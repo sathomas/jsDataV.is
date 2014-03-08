@@ -52,6 +52,16 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/build\/js\/scripts.min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/build\/js\/scripts.min.js",
+		"outputAbbreviatedPath": "\/Users\/stephen\/Software\/build\/js\/scripts.min.min.js",
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/README.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
@@ -76,7 +86,7 @@
 		},
 	"\/src\/bower_components\/d3\/d3.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/bower_components\/d3\/d3.js",
 		"outputAbbreviatedPath": "\/Users\/stephen\/Software\/build\/js\/d3.min.js",
@@ -118,7 +128,7 @@
 		},
 	"\/src\/bower_components\/normalize-css\/normalize.css": {
 		"fileType": 16,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/bower_components\/normalize-css\/normalize.css",
 		"outputAbbreviatedPath": "No Output Path",
@@ -482,6 +492,35 @@
 		"resolveRelativeURLS": 0,
 		"shouldRunAutoprefixer": 1,
 		"shouldRunBless": 1
+		},
+	"\/src\/scripts\/scripts.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/scripts\/scripts.js",
+		"outputAbbreviatedPath": "\/build\/js\/scripts.min.js",
+		"outputPathIsSetByUser": 1,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/src\/styles\/styles.less": {
+		"allowInsecureImports": 0,
+		"createSourceMap": 0,
+		"disableJavascript": 0,
+		"fileType": 1,
+		"ieCompatibility": 0,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/styles\/styles.less",
+		"outputAbbreviatedPath": "\/build\/css\/styles.css",
+		"outputPathIsSetByUser": 1,
+		"outputStyle": 0,
+		"relativeURLS": 0,
+		"shouldRunAutoprefixer": 1,
+		"shouldRunBless": 1,
+		"strictImports": 0,
+		"strictMath": 0,
+		"strictUnits": 0
 		}
 	},
 "hooks": [
