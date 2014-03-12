@@ -1,3 +1,3 @@
-# Data Visualization Web Site (datavis.info)
+# Data Visualization Web Site (jsDataV.is)
 
-Repository for http://datavis.info web site
+Repository for http://jsDataV.is web site
