@@ -2,33 +2,23 @@
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
 "creatorBuild": "16828",
 "files": {
-	"\/build\/apple-touch-icon-114-precomposed.png": {
+	"\/build\/apple-touch-icon-120-precomposed.png": {
 		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 7310,
-		"inputAbbreviatedPath": "\/build\/apple-touch-icon-114-precomposed.png",
-		"outputAbbreviatedPath": "\/build\/apple-touch-icon-114-precomposed.png",
+		"initialSize": 4437,
+		"inputAbbreviatedPath": "\/build\/apple-touch-icon-120-precomposed.png",
+		"outputAbbreviatedPath": "\/build\/apple-touch-icon-120-precomposed.png",
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/build\/apple-touch-icon-144-precomposed.png": {
+	"\/build\/apple-touch-icon-152-precomposed.png": {
 		"fileType": 32768,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"initialSize": 9344,
-		"inputAbbreviatedPath": "\/build\/apple-touch-icon-144-precomposed.png",
-		"outputAbbreviatedPath": "\/build\/apple-touch-icon-144-precomposed.png",
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/build\/apple-touch-icon-57-precomposed.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 3929,
-		"inputAbbreviatedPath": "\/build\/apple-touch-icon-57-precomposed.png",
-		"outputAbbreviatedPath": "\/build\/apple-touch-icon-57-precomposed.png",
+		"initialSize": 5728,
+		"inputAbbreviatedPath": "\/build\/apple-touch-icon-152-precomposed.png",
+		"outputAbbreviatedPath": "\/build\/apple-touch-icon-152-precomposed.png",
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
@@ -501,6 +491,76 @@
 		"shouldRunAutoprefixer": 1,
 		"shouldRunBless": 1
 		},
+	"\/src\/images\/Branding.sketch\/QuickLook\/Preview.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 31475,
+		"inputAbbreviatedPath": "\/src\/images\/Branding.sketch\/QuickLook\/Preview.png",
+		"outputAbbreviatedPath": "\/src\/images\/Branding.sketch\/QuickLook\/Preview.png",
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/src\/images\/Branding.sketch\/QuickLook\/Thumbnail.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 39680,
+		"inputAbbreviatedPath": "\/src\/images\/Branding.sketch\/QuickLook\/Thumbnail.png",
+		"outputAbbreviatedPath": "\/src\/images\/Branding.sketch\/QuickLook\/Thumbnail.png",
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/src\/images\/favicon16.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 489,
+		"inputAbbreviatedPath": "\/src\/images\/favicon16.png",
+		"outputAbbreviatedPath": "\/src\/images\/favicon16.png",
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/src\/images\/favicon32.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 797,
+		"inputAbbreviatedPath": "\/src\/images\/favicon32.png",
+		"outputAbbreviatedPath": "\/src\/images\/favicon32.png",
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/src\/images\/touchicon120.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 4437,
+		"inputAbbreviatedPath": "\/src\/images\/touchicon120.png",
+		"outputAbbreviatedPath": "\/src\/images\/touchicon120.png",
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/src\/images\/touchicon152.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 5728,
+		"inputAbbreviatedPath": "\/src\/images\/touchicon152.png",
+		"outputAbbreviatedPath": "\/src\/images\/touchicon152.png",
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
+	"\/src\/images\/touchicon72.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 2621,
+		"inputAbbreviatedPath": "\/src\/images\/touchicon72.png",
+		"outputAbbreviatedPath": "\/src\/images\/touchicon72.png",
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/src\/scripts\/scripts.js": {
 		"fileType": 64,
 		"ignore": 0,
@@ -529,462 +589,6 @@
 		"strictImports": 0,
 		"strictMath": 0,
 		"strictUnits": 0
-		},
-	"\/src\/text\/ch1\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch1\/01-bar-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/01-bar-charts.md",
-		"outputAbbreviatedPath": "\/tmp\/ch1\/01-bar-charts.kit",
-		"outputPathIsSetByUser": 1
-		},
-	"\/src\/text\/ch1\/02-line-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/02-line-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/02-line-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch1\/03-pie-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/03-pie-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/03-pie-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch1\/04-scatter-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/04-scatter-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/04-scatter-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch1\/05-bubble-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/05-bubble-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/05-bubble-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch1\/06-radar-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/06-radar-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/06-radar-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch1\/07-custom-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/07-custom-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/07-custom-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch1\/99-conclusion.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/99-conclusion.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch2\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch2\/01-selecting-content.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/01-selecting-content.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/01-selecting-content.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch2\/02-zooming-panning.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/02-zooming-panning.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/02-zooming-panning.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch2\/03-tracking-values.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/03-tracking-values.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/03-tracking-values.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch2\/04-data-via-ajax.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/04-data-via-ajax.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/04-data-via-ajax.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch2\/99-conclusion.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/99-conclusion.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/01-classic-sparkline.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/01-classic-sparkline.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/01-classic-sparkline.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/02-small-multiples.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/02-small-multiples.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/02-small-multiples.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/03-annotations.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/03-annotations.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/03-annotations.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/04-composite-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/04-composite-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/04-composite-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/05-click-events.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/05-click-events.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/05-click-events.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/06-real-time.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/06-real-time.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/06-real-time.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch3\/99-conclusion.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/99-conclusion.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch4\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch4\/01-tree-maps.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/01-tree-maps.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/01-tree-maps.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch4\/02-heat-maps.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/02-heat-maps.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/02-heat-maps.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch4\/03-gantt-charts.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/03-gantt-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/03-gantt-charts.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch4\/04-graphs.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/04-graphs.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/04-graphs.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch4\/05-word-clouds.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/05-word-clouds.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/05-word-clouds.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch4\/99-conclusion.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/99-conclusion.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch5\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch5\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch5\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch6\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch6\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch6\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch7\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch7\/01-functional-programming.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/01-functional-programming.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/01-functional-programming.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch7\/02-arrays.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/02-arrays.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/02-arrays.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch7\/03-objects.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/03-objects.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/03-objects.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch7\/04-collections.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/04-collections.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/04-collections.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch7\/99-conclusion.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/99-conclusion.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch8\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/00-intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/text\/intro.md",
-		"outputAbbreviatedPath": "\/tmp\/intro.kit",
-		"outputPathIsSetByUser": 1
-		},
-	"\/tmp\/intro.kit": {
-		"fileType": 2048,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/tmp\/intro.kit",
-		"outputAbbreviatedPath": "\/Users\/stephen\/Software\/intro.html",
-		"outputPathIsSetByUser": 0
-		},
-	"\/Users\/stephen\/Software\/01-bar-charts.html": {
-		"fileType": 8192,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/Users\/stephen\/Software\/01-bar-charts.html",
-		"outputAbbreviatedPath": "No Output Path",
-		"outputPathIsSetByUser": 0
 		}
 	},
 "hooks": [
@@ -1003,9 +607,9 @@
 	},
 "projectAttributes": {
 	"bowerAbbreviatedPath": "src",
-	"displayValue": "datavis.info",
+	"displayValue": "jsDataV.is",
 	"displayValueWasSetByUser": 1,
-	"iconImageName": "brackets_blue"
+	"iconImageName": "compass_orange"
 	},
 "projectSettings": {
 	"alwaysUseExternalServer": 0,

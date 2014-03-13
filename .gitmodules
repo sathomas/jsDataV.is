@@ -1,0 +1,3 @@
+[submodule "src/git/prism"]
+	path = src/git/prism
+	url = https://github.com/LeaVerou/prism/
