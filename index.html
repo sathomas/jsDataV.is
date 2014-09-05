@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <!--[if lte IE 8]>
+            <script>window.location.href='http://browsehappy.com';</script>
+        <![endif]-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Stephen Thomas <stephen@sathomas.me>">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png">
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/styles.min.css">
+        <title>Data Visualization with JavaScript</title>
+        <script>
+            var chartStyles = {
+                color: {
+                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
+                    primary:            "#CA0000",
+                    primaryLightest:    "#FE4C4C",
+                    primaryLight:       "#F71515",
+                    primaryDark:        "#A50000",
+                    primaryDarkest:     "#7B0000",
+                    secondary:          "#007979",
+                    secondaryLightest:  "#2D9999",
+                    secondaryLight:     "#0D9494",
+                    secondaryDark:      "#006363",
+                    secondaryDarkest:   "#004A4A",
+                    alternate:          "#7EBD00",
+                    alternateLightest:  "#B6ED47",
+                    alternateLight:     "#A0E714",
+                    alternateDark:      "#679A00",
+                    alternateDarkest:   "#4D7300"
+                },
+                font: {
+                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
+                }
+
+            };
+        </script>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html" alt="jsDataV.is">
+                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>jsDataV.is</title>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
+                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
+                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
+                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
+                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
+                            </g>
+                        </svg>
+                    </a>
+                </li>
+                <li>Contents ▾
+                    <ol>
+                        <li><a href="intro.html" >Introduction</a></li>
+                        <li><a href="chap01.html">Graphing Data</a></li>
+                        <li><a href="chap02.html">Making Charts Interactive</a></li>
+                        <li><a href="chap03.html">Integrating Charts in a Page</a></li>
+                        <li><a href="chap04.html">Creating Specialized Graphs</a></li>
+                        <li><a href="chap05.html">Showing Timelines</a></li>
+                        <li><a href="chap06.html">Visualizing Geographic Data</a></li>
+                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
+                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                    </ol>
+                </li>
+            </ul>
+        </nav>
+        <main>
+<h1 id="data-visualization-with-javascript">Data Visualization with JavaScript</h1>
+<p>It’s getting hard to ignore the importance of <em>data</em> in our lives. Data is critical to the largest <a href="https://www.facebook.com/data">social organizations</a> in human history. It can affect even the least consequential of our <a href="http://www.nytimes.com/2010/05/02/magazine/02self-measurement-t.html?pagewanted=all&amp;_r=0">everyday decisions</a>. And its collection has widespread <a href="http://www.theguardian.com/world/the-nsa-files">geopolitical implications</a>. Yet it also seems to be getting easier to ignore the data itself. <a href="http://www.theregister.co.uk/2012/06/04/big_data_too_big/">One estimate</a> suggests that 99.5% of the data our systems collect goes to waste. No one ever analyzes it effectively.</p>
+<p><em>Data visualization</em> is a tool that addresses this gap.</p>
+<p>Effective visualizations clarify; they transform collections of abstract artifacts (otherwise known as numbers) into shapes and forms that viewers quickly grasp and understand. The best visualizations, in fact, impart this understanding subconsciously. Viewers comprehend the data immediately—without thinking. Such presentations free the viewer to more fully consider the implications of the data: the stories it tells, the insights it reveals, or even the warnings it offers. That, of course, defines the best kind of communication.</p>
+<p>If you’re developing web sites or web applications today, there’s a good chance you have data to communicate, and that data may be begging for a good visualization. But how do you know what kind of visualization is appropriate? And, even more importantly, how do you actually create one? Answers to those very questions are the core of this book. In the chapters that follow, we explore dozens of different visualizations and visualization techniques and tool kits. Each example discusses the appropriateness of the visualization (and suggests possible alternatives) and provides step-by-step instructions for including the visualization in your own web pages.</p>
+<p>As the title no doubt makes clear, these examples rely primarily on JavaScript programming. To add the examples to your own sites, you will need basic JavaScript skills and knowledge. For all but the most complex visualizations, however, no advanced skills are necessary. If, for example, your experience includes a bit of jQuery, you’ll be fine. And even the most advanced visualizations include complete step-by-step instructions.</p>
+<p>To make the text as clear and readable as possible, these examples generally contain isolated snippets of JavaScript, plus occasional fragments of <span class="smcp">HTML</span> or <span class="smcp">CSS</span>. Complete examples are available on <a href="https://github.com/sathomas/jsdataviz">GitHub</a>.</p>
+<blockquote>
+<p>A quick note about <a href="http://d3js.org"><span class="smcp">D3</span>.js</a>, perhaps the most powerful JavaScript visualization library available. <span class="lgcp">D3</span>’s enormous power does come at the cost of complexity, and as a result it’s especially well-suited for data visualization professionals. This book aims for a broader audience: web designers and developers that mostly worry about traditional web development problems (<span class="smcp">CSS3</span>, <span class="smcp">HTML5</span>, etc.) but still want to present data effectively. Its main goal is giving those designers and developers the tools they can use, without requiring a full time commitment to advanced data visualization. For those readers we’ve kept the main text at a more introductory level and gradually introduced more advanced JavaScript features within each chapter. By the time you’ve reached the final chapter, however, you’ll have all the background needed to use <span class="smcp">D3</span>.js effectively. As a starting point, the book’s appendix includes several examples that provide a whirlwind tour of the <span class="smcp">D3</span>.js library.</p>
+</blockquote>
+<p>Continue reading: <a href="chap01.html">Chapter 1: Graphing Data</a>.</p>
+        </main>
+        <footer>
+            <small>Copyright © 2012-2014 by Stephen A. Thomas. All Rights Reserved.</small>
+        </footer>
+    <script src="js/scripts.min.js"></script>
+   </body>
+</html>
