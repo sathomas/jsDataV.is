@@ -1,3 +1,4 @@
-/src/bower_components
-
-/.codekit-cache
+build
+release
+.codekit-cache
+bower_components

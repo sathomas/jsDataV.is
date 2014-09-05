@@ -1,0 +1,50 @@
+table {
+    width: 100%;
+    margin-bottom: 1.2em;
+    border: 1px solid @color-border;
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: @border-radius;
+}
+
+table thead:first-child tr:first-child>th:first-child,
+table tbody:first-child tr:first-child>td:first-child {
+    border-top-left-radius: @border-radius;
+}
+
+table thead:first-child tr:first-child>th:last-child,
+table tbody:first-child tr:first-child>td:last-child {
+    border-top-right-radius: @border-radius;
+}
+
+table thead th {
+    vertical-align: bottom;
+}
+
+table th,
+table td {
+    padding: 0.5em;
+    line-height: 1.2em;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid @color-border;
+}
+
+table caption+tbody tr:first-child td,
+table caption+tbody tr:first-child th,
+table caption+thead tr:first-child td,
+table caption+thead tr:first-child th,
+table colgroup+tbody tr:first-child td,
+table colgroup+tbody tr:first-child th,
+table colgroup+thead tr:first-child td,
+table colgroup+thead tr:first-child th,
+table tbody:first-child tr:first-child td,
+table tbody:first-child tr:first-child th,
+table thead:first-child tr:first-child td,
+table thead:first-child tr:first-child th {
+    border-top: 0;
+}
+
+table th, table td {
+    border-left:1px solid @color-border;
+}

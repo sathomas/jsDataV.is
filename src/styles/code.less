@@ -1,0 +1,48 @@
+/*
+ * Styles for source code.
+ */
+
+pre.sourceCode > code {
+    padding-left: 0.5em;
+}
+
+pre.sourceCode, table.sourceCode {
+    background-color: @color-block-background;
+    width: 100%;
+}
+
+table.sourceCode td.lineNumbers {
+    text-align: right;
+    padding: 0 0.5em;
+    background-color: @color-block-dark-background;
+    border-right: 1px @color-border solid;
+    border-radius: @border-radius;
+    color: @color-grey-text;
+}
+
+table.sourceCode td.lineNumbers pre {
+    width: 1.5em;
+}
+
+table.sourceCode td.sourceCode {
+    padding: 0 0.5em;
+}
+
+table.sourceCode td.sourceCode pre {
+    width: 36.5em;
+}
+
+table.sourceCode pre {
+    margin: 0;
+}
+
+.sourceCode .ch, .sourceCode .st { color: @color-pink-dark; }                   /* character, string */
+.sourceCode .co { color: @color-pink-lightest; font-style: italic; }            /* comment */
+.sourceCode .dt { color: @color-blue; }                                         /* data type */
+.sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: @color-red-dark; }   /* decimal, baseN, float value */
+.sourceCode .fu { color: @color-green-dark; }                                   /* function */
+.sourceCode .kw { color: @color-blue-darkest; font-weight: normal; }            /* key word */
+.sourceCode .ot { color: @color-blue-darkest; }                                 /* other token */
+.sourceCode .re { } /* region */
+.sourceCode .al { } /* alert */
+.sourceCode .er { } /* error */

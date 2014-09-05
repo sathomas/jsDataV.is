@@ -1,0 +1,47 @@
+/*
+ * Styles for figures in content.
+ */
+
+main {
+    counter-reset: figures nextfigure 1;
+}
+
+figure {
+    page-break-inside:  avoid;
+    counter-increment: figures nextfigure;
+    margin: 2em 0;
+}
+
+figcaption {
+    font-size: 0.8em;
+    color: @color-muted-text;
+    clear: both;
+    margin-top: 1em;
+}
+
+figcaption:before {
+    content: "Figure " counter(chapter) "‒" counter(figures) ". ";
+}
+
+span.nextfigure:before {
+    content: counter(chapter) "‒" counter(nextfigure);
+}
+
+span.lastfigure:before {
+    content: counter(chapter) "‒" counter(figures);
+}
+
+.appendix figcaption:before {
+    font-family: varela-smcp, sans-serif;
+    content: "Figure " counter(appendix, lower-alpha) "‒" counter(figures) ". ";
+}
+
+.appendix span.nextfigure:before {
+    font-family: varela-smcp, sans-serif;
+    content: counter(appendix, lower-alpha) "‒" counter(nextfigure);
+}
+
+.appendix span.lastfigure:before {
+    font-family: varela-smcp, sans-serif;
+    content: counter(appendix, lower-alpha) "‒" counter(figures);
+}

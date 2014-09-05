@@ -1,0 +1,126 @@
+/*
+ * Styles for site typography.
+ */
+
+/* Body font */
+@font-face {
+    font-family: 'Varela';
+    src: url('../fonts/varela.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Varela-onum';
+    src: url('../fonts/varela-onum.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Varela-smcp';
+    src: url('../fonts/varela-smcp.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Varela-lgcp';
+    src: url('../fonts/varela-lgcp.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    color: @color-body-text;
+    font-family: Varela, sans-serif;
+    font-size: 100%;
+    line-height: 1.5;
+}
+figure {
+    font-family: print, Varela, sans-serif;  /* PRINT SCREENSHOTS: prepend 'print' */
+    font-feature-settings: "onum" 0, "lnum" 1, "smcp" 0;
+}
+.no-font-feature-settings body {
+    font-family: Varela-onum, sans-serif;
+}
+.no-font-feature-settings figure,
+.no-font-feature-settings figure .lgcp {
+    font-family: print, Varela, sans-serif;  /* PRINT SCREENSHOTS: prepend 'print' */
+}
+@media screen and (max-width: 25em) {
+  body { font-size: 90%; }
+}
+a {
+    color: @color-body-text;
+    text-decoration: none;
+    position: relative;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+    background-image: linear-gradient(to top, transparent, transparent 2px, #aaa 2px, #aaa 3px, transparent 3px);
+}
+a:hover, a:focus {
+    color: @color-red;
+    background-image: linear-gradient(to top, transparent, transparent 2px, #ca4318 2px, #ca4318 3px, transparent 3px);
+}
+blockquote {
+    border-left: 2px solid #ccc;
+    margin: 0 2em 0 1em;
+    padding-left: 1em;
+}
+.smcp {
+    text-transform: lowercase;
+    font-feature-settings: "onum" 1, "lnum" 0, "smcp" 1;
+}
+.lgcp {
+    text-transform: uppercase;
+    font-feature-settings: "onum" 0, "lnum" 1, "smcp" 0;
+}
+.no-font-feature-settings .smcp {
+    font-family: Varela-smcp, sans-serif;
+}
+.no-font-feature-settings .lgcp {
+    font-family: Varela-lgcp, sans-serif;
+}
+
+/* Display font */
+@font-face {
+    font-family: 'klinicslab';
+    src: url('../fonts/klinicslab.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+h1,h2,h3,h4,h5,h6 {
+    color: @color-headings;
+    font-family: klinicslab, serif;
+    font-weight: bold;
+    line-height: 1;
+}
+h1 { font-size: 3.157rem; }
+h2 { font-size: 2.369rem; }
+h3 { font-size: 1.777rem; }
+h3 { font-size: 1.333rem; }
+
+/* Monospace fonts for code blocks */
+@font-face {
+    font-family: 'ankacoder';
+    src: url('../fonts/ankacoder.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ankacoder';
+    src: url('../fonts/ankacoder-italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'ankacoder';
+    src: url('../fonts/ankacoder-bold.woff') format('woff');
+    font-weight: bold;
+}
+
+code, pre {
+    font-family: ankacoder, monospace;
+}
+
+/* Custom font for branding */
+@import (less) "../typefaces/jsdatavis-font.css";
+
+/* Font for matching print version */
+@import (less) "../typefaces/print-font.css";   /* PRINT SCREENSHOTS */

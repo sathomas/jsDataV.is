@@ -1,0 +1,3 @@
+## Summing Up
+
+As the examples in this chapter show, we don't have to be satisfied with static charts on our web pages. A little JavaScript can bring charts to life by letting users interact with them. These interactions give the user a chance to see a "big picture" view of the data and, on the same page, look into the specific aspects that are most interesting and relevant to them. We've considered techniques that let users select which data series appear on our charts, zoom in on specific chart areas, and use their mouse to explore details of the data without losing sight of the overall view. We've also looked at how to get interactive data directly from its source using <span class="smcp">AJAX</span> and asynchronous programming.
