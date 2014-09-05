@@ -1,0 +1,2533 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <!--[if lte IE 8]>
+            <script>window.location.href='http://browsehappy.com';</script>
+        <![endif]-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Stephen Thomas <stephen@sathomas.me>">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png">
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/styles.min.css">
+        <title>Data Visualization with JavaScript</title>
+        <script>
+            var chartStyles = {
+                color: {
+                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
+                    primary:            "#CA0000",
+                    primaryLightest:    "#FE4C4C",
+                    primaryLight:       "#F71515",
+                    primaryDark:        "#A50000",
+                    primaryDarkest:     "#7B0000",
+                    secondary:          "#007979",
+                    secondaryLightest:  "#2D9999",
+                    secondaryLight:     "#0D9494",
+                    secondaryDark:      "#006363",
+                    secondaryDarkest:   "#004A4A",
+                    alternate:          "#7EBD00",
+                    alternateLightest:  "#B6ED47",
+                    alternateLight:     "#A0E714",
+                    alternateDark:      "#679A00",
+                    alternateDarkest:   "#4D7300"
+                },
+                font: {
+                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
+                }
+
+            };
+        </script>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html" alt="jsDataV.is">
+                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>jsDataV.is</title>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
+                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
+                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
+                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
+                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
+                            </g>
+                        </svg>
+                    </a>
+                </li>
+                <li>Contents ▾
+                    <ol>
+                        <li><a href="intro.html" >Introduction</a></li>
+                        <li><a href="chap01.html">Graphing Data</a></li>
+                        <li><a href="chap02.html">Making Charts Interactive</a></li>
+                        <li><a href="chap03.html">Integrating Charts in a Page</a></li>
+                        <li><a href="chap04.html">Creating Specialized Graphs</a></li>
+                        <li><a href="chap05.html">Showing Timelines</a></li>
+                        <li><a href="chap06.html">Visualizing Geographic Data</a></li>
+                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
+                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                    </ol>
+                </li>
+            </ul>
+        </nav>
+        <main>
+
+<style>
+body { counter-reset: chapter 3; }
+</style>
+
+<h1 id="chapter-3-integrating-charts-in-a-page">Chapter 3: Integrating Charts in a Page</h1>
+You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That’s not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they “look pretty” on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn’t. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn’t take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes and labels and titles and legends and such to place. Edward Tufte considered this problem in his groundbreaking work <em>The Visual Display of Quantitative Information,</em> and he proposed a novel solution he called <em>sparklines.</em> Sparklines are charts stripped to their bare essentials, presented without labels, axes, titles or other elements we often see in a chart. Sparklines can present a lot of information in very little space, even to the point where it is possible to include a chart right in the middle of a sentence. There is no need for “See figure below” or “Click for larger view.” One of Tufte’s earliest examples presents the glucose level of a medical patient; figure <span class="nextfigure"/> shows a reproduction.
+<figure style="text-align: center">
+<p style="display: inline-block;">
+<span id="sparkline-intro">170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,184,148,145,134,145,145,145,143,148,224,181,112,111,129,151,131,131,131,114,112,112,112,124,187,202,200,203,237,263,221,197,184,185,203,290,330,330,226,113,148,169,148,78,96,96,96,77,59,22,22,70,110,128</span> <span style="color:#CA0000"> 128 </span> <strong>Glucose</strong>
+</p>
+<figcaption>
+Tufte’s classic sparkline example shows a lot of information in a small space.
+</figcaption>
+</figure>
+<p>In a mere 154×20 pixels we’ve shown the patient’s current glucose level, its trend for more than two months, high and low values, and the range of normal values. This high information density makes sparklines effective any time space is a premium—inline in textual paragraphs, as cells in tables, or as part of information dashboards. Sparklines do have disadvantages of course. They cannot provide as much fine-grained detail as a full size chart with axes and labels. They also cannot support significant interactivity, so we can’t give users a lot of flexibility in selecting data or zooming in for detail. But for many visualizations, these aren’t major concerns. Plus, as we’ll see in this chapter’s examples, the web gives us the chance to augment sparklines in ways not possible in print. There are a few JavaScript libraries and toolkits for creating sparklines, but we’ll focus on the most popular of them: <a href="http://omnipotent.net/jquery.sparkline/">jQuery sparklines</a>. As the name implies, this open source library is an extension to jQuery. The examples that follow look closely at how to use these tools to incorporate information dense visualizations into your web page. Here’s what we’ll learn:</p>
+<ul>
+<li>How to create a classic sparkline for integration directly in test</li>
+<li>How to combine multiple sparklines to show comparisons</li>
+<li>How to annotate sparklines with additional details</li>
+<li>How to create composite charts</li>
+<li>How to respond to click events on the page</li>
+<li>How to update our charts in real time</li>
+</ul>
+<script>
+;(function(){
+
+    draw = function() {
+
+        $('#sparkline-intro').sparkline('html',{
+          lineColor: "rgb(68, 68, 68)",
+          fillColor: false,
+          disableHiddenCheck: true,
+          defaultPixelsPerValue: 1,
+          spotColor: chartStyles.color.primary,
+          minSpotColor: chartStyles.color.primary,
+          maxSpotColor: chartStyles.color.primary,
+          normalRangeMin: 82,
+          normalRangeMax: 180,
+        });
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="creating-a-classic-sparkline">Creating a Classic Sparkline</h2>
+<p>As later examples will demonstrate, the sparklines library is both flexible and powerful, and we can use it in many different contexts. As a start, though, it seems appropriate to use the library to create a sparkline exactly as Edward Tufte first defined it. The process is quite straightforward and only takes four simple steps.</p>
+<h3 id="step-1-include-the-required-javascript-libraries">Step 1: Include the Required JavaScript Libraries</h3>
+<p>Since we’re using the jQuery sparklines library to create the chart, we need to include that library in our web pages, along with jQuery. Both jQuery and sparklines are available on public content distribution networks (<span class="smcp">CDN</span>s). For this example (and the others in this chapter), we’ll use the CloudFlare <span class="smcp">CDN</span>, but for some notes on the advantages and disadvantages of using <span class="smcp">CDN</span>s, see Chapter 2.</p>
+<p>In addition to the jQuery library, sparklines relies on the <span class="smcp">HTML</span> <em>canvas</em> feature. Since Internet Explorer didn’t support canvas until version 9, we’ll use some special markup in line 9 to ensure that <span class="smcp">IE</span> 8 and earlier will load an additional library (<code>excanvas.min.js</code>), just like we did in Chapter 2. Here’s the skeleton with which we start:</p>
+<table class="sourceCode html numberLines" data-line="9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="co">&lt;!-- Content goes here --&gt;</span>
+    <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/jquery.sparkline.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<p>As you can see, we’re including the JavaScript libraries at the end of the document. This approach lets the browser load all of the document’s <span class="smcp">HTML</span> markup and begin laying out the page while it waits for the server to provide the JavaScript libraries.</p>
+<h3 id="step-2-create-the-html-markup-for-the-sparkline">Step 2: Create the HTML Markup for the Sparkline</h3>
+<p>Because we’re closely integrating the sparkline chart with other elements, we simply use a <code>&lt;span&gt;</code> tag to hold the <span class="smcp">HTML</span> markup for our visualization, rather than using a <code>&lt;div&gt;</code>. In addition to the chart itself, we include the final value and a label as standard <span class="smcp">HTML</span>. Here is the <span class="smcp">HTML</span> for the glucose sparkline.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;p&gt;</span>
+  <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;sparkline&quot;</span><span class="kw">&gt;</span>
+    170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,
+    184,148,145,134,145,145,145,143,148,224,181,112,111,129,
+    151,131,131,131,114,112,112,112,124,187,202,200,203,237,
+    263,221,197,184,185,203,290,330,330,226,113,148,169,148,
+    78,96,96,96,77,59,22,22,70,110,128
+  <span class="kw">&lt;/span&gt;</span>
+  128 Glucose
+<span class="kw">&lt;/p&gt;</span></code></pre></td></tr></table>
+<p>Compared to other visualizations, two characteristics of our sparkline chart are unusual.</p>
+<ul>
+<li>We include the data right in the <span class="smcp">HTML</span> itself, not in the JavaScript that creates the chart.</li>
+<li>The <code>&lt;span&gt;</code> for the chart does not have a unique <code>id</code> attribute.</li>
+</ul>
+<p>Both of these differences are optional; we could construct the chart as in other visualizations by passing data to a JavaScript function and identifying its container with a unique <code>id</code>. For sparklines, however, the approach we’re using here often makes more sense. By including the chart data directly in the <span class="smcp">HTML</span>, we can easily see the data’s relation to other content on the page. It’s clear, for example, that the final value of our chart (128) is the same as the value we’re using for the label. If we had made a mistake and used a different value for the label, the error would be much easier to spot and correct. Using a common <code>class</code> for all sparklines instead of unique <code>id</code>s simplifies how we might use the library to create multiple charts on one page. With unique <code>id</code>s we would have to call a library function for every chart. With a common <code>class</code>, on the other hand, we only need call a single library function to create multiple charts. That’s especially helpful when a web page contains a lot of sparklines.</p>
+<h3 id="step-3-draw-the-sparkline">Step 3: Draw the Sparkline</h3>
+<p>Now that we’ve included the necessary libraries and set up our <span class="smcp">HTML</span>, it’s remarkably easy to draw the charts. In fact, a single line of JavaScript is sufficient. We simply select the containing element(s) using jQuery (<code>$('.sparkline')</code>) and call the sparklines plugin.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="kw">function</span>() {
+    <span class="fu">$</span>(<span class="st">&#39;.sparkline&#39;</span>).<span class="fu">sparkline</span>();
+}</code></pre></td></tr></table>
+<p>As you can see in figure <span class="nextfigure"/>, the sparklines library creates a standard sparkline from our data:</p>
+<figure>
+<span id="sparkline-chart1"> 170,134,115,128,168,166,122,81,56,39,97,114,114,130,151, 184,148,145,134,145,145,145,143,148,224,181,112,111,129, 151,131,131,131,114,112,112,112,124,187,202,200,203,237, 263,221,197,184,185,203,290,330,330,226,113,148,169,148, 78,96,96,96,77,59,22,22,70,110,128 </span> 128 Glucose
+<figcaption>
+The default sparkline options differ slightly from the classic example.
+</figcaption>
+</figure>
+<p>The library’s default options don’t quite match Tufte’s classic sparkline definition. The differences include colors, chart type, and density. We’ll tweak those next.</p>
+<h3 id="step-4-adjust-the-chart-style">Step 4: Adjust the Chart Style</h3>
+<p>To make our sparkline exactly match Tufte’s definition, we can specify new values for some of the default options. Let’s collect the changes first, and then see how to pass them to the library.</p>
+<ul>
+<li>Tufte’s classic sparklines are black and white except for key data points (minimum, maximum, and final values). His color scheme adds extra emphasis to those points. To change the library’s default (blue), we can set a <code>lineColor</code>. For screen displays we might chose a dark gray rather than pure black. That’s what we’re using in line 2 below.</li>
+<li>Tufte doesn’t fill the area below the line so he can use shading to indicate a normal range. To eliminate the library’s light blue shading, we set <code>fillColor</code> to <code>false</code>. (Line 3.)</li>
+<li>Tufte uses red for key data points. To change the library’s default (orange), we set <code>spotColor</code>, <code>minSpotColor</code>, and <code>maxSpotColor</code> in lines 5 through 7.</li>
+<li>By default, the library uses three pixels as the width for each data point. To maximize information density, Tufte would likely suggest using only a single pixel. Setting the <code>defaultPixelsPerValue</code> option in line 4 makes that change.</li>
+<li>Finally, Tufte’s sparklines can include shading to mark the normal range for a value. To show, for example, a range of 82 to 180 mg/dL, we set the <code>normalRangeMin</code> and <code>normalRangeMax</code> options in lines 8 and 9.</li>
+</ul>
+<p>To pass these options to sparklines, we construct a JavaScript object and include it as the second parameter in the <code>sparkline</code> function call. The function’s first parameter is the data itself, which here we specify with <code>'html'</code> because our data is included in the <span class="smcp">HTML</span> markup.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;.sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,{
+    <span class="dt">lineColor</span>: <span class="st">&quot;dimgray&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="kw">false</span>,
+    <span class="dt">defaultPixelsPerValue</span>: <span class="dv">1</span>,
+    <span class="dt">spotColor</span>: <span class="st">&quot;red&quot;</span>,
+    <span class="dt">minSpotColor</span>: <span class="st">&quot;red&quot;</span>,
+    <span class="dt">maxSpotColor</span>: <span class="st">&quot;red&quot;</span>,
+    <span class="dt">normalRangeMin</span>: <span class="dv">82</span>,
+    <span class="dt">normalRangeMax</span>: <span class="dv">180</span>,
+});</code></pre></td></tr></table>
+<p>To complete our transformation to Tufte’s original we can style the <span class="smcp">HTML</span> content as well. Making the final value the same color as the key data points clarifies that connection, and making the chart label bold emphasizes it as a title.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;p&gt;</span>
+  <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;sparkline&quot;</span><span class="kw">&gt;</span>
+    170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,
+    184,148,145,134,145,145,145,143,148,224,181,112,111,129,
+    151,131,131,131,114,112,112,112,124,187,202,200,203,237,
+    263,221,197,184,185,203,290,330,330,226,113,148,169,148,
+    78,96,96,96,77,59,22,22,70,110,128
+  <span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;span</span><span class="ot"> style=</span><span class="st">&quot;color:red&quot;</span><span class="kw">&gt;</span> 128 <span class="kw">&lt;/span&gt;</span>
+  <span class="kw">&lt;strong&gt;</span> Glucose <span class="kw">&lt;/strong&gt;</span>
+<span class="kw">&lt;/p&gt;</span></code></pre></td></tr></table>
+<p>With these changes we have the classic Tufte sparkline on our web page. We can even include it within a text paragraph ( <span id="sparkline-chart2"> 170,134,115,128,168,166,122,81,56,39,97,114,114,130,151, 184,148,145,134,145,145,145,143,148,224,181,112,111,129, 151,131,131,131,114,112,112,112,124,187,202,200,203,237, 263,221,197,184,185,203,290,330,330,226,113,148,169,148, 78,96,96,96,77,59,22,22,70,110,128 </span> <span style="color:#CA0000"> 128 </span> <strong>Glucose</strong> ) so that the visualization enhances the content of the text.</p>
+<script>
+;(function(){
+
+    draw = function() {
+
+        $('#sparkline-chart1').sparkline();
+        $('#sparkline-chart2').sparkline('html',{
+            lineColor: "dimgray",
+            fillColor: false,
+            defaultPixelsPerValue: 1,
+            spotColor: chartStyles.color.primary,
+            minSpotColor: chartStyles.color.primary,
+            maxSpotColor: chartStyles.color.primary,
+            normalRangeMin: 82,
+            normalRangeMax: 180,
+        });
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="charting-many-variables">Charting Many Variables</h2>
+<p>By design, sparklines take up very little space on a page, and that makes them ideal for another visualization challenge: showing many variables at once. Of course regular line charts and bar charts can plot multiple data sets simultaneously; however, these multiple series charts rapidly grow unwieldy if the number of data sets exceeds four or five. Some visualization projects show dozens of different variables, far beyond what a multiple series chart can accommodate. A <em>small multiples</em> approach turns the standard chart approach completely around. Instead of showing one chart with multiple data sets, show multiple charts each with a single data set. Placing lots of charts on a page means that each individual chart cannot take up much space. That is the exactly the problem that sparklines solve.</p>
+<p>We won’t go too crazy with this example to keep the code examples manageable, but it’s easy to extend this approach to many more variables. In our case we’ll construct a visualization for analyzing stock market performance. The companies in our analysis will include the <a href="http://money.cnn.com/magazines/fortune/fortune500/2012/full_list/">10 largest American companies in 2012</a>, (the “Fortune 10”), Barclay’s <a href="http://www.marketwatch.com/story/barclays-best-tech-stocks-for-2012-2011-12-20">best technology stocks for 2012</a> (as identified in December 2011), and Bristol-Myers Squibb, which <span class="smcp">CR</span> Magazine named the <a href="http://www.thecro.com/files/100Best2012_List_3.8.pdf">top company in America for corporate responsibility</a>. Those selections are completely arbitrary, but the example is designed to include three different cases which we will style differently in our visualization. We’ll treat one as a general case (The Fortune 10 list), one as a special class (the Barclay’s list), and one as a unique variable (Bristol-Myers Squibb).</p>
+<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page.</p>
+<h3 id="step-1-prepare-the-html-markup">Step 1: Prepare the HTML Markup</h3>
+<p>The sparklines library makes is easy to embed the data directly inside the <span class="smcp">HTML</span> markup. For this example, an <span class="smcp">HTML</span> table is the most appropriate structure for the data. Here’s how such a table could begin. (For brevity the excerpt below doesn’t include the full <span class="smcp">HTML</span>, but the complete example is available in the book’s source code.)</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;table&gt;</span>
+    <span class="kw">&lt;thead&gt;</span>
+        <span class="kw">&lt;tr&gt;</span>
+            <span class="kw">&lt;th&gt;</span>Symbol<span class="kw">&lt;/th&gt;</span>
+            <span class="kw">&lt;th&gt;</span>Company<span class="kw">&lt;/th&gt;</span>
+            <span class="kw">&lt;th&gt;</span>2012 Performance<span class="kw">&lt;/th&gt;</span>
+            <span class="kw">&lt;th&gt;</span>Gain<span class="kw">&lt;/th&gt;</span>
+        <span class="kw">&lt;/tr&gt;</span>
+    <span class="kw">&lt;/thead&gt;</span>
+    <span class="kw">&lt;tbody&gt;</span>
+        <span class="kw">&lt;tr</span><span class="ot"> class=</span><span class="st">&#39;barclays&#39;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;td&gt;</span>AAPL<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td&gt;</span>Apple Inc.<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="kw">&gt;</span>418.68,416.11,416.6,443.34,455.63,489.08,497.7,517.81,...<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td&gt;</span>27%<span class="kw">&lt;/td&gt;</span>
+        <span class="kw">&lt;/tr&gt;</span>
+        <span class="kw">&lt;tr</span><span class="ot"> class=</span><span class="st">&#39;barclays&#39;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;td&gt;</span>ALTR<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td&gt;</span>Altera Corporation<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="kw">&gt;</span>37.1,36.92,39.93,39.81,40.43,39.76,39.73,38.55,36.89,...<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td&gt;</span>-7%<span class="kw">&lt;/td&gt;</span>
+        <span class="kw">&lt;/tr&gt;</span>
+        // Markup continues... 
+    <span class="kw">&lt;/tbody&gt;</span>
+<span class="kw">&lt;/table&gt;</span></code></pre></td></tr></table>
+<p>The table has three important characteristics relevant to our visualization.</p>
+<ul>
+<li>Each stock is a single table row (<code>&lt;tr&gt;</code>).</li>
+<li>Stocks from Barclay’s Technology list have the class attribute <code>'barclays'</code> added to that <code>&lt;tr&gt;</code> element.</li>
+<li>The top Corporate Responsibility stock has no special attributes or characteristics (yet).</li>
+</ul>
+<h3 id="step-2-draw-the-charts">Step 2: Draw the Charts</h3>
+<p>Just as in this chapter’s first example, creating the sparklines using default options is amazingly simple. It only takes a single line of JavaScript. We use jQuery to select all the elements which contain sparkline data, and we call the <code>sparkline()</code> function to generate the charts. Notice that we only have to make one call to <code>sparkline()</code>, even though each chart has unique data. That’s a major benefit of placing the data within the <span class="smcp">HTML</span> itself.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="kw">function</span>() {
+    <span class="fu">$</span>(<span class="st">&#39;.sparkline&#39;</span>).<span class="fu">sparkline</span>();
+}</code></pre></td></tr></table>
+<p>The resulting charts in figure <span class="nextfigure"/> all have identical styles, but we’ll fix that in the next few steps.</p>
+<figure>
+<table class="table table-bordered table-condensed" id="multiples-chart1" class="figure">
+<thead>
+<tr>
+<th>
+Symbol
+</th>
+<th>
+Company
+</th>
+<th>
+2012 Performance
+</th>
+<th>
+Gain
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="barclays">
+<td>
+AAPL
+</td>
+<td>
+Apple Inc.
+</td>
+<td class="sparkline">
+418.68,416.11,416.6,443.34,455.63,489.08,497.7,517.81,540.38,540.37,580.42,590.8,594.27,628.1,599.9,567.94,597.69,560.27,561.72,525.71,557.34,556.05,575.21,569.08,576.98,578.86,600.55,599.64,598.98,580.01,610.28,618.87,645.16,660.2,662.22,677.35,688.14,696.91,664.07,649.62,626.85,607.07,601.25,574.18,547.06,527.68,571.5,585.28,533.25,509.79,519.33,509.59,532.17
+</td>
+<td>
+27%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+ALTR
+</td>
+<td>
+Altera Corporation
+</td>
+<td class="sparkline">
+37.1,36.92,39.93,39.81,40.43,39.76,39.73,38.55,36.89,37.68,39.18,38.47,39.49,37.85,37.17,34.95,35.26,33.4,33.53,33.03,34.21,32.09,33.29,32.86,33.24,33.64,32.54,31.16,31.04,35.82,35.58,37,36.23,36.23,37.21,37.85,38.03,36.62,33.89,33.32,32.22,32.4,30.3,30.41,30.64,30.45,31.86,32.39,31.58,32.86,34.5,34.01,34.39
+</td>
+<td>
+(7%)
+</td>
+</tr>
+<tr class="crmagazine">
+<td>
+BMY
+</td>
+<td>
+Bristol Meyers Squibb Co.
+</td>
+<td class="sparkline">
+32.86,32.46,31.36,31.01,30.98,30.64,31.81,31.31,31.3,31.61,31.87,31.65,32.41,32.67,31.57,33.21,32.32,32.37,32.12,31.74,32.1,32.33,33.34,33.21,34.3,34.88,33.9,34.64,34.69,35.31,31.97,31.07,30.92,31.9,32.33,32.61,32.55,32.92,33.05,33.28,32.73,33.45,33.26,32.82,31.88,31.37,32.27,32.28,32.21,32.38,32.21,31.56,32.24
+</td>
+<td>
+(2%)
+</td>
+</tr>
+<tr class="fortune">
+<td>
+BRKA
+</td>
+<td>
+Berkshire Hathaway Inc.
+</td>
+<td class="sparkline">
+114500,116520,119775,119211,119800,117980,119190,120000,117434,119065,122190,122170,121900,121295,118385,118580,120925,121950,122795,119850,119500,119845,122000,123375,122670,124945,123898,126625,125730,127735,128479,127175,128880,128225,126560,129942,133000,134584,132700,135555,132502,133841,129725,130550,127585,129345,132606,131916,131090,133795,134800,133000,134060
+</td>
+<td>
+17%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+COP
+</td>
+<td>
+ConocoPhillips
+</td>
+<td class="sparkline">
+52.95,51.26,51.89,50.58,51.35,52.65,53.95,55.85,57.1,56.74,56.76,56.26,55.9,55.42,54.15,53.59,52.93,51.29,51.61,49.65,50.91,50.01,52.73,54.18,52.18,54.59,53.49,53.71,55.34,54.34,55.07,56.62,56.73,55.71,56.14,55.99,57.54,56.7,56.52,56.92,56.17,57.45,57.31,57.65,55.67,55.03,56.67,56.94,57.94,57.69,58.61,57.07,57.99
+</td>
+<td>
+10%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+CTXS
+</td>
+<td>
+Citrix Systems, Inc.
+</td>
+<td class="sparkline">
+62.02,64.85,68.12,65.14,68.78,71.46,74.77,75.16,75.43,76.27,78.2,77.68,78.91,78.28,75.12,77.78,85.78,82.85,79.46,74.82,75.43,70.79,77.12,80.12,80.14,83.94,77.45,76.63,80.75,77.81,72.44,76.26,78.08,77,77.69,80.59,81.74,81.19,76.53,71.57,67.7,64.16,62.82,62.77,60.17,59.21,61.77,61.16,62.03,65.02,66.15,64.3,65.62
+</td>
+<td>
+6%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+CVX
+</td>
+<td>
+Chevron Corporation
+</td>
+<td class="sparkline">
+104.78,102.63,103.4,100.57,102.06,101.85,103.97,106.33,106.85,106.81,107.5,103.68,104.51,102.11,98.24,99.94,103.52,101.11,100.1,96.84,97.24,94.83,99.18,102.62,98.79,103.77,103.34,104.27,107.4,107.47,109.3,111.69,111.7,111.05,111.2,113.03,116.25,116.79,115.56,116.5,111.11,112.41,110.23,107.44,104.94,102.4,105.47,105.69,106.99,107.82,109.71,106.45,108.14
+</td>
+<td>
+3%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+F
+</td>
+<td>
+Ford Motor Company
+</td>
+<td class="sparkline">
+11.5,11.82,12.36,12.03,12.6,12.26,12.57,12.05,12.54,12.4,12.33,12.14,12.3,12.29,11.75,11.24,11.43,10.56,10.47,9.91,10.49,10.02,10.55,10.24,10.09,9.49,9.4,9.18,9.12,8.91,9.05,9.3,9.58,9.44,9.29,10.09,10.48,10.35,9.81,10.11,10.07,10.13,10.31,11.17,10.93,10.5,11.1,11.45,11.48,11.1,11.86,12.87,12.95
+</td>
+<td>
+13%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+FNMA
+</td>
+<td>
+Federal National Mortgage Association
+</td>
+<td class="sparkline">
+0.2,0.23,0.24,0.23,0.24,0.3,0.38,0.32,0.32,0.32,0.31,0.31,0.29,0.28,0.27,0.29,0.28,0.27,0.3,0.27,0.27,0.26,0.26,0.26,0.26,0.26,0.25,0.24,0.24,0.24,0.24,0.28,0.24,0.25,0.25,0.24,0.28,0.28,0.28,0.28,0.27,0.27,0.27,0.27,0.28,0.27,0.28,0.27,0.27,0.27,0.26,0.26,0.26
+</td>
+<td>
+30%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+GE
+</td>
+<td>
+General Electric Company
+</td>
+<td class="sparkline">
+18.03,18.21,18.51,18.39,18.38,18.25,18.64,18.76,18.5,18.57,19.7,19.29,19.57,19.01,18.41,18.88,19.29,18.86,18.54,18.48,18.72,18.08,18.72,19.5,19.48,20.5,19.67,19.44,19.54,20.57,20.61,20.75,20.65,20.46,20.37,21.23,21.74,22.33,22.5,22.91,22.28,21.83,20.92,21.12,20.81,19.97,20.85,20.94,21.27,21.42,20.88,20.44,20.99
+</td>
+<td>
+16%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+GLW
+</td>
+<td>
+Corning Incorporated
+</td>
+<td class="sparkline">
+13.18,13.64,14.05,12.3,13.23,13.25,13.49,13.4,12.73,13.02,14.04,13.74,13.8,13.27,13.31,12.91,14.16,13.39,13.04,12.49,12.65,12.43,12.94,12.82,12.67,12.74,12.61,12.14,12.09,11.36,11.18,11.4,11.82,11.35,11.89,12.45,13.01,13.11,13.04,13.19,12.88,13.41,11.72,11.61,11.25,10.9,11.29,12.23,12.54,12.62,12.6,12.47,12.62
+</td>
+<td>
+(4%)
+</td>
+</tr>
+<tr class="fortune">
+<td>
+GM
+</td>
+<td>
+General Motors Company
+</td>
+<td class="sparkline">
+22.92,24.29,25,24.37,26.18,25.5,27.34,26.07,26.45,25.62,25.57,25.17,25.65,24.81,23.8,23.6,23.53,22.36,22,21.18,22.44,22.01,22.05,21.74,20.6,19.72,20.31,19.62,19.36,19.67,20.04,20.54,22.01,21.18,21.35,23.37,24.14,24.8,22.75,24.8,24.44,24.59,23.28,25.79,25.04,23.85,25.21,25.88,25.19,24.61,27.32,27.85,28.83
+</td>
+<td>
+26%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+HPQ
+</td>
+<td>
+Hewlett-Packard Company
+</td>
+<td class="sparkline">
+25.67,25.76,27.35,27.11,28.27,27.91,28.77,25.9,24.62,23.51,23.93,23.09,23.29,22.58,24.01,23.95,24.19,23.72,22.62,20.97,21.82,20.77,21.8,21.27,20.02,19.77,19.24,18.66,18.29,18.25,17.95,19.37,19.19,17.28,16.59,17.12,18,17.42,16.9,14.59,14.27,14.34,13.96,13.63,13.48,12.73,12.32,12.87,13.81,14.75,14.34,13.68,14.25
+</td>
+<td>
+(44%)
+</td>
+</tr>
+<tr class="barclays">
+<td>
+QCOM
+</td>
+<td>
+QUALCOMM, Inc.
+</td>
+<td class="sparkline">
+55.28,55.65,56.83,56.88,60.1,60.76,61.54,62.45,61.66,63.14,64.61,65.86,67.22,66.36,65.85,61.49,63.39,61.15,61.1,55.29,56.62,54.68,58.29,56.05,55.19,55.23,54.87,54.54,57.22,58.86,59.76,61.48,62.78,61.93,60.97,61.69,64.62,64.02,62.22,62.39,58.66,58.52,58.81,59.07,61.38,61.69,62.88,63.37,63.86,59.83,61.61,60.64,61.86
+</td>
+<td>
+12%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+TER
+</td>
+<td>
+Teradyne, Inc.
+</td>
+<td class="sparkline">
+14.63,14.84,16.14,16.95,17.03,16.5,17.01,16.38,16.11,16.21,17.05,16.82,16.89,16.42,16.29,16.3,17.39,16.13,15.71,14.32,14.79,13.61,14.38,14.46,14.31,14.06,13.67,13.21,13.64,14.97,14.8,15.59,15.94,15.74,15.62,16.28,16.43,14.6,14.22,14.07,13.62,14.12,14.5,15.31,15.51,15.03,15.93,15.64,15.84,16.49,16.75,16.42,16.89
+</td>
+<td>
+15%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+TSLA
+</td>
+<td>
+Tesla Motors Inc
+</td>
+<td class="sparkline">
+26.91,22.79,26.6,29.33,31.15,31.1,34.97,33.75,34.04,34.74,35.32,34.08,37.24,34.48,33.59,33.16,33.34,31.83,32.25,27.56,29.81,28.15,30.08,29.91,33.79,31.29,30.99,34.25,31.79,29.51,27.27,29.94,30.01,29.5,28.52,29.35,30.39,30.02,29.28,28.89,27.64,27.74,27.38,28.92,30.32,31.84,32.13,33.82,34.17,33.81,34,33.22,33.87
+</td>
+<td>
+26%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+WMT
+</td>
+<td>
+Wal-Mart Stores, Inc.
+</td>
+<td class="sparkline">
+57.58,58.11,59.54,59.25,60.54,60.41,60.98,57.38,57.59,59.03,59.77,59.68,60.13,59.61,58.72,61.35,57.99,57.67,58.77,61.75,64.6,64.84,67.48,67.01,66.57,68.96,70.58,72.38,71.46,73.71,73.74,73.27,71.59,71.71,72.2,73.41,74.09,74.04,73.39,74.72,75.39,75.2,74.7,72.37,71.91,67.65,69.81,71.62,72.29,68.75,68.65,67.61,68.23
+</td>
+<td>
+18%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+XOM
+</td>
+<td>
+Exxon Mobil Corporation
+</td>
+<td class="sparkline">
+83.01,82.78,85.33,83.71,82.82,82.17,83.96,85.65,84.66,82.67,84.76,83.89,85.05,83.17,81.34,83.65,84.41,82.93,82.05,80.44,81.04,76.94,79.82,82.17,81.07,84.49,83.73,84.39,84.86,86.34,86.44,87.89,87.85,87.5,86.76,89.36,91.73,91.35,90.88,91.97,90.46,91.58,90.06,89.71,87.21,86.45,89.09,88.14,88.6,88.08,87.23,85.1,86.55
+</td>
+<td>
+4%
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption>
+Sparklines can be a good visualization to include within page elements such as tables.
+</figcaption>
+</figure>
+<h3 id="step-4-establish-a-default-style-for-the-charts">Step 4: Establish a Default Style for the Charts</h3>
+<p>If we don’t like the sparklines library’s default style, it’s easy to change it using an options object like below. The object is the second parameter to the <code>sparkline()</code> function, and here it changes the color for the charts and disables the highlights on the minimum, maximum, and final values. The first parameter, the string <code>'html'</code>, indicates to the library that the data is already present in our <span class="smcp">HTML</span>.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;.sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,{
+    <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#2D9999&quot;</span>,
+    <span class="dt">spotColor</span>: <span class="kw">false</span>,
+    <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
+    <span class="dt">maxSpotColor</span>: <span class="kw">false</span>
+});</code></pre></td></tr></table>
+<p>Figure <span class="nextfigure"/> shows the result for one row. We’ll use this style as the default for all our charts.</p>
+<figure>
+<table class="table table-bordered table-condensed" id="multiples-chart2" class="figure">
+<thead>
+<tr>
+<th>
+Symbol
+</th>
+<th>
+Company
+</th>
+<th>
+2012 Performance
+</th>
+<th>
+Gain
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="barclays">
+<td>
+AAPL
+</td>
+<td>
+Apple Inc.
+</td>
+<td class="sparkline">
+418.68,416.11,416.6,443.34,455.63,489.08,497.7,517.81,540.38,540.37,580.42,590.8,594.27,628.1,599.9,567.94,597.69,560.27,561.72,525.71,557.34,556.05,575.21,569.08,576.98,578.86,600.55,599.64,598.98,580.01,610.28,618.87,645.16,660.2,662.22,677.35,688.14,696.91,664.07,649.62,626.85,607.07,601.25,574.18,547.06,527.68,571.5,585.28,533.25,509.79,519.33,509.59,532.17
+</td>
+<td>
+27%
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption>
+The sparkline options let us adjust the chart styles.
+</figcaption>
+</figure>
+<h3 id="step-5-modify-the-default-style-for-special-classes">Step 5: Modify the Default Style for Special Classes</h3>
+<p>With a default style in place, we can turn our attention to the special class of charts for stocks in Barclay’s technology list. For our example, let’s change the color of the chart <em>without any other changes to our default style.</em> That final clause is important. We could just copy-and-paste the options, but that would be setting ourselves up for problems in the future. You can see why in the example code such an approach would produce.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;tr:not(.barclays) .sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,{
+    <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#2D9999&quot;</span>,
+    <span class="dt">spotColor</span>: <span class="kw">false</span>,
+    <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
+    <span class="dt">maxSpotColor</span>: <span class="kw">false</span>
+});
+<span class="fu">$</span>(<span class="st">&#39;tr.barclays .sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,{
+    <span class="dt">lineColor</span>: <span class="st">&quot;#A50000&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#FE4C4C&quot;</span>,
+    <span class="dt">spotColor</span>: <span class="kw">false</span>,
+    <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
+    <span class="dt">maxSpotColor</span>: <span class="kw">false</span>
+});</code></pre></td></tr></table>
+<p>Notice that the second call to <code>sparklines()</code> duplicates options from the first call that haven’t changed, specifically for the spot colors. This makes the code harder to maintain if, in the future, we decide to turn spot colors back on for all our charts, since we would have to make changes to our code in two places. There is a better way.</p>
+<p>To avoid duplication we first define a variable that holds our default options.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> sparkline_default = {
+    <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#2D9999&quot;</span>,
+    <span class="dt">spotColor</span>: <span class="kw">false</span>,
+    <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
+    <span class="dt">maxSpotColor</span>: <span class="kw">false</span>
+};</code></pre></td></tr></table>
+<p>Next we create a new variable for the Barclay’s styles. To create this new variable, we can use the jQuery <code>.extend()</code> function to avoid duplication. In the code below, we pass three parameters to <code>.extend()</code>. The first parameter is the target. It’s an object that the function will modify, and we start with an empty object (<code>{}</code>). The next parameters are objects that <code>.extend()</code> will merge into the target. The merge process adds new properties to the target and updates any properties in the target object with new values. Since we’re passing two additional parameters, we’re asking for two merges.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> sparkline_barclays = <span class="ot">$</span>.<span class="fu">extend</span>( {}, sparkline_default, {
+    <span class="dt">lineColor</span>: <span class="st">&quot;#A50000&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#FE4C4C&quot;</span>
+}); </code></pre></td></tr></table>
+<p>You can think of the call to <code>.extend()</code> as a two-stage process.</p>
+<ol type="1">
+<li>Since our target is initially empty, the first merge will add all of the properties from <code>sparkline_default</code> to the target.</li>
+<li>Our target now has the same properties as <code>sparkline_default</code>, and the second merge will modify it by updating the two properties in the last parameter, <code>lineColor</code> and <code>fillColor</code>.</li>
+</ol>
+<p>The resulting object will hold the options we want for charts of Barclay’s technology stocks. Here’s a complete code listing, using these objects to create the charts.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> sparkline_default = {
+    <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#2D9999&quot;</span>,
+    <span class="dt">spotColor</span>: <span class="kw">false</span>,
+    <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
+    <span class="dt">maxSpotColor</span>: <span class="kw">false</span>
+};
+<span class="kw">var</span> sparkline_barclays = <span class="ot">$</span>.<span class="fu">extend</span>( {}, sparkline_default, {
+    <span class="dt">lineColor</span>: <span class="st">&quot;#A50000&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#FE4C4C&quot;</span>
+}); 
+<span class="fu">$</span>(<span class="st">&#39;tr:not(.barclays) .sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,sparkline_default);
+<span class="fu">$</span>(<span class="st">&#39;tr.barclays .sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,sparkline_barclays);</code></pre></td></tr></table>
+<p>Notice in line 12 that we create the non-technology sparklines by selecting table rows (<code>&lt;tr&gt;</code>) that don’t have the <code>&quot;barclays&quot;</code> class. In line 13 we create the technology sparklines. Because we’ve defined the technology options based on the default, we have an easy way to maintain both default styles and styles for special classes. The chart colors in figure <class="nextfigure"/> clearly distinguish the stock types in our table.</p>
+<figure>
+<table class="table table-bordered table-condensed" id="multiples-chart3" class="figure">
+<thead>
+<tr>
+<th>
+Symbol
+</th>
+<th>
+Company
+</th>
+<th>
+2012 Performance
+</th>
+<th>
+Gain
+</th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr class="barclays">
+<td>
+TSLA
+</td>
+<td>
+Tesla Motors Inc
+</td>
+<td class="sparkline">
+26.91,22.79,26.6,29.33,31.15,31.1,34.97,33.75,34.04,34.74,35.32,34.08,37.24,34.48,33.59,33.16,33.34,31.83,32.25,27.56,29.81,28.15,30.08,29.91,33.79,31.29,30.99,34.25,31.79,29.51,27.27,29.94,30.01,29.5,28.52,29.35,30.39,30.02,29.28,28.89,27.64,27.74,27.38,28.92,30.32,31.84,32.13,33.82,34.17,33.81,34,33.22,33.87
+</td>
+<td>
+26%
+</td>
+</tr>
+<tr>
+<td>
+WMT
+</td>
+<td>
+Wal-Mart Stores, Inc.
+</td>
+<td class="sparkline">
+57.58,58.11,59.54,59.25,60.54,60.41,60.98,57.38,57.59,59.03,59.77,59.68,60.13,59.61,58.72,61.35,57.99,57.67,58.77,61.75,64.6,64.84,67.48,67.01,66.57,68.96,70.58,72.38,71.46,73.71,73.74,73.27,71.59,71.71,72.2,73.41,74.09,74.04,73.39,74.72,75.39,75.2,74.7,72.37,71.91,67.65,69.81,71.62,72.29,68.75,68.65,67.61,68.23
+</td>
+<td>
+18%
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption>
+Different visual styles distinguish different types of data.
+</figcaption>
+</figure>
+<h3 id="step-6-create-a-unique-style-for-a-specific-chart">Step 6: Create a Unique Style for a Specific Chart</h3>
+<p>For the final step in this example, let’s consider the single stock at the top of <span class="smcp">CR</span> Magazine’s list. Suppose we want to add distinct styles to its chart, and we only know those styles when we’re generating the <span class="smcp">HTML</span>, not when we’re writing the JavaScript. How can we adjust the chart style if we can’t modify any JavaScript?</p>
+<p>Sparklines lets you add special attributes directly to the <span class="smcp">HTML</span> element containing a chart. To set the line color, for example, you need to specify the attribute <code>sparkLineColor</code>. The problem is, if we were to enter this attribute directly in the <span class="smcp">HTML</span>, the result would’t be valid <span class="smcp">HTML</span>, because the <span class="smcp">HTML</span> specification doesn’t recognize the <code>sparkLineColor</code> attribute. To conform to the <span class="smcp">HTML</span> standard, custom attributes need to have names that begin with the prefix <code>data-</code>.</p>
+<p>In order to use <span class="smcp">HTML</span>-compliant attribute names to refer to sparklines’ custom attributes, we just need to tell the sparklines library how to find those attribute names. For our <span class="smcp">HTML</span>, we use the standard <code>data-</code> prefix instead of <code>spark</code> in line 4.</p>
+<table class="sourceCode html numberLines" data-line="4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;tr&gt;</span>
+    <span class="kw">&lt;td&gt;</span>BMY<span class="kw">&lt;/td&gt;</span>
+    <span class="kw">&lt;td&gt;</span>Bristol Meyers Squibb Co.<span class="kw">&lt;/td&gt;</span>
+    <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="ot"> data-LineColor=</span><span class="st">&#39;#679A00&#39;</span><span class="ot"> data-FillColor=</span><span class="st">&#39;#B6ED47&#39;</span><span class="kw">&gt;</span>32.86,32.46,31.36,...<span class="kw">&lt;/td&gt;</span>
+    <span class="kw">&lt;td&gt;</span>(2%)<span class="kw">&lt;/td&gt;</span>
+<span class="kw">&lt;/tr&gt;</span></code></pre></td></tr></table>
+<p>Now we have to add a couple of additional options in our call to <code>sparkline()</code>. First we set <code>enableTagOptions</code> to true to tell the library that we’re including options directly in the <span class="smcp">HTML</span>. Then we set <code>tagOptionsPrefix</code> to <code>&quot;data-&quot;</code> to specify the specific prefix we’re using for those attributes.</p>
+<blockquote>
+<p>Note: As of this writing, the jQuery sparklines documentation for <code>tagOptionsPrefix</code> is <em>not</em> correct. The documentation lists the option as <code>tagOptionPrefix</code>, where “option” is singular instead of plural. The library’s code, however, expects the plural form.</p>
+</blockquote>
+<p>If we use these options correctly, one of our charts will have the distinct color in figure <span class="nextfigure"/>.</p>
+<figure>
+<table class="table table-bordered table-condensed" id="multiples-chart4" class="figure">
+<tbody>
+<tr>
+<td>
+BMY
+</td>
+<td>
+Bristol Meyers Squibb Co.
+</td>
+<td class="sparkline" data-LineColor="#679A00" data-FillColor="#B6ED47">
+32.86,32.46,31.36,31.01,30.98,30.64,31.81,31.31,31.3,31.61,31.87,31.65,32.41,32.67,31.57,33.21,32.32,32.37,32.12,31.74,32.1,32.33,33.34,33.21,34.3,34.88,33.9,34.64,34.69,35.31,31.97,31.07,30.92,31.9,32.33,32.61,32.55,32.92,33.05,33.28,32.73,33.45,33.26,32.82,31.88,31.37,32.27,32.28,32.21,32.38,32.21,31.56,32.24
+</td>
+<td>
+(2%)
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption>
+The sparklines library supports unique styling options for individual charts.
+</figcaption>
+</figure>
+<p>To pass the appropriate options to <code>sparkline()</code> we can take advantage of the work we did in step five. Since we created a special object for default options, that’s the only object we have to change.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> sparkline_default = {
+    <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+    <span class="dt">fillColor</span>: <span class="st">&quot;#2D9999&quot;</span>,
+    <span class="dt">spotColor</span>: <span class="kw">false</span>,
+    <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
+    <span class="dt">maxSpotColor</span>: <span class="kw">false</span>,
+    <span class="dt">enableTagOptions</span>: <span class="kw">true</span>,
+    <span class="dt">tagOptionsPrefix</span>: <span class="st">&quot;data-&quot;</span>
+};</code></pre></td></tr></table>
+<p>We only need to make the change in one place, and all of our calls to <code>sparkline()</code>use the new options. Here is the final, complete JavaScript code for this example.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="kw">function</span>() {
+    <span class="kw">var</span> sparkline_default = {
+        <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+        <span class="dt">fillColor</span>: <span class="st">&quot;#2D9999&quot;</span>,
+        <span class="dt">spotColor</span>: <span class="kw">false</span>,
+        <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
+        <span class="dt">maxSpotColor</span>: <span class="kw">false</span>,
+        <span class="dt">enableTagOptions</span>: <span class="kw">true</span>,
+        <span class="dt">tagOptionsPrefix</span>: <span class="st">&quot;data-&quot;</span>
+    };
+    <span class="kw">var</span> sparkline_barclays = <span class="ot">$</span>.<span class="fu">extend</span>( {}, sparkline_default, {
+        <span class="dt">lineColor</span>: <span class="st">&quot;#A50000&quot;</span>,
+        <span class="dt">fillColor</span>: <span class="st">&quot;#FE4C4C&quot;</span>
+    }); 
+    <span class="fu">$</span>(<span class="st">&#39;tr:not(.barclays) .sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,sparkline_default);
+    <span class="fu">$</span>(<span class="st">&#39;tr.barclays .sparkline&#39;</span>).<span class="fu">sparkline</span>(<span class="st">&#39;html&#39;</span>,sparkline_barclays);
+}</code></pre></td></tr></table>
+<p>And figure <span class="nextfigure"/> shows the final result. We have a table that integrates text and charts, and we can style those charts appropriately and efficiently for the default case, for a special class, and for a unique value.</p>
+<figure>
+<table class="table table-bordered table-condensed" id="multiples-chart5" class="figure">
+<thead>
+<tr>
+<th>
+Symbol
+</th>
+<th>
+Company
+</th>
+<th>
+2012 Performance
+</th>
+<th>
+Gain
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="barclays">
+<td>
+AAPL
+</td>
+<td>
+Apple Inc.
+</td>
+<td class="sparkline">
+418.68,416.11,416.6,443.34,455.63,489.08,497.7,517.81,540.38,540.37,580.42,590.8,594.27,628.1,599.9,567.94,597.69,560.27,561.72,525.71,557.34,556.05,575.21,569.08,576.98,578.86,600.55,599.64,598.98,580.01,610.28,618.87,645.16,660.2,662.22,677.35,688.14,696.91,664.07,649.62,626.85,607.07,601.25,574.18,547.06,527.68,571.5,585.28,533.25,509.79,519.33,509.59,532.17
+</td>
+<td>
+27%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+ALTR
+</td>
+<td>
+Altera Corporation
+</td>
+<td class="sparkline">
+37.1,36.92,39.93,39.81,40.43,39.76,39.73,38.55,36.89,37.68,39.18,38.47,39.49,37.85,37.17,34.95,35.26,33.4,33.53,33.03,34.21,32.09,33.29,32.86,33.24,33.64,32.54,31.16,31.04,35.82,35.58,37,36.23,36.23,37.21,37.85,38.03,36.62,33.89,33.32,32.22,32.4,30.3,30.41,30.64,30.45,31.86,32.39,31.58,32.86,34.5,34.01,34.39
+</td>
+<td>
+(7%)
+</td>
+</tr>
+<tr>
+<td>
+BMY
+</td>
+<td>
+Bristol Meyers Squibb Co.
+</td>
+<td class="sparkline" data-LineColor="#679A00" data-FillColor="#B6ED47">
+32.86,32.46,31.36,31.01,30.98,30.64,31.81,31.31,31.3,31.61,31.87,31.65,32.41,32.67,31.57,33.21,32.32,32.37,32.12,31.74,32.1,32.33,33.34,33.21,34.3,34.88,33.9,34.64,34.69,35.31,31.97,31.07,30.92,31.9,32.33,32.61,32.55,32.92,33.05,33.28,32.73,33.45,33.26,32.82,31.88,31.37,32.27,32.28,32.21,32.38,32.21,31.56,32.24
+</td>
+<td>
+(2%)
+</td>
+</tr>
+<tr class="fortune">
+<td>
+BRKA
+</td>
+<td>
+Berkshire Hathaway Inc.
+</td>
+<td class="sparkline">
+114500,116520,119775,119211,119800,117980,119190,120000,117434,119065,122190,122170,121900,121295,118385,118580,120925,121950,122795,119850,119500,119845,122000,123375,122670,124945,123898,126625,125730,127735,128479,127175,128880,128225,126560,129942,133000,134584,132700,135555,132502,133841,129725,130550,127585,129345,132606,131916,131090,133795,134800,133000,134060
+</td>
+<td>
+17%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+COP
+</td>
+<td>
+ConocoPhillips
+</td>
+<td class="sparkline">
+52.95,51.26,51.89,50.58,51.35,52.65,53.95,55.85,57.1,56.74,56.76,56.26,55.9,55.42,54.15,53.59,52.93,51.29,51.61,49.65,50.91,50.01,52.73,54.18,52.18,54.59,53.49,53.71,55.34,54.34,55.07,56.62,56.73,55.71,56.14,55.99,57.54,56.7,56.52,56.92,56.17,57.45,57.31,57.65,55.67,55.03,56.67,56.94,57.94,57.69,58.61,57.07,57.99
+</td>
+<td>
+10%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+CTXS
+</td>
+<td>
+Citrix Systems, Inc.
+</td>
+<td class="sparkline">
+62.02,64.85,68.12,65.14,68.78,71.46,74.77,75.16,75.43,76.27,78.2,77.68,78.91,78.28,75.12,77.78,85.78,82.85,79.46,74.82,75.43,70.79,77.12,80.12,80.14,83.94,77.45,76.63,80.75,77.81,72.44,76.26,78.08,77,77.69,80.59,81.74,81.19,76.53,71.57,67.7,64.16,62.82,62.77,60.17,59.21,61.77,61.16,62.03,65.02,66.15,64.3,65.62
+</td>
+<td>
+6%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+CVX
+</td>
+<td>
+Chevron Corporation
+</td>
+<td class="sparkline">
+104.78,102.63,103.4,100.57,102.06,101.85,103.97,106.33,106.85,106.81,107.5,103.68,104.51,102.11,98.24,99.94,103.52,101.11,100.1,96.84,97.24,94.83,99.18,102.62,98.79,103.77,103.34,104.27,107.4,107.47,109.3,111.69,111.7,111.05,111.2,113.03,116.25,116.79,115.56,116.5,111.11,112.41,110.23,107.44,104.94,102.4,105.47,105.69,106.99,107.82,109.71,106.45,108.14
+</td>
+<td>
+3%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+F
+</td>
+<td>
+Ford Motor Company
+</td>
+<td class="sparkline">
+11.5,11.82,12.36,12.03,12.6,12.26,12.57,12.05,12.54,12.4,12.33,12.14,12.3,12.29,11.75,11.24,11.43,10.56,10.47,9.91,10.49,10.02,10.55,10.24,10.09,9.49,9.4,9.18,9.12,8.91,9.05,9.3,9.58,9.44,9.29,10.09,10.48,10.35,9.81,10.11,10.07,10.13,10.31,11.17,10.93,10.5,11.1,11.45,11.48,11.1,11.86,12.87,12.95
+</td>
+<td>
+13%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+FNMA
+</td>
+<td>
+Federal National Mortgage Association
+</td>
+<td class="sparkline">
+0.2,0.23,0.24,0.23,0.24,0.3,0.38,0.32,0.32,0.32,0.31,0.31,0.29,0.28,0.27,0.29,0.28,0.27,0.3,0.27,0.27,0.26,0.26,0.26,0.26,0.26,0.25,0.24,0.24,0.24,0.24,0.28,0.24,0.25,0.25,0.24,0.28,0.28,0.28,0.28,0.27,0.27,0.27,0.27,0.28,0.27,0.28,0.27,0.27,0.27,0.26,0.26,0.26
+</td>
+<td>
+30%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+GE
+</td>
+<td>
+General Electric Company
+</td>
+<td class="sparkline">
+18.03,18.21,18.51,18.39,18.38,18.25,18.64,18.76,18.5,18.57,19.7,19.29,19.57,19.01,18.41,18.88,19.29,18.86,18.54,18.48,18.72,18.08,18.72,19.5,19.48,20.5,19.67,19.44,19.54,20.57,20.61,20.75,20.65,20.46,20.37,21.23,21.74,22.33,22.5,22.91,22.28,21.83,20.92,21.12,20.81,19.97,20.85,20.94,21.27,21.42,20.88,20.44,20.99
+</td>
+<td>
+16%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+GLW
+</td>
+<td>
+Corning Incorporated
+</td>
+<td class="sparkline">
+13.18,13.64,14.05,12.3,13.23,13.25,13.49,13.4,12.73,13.02,14.04,13.74,13.8,13.27,13.31,12.91,14.16,13.39,13.04,12.49,12.65,12.43,12.94,12.82,12.67,12.74,12.61,12.14,12.09,11.36,11.18,11.4,11.82,11.35,11.89,12.45,13.01,13.11,13.04,13.19,12.88,13.41,11.72,11.61,11.25,10.9,11.29,12.23,12.54,12.62,12.6,12.47,12.62
+</td>
+<td>
+(4%)
+</td>
+</tr>
+<tr class="fortune">
+<td>
+GM
+</td>
+<td>
+General Motors Company
+</td>
+<td class="sparkline">
+22.92,24.29,25,24.37,26.18,25.5,27.34,26.07,26.45,25.62,25.57,25.17,25.65,24.81,23.8,23.6,23.53,22.36,22,21.18,22.44,22.01,22.05,21.74,20.6,19.72,20.31,19.62,19.36,19.67,20.04,20.54,22.01,21.18,21.35,23.37,24.14,24.8,22.75,24.8,24.44,24.59,23.28,25.79,25.04,23.85,25.21,25.88,25.19,24.61,27.32,27.85,28.83
+</td>
+<td>
+26%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+HPQ
+</td>
+<td>
+Hewlett-Packard Company
+</td>
+<td class="sparkline">
+25.67,25.76,27.35,27.11,28.27,27.91,28.77,25.9,24.62,23.51,23.93,23.09,23.29,22.58,24.01,23.95,24.19,23.72,22.62,20.97,21.82,20.77,21.8,21.27,20.02,19.77,19.24,18.66,18.29,18.25,17.95,19.37,19.19,17.28,16.59,17.12,18,17.42,16.9,14.59,14.27,14.34,13.96,13.63,13.48,12.73,12.32,12.87,13.81,14.75,14.34,13.68,14.25
+</td>
+<td>
+(44%)
+</td>
+</tr>
+<tr class="barclays">
+<td>
+QCOM
+</td>
+<td>
+QUALCOMM, Inc.
+</td>
+<td class="sparkline">
+55.28,55.65,56.83,56.88,60.1,60.76,61.54,62.45,61.66,63.14,64.61,65.86,67.22,66.36,65.85,61.49,63.39,61.15,61.1,55.29,56.62,54.68,58.29,56.05,55.19,55.23,54.87,54.54,57.22,58.86,59.76,61.48,62.78,61.93,60.97,61.69,64.62,64.02,62.22,62.39,58.66,58.52,58.81,59.07,61.38,61.69,62.88,63.37,63.86,59.83,61.61,60.64,61.86
+</td>
+<td>
+12%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+TER
+</td>
+<td>
+Teradyne, Inc.
+</td>
+<td class="sparkline">
+14.63,14.84,16.14,16.95,17.03,16.5,17.01,16.38,16.11,16.21,17.05,16.82,16.89,16.42,16.29,16.3,17.39,16.13,15.71,14.32,14.79,13.61,14.38,14.46,14.31,14.06,13.67,13.21,13.64,14.97,14.8,15.59,15.94,15.74,15.62,16.28,16.43,14.6,14.22,14.07,13.62,14.12,14.5,15.31,15.51,15.03,15.93,15.64,15.84,16.49,16.75,16.42,16.89
+</td>
+<td>
+15%
+</td>
+</tr>
+<tr class="barclays">
+<td>
+TSLA
+</td>
+<td>
+Tesla Motors Inc
+</td>
+<td class="sparkline">
+26.91,22.79,26.6,29.33,31.15,31.1,34.97,33.75,34.04,34.74,35.32,34.08,37.24,34.48,33.59,33.16,33.34,31.83,32.25,27.56,29.81,28.15,30.08,29.91,33.79,31.29,30.99,34.25,31.79,29.51,27.27,29.94,30.01,29.5,28.52,29.35,30.39,30.02,29.28,28.89,27.64,27.74,27.38,28.92,30.32,31.84,32.13,33.82,34.17,33.81,34,33.22,33.87
+</td>
+<td>
+26%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+WMT
+</td>
+<td>
+Wal-Mart Stores, Inc.
+</td>
+<td class="sparkline">
+57.58,58.11,59.54,59.25,60.54,60.41,60.98,57.38,57.59,59.03,59.77,59.68,60.13,59.61,58.72,61.35,57.99,57.67,58.77,61.75,64.6,64.84,67.48,67.01,66.57,68.96,70.58,72.38,71.46,73.71,73.74,73.27,71.59,71.71,72.2,73.41,74.09,74.04,73.39,74.72,75.39,75.2,74.7,72.37,71.91,67.65,69.81,71.62,72.29,68.75,68.65,67.61,68.23
+</td>
+<td>
+18%
+</td>
+</tr>
+<tr class="fortune">
+<td>
+XOM
+</td>
+<td>
+Exxon Mobil Corporation
+</td>
+<td class="sparkline">
+83.01,82.78,85.33,83.71,82.82,82.17,83.96,85.65,84.66,82.67,84.76,83.89,85.05,83.17,81.34,83.65,84.41,82.93,82.05,80.44,81.04,76.94,79.82,82.17,81.07,84.49,83.73,84.39,84.86,86.34,86.44,87.89,87.85,87.5,86.76,89.36,91.73,91.35,90.88,91.97,90.46,91.58,90.06,89.71,87.21,86.45,89.09,88.14,88.6,88.08,87.23,85.1,86.55
+</td>
+<td>
+4%
+</td>
+</tr>
+</tbody>
+</table>
+<figcaption>
+A complete example distinguishes different individual data sets in a larger collection.
+</figcaption>
+</figure>
+<p>The third example in chapter 2 uses a full-featured charting package for a similar result. If you don’t need the space efficiency of sparklines, consider that approach as an alternative.</p>
+<script>
+;(function(){
+
+    draw = function() {
+
+        $("#multiples-chart1 .sparkline").sparkline();
+        $('#multiples-chart2 .sparkline').sparkline('html',{
+            lineColor: chartStyles.color.secondaryDark,
+            fillColor: chartStyles.color.secondaryLightest,
+            spotColor: false,
+            minSpotColor: false,
+            maxSpotColor: false,
+        });
+        var sparkline_default = {
+            lineColor: chartStyles.color.secondaryDark,
+            fillColor: chartStyles.color.secondaryLightest,
+            spotColor: false,
+            minSpotColor: false,
+            maxSpotColor: false,
+        };
+        var sparkline_barclays = $.extend( {}, sparkline_default, {
+            lineColor: chartStyles.color.primaryDark,
+            fillColor: chartStyles.color.primaryLightest
+        }); 
+        $('#multiples-chart3 tr:not(.barclays) .sparkline').sparkline('html',sparkline_default);
+        $('#multiples-chart3 tr.barclays .sparkline').sparkline('html',sparkline_barclays);
+        var sparkline_default = {
+            lineColor: chartStyles.color.secondaryDark,
+            fillColor: chartStyles.color.secondaryLightest,
+            spotColor: false,
+            minSpotColor: false,
+            maxSpotColor: false,
+            enableTagOptions: true,
+            tagOptionsPrefix: "data-"
+        };
+        $('#multiples-chart4 .sparkline').sparkline('html',sparkline_default);
+        var sparkline_barclays = $.extend( {}, sparkline_default, {
+            lineColor: chartStyles.color.primaryDark,
+            fillColor: chartStyles.color.primaryLightest
+        }); 
+        $('#multiples-chart5 tr:not(.barclays) .sparkline').sparkline('html',sparkline_default);
+        $('#multiples-chart5 tr.barclays .sparkline').sparkline('html',sparkline_barclays);
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="annotating-sparklines">Annotating Sparklines</h2>
+<p>Because they’re designed to maximize information density, sparklines omit many traditional chart components such as axes and labels. This approach certainly focuses on the data itself, but it can sometimes leave users without enough context to understand the data. Print versions usually rely on traditional text to supply this context, but on the web we have more flexibility. We can present the data by itself in a sparkline, and we can give users the chance to explore the data’s context through interactions. Tooltips, which show additional information as users hover their mouse pointers over sections of a web page, can be an effective way to annotate a sparkline, so long as the users are accessing the page from a desktop computer. (Touch-based devices such as smartphones and tablets don’t typically support the concept of hover.) We’ll walk through a visualization that includes tooltips in this example; other examples in the chapter consider alternative approaches that may be more effective for touch devices. Let’s see how we can use a customized form of tooltips by enhancing the charts in the previous example.</p>
+<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page.</p>
+<h3 id="step-1-prepare-the-data">Step 1: Prepare the Data</h3>
+<p>In the previous examples we’ve embedded the data directly in the <span class="smcp">HTML</span> markup. That’s convenient since it lets us separate the data from our code. In this example, however, the JavaScript code will need more detailed knowledge of the data so it can present the right tooltip information. This time we’ll use a JavaScript array to store our data, so that all the relevant information is in one place. For this example we can focus on a single stock. And even though we’re only graphing the adjusted closing price, the array will track additional data that we can include in the tooltips. Here’s an excerpt of the data for one of the stocks.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> stock = [
+  { <span class="dt">date</span>: <span class="st">&quot;2012-01-03&quot;</span>, <span class="dt">open</span>: <span class="fl">409.40</span>, <span class="dt">high</span>: <span class="fl">422.75</span>, <span class="dt">low</span>: <span class="fl">409.00</span>, <span class="dt">close</span>: <span class="fl">422.40</span>, <span class="dt">volume</span>: <span class="dv">10283900</span>, <span class="dt">adj_close</span>: <span class="fl">416.26</span> },
+  { <span class="dt">date</span>: <span class="st">&quot;2012-01-09&quot;</span>, <span class="dt">open</span>: <span class="fl">425.50</span>, <span class="dt">high</span>: <span class="fl">427.75</span>, <span class="dt">low</span>: <span class="fl">418.66</span>, <span class="dt">close</span>: <span class="fl">419.81</span>, <span class="dt">volume</span>:  <span class="dv">9327900</span>, <span class="dt">adj_close</span>: <span class="fl">413.70</span> },
+  { <span class="dt">date</span>: <span class="st">&quot;2012-01-17&quot;</span>, <span class="dt">open</span>: <span class="fl">424.20</span>, <span class="dt">high</span>: <span class="fl">431.37</span>, <span class="dt">low</span>: <span class="fl">419.75</span>, <span class="dt">close</span>: <span class="fl">420.30</span>, <span class="dt">volume</span>: <span class="dv">10673200</span>, <span class="dt">adj_close</span>: <span class="fl">414.19</span> },
+  <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+<h3 id="step-2-prepare-the-html-markup">Step 2: Prepare the HTML Markup</h3>
+<p>Our visualization will include three distinct areas, each in a <code>&lt;div&gt;</code> element. The primary <code>&lt;div&gt;</code> created in line 3 will hold the chart. Underneath the chart we’ll add the primary tool tip information in its own <code>&lt;div&gt;</code> (line 4), and we’ll include supplementary details to the right (line 7). The example below uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.</p>
+<table class="sourceCode html numberLines" data-line="3,4,7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;stock&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> style=</span><span class="st">&quot;float:left&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;chart&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;info&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> style=</span><span class="st">&quot;float:left&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;details&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
+<h3 id="step-3-add-the-chart">Step 3: Add the Chart</h3>
+<p>Adding the chart to our markup is easy with the sparklines library. We can use the jQuery <code>.map()</code> function to extract the adjusted close value from our <code>stock</code> array. The <code>minSpotColor</code> and <code>maxSpotColor</code> options tell the library how to highlight the lowest and highest values for the year.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock .chart&#39;</span>).<span class="fu">sparkline</span>(
+    <span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }),
+    {
+        <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+        <span class="dt">fillColor</span>: <span class="st">&quot;#2D9999&quot;</span>,
+        <span class="dt">spotColor</span>: <span class="kw">false</span>,
+        <span class="dt">minSpotColor</span>: <span class="st">&quot;#CA0000&quot;</span>,
+        <span class="dt">maxSpotColor</span>: <span class="st">&quot;#CA0000&quot;</span>
+    }
+);</code></pre></td></tr></table>
+<p>The static chart of figure <span class="nextfigure"/> shows the stock performance nicely.</p>
+<figure>
+<div id="annotate-chart1">
+<div style="float:left">
+<div class="chart">
+
+</div>
+<div class="info" style="font-size:0.8em">
+ 
+</div>
+</div>
+<div style="float:left">
+<div class="details" style="font-size:0.8em;line-height:1.3em;padding-left:10px;padding-top:1px">
+
+</div>
+</div>
+</div>
+<figcaption>
+A static sparkline shows the change in the data set over time.
+</figcaption>
+</figure>
+<h3 id="step-4-add-the-primary-annotation">Step 4: Add the Primary Annotation</h3>
+<p>The sparklines library adds a simple tooltip to all of its charts by default. Although that tooltip does show the value over which the user’s mouse is hovering, the presentation isn’t particularly elegant, and, more importantly, it doesn’t provide as much information as we would like. Let’s build on the default behavior but enhance it to meet our needs.</p>
+<p>Looking at the library’s defaults, we can retain the vertical marker, but we don’t want the default tooltip. Adding the option <code>disableTooltips</code> with a value of <code>true</code> will turn off the undesired tooltip.</p>
+<p>For our own custom tooltip, we can rely on a handy feature of the sparklines library. The library generates a custom event whenever the user’s mouse moves over a chart region. That event is the <code>&quot;sparklineRegionChange&quot;</code> event. The library attaches a custom property, <code>sparklines</code>, to those events. By analyzing that property we can determine the mouse’s location relative to the data.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;.chart&quot;</span>)
+    .<span class="fu">on</span>(<span class="st">&#39;sparklineRegionChange&#39;</span>, <span class="kw">function</span>(ev) {
+        <span class="kw">var</span> idx = <span class="ot">ev</span>.<span class="fu">sparklines</span>[<span class="dv">0</span>].<span class="fu">getCurrentRegionFields</span>().<span class="fu">offset</span>;
+        <span class="co">/* if it&#39;s defined, idx has the index into the</span>
+<span class="co">           data array corresponding to the mouse pointer */</span>
+    });</code></pre></td></tr></table>
+<p>As the comment in line 4 indicates, the library sometimes generates the event when the mouse leaves the chart area. In those cases a defined value for the offset will not exist.</p>
+<p>Once we have the mouse position, we can place our tooltip information in the <code>&lt;div&gt;</code> we set aside for it. We get the information in lines 3 and 5 from the <code>stock</code> array using the index value from the <code>sparklineRegionChange</code> event.</p>
+<table class="sourceCode javascript numberLines" data-line="3,5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">        <span class="kw">if</span> (idx) {
+            <span class="fu">$</span>(<span class="st">&quot;.info&quot;</span>).<span class="fu">html</span>(
+                <span class="st">&quot;Week of &quot;</span> + stock[idx].<span class="fu">date</span> 
+              + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; &quot;</span>
+              + <span class="st">&quot;Close: $&quot;</span> + stock[idx].<span class="fu">adj_close</span>);
+        }</code></pre></td></tr></table>
+<p>The sparklines library isn’t completely reliable in generating events when the mouse leaves the chart area. Instead of using the custom event, therefore, we can use the standard JavaScript <code>mouseout</code> event. When the user does move the mouse off of the chart, we’ll turn off the custom tooltip by setting it’s content to a blank space. We use the <span class="smcp">HTML</span> non-breaking space (<code>&amp;nbsp;</code>) so the browser doesn’t think the <code>&lt;div&gt;</code> is completely empty. If we used a standard space character, the browser would treat the <code>&lt;div&gt;</code> as empty and recalculate the height of the page, causing an annoying jump in the page contents. (For the same reason we should initialize that <code>&lt;div&gt;</code> with <code>&amp;nbsp;</code> instead of leaving it blank.)</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">    .<span class="fu">on</span>(<span class="st">&#39;mouseout&#39;</span>, <span class="kw">function</span>() {
+        <span class="fu">$</span>(<span class="st">&quot;.info&quot;</span>).<span class="fu">html</span>(<span class="st">&quot;&amp;nbsp;&quot;</span>);
+    });</code></pre></td></tr></table>
+<p>For the cleanest implementation, we combine all of these steps using method chaining. (To keep it concise, the excerpt below omits the chart styling options.)</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock .chart&#39;</span>)
+    .<span class="fu">sparkline</span>(
+        <span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }),
+        { <span class="dt">disableTooltips</span>: <span class="kw">true</span> }
+    ).<span class="fu">on</span>(<span class="st">&#39;sparklineRegionChange&#39;</span>, <span class="kw">function</span>(ev) {
+        <span class="kw">var</span> idx = <span class="ot">ev</span>.<span class="fu">sparklines</span>[<span class="dv">0</span>].<span class="fu">getCurrentRegionFields</span>().<span class="fu">offset</span>;
+        <span class="kw">if</span> (idx) {
+            <span class="fu">$</span>(<span class="st">&quot;.info&quot;</span>).<span class="fu">html</span>(
+                <span class="st">&quot;Week of &quot;</span> + stock[idx].<span class="fu">date</span> 
+              + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; &quot;</span>
+              + <span class="st">&quot;Close: $&quot;</span> + stock[idx].<span class="fu">adj_close</span>);
+        }
+    }).<span class="fu">on</span>(<span class="st">&#39;mouseout&#39;</span>, <span class="kw">function</span>() {
+        <span class="fu">$</span>(<span class="st">&quot;.info&quot;</span>).<span class="fu">html</span>(<span class="st">&quot;&amp;nbsp;&quot;</span>);
+    });</code></pre></td></tr></table>
+<p>Now with figure <span class="nextfigure"/> we have a nice, interactive tooltip that tracks the user’s mouse as it moves across the chart.</p>
+<figure>
+<div id="annotate-chart2">
+<div style="float:left">
+<div class="chart">
+
+</div>
+<div class="info" style="font-size:0.8em">
+ 
+</div>
+</div>
+<div style="float:left">
+<div class="details" style="font-size:0.8em;line-height:1.3em;padding-left:10px;padding-top:1px">
+
+</div>
+</div>
+</div>
+<figcaption>
+An interactive sparkline tracks the user’s mouse and provides information relevant to the mouse position.
+</figcaption>
+</figure>
+<h3 id="step-5-provide-additional-information">Step 5: Provide Additional Information</h3>
+<p>The tooltip information we’ve added so far shows the immediately relevant information to the user: the week and the adjusted closing price of the stock. Our data, however, contains additional information that might be useful to the user. We can expand on the original tooltip by displaying that information as well.</p>
+<p>At the same time we update the primary tooltip region, let’s add the extra data.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;.details&quot;</span>).<span class="fu">html</span>(
+    <span class="st">&quot;Open: $&quot;</span> + stock[idx].<span class="fu">open</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
+  + <span class="st">&quot;High: $&quot;</span> + stock[idx].<span class="fu">high</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
+  + <span class="st">&quot;Low: $&quot;</span>  + stock[idx].<span class="fu">low</span>  + <span class="st">&quot;&lt;br/&gt;&quot;</span>
+  + <span class="st">&quot;Volume: &quot;</span> + stock[idx].<span class="fu">volume</span>
+);</code></pre></td></tr></table>
+<p>When we clear the primary tooltip region, we’ll clear this area as well.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;.details&quot;</span>).<span class="fu">html</span>(<span class="st">&quot;&quot;</span>);</code></pre></td></tr></table>
+<p>Because it won’t affect the vertical size of the page, we don’t need to fill this <code>&lt;div&gt;</code> with a dummy <code>&amp;nbsp;</code>.</p>
+<figure>
+<div id="annotate-chart3">
+<div style="float:left">
+<div class="chart">
+
+</div>
+<div class="info" style="font-size:0.8em">
+ 
+</div>
+</div>
+<div style="float:left">
+<div class="details" style="font-size:0.8em;line-height:1.3em;padding-left:10px;padding-top:1px">
+
+</div>
+</div>
+</div>
+<figcaption>
+Interactive sparklines can show additional information in many ways.
+</figcaption>
+</figure>
+<p>With figure <span class="lastfigure"/> we have the visualization we want. The chart clearly shows the overall trend for the stock during the year, but it takes up only a small amount of space on the web page. At first glance the chart is also free of distracting elements such as labels and axes. For users that just want a general sense of the stock’s performance, those elements are superfluous. Users who want the full details need only hover their mouse over the chart and it reveals the complete market information.</p>
+<p>Because we’ve managed to display the information while retaining the compact nature of sparklines, the technique in this example works well when combined with the small multiples approach of this chapter’s second example.</p>
+<p>The next example includes an alternate method for showing the extra details.</p>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var stock = [
+          { date: "2012-01-03", open: 409.40, high: 422.75, low: 409.00, close: 422.40, volume: 10283900, adj_close: 416.26 },
+          { date: "2012-01-09", open: 425.50, high: 427.75, low: 418.66, close: 419.81, volume:  9327900, adj_close: 413.70 },
+          { date: "2012-01-17", open: 424.20, high: 431.37, low: 419.75, close: 420.30, volume: 10673200, adj_close: 414.19 },
+          { date: "2012-01-23", open: 422.67, high: 454.45, low: 419.55, close: 447.28, volume: 17397900, adj_close: 440.77 },
+          { date: "2012-01-30", open: 445.71, high: 460.00, low: 445.39, close: 459.68, volume: 10817600, adj_close: 452.99 },
+          { date: "2012-02-06", open: 458.38, high: 497.62, low: 458.20, close: 493.42, volume: 17778800, adj_close: 486.24 },
+          { date: "2012-02-13", open: 499.53, high: 526.29, low: 486.63, close: 502.12, volume: 28314900, adj_close: 494.82 },
+          { date: "2012-02-21", open: 506.88, high: 522.90, low: 504.12, close: 522.41, volume: 18499900, adj_close: 514.81 },
+          { date: "2012-02-27", open: 521.31, high: 548.21, low: 516.28, close: 545.18, volume: 22964000, adj_close: 537.25 },
+          { date: "2012-03-05", open: 545.42, high: 547.74, low: 516.22, close: 545.17, volume: 23951800, adj_close: 537.24 },
+          { date: "2012-03-12", open: 548.98, high: 600.01, low: 547.00, close: 585.57, volume: 32158400, adj_close: 577.05 },
+          { date: "2012-03-19", open: 598.37, high: 609.65, low: 589.05, close: 596.05, volume: 24402100, adj_close: 587.38 },
+          { date: "2012-03-26", open: 599.79, high: 621.45, low: 595.26, close: 599.55, volume: 22840000, adj_close: 590.83 },
+          { date: "2012-04-02", open: 601.83, high: 634.66, low: 600.38, close: 633.68, volume: 23635600, adj_close: 624.46 },
+          { date: "2012-04-09", open: 626.13, high: 644.00, low: 603.51, close: 605.23, volume: 26127500, adj_close: 596.43 },
+          { date: "2012-04-16", open: 610.06, high: 620.25, low: 570.42, close: 572.98, volume: 34975300, adj_close: 564.65 },
+          { date: "2012-04-23", open: 570.61, high: 618.00, low: 555.00, close: 603.00, volume: 27794600, adj_close: 594.23 },
+          { date: "2012-04-30", open: 597.80, high: 598.40, low: 565.17, close: 565.25, volume: 17607600, adj_close: 557.03 },
+          { date: "2012-05-07", open: 561.50, high: 575.88, low: 558.73, close: 566.71, volume: 15505800, adj_close: 558.47 },
+          { date: "2012-05-14", open: 562.57, high: 567.51, low: 522.18, close: 530.38, volume: 20281200, adj_close: 522.67 },
+          { date: "2012-05-21", open: 534.50, high: 576.50, low: 534.05, close: 562.29, volume: 19540000, adj_close: 554.11 },
+          { date: "2012-05-29", open: 570.90, high: 581.50, low: 560.52, close: 560.99, volume: 17166000, adj_close: 552.83 },
+          { date: "2012-06-04", open: 561.50, high: 580.58, low: 548.50, close: 580.32, volume: 14813900, adj_close: 571.88 },
+          { date: "2012-06-11", open: 587.72, high: 588.50, low: 566.70, close: 574.13, volume: 14293200, adj_close: 565.78 },
+          { date: "2012-06-18", open: 570.96, high: 590.00, low: 570.37, close: 582.10, volume: 12654100, adj_close: 573.63 },
+          { date: "2012-06-25", open: 577.30, high: 584.00, low: 565.61, close: 584.00, volume: 10630300, adj_close: 575.51 },
+          { date: "2012-07-02", open: 584.73, high: 614.34, low: 583.60, close: 605.88, volume: 13795700, adj_close: 597.07 },
+          { date: "2012-07-09", open: 605.30, high: 619.87, low: 592.68, close: 604.97, volume: 15001100, adj_close: 596.17 },
+          { date: "2012-07-16", open: 605.12, high: 615.35, low: 603.15, close: 604.30, volume: 12013700, adj_close: 595.51 },
+          { date: "2012-07-23", open: 594.40, high: 609.68, low: 570.00, close: 585.16, volume: 19578500, adj_close: 576.65 },
+          { date: "2012-07-30", open: 590.92, high: 617.98, low: 587.82, close: 615.70, volume: 13593200, adj_close: 606.74 },
+          { date: "2012-08-06", open: 617.29, high: 625.00, low: 615.26, close: 621.70, volume:  8955900, adj_close: 615.29 },
+          { date: "2012-08-13", open: 623.39, high: 648.19, low: 623.25, close: 648.11, volume: 11240200, adj_close: 641.43 },
+          { date: "2012-08-20", open: 650.01, high: 674.88, low: 648.11, close: 663.22, volume: 20349200, adj_close: 656.38 },
+          { date: "2012-08-27", open: 679.99, high: 680.87, low: 657.25, close: 665.24, volume: 10987500, adj_close: 658.38 },
+          { date: "2012-09-04", open: 665.76, high: 682.48, low: 664.50, close: 680.44, volume: 12724300, adj_close: 673.42 },
+          { date: "2012-09-10", open: 680.45, high: 696.98, low: 656.00, close: 691.28, volume: 20736000, adj_close: 684.15 },
+          { date: "2012-09-17", open: 699.35, high: 705.07, low: 693.62, close: 700.09, volume: 14332600, adj_close: 692.87 },
+          { date: "2012-09-24", open: 686.86, high: 695.12, low: 660.35, close: 667.10, volume: 20459000, adj_close: 660.22 },
+          { date: "2012-10-01", open: 671.16, high: 676.75, low: 650.65, close: 652.59, volume: 18290000, adj_close: 645.86 },
+          { date: "2012-10-08", open: 646.88, high: 647.56, low: 623.55, close: 629.71, volume: 21378800, adj_close: 623.21 },
+          { date: "2012-10-15", open: 632.35, high: 652.79, low: 609.62, close: 609.84, volume: 18514400, adj_close: 603.55 },
+          { date: "2012-10-22", open: 612.42, high: 635.38, low: 591.00, close: 604.00, volume: 24908300, adj_close: 597.77 },
+          { date: "2012-10-31", open: 594.88, high: 603.00, low: 574.75, close: 576.80, volume: 17508000, adj_close: 570.85 },
+          { date: "2012-11-05", open: 583.52, high: 590.74, low: 533.72, close: 547.06, volume: 26312500, adj_close: 543.89 },
+          { date: "2012-11-12", open: 554.15, high: 554.50, low: 505.75, close: 527.68, volume: 25590900, adj_close: 524.62 },
+          { date: "2012-11-19", open: 540.71, high: 572.00, low: 539.88, close: 571.50, volume: 18856200, adj_close: 568.19 },
+          { date: "2012-11-26", open: 575.90, high: 594.25, low: 572.26, close: 585.28, volume: 18505600, adj_close: 581.89 },
+          { date: "2012-12-03", open: 593.65, high: 594.59, low: 518.63, close: 533.25, volume: 28073100, adj_close: 530.16 },
+          { date: "2012-12-10", open: 525.00, high: 549.56, low: 505.58, close: 509.79, volume: 23891500, adj_close: 506.84 },
+          { date: "2012-12-17", open: 508.93, high: 534.90, low: 501.23, close: 519.33, volume: 20790100, adj_close: 516.32 },
+          { date: "2012-12-24", open: 520.35, high: 524.25, low: 504.66, close: 509.59, volume: 11496300, adj_close: 506.64 },
+          { date: "2012-12-31", open: 510.53, high: 535.40, low: 509.00, close: 532.17, volume: 23553300, adj_close: 529.09 },
+        ];
+
+        $('#annotate-chart1 .chart').sparkline(
+            $.map(stock, function(wk) { return wk.adj_close; }),
+            {
+                height: 48,
+                width: 210,
+                lineColor: chartStyles.color.secondaryDark,
+                fillColor: chartStyles.color.secondaryLightest,
+                spotColor: false,
+                minSpotColor: chartStyles.color.primary,
+                maxSpotColor: chartStyles.color.primary,
+                highlightLineColor: chartStyles.color.primary,
+                highlightSpotColor: chartStyles.color.secondaryDark,
+                disableTooltips: true
+            }
+        );
+
+        $('#annotate-chart2 .chart').sparkline(
+            $.map(stock, function(wk) { return wk.adj_close; }),
+            {
+                height: 48,
+                width: 210,
+                lineColor: chartStyles.color.secondaryDark,
+                fillColor: chartStyles.color.secondaryLightest,
+                spotColor: false,
+                minSpotColor: chartStyles.color.primary,
+                maxSpotColor: chartStyles.color.primary,
+                highlightLineColor: chartStyles.color.primary,
+                highlightSpotColor: chartStyles.color.secondaryDark,
+                disableTooltips: true
+            }
+            ).on('sparklineRegionChange', function(ev) {
+                var idx = ev.sparklines[0].getCurrentRegionFields().offset;
+                if (idx) {
+                    $("#annotate-chart2 .info").html(
+                      "Week of " + stock[idx].date 
+                    + "&nbsp;&nbsp;&nbsp; Close: $" + stock[idx].adj_close);
+                }
+            }).on('mouseout', function() {
+                $("#annotate-chart2 .info").html("&nbsp;");
+            });
+
+        $('#annotate-chart3 .chart').sparkline(
+            $.map(stock, function(wk) { return wk.adj_close; }),
+            {
+                height: 48,
+                width: 210,
+                lineColor: chartStyles.color.secondaryDark,
+                fillColor: chartStyles.color.secondaryLightest,
+                spotColor: false,
+                minSpotColor: chartStyles.color.primary,
+                maxSpotColor: chartStyles.color.primary,
+                highlightLineColor: chartStyles.color.primary,
+                highlightSpotColor: chartStyles.color.secondaryDark,
+                disableTooltips: true
+            }
+            ).on('sparklineRegionChange', function(ev) {
+                var idx = ev.sparklines[0].getCurrentRegionFields().offset;
+                if (idx) {
+                    $("#annotate-chart3 .info").html(
+                      "Week of " + stock[idx].date 
+                    + "&nbsp;&nbsp;&nbsp; Close: $" + stock[idx].adj_close
+                    );
+                    $("#annotate-chart3 .details").html(
+                        "Open: $" + stock[idx].open + "<br/>"
+                      + "High: $" + stock[idx].high + "<br/>"
+                      + "Low: $"  + stock[idx].low  + "<br/>"
+                      + "Volume: " + stock[idx].volume
+                    );
+                }
+            }).on('mouseout', function() {
+                $("#annotate-chart3 .info").html("&nbsp;");
+                $("#annotate-chart3 .details").html("");
+            });
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="composite-charts">Composite Charts</h2>
+<p>So far in this chapter we’ve seen how sparklines can provide a lot of visual information in a very small space. That characteristic makes them perfect for integrating charts in a complete web page that includes text, tables, and other elements. We haven’t yet exhausted the capabilities of sparklines, however. We can increase the information density of our visualizations still further by creating composite charts—in effect, drawing multiple charts in the same space.</p>
+<p>To see an example of this technique, we can build on the previous example. In that example we used a sparkline to show the closing price of a stock over an entire year. Price is indeed the most relevant data about a stock, but there’s another quantity that many investors like to see: the stock’s trading volume. And just as with price, it can be important to understand the trend for trading volume at a glance. That makes the value an excellent candidate for a chart.</p>
+<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web. Because we’re visualizing the same data as in the previous example, we’ll also want to set up the data array and the <span class="smcp">HTML</span> markup exactly as in that example.</p>
+<h3 id="step-1-draw-the-trading-volume-chart">Step 1: Draw the Trading Volume Chart</h3>
+<p>Even though we’re including a chart of trading volume, the most important quantity is the stock price. To keep the emphasis on stock price, we want to draw that chart <em>on top of</em> the chart for trading volume. That means we need to draw the trading volume chart first.</p>
+<p>The code for trading volume is very similar to the stock price from the previous example. Instead of an area chart, however, we’ll use a bar chart. We use the jQuery <code>.map()</code> function to extract the <code>volume</code> property from our data array. Setting the <code>type</code> option to <code>&quot;bar&quot;</code> in line 3 is all it takes to tell the sparklines library to create a bar chart.</p>
+<table class="sourceCode javascript numberLines" data-line="3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock .chart&#39;</span>).<span class="fu">sparkline</span>(
+    <span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">volume</span>; }),
+    { <span class="dt">type</span>: <span class="st">&quot;bar&quot;</span> }
+);</code></pre></td></tr></table>
+<p>Figure <span class="nextfigure"/> shows the results.</p>
+<figure>
+<div id="composite-chart1">
+<div style="float:left">
+<div class="chart">
+
+</div>
+<div class="info" style="font-size:0.8em">
+ 
+</div>
+</div>
+<div style="float:left">
+<div class="details" style="font-size:0.8em;line-height:1.3em;padding-left:10px;padding-top:1px">
+
+</div>
+</div>
+</div>
+<figcaption>
+The sparklines library can create bar charts as well as line charts.
+</figcaption>
+</figure>
+<h3 id="step-2-add-the-closing-price-chart">Step 2: Add the Closing Price Chart</h3>
+<p>To add the price chart on top of the volume chart, we can call the sparklines library once again. We give it the same containing element and, most importantly, set the <code>composite</code> option to <code>true</code> in line 10. This parameter tells the library not to erase any existing chart in the element but to simply draw over it.</p>
+<table class="sourceCode javascript numberLines" data-line="10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock .chart&#39;</span>)
+    .<span class="fu">sparkline</span>(
+        <span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">volume</span>; }),
+        { 
+            <span class="dt">type</span>: <span class="st">&quot;bar&quot;</span> 
+        }
+    ).<span class="fu">sparkline</span>(
+        <span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }),
+        {
+            <span class="dt">composite</span>: <span class="kw">true</span>,
+            <span class="dt">lineColor</span>: <span class="st">&quot;#006363&quot;</span>,
+            <span class="dt">fillColor</span>: <span class="st">&quot;rgba(45, 153, 153, 0.3)&quot;</span>,
+            <span class="dt">disableTooltips</span>: <span class="kw">true</span>
+        }
+    );</code></pre></td></tr></table>
+<p>Notice the way we specify the fill color for the second chart. We set a transparency (or <em>alpha</em>) value of 0.3. This value makes the chart area nearly transparent, so the volume chart will show through. Note, though, that some older web browsers, notably Internet Explorer version 8 and earlier, do not support the transparency standard. If your site has a significant number of users with those browsers, you might consider simply setting the <code>fillColor</code> option to <code>false</code>, which will disable filling the area entirely.</p>
+<p>As figure <span class="nextfigure"/> shows, the result combines both charts in the same space.</p>
+<figure>
+<div id="composite-chart2">
+<div style="float:left">
+<div class="chart">
+
+</div>
+<div class="info" style="font-size:0.8em">
+ 
+</div>
+</div>
+<div style="float:left">
+<div class="details" style="font-size:0.8em;line-height:1.3em;padding-left:10px;padding-top:1px">
+
+</div>
+</div>
+</div>
+<figcaption>
+Multiple charts may be combined in the same space.
+</figcaption>
+</figure>
+<h3 id="step-3-add-the-annotations">Step 3: Add the Annotations</h3>
+<p>We can add annotations to the chart using the same approach as in the previous example. Because our charts now include the trading volume, it’s appropriate to move that value from the details area into the primary annotation <code>&lt;div&gt;</code>. The code to do that is a simple adjustment from the prior example.</p>
+<p>In addition to moving the text from one area to the other, there are two significant changes.</p>
+<ol type="1">
+<li><p>We get the <code>idx</code> value from the second element of the event’s <code>sparklines</code> array (<code>sparklines[1]</code>) in line 2. That’s because the first element of that array is the first chart. The sparklines library doesn’t really return any useful information about bar charts in the <code>sparklineRegionChange</code> event. Fortunately, we can get all the information we need from the line chart.2. We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 7. It’s much easier for our users to quickly grasp “24.4M” than “24402100.”</p>
+<table class="sourceCode javascript numberLines" data-line="2,7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">.<span class="fu">on</span>(<span class="st">&#39;sparklineRegionChange&#39;</span>, <span class="kw">function</span>(ev) {
+    <span class="kw">var</span> idx = <span class="ot">ev</span>.<span class="fu">sparklines</span>[<span class="dv">1</span>].<span class="fu">getCurrentRegionFields</span>().<span class="fu">offset</span>;
+    <span class="kw">if</span> (idx) {
+        <span class="fu">$</span>(<span class="st">&quot;.info&quot;</span>).<span class="fu">html</span>(
+          <span class="st">&quot;Week of &quot;</span> + stock[idx].<span class="fu">date</span> 
+        + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; Close: $&quot;</span> + stock[idx].<span class="fu">adj_close</span>
+        + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; Volume: &quot;</span> + <span class="ot">Math</span>.<span class="fu">round</span>(stock[idx].<span class="fu">volume</span>/<span class="dv">10000</span>)/<span class="dv">100</span> + <span class="st">&quot;M&quot;</span>
+        );
+        <span class="fu">$</span>(<span class="st">&quot;.details&quot;</span>).<span class="fu">html</span>(
+            <span class="st">&quot;Open: $&quot;</span> + stock[idx].<span class="fu">open</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
+          + <span class="st">&quot;High: $&quot;</span> + stock[idx].<span class="fu">high</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
+          + <span class="st">&quot;Low: $&quot;</span>  + stock[idx].<span class="fu">low</span>
+        );
+    }</code></pre></td></tr></table>
+<p>As in the previous example, the annotations provide additional details.</p></li>
+</ol>
+<figure>
+<div id="composite-chart3">
+<div style="float:left">
+<div class="chart">
+
+</div>
+<div class="info" style="font-size:0.8em">
+ 
+</div>
+</div>
+<div style="float:left">
+<div class="details" style="font-size:0.8em;line-height:1.3em;padding-left:10px;padding-top:1px">
+
+</div>
+</div>
+</div>
+<figcaption>
+Tracking the mouse position makes it possible to interactively annotate the charts.
+</figcaption>
+</figure>
+<h3 id="step-4-show-details-as-a-chart">Step 4: Show Details as a Chart</h3>
+<p>So far we’ve shown the additional details for the stock (open, close, high, and low) as text values. As long as we’re drawing multiple charts, we can show those values graphically as well. The statistical box plot serves as a useful model for us. Traditionally, that plot type shows the range of a distribution, including deviations, quartiles, and medians. Visually, however, it provides a perfect model of a stock’s trading performance. We can use it to show the opening and closing prices, as well as the high and low values during the period.</p>
+<p>The sparklines library can draw a box plot for us, but normally it calculates the values to display given the distribution as input data. In our case we don’t want to use the standard statistical calculations. Instead, we can use an option that tells the library to use pre-computed values. The library expects at least 5 values:</p>
+<ul>
+<li>The lowest sample value</li>
+<li>The first quartile</li>
+<li>The median</li>
+<li>The third quartile</li>
+<li>The highest sample value</li>
+</ul>
+<p>For our example, we’ll provide the following values instead:</p>
+<ul>
+<li>The lowest price</li>
+<li>Whichever is less of the opening and closing prices</li>
+<li>The adjusted closing price</li>
+<li>Whichever is greater of the opening and closing prices</li>
+<li>The highest price</li>
+</ul>
+<p>We’ll also color the median bar red or green depending on whether the stock gained or lost value during the period.</p>
+<p>Here’s the code that creates that chart in response to the <code>sparklineRegionChange</code> event. The data for the chart (lines 3-7) is simply the five values extracted from the stock data for the appropriate week. As lines 11 and 12 demonstrate, we can change the color of the median bar depending on whether the stock finished higher or lower for the day.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;#composite-chart4 .details&quot;</span>)
+    .<span class="fu">sparkline</span>([
+        stock[idx].<span class="fu">low</span>, 
+        <span class="ot">Math</span>.<span class="fu">min</span>(stock[idx].<span class="fu">open</span>,stock[idx].<span class="fu">close</span>), 
+        stock[idx].<span class="fu">adj_close</span>, 
+        <span class="ot">Math</span>.<span class="fu">max</span>(stock[idx].<span class="fu">open</span>,stock[idx].<span class="fu">close</span>), 
+        stock[idx].<span class="fu">high</span>
+    ], {
+        <span class="dt">type</span>: <span class="st">&quot;box&quot;</span>,
+        <span class="dt">showOutliers</span>: <span class="kw">false</span>,
+        <span class="dt">medianColor</span>: (stock[idx].<span class="fu">open</span> &lt; stock[idx].<span class="fu">close</span>)
+         ? <span class="st">&quot;green&quot;</span> : <span class="st">&quot;red&quot;</span>
+    });</code></pre></td></tr></table>
+<p>When the mouse leaves the chart region, we can remove the box plot by emptying its container.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;.details&quot;</span>).<span class="fu">empty</span>();</code></pre></td></tr></table>
+<p>Now as our users mouse over the chart area, they can see a visual representation of the stock’s price range during each period.</p>
+<figure>
+<div id="composite-chart4">
+<div style="float:left">
+<div class="chart">
+
+</div>
+<div class="info" style="font-size:0.8em">
+ 
+</div>
+</div>
+<div style="float:left">
+<div class="details" style="font-size:0.8em;line-height:1.3em;padding-left:10px;padding-top:1px">
+
+</div>
+</div>
+</div>
+<figcaption>
+Interactive annotations can be charts themselves in addition to text.
+</figcaption>
+</figure>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var stock = [
+          { date: "2012-01-03", open: 409.40, high: 422.75, low: 409.00, close: 422.40, volume: 10283900, adj_close: 416.26 },
+          { date: "2012-01-09", open: 425.50, high: 427.75, low: 418.66, close: 419.81, volume:  9327900, adj_close: 413.70 },
+          { date: "2012-01-17", open: 424.20, high: 431.37, low: 419.75, close: 420.30, volume: 10673200, adj_close: 414.19 },
+          { date: "2012-01-23", open: 422.67, high: 454.45, low: 419.55, close: 447.28, volume: 17397900, adj_close: 440.77 },
+          { date: "2012-01-30", open: 445.71, high: 460.00, low: 445.39, close: 459.68, volume: 10817600, adj_close: 452.99 },
+          { date: "2012-02-06", open: 458.38, high: 497.62, low: 458.20, close: 493.42, volume: 17778800, adj_close: 486.24 },
+          { date: "2012-02-13", open: 499.53, high: 526.29, low: 486.63, close: 502.12, volume: 28314900, adj_close: 494.82 },
+          { date: "2012-02-21", open: 506.88, high: 522.90, low: 504.12, close: 522.41, volume: 18499900, adj_close: 514.81 },
+          { date: "2012-02-27", open: 521.31, high: 548.21, low: 516.28, close: 545.18, volume: 22964000, adj_close: 537.25 },
+          { date: "2012-03-05", open: 545.42, high: 547.74, low: 516.22, close: 545.17, volume: 23951800, adj_close: 537.24 },
+          { date: "2012-03-12", open: 548.98, high: 600.01, low: 547.00, close: 585.57, volume: 32158400, adj_close: 577.05 },
+          { date: "2012-03-19", open: 598.37, high: 609.65, low: 589.05, close: 596.05, volume: 24402100, adj_close: 587.38 },
+          { date: "2012-03-26", open: 599.79, high: 621.45, low: 595.26, close: 599.55, volume: 22840000, adj_close: 590.83 },
+          { date: "2012-04-02", open: 601.83, high: 634.66, low: 600.38, close: 633.68, volume: 23635600, adj_close: 624.46 },
+          { date: "2012-04-09", open: 626.13, high: 644.00, low: 603.51, close: 605.23, volume: 26127500, adj_close: 596.43 },
+          { date: "2012-04-16", open: 610.06, high: 620.25, low: 570.42, close: 572.98, volume: 34975300, adj_close: 564.65 },
+          { date: "2012-04-23", open: 570.61, high: 618.00, low: 555.00, close: 603.00, volume: 27794600, adj_close: 594.23 },
+          { date: "2012-04-30", open: 597.80, high: 598.40, low: 565.17, close: 565.25, volume: 17607600, adj_close: 557.03 },
+          { date: "2012-05-07", open: 561.50, high: 575.88, low: 558.73, close: 566.71, volume: 15505800, adj_close: 558.47 },
+          { date: "2012-05-14", open: 562.57, high: 567.51, low: 522.18, close: 530.38, volume: 20281200, adj_close: 522.67 },
+          { date: "2012-05-21", open: 534.50, high: 576.50, low: 534.05, close: 562.29, volume: 19540000, adj_close: 554.11 },
+          { date: "2012-05-29", open: 570.90, high: 581.50, low: 560.52, close: 560.99, volume: 17166000, adj_close: 552.83 },
+          { date: "2012-06-04", open: 561.50, high: 580.58, low: 548.50, close: 580.32, volume: 14813900, adj_close: 571.88 },
+          { date: "2012-06-11", open: 587.72, high: 588.50, low: 566.70, close: 574.13, volume: 14293200, adj_close: 565.78 },
+          { date: "2012-06-18", open: 570.96, high: 590.00, low: 570.37, close: 582.10, volume: 12654100, adj_close: 573.63 },
+          { date: "2012-06-25", open: 577.30, high: 584.00, low: 565.61, close: 584.00, volume: 10630300, adj_close: 575.51 },
+          { date: "2012-07-02", open: 584.73, high: 614.34, low: 583.60, close: 605.88, volume: 13795700, adj_close: 597.07 },
+          { date: "2012-07-09", open: 605.30, high: 619.87, low: 592.68, close: 604.97, volume: 15001100, adj_close: 596.17 },
+          { date: "2012-07-16", open: 605.12, high: 615.35, low: 603.15, close: 604.30, volume: 12013700, adj_close: 595.51 },
+          { date: "2012-07-23", open: 594.40, high: 609.68, low: 570.00, close: 585.16, volume: 19578500, adj_close: 576.65 },
+          { date: "2012-07-30", open: 590.92, high: 617.98, low: 587.82, close: 615.70, volume: 13593200, adj_close: 606.74 },
+          { date: "2012-08-06", open: 617.29, high: 625.00, low: 615.26, close: 621.70, volume:  8955900, adj_close: 615.29 },
+          { date: "2012-08-13", open: 623.39, high: 648.19, low: 623.25, close: 648.11, volume: 11240200, adj_close: 641.43 },
+          { date: "2012-08-20", open: 650.01, high: 674.88, low: 648.11, close: 663.22, volume: 20349200, adj_close: 656.38 },
+          { date: "2012-08-27", open: 679.99, high: 680.87, low: 657.25, close: 665.24, volume: 10987500, adj_close: 658.38 },
+          { date: "2012-09-04", open: 665.76, high: 682.48, low: 664.50, close: 680.44, volume: 12724300, adj_close: 673.42 },
+          { date: "2012-09-10", open: 680.45, high: 696.98, low: 656.00, close: 691.28, volume: 20736000, adj_close: 684.15 },
+          { date: "2012-09-17", open: 699.35, high: 705.07, low: 693.62, close: 700.09, volume: 14332600, adj_close: 692.87 },
+          { date: "2012-09-24", open: 686.86, high: 695.12, low: 660.35, close: 667.10, volume: 20459000, adj_close: 660.22 },
+          { date: "2012-10-01", open: 671.16, high: 676.75, low: 650.65, close: 652.59, volume: 18290000, adj_close: 645.86 },
+          { date: "2012-10-08", open: 646.88, high: 647.56, low: 623.55, close: 629.71, volume: 21378800, adj_close: 623.21 },
+          { date: "2012-10-15", open: 632.35, high: 652.79, low: 609.62, close: 609.84, volume: 18514400, adj_close: 603.55 },
+          { date: "2012-10-22", open: 612.42, high: 635.38, low: 591.00, close: 604.00, volume: 24908300, adj_close: 597.77 },
+          { date: "2012-10-31", open: 594.88, high: 603.00, low: 574.75, close: 576.80, volume: 17508000, adj_close: 570.85 },
+          { date: "2012-11-05", open: 583.52, high: 590.74, low: 533.72, close: 547.06, volume: 26312500, adj_close: 543.89 },
+          { date: "2012-11-12", open: 554.15, high: 554.50, low: 505.75, close: 527.68, volume: 25590900, adj_close: 524.62 },
+          { date: "2012-11-19", open: 540.71, high: 572.00, low: 539.88, close: 571.50, volume: 18856200, adj_close: 568.19 },
+          { date: "2012-11-26", open: 575.90, high: 594.25, low: 572.26, close: 585.28, volume: 18505600, adj_close: 581.89 },
+          { date: "2012-12-03", open: 593.65, high: 594.59, low: 518.63, close: 533.25, volume: 28073100, adj_close: 530.16 },
+          { date: "2012-12-10", open: 525.00, high: 549.56, low: 505.58, close: 509.79, volume: 23891500, adj_close: 506.84 },
+          { date: "2012-12-17", open: 508.93, high: 534.90, low: 501.23, close: 519.33, volume: 20790100, adj_close: 516.32 },
+          { date: "2012-12-24", open: 520.35, high: 524.25, low: 504.66, close: 509.59, volume: 11496300, adj_close: 506.64 },
+          { date: "2012-12-31", open: 510.53, high: 535.40, low: 509.00, close: 532.17, volume: 23553300, adj_close: 529.09 },
+        ];
+        
+        
+        $('#composite-chart1 .chart').sparkline(
+            $.map(stock, function(wk) { return wk.volume; }),
+            {
+                type: "bar",
+                barColor: chartStyles.color.alternateLight,
+                barWidth: 5,
+                height: 46,
+                width: 300,
+                disableTooltips: true
+            });
+        
+        $('#composite-chart2 .chart').sparkline(
+            $.map(stock, function(wk) { return wk.volume; }),
+            {
+                type: "bar",
+                barColor: chartStyles.color.alternateLight,
+                barWidth: 5,
+                height: 46,
+                width: 300,
+                disableTooltips: true
+            }
+            )
+            .sparkline(
+                $.map(stock, function(wk) { return wk.adj_close; }),
+                {
+                    composite: true,
+                    lineColor: chartStyles.color.secondaryDark,
+                    fillColor: "rgba(45, 153, 153, 0.3)",
+                    spotColor: false,
+                    minSpotColor: chartStyles.color.primary,
+                    maxSpotColor: chartStyles.color.primary,
+                    highlightLineColor: chartStyles.color.primary,
+                    highlightSpotColor: chartStyles.color.secondaryDarkest,
+                    disableTooltips: true
+                }
+            );
+        
+        $('#composite-chart3 .chart').sparkline(
+            $.map(stock, function(wk) { return wk.volume; }),
+            {
+                type: "bar",
+                barColor: chartStyles.color.alternateLight,
+                barWidth: 5,
+                height: 46,
+                width: 300,
+                disableTooltips: true
+            }
+            )
+            .sparkline(
+                $.map(stock, function(wk) { return wk.adj_close; }),
+                {
+                    composite: true,
+                    lineColor: chartStyles.color.secondaryDark,
+                    fillColor: "rgba(45, 153, 153, 0.3)",
+                    spotColor: false,
+                    minSpotColor: chartStyles.color.primary,
+                    maxSpotColor: chartStyles.color.primary,
+                    highlightLineColor: chartStyles.color.primary,
+                    highlightSpotColor: chartStyles.color.secondaryDarkest,
+                    disableTooltips: true
+                }
+            )
+            .on('sparklineRegionChange', function(ev) {
+                var idx = ev.sparklines[1].getCurrentRegionFields().offset;
+                if (idx) {
+                    $("#composite-chart3 .info").html(
+                      "Week of " + stock[idx].date 
+                    + "&nbsp;&nbsp;&nbsp; Close: $" + stock[idx].adj_close
+                    + "&nbsp;&nbsp;&nbsp; Volume: " + Math.round(stock[idx].volume/10000)/100 + "M"
+                    );
+                    $("#composite-chart3 .details").html(
+                        "Open: $" + stock[idx].open + "<br/>"
+                      + "High: $" + stock[idx].high + "<br/>"
+                      + "Low: $"  + stock[idx].low
+                    );
+                }
+            }).on('mouseout', function() {
+                $("#composite-chart3 .info").html("&nbsp;");
+                $("#composite-chart3 .details").html("");
+            });
+        
+        $('#composite-chart4 .chart').sparkline(
+            $.map(stock, function(wk) { return wk.volume; }),
+            {
+                type: "bar",
+                barColor: chartStyles.color.alternateLight,
+                barWidth: 5,
+                height: 46,
+                width: 300,
+                disableTooltips: true,
+                highlightLighten: 0.8,
+            }
+            )
+            .sparkline(
+                $.map(stock, function(wk) { return wk.adj_close; }),
+                {
+                    composite: true,
+                    lineColor: chartStyles.color.secondaryDark,
+                    fillColor: "rgba(45, 153, 153, 0.3)",
+                    spotColor: false,
+                    minSpotColor: chartStyles.color.primary,
+                    maxSpotColor: chartStyles.color.primary,
+                    highlightLineColor: chartStyles.color.primary,
+                    highlightSpotColor: chartStyles.color.secondaryDarkest,
+                    disableTooltips: true
+                }
+            )
+            .on('sparklineRegionChange', function(ev) {
+                var idx = ev.sparklines[1].getCurrentRegionFields().offset;
+                if (idx) {
+                    $("#composite-chart4 .info").html(
+                      "Week of " + stock[idx].date 
+                    + "&nbsp;&nbsp;&nbsp; Close: $" + stock[idx].adj_close
+                    + "&nbsp;&nbsp;&nbsp; Volume: " + Math.round(stock[idx].volume/10000)/100 + "M"
+                    );
+                    $("#composite-chart4 .details")
+                        .sparkline([
+                            stock[idx].low, 
+                            Math.min(stock[idx].open,stock[idx].close), 
+                            stock[idx].adj_close, 
+                            Math.max(stock[idx].open,stock[idx].close), 
+                            stock[idx].high
+                        ], {
+                            type: "box",
+                            showOutliers: false,
+                            boxLineColor: chartStyles.color.secondary,
+                            whiskerColor: chartStyles.color.secondary,
+                            boxFillColor: "#38C2C2",
+                            medianColor: (stock[idx].open < stock[idx].close) ? chartStyles.color.alternate : chartStyles.color.primary
+                        });
+                }
+            }).on('mouseout', function() {
+                $("#composite-chart4 .info").html("&nbsp;");
+                $("#composite-chart4 .details").empty();
+            });
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="responding-to-click-events">Responding to Click Events</h2>
+<p>Throughout this chapter we’ve looked at how to include a lot of visual information in a small space, making it easier to integrate a visualization within a web page. The basic sparkline by itself is very efficient, and previous examples have added annotations and composites to increase the information density further. Sometimes, however, there’s just no way to fit all the possible data in a small enough space. Even in these cases, though, the interactive nature of the web can help us out. Our web page can start with a compact visualization but expand to a different view—one with richer details—with a simple click or tap.</p>
+<p>Indeed the compact quality of sparklines seems to invite interaction. In every usability test I’ve performed that included sparklines on a web page, the participants invariably clicked on the chart. That was true even when there were no other details that the page could provide and the participants had no idea what to expect in response to their clicks. Users would inevitably click on sparklines just to see what happens.</p>
+<p>This example continues our stock market example. We’ll begin with the same basic stock price chart we’ve seen before, but enhance it to provide details when users click on the chart region.</p>
+<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page. Because we’re visualizing the same data as in the previous example, we’ll also want to set up the data array exactly as in that example. The <span class="smcp">HTML</span> markup, however, can be much simpler. All we need is a simple <code>&lt;div&gt;</code> to hold the chart.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;stock&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></code></pre></td></tr></table>
+<h3 id="step-1-add-the-chart">Step 1: Add the Chart</h3>
+<p>Adding the chart to our markup is easy with the sparklines library. We can use the jQuery <code>.map()</code> function to extract the adjusted close value from our <code>stock</code> array.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock&#39;</span>).<span class="fu">sparkline</span>(<span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }));</code></pre></td></tr></table>
+<p>The static chart of figure <span class="nextfigure"/>, which shows the stock performance, is probably looking familiar by now.</p>
+<figure>
+<div id="click-chart1">
+
+</div>
+<figcaption>
+Starting with a static chart ensures the visualization is sound.
+</figcaption>
+</figure>
+<h3 id="step-2-handle-click-events">Step 2: Handle Click Events</h3>
+<p>The sparklines library makes it easy for us to handle click events. When users click on a chart region, the library generates a custom <code>sparklineClick</code> event. The event data includes all the normal click properties, plus information about where on the chart the user clicked. To be notified of clicks, we define a handler for that custom event.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock&#39;</span>)
+    .<span class="fu">sparkline</span>(<span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }))
+    .<span class="fu">on</span>(<span class="st">&#39;sparklineClick&#39;</span>, <span class="kw">function</span>(ev) {
+        <span class="kw">var</span> sparkline = <span class="ot">ev</span>.<span class="fu">sparklines</span>[<span class="dv">0</span>],
+        region = <span class="ot">sparkline</span>.<span class="fu">getCurrentRegionFields</span>();
+        <span class="co">/* region.x and region.y are the coordinates of the click */</span>
+    });</code></pre></td></tr></table>
+<p>Now that we’re set up to receive <code>sparklineClick</code> events, we can write the code to respond to them. For our example, let’s reveal a detailed financial analysis widget. Many web services, including Yahoo and Google, have similar widgets, but we’ll use one from WolframAlpha. As is typical, WolframAlpha provides code for the widget as an <span class="smcp">HTML</span> <code>&lt;iframe&gt;</code>. We can wrap that <code>&lt;iframe&gt;</code> in our own <code>&lt;div&gt;</code> and place it immediately after the chart. We set a <code>display</code> property of <code>none</code> so that the contents are initially hidden. (The snippet below omits the details of the <code>&lt;iframe&gt;</code> element for clarity.)</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;stock&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;widget&quot;</span><span class="ot"> style=</span><span class="st">&quot;display:none&quot;</span><span class="kw">&gt;&lt;iframe&gt;&lt;/iframe&gt;&lt;/div&gt;</span></code></pre></td></tr></table>
+<p>Now our event handling code can reveal the widget using the jQuery <code>show()</code> function.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">  .<span class="fu">on</span>(<span class="st">&#39;sparklineClick&#39;</span>, <span class="kw">function</span>(ev) {
+    <span class="fu">$</span>(<span class="st">&quot;#widget&quot;</span>).<span class="fu">show</span>();
+  });</code></pre></td></tr></table>
+<p>That works to reveal the details, but as figure <span class="nextfigure"/> shows, the resulting presentation isn’t as elegant as it could be since the details appear so abruptly.</p>
+<figure>
+<div id="click-chart2">
+
+</div>
+<div id="popup2" style="width:600px;height:600px;display:none">
+<iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081">
+</iframe>
+</div>
+<figcaption>
+Mouse clicks can reveal more details for a chart.
+</figcaption>
+</figure>
+<h3 id="step-3-improve-the-transitions">Step 3: Improve the Transitions</h3>
+<p>Instead of simply revealing the widget beneath the chart, it would be better to have the widget replace the chart. And if we’re going to do that, we’ll also want to give the users a chance to restore the chart and hide the widget. For that last function, we include a <code>&quot;widget-control&quot;</code> <code>&lt;div&gt;</code> in the code below (lines 2-4) for controlling the widget’s visibility. The only content we need for this controller is a close symbol floated right. Just like the widget itself, the controller is initially hidden.</p>
+<table class="sourceCode html numberLines" data-line="2-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;stock&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;widget-control&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;display:none&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> style=</span><span class="st">&quot;float:right&quot;</span><span class="kw">&gt;</span><span class="dv">&amp;times;</span><span class="kw">&lt;/a&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;widget&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;display:none&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;iframe&gt;&lt;/iframe&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
+<p>Now when the user clicks on the chart, we reveal the widget, reveal the controller, and hide the chart.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">.<span class="fu">on</span>(<span class="st">&#39;sparklineClick&#39;</span>, <span class="kw">function</span>(ev) {
+    <span class="fu">$</span>(<span class="st">&quot;#widget&quot;</span>).<span class="fu">show</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#widget-control&quot;</span>).<span class="fu">show</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#stock&quot;</span>).<span class="fu">hide</span>();
+});</code></pre></td></tr></table>
+<p>Next we intercept clicks on the close symbol in the widget controller. We first prevent default event handling; otherwise the browser will disconcertingly jump to the top of the page. Then we hide the widget and its controller while revealing the chart again.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;#widget-control a&quot;</span>).<span class="fu">click</span>(<span class="kw">function</span>(ev) {
+    <span class="ot">ev</span>.<span class="fu">preventDefault</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#widget&quot;</span>).<span class="fu">hide</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#widget-control&quot;</span>).<span class="fu">hide</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#stock&quot;</span>).<span class="fu">show</span>();
+})</code></pre></td></tr></table>
+<p>Finally, we need to give the user some indication that this interaction is possible. On the chart, we can override the sparklines library’s default tooltip in line 4 to let users know that more details are available.</p>
+<table class="sourceCode javascript numberLines" data-line="4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock&#39;</span>)
+    .<span class="fu">sparkline</span>(
+        <span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }),
+        { <span class="dt">tooltipFormatter</span>: <span class="kw">function</span>() {<span class="kw">return</span> <span class="st">&quot;Click for details&quot;</span>; } }
+    );</code></pre></td></tr></table>
+<p>And for the widget controller, we simple add a <code>title</code> attribute in line 3 to tell users how to hide the widget.</p>
+<table class="sourceCode html numberLines" data-line="3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;stock&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;widget-control&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;display:none&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> title=</span><span class="st">&quot;Click to hide&quot;</span><span class="ot"> style=</span><span class="st">&quot;float:right;&quot;</span><span class="kw">&gt;</span><span class="dv">&amp;times;</span><span class="kw">&lt;/a&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;widget&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;display:none&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;iframe&gt;&lt;/iframe&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
+<p>These additions give us the simple sparkline chart of figure <span class="nextfigure"/> that expands to a wealth of details with a single click. The close symbol in the upper right lets users return to the more compact sparkline.</p>
+<style>
+a.closebtn, a.closebtn:hover, a.closebtn:focus, a.closebtn:active, a.closebtn:visited {text-decoration: none; color: #444; background-image:none; text-shadow:none;}
+</style>
+<figure>
+<div id="click-chart3">
+
+</div>
+<div id="popup3-control" style="width:600px;display:none">
+<a class="closebtn" href="#" title="Click to hide" style="float:right">x</a>
+</div>
+<div id="popup3" style="width:600px;height:620px;display:none">
+<iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081">
+</iframe>
+</div>
+<figcaption>
+Mouse clicks can reveal more details for a chart.
+</figcaption>
+</figure>
+<h3 id="step-4-animation">Step 4: Animation</h3>
+<p>For a final touch to our visualization, let’s do something about the abrupt hiding and revealing of the visualization components. A smoother animation will help our users follow the transition, and jQuery makes it easy enough to implement. There are lots of animation effects available in the jQuery <span class="smcp">UI</span> library, but the basic functionality of jQuery’s core is fine for this example. We simply replace the <code>show()</code> and <code>hide()</code> functions with <code>slideDown()</code> and <code>slideUp()</code> respectively.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">.<span class="fu">on</span>(<span class="st">&#39;sparklineClick&#39;</span>, <span class="kw">function</span>(ev) {
+    <span class="fu">$</span>(<span class="st">&quot;#widget&quot;</span>).<span class="fu">slideDown</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#widget-control&quot;</span>).<span class="fu">slideDown</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#stock&quot;</span>).<span class="fu">slideUp</span>();
+});
+<span class="fu">$</span>(<span class="st">&quot;#widget-control a&quot;</span>).<span class="fu">click</span>(<span class="kw">function</span>(ev) {
+    <span class="ot">ev</span>.<span class="fu">preventDefault</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#widget&quot;</span>).<span class="fu">slideUp</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#widget-control&quot;</span>).<span class="fu">slideUp</span>();
+    <span class="fu">$</span>(<span class="st">&quot;#stock&quot;</span>).<span class="fu">slideDown</span>();
+})</code></pre></td></tr></table>
+<p>At this point we can call our visualization complete with figure <span class="nextfigure"/>. The compact sparkline smoothly transitions to detailed information on a click, and those details transition back to the sparkline when they’re closed.</p>
+<figure>
+<div id="click-chart4">
+
+</div>
+<div id="popup4-control" style="width:600px;display:none">
+<a class="closebtn" href="#" title="Click to hide" style="float:right;text-decoration:none;">x</a>
+</div>
+<div id="popup4" style="width:600px;height:620px;display:none">
+<iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081">
+</iframe>
+</div>
+<figcaption>
+Animating transitions can make the visualization less jarring to users.
+</figcaption>
+</figure>
+<script>
+;(function(){
+
+  draw = function() {
+
+        var stock = [
+          { date: "2012-01-03", open: 409.40, high: 422.75, low: 409.00, close: 422.40, volume: 10283900, adj_close: 416.26 },
+          { date: "2012-01-09", open: 425.50, high: 427.75, low: 418.66, close: 419.81, volume:  9327900, adj_close: 413.70 },
+          { date: "2012-01-17", open: 424.20, high: 431.37, low: 419.75, close: 420.30, volume: 10673200, adj_close: 414.19 },
+          { date: "2012-01-23", open: 422.67, high: 454.45, low: 419.55, close: 447.28, volume: 17397900, adj_close: 440.77 },
+          { date: "2012-01-30", open: 445.71, high: 460.00, low: 445.39, close: 459.68, volume: 10817600, adj_close: 452.99 },
+          { date: "2012-02-06", open: 458.38, high: 497.62, low: 458.20, close: 493.42, volume: 17778800, adj_close: 486.24 },
+          { date: "2012-02-13", open: 499.53, high: 526.29, low: 486.63, close: 502.12, volume: 28314900, adj_close: 494.82 },
+          { date: "2012-02-21", open: 506.88, high: 522.90, low: 504.12, close: 522.41, volume: 18499900, adj_close: 514.81 },
+          { date: "2012-02-27", open: 521.31, high: 548.21, low: 516.28, close: 545.18, volume: 22964000, adj_close: 537.25 },
+          { date: "2012-03-05", open: 545.42, high: 547.74, low: 516.22, close: 545.17, volume: 23951800, adj_close: 537.24 },
+          { date: "2012-03-12", open: 548.98, high: 600.01, low: 547.00, close: 585.57, volume: 32158400, adj_close: 577.05 },
+          { date: "2012-03-19", open: 598.37, high: 609.65, low: 589.05, close: 596.05, volume: 24402100, adj_close: 587.38 },
+          { date: "2012-03-26", open: 599.79, high: 621.45, low: 595.26, close: 599.55, volume: 22840000, adj_close: 590.83 },
+          { date: "2012-04-02", open: 601.83, high: 634.66, low: 600.38, close: 633.68, volume: 23635600, adj_close: 624.46 },
+          { date: "2012-04-09", open: 626.13, high: 644.00, low: 603.51, close: 605.23, volume: 26127500, adj_close: 596.43 },
+          { date: "2012-04-16", open: 610.06, high: 620.25, low: 570.42, close: 572.98, volume: 34975300, adj_close: 564.65 },
+          { date: "2012-04-23", open: 570.61, high: 618.00, low: 555.00, close: 603.00, volume: 27794600, adj_close: 594.23 },
+          { date: "2012-04-30", open: 597.80, high: 598.40, low: 565.17, close: 565.25, volume: 17607600, adj_close: 557.03 },
+          { date: "2012-05-07", open: 561.50, high: 575.88, low: 558.73, close: 566.71, volume: 15505800, adj_close: 558.47 },
+          { date: "2012-05-14", open: 562.57, high: 567.51, low: 522.18, close: 530.38, volume: 20281200, adj_close: 522.67 },
+          { date: "2012-05-21", open: 534.50, high: 576.50, low: 534.05, close: 562.29, volume: 19540000, adj_close: 554.11 },
+          { date: "2012-05-29", open: 570.90, high: 581.50, low: 560.52, close: 560.99, volume: 17166000, adj_close: 552.83 },
+          { date: "2012-06-04", open: 561.50, high: 580.58, low: 548.50, close: 580.32, volume: 14813900, adj_close: 571.88 },
+          { date: "2012-06-11", open: 587.72, high: 588.50, low: 566.70, close: 574.13, volume: 14293200, adj_close: 565.78 },
+          { date: "2012-06-18", open: 570.96, high: 590.00, low: 570.37, close: 582.10, volume: 12654100, adj_close: 573.63 },
+          { date: "2012-06-25", open: 577.30, high: 584.00, low: 565.61, close: 584.00, volume: 10630300, adj_close: 575.51 },
+          { date: "2012-07-02", open: 584.73, high: 614.34, low: 583.60, close: 605.88, volume: 13795700, adj_close: 597.07 },
+          { date: "2012-07-09", open: 605.30, high: 619.87, low: 592.68, close: 604.97, volume: 15001100, adj_close: 596.17 },
+          { date: "2012-07-16", open: 605.12, high: 615.35, low: 603.15, close: 604.30, volume: 12013700, adj_close: 595.51 },
+          { date: "2012-07-23", open: 594.40, high: 609.68, low: 570.00, close: 585.16, volume: 19578500, adj_close: 576.65 },
+          { date: "2012-07-30", open: 590.92, high: 617.98, low: 587.82, close: 615.70, volume: 13593200, adj_close: 606.74 },
+          { date: "2012-08-06", open: 617.29, high: 625.00, low: 615.26, close: 621.70, volume:  8955900, adj_close: 615.29 },
+          { date: "2012-08-13", open: 623.39, high: 648.19, low: 623.25, close: 648.11, volume: 11240200, adj_close: 641.43 },
+          { date: "2012-08-20", open: 650.01, high: 674.88, low: 648.11, close: 663.22, volume: 20349200, adj_close: 656.38 },
+          { date: "2012-08-27", open: 679.99, high: 680.87, low: 657.25, close: 665.24, volume: 10987500, adj_close: 658.38 },
+          { date: "2012-09-04", open: 665.76, high: 682.48, low: 664.50, close: 680.44, volume: 12724300, adj_close: 673.42 },
+          { date: "2012-09-10", open: 680.45, high: 696.98, low: 656.00, close: 691.28, volume: 20736000, adj_close: 684.15 },
+          { date: "2012-09-17", open: 699.35, high: 705.07, low: 693.62, close: 700.09, volume: 14332600, adj_close: 692.87 },
+          { date: "2012-09-24", open: 686.86, high: 695.12, low: 660.35, close: 667.10, volume: 20459000, adj_close: 660.22 },
+          { date: "2012-10-01", open: 671.16, high: 676.75, low: 650.65, close: 652.59, volume: 18290000, adj_close: 645.86 },
+          { date: "2012-10-08", open: 646.88, high: 647.56, low: 623.55, close: 629.71, volume: 21378800, adj_close: 623.21 },
+          { date: "2012-10-15", open: 632.35, high: 652.79, low: 609.62, close: 609.84, volume: 18514400, adj_close: 603.55 },
+          { date: "2012-10-22", open: 612.42, high: 635.38, low: 591.00, close: 604.00, volume: 24908300, adj_close: 597.77 },
+          { date: "2012-10-31", open: 594.88, high: 603.00, low: 574.75, close: 576.80, volume: 17508000, adj_close: 570.85 },
+          { date: "2012-11-05", open: 583.52, high: 590.74, low: 533.72, close: 547.06, volume: 26312500, adj_close: 543.89 },
+          { date: "2012-11-12", open: 554.15, high: 554.50, low: 505.75, close: 527.68, volume: 25590900, adj_close: 524.62 },
+          { date: "2012-11-19", open: 540.71, high: 572.00, low: 539.88, close: 571.50, volume: 18856200, adj_close: 568.19 },
+          { date: "2012-11-26", open: 575.90, high: 594.25, low: 572.26, close: 585.28, volume: 18505600, adj_close: 581.89 },
+          { date: "2012-12-03", open: 593.65, high: 594.59, low: 518.63, close: 533.25, volume: 28073100, adj_close: 530.16 },
+          { date: "2012-12-10", open: 525.00, high: 549.56, low: 505.58, close: 509.79, volume: 23891500, adj_close: 506.84 },
+          { date: "2012-12-17", open: 508.93, high: 534.90, low: 501.23, close: 519.33, volume: 20790100, adj_close: 516.32 },
+          { date: "2012-12-24", open: 520.35, high: 524.25, low: 504.66, close: 509.59, volume: 11496300, adj_close: 506.64 },
+          { date: "2012-12-31", open: 510.53, high: 535.40, low: 509.00, close: 532.17, volume: 23553300, adj_close: 529.09 },
+        ];
+        
+        $('#click-chart1').sparkline(
+            $.map(stock, function(wk) { return wk.adj_close; }),
+            {
+                height: 48,
+                width: 210,
+                lineColor: chartStyles.color.secondaryDark,
+                fillColor: chartStyles.color.secondaryLightest,
+                spotColor: false,
+                minSpotColor: chartStyles.color.primary,
+                maxSpotColor: chartStyles.color.primary,
+                disableHighlight: true,
+                disableTooltips: true
+            }
+        );
+        
+        $('#click-chart2')
+          .sparkline(
+            $.map(stock, function(wk) { return wk.adj_close; }),
+            {
+                height: 48,
+                width: 210,
+                lineColor: chartStyles.color.secondaryDark,
+                fillColor: chartStyles.color.secondaryLightest,
+                spotColor: false,
+                minSpotColor: chartStyles.color.primary,
+                maxSpotColor: chartStyles.color.primary,
+                disableHighlight: true,
+                disableTooltips: true
+            }
+          ).on('sparklineClick', function(ev) {
+            $("#popup2").show();
+          });
+        
+        $('#click-chart3')
+          .sparkline(
+            $.map(stock, function(wk) { return wk.adj_close; }),
+            {
+                height: 48,
+                width: 210,
+                lineColor: chartStyles.color.secondaryDark,
+                fillColor: chartStyles.color.secondaryLightest,
+                spotColor: false,
+                minSpotColor: chartStyles.color.primary,
+                maxSpotColor: chartStyles.color.primary,
+                disableHighlight: true,
+                tooltipFormatter: function() {return "Click for details"; }
+            }
+          ).on('sparklineClick', function(ev) {
+            $("#popup3").show();
+            $("#popup3-control").show();
+            $('#click-chart3').hide();
+          });
+          $("#popup3-control a").click(function(ev) {
+            ev.preventDefault();
+            $("#popup3").hide();
+            $("#popup3-control").hide();
+            $('#click-chart3').show();
+          })
+        
+        $('#click-chart4')
+          .sparkline(
+            $.map(stock, function(wk) { return wk.adj_close; }),
+            {
+                height: 48,
+                width: 210,
+                lineColor: chartStyles.color.secondaryDark,
+                fillColor: chartStyles.color.secondaryLightest,
+                spotColor: false,
+                minSpotColor: chartStyles.color.primary,
+                maxSpotColor: chartStyles.color.primary,
+                disableHighlight: true,
+                tooltipFormatter: function() {return "Click for details"; }
+            }
+          ).on('sparklineClick', function(ev) {
+            $("#popup4").slideDown();
+            $("#popup4-control").slideDown();
+            $('#click-chart4').slideUp();
+          });
+          $("#popup4-control a").click(function(ev) {
+            ev.preventDefault();
+            $("#popup4").slideUp();
+            $("#popup4-control").slideUp();
+            $('#click-chart4').slideDown();
+          })
+
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="updating-charts-in-real-time">Updating Charts in Real Time</h2>
+<p>As we’ve seen in this chapter’s other examples, sparklines are great for integrating visualizations in a complete web page. They can be embedded in text content or used as table elements. Another application that suits sparklines well is an information dashboard. Effective dashboards summarize the health of the underlying system <em>at a glance</em>. When users don’t have the time to read through pages of texts or detailed graphics, the information density of sparklines makes them an ideal tool.</p>
+<p>In addition to high information density, most dashboards have another requirement: they must be up-to-date. For web-based dashboards, that means the contents should be continuously updated, even while users are viewing the page. There is no excuse for requiring them to “refresh their browsers.” Fortunately, the sparklines library makes it easy to accommodate this requirement as well.</p>
+<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web. For this visualization we’ll show both a chart and the most recent value of the data. We define <code>&lt;div&gt;</code> elements for each and place both in a containing <code>&lt;div&gt;</code>. The code below includes some styles inline, but you could place them in an external style sheet. Here the styles are just meant to position the value immediately to the right of the chart rather than on a separate line.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;dashboard&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;chart&quot;</span><span class="ot"> style=</span><span class="st">&quot;float:left&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;value&quot;</span><span class="ot"> style=</span><span class="st">&quot;float:left&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
+<h3 id="step-1-retrieve-the-data">Step 1: Retrieve the Data</h3>
+<p>In a real dashboard example, the server would provide the data to display and updates to that data. As long as the frequency of the updates was modest (not faster than once every five seconds or so), we could simply poll the server for updates on a regular interval. It’s probably not a good idea, however, to use the JavaScript <code>setInterval()</code> function to control the polling interval. That may seem strange at first because <code>setInterval()</code> executes a function periodically, which would seem to meet the requirements exactly. The situation is not quite that simple, however. If the server or network encounters a problem, then requests triggered by <code>setInterval()</code>will continue unabated, stacking up in a queue. Then, when communications with the server is restored, all of the pending requests will immediately finish, and we’d have a flood of data to handle.</p>
+<p>To avoid this problem, we can use the <code>setTimeout()</code> function instead. That function only executes once, so we’ll have to keep calling it explicitly. By doing that, though, we can make sure that we only send a request to the server after the current one finishes. This approach avoids stacking up a queue of requests.</p>
+<table class="sourceCode javascript numberLines" data-line="12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">(<span class="kw">function</span> <span class="fu">getData</span>(){
+    <span class="fu">setTimeout</span>(<span class="kw">function</span>(){
+        <span class="co">// request the data from the server</span>
+        <span class="ot">$</span>.<span class="fu">ajax</span>({ <span class="dt">url</span>: <span class="st">&quot;/api/data&quot;</span>, <span class="dt">success</span>: <span class="kw">function</span>(data) {
+
+            <span class="co">// data has the response from the server</span>
+
+            <span class="co">// now prepare to ask for updated data</span>
+            <span class="fu">getData</span>();
+        }, <span class="dt">dataType</span>: <span class="st">&quot;json&quot;</span>});
+    }, <span class="dv">30000</span>);  <span class="co">// 30000: wait 30 seconds to make the request</span>
+})();</code></pre></td></tr></table>
+<p>Notice that the structure of the code defines the <code>getData()</code> function and immediately executes it. The closing pair of parenthesis at the end of line 12 triggers the immediate execution.</p>
+<p>Within the <code>success</code> callback we set up a recursive call to <code>getData()</code> in line 9 so the function executes again whenever the server responds with data.</p>
+<h3 id="step-2-update-the-visualization">Step 2: Update the Visualization</h3>
+<p>Whenever we receive updated information from the server, we can simply update the chart and value. The code needs only a straightforward call to the sparklines library and a jQuery function to update the value. We’ve added that to the code in lines 6 and 7 below.</p>
+<table class="sourceCode javascript numberLines" data-line="6,7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">(<span class="kw">function</span> <span class="fu">getData</span>(){
+    <span class="fu">setTimeout</span>(<span class="kw">function</span>(){
+        <span class="co">// request the data from the server</span>
+        <span class="ot">$</span>.<span class="fu">ajax</span>({ <span class="dt">url</span>: <span class="st">&quot;/api/data&quot;</span>, <span class="dt">success</span>: <span class="kw">function</span>(data) {
+
+            <span class="fu">$</span>(<span class="st">&#39;#chart&#39;</span>).<span class="fu">sparkline</span>(data);
+            <span class="fu">$</span>(<span class="st">&#39;#value&#39;</span>).<span class="fu">text</span>(<span class="ot">data</span>.<span class="fu">slice</span>(-<span class="dv">1</span>));
+
+            <span class="fu">getData</span>();
+        }, <span class="dt">dataType</span>: <span class="st">&quot;json&quot;</span>});
+    }, <span class="dv">30000</span>);  <span class="co">// 30000: wait 30 seconds to make the request</span>
+})();</code></pre></td></tr></table>
+<p>Figure <span class="nextfigure"/> shows what a default chart looks like. Of course you can specify both the chart and text styles as appropriate for your own dashboard.</p>
+<figure>
+<div id="dashboard1">
+<div id="chart" style="float:left;height:40px;width:135px">
+
+</div>
+<div id="value" style="float:left;height:40px;font-size:22px;padding-top:5px;">
+
+</div>
+</div>
+<figcaption>
+A live updating chart can show real time data.
+</figcaption>
+</figure>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var mrefreshinterval = 500; // update display every 500ms
+        var lastmousex=-1; 
+        var lastmousey=-1;
+        var lastmousetime;
+        var mousetravel = 0;
+        var mpoints = [0,0,0,0,0,0,0,0,0,0
+                      ,0,0,0,0,0,0,0,0,0,0
+                      ,0,0,0,0,0,0,0,0,0,0
+                      ,0,0,0,0,0,0,0,0,0,0
+                      ,0,0,0,0,0,0,0,0,0,0
+                      ,0,0,0,0,0,0,0,0,0,0];
+        var mpoints_max = 60;
+        $('html').mousemove(function(e) {
+            var mousex = e.pageX;
+            var mousey = e.pageY;
+            if (lastmousex > -1) {
+                mousetravel += Math.max( Math.abs(mousex-lastmousex), Math.abs(mousey-lastmousey) );
+            }
+            lastmousex = mousex;
+            lastmousey = mousey;
+        });
+        var mdraw = function() {
+            var md = new Date();
+            var timenow = md.getTime();
+            if (lastmousetime && lastmousetime!=timenow) {
+                var pps = Math.round(mousetravel / (timenow - lastmousetime) * 1000);
+                mpoints.push(pps);
+                if (mpoints.length > mpoints_max)
+                    mpoints.splice(0,1);
+                mousetravel = 0;
+                $('#dashboard1 #chart')
+                    .sparkline(mpoints, { 
+                        width: mpoints.length*2, 
+                        height: 30,
+                        lineColor: chartStyles.color.secondaryDark,
+                        fillColor: chartStyles.color.secondaryLightest,
+                        spotColor: false,
+                        minSpotColor: false,
+                        maxSpotColor: false
+                    });
+                $('#dashboard1 #value').text(mpoints.slice(-1));
+            }
+            lastmousetime = timenow;
+            setTimeout(mdraw, mrefreshinterval);
+        }
+        setTimeout(mdraw, mrefreshinterval); 
+
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="summing-up">Summing Up</h2>
+<p>In this chapter we’ve considered various techniques for integrating visualizations within a web page. We’ve seen that sparklines are an excellent tool. Because they provide a lot of visual information in a small space, they leave room for other elements of the page, including text blocks, tables, and dashboards. We’ve considered several ways to increase the information density even further with annotations, composite charts, and click events. Finally we looked at how to create charts that update in real time, accurately visualizing the up-to-the-minute status of an underlying system.</p>
+<p>Continue reading: <a href="chap04.html">Chapter 4: Creating Specialized Graphs</a>.</p>
+<script src="js/scripts.03.min.js"></script>
+        </main>
+        <footer>
+            <small>Copyright © 2012-2014 by Stephen A. Thomas. All Rights Reserved.</small>
+        </footer>
+    <script src="js/scripts.min.js"></script>
+   </body>
+</html>

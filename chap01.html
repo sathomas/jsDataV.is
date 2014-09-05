@@ -1,0 +1,2543 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <!--[if lte IE 8]>
+            <script>window.location.href='http://browsehappy.com';</script>
+        <![endif]-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Stephen Thomas <stephen@sathomas.me>">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png">
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/styles.min.css">
+        <title>Data Visualization with JavaScript</title>
+        <script>
+            var chartStyles = {
+                color: {
+                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
+                    primary:            "#CA0000",
+                    primaryLightest:    "#FE4C4C",
+                    primaryLight:       "#F71515",
+                    primaryDark:        "#A50000",
+                    primaryDarkest:     "#7B0000",
+                    secondary:          "#007979",
+                    secondaryLightest:  "#2D9999",
+                    secondaryLight:     "#0D9494",
+                    secondaryDark:      "#006363",
+                    secondaryDarkest:   "#004A4A",
+                    alternate:          "#7EBD00",
+                    alternateLightest:  "#B6ED47",
+                    alternateLight:     "#A0E714",
+                    alternateDark:      "#679A00",
+                    alternateDarkest:   "#4D7300"
+                },
+                font: {
+                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
+                }
+
+            };
+        </script>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html" alt="jsDataV.is">
+                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>jsDataV.is</title>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
+                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
+                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
+                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
+                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
+                            </g>
+                        </svg>
+                    </a>
+                </li>
+                <li>Contents ▾
+                    <ol>
+                        <li><a href="intro.html" >Introduction</a></li>
+                        <li><a href="chap01.html">Graphing Data</a></li>
+                        <li><a href="chap02.html">Making Charts Interactive</a></li>
+                        <li><a href="chap03.html">Integrating Charts in a Page</a></li>
+                        <li><a href="chap04.html">Creating Specialized Graphs</a></li>
+                        <li><a href="chap05.html">Showing Timelines</a></li>
+                        <li><a href="chap06.html">Visualizing Geographic Data</a></li>
+                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
+                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                    </ol>
+                </li>
+            </ul>
+        </nav>
+        <main>
+
+<style>
+
+body { counter-reset: chapter 1; }
+
+.flotr-title, .flotr-axis-title { font-weight: normal !important; }
+.flotr-legend { padding: 5px; background-color: #f5f5f5; }
+.flotr-legend>table { width: auto; margin-bottom: 0; border: none; }
+.flotr-legend>table thead:first-child tr:first-child>th:first-child, .flotr-legend>table tbody:first-child tr:first-child>td:first-child { border-top-left-radius: 0; }
+.flotr-legend>table thead:first-child tr:first-child>th:last-child, .flotr-legend>table tbody:first-child tr:first-child>td:last-child { border-top-right-radius: 0; }
+.flotr-legend>table thead th { vertical-align: bottom;}
+.flotr-legend>table th, .flotr-legend>table td { padding: 0 0.2em; line-height: 1.3; border-top: none; }
+.flotr-legend>table th, .flotr-legend>table td { border-left: none; }
+
+</style>
+
+<h1 id="chapter-1-graphing-data">Chapter 1: Graphing Data</h1>
+<p>Many people think of data visualization as intricate interactive graphics of dazzling complexity. Creating effective visualizations, however, doesn’t require Picasso’s artistic skills nor Turing’s programming expertise. In fact, when you consider the ultimate purpose of data visualization—helping users <em>understand</em> data—simplicity is one of the most important features of an effective visualization. Simple, straightforward charts are often the easiest to understand. After all, users have seen hundreds or thousands of bar charts, line charts, <span class="smcp">X</span>/<span class="smcp">Y</span> plots, and the like. They know the conventions that underlie these charts, so they can interpret a well-designed example effortlessly. That makes them the first choice for planning any visualization. If a simple, static chart presents the data best, use it. You’ll spend less effort creating your visualization, and your users will spend less effort trying to understand it.</p>
+<p>There are many high quality tools and libraries to help you get started with simple visualizations. With these tools, you can avoid reinventing the wheel, plus you can be assured of a reasonably attractive presentation by sticking with the library defaults. We’ll look at several of these tools throughout the book, but for this chapter the we’ll use the <a href="http://www.humblesoftware.com/flotr2/">flotr2 library</a>. flotr2 makes it easy to add standard bar charts, line charts, and pie charts to any web page, and it also supports some less common chart types. We’ll take a look at all of these techniques in the examples that follow. Here’s what you’ll learn:</p>
+<ul>
+<li>How to create a basic bar chart</li>
+<li>How to plot continuous data with a line chart</li>
+<li>How to emphasize fractions with a pie chart</li>
+<li>How to plot <span class="smcp">X</span>/<span class="smcp">Y</span> data with a scatter chart</li>
+<li>How to show magnitudes of <span class="smcp">X</span>/<span class="smcp">Y</span> data with a bubble chart</li>
+<li>How to display multidimensional data with a radar chart</li>
+</ul>
+<h2 id="creating-a-basic-bar-chart">Creating a Basic Bar Chart</h2>
+<p>If you’re ever in doubt about what type of chart best explains your data, your first consideration should probably be the basic bar chart. We see them so often it’s easy to overlook how effective they can be. Bar charts can show the evolution of a value over time, or they can provide a straightforward comparison of multiple values. Let’s walk through the steps in building one.</p>
+<h3 id="step-1-include-the-required-javascript">Step 1: Include the Required JavaScript</h3>
+<p>Since we’re using the flotr2 library to create the chart, we need to include that library in our web pages. The flotr2 package isn’t currently popular enough for public content distribution networks, so you’ll need to download a copy and host it on your own web server. We’ll use the minimized version (<code>flotr2.min.js</code>) since it provides the best performance.</p>
+<p>Flotr2 doesn’t require any other JavaScript libraries (such as jQuery), but it does rely on the <span class="smcp">HTML</span> <em>canvas</em> feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can add an additional library (<code>excanvas.min.js</code>) to our pages. That library is available from <a href="https://code.google.com/p/explorercanvas/">Google</a>. Since other browsers don’t need this library, we use some special markup to make sure only <span class="smcp">IE8</span> and earlier will bother to load it. (Line 9.) Start with the following skeleton for your <span class="smcp">HTML</span> document:</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="co">&lt;!-- Page Content Here --&gt;</span>
+    <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/flotr2.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<p>As you can see, we’re including the JavaScript libraries at the end of the document. This approach lets the browser load the document’s entire <span class="smcp">HTML</span> markup and begin laying out the page while it waits for the server to provide the JavaScript libraries.</p>
+<h3 id="step-2-set-aside-a-div-element-to-hold-the-chart">Step 2: Set Aside a &lt;div&gt; Element to Hold the Chart</h3>
+<p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the chart. This element must have an explicit height and width, or flotr2 won’t be able to construct the chart. We can indicate the element’s size in a <span class="smcp">CSS</span> style sheet, or we can place it directly on the element itself. Here’s how the document might look with the latter approach.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&#39;chart&#39;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;height:300px;&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/flotr2.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<p>Note that we’ve given the <code>&lt;div&gt;</code> an explicit <code>id</code> (‘chart’) so we can reference it later. You’ll need to use a basic template like this (importing the flotr2 library and setting up the <code>&lt;div&gt;</code>) for all the charts in this chapter.</p>
+<h3 id="step-3-define-the-data">Step 3: Define the Data</h3>
+<p>Now we can tackle the data that we want to display. For this example, I’ll use the number of Manchester City wins in the English Premier League for the past seven years. Of course you’ll want to substitute your actual data values, either with inline JavaScript (like the example below) or by another means (such as an <span class="smcp">AJAX</span> call to the server).</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;script&gt;</span>
+<span class="kw">var</span> wins = [[[<span class="dv">2006</span>,<span class="dv">13</span>],[<span class="dv">2007</span>,<span class="dv">11</span>],[<span class="dv">2008</span>,<span class="dv">15</span>],[<span class="dv">2009</span>,<span class="dv">15</span>],[<span class="dv">2010</span>,<span class="dv">18</span>],[<span class="dv">2011</span>,<span class="dv">21</span>],[<span class="dv">2012</span>,<span class="dv">28</span>]]];
+&lt;<span class="ot">/script&gt;</span></code></pre></td></tr></table>
+<p>As you can see, we have three layers of arrays. Let’s start from the inside and work our way out. For flotr2 charts, each data point is entered in a two-item array with an x-value and y-value. In our case we’re using the year as the x-value and the number of wins as the y-value. We collect all these values in another array called a <em>series</em>. We place this series inside one more outer array. We could enter multiple series into this outer array, but for now we’re only showing one series. Here’s a quick summary of each layer:</p>
+<ul>
+<li>Each data point consists of an x-value and a y-value packaged in an array</li>
+<li>Each series consists of a set of data points packaged in an array</li>
+<li>The data to chart consists of one or more series packaged in an array</li>
+</ul>
+<h3 id="step-4-draw-the-chart">Step 4: Draw the Chart</h3>
+<p>That’s all the setup we need. A simple call to the flotr2 library creates our first attempt at a chart. Here’s the code to do that. We first have to make sure the browser has loaded our document (otherwise the <code>chart</code> <code>&lt;div&gt;</code> might not be present. That’s the point of <code>window.onload</code>. Once that event occurs, we call <code>Flotr.draw</code> with three parameters: the <span class="smcp">HTML</span> element to contain the chart, the data for the chart, and any chart options. Our only options tell flotr2 to create a bar chart from the data.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">window</span>.<span class="fu">onload</span> = <span class="kw">function</span> () {
+    <span class="ot">Flotr</span>.<span class="fu">draw</span>(
+        <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+        wins,
+        {
+            <span class="dt">bars</span>: {
+                <span class="dt">show</span>: <span class="kw">true</span>
+            }
+        }
+    );
+};</code></pre></td></tr></table>
+<p>Since flotr2 doesn’t require jQuery, we haven’t taken advantage of any of jQuery’s shortcuts in this example. If your page already includes jQuery, you can use the standard jQuery conventions for the flotr2 charts in this chapter to execute the script after the window has loaded, and to find the <code>&lt;div&gt;</code> container for the chart.</p>
+<p>Figure <span class="nextfigure"/> shows what you’ll see on the web page:</p>
+<figure>
+<div id="bar-chart1" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+The flotr2 library turns data into a basic (if unpolished) bar chart.
+</figcaption>
+</figure>
+<p>Now you have a bar chart, but it’s not showing the information very effectively. Let’s add some options incrementally until we get what we want.</p>
+<h3 id="step-5-fix-the-vertical-axis">Step 5: Fix the Vertical Axis</h3>
+<p>The most glaring problem with the vertical axis is its scale. By default, flotr2 automatically calculates the range of the axis from the minimum and maximum values in the data. In our case the minimum value is 11 wins (from 2007), so flotr2 dutifully uses that as its y-axis minimum. In bar charts, however, it’s almost always best to make zero the y-axis minimum. If you don’t use zero, you risk overemphasizing the differences between values and confusing your users. Anyone who glances at the chart above, for example, might think that Manchester City did not win any matches in 2007. That certainly wouldn’t do the team any justice.</p>
+<p>Another problem with the vertical axis is the formatting. Flotr2 defaults to a precision of one decimal place, so it adds the superfluous “.0” to all the labels. We can fix both of these problems by specifying some y-axis options. The <code>min</code> property sets the minimum value for the y-axis, and the <code>tickDecimals</code> property tells flotr2 how many decimal places to show for the labels. In our case we don’t want any decimal places.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>), [wins], {
+    <span class="dt">bars</span>: {
+        <span class="dt">show</span>: <span class="kw">true</span>
+    },
+    <span class="dt">yaxis</span>: {
+        <span class="dt">min</span>: <span class="dv">0</span>,
+        <span class="dt">tickDecimals</span>: <span class="dv">0</span>
+    }
+});</code></pre></td></tr></table>
+<p>That definitely improves the vertical axis since the values start at zero and are formatted appropriately for integers.</p>
+<p>Figure <span class="nextfigure"/> shows how the graph looks now.</p>
+<figure>
+<div id="bar-chart2" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Simple options help flotr2 construct a better vertical axis.</figcation>
+</figure>
+<h3 id="step-6-fix-the-horizontal-axis">Step 6: Fix the Horizontal Axis</h3>
+<p>The horizontal axis needs some work as well. Just like the y-axis, flotr2 assumes that the x-axis values are real numbers and shows one decimal place in the labels. Since we’re charting years, we could simply set the precision to zero, as we did for the y-axis. But that’s not a very general solution, since it won’t work when the x-values are categories (like team names) that aren’t numbers at all. For the more general case, let’s first change our data to use simple numbers rather than years for the x-values. Then we’ll create an array that maps those simple numbers to arbitrary strings, which we can use as labels.</p>
+<p>As you can see, instead of using the actual years for the x-values, we’re simply using 0, 1, 2, etc. We then define a second array that maps those integer values into strings. Although our strings are years (and, thus, numbers) they could be anything.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> wins = [[<span class="dv">0</span>,<span class="dv">13</span>],[<span class="dv">1</span>,<span class="dv">11</span>],[<span class="dv">2</span>,<span class="dv">15</span>],[<span class="dv">3</span>,<span class="dv">15</span>],[<span class="dv">4</span>,<span class="dv">18</span>],[<span class="dv">5</span>,<span class="dv">21</span>],[<span class="dv">6</span>,<span class="dv">28</span>]];
+<span class="kw">var</span> years = [
+    [<span class="dv">0</span>, <span class="st">&quot;2006&quot;</span>],
+    [<span class="dv">1</span>, <span class="st">&quot;2007&quot;</span>],
+    [<span class="dv">2</span>, <span class="st">&quot;2008&quot;</span>],
+    [<span class="dv">3</span>, <span class="st">&quot;2009&quot;</span>],
+    [<span class="dv">4</span>, <span class="st">&quot;2010&quot;</span>],
+    [<span class="dv">5</span>, <span class="st">&quot;2011&quot;</span>],
+    [<span class="dv">6</span>, <span class="st">&quot;2012&quot;</span>]
+];</code></pre></td></tr></table>
+<p>Another problem is a lack of spacing between the bars. By default, flotr2 has each bar take up its full horizontal space, but that makes the chart look very cramped. We can adjust that with the <code>barWidth</code> property. Let’s set it to <code>0.5</code> so each bar only takes up half the available space.</p>
+<p>Here’s how we pass those options to flotr2. Note in line 11 that we use the <code>ticks</code> property of the x-axis to tell flotr2 which labels match which x-values.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>), wins, {
+    <span class="dt">bars</span>: {
+        <span class="dt">show</span>: <span class="kw">true</span>,
+        <span class="dt">barWidth</span>: <span class="fl">0.5</span>
+    },
+    <span class="dt">yaxis</span>: {
+        <span class="dt">min</span>: <span class="dv">0</span>,
+        <span class="dt">tickDecimals</span>: <span class="dv">0</span>
+    },
+    <span class="dt">xaxis</span>: {
+        <span class="dt">ticks</span>: years
+    }
+});</code></pre></td></tr></table>
+<p>Now we’re starting to get somewhere with our chart, which looks like figure <span class="nextfigure"/>. The year labels are appropriate for years, and there is space between the bars to improve their legibility.</p>
+<figure>
+<div id="bar-chart3" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+We can define our own labels for the horizontal axis.
+</figcaption>
+</figure>
+<h3 id="step-7-adjust-the-styling">Step 7: Adjust the styling</h3>
+<p>Now that the chart is functional and readable, we can pay some attention to the aesthetics. Let’s add a title, get rid of the unnecessary grid lines, and adjust the coloring of the bars.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>), wins, {
+    <span class="dt">title</span>: <span class="st">&quot;Manchester City Wins&quot;</span>,
+    <span class="dt">colors</span>: [<span class="st">&quot;#89AFD2&quot;</span>],
+    <span class="dt">bars</span>: {
+        <span class="dt">show</span>: <span class="kw">true</span>,
+        <span class="dt">barWidth</span>: <span class="fl">0.5</span>,
+        <span class="dt">shadowSize</span>: <span class="dv">0</span>,
+        <span class="dt">fillOpacity</span>: <span class="dv">1</span>,
+        <span class="dt">lineWidth</span>: <span class="dv">0</span>
+    },
+    <span class="dt">yaxis</span>: {
+        <span class="dt">min</span>: <span class="dv">0</span>,
+        <span class="dt">tickDecimals</span>: <span class="dv">0</span>
+    },
+    <span class="dt">xaxis</span>: {
+        <span class="dt">ticks</span>: years
+    },
+    <span class="dt">grid</span>: {
+        <span class="dt">horizontalLines</span>: <span class="kw">false</span>,
+        <span class="dt">verticalLines</span>: <span class="kw">false</span>
+    }
+});</code></pre></td></tr></table>
+<p>With figure <span class="nextfigure"/> we have a bar chart of which Manchester City fans can be proud.</p>
+<figure>
+<div id="bar-chart4" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Additional options let us adjust the visual styles of the chart.
+</figcaption>
+</figure>
+<p>For any data set of moderate size, the standard bar chart is often the most effective visualization. Users are already familiar with its conventions, so it doesn’t take any extra effort to understand the format. The bars themselves offer a clear visual contrast with the background, and they use a single linear dimension (height) to show differences between values, so users easily grasp the salient data.</p>
+<h3 id="step-8-varying-the-bar-color">Step 8: Varying the Bar Color</h3>
+<p>So far our chart has been fairly monochromatic. That actually makes sense because we’re showing the same value (Manchester City wins) across time. But bar charts are also good for comparing different values. Suppose, for example, we wanted to show the total wins for multiple teams in one year. In that case, it makes sense to use a different color for the bar of each team. Here’s how we can go about that.</p>
+<p>First we need to restructure the data somewhat. Previously we’ve only shown a single series. Now what we’re after is a different series for each team. Creating multiple series lets flotr2 color each independently. Here’s how the new data series compares with the old. We’ve left the <code>wins</code> array in the code for comparison, but it’s the <code>wins2</code> array that we’re going to show now. Notice how the nesting of the arrays changes. Also, we’re going to label each bar with the team abbreviation instead of the year.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> wins = [[[<span class="dv">0</span>,<span class="dv">13</span>],[<span class="dv">1</span>,<span class="dv">11</span>],[<span class="dv">2</span>,<span class="dv">15</span>],[<span class="dv">3</span>,<span class="dv">15</span>],[<span class="dv">4</span>,<span class="dv">18</span>],[<span class="dv">5</span>,<span class="dv">21</span>],[<span class="dv">6</span>,<span class="dv">28</span>]]];
+<span class="kw">var</span> wins2 = [[[<span class="dv">0</span>,<span class="dv">28</span>]],[[<span class="dv">1</span>,<span class="dv">28</span>]],[[<span class="dv">2</span>,<span class="dv">21</span>]],[[<span class="dv">3</span>,<span class="dv">20</span>]],[[<span class="dv">4</span>,<span class="dv">19</span>]]];
+<span class="kw">var</span> teams = [
+    [<span class="dv">0</span>, <span class="st">&quot;MCI&quot;</span>],
+    [<span class="dv">1</span>, <span class="st">&quot;MUN&quot;</span>],
+    [<span class="dv">2</span>, <span class="st">&quot;ARS&quot;</span>],
+    [<span class="dv">3</span>, <span class="st">&quot;TOT&quot;</span>],
+    [<span class="dv">4</span>, <span class="st">&quot;NEW&quot;</span>]
+];</code></pre></td></tr></table>
+<p>With those changes, our data is structured appropriately, and we can ask flotr2 to draw the chart. When we do that, let’s use different colors for each team. Everything else is the same as before.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>), wins2, {
+    <span class="dt">title</span>: <span class="st">&quot;Premier League Wins (2011-2012)&quot;</span>,
+    <span class="dt">colors</span>: [<span class="st">&quot;#89AFD2&quot;</span>, <span class="st">&quot;#1D1D1D&quot;</span>, <span class="st">&quot;#DF021D&quot;</span>, <span class="st">&quot;#0E204B&quot;</span>, <span class="st">&quot;#E67840&quot;</span>],
+    <span class="dt">bars</span>: {
+        <span class="dt">show</span>: <span class="kw">true</span>,
+        <span class="dt">barWidth</span>: <span class="fl">0.5</span>,
+        <span class="dt">shadowSize</span>: <span class="dv">0</span>,
+        <span class="dt">fillOpacity</span>: <span class="dv">1</span>,
+        <span class="dt">lineWidth</span>: <span class="dv">0</span>
+    },
+    <span class="dt">yaxis</span>: {
+        <span class="dt">min</span>: <span class="dv">0</span>,
+        <span class="dt">tickDecimals</span>: <span class="dv">0</span>
+    },
+    <span class="dt">xaxis</span>: {
+        <span class="dt">ticks</span>: teams
+    },
+    <span class="dt">grid</span>: {
+        <span class="dt">horizontalLines</span>: <span class="kw">false</span>,
+        <span class="dt">verticalLines</span>: <span class="kw">false</span>
+    }
+});</code></pre></td></tr></table>
+<p>As you can see from figure <span class="nextfigure"/>, with a few minor adjustments we’ve completely changed the focus of our bar chart. Instead of showing a single team at different points in time, we’re now comparing different teams at the same point in time. That’s the versatility of a simple bar chart.</p>
+<figure>
+<div id="bar-chart5" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Bar charts can compare different quantities at one point in time as well as the same quantity at different points in time.
+</figcaption>
+</figure>
+<p>We’ve used a lot of different code fragments to put together these examples. If you want to see a complete example all contained in a single file, check out this book’s source code.</p>
+<h3 id="step-9-work-arounds-for-flotr2-bugs">Step 9: Work Arounds for Flotr2 “Bugs”</h3>
+<p>If you’re building large web pages with a lot of content, you may run into a flotr2 “bug” that can be quite annoying. I’ve put “bug” in quotation marks because the flotr2 behavior is deliberate, but I believe it’s not correct. In the process of constructing its charts, flotr2 creates dummy <span class="smcp">HTML</span> elements so it can calculate their sizes. Flotr2 doesn’t intend these dummy elements to be visible on the page, so it “hides” them by positioning them off the screen. Unfortunately, what flotr2 thinks is off the screen isn’t always. Specifically, around line 2280 in <code>flotr2.js</code> you’ll find the statement:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">D</span>.<span class="fu">setStyles</span>(div, { <span class="st">&#39;position&#39;</span> : <span class="st">&#39;absolute&#39;</span>, <span class="st">&#39;top&#39;</span> : <span class="st">&#39;-10000px&#39;</span> });</code></pre>
+<p>Flotr2 intends to place these dummy elements 10,000 pixels above the top of the browser window. However, <span class="smcp">CSS</span> absolute positioning can be relative to the containing element, which is not always the browser window. So if your document is more than 10,000 pixels high, you may find flotr2 scattering text in random-looking locations throughout the page. There are a couple of ways to work around this bug, at least until the flotr2 code is revised.</p>
+<p>One option is to modify the code yourself. Flotr2 is open source, so you can freely download the full source code and modify it appropriately. One simple modification would position the dummy elements far to the right or left rather than above. Instead of <code>'top'</code> you could change the code to <code>'right'</code>. If you’re not comfortable making changes to the library’s source code, another option is to find and hide those dummy elements yourself. You should do this <em>after</em> you’ve called <code>Flotr.draw()</code> for the last time. The latest version of jQuery can banish these extraneous elements with the following statement:</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;.flotr-dummy-div&quot;</span>).<span class="fu">parent</span>().<span class="fu">hide</span>();</code></pre></td></tr></table>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var wins = [[[2006,13],[2007,11],[2008,15],[2009,15],[2010,18],[2011,21]],[2012,28]];
+        Flotr.draw(document.getElementById("bar-chart1"),wins, {
+            fontColor: chartStyles.color.text,
+            grid: { color: chartStyles.color.text },
+            bars: {
+                show: true,
+            },
+        });
+        Flotr.draw(document.getElementById("bar-chart2"),wins, {
+            fontColor: chartStyles.color.text,
+            grid: { color: chartStyles.color.text },
+            bars: {
+                show: true,
+            },
+            yaxis: {
+                min: 0,
+                tickDecimals: 0,
+            }
+        });
+        wins = [[[0,13],[1,11],[2,15],[3,15],[4,18],[5,21],[6,28]]];
+        var years = [
+            [0, "2006"],
+            [1, "2007"],
+            [2, "2008"],
+            [3, "2009"],
+            [4, "2010"],
+            [5, "2011"],
+            [6, "2012"],
+        ];
+        Flotr.draw(document.getElementById("bar-chart3"),wins, {
+            fontColor: chartStyles.color.text,
+            grid: { color: chartStyles.color.text },
+            bars: {
+                show: true,
+                barWidth: 0.5,
+            },
+            yaxis: {
+                min: 0,
+                tickDecimals: 0,
+            },
+            xaxis: {
+                ticks: years
+            }
+        });
+        Flotr.draw(document.getElementById("bar-chart4"),wins, {
+            fontColor: chartStyles.color.text,
+            title: "Manchester City Wins",
+            colors: ["#89AFD2"],
+            bars: {
+                show: true,
+                barWidth: 0.5,
+                shadowSize: 0,
+                fillOpacity: 1,
+                lineWidth: 0,
+            },
+            yaxis: {
+                min: 0,
+                tickDecimals: 0,
+            },
+            xaxis: {
+                ticks: years,
+            },
+            grid: {
+                color: chartStyles.color.text,
+                horizontalLines: false,
+                verticalLines: false,
+            }
+        });
+        var wins2 = [[[0,28]],[[1,28]],[[2,21]],[[3,20]],[[4,19]]];
+        var teams = [
+            [0, "MCI"],
+            [1, "MUN"],
+            [2, "ARS"],
+            [3, "TOT"],
+            [4, "NEW"],
+        ];
+        Flotr.draw(document.getElementById("bar-chart5"),wins2, {
+            fontColor: chartStyles.color.text,
+            title: "Premier League Wins (2011-2012)",
+            colors: ["#89AFD2", "#1D1D1D", "#DF021D", "#0E204B", "#E67840"],
+            bars: {
+                show: true,
+                barWidth: 0.5,
+                shadowSize: 0,
+                fillOpacity: 1,
+                lineWidth: 0,
+            },
+            yaxis: {
+                min: 0,
+                tickDecimals: 0,
+            },
+            xaxis: {
+                ticks: teams,
+            },
+            grid: {
+                color: chartStyles.color.text,
+                horizontalLines: false,
+                verticalLines: false,
+            }
+        });
+
+        var dummyElements = document.getElementsByClassName('flotr-dummy-div');
+        Array.prototype.forEach.call(dummyElements, function(dummyElement){
+            dummyElement.parentNode.style.display = 'none';
+        });
+
+    };
+
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="plotting-continuous-data-with-a-line-chart">Plotting Continuous Data with a Line Chart</h2>
+<p>Bar charts work great for visualizing a modest amount of data, but for more significant amounts of data, a line chart can present the information much more effectively. Line charts are especially good at revealing overall trends in data without bogging the user down in individual data points.</p>
+<p>For our example, we’ll look at two measures that may be related to each other: Carbon Dioxide concentration in the atmosphere and global temperatures. We want to show how both measures have changed over time, and we’d like to see how strongly related the values are. A line chart is a perfect visualization tool for looking at these trends.</p>
+<p>Just like for the bar chart, you’ll need to include the flotr2 library in your web page and create a <code>&lt;div&gt;</code> element to contain the chart. Let’s start prepping the data.</p>
+<h3 id="step-1-define-the-data">Step 1: Define the Data</h3>
+<p>Let’s start with <span class="smcp">CO</span><sub>2</sub> concentration measurements. The <span class="smcp">US</span> National Oceanographic and Atmospheric Administration (<span class="smcp">NOAA</span>) publishes <a href="http://www.esrl.noaa.gov/gmd/ccgg/trends/co2_data_mlo.html">measurements</a> taken at Mauna Loa, Hawaii from 1959 through today. (Only the first few values are shown in the excerpt below.)</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> co2 = [
+    [ <span class="dv">1959</span>, <span class="fl">315.97</span> ],
+    [ <span class="dv">1960</span>, <span class="fl">316.91</span> ],
+    [ <span class="dv">1961</span>, <span class="fl">317.64</span> ],
+    [ <span class="dv">1962</span>, <span class="fl">318.45</span> ],
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+<p><span class="lgcp">NOAA</span> also publishes measurements of <a href="http://www.ncdc.noaa.gov/cmb-faq/anomalies.php">mean global surface temperature</a>. These values measure the difference from the baseline, which is currently taken to be the average temperature over the entire 20<sup>th</sup> century. Since the <span class="smcp">CO</span><sub>2</sub> measurements begin in 1959, we’ll use that as our starting point for temperature as well.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> temp = [
+    [ <span class="dv">1959</span>,  <span class="fl">0.0776</span> ],
+    [ <span class="dv">1960</span>,  <span class="fl">0.0280</span> ],
+    [ <span class="dv">1961</span>,  <span class="fl">0.1028</span> ],
+    [ <span class="dv">1962</span>,  <span class="fl">0.1289</span> ],
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+<h3 id="step-2-graph-the-co2-data">Step 2: Graph the CO<sub>2</sub> Data</h3>
+<p>Graphing one data set is quite easy with flotr2. We simply call the <code>draw()</code> method of the <code>Flotr</code> object. The only parameters it requires are a reference to the <span class="smcp">HTML</span> element in which to place the graph, and the data itself. As part of the data object, we indicate that we want a line chart.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [{ <span class="dt">data</span>: co2, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }]
+);</code></pre></td></tr></table>
+<p>Since flotr2 does not require jQuery, we’re not using any jQuery convenience functions in our example. If you do have jQuery on your pages, you can simplify the code above a little. In either case figure <span class="nextfigure"/> the result:</p>
+<figure>
+<div id="line-chart1" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+The first chart shows one data set.
+</figcaption>
+</figure>
+<p>The chart clearly shows the trend in <span class="smcp">CO</span><sub>2</sub> concentration for the past 50+ years.</p>
+<h3 id="step-3-add-the-temperature-data">Step 3: Add the Temperature Data</h3>
+<p>With a simple addition we can add temperature measurements to our chart. Note that we include the <code>yaxis</code> option for the temperature data and give it a value of 2. That tells flotr2 to use a different y-scale for the temperature data.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [
+        { <span class="dt">data</span>: co2, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: temp, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span> }
+    ]
+);</code></pre></td></tr></table>
+<p>The chart in figure <span class="nextfigure"/> now shows both measurements for the years in question, but it’s gotten a little cramped and confusing. The values butt up right against the edges of the chart, and the grid lines are hard for users to interpret when there are multiple vertical axes.</p>
+<figure>
+<div id="line-chart2" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+A single chart can show multiple data sets.
+</figcaption>
+</figure>
+<h3 id="step-4-improve-the-charts-readability">Step 4: Improve the Chart’s Readability</h3>
+<p>By using more flotr2 options we can make several improvements in the chart’s readability. First we can eliminate the grid lines, since they aren’t relevant for the temperature measurements.</p>
+<p>We can also extend the range of both vertical axes to provide a bit of breathing room for the chart. Both of these changes are additional options to the <code>draw()</code> method. The <code>grid</code> options turn off the gridlines by setting both the <code>horizontalLines</code> and <code>verticalLines</code> properties to <code>false</code>. The <code>yaxis</code> options specify the minimum and maximum value for the first vertical axis (<span class="smcp">CO</span><sub>2</sub> concentration), while the <code>y2axis</code> options specify those values for the second vertical axis (temperature difference).</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [
+        { <span class="dt">data</span>: co2, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: temp, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span> }
+    ],{
+        <span class="dt">grid</span>: {<span class="dt">horizontalLines</span>: <span class="kw">false</span>, <span class="dt">verticalLines</span>: <span class="kw">false</span>},
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>},
+        <span class="dt">y2axis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>}
+    }
+);</code></pre></td></tr></table>
+<p>The resulting graph in figure <span class="nextfigure"/> is cleaner and easier to read:</p>
+<figure>
+<div id="line-chart3" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Removing grid lines and expanding the axes makes the chart easier to read.
+</figcaption>
+</figure>
+<h3 id="step-5-clarify-the-temperature-measurements">Step 5: Clarify the Temperature Measurements</h3>
+<p>The temperature measures might still be a little confusing to users, since they’re not really temperatures; they’re actually deviations from the 20<sup>th</sup> century average. Let’s use our chart to help explain that distinction, by adding a line for that 20<sup>th</sup> century average, and explicitly labelling it. The simplest way to do that is to create a “dummy” data set and add that to the chart. The extra data set has nothing but zeros.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> zero = [];
+<span class="kw">for</span> (<span class="kw">var</span> yr=<span class="dv">1959</span>; yr&lt;<span class="dv">2012</span>; yr++) { <span class="ot">zero</span>.<span class="fu">push</span>([yr, <span class="dv">0</span>]); };</code></pre></td></tr></table>
+<p>When we add it to the chart, we need to indicate that it corresponds to the second y-axis. And since we want this line to appear as part of the chart framework rather than as another data set, let’s deemphasize it somewhat by setting its width to one pixel, coloring it dark gray, and disabling shadows.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [
+        { <span class="dt">data</span>: zero, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">lineWidth</span>: <span class="dv">1</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span>, <span class="dt">shadowSize</span>: <span class="dv">0</span>, <span class="dt">color</span>: <span class="st">&quot;#545454&quot;</span> },
+        { <span class="dt">data</span>: co2, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: temp, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span> }
+    ],{
+        <span class="dt">grid</span>: {<span class="dt">horizontalLines</span>: <span class="kw">false</span>, <span class="dt">verticalLines</span>: <span class="kw">false</span>},
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>},
+        <span class="dt">y2axis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>}
+    }
+);</code></pre></td></tr></table>
+<p>As you can see, we’ve placed the zero line first among the data sets. With that order, flotr2 will draw the actual data on top of the zero line as in figure <span class="nextfigure"/>, reinforcing its role as chart framework instead of data.</p>
+<figure>
+<div id="line-chart4" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+A dummy data set can emphasize a position on a chart axis.
+</figcaption>
+</figure>
+<h3 id="step-6-label-the-chart">Step 6: Label the Chart</h3>
+<p>For the last step in this example, we’ll add appropriate labels to the chart. That includes an overall title, as well as labels for individual data sets. And to make it clear which axis refers to temperature, we’ll add a “°C” suffix to the temperature scale. We identify the label for each data series in the <code>label</code> option for that series. The overall chart title merits its own option, and we add the “°C” suffix using a <code>tickFormatter</code> function. That option expects a function. For each value on the axis, the formatter function is called with the value, and flotr2 expects it to return a string to use for the label. As you can see in line 26, we simply append the <code>&quot; °C&quot;</code> string to the value.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;line-chart5&quot;</span>),
+    [ {
+        <span class="dt">data</span>: zero,
+        <span class="dt">label</span>: <span class="st">&quot;20&lt;sup&gt;th&lt;/sup&gt; Century Baseline Temperature&quot;</span>,
+        <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">lineWidth</span>: <span class="dv">1</span>},
+        <span class="dt">shadowSize</span>: <span class="dv">0</span>,
+        <span class="dt">color</span>: <span class="st">&quot;#545454&quot;</span>
+      },
+      { 
+        <span class="dt">data</span>: temp,
+        <span class="dt">label</span>: <span class="st">&quot;Yearly Temperature Difference (°C)&quot;</span>,
+        <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>}
+      },
+      {
+        <span class="dt">data</span>: co2,
+        <span class="dt">yaxis</span>: <span class="dv">2</span>,
+        <span class="dt">label</span>: <span class="st">&quot;CO&lt;sub&gt;2&lt;/sub&gt; Concentration (ppm)&quot;</span>,
+        <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>}
+      }
+    ],
+    {
+        <span class="dt">title</span>: <span class="st">&quot;Global Temperature and CO&lt;sub&gt;2&lt;/sub&gt; Concentration (NOAA Data)&quot;</span>,
+        <span class="dt">grid</span>: {<span class="dt">horizontalLines</span>: <span class="kw">false</span>, <span class="dt">verticalLines</span>: <span class="kw">false</span>},
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>},
+        <span class="dt">y2axis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>, 
+                <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot; °C&quot;</span>;}}
+    }
+);</code></pre></td></tr></table>
+<p>You may have noticed that we’ve also swapped the position of the <span class="smcp">CO</span><sub>2</sub> and temperature graphs. We’re now passing the temperature data series ahead of the <span class="smcp">CO</span><sub>2</sub> series. We did that so that the two temperature quantities (baseline and difference) appear next to each other in the legend, making their connection a little more clear to the user. And because the temperature now appears first in the legend, we’ve also swapped the axes, so the temperature axis is on the left. Finally, for the same reason we’ve adjusted the title of the chart.</p>
+<figure>
+<div id="line-chart5" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Labeling the axes and adding a legend completes the chart.
+</figcaption>
+</figure>
+<p>A line chart like <span class="lastfigure"/> excels in visualizing this kind of data. Each data set contains over 50 points, making it impractical to present each individual point. And in fact, individual data points are not the focus of the visualization. Rather, we want to show trends—the trends of each data set as well as their correlation. Connecting the points with lines leads the user right to those trends and to the heart of our visualization.</p>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var co2 = [
+            [ 1959, 315.97 ],
+            [ 1960, 316.91 ],
+            [ 1961, 317.64 ],
+            [ 1962, 318.45 ],
+            [ 1963, 318.99 ],
+            [ 1964, 319.62 ],
+            [ 1965, 320.04 ],
+            [ 1966, 321.38 ],
+            [ 1967, 322.16 ],
+            [ 1968, 323.04 ],
+            [ 1969, 324.62 ],
+            [ 1970, 325.68 ],
+            [ 1971, 326.32 ],
+            [ 1972, 327.45 ],
+            [ 1973, 329.68 ],
+            [ 1974, 330.18 ],
+            [ 1975, 331.08 ],
+            [ 1976, 332.05 ],
+            [ 1977, 333.78 ],
+            [ 1978, 335.41 ],
+            [ 1979, 336.78 ],
+            [ 1980, 338.68 ],
+            [ 1981, 340.10 ],
+            [ 1982, 341.44 ],
+            [ 1983, 343.03 ],
+            [ 1984, 344.58 ],
+            [ 1985, 346.04 ],
+            [ 1986, 347.39 ],
+            [ 1987, 349.16 ],
+            [ 1988, 351.56 ],
+            [ 1989, 353.07 ],
+            [ 1990, 354.35 ],
+            [ 1991, 355.57 ],
+            [ 1992, 356.38 ],
+            [ 1993, 357.07 ],
+            [ 1994, 358.82 ],
+            [ 1995, 360.80 ],
+            [ 1996, 362.59 ],
+            [ 1997, 363.71 ],
+            [ 1998, 366.65 ],
+            [ 1999, 368.33 ],
+            [ 2000, 369.52 ],
+            [ 2001, 371.13 ],
+            [ 2002, 373.22 ],
+            [ 2003, 375.77 ],
+            [ 2004, 377.49 ],
+            [ 2005, 379.80 ],
+            [ 2006, 381.90 ],
+            [ 2007, 383.77 ],
+            [ 2008, 385.59 ],
+            [ 2009, 387.37 ],
+            [ 2010, 389.85 ],
+            [ 2011, 391.62 ],
+        ];
+        var temp = [
+            [ 1959,  0.0776 ],
+            [ 1960,  0.0280 ],
+            [ 1961,  0.1028 ],
+            [ 1962,  0.1289 ],
+            [ 1963,  0.1469 ],
+            [ 1964, -0.1171 ],
+            [ 1965, -0.0523 ],
+            [ 1966,  0.0063 ],
+            [ 1967,  0.0219 ],
+            [ 1968,  0.0093 ],
+            [ 1969,  0.1139 ],
+            [ 1970,  0.0684 ],
+            [ 1971, -0.0315 ],
+            [ 1972,  0.0558 ],
+            [ 1973,  0.1909 ],
+            [ 1974, -0.0527 ],
+            [ 1975,  0.0172 ],
+            [ 1976, -0.0753 ],
+            [ 1977,  0.1779 ],
+            [ 1978,  0.0990 ],
+            [ 1979,  0.1856 ],
+            [ 1980,  0.2301 ],
+            [ 1981,  0.2701 ],
+            [ 1982,  0.1521 ],
+            [ 1983,  0.3170 ],
+            [ 1984,  0.1259 ],
+            [ 1985,  0.1065 ],
+            [ 1986,  0.1956 ],
+            [ 1987,  0.3293 ],
+            [ 1988,  0.3407 ],
+            [ 1989,  0.2659 ],
+            [ 1990,  0.3988 ],
+            [ 1991,  0.3757 ],
+            [ 1992,  0.2323 ],
+            [ 1993,  0.2621 ],
+            [ 1994,  0.3245 ],
+            [ 1995,  0.4473 ],
+            [ 1996,  0.3170 ],
+            [ 1997,  0.5117 ],
+            [ 1998,  0.6286 ],
+            [ 1999,  0.4525 ],
+            [ 2000,  0.4264 ],
+            [ 2001,  0.5496 ],
+            [ 2002,  0.6121 ],
+            [ 2003,  0.6211 ],
+            [ 2004,  0.5779 ],
+            [ 2005,  0.6510 ],
+            [ 2006,  0.5977 ],
+            [ 2007,  0.5923 ],
+            [ 2008,  0.5134 ],
+            [ 2009,  0.5985 ],
+            [ 2010,  0.6621 ],
+            [ 2011,  0.5362 ],
+        ];
+
+        Flotr.draw(
+            document.getElementById("line-chart1")
+            ,[{ data: co2, lines: {show:true}, color: chartStyles.color.secondary }]
+            ,{fontColor: chartStyles.color.text, grid: { color: chartStyles.color.text }}
+        );
+        Flotr.draw(
+            document.getElementById("line-chart2")
+            ,[
+                { data: co2, lines: {show:true}, color: chartStyles.color.secondary },
+                { data: temp, lines: {show:true}, yaxis: 2, color: chartStyles.color.alternate },
+             ]
+            ,{fontColor: chartStyles.color.text, grid: { color: chartStyles.color.text }}
+        );
+        Flotr.draw(
+            document.getElementById("line-chart3")
+            ,[
+                { data: co2, lines: {show:true}, color: chartStyles.color.secondary  },
+                { data: temp, lines: {show:true}, yaxis: 2, color: chartStyles.color.alternate },
+             ]
+            ,{
+                fontColor: chartStyles.color.text,
+                grid: {horizontalLines: false, verticalLines: false, color: chartStyles.color.text},
+                yaxis: {min: 300, max: 400},
+                y2axis: {min: -0.15, max: 0.69},
+             }
+        );
+        var zero = [];
+        for (yr=1959; yr<2012; yr++) { zero.push([yr, 0]); };
+        Flotr.draw(
+            document.getElementById("line-chart4")
+            ,[
+                { data: zero, lines: {show:true, lineWidth: 1}, yaxis: 2, shadowSize: 0, color: chartStyles.color.primary },
+                { data: co2, lines: {show:true}, color: chartStyles.color.secondary },
+                { data: temp, lines: {show:true}, yaxis: 2, color: chartStyles.color.alternate },
+             ]
+            ,{
+                fontColor: chartStyles.color.text,
+                grid: {horizontalLines: false, verticalLines: false, color: chartStyles.color.text},
+                yaxis: {min: 300, max: 400},
+                y2axis: {min: -0.15, max: 0.69},
+             }
+        );
+        Flotr.draw(
+            document.getElementById("line-chart5")
+            ,[
+                { data: zero, label: "20<sup>th</sup> Century Baseline Temperature", lines: {show:true, lineWidth: 1}, shadowSize: 0, color: chartStyles.color.primary },
+                { data: temp, label: "Yearly Temperature Difference (°C)", lines: {show:true}, color: chartStyles.color.alternate},
+                { data: co2, label: "CO<sub>2</sub> Concentration (ppm)", lines: {show:true}, yaxis: 2, color: chartStyles.color.secondary },
+             ]
+            ,{
+                fontColor: chartStyles.color.text,
+                title: "Global Temperature and CO<sub>2</sub> Concentration (NOAA Data)",
+                grid: {horizontalLines: false, verticalLines: false, color: chartStyles.color.text},
+                y2axis: {min: 300, max: 400},
+                yaxis: {min: -0.15, max: 0.69, 
+                        tickFormatter: function(val) {return val+" °C";}},
+                legend: {backgroundOpacity: 0,},
+             }
+        );
+
+        var dummyElements = document.getElementsByClassName('flotr-dummy-div');
+        Array.prototype.forEach.call(dummyElements, function(dummyElement){
+            dummyElement.parentNode.style.display = 'none';
+        });
+
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="emphasizing-fractions-using-a-pie-chart">Emphasizing Fractions Using a Pie Chart</h2>
+<p>Pie charts don’t get a lot of love in the visualization community, and there’s a pretty good reason for that: they’re rarely the most effective way to communicate data. We will walk through the steps to create pie charts in this section, but it’s worth spending a little bit of time understanding the problems they introduce. Here, for example, is a simple pie chart. Can you tell from the chart in figure <span class="nextfigure"/> which color is the largest? Or the smallest?</p>
+<figure>
+<div id="pie-chart1" style="width:300px;height:300px">
+
+</div>
+<figcaption>
+Pies charts can make it hard to compare values.
+</figcaption>
+</figure>
+<p>It’s very hard to tell. That’s because humans are not particularly good at judging the relative size of areas, especially if those areas aren’t rectangles. If we really wanted to compare these five values, a bar chart works much better. Figure <span class="nextfigure"/> shows the same values in a bar chart:</p>
+<figure>
+<div id="pie-chart2" style="width:400px;height:300px">
+
+</div>
+<figcaption>
+Bar charts usually make comparisons easier.
+</figcaption>
+</figure>
+<p>Now, of course, it’s easy to rank each color. With a bar chart we only have to compare one dimension—height. This yields a simple rule of thumb: if you’re comparing different values against each other, consider a bar chart first. It will almost always provide the best visualization.</p>
+<p>One case, however, where pie charts can be quite effective is when we want to compare a single partial value against a whole. Say, for example, we want to visualize the percentage of the world’s population that lives in poverty. In such a case a pie chart may work quite well. Here’s how we can construct such a chart using the flotr2 JavaScript library.</p>
+<p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct. The unique aspects of this example begin below.</p>
+<h3 id="step-1-define-the-data-1">Step 1: Define the Data</h3>
+<p>The data in this case is quite straightforward. According to the <a href="http://www.newgeography.com/content/003325-alleviating-world-poverty-a-progress-report">World Bank</a>, at the end of 2008, 22.4% of the world’s people lived on less than $1.25/day. That’s the fraction that we want to emphasize with our chart.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [[[<span class="dv">0</span>,<span class="fl">22.4</span>]],[[<span class="dv">1</span>,<span class="fl">77.6</span>]]];</code></pre></td></tr></table>
+<p>Here we have an array with two data series: one for the percentage of the population in poverty (22.4%) and a second series for the rest (77.6%). Each series itself consists of an array of points. In this example, and for pie charts in general, there is only one point in each series, with an x-value and a y-value (which are each stored together in yet another, inner array). For pie charts the x-values are irrelevant, so we simply include placeholder values 0 and 1.</p>
+<h3 id="step-2-draw-the-chart">Step 2: Draw the Chart</h3>
+<p>To draw the chart, we call the <code>draw</code> method of the <code>Flotr</code> object. That method takes three parameters: the element in our <span class="smcp">HTML</span> document in which to place the chart, the data for our chart, and any options. We’ll start with the minimum set of options required for a pie chart. As you can see, flotr2 requires a bit more options for a minimum pie chart than it does for other common chart types. For both the x- and y-axes we need to disable labels, which we do by setting the <code>showLabels</code> property <code>false</code> in lines 7 and 10. We also have to turn off the grid, as a grid doesn’t make a lot of sense for a pie chart. Setting the <code>verticalLines</code> and <code>horizontalLines</code> properties of the <code>grid</code> option to <code>false</code> in lines 13 and 14 accomplishes that.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">window</span>.<span class="fu">onload</span> = <span class="kw">function</span> () {
+    <span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>), data, {
+        <span class="dt">pie</span>: {
+            <span class="dt">show</span>: <span class="kw">true</span>
+        },
+        <span class="dt">yaxis</span>: {
+            <span class="dt">showLabels</span>: <span class="kw">false</span>
+        },
+        <span class="dt">xaxis</span>: {
+            <span class="dt">showLabels</span>: <span class="kw">false</span>
+        },
+        <span class="dt">grid</span>: {
+            <span class="dt">horizontalLines</span>: <span class="kw">false</span>,
+            <span class="dt">verticalLines</span>: <span class="kw">false</span>
+        }
+    });
+}</code></pre></td></tr></table>
+<p>Since flotr2 doesn’t require jQuery, we’re not using any of the jQuery convenience functions in this example. If you do have jQuery for your pages, you can simplify the code above a little bit. Figure <span class="nextfigure"/> is a start, but it’s hard to tell exactly what the graph intends to show.</p>
+<figure>
+<div id="pie-chart3" style="width:400px;height:400px;">
+
+</div>
+<figcaption>
+Without effective labeling, pie charts can be difficult to interpret.
+</figcaption>
+</figure>
+<h3 id="step-3-label-the-values">Step 3: Label the Values</h3>
+<p>The next step is to add some text labels and a legend to say what the chart is displaying. To label each quantity separately, we have to change the structure of our data. Instead of using an array of series, we’ll create an object to store each series. Each object’s <code>data</code> property will contain the corresponding series, and we’ll add a <code>label</code> property for the text labels.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [
+    {<span class="dt">data</span>: [[<span class="dv">0</span>,<span class="fl">22.4</span>]], <span class="dt">label</span>: <span class="st">&quot;Extreme Poverty&quot;</span>},
+    {<span class="dt">data</span>: [[<span class="dv">1</span>,<span class="fl">77.6</span>]]}
+];</code></pre></td></tr></table>
+<p>By structuring our data this way, flotr2 will automatically identify labels associated with each series. Now when we call the <code>draw()</code> method, we just need to add a title option. Flotr2 will add the title above the graph, and create a simple legend identifying the pie portions with our labels. To make the chart a little more engaging, we’ll pose a question in our title. That’s why we’re only labeling one of the areas in the chart: the labelled area answers the question in the title.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),data, {
+    <span class="dt">title</span>: <span class="st">&quot;How Much of the World Lives on $1.25/day?&quot;</span>,
+    <span class="dt">pie</span>: {
+        <span class="dt">show</span>: <span class="kw">true</span>
+    },
+    <span class="dt">yaxis</span>: {
+        <span class="dt">showLabels</span>: <span class="kw">false</span>
+    },
+    <span class="dt">xaxis</span>: {
+        <span class="dt">showLabels</span>: <span class="kw">false</span>
+    },
+    <span class="dt">grid</span>: {
+        <span class="dt">horizontalLines</span>: <span class="kw">false</span>,
+        <span class="dt">verticalLines</span>: <span class="kw">false</span>
+    }
+});</code></pre></td></tr></table>
+<p>The chart in figure <span class="nextfigure"/> reveals the data quite clearly.</p>
+<figure style="margin-top:20px;">
+<div id="pie-chart4" style="width:400px;height:400px;">
+
+</div>
+<figcaption>
+Labels and titles can help make a chart engaging.
+</figcaption>
+</figure>
+<p>Although pie charts have a bad reputation in the data visualization community, there are occasional applications for which they are quite effective. They’re not very good at letting users compare multiple values, but as in this example, they do provide a nice and easily understandable picture showing the proportion of a single value within a whole.</p>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var data = [[[0,23]],[[1,22]],[[2,20]],[[3,18]],[[4,17]]];
+        Flotr.draw(document.getElementById("pie-chart1"),data, {
+            fontColor: chartStyles.color.text,
+            colors: [chartStyles.color.primary,chartStyles.color.alternateLightest,chartStyles.color.secondaryDarkest,chartStyles.color.alternateDarkest,chartStyles.color.secondaryLightest],
+            pie: {
+                show: true,
+                shadowSize: 0,
+                fillOpacity: 1,
+                lineWidth: 0,
+                sizeRatio: 0.75,
+                labelFormatter: function() { return false;},
+            },
+            yaxis: {
+                showLabels: false,
+            },
+            xaxis: {
+                showLabels: false,
+            },
+            grid: {
+                color: chartStyles.color.text,
+                horizontalLines: false,
+                verticalLines: false,
+                outlineWidth: 0,
+                outline: ""
+            }
+        });
+        Flotr.draw(document.getElementById("pie-chart2"),data, {
+            fontColor: chartStyles.color.text,
+            colors: [chartStyles.color.primary,chartStyles.color.alternateLightest,chartStyles.color.secondaryDarkest,chartStyles.color.alternateDarkest,chartStyles.color.secondaryLightest],
+            bars: {
+                show: true,
+                barWidth: 0.75,
+                shadowSize: 0,
+                fillOpacity: 1,
+                lineWidth: 0,
+            },
+            yaxis: {
+                min: 0,
+                tickDecimals: 0,
+                showLabels: false,
+            },
+            xaxis: {
+                showLabels: false,
+            },
+            grid: {
+                color: chartStyles.color.text,
+                horizontalLines: false,
+                verticalLines: false,
+                outlineWidth: 0,
+                outline: ""
+            }
+        });
+        data = [[[0,22.4]],[[1,77.6]]];
+        Flotr.draw(document.getElementById("pie-chart3"),data, {
+            fontColor: chartStyles.color.text,
+            colors: [chartStyles.color.primary,chartStyles.color.secondary],
+            pie: {
+                show: true,
+                shadowSize: 0,
+                fillOpacity: 1,
+                lineWidth: 0,
+            },
+            yaxis: {
+                showLabels: false,
+            },
+            xaxis: {
+                showLabels: false,
+            },
+            grid: {
+                color: chartStyles.color.text,
+                horizontalLines: false,
+                verticalLines: false,
+                outlineWidth: 0,
+                outline: ""
+            }
+        });
+        data = [
+            {data: [[0,22.4]], label: "Extreme Poverty"},
+            {data: [[1,77.6]], }
+        ];
+        Flotr.draw(document.getElementById("pie-chart4"),data, {
+            fontColor: chartStyles.color.text,
+            colors: [chartStyles.color.primary,chartStyles.color.secondary],
+            title: "How Much of the World Lives on $1.25/day?",
+            pie: {
+                show: true,
+                sizeRatio: 0.7,
+                shadowSize: 0,
+                fillOpacity: 1,
+                lineWidth: 0,
+            },
+            yaxis: {
+                showLabels: false,
+            },
+            xaxis: {
+                showLabels: false,
+            },
+            grid: {
+                color: chartStyles.color.text,
+                horizontalLines: false,
+                verticalLines: false,
+                outlineWidth: 0,
+                outline: ""
+            },
+            legend: {backgroundOpacity: 0,},
+        });
+        
+        var dummyElements = document.getElementsByClassName('flotr-dummy-div');
+        Array.prototype.forEach.call(dummyElements, function(dummyElement){
+            dummyElement.parentNode.style.display = 'none';
+        });
+
+    };
+
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="plotting-xy-data-with-a-scatter-chart">Plotting X/Y Data with a Scatter Chart</h2>
+<p>When we want to analyze data that primarily consists of a single quantity, perhaps a quantity that changes at regular intervals (e.g. yearly) or varies among a population (e.g. sports teams), the bar chart is often the best tool for our visualization. The real world, however, sometimes makes things more complicated than a single quantity can capture. If we want to explore the relationship between two different quantities, a scatter chart can be more effective. Suppose, for example, we wish to visualize the relationship between a country’s health care spending (one quantity) and its life expectancy (the second quantity). Let’s step through an example to see how to create a scatter chart for that data.</p>
+<p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct. The unique aspects of this example begin below.</p>
+<h3 id="step-1-define-the-data-2">Step 1: Define the Data</h3>
+<p>For this example, we’ll use the 2012 Report from the <a href="http://www.oecd.org/health/healthpoliciesanddata/oecdhealthdata2012.htm">Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)</a>. Their report includes health care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here’s how we might store that data in a JavaScript array.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> health_data = [
+    {  <span class="dt">country</span>: <span class="st">&quot;Australia&quot;</span>,       <span class="dt">spending</span>:  <span class="fl">9.1</span>,  <span class="dt">life</span>: <span class="fl">81.8</span>  },
+    {  <span class="dt">country</span>: <span class="st">&quot;Austria&quot;</span>,         <span class="dt">spending</span>: <span class="fl">11.0</span>,  <span class="dt">life</span>: <span class="fl">80.7</span>  },
+    {  <span class="dt">country</span>: <span class="st">&quot;Belgium&quot;</span>,         <span class="dt">spending</span>: <span class="fl">10.5</span>,  <span class="dt">life</span>: <span class="fl">80.3</span>  },
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+<h3 id="step-2-format-the-data">Step 2: Format the Data</h3>
+<p>As is often the case, the structure containing our data isn’t in the exact format that the flotr2 library requires. We need to restructure the original data just a bit, and here’s the JavaScript code to do that. We start with an empty <code>data</code> array and step through the source data. For each element in the source <code>health_data</code>, we extract the data point for our chart and push that data point into the <code>data</code> array.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [];
+<span class="kw">for</span> (<span class="kw">var</span> i = <span class="dv">0</span>; i &lt; <span class="ot">health_data</span>.<span class="fu">length</span>; i++) {
+    <span class="ot">data</span>.<span class="fu">push</span>([
+        health_data[i].<span class="fu">spending</span>, 
+        health_data[i].<span class="fu">life</span>
+    ]);
+};</code></pre></td></tr></table>
+<p>Since flotr2 doesn’t require jQuery, we’re not using any of the jQuery convenience functions in this example. But if you’re using jQuery for other reasons in your page, you could, for example, use the <code>.map()</code> function to simplify the code for this restructuring. (Chapter 2 includes a detailed example of the jQuery <code>.map()</code> function, as that chapter’s examples require jQuery.)</p>
+<h3 id="step-3-plot-the-data">Step 3: Plot the Data</h3>
+<p>Now all we need to do is call the <code>draw()</code> method of the <code>Flotr</code> object to create our chart. For a first attempt, we’ll stick with the default options.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [{ <span class="dt">data</span>: data, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }]
+);</code></pre></td></tr></table>
+<p>As you can see, flotr2 expects at least two parameters. The first is the element in our <span class="smcp">HTML</span> document in which we want the chart placed, and the second is the data for the chart. The data takes the form of an array. In general, flotr2 can draw multiple series on the same chart, so that array might have multiple objects. In our case, however, we’re only charting one series, so the array has a single object. That object identifies the data itself, and it tells flotr2 not to show lines but to show points instead.</p>
+<p>Figure <span class="nextfigure"/> shows our result. Notice how the points are pressed right up the edges of the chart.</p>
+<figure>
+<div id="scatter-chart1" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+The default scatterplot options don’t provide any margins
+</figcaption>
+</figure>
+<h3 id="step-4-adjust-the-charts-axes">Step 4: Adjust the Chart’s Axes</h3>
+<p>The first attempt isn’t too bad, but flotr2 automatically calculates the ranges for each axis, and its default algorithm usually results in a chart that’s too cramped. Flotr2 does have an <code>autoscale</code> option; if you set it then the library attempts to find “sensible” ranges for the associated axes automatically. Unfortunately, in my experience the ranges it suggests rarely improve the default option significantly. Selecting good ranges turns out to be extremely difficult; in most cases we’re better off to explicitly set them. Here’s how we might do for our chart.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [{
+        <span class="dt">data</span>: data, 
+        <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} 
+    }],
+    { 
+        <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>}, 
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>}
+    }
+);</code></pre></td></tr></table>
+<p>We’ve added a third parameter to the <code>draw()</code> method that contains our options. In this case the options are properties for the x- and y-axes. In each case we’re explicitly setting a minimum and maximum value. By specifying ranges that give the data a little breathing room, we’ve made the chart in figure <span class="nextfigure"/> much easier to read:</p>
+<figure>
+<div id="scatter-chart2" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Specifying our own axes makes the chart easier to read.
+</figcaption>
+</figure>
+<h3 id="step-5-label-the-data">Step 5: Label the Data</h3>
+<p>Our chart so far looks reasonably nice, but it doesn’t tell the user what they’re seeing. We need to add some labels to identify the data. A few more options can clarify the chart:</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [{
+        <span class="dt">data</span>: data, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} 
+    }],
+    { 
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
+        <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
+        <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
+                <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>}, 
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
+    }
+);</code></pre></td></tr></table>
+<p>The <code>title</code> and <code>subtitle</code> options give the chart its overall title and subtitle, while the <code>title</code> properties within the <code>xaxis</code> and <code>yaxis</code> options name the labels for those axes. In addition to adding labels, we’ve told flotr2 to drop the unnecessary decimal point from the x- and y-axis values. We did that with the <code>tickDecimals</code> property in lines 7 and 9. The chart in figure <span class="nextfigure"/> is now looking much better.</p>
+<figure>
+<div id="scatter-chart3" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Labels and titles clarify the chart’s content.
+</figcaption>
+</figure>
+<h3 id="step-6-clarify-the-x-axis">Step 6: Clarify the X Axis</h3>
+<p>Although our chart has definitely improved since the first attempt, there is still one nagging problem with the data presentation. The x-axis represents a percentage, but the labels for that axis show whole numbers. That discrepancy might cause our users some initial confusion, so lets get rid of it. Flotr2 gives us the option to format the axis labels however we want. In this example, we simply wish to add a percentage symbol to the value. That’s easy enough:</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [{ 
+        <span class="dt">data</span>: data, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>}
+    }],
+    { 
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
+        <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
+        <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
+               <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>, 
+               <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot;%&quot;</span>}}, 
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
+    }
+);</code></pre></td></tr></table>
+<p>The trick is the <code>tickFormatter</code> property of the <code>xaxis</code> options. It’s line 9 in the above code. That property specifies a function. When that option is present, flotr2 doesn’t draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we’re simply adding a percent sign after the value.</p>
+<p>With figure <span class="nextfigure"/> we have a chart that clearly presents the data. The horizontal axis clearly labels the percentage values.</p>
+<figure>
+<div id="scatter-chart4" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Formatting the axis labels clarifies the content.
+</figcaption>
+</figure>
+<p>The scatter plot excels at revealing relationships between two different variables. In this example, we can see how life expectancy relates to health care spending. In aggregate, more spending yields longer life.</p>
+<h3 id="step-7-answering-users-questions">Step 7: Answering Users’ Questions</h3>
+<p>Now that our chart successfully presents the data, we can start to look more carefully at the visualization from our users’ perspective. We especially want to anticipate any questions that users might have and try to answer those questions directly on the chart. Looking at the chart as it now stands, there are at least three questions that stand out:</p>
+<ol type="1">
+<li>What countries are shown?</li>
+<li>Are there any regional differences?</li>
+<li>What’s that data point way over on the right?</li>
+</ol>
+<p>One way to answer those questions would be to add mouse overs (or tool tips) to each data point. But we’re not going to use that approach in this example for a couple of reasons. First (and most obviously), interactive visualizations are the subject of chapter 2; this chapter considers only static charts and graphs. Secondly, mouse overs and tool tips are ineffective for users accessing our site on a touch device such as a smartphone or tablet. If we required users to have a mouse to fully understand our visualization, we might be neglecting a significant (and rapidly growing) number of users.</p>
+<p>Our approach to this problem will be to divide our data into multiple series so that we can color and label each independently. Here’s the first step in breaking the data into regions:</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> pacific_data = [
+    {  <span class="dt">country</span>: <span class="st">&quot;Australia&quot;</span>,       <span class="dt">spending</span>:  <span class="fl">9.1</span>,  <span class="dt">life</span>: <span class="fl">81.8</span>  },
+    {  <span class="dt">country</span>: <span class="st">&quot;New Zealand&quot;</span>,     <span class="dt">spending</span>: <span class="fl">10.1</span>,  <span class="dt">life</span>: <span class="fl">81.0</span>  },
+];
+<span class="kw">var</span> europe_data = [
+    {  <span class="dt">country</span>: <span class="st">&quot;Austria&quot;</span>,         <span class="dt">spending</span>: <span class="fl">11.0</span>,  <span class="dt">life</span>: <span class="fl">80.7</span>  },
+    {  <span class="dt">country</span>: <span class="st">&quot;Belgium&quot;</span>,         <span class="dt">spending</span>: <span class="fl">10.5</span>,  <span class="dt">life</span>: <span class="fl">80.3</span>  },
+    {  <span class="dt">country</span>: <span class="st">&quot;Czech Republic&quot;</span>,  <span class="dt">spending</span>:  <span class="fl">7.5</span>,  <span class="dt">life</span>: <span class="fl">77.7</span>  },
+
+<span class="co">// Data set continues...</span>
+
+<span class="kw">var</span> us_data = [
+    {  <span class="dt">country</span>: <span class="st">&quot;United States&quot;</span>,   <span class="dt">spending</span>: <span class="fl">17.6</span>,  <span class="dt">life</span>: <span class="fl">78.7</span>  }
+];</code></pre></td></tr></table>
+<p>We don’t include the United States in the Americas series. That’s because the U.S. is the outlier data point on the far right of the chart. Our users probably want to know the specific country for that point and not just its region. For the other countries, a region alone is probably enough identification. As before, we need to restructure these arrays into flotr2’s format. The code is the same as in step 4; we’re just repeating it for each data set.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> pacific=[], europe=[], americas=[], mideast=[], asia=[], us=[];
+<span class="kw">for</span> (i = <span class="dv">0</span>; i &lt; <span class="ot">pacific_data</span>.<span class="fu">length</span>; i++) {
+    <span class="ot">pacific</span>.<span class="fu">push</span>([ pacific_data[i].<span class="fu">spending</span>, pacific_data[i].<span class="fu">life</span> ]);
+}
+<span class="kw">for</span> (i = <span class="dv">0</span>; i &lt; <span class="ot">europe_data</span>.<span class="fu">length</span>; i++) {
+    <span class="ot">europe</span>.<span class="fu">push</span>([ europe_data[i].<span class="fu">spending</span>, europe_data[i].<span class="fu">life</span> ]);
+}
+<span class="co">// Code continues...</span></code></pre></td></tr></table>
+<p>Once we’ve separated the countries, we can pass their data to flotr2 as distinct series. Here we see why flotr2 expects arrays as its data parameter. Each series is a separate object in the array.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [
+        { <span class="dt">data</span>: pacific,  <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: europe,   <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: americas, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: mideast,  <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: asia,     <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: us,       <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }
+    ],{ 
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
+        <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
+        <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
+                <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>, 
+                <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot;%&quot;</span>}}, 
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
+    }
+);</code></pre></td></tr></table>
+<p>With the countries in different data series based on regions, flotr2 is able to color the regions distinctly as in figure <span class="nextfigure"/>.</p>
+<figure>
+<div id="scatter-chart5" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Splitting the data into multiple data sets lets us assign different colors to each.
+</figcaption>
+</figure>
+<p>For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 14) and position the legend in the northeast quadrant (line 18).</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [
+        { <span class="dt">data</span>: pacific,  <span class="dt">label</span>: <span class="st">&quot;Pacific&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: europe,   <span class="dt">label</span>: <span class="st">&quot;Europe&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: americas, <span class="dt">label</span>: <span class="st">&quot;Americas&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: mideast,  <span class="dt">label</span>: <span class="st">&quot;Middle East&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: asia,     <span class="dt">label</span>: <span class="st">&quot;Asia&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
+        { <span class="dt">data</span>: us,       <span class="dt">label</span>: <span class="st">&quot;United States&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }
+    ],{ 
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
+        <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
+        <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">25</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
+               <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>, 
+               <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot;%&quot;</span>}}, 
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>},
+        <span class="dt">legend</span>: {<span class="dt">position</span>: <span class="st">&quot;ne&quot;</span>}
+    }
+);</code></pre></td></tr></table>
+<p>This addition gives us the final chart of figure <span class="nextfigure"/>.</p>
+<figure>
+<div id="scatter-chart6" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Adding a legend completes the chart.
+</figcaption>
+</figure>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var health_data = [
+            {  country: "Australia",       spending:  9.1,  life: 81.8  },
+            {  country: "Austria",         spending: 11.0,  life: 80.7  },
+            {  country: "Belgium",         spending: 10.5,  life: 80.3  },
+            {  country: "Canada",          spending: 11.4,  life: 80.8  },
+            {  country: "Chile",           spending:  8.0,  life: 79.0  },
+            {  country: "Czech Republic",  spending:  7.5,  life: 77.7  },
+            {  country: "Denmark",         spending: 11.1,  life: 79.3  },
+            {  country: "Estonia",         spending:  6.3,  life: 75.6  },
+            {  country: "Finland",         spending:  8.9,  life: 80.2  },
+            {  country: "France",          spending: 11.6,  life: 81.3  },
+            {  country: "Germany",         spending: 11.6,  life: 80.5  },
+            {  country: "Greece",          spending: 10.2,  life: 80.6  },
+            {  country: "Hungary",         spending:  7.8,  life: 74.3  },
+            {  country: "Iceland",         spending:  9.3,  life: 81.5  },
+            {  country: "Ireland",         spending:  9.2,  life: 81.0  },
+            {  country: "Israel",          spending:  7.5,  life: 81.7  },
+            {  country: "Italy",           spending:  9.3,  life: 82.0  },
+            {  country: "Japan",           spending:  9.5,  life: 83.0  },
+            {  country: "Korea",           spending:  7.1,  life: 80.7  },
+            {  country: "Luxembourg",      spending:  7.9,  life: 80.7  },
+            {  country: "Mexico",          spending:  6.2,  life: 75.5  },
+            {  country: "Netherlands",     spending: 12.0,  life: 80.8  },
+            {  country: "New Zealand",     spending: 10.1,  life: 81.0  },
+            {  country: "Norway",          spending:  9.4,  life: 81.2  },
+            {  country: "Poland",          spending:  7.0,  life: 76.3  },
+            {  country: "Portugal",        spending: 10.7,  life: 79.8  },
+            {  country: "Slovak Republic", spending:  9.0,  life: 75.2  },
+            {  country: "Slovenia",        spending:  9.0,  life: 79.5  },
+            {  country: "Spain",           spending:  9.6,  life: 82.2  },
+            {  country: "Sweden",          spending:  9.6,  life: 81.5  },
+            {  country: "Switzerland",     spending: 11.4,  life: 82.6  },
+            {  country: "Turkey",          spending:  6.1,  life: 74.3  },
+            {  country: "United Kingdom",  spending:  9.6,  life: 80.6  },
+            {  country: "United States",   spending: 17.6,  life: 78.7  },
+        ];
+        var data = [];
+        for (i = 0; i < health_data.length; i++) {
+            data.push([
+                health_data[i].spending, 
+                health_data[i].life
+            ]);
+        }
+        Flotr.draw(
+            document.getElementById("scatter-chart1")
+            ,[{ data: data, points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondary }]
+            ,{ fontColor: chartStyles.color.text, grid: { color: chartStyles.color.text } }
+        );
+        Flotr.draw(
+            document.getElementById("scatter-chart2")
+            ,[{ data: data, points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondary }]
+            ,{ fontColor: chartStyles.color.text, grid: { color: chartStyles.color.text }, xaxis: {min: 5, max: 20}, yaxis: {min: 70, max: 85} }
+        );
+        Flotr.draw(
+            document.getElementById("scatter-chart3")
+            ,[{ data: data, points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondary }]
+            ,{
+                fontColor: chartStyles.color.text,
+                grid: { color: chartStyles.color.text },
+                title: "Life Expectancy vs. Health Care Spending",
+                subtitle: "(by Country, 2010 OECD data)",
+                xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP"}, 
+                yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
+            }
+        );
+        Flotr.draw(
+            document.getElementById("scatter-chart4")
+            ,[{ data: data, points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondary }]
+            ,{ 
+                fontColor: chartStyles.color.text,
+                grid: { color: chartStyles.color.text },
+                title: "Life Expectancy vs. Health Care Spending",
+                subtitle: "(by Country, 2010 OECD data)",
+                xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
+                yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
+            }
+        );
+        var pacific_data = [
+            {  country: "Australia",       spending:  9.1,  life: 81.8  },
+            {  country: "New Zealand",     spending: 10.1,  life: 81.0  },
+        ];
+        var europe_data = [
+            {  country: "Austria",         spending: 11.0,  life: 80.7  },
+            {  country: "Belgium",         spending: 10.5,  life: 80.3  },
+            {  country: "Czech Republic",  spending:  7.5,  life: 77.7  },
+            {  country: "Denmark",         spending: 11.1,  life: 79.3  },
+            {  country: "Estonia",         spending:  6.3,  life: 75.6  },
+            {  country: "Finland",         spending:  8.9,  life: 80.2  },
+            {  country: "France",          spending: 11.6,  life: 81.3  },
+            {  country: "Germany",         spending: 11.6,  life: 80.5  },
+            {  country: "Greece",          spending: 10.2,  life: 80.6  },
+            {  country: "Hungary",         spending:  7.8,  life: 74.3  },
+            {  country: "Iceland",         spending:  9.3,  life: 81.5  },
+            {  country: "Ireland",         spending:  9.2,  life: 81.0  },
+            {  country: "Italy",           spending:  9.3,  life: 82.0  },
+            {  country: "Luxembourg",      spending:  7.9,  life: 80.7  },
+            {  country: "Netherlands",     spending: 12.0,  life: 80.8  },
+            {  country: "Norway",          spending:  9.4,  life: 81.2  },
+            {  country: "Poland",          spending:  7.0,  life: 76.3  },
+            {  country: "Portugal",        spending: 10.7,  life: 79.8  },
+            {  country: "Slovak Republic", spending:  9.0,  life: 75.2  },
+            {  country: "Slovenia",        spending:  9.0,  life: 79.5  },
+            {  country: "Spain",           spending:  9.6,  life: 82.2  },
+            {  country: "Sweden",          spending:  9.6,  life: 81.5  },
+            {  country: "Switzerland",     spending: 11.4,  life: 82.6  },
+            {  country: "Turkey",          spending:  6.1,  life: 74.3  },
+            {  country: "United Kingdom",  spending:  9.6,  life: 80.6  },
+        ];
+        var americas_data = [
+            {  country: "Canada",          spending: 11.4,  life: 80.8  },
+            {  country: "Chile",           spending:  8.0,  life: 79.0  },
+            {  country: "Mexico",          spending:  6.2,  life: 75.5  },
+            {  country: "United States",   spending: 17.6,  life: 78.7  },
+        ];
+        var mideast_data = [
+            {  country: "Israel",          spending:  7.5,  life: 81.7  },
+        ];
+        var asia_data = [
+            {  country: "Japan",           spending:  9.5,  life: 83.0  },
+            {  country: "Korea",           spending:  7.1,  life: 80.7  },
+        ];
+        var us_data = [
+            {  country: "United States",   spending: 17.6,  life: 78.7  },
+        ];
+        var pacific=[], europe=[], americas=[], mideast=[], asia=[], us=[];
+        for (i = 0; i < pacific_data.length; i++) {
+            pacific.push([ pacific_data[i].spending, pacific_data[i].life ]);
+        }
+        for (i = 0; i < europe_data.length; i++) {
+            europe.push([ europe_data[i].spending, europe_data[i].life ]);
+        }
+        for (i = 0; i < americas_data.length; i++) {
+            americas.push([ americas_data[i].spending, americas_data[i].life ]);
+        }
+        for (i = 0; i < mideast_data.length; i++) {
+            mideast.push([ mideast_data[i].spending, mideast_data[i].life ]);
+        }
+        for (i = 0; i < asia_data.length; i++) {
+            asia.push([ asia_data[i].spending, asia_data[i].life ]);
+        }
+        for (i = 0; i < us_data.length; i++) {
+            us.push([ us_data[i].spending, us_data[i].life ]);
+        }
+        Flotr.draw(
+            document.getElementById("scatter-chart5")
+            ,[
+                { data: pacific,  points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.alternateDark },
+                { data: europe,   points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondary },
+                { data: americas, points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.alternateLight },
+                { data: mideast,  points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondaryLightest },
+                { data: asia,     points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondaryDarkest },
+                { data: us,       points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.alternateLight },
+            ]
+            ,{ 
+                fontColor: chartStyles.color.text,
+                grid: { color: chartStyles.color.text },
+                title: "Life Expectancy vs. Health Care Spending",
+                subtitle: "(by Country, 2010 OECD data)",
+                xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
+                yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
+            }
+        );
+        Flotr.draw(
+            document.getElementById("scatter-chart6")
+            ,[
+                { data: asia,     label: "Asia", points: {show:true, shadowSize: 0, fillColor: null, radius: 5,}, color: chartStyles.color.secondaryDarkest, },
+                { data: europe,   label: "Europe", points: {show:true, shadowSize: 0, fillColor: null, radius: 5,}, color: chartStyles.color.secondary },
+                { data: mideast,  label: "Middle East", points: {show:true, shadowSize: 0, fillColor: null, radius: 5,}, color: chartStyles.color.secondaryLightest, },
+                { data: pacific,  label: "Pacific", points: {show:true, shadowSize: 0, fillColor: null, radius: 5,}, color: chartStyles.color.alternateDark, },
+                { data: americas, label: "Americas", points: {show:true, shadowSize: 0, fillColor: null, radius: 5,}, color: chartStyles.color.alternateLight, },
+                { data: us,       label: "United States", points: {show:true, shadowSize: 0, fillColor: null, radius: 5,}, color: chartStyles.color.primary, },
+            ]
+            ,{ 
+                fontColor: chartStyles.color.text,
+                grid: { color: chartStyles.color.text },
+                title: "Life Expectancy vs. Health Care Spending (2010 OECD data)",
+                xaxis: {min: 5, max: 25, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
+                yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"},
+                legend: {position: "ne", backgroundOpacity: 0, },
+            }
+        );
+        
+        var dummyElements = document.getElementsByClassName('flotr-dummy-div');
+        Array.prototype.forEach.call(dummyElements, function(dummyElement){
+            dummyElement.parentNode.style.display = 'none';
+        });
+
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="adding-magnitudes-to-xy-data-with-a-bubble-chart">Adding Magnitudes to X/Y Data with a Bubble Chart</h2>
+<p>Traditional scatter plots, like those described in the last example, show the relationship between two values: the x-axis and the y-axis. Sometimes, however, two values are not adequate for the data we want to visualize. If three variables need visualization, it might be effective to use a scatter plot framework for two of the variables and then vary the size of the points according to the third variable. The resulting chart is a bubble chart.</p>
+<p>Using bubble charts effectively requires some caution, though. Humans cannot accurately judge the relative areas of non-rectangular shapes. So, just as with pie charts and their non-rectangular areas, bubble charts don’t lend themselves to precise comparisons of the bubble size. But if your third variable only conveys the general sense of a quantity rather than an accurate measurement, a bubble chart may be appropriate.</p>
+<p>For this example we’ll use a bubble chart to visualize the path of Hurricane Katrina in 2005. Our x- and y-values will represent position (latitude and longitude), and we’ll ensure our users can interpret those values very accurately. For the third value—the bubble area—we’ll use the storm’s sustained wind speed. Since wind speed is only a general value anyway (as the wind gusts and subsides), a general impression is sufficient.</p>
+<p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct.</p>
+<h3 id="step-1-define-the-data-3">Step 1: Define the Data</h3>
+<p>We’ll start our example with data taken from Hurricane Katrina observations. The data includes the latitude and longitude of the observation and the sustained wind speed in miles/hour.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> katrina = [
+    { <span class="dt">north</span>: <span class="fl">23.2</span>, <span class="dt">west</span>: <span class="fl">75.5</span>, <span class="dt">wind</span>:  <span class="dv">35</span> },
+    { <span class="dt">north</span>: <span class="fl">24.0</span>, <span class="dt">west</span>: <span class="fl">76.4</span>, <span class="dt">wind</span>:  <span class="dv">35</span> },
+    { <span class="dt">north</span>: <span class="fl">25.2</span>, <span class="dt">west</span>: <span class="fl">77.0</span>, <span class="dt">wind</span>:  <span class="dv">45</span> },
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+<p>For its bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, an optional parameter can specify a filter function. And while we’re extracting data points, we can reverse the sign of the longitude so that west to east displays right to left.</p>
+<p>The code for our function starts by setting the return value (<code>result</code>) to an empty array in line 2. Then it iterates through the input <code>source_array</code> one element at a time. If the <code>filter_function</code> parameter is available, and if it is a valid function, our code calls that function with the source array element as a parameter. If the function returns <code>true</code>, or if no function was passed in the parameter, then our code extracts the data point from the source element and pushes it onto the result array.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="fu">get_points</span>(source_array, filter_function) {
+    <span class="kw">var</span> result = [];
+    <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="ot">source_array</span>.<span class="fu">length</span>; i++) {
+        <span class="kw">if</span> ( (<span class="kw">typeof</span> filter_function === <span class="st">&quot;undefined&quot;</span>)
+          || (<span class="kw">typeof</span> filter_function !== <span class="st">&quot;function&quot;</span>)
+          || <span class="fu">filter_function</span>(source_array[i]) ) {
+            <span class="ot">result</span>.<span class="fu">push</span>([
+                source_array[i].<span class="fu">west</span> * -<span class="dv">1</span>,
+                source_array[i].<span class="fu">north</span>,
+                source_array[i].<span class="fu">wind</span>
+            ]);
+        }
+    }
+    <span class="kw">return</span> result;
+}</code></pre></td></tr></table>
+<p>As you can see, the <code>filter_function</code> parameter is optional. If the caller omits it (or if it is not a valid function), then every point in the source ends up in the result. We won’t use the filter function right away, but it will come in handy for the later steps in this example.</p>
+<h3 id="step-2-create-a-background-for-the-chart">Step 2: Create a Background for the Chart</h3>
+<p>Because the x- and y-values of our chart will represent position, a map makes the perfect chart background. To avoid any copyright concerns, we’ll use map images from <a href="http://stamen.com/">Stamen Design</a>, which use data from <a href="http://openstreetmap.org/">OpenStreetMap</a>. Both are available under Creative Commons licenses, <a href="http://creativecommons.org/licenses/by/3.0"><span class="smcp">CC</span> <span class="smcp">BY</span> 3.0</a> and <a href="http://creativecommons.org/licenses/by-sa/3.0"><span class="smcp">CC</span> <span class="smcp">BY</span> <span class="smcp">SA</span></a>, respectively.</p>
+<p>Figure <span class="nextfigure"/> shows the map image on which we’ll overlay the hurricane’s path.</p>
+<figure>
+<img src="img/gulf.png" height="400" width="600" />
+<figcaption>
+A map image can be used as the background for a chart.
+</figcaption>
+</figure>
+<p>Projections can be a tricky issue when working with maps, but they have less of an effect the smaller the mapped area, and they’re less critical in the center of the mapped region. For this example, with its relatively small area and action focused in the center, we’ll assume the map image uses a Mercator projection. That assumption lets us avoid any advanced mathematical transformations when converting from latitude and longitude to x- and y-values.</p>
+<h3 id="step-3-plot-the-data-1">Step 3: Plot the Data</h3>
+<p>It will take us several iterations to get the plot looking the way we want, but let’s start with the minimum number of options. One parameter we will need to specify is the bubble radius. For static charts such as this example, it’s easiest to experiment with a few values to find the best size. A value of 0.3 seems effective for our chart. In addition to the options, the <code>draw()</code> method expects an <span class="smcp">HTML</span> element that will contain the chart, as well as the data itself. As you can see, we’re using our transformation function to extract the data from our source. The return value from that function serves directly as the second parameter to <code>draw()</code>.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [{ 
+      <span class="dt">data</span>: <span class="fu">get_points</span>(katrina), 
+      <span class="dt">bubbles</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">baseRadius</span>: <span class="fl">0.3</span>}
+    }]
+);</code></pre></td></tr></table>
+<p>For now, we haven’t bothered with the background image. We’ll add that to the chart once we’ve adjusted the data a bit. The result in figure <span class="nextfigure"/> still needs improvement, but it’s a working start:</p>
+<figure>
+<div id="bubble-chart1" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+A basic bubble chart varies the size of the data points.
+</figcaption>
+</figure>
+<h3 id="step-4-add-the-background">Step 4: Add the Background</h3>
+<p>Now that we’ve seen how flotr2 will plot our data, we can add in the background image. We’ll want to make a few other additions at the same time. First, as long as we’re adding the background, we can remove the grid lines. Second, let’s disable the axis labels; latitude and longitude values don’t have much meaning for the average user, and they’re certainly not necessary with the map. Finally, and most importantly, we need to adjust the scale of the chart to match the map image.</p>
+<p>Our image shows latitude values from 23.607°<span class="smcp">N</span> to 33.657°<span class="smcp">N</span> and longitude from 77.586°<span class="smcp">W</span> to 94.298°<span class="smcp">W</span>. We provide those values to flotr2 as the ranges for its axes in line 11. The <code>grid</code> options in lines 5 through 9 tell flotr2 to omit both horizontal and vertical grid lines, and they designate the background image. The <code>xaxis</code> and <code>yaxis</code> options in lines 10 and 11 disable labels for both axes and specify their minimum and maximum values. Note that because we’re dealing with longitudes west of 0, we’re using negative values.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [{ 
+      <span class="dt">data</span>: <span class="fu">get_points</span>(katrina), 
+      <span class="dt">bubbles</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">baseRadius</span>: <span class="fl">0.3</span>} 
+    }],
+    { 
+        <span class="dt">grid</span>: {
+            <span class="dt">backgroundImage</span>: <span class="st">&quot;img/gulf.png&quot;</span>, 
+            <span class="dt">horizontalLines</span>: <span class="kw">false</span>, 
+            <span class="dt">verticalLines</span>: <span class="kw">false</span>
+        },
+        <span class="dt">yaxis</span>: {<span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>: <span class="fl">23.607</span>, <span class="dt">max</span>: <span class="fl">33.657</span>},
+        <span class="dt">xaxis</span>: {<span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>: -<span class="fl">94.298</span>, <span class="dt">max</span>: -<span class="fl">77.586</span>}
+    }
+);</code></pre></td></tr></table>
+<p>At this point the chart in figure <span class="nextfigure"/> is looking pretty good. We can clearly see the path of the hurricane and get a sense of how the storm strengthened and weakened along that path.</p>
+<figure>
+<div id="bubble-chart2" style="width:600px;height:400px;background-image:url(img/gulf.png);background-size:cover;">
+
+</div>
+<figcaption>
+With a map as the background image, the chart has a meaningful context.
+</figcaption>
+</figure>
+<h3 id="step-5-color-the-bubbles">Step 5: Color the Bubbles</h3>
+<p>This example gives us a chance to provide even more information to our users without overly distracting them; we have the option to modify the bubble colors. Let’s use that freedom to indicate the Saffir-Simpson classification for the storm at each measurement point.</p>
+<p>Here’s where we can take advantage of the filter option we included in the data formatting function. The Saffir-Simpson classification is based on wind speed, so we’ll filter based on the <code>wind</code> property. For example, here’s how to extract only those values that represent a Category 1 Hurricane, with wind speeds from 74 to 95 miles/hour. The function we pass to <code>get_points</code> only returns true for appropriate wind speeds.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">cat1 = <span class="fu">get_points</span>(katrina, <span class="kw">function</span>(obs) {
+    <span class="kw">return</span> (<span class="ot">obs</span>.<span class="fu">wind</span> &gt;= <span class="dv">74</span>) &amp;&amp; (<span class="ot">obs</span>.<span class="fu">wind</span> &lt; <span class="dv">95</span>);
+});</code></pre></td></tr></table>
+<p>To have flotr2 assign different colors to different strengths, we divide the data into multiple series. Each series gets its own color. Here’s how we can specify the different series. In addition to the five hurricane categories, we’ve also parsed out the points for tropical storm and tropical depression strength.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [
+      { 
+          <span class="dt">data</span>: <span class="fu">get_points</span>(katrina, <span class="kw">function</span>(obs) {
+                    <span class="kw">return</span> (<span class="ot">obs</span>.<span class="fu">wind</span> &lt; <span class="dv">39</span>);
+                }), 
+          <span class="dt">color</span>: <span class="st">&quot;#74add1&quot;</span>,
+          <span class="dt">bubbles</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">baseRadius</span>: <span class="fl">0.3</span>, <span class="dt">lineWidth</span>: <span class="dv">1</span>}
+      },{ 
+      <span class="co">// Options continue...</span>
+      },{ 
+          <span class="dt">data</span>: <span class="fu">get_points</span>(katrina, <span class="kw">function</span>(obs) {
+                    <span class="kw">return</span> (<span class="ot">obs</span>.<span class="fu">wind</span> &gt;= <span class="dv">157</span>);
+                }), 
+          <span class="dt">color</span>: <span class="st">&quot;#d73027&quot;</span>,
+          <span class="dt">label</span>: <span class="st">&quot;Category 5&quot;</span>,
+          <span class="dt">bubbles</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">baseRadius</span>: <span class="fl">0.3</span>, <span class="dt">lineWidth</span>: <span class="dv">1</span>}
+      }
+    ],{ 
+        <span class="dt">grid</span>: {
+            <span class="dt">backgroundImage</span>: <span class="st">&quot;img/gulf.png&quot;</span>, 
+            <span class="dt">horizontalLines</span>: <span class="kw">false</span>, 
+            <span class="dt">verticalLines</span>: <span class="kw">false</span>
+        },
+        <span class="dt">yaxis</span>: {<span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>: <span class="fl">23.607</span>, <span class="dt">max</span>: <span class="fl">33.657</span>},
+        <span class="dt">xaxis</span>: {<span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>: -<span class="fl">94.298</span>, <span class="dt">max</span>: -<span class="fl">77.586</span>},
+        <span class="dt">legend</span>: {<span class="dt">position</span>: <span class="st">&quot;sw&quot;</span>}
+    }
+);</code></pre></td></tr></table>
+<p>We’ve also added labels for the hurricane categories and placed a legend in the lower left of the chart in figure <span class="nextfigure"/>.</p>
+<figure>
+<div id="bubble-chart3" style="width:600px;height:400px;background-image:url(img/gulf.png);background-size:cover;">
+
+</div>
+<figcaption>
+Different colors can indicate wind strength.
+</figcaption>
+</figure>
+<h3 id="step-6-adjust-the-legend-styles">Step 6: Adjust the Legend Styles</h3>
+<p>By default, flotr2 seems to prefer all elements as large as possible. The legend in the chart above is a good example: it looks cramped and unattractive. Fortunately, the fix is rather simple, We simply add some <span class="smcp">CSS</span> styles which give the legend padding. We can also set the legend’s background color explicitly rather than relying on flotr2’s manipulation of opacity.</p>
+<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.flotr-legend</span> <span class="kw">{</span>
+    <span class="kw">padding:</span> <span class="dt">5px</span><span class="kw">;</span>
+    <span class="kw">background-color:</span> <span class="dt">#ececec</span><span class="kw">;</span>
+<span class="kw">}</span></code></pre></td></tr></table>
+<p>To prevent flotr2 from creating its own background for the legend, set the opacity to zero.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>)
+        <span class="co">// Additional options...</span>
+        legend: {<span class="dt">position</span>: <span class="st">&quot;sw&quot;</span>, <span class="dt">backgroundOpacity</span>: <span class="dv">0</span>,},
+        <span class="co">// Additional options...</span></code></pre></td></tr></table>
+<p>With that final tweak, we have the finished product of figure <span class="nextfigure"/>. We don’t want to use the flotr2 options to specify a title because flotr2 will shrink the chart area by an unpredictable amount (since we cannot predict the font sizing in the users’ browsers). That would distort our latitude transformation. Of course, it’s easy enough to use <span class="smcp">HTML</span> to provide the title.</p>
+<style>
+#bubble-chart4 .flotr-legend { background-color: #ececec; }
+</style>
+<figure>
+<div style="width:600px;text-align:center;">
+Hurricane Katrina 2005: Course and Wind Strength
+</div>
+<div id="bubble-chart4" style="width:600px;height:400px;background-image:url(img/gulf.png);background-size:cover;">
+
+</div>
+<figcaption>
+A bubble chart shows a third dimension (wind speed) as well as position.
+</figcaption>
+</figure>
+<p>The bubble chart adds another dimension to the two-dimensional scatter chart. In fact, as in our example, it can add two additional dimensions. The example uses bubble size to represent wind speed and color to indicate the hurricane’s classification. Both of these additional values require care, however. Humans are not good at comparing two-dimensional areas, nor can they easily compare relative shades or colors. We should never use the extra bubble chart dimensions to convey critical data or precise quantities, therefore. Rather, they work best in examples such as this example—neither the exact wind speed nor the specific classification need be as precise as the location. Few people can tell the difference between 100 and 110 mile/hour winds, but many certainly know the difference between New Orleans and Dallas.</p>
+<script>
+;(function(){
+
+    draw = function() {
+
+        var katrina = [
+            { north: 23.2, west: 75.5, wind:  35 },
+            { north: 24.0, west: 76.4, wind:  35 },
+            { north: 25.2, west: 77.0, wind:  45 },
+            { north: 26.0, west: 77.6, wind:  45 },
+            { north: 26.2, west: 78.7, wind:  50 },
+            { north: 26.1, west: 79.9, wind:  75 },
+            { north: 25.5, west: 80.7, wind:  75 },
+            { north: 25.1, west: 82.2, wind: 100 },
+            { north: 24.8, west: 82.9, wind: 100 },
+            { north: 24.4, west: 84.0, wind: 110 },
+            { north: 24.4, west: 84.6, wind: 115 },
+            { north: 25.1, west: 86.8, wind: 145 },
+            { north: 25.7, west: 87.7, wind: 160 },
+            { north: 26.5, west: 88.6, wind: 175 },
+            { north: 27.9, west: 89.5, wind: 160 },
+            { north: 29.7, west: 89.6, wind: 135 },
+            { north: 30.8, west: 89.6, wind: 105 },
+            { north: 31.9, west: 89.6, wind:  75 },
+            { north: 32.9, west: 88.9, wind:  65 },
+            { north: 34.7, west: 88.4, wind:  50 },
+        ];
+        var get_points = function(source_array, filter_function) {
+            var result = [];
+            for (var i=0; i<source_array.length; i++) {
+                if ( (typeof filter_function === "undefined")
+                  || (typeof filter_function !== "function")
+                  || filter_function(source_array[i]) ) {
+                    result.push([
+                        source_array[i].west * -1,
+                        source_array[i].north,
+                        source_array[i].wind,
+                    ]);
+                }
+            }
+            return result;
+        };
+        Flotr.draw(
+            document.getElementById("bubble-chart1")
+            ,[{ data: get_points(katrina), bubbles: {show:true, baseRadius: 0.3} }]
+            ,{fontColor: chartStyles.color.text, grid: { color: chartStyles.color.text }}
+        );
+        Flotr.draw(
+            document.getElementById("bubble-chart2")
+            ,[{ data: get_points(katrina), bubbles: {show:true, baseRadius: 0.3} }]
+            ,{ 
+                fontColor: chartStyles.color.text,      
+                grid: {
+                    color: chartStyles.color.text,
+                    horizontalLines: false, 
+                    verticalLines: false
+                },
+                yaxis: {showLabels: false, min: 23.607, max: 33.657},
+                xaxis: {showLabels: false, min: -94.298, max: -77.586},
+            }
+        );
+        Flotr.draw(
+            document.getElementById("bubble-chart3")
+            ,[
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind < 39);
+                        }), 
+                  color: "#74add1",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 39) && (obs.wind < 74);
+                        }), 
+                  color: "#abd9e9",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 74) && (obs.wind < 95);
+                        }),
+                  color: "#ffffbf",
+                  label: "Category 1",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 95) && (obs.wind < 110);
+                        }), 
+                  color: "#fee090",
+                  label: "Category 2",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 110) && (obs.wind < 130);
+                        }), 
+                  color: "#fdae61",
+                  label: "Category 3",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 130) && (obs.wind < 157);
+                        }), 
+                  color: "#f46d43",
+                  label: "Category 4",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 157);
+                        }), 
+                  color: "#d73027",
+                  label: "Category 5",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+             ]
+            ,{ 
+                fontColor: chartStyles.color.text,
+                grid: {
+                    color: chartStyles.color.text,
+                    horizontalLines: false, 
+                    verticalLines: false
+                },
+                yaxis: {showLabels: false, min: 23.607, max: 33.657},
+                xaxis: {showLabels: false, min: -94.298, max: -77.586},
+                legend: {position: "sw"},
+            }
+        );
+        Flotr.draw(
+            document.getElementById("bubble-chart4")
+            ,[
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind < 39);
+                        }), 
+                  color: "#74add1",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 39) && (obs.wind < 74);
+                        }), 
+                  color: "#abd9e9",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 74) && (obs.wind < 95);
+                        }),
+                  color: "#ffffbf",
+                  label: "Category 1",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 95) && (obs.wind < 110);
+                        }), 
+                  color: "#fee090",
+                  label: "Category 2",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 110) && (obs.wind < 130);
+                        }), 
+                  color: "#fdae61",
+                  label: "Category 3",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 130) && (obs.wind < 157);
+                        }), 
+                  color: "#f46d43",
+                  label: "Category 4",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+              { 
+                  data: get_points(katrina, function(obs) {
+                            return (obs.wind >= 157);
+                        }), 
+                  color: "#d73027",
+                  label: "Category 5",
+                  bubbles: {show:true, baseRadius: 0.3, lineWidth: 1}, 
+              },
+             ]
+            ,{ 
+                fontColor: chartStyles.color.text,
+                grid: {
+                    color: chartStyles.color.text,
+                    horizontalLines: false, 
+                    verticalLines: false
+                },
+                yaxis: {showLabels: false, min: 23.607, max: 33.657},
+                xaxis: {showLabels: false, min: -94.298, max: -77.586},
+                legend: {position: "sw", backgroundOpacity: 0, fontColor: chartStyles.color.text}
+            }
+        );
+    
+        var dummyElements = document.getElementsByClassName('flotr-dummy-div');
+        Array.prototype.forEach.call(dummyElements, function(dummyElement){
+            dummyElement.parentNode.style.display = 'none';
+        });
+
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="displaying-multidimensional-data-with-a-radar-chart">Displaying Multidimensional Data with a Radar Chart</h2>
+<p>If you have data with many dimensions, a radar chart may be the most effective way to visualize it. Radar charts are not as common as other charts, though, and their unfamiliarity makes them a little harder on users. You don’t want to increase that burden by using the chart inappropriately.</p>
+<p>Radar charts are most effective when your data has several characteristics</p>
+<ul>
+<li>You don’t have too many data points to show. Half a dozen data points is about the maximum that a radar chart can accommodate.</li>
+<li>The data points have multiple dimensions. With two or even three dimensions to your data, you would probably be better off with a more traditional chart type. Radar charts come into play with data of four or more dimensions.</li>
+<li>Each data dimension is a scale, e.g. from good to bad. Radar charts don’t work well with data dimensions that are merely arbitrary categories (such as political party or nationality). They work best if all the dimensions can at least be ranked, if not assigned a number outright.</li>
+</ul>
+<p>A classic use for radar charts is analyzing the performance of players on a sports team. Consider, for example, the starting lineup of the 2012 National Basketball Association’s (<span class="smcp">NBA</span>) Miami Heat. There are only five data points (the five players). There are multiple dimensions—points, assists, rebounds, blocks, steals, etc., and each of those dimensions has a natural numeric value.</p>
+<p>Here are the players’ 2011-2012 season averages per game, as well as the team totals (which include the contributions of non-starters).</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Player</th>
+<th style="text-align: right;">Points</th>
+<th style="text-align: right;">Rebounds</th>
+<th style="text-align: right;">Assists</th>
+<th style="text-align: right;">Steals</th>
+<th style="text-align: right;">Blocks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Chris Bosh</td>
+<td style="text-align: right;">17.2</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Shane Battier</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">1.2</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LeBron James</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dwayne Wade</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">1.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mario Chalmers</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">2.9</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Team Total</strong></td>
+<td style="text-align: right;"><strong>98.2</strong></td>
+<td style="text-align: right;"><strong>41.3</strong></td>
+<td style="text-align: right;"><strong>19.3</strong></td>
+<td style="text-align: right;"><strong>8.5</strong></td>
+<td style="text-align: right;"><strong>5.3</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct.</p>
+<h3 id="step-1-define-the-data-4">Step 1: Define the Data</h3>
+<p>We’ll start with a typical JavaScript expression of the team’s statistics. For our example we’ll start with an array of objects corresponding to each starter, and a separate object for the entire team.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> players = [
+    { <span class="dt">player</span>: <span class="st">&quot;Chris Bosh&quot;</span>,     <span class="dt">points</span>: <span class="fl">17.2</span>, <span class="dt">rebounds</span>: <span class="fl">7.9</span>, <span class="dt">assists</span>: <span class="fl">1.6</span>, <span class="dt">steals</span>: <span class="fl">0.8</span>, <span class="dt">blocks</span>: <span class="fl">0.8</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;Shane Battier&quot;</span>,  <span class="dt">points</span>:  <span class="fl">5.4</span>, <span class="dt">rebounds</span>: <span class="fl">2.6</span>, <span class="dt">assists</span>: <span class="fl">1.2</span>, <span class="dt">steals</span>: <span class="fl">1.0</span>, <span class="dt">blocks</span>: <span class="fl">0.5</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;LeBron James&quot;</span>,   <span class="dt">points</span>: <span class="fl">28.0</span>, <span class="dt">rebounds</span>: <span class="fl">8.4</span>, <span class="dt">assists</span>: <span class="fl">6.1</span>, <span class="dt">steals</span>: <span class="fl">1.9</span>, <span class="dt">blocks</span>: <span class="fl">0.8</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;Dwayne Wade&quot;</span>,    <span class="dt">points</span>: <span class="fl">22.3</span>, <span class="dt">rebounds</span>: <span class="fl">5.0</span>, <span class="dt">assists</span>: <span class="fl">4.5</span>, <span class="dt">steals</span>: <span class="fl">1.7</span>, <span class="dt">blocks</span>: <span class="fl">1.3</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;Mario Chalmers&quot;</span>, <span class="dt">points</span>: <span class="fl">10.2</span>, <span class="dt">rebounds</span>: <span class="fl">2.9</span>, <span class="dt">assists</span>: <span class="fl">3.6</span>, <span class="dt">steals</span>: <span class="fl">1.4</span>, <span class="dt">blocks</span>: <span class="fl">0.2</span> }
+];
+<span class="kw">var</span> team = {
+    <span class="dt">points</span>:   <span class="fl">98.2</span>,
+    <span class="dt">rebounds</span>: <span class="fl">41.3</span>,
+    <span class="dt">assists</span>:  <span class="fl">19.3</span>,
+    <span class="dt">steals</span>:    <span class="fl">8.5</span>,
+    <span class="dt">blocks</span>:    <span class="fl">5.3</span>
+};</code></pre></td></tr></table>
+<p>For an effective radar plot, we need to normalize all the values to a common scale. In this example, let’s translate raw statistics into team percentage. For example, instead of visualizing LeBron’s James’ scoring as 28.0, we’ll show it as 29% (28.0/98.2).</p>
+<p>Here are a couple of functions we can use to convert the raw statistics into an object to chart. The first function returns the <code>statistics</code> object for a single player. It simply searches through the <code>players</code> array looking for that player’s name. The second function relies on the first. It steps through each statistic in the <code>team</code> object, gets the corresponding statistic for the named player, and normalizes the value. The returned object will have a <code>label</code> property equal to the player’s name, and an array of normalized statistics for that player.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> get_player = <span class="kw">function</span>(name) {
+    <span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="ot">players</span>.<span class="fu">length</span>; i++) {
+        <span class="kw">if</span> (players[i].<span class="fu">player</span> === name) <span class="kw">return</span> players[i];
+    }
+}
+<span class="kw">var</span> player_data = <span class="kw">function</span>(name) {
+    <span class="kw">var</span> obj = {}, i = <span class="dv">0</span>;
+    <span class="ot">obj</span>.<span class="fu">label</span> = name;
+    <span class="ot">obj</span>.<span class="fu">data</span> = [];
+    <span class="kw">for</span> (<span class="kw">var</span> key <span class="kw">in</span> team) {
+        <span class="ot">obj</span>.<span class="ot">data</span>.<span class="fu">push</span>([i, <span class="dv">100</span>*<span class="fu">get_player</span>(name)[key]/team[key]]);
+        i++;
+    };
+    <span class="kw">return</span> obj;
+};</code></pre></td></tr></table>
+<p>For example, the function call <code>player_data(&quot;LeBron James&quot;)</code> returns the following object:</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">{
+    <span class="dt">label</span>: <span class="st">&quot;LeBron James&quot;</span>,
+    <span class="dt">data</span>:  [
+               [<span class="dv">0</span>,<span class="fl">28.513238289205702</span>],
+               [<span class="dv">1</span>,<span class="fl">20.33898305084746</span>],
+               [<span class="dv">2</span>,<span class="fl">31.60621761658031</span>],
+               [<span class="dv">3</span>,<span class="fl">22.352941176470587</span>],
+               [<span class="dv">4</span>,<span class="fl">15.09433962264151</span>]
+           ]
+}</code></pre></td></tr></table>
+<p>For the specific statistics, we’re using counter from 0 to 4. In a minute we’ll see how to map those numbers into meaningful values.</p>
+<p>Since flotr2 doesn’t require jQuery, we aren’t taking advantage of any jQuery convenience function in the code above. We’re also not taking full advantage of the JavaScript standard (e.g. <code>.each()</code>) because Internet Explorer (<span class="smcp">IE</span>) releases prior to version 9 do not support those methods. If you have jQuery on your pages for other reasons, or if you don’t need to support older <span class="smcp">IE</span> versions, you can simplify the code above quite a bit.</p>
+<p>The last bit of code we’ll use is a simple array of labels for the statistics in our chart. The order must match the order returned in <code>player_data()</code>.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> labels = [
+    [<span class="dv">0</span>, <span class="st">&quot;Points&quot;</span>],
+    [<span class="dv">1</span>, <span class="st">&quot;Rebounds&quot;</span>],
+    [<span class="dv">2</span>, <span class="st">&quot;Assists&quot;</span>],
+    [<span class="dv">3</span>, <span class="st">&quot;Steals&quot;</span>],
+    [<span class="dv">4</span>, <span class="st">&quot;Blocks&quot;</span>]
+];</code></pre></td></tr></table>
+<h3 id="step-2-create-the-chart">Step 2: Create the Chart</h3>
+<p>A single call to flotr2’s <code>draw()</code> method is all it takes to create our chart. We need to specify the <span class="smcp">HTML</span> element in which to place the chart, as well as the chart data. For the data, we’ll use the <code>get_player()</code> function above. The code below also includes a few options. The <code>title</code> option in line 9 provides an overall title for the chart, and the <code>radar</code> option in line 10 tells flotr2 the type of chart we want. With a radar chart we also have to explicitly specify a circular (as opposed to rectangular) grid, so we do that with the <code>grid</code> option in line 11. The final two options detail the x- and y-axes. For the x-axis we’ll use our <code>labels</code> array to give each statistic a name, and for the y-axis we forgo labels altogether and explicitly specify the minimum and maximum values.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
+    [
+        <span class="fu">player_data</span>(<span class="st">&quot;Chris Bosh&quot;</span>),
+        <span class="fu">player_data</span>(<span class="st">&quot;Shane Battier&quot;</span>),
+        <span class="fu">player_data</span>(<span class="st">&quot;LeBron James&quot;</span>),
+        <span class="fu">player_data</span>(<span class="st">&quot;Dwayne Wade&quot;</span>),
+        <span class="fu">player_data</span>(<span class="st">&quot;Mario Chalmers&quot;</span>)
+    ],{
+        <span class="dt">title</span>:  <span class="st">&quot;2011/12 Miami Heat Starting Lineup - Contribution to Team Total&quot;</span>,
+        <span class="dt">radar</span>:  { <span class="dt">show</span>: <span class="kw">true</span> },
+        <span class="dt">grid</span>:   { <span class="dt">circular</span>: <span class="kw">true</span> },
+        <span class="dt">xaxis</span>:  { <span class="dt">ticks</span>: labels },
+        <span class="dt">yaxis</span>:  { <span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>:<span class="dv">0</span>, <span class="dt">max</span>: <span class="dv">33</span> }
+    }
+);</code></pre></td></tr></table>
+<p>The only real trick is making the <span class="smcp">HTML</span> container wide enough to hold both the chart proper and the legend since flotr2 doesn’t do a great job of calculating the size appropriately. For a static chart such as this one, trial and error is the simplest approach and gives us the chart of figure <span class="nextfigure"/>.</p>
+<figure>
+<div id="radar-chart1" style="width:600px;height:400px;">
+
+</div>
+<figcaption>
+Radar charts let users compare multiple data variables at once.
+</figcaption>
+</figure>
+<p>Although it’s certainly not a surprise to <span class="smcp">NBA</span> fans, the chart clearly demonstrates the value of LeBron James to the team. As is evident above, he leads the team in four of the five major statistical categories.</p>
+<p>The radar chart definitely lends itself only to a few specialized applications; however, when we have only a modest number of variables, each of which is easily quantified, it can be effective. In the example above, we can also show how a particular player (LeBron James) dominates so many of the individual variables. Each player’s area on the chart roughly corresponds to his total contribution across all of the variables. The relative size of the red area makes James’s total contribution strikingly clear.</p>
+<script>
+;(function(){
+
+    draw = function() {
+        
+        var players = [
+            { player: "Chris Bosh",     points: 17.2, rebounds: 7.9, assists: 1.6, steals: 0.8, blocks: 0.8 },
+            { player: "Shane Battier",  points:  5.4, rebounds: 2.6, assists: 1.2, steals: 1.0, blocks: 0.5 },
+            { player: "LeBron James",   points: 28.0, rebounds: 8.4, assists: 6.1, steals: 1.9, blocks: 0.8 },
+            { player: "Dwayne Wade",    points: 22.3, rebounds: 5.0, assists: 4.5, steals: 1.7, blocks: 1.3 },
+            { player: "Mario Chalmers", points: 10.2, rebounds: 2.9, assists: 3.6, steals: 1.4, blocks: 0.2 },
+        ];
+        var team = {
+            points:   98.2,
+            rebounds: 41.3,
+            assists:  19.3,
+            steals:    8.5,
+            blocks:    5.3,
+        };
+        var get_player = function(name) {
+            for (var i=0; i<players.length; i++) {
+                if (players[i].player === name) return players[i];
+            }
+        }
+        var player_data = function(name) {
+            var obj = {}, i = 0;
+            obj.label = name;
+            obj.data = [];
+            for (var key in team) {
+                obj.data.push([i, 100*get_player(name)[key]/team[key]]);
+                i++;
+            };
+            return obj;
+        };
+        var labels = [
+            [0, "Points"],
+            [1, "Rebounds"],
+            [2, "Assists"],
+            [3, "Steals"],
+            [4, "Blocks"],
+        ];
+        
+        Flotr.draw(document.getElementById("radar-chart1"),
+            [
+                player_data("LeBron James"),
+                player_data("Dwayne Wade"),
+                player_data("Chris Bosh"),
+                player_data("Mario Chalmers"),
+                player_data("Shane Battier")
+            ],{
+                colors: [chartStyles.color.primary,chartStyles.color.alternateLightest,chartStyles.color.secondaryLightest,chartStyles.color.alternateDarkest,chartStyles.color.secondaryDarkest],
+                fontColor: chartStyles.color.text,
+                title:  "2011/12 Miami Heat Starting Lineup - Contribution to Team Total",
+                radar:  { show: true, radiusRatio: 0.9},
+                grid:   { circular: true, color: chartStyles.color.text },
+                xaxis:  { ticks: labels, },
+                yaxis:  { showLabels: false, min:0, max: 33, },
+                legend: {position: "nw", backgroundOpacity: 0, },
+            }
+        );
+           
+        var dummyElements = document.getElementsByClassName('flotr-dummy-div');
+        Array.prototype.forEach.call(dummyElements, function(dummyElement){
+            dummyElement.parentNode.style.display = 'none';
+        });
+
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
+</script>
+<h2 id="summing-up">Summing Up</h2>
+<p>The examples in this chapter provide a quick tour of the many types of standard data charts, the simplest and most straightforward tool for visualizing data. Each of these charts is especially effective for certain types of visualizations.</p>
+<dl class="dl-horizontal">
+<dt>
+Bar Charts
+</dt>
+<dd>
+The workhorse of charts. Effective at showing the change of a quantity over a small number of regular time intervals, or at comparing several different quantities against each other.
+</dd>
+<dt>
+Line Charts
+</dt>
+<dd>
+More effective than bar charts when there is a large number of data values to show, or for showing quantities that vary on an irregular schedule.
+</dd>
+<dt>
+Pie Charts
+</dt>
+<dd>
+Often overused, but can be effective to highlight the percentage of a whole that a single value comprises.
+</dd>
+<dt>
+Scatter Charts
+</dt>
+<dd>
+Effective for showing possible relationships between two values.
+</dd>
+<dt>
+Bubble Charts
+</dt>
+<dd>
+Adds a third value to scatter charts, but should be used carefully, as humans have difficulty accurately assessing the relative areas of circular regions.
+</dd>
+<dt>
+Radar Charts
+</dt>
+<dd>
+Designed to show several aspects of the subject on one chart. Not as familiar to many users, so be aware of the extra difficulty interpretation may entail.
+</dd>
+</dl>
+<p>Continue reading: <a href="chap02.html">Chapter 2: Making Charts Interactive</a>.</p>
+<script src="js/scripts.01.min.js"></script>
+        </main>
+        <footer>
+            <small>Copyright © 2012-2014 by Stephen A. Thomas. All Rights Reserved.</small>
+        </footer>
+    <script src="js/scripts.min.js"></script>
+   </body>
+</html>

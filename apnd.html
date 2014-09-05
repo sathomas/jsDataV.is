@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Cache-Control" content="no-transform">
+        <!--[if lte IE 8]>
+            <script>window.location.href='http://browsehappy.com';</script>
+        <![endif]-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Stephen Thomas <stephen@sathomas.me>">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png">
+        <link rel="shortcut icon" href="favicon.ico">
+        <link rel="stylesheet" href="css/styles.min.css">
+        <title>Data Visualization with JavaScript</title>
+        <script>
+            var chartStyles = {
+                color: {
+                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
+                    primary:            "#CA0000",
+                    primaryLightest:    "#FE4C4C",
+                    primaryLight:       "#F71515",
+                    primaryDark:        "#A50000",
+                    primaryDarkest:     "#7B0000",
+                    secondary:          "#007979",
+                    secondaryLightest:  "#2D9999",
+                    secondaryLight:     "#0D9494",
+                    secondaryDark:      "#006363",
+                    secondaryDarkest:   "#004A4A",
+                    alternate:          "#7EBD00",
+                    alternateLightest:  "#B6ED47",
+                    alternateLight:     "#A0E714",
+                    alternateDark:      "#679A00",
+                    alternateDarkest:   "#4D7300"
+                },
+                font: {
+                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
+                }
+
+            };
+        </script>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html" alt="jsDataV.is">
+                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <title>jsDataV.is</title>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
+                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
+                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
+                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
+                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
+                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
+                            </g>
+                        </svg>
+                    </a>
+                </li>
+                <li>Contents ▾
+                    <ol>
+                        <li><a href="intro.html" >Introduction</a></li>
+                        <li><a href="chap01.html">Graphing Data</a></li>
+                        <li><a href="chap02.html">Making Charts Interactive</a></li>
+                        <li><a href="chap03.html">Integrating Charts in a Page</a></li>
+                        <li><a href="chap04.html">Creating Specialized Graphs</a></li>
+                        <li><a href="chap05.html">Showing Timelines</a></li>
+                        <li><a href="chap06.html">Visualizing Geographic Data</a></li>
+                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
+                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                    </ol>
+                </li>
+            </ul>
+        </nav>
+        <main>
+
+<style>
+body { counter-reset: appendix 1; }
+</style>
+
+<div class="appendix">
+<h1 id="appendix-a-custom-visualizations-with-d3.js">Appendix A: Custom Visualizations with D3.js</h1>
+<p>In this book we’ve looked a many different JavaScript libraries that were designed for specific types of visualizations. If you need a visualization for your web page and there’s a library that can create that type of visualization, that library often provides the quickest and easiest way to create your visualization. There are drawbacks to such libraries, however. They all make assumptions about how the visualization should look and act, and despite the configuration options they provide, you don’t have complete control over the results. Sometimes that’s not an acceptable trade-off.</p>
+<p>For this appendix we’ll look at an entirely different approach to JavaScript visualizations, one where we retain complete control and creativity over the results. As you might expect, that approach isn’t always as easy as, for example, adding a charting library and feeding it data. Fortunately, there is a very powerful JavaScript library that can help: <a href="http://d3js.org">D3.js</a>. D3.js doesn’t provide pre-defined visualizations such as charts, graphs, or maps. Instead, it’s a toolbox for data visualization, and it gives you the tools to create <em>your own</em> charts, graphs, maps, and more.</p>
+<p>To see some of the powerful features of D3.js, we’ll take a whirlwind tour in this appendix. Its examples include:</p>
+<ul>
+<li>Creating a custom chart not available in an off-the-shelf library.</li>
+<li>Building a force-directed graph that responds to user interactions.</li>
+<li>Displaying map-based data using high quality, scalable vector graphics.</li>
+</ul>
+<h2 id="creating-a-custom-chart">Creating a Custom Chart</h2>
+<p>The most significant difference between D3.js and other JavaScript libraries is its philosophy. D3.js is not a tool for creating pre-defined types of charts and visualizations. It is, instead, a library to help with the creation of any visualization, including custom and unique presentations. It takes more effort to create a standard chart with D3.js, but by using D3.js we’re not limited to standard charts. To get a sense of how D3.js works, we can create a custom chart that wouldn’t be possible with a typical charting library.</p>
+<p>For this example, we’ll visualize one of the most important findings in modern physics—Hubble’s Law. According to that law, the universe is expanding. As a result, the speed at which we perceive distant galaxies to be moving varies according to their distance from us. More precisely, Hubble’s Law proposes that the variation, or shift, in this speed is a linear function of distance. To visualize the law, we can chart the speed variation (known as <em>red shift velocity</em>) vs. distance for several galaxies. If Hubble is right the chart should look like a line. For our data, we’ll use galaxies and clusters from Hubble’s original <a href="http://www.pnas.org/content/15/3/168.full">1929 paper</a>, but updated with current values for distance and red shift velocities.</p>
+<p>So far this task seems like a good match for a scatter plot. Distance could serve as the x-axis and velocity the y-axis. There’s a twist, though; physicists don’t actually know the distances or velocities that we want to chart, at least not exactly. The best they can do is estimate those values, and there is potential for error in both. But that’s no reason to abandon the effort. In fact, potential errors in the values might be an important aspect for the visualization to highlight. To do that, we won’t draw each value as a point. Rather, we’ll show it as a box, and the box dimensions will correspond to the potential errors in the value.</p>
+<h3 id="step-1-prepare-the-data">Step 1: Prepare the Data</h3>
+<p>Here is the data for our chart according to recent estimates.</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Nebulae/Cluster</th>
+<th style="text-align: left;">Distance</th>
+<th style="text-align: left;">Red Shift Velocity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NGC 6822</td>
+<td style="text-align: left;">0.500±0.010 Mpc</td>
+<td style="text-align: left;">57±2 km/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGC 221</td>
+<td style="text-align: left;">0.763±0.024 Mpc</td>
+<td style="text-align: left;">200±6 km/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NGC 598</td>
+<td style="text-align: left;">0.835±0.105 Mpc</td>
+<td style="text-align: left;">179±3 km/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGC 4736</td>
+<td style="text-align: left;">4.900±0.400 Mpc</td>
+<td style="text-align: left;">308±1 km/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NGC 5457</td>
+<td style="text-align: left;">6.400±0.500 Mpc</td>
+<td style="text-align: left;">241±2 km/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGC 4258</td>
+<td style="text-align: left;">7.000±0.500 Mpc</td>
+<td style="text-align: left;">448±3 km/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NGC 5194</td>
+<td style="text-align: left;">7.100±1.200 Mpc</td>
+<td style="text-align: left;">463±3 km/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGC 4826</td>
+<td style="text-align: left;">7.400±0.610 Mpc</td>
+<td style="text-align: left;">408±4 km/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NGC 3627</td>
+<td style="text-align: left;">11.000±1.500 Mpc</td>
+<td style="text-align: left;">727±3 km/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGC 7331</td>
+<td style="text-align: left;">12.200±1.000 Mpc</td>
+<td style="text-align: left;">816±1 km/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NGC 4486</td>
+<td style="text-align: left;">16.400±0.500 Mpc</td>
+<td style="text-align: left;">1307±7 km/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NGC 4649</td>
+<td style="text-align: left;">16.800±1.200 Mpc</td>
+<td style="text-align: left;">1117±6 km/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NGC 4472</td>
+<td style="text-align: left;">17.100±1.200 Mpc</td>
+<td style="text-align: left;">729±2 km/s</td>
+</tr>
+</tbody>
+</table>
+<p>We can represent that in JavaScript using the following array.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">hubble_data = [
+    { <span class="dt">nebulae</span>: <span class="st">&quot;NGC 6822&quot;</span>, <span class="dt">distance</span>:  <span class="fl">0.500</span>, <span class="dt">distance_error</span>: <span class="fl">0.010</span>,
+      <span class="dt">velocity</span>:   <span class="dv">57</span>, <span class="dt">velocity_error</span>: <span class="dv">2</span>, },
+    { <span class="dt">nebulae</span>: <span class="st">&quot;NGC  221&quot;</span>, <span class="dt">distance</span>:  <span class="fl">0.763</span>, <span class="dt">distance_error</span>: <span class="fl">0.024</span>,
+      <span class="dt">velocity</span>:  <span class="dv">200</span>, <span class="dt">velocity_error</span>: <span class="dv">6</span>, },
+    { <span class="dt">nebulae</span>: <span class="st">&quot;NGC  598&quot;</span>, <span class="dt">distance</span>:  <span class="fl">0.835</span>, <span class="dt">distance_error</span>: <span class="fl">0.105</span>,
+      <span class="dt">velocity</span>:  <span class="dv">179</span>, <span class="dt">velocity_error</span>: <span class="dv">3</span>, },
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+<h3 id="step-2-set-up-the-web-page">Step 2: Set Up the Web Page</h3>
+<p>D3.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need do is include it in the page (line 9). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<h3 id="step-3-create-a-stage-for-the-visualization">Step 3: Create a Stage for the Visualization</h3>
+<p>Unlike higher level libraries, D3.js doesn’t draw the visualization on the page. We’ll have to do that ourselves. In exchange for the additional effort, though, we do get the freedom to pick our own drawing technology. We could follow the same approach as most libraries in this book and use HTML5’s <code>&lt;canvas&gt;</code> element, or we could simply use native HTML. After seeing it in action in chapter 6, however, it seems Scalable Vector Graphics (SVG) is the best approach for our chart. The root of our graph, therefore, will be an <code>&lt;svg&gt;</code> element, and we need to add that to the page. We can define its dimensions at the same time using attributes.</p>
+<p>If we were using jQuery, we might do something like the following.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="fu">$</span>(<span class="st">&quot;&lt;svg&gt;&quot;</span>).<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height).<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width);
+<span class="fu">$</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(svg);</code></pre></td></tr></table>
+<p>With D3.js our code is very similar.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height)
+    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width);</code></pre></td></tr></table>
+<p>With that statement we’re selecting the container, appending an <code>&lt;svg&gt;</code> element to it, and setting the attributes of that <code>&lt;svg&gt;</code> element. This statement does highlight one important difference between D3.js and jQuery that often trips up developers starting out with D3.js. In jQuery the <code>append()</code> method returns the original selection so that you can continue operating on that selection. More specifically, <code>$(&quot;#container&quot;).append(svg)</code> returns <code>$(&quot;#container&quot;)</code>.</p>
+<p>With D3.js, on the other hand, <code>append()</code> returns a different selection, the newly appended element(s). So <code>d3.select(&quot;#container&quot;).append(&quot;svg&quot;)</code> doesn’t return the container selection but, rather, a selection of the new <code>&lt;svg&gt;</code> element. The <code>attr()</code> calls that follow, therefore, apply to the <code>&lt;svg&gt;</code> element and not the <code>&quot;#container&quot;</code>.</p>
+<h3 id="step-4-control-the-charts-dimensions">Step 4: Control the Chart’s Dimensions</h3>
+<p>So far we haven’t specified the actual values for the chart’s height and width; we’ve only used <code>height</code> and <code>width</code> variables. Having the dimensions in variables will come in handy, and it will make it easy to incorporate margins in the visualization. The code below sets up those dimensions; its form is a common convention in D3.js visualizations.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> margin = {<span class="dt">top</span>: <span class="dv">20</span>, <span class="dt">right</span>: <span class="dv">20</span>, <span class="dt">bottom</span>: <span class="dv">20</span>, <span class="dt">left</span>: <span class="dv">20</span>},
+    width = <span class="dv">960</span> - <span class="ot">margin</span>.<span class="fu">left</span> - <span class="ot">margin</span>.<span class="fu">right</span>,
+    height = <span class="dv">500</span> - <span class="ot">margin</span>.<span class="fu">top</span> - <span class="ot">margin</span>.<span class="fu">bottom</span>;</code></pre></td></tr></table>
+<p>We’ll have to adjust the code that creates the main <code>&lt;svg&gt;</code> container to account for these margins.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#chart1&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="ot">margin</span>.<span class="fu">right</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="ot">margin</span>.<span class="fu">bottom</span>);</code></pre></td></tr></table>
+<p>To make sure our chart honors the defined margins, we’ll construct it entirely within a child SVG group (<code>&lt;g&gt;</code>) element. The <code>&lt;g&gt;</code> element is just an arbitrary containing element in SVG, much like the <code>&lt;div&gt;</code> element for HTML. We can use D3.js to create the element and position it appropriately within the main <code>&lt;svg&gt;</code> element.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> chart = <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="st">&quot;,&quot;</span> + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="st">&quot;)&quot;</span>);</code></pre></td></tr></table>
+<p>Visualizations must often re-scale the source data. In our case, we’ll need to re-scale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, we want to scale galactic distance to between 0 and 920 pixels. Since this type of requirement is common for visualizations, D3.js has tools to help. Not surprisingly, they’re <code>scale</code> objects. We’ll create scales for both the x- and the y-dimensions.</p>
+<p>As the code below indicates, both of our scales are linear scales. Linear transformations are pretty simple (and we really don’t need D3.js to manage them); however, D3.js supports other types of scales that can be quite complex. With D3.js using more sophisticated scaling is just as easy as linear scales.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xScale = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
+    .<span class="fu">range</span>([<span class="dv">0</span>,width]);
+<span class="kw">var</span> yScale = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
+    .<span class="fu">range</span>([height,<span class="dv">0</span>]);</code></pre></td></tr></table>
+<p>For both scales we define their range as the desired limits for the scales. The x scale ranges from 0 to the chart’s width, and the y scale ranges from 0 to the chart’s height. Note, though, that we’ve reversed the normal order for the y scale. That’s because SVG dimensions (just like HTML dimensions) place 0 at the top of the area. That convention is opposite of the normal chart convention which places 0 at the bottom. To account for the reversal, we swap the values when defining the range.</p>
+<p>At this point we’ve set the ranges for each scale, and those ranges define the desired output. We also have to specify the possible inputs to each scale, which D3.js calls the <em>domain.</em> Those inputs are the minimum and maximum values for the distance and velocity. We can use D3.js to extract the values directly from the data. Here’s how to get the minimum distance.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> minDist = <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { 
+    <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>;
+});</code></pre></td></tr></table>
+<p>We can’t simply find the minimum value in the data because we have to account for the distance error. As we can see above, D3.js accepts a function as a parameter to <code>d3.min()</code>, and that function can make the necessary adjustment. We can use the same approach for maximum values as well. Here’s the complete code for defining the domains of both scales.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">xScale</span>.<span class="fu">domain</span>([
+        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>; }),
+        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> + <span class="ot">nebulae</span>.<span class="fu">distance_error</span>; })
+    ])
+    .<span class="fu">nice</span>();
+<span class="ot">yScale</span>.<span class="fu">domain</span>([
+        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> - <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>; }),
+        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> + <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>; })
+    ])
+    .<span class="fu">nice</span>();</code></pre></td></tr></table>
+<h3 id="step-5-draw-the-chart-framework">Step 5: Draw the Chart Framework</h3>
+<p>Axes are another common feature in visualizations, and D3.js has tools for those as well. To create the axes for our chart, we specify the appropriate scales and an orientation. As you can see from the code below, D3.js supports axes as part of its SVG utilities.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xAxis = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
+    .<span class="fu">scale</span>(xScale)
+    .<span class="fu">orient</span>(<span class="st">&quot;bottom&quot;</span>);
+<span class="kw">var</span> yAxis = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
+    .<span class="fu">scale</span>(yScale)
+    .<span class="fu">orient</span>(<span class="st">&quot;left&quot;</span>);</code></pre></td></tr></table>
+<p>After defining the axes, we can use D3.js to add the appropriate SVG elements to the page. We’ll contain each axis within its own <code>&lt;g&gt;</code> group. For the x-axis, we need to shift that group to the bottom of the chart.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xAxisGroup = <span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>);</code></pre></td></tr></table>
+<p>To create the SVG elements that make up the axis, we could call the <code>xAxis</code> object and pass it the containing group as a parameter.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">xAxis</span>(xAxisGroup);</code></pre></td></tr></table>
+<p>With D3.js, though, there’s a more concise expression that avoids creating unnecessary local variables and preserves method chaining.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
+    .<span class="fu">call</span>(xAxis);</code></pre></td></tr></table>
+<p>And as long as we’re preserving method chaining, we can take advantage of it to add yet another element to our chart, this time it’s the label for the axis.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
+    .<span class="fu">call</span>(xAxis)
+  .<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;x&quot;</span>, width)
+    .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, -<span class="dv">6</span>)
+    .<span class="fu">style</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
+    .<span class="fu">text</span>(<span class="st">&quot;Distance (Mpc)&quot;</span>);</code></pre></td></tr></table>
+<p>If you look under the hood, you’ll find that D3.js has done quite a bit of work for us in creating the axis, its tick marks, and its labels. Here’s a taste of the SVG it builds.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;g</span><span class="ot"> class=</span><span class="st">&quot;x axis&quot;</span><span class="ot"> transform=</span><span class="st">&quot;translate(0,450)&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;g</span><span class="ot"> class=</span><span class="st">&quot;tick&quot;</span><span class="ot"> transform=</span><span class="st">&quot;translate(0,0)&quot;</span><span class="ot"> style=</span><span class="st">&quot;opacity: 1;&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;line</span><span class="ot"> y2=</span><span class="st">&quot;6&quot;</span><span class="ot"> x2=</span><span class="st">&quot;0&quot;</span><span class="kw">&gt;&lt;/line&gt;</span>
+        <span class="kw">&lt;text</span><span class="ot"> y=</span><span class="st">&quot;9&quot;</span><span class="ot"> x=</span><span class="st">&quot;0&quot;</span><span class="ot"> dy=</span><span class="st">&quot;.71em&quot;</span><span class="ot"> style=</span><span class="st">&quot;text-anchor: middle;&quot;</span><span class="kw">&gt;</span>0<span class="kw">&lt;/text&gt;</span>
+    <span class="kw">&lt;/g&gt;</span>
+    <span class="kw">&lt;g</span><span class="ot"> class=</span><span class="st">&quot;tick&quot;</span><span class="ot"> transform=</span><span class="st">&quot;translate(77.77,0)&quot;</span><span class="ot"> style=</span><span class="st">&quot;opacity: 1;&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;line</span><span class="ot"> y2=</span><span class="st">&quot;6&quot;</span><span class="ot"> x2=</span><span class="st">&quot;0&quot;</span><span class="kw">&gt;&lt;/line&gt;</span>
+        <span class="kw">&lt;text</span><span class="ot"> y=</span><span class="st">&quot;9&quot;</span><span class="ot"> x=</span><span class="st">&quot;0&quot;</span><span class="ot"> dy=</span><span class="st">&quot;.71em&quot;</span><span class="ot"> style=</span><span class="st">&quot;text-anchor: middle;&quot;</span><span class="kw">&gt;</span>2<span class="kw">&lt;/text&gt;</span>
+    <span class="kw">&lt;/g&gt;</span>
+    <span class="co">&lt;!-- Additional Tick Marks... --&gt;</span>
+    <span class="kw">&lt;path</span><span class="ot"> class=</span><span class="st">&quot;domain&quot;</span><span class="ot"> d=</span><span class="st">&quot;M0,6V0H700V6&quot;</span><span class="kw">&gt;&lt;/path&gt;</span>
+    <span class="kw">&lt;text</span><span class="ot"> x=</span><span class="st">&quot;700&quot;</span><span class="ot"> y=</span><span class="st">&quot;-6&quot;</span><span class="ot"> style=</span><span class="st">&quot;text-anchor: end;&quot;</span><span class="kw">&gt;</span>Distance (Mpc)<span class="kw">&lt;/text&gt;</span>
+<span class="kw">&lt;/g&gt;</span></code></pre></td></tr></table>
+<p>When we add the code for the y-axis, we’ve completed the framework for the chart.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
+    .<span class="fu">call</span>(xAxis)
+  .<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;x&quot;</span>, width)
+    .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, -<span class="dv">6</span>)
+    .<span class="fu">style</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
+    .<span class="fu">text</span>(<span class="st">&quot;Distance (Mpc)&quot;</span>);
+
+<span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="fu">call</span>(yAxis)
+  .<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;rotate(-90)&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, <span class="dv">6</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;dy&quot;</span>, <span class="st">&quot;.71em&quot;</span>)
+    .<span class="fu">style</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
+    .<span class="fu">text</span>(<span class="st">&quot;Red Shift Velocity (km/s)&quot;</span>)</code></pre></td></tr></table>
+<p>The result of figure <span class="nextfigure"/> isn’t very exciting without any data, but it does give us a framework for the chart.</p>
+<style>
+svg { font: 10px sans-serif; }
+
+.axis path, .axis line {
+  fill: none;
+  stroke: #888;
+  shape-rendering: crispEdges;
+}
+</style>
+<figure>
+<div id="chart1" style="height:500px;width:840px;">
+
+</div>
+<figcaption>
+D3.js provides tools to create the framework for a chart.
+</figcaption>
+</figure>
+<p>As you can tell, we’ve had to write quite a bit of code just to get a couple of axes on the page. That’s the nature of D3.js. It’s not a library to which you can simply pass a data set and get a chart as an output. Instead, it’s better thought of as a collection of very useful utilities that you can use to help create your own charts.</p>
+<h3 id="step-6-add-the-data-to-the-chart">Step 6: Add the Data to the Chart</h3>
+<p>Now that our chart’s framework is ready, we can add the actual data. Because we want to show both the distance and velocity errors in the data, we can draw each point as a rectangle. For a simple, static chart, we can add SVG <code>&lt;rect&gt;</code> elements just as we’ve created the rest of the chart. We can take advantage of our x and y scales to calculate the dimensions of the rectangles.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">hubble_data</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(nebulae) {
+    <span class="ot">chart2</span>.<span class="fu">append</span>(<span class="st">&quot;rect&quot;</span>)
+      .<span class="fu">attr</span>(<span class="st">&quot;x&quot;</span>, <span class="fu">xScale</span>(<span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>))
+      .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, <span class="fu">xScale</span>(<span class="dv">2</span> * <span class="ot">nebulae</span>.<span class="fu">distance_error</span>))
+      .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, <span class="fu">yScale</span>(<span class="ot">nebulae</span>.<span class="fu">velocity</span> - <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>))
+      .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height - <span class="fu">yScale</span>(<span class="dv">2</span> * <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>));
+});</code></pre></td></tr></table>
+<p>The approach above works fine for this example and results in the chart of figure <span class="nextfigure"/>. Typically, however, D3.js visualizations combine their data sets directly with markup elements and rely on D3’s <code>enter</code>, <code>update</code>, and <code>exit</code> selections to add the data to the page. We’ll defer further discussion of this alternative approach until the next example.</p>
+<figure>
+<div id="chart2" style="height:500px;width:840px;">
+
+</div>
+<figcaption>
+D3.js can render the data elements using any valid markup, including SVG &lt;rect&gt; elements with defined dimensions.
+</figcaption>
+</figure>
+<h3 id="step-7-answer-users-questions">Step 7: Answer Users’ Questions</h3>
+<p>Whenever we create a visualization, it’s a good idea to anticipate questions that users might ask when they view it. In our example so far, we’ve presented a data set that leads to Hubble’s Law. But we haven’t (yet) shown how well the data fits that law. Since that is such an obvious question, let’s answer it right on the chart itself.</p>
+<p>The current estimate for Hubble’s Constant (H0) is about 70 km/s/Mpc. To show how that matches the data on our chart, we can create a line graph with that slope beginning at the point (0,0). A single SVG <code>&lt;line&gt;</code> is all that’s required. Once again we rely on the D3.js scales to define the line’s coordinates.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;line&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;x1&quot;</span>,<span class="fu">xScale</span>(<span class="dv">0</span>))
+    .<span class="fu">attr</span>(<span class="st">&quot;y1&quot;</span>,<span class="fu">yScale</span>(<span class="dv">0</span>))
+    .<span class="fu">attr</span>(<span class="st">&quot;x2&quot;</span>,<span class="fu">xScale</span>(<span class="dv">20</span>))
+    .<span class="fu">attr</span>(<span class="st">&quot;y2&quot;</span>,<span class="fu">yScale</span>(<span class="dv">1400</span>));</code></pre></td></tr></table>
+<p>In figure <span class="nextfigure"/> we can see that Hubble’s Law remains a good approximation.</p>
+<figure>
+<div id="chart3" style="height:500px;width:840px;">
+
+</div>
+<figcaption>
+The complete custom chart shows the data set exactly as we wish.
+</figcaption>
+</figure>
+<script>
+contentLoaded.done(function() {
+
+
+var hubble_data = [
+    { nebulae: "NGC 6822", distance:  0.500, distance_error: 0.010, velocity:   57, velocity_error: 2, },
+    { nebulae: "NGC  221", distance:  0.763, distance_error: 0.024, velocity:  200, velocity_error: 6, },
+    { nebulae: "NGC  598", distance:  0.835, distance_error: 0.105, velocity:  179, velocity_error: 3, },
+    { nebulae: "NGC 4736", distance:  4.900, distance_error: 0.400, velocity:  308, velocity_error: 1, },
+    { nebulae: "NGC 4258", distance:  7.000, distance_error: 0.500, velocity:  448, velocity_error: 3, },
+    { nebulae: "NGC 5194", distance:  7.100, distance_error: 1.200, velocity:  463, velocity_error: 3, },
+    { nebulae: "NGC 4826", distance:  7.400, distance_error: 0.610, velocity:  408, velocity_error: 4, },
+    { nebulae: "NGC 3627", distance: 11.000, distance_error: 1.500, velocity:  727, velocity_error: 3, },
+    { nebulae: "NGC 7331", distance: 12.200, distance_error: 1.000, velocity:  816, velocity_error: 1, },
+    { nebulae: "NGC 4486", distance: 16.400, distance_error: 0.500, velocity: 1307, velocity_error: 7, },
+    { nebulae: "NGC 4649", distance: 16.800, distance_error: 1.200, velocity: 1117, velocity_error: 6, },
+];
+
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 760 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var svg1 = d3.select("#chart1").append("svg")
+    .attr("height", height + margin.left + margin.right)
+    .attr("width", width + margin.top + margin.bottom);
+
+var chart1 = svg1.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var xScale = d3.scale.linear()
+    .range([0,width]);
+var yScale = d3.scale.linear()
+    .range([height,0]);
+
+var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+    
+xScale.domain([
+        d3.min(hubble_data, function(nebulae) { return nebulae.distance - nebulae.distance_error; }),
+        d3.max(hubble_data, function(nebulae) { return nebulae.distance + nebulae.distance_error; })
+    ])
+    .nice();
+
+yScale.domain([
+        d3.min(hubble_data, function(nebulae) { return nebulae.velocity - nebulae.velocity_error; }),
+        d3.max(hubble_data, function(nebulae) { return nebulae.velocity + nebulae.velocity_error; })
+    ])
+    .nice();
+
+chart1.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+  .append("text")
+    .attr("x", width)
+    .attr("y", -6)
+    .style("text-anchor", "end")
+    .text("Distance (Mpc)");
+
+chart1.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+  .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Red Shift Velocity (km/s)")
+
+
+var svg2 = d3.select("#chart2").append("svg")
+    .attr("height", height + margin.left + margin.right)
+    .attr("width", width + margin.top + margin.bottom);
+
+var chart2 = svg2.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+chart2.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+  .append("text")
+    .attr("x", width)
+    .attr("y", -6)
+    .style("text-anchor", "end")
+    .text("Distance (Mpc)");
+
+chart2.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+  .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Red Shift Velocity (km/s)")
+
+hubble_data.forEach(function(nebulae) {
+    chart2.append("rect")
+      .attr("x", xScale(nebulae.distance - nebulae.distance_error))
+      .attr("width", xScale(2 * nebulae.distance_error))
+      .attr("y", yScale(nebulae.velocity - nebulae.velocity_error))
+      .attr("height", height - yScale(2 * nebulae.velocity_error))
+      .style("fill", "red");
+});
+
+var svg3 = d3.select("#chart3").append("svg")
+    .attr("height", height + margin.left + margin.right)
+    .attr("width", width + margin.top + margin.bottom);
+
+var chart3 = svg3.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+chart3.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+  .append("text")
+    .attr("x", width)
+    .attr("y", -6)
+    .style("text-anchor", "end")
+    .text("Distance (Mpc)");
+
+chart3.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+  .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Red Shift Velocity (km/s)")
+
+hubble_data.forEach(function(nebulae) {
+    chart3.append("rect")
+      .attr("x", xScale(nebulae.distance - nebulae.distance_error))
+      .attr("width", xScale(2 * nebulae.distance_error))
+      .attr("y", yScale(nebulae.velocity - nebulae.velocity_error))
+      .attr("height", height - yScale(2 * nebulae.velocity_error))
+      .style("fill", "red");
+});
+
+chart3.append("line")
+    .attr("x1",xScale(0))
+    .attr("y1",yScale(0))
+    .attr("x2",xScale(20))
+    .attr("y2",yScale(1400))
+    .style("stroke","#300083");
+
+
+
+
+});
+</script>
+<h2 id="creating-a-force-directed-network-graph">Creating a Force Directed Network Graph</h2>
+<p>Unlike the JavaScript plotting libraries we considered in the early chapters, D3.js is not limited to standard charts. In fact, it excels at specialized and custom graph types. To see its power we’ll create another version of the network graph from Chapter 4. In the earlier implementation we used the sigmajs library, and most of our work was structuring the data into the format that library requires. We didn’t have to decide how to draw the nodes and edges, how to connect them, or, once we enabled layouts, how to position them on the page. As we’ll see below, D3.js doesn’t make those decisions for us. For this example, we’ll have to draw the nodes and edges, connect them to each other appropriately, and position them on the page. That may sound like a lot of work, but, as we’ll also see, D3.js gives us a lot of tools to help.</p>
+<h3 id="step-1-prepare-the-data-1">Step 1: Prepare the Data</h3>
+<p>Since we’re replicating the network graph from chapter 4, we start with the same data set.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> albums = [
+  {
+    <span class="dt">album</span>: <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span>,
+    <span class="dt">musicians</span>: [
+      <span class="st">&quot;Cannonball Adderley&quot;</span>,
+      <span class="st">&quot;Paul Chambers&quot;</span>,
+      <span class="st">&quot;Jimmy Cobb&quot;</span>,
+      <span class="st">&quot;John Coltrane&quot;</span>,
+      <span class="st">&quot;Miles Davis&quot;</span>,
+      <span class="st">&quot;Bill Evans&quot;</span>
+    ]
+  },{
+    <span class="dt">album</span>: <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span>,
+    <span class="dt">musicians</span>: [
+      <span class="st">&quot;John Coltrane&quot;</span>,
+      <span class="st">&quot;Jimmy Garrison&quot;</span>,
+      <span class="st">&quot;Elvin Jones&quot;</span>,
+      <span class="st">&quot;McCoy Tyner&quot;</span>
+    ]
+  <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+<p>For the visualization it will be helpful to have two separate arrays, one for the graph’s nodes and a second for the graph’s edges. Extracting those arrays from the original data is straightforward, so we won’t bother looking at it in this appendix. You can, however, see the full implementation in the book’s source code. The result looks like the following.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> nodes = [
+  {
+    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span>,
+    <span class="st">&quot;links&quot;</span>: [
+      <span class="st">&quot;Cannonball Adderley&quot;</span>,
+      <span class="st">&quot;Paul Chambers&quot;</span>,
+      <span class="st">&quot;Jimmy Cobb&quot;</span>,
+      <span class="st">&quot;John Coltrane&quot;</span>,
+      <span class="st">&quot;Miles Davis&quot;</span>,
+      <span class="st">&quot;Bill Evans&quot;</span>
+    ],
+    <span class="st">&quot;x&quot;</span>: <span class="dv">270</span>,
+    <span class="st">&quot;y&quot;</span>: <span class="dv">200</span>
+  },
+  {
+    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span>,
+    <span class="st">&quot;links&quot;</span>: [
+      <span class="st">&quot;John Coltrane&quot;</span>,
+      <span class="st">&quot;Jimmy Garrison&quot;</span>,
+      <span class="st">&quot;Elvin Jones&quot;</span>,
+      <span class="st">&quot;McCoy Tyner&quot;</span>
+    ],
+    <span class="st">&quot;x&quot;</span>: <span class="fl">307.303483</span>,
+    <span class="st">&quot;y&quot;</span>: <span class="fl">195.287474</span>
+  },
+  <span class="co">// Data set continues...</span>
+];</code></pre></td></tr></table>
+<p>For the nodes, we’ve added <code>x</code> and <code>y</code> properties to define a position on the graph. Initially the code arbitrarily sets these values so that the nodes are positioned in a circle.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> edges = [
+  {
+    <span class="st">&quot;source&quot;</span>: <span class="dv">0</span>,
+    <span class="st">&quot;target&quot;</span>: <span class="dv">16</span>,
+    <span class="st">&quot;links&quot;</span>: [
+      <span class="st">&quot;Cannonball Adderley&quot;</span>,
+      <span class="st">&quot;Miles Davis&quot;</span>
+    ]
+  },
+  {
+    <span class="st">&quot;source&quot;</span>: <span class="dv">0</span>,
+    <span class="st">&quot;target&quot;</span>: <span class="dv">6</span>,
+    <span class="st">&quot;links&quot;</span>: [
+      <span class="st">&quot;Paul Chambers&quot;</span>,
+      <span class="st">&quot;John Coltrane&quot;</span>
+    ]
+  },
+  <span class="co">// Data set continues...</span>
+];</code></pre></td></tr></table>
+<p>The edges indicate the two nodes that they connect as indices in the <code>nodes</code> array and they include an array of the individual musicians that are common between the albums.</p>
+<h3 id="step-2-set-up-the-page">Step 2: Set Up the Page</h3>
+<p>As we noted in the previous example, D3.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need do is include it in the page (line 9). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<h3 id="step-3-create-a-stage-for-the-visualization-1">Step 3: Create a Stage for the Visualization</h3>
+<p>This step is also the same as the previous example. We ask D3.js to select the container element and then insert an <code>&lt;svg&gt;</code> element within it. In addition to appending the <code>&lt;svg&gt;</code> element, we can define its size by setting the <code>height</code> and <code>width</code> attributes.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, <span class="dv">500</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, <span class="dv">960</span>);</code></pre></td></tr></table>
+<h3 id="step-4-draw-the-graphs-nodes">Step 4: Draw the Graph’s Nodes</h3>
+<p>We’re going to draw each node as a circle, and that’s as simple as appending <code>&lt;circle&gt;</code> elements inside the <code>&lt;svg&gt;</code> stage. Based on the previous step, you might think that would be as simple as executing <code>svg.append(&quot;circle&quot;)</code> for each element in the <code>nodes</code> array.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodes</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(node) {
+    <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>);
+});</code></pre></td></tr></table>
+<p>That code will indeed add 25 circles to the visualization. What it won’t do, though, is create any links between the data (nodes in the array) and the document (circle elements on the page). D3.js has another way to add the circles to the page that does create that linkage. In fact, not only will D3.js create the links, it will even manage them for us. This support becomes especially valuable as visualizations grow more complex.</p>
+<blockquote>
+<p>This feature is really the <em>core</em> of D3.js, and it is, in fact, the source for the name “D3” which is shorthand for “Data Driven Documents.”</p>
+</blockquote>
+<p>Here’s how we can use D3.js more effectively to add the <code>&lt;circle&gt;</code> elements to the graph.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> selection = <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
+    .<span class="fu">data</span>(nodes);
+    
+<span class="ot">selection</span>.<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>);</code></pre></td></tr></table>
+<p>For those of you that haven’t seen D3.js code before, that fragment surely looks very strange. What are we trying to do by selecting <code>&lt;circle&gt;</code> elements before we’ve even created any? Won’t the result just be empty? And if so, what’s the point of the <code>data()</code> function that follows? To answer those questions, we have to understand how D3.js differs from traditional JavaScript libraries like jQuery. In those libraries a selection represents elements of HTML markup. With jQuery, <code>$(&quot;circle&quot;)</code> is nothing more than the <code>&lt;circle&gt;</code> elements in the page. With D3.js, however, selections are more than just markup elements. D3.js selections can contain both markup <em>and</em> data.</p>
+<p>D3.js puts markup elements and data objects together with the <code>data()</code> function. The object on which it operates (<code>svg.selectAll(&quot;circle&quot;)</code> above) supplies the elements, and its parameter (<code>nodes</code> above) provides the data. The first statement in the fragment, therefore, tells D3.js that we want to match <code>&lt;circle&gt;</code> elements with nodes in our graph. We are, in effect, saying that we want one <code>&lt;circle&gt;</code> to represent each value in the <code>nodes</code> array.</p>
+<p>The result is easiest to understand when there are exactly as many elements as there are data values. Figure <span class="nextfigure"/> shows four <code>&lt;circle&gt;</code> elements and four albums. D3.js dutifully combines the two sets, giving us a selection of four objects. Each object has both a <code>&lt;circle&gt;</code> and an album.</p>
+<figure>
+<img src="img/fulljoin.png" />
+<figcaption>
+D3.js selections can associate page content such as &lt;circle&gt; elements with data items such as albums.
+</figcaption>
+</figure>
+<p>In general, though, we can’t guarantee that there will be exactly as many elements as data values. Suppose, for example, only two <code>&lt;circle&gt;</code> elements existed for our four albums. As figure <span class="nextfigure"/> shows, D3.js still creates a selection of four objects, even though there aren’t enough circles for all of them. Two of the objects will have a data value but no element.</p>
+<figure>
+<img src="img/partjoin.png" />
+<figcaption>
+D3.js selections keep track of page content that doesn’t exist (yet).
+</figcaption>
+</figure>
+<p>Our code fragment is an even more extreme example. When it executes, there are absolutely no circles on the page. There are, however, values in the <code>nodes</code> array that we’re telling D3.js to use as data. D3.js, therefore, creates an object for each of those data values. It just won’t have a <code>&lt;circle&gt;</code> element to go with them.</p>
+<p>(Take a breath because magic is about to happen.)</p>
+<p>Now we can look at the second statement in our code fragment. It starts out <code>selection.enter()</code>. The <code>enter()</code> function is a special D3.js function. It tells D3.js to search through the selection and find all of the objects that have a data value <em>but no markup element.</em> We then complete the statement by taking that subset of the selection and calling <code>append(&quot;circle&quot;)</code>. And with that function call D3.js will take any object in the selection without a markup element and create a circle for it. That’s how we add <code>&lt;circle&gt;</code> elements to the graph.</p>
+<p>To be a little more concise, we can combine our two statements into a single one. The effect, for our visualization is to create a <code>&lt;circle&gt;</code> within the <code>&lt;svg&gt;</code> container for every node in the graph.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> nodeSelection = <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
+    .<span class="fu">data</span>(nodes)
+    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>);</code></pre></td></tr></table>
+<h3 id="step-5-draw-the-graphs-edges">Step 5: Draw the Graph’s Edges</h3>
+<p>You won’t be surprised to find that adding the edges to the graph works just like adding nodes. We simply append <code>&lt;line&gt;</code> elements instead of circles.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> edgeSelection = <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;line&quot;</span>)
+    .<span class="fu">data</span>(edges)
+    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;line&quot;</span>);</code></pre></td></tr></table>
+<blockquote>
+<p>Even though we won’t need to use them for this example, D3.js has other functions that complement the <code>enter()</code> function. To find objects that have a markup element but no data value, you can use the function <code>exit()</code>. And to find objects that have a markup element with a data value that has changed, you can use the function <code>update()</code>. The names <em>enter</em> and <em>exit</em> derive from a theater metaphor that D3.js associates with a visualization. The <code>enter()</code> subset represents those elements that are <em>entering</em> the stage, while the <code>exit()</code> subset represents elements leaving, or <em>exiting,</em> the stage.</p>
+</blockquote>
+<p>Because we’re using SVG elements for both the nodes and the edges, we can use CSS rules to style them. That’s especially important for the edges because, by default, SVG lines have a stroke width of 0.</p>
+<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode css">circle <span class="kw">{</span>
+    <span class="kw">fill:</span> <span class="dt">#ccc</span><span class="kw">;</span>
+    <span class="kw">stroke:</span> <span class="dt">#fff</span><span class="kw">;</span>
+    <span class="kw">stroke-width:</span> <span class="dt">1px</span><span class="kw">;</span>
+<span class="kw">}</span>
+
+line <span class="kw">{</span>
+    <span class="kw">stroke:</span> <span class="dt">#777</span><span class="kw">;</span>
+    <span class="kw">stroke-width:</span> <span class="dt">1px</span><span class="kw">;</span>
+<span class="kw">}</span></code></pre></td></tr></table>
+<h3 id="step-6-position-the-elements">Step 6: Position the Elements</h3>
+<p>At this point we’ve added the necessary markup elements to our visualization, but we haven’t given them any dimensions or positions. As we’ve noted before, D3.js doesn’t do any drawing, so we’ll have to write the code to do it. As noted in step 2, we did assign somewhat arbitrary positions to the nodes by arranging them in a circle. For now, we can use that to position them.</p>
+<p>To position an SVG circle we set its <code>cx</code> and <code>cy</code> attributes to correspond to the circle’s center. We also specify the circle’s radius with the <code>r</code> attribute. Let’s start with the radius; we’ll set it to a fixed value for all nodes. We’ve already created a D3.js selection for all of those nodes. Setting their <code>r</code> attributes is a simple statement.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodeSelection</span>.<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">10</span>);</code></pre></td></tr></table>
+<p>The <code>cx</code> and <code>cy</code> values are a little trickier because they’re not the same for all of the nodes. Those values depend on properties of the data associated with the nodes. More specifically, each element in the <code>nodes</code> array has <code>x</code> and <code>y</code> properties. D3.js, however, makes it very easy to access those properties. Instead of providing constant values for the attributes, we provide functions. D3.js will then call those functions and pass the data values as parameters. Our functions can return the appropriate value for the attribute.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">nodeSelection
+    .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">10</span>)
+    .<span class="fu">attr</span>(<span class="st">&#39;cx&#39;</span>, <span class="kw">function</span>(dataValue) { <span class="kw">return</span> <span class="ot">dataValue</span>.<span class="fu">x</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;cy&#39;</span>, <span class="kw">function</span>(dataValue) { <span class="kw">return</span> <span class="ot">dataValue</span>.<span class="fu">y</span>; });</code></pre></td></tr></table>
+<p>Positioning the edges relies on a similar strategy. We want to set the endpoints of the lines to the centers of the corresponding nodes. Those endpoints are the <code>x1,y1</code> and <code>x2,y2</code> attributes of the <code>&lt;line&gt;</code> elements. Here’s the code to set those attributes. As is conventional with D3.js, the parameter <code>d</code> is the data value.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">edgeSelection
+    .<span class="fu">attr</span>(<span class="st">&#39;x1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">source</span>].<span class="fu">x</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;y1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">source</span>].<span class="fu">y</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;x2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">target</span>].<span class="fu">x</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;y2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">target</span>].<span class="fu">y</span>; });</code></pre></td></tr></table>
+<p>With the elements finally drawn and positioned, we have the first version of our visualization with figure <span class="nextfigure"/>.</p>
+<style>
+circle {
+    fill: #ccc;
+    stroke: #fff;
+    stroke-width: 1px;
+}
+
+line {
+    stroke: #777;
+    stroke-width: 1px;
+}
+</style>
+<figure>
+<div id="figure1" style="position:relative;left:-200px">
+
+</div>
+<figcaption>
+D3.js provides tools to help draw the circles and lines for a network graph.
+</figcaption>
+</figure>
+<h3 id="step-7-add-force-direction-to-the-graph">Step 7: Add Force-Direction to the Graph</h3>
+<p>The graph has all the essential components, but its layout doesn’t make identifying the connections as easy as we’d like. In chapter 4’s example the sigmajs library could automate the layout with only took a couple of lines of JavaScript. To perform that automation, sigmajs uses a force-direction algorithm. Force-direction treats nodes as physical object and simulates the effect of forces such as gravity and electromagnetism.</p>
+<p>With D3.js we cannot rely on the library to fully automate the layout. As we’ve seen, D3.js does not draw any of the graph elements, so it cannot, by itself, set positions and dimensions. D3.js does, however, provide a lot of tools to help us create our own graph layouts. One of those tools is the <em>force layout.</em> As you might expect, the force layout tool helps us draw our own force-directed graph. It handles all of the messy and complex calculations that underly force-direction and gives us results we can use directly in code that draws the graph.</p>
+<p>To get started with the layout, we define a new <code>force</code> object. That object accepts many configuration parameters, but only five are essential for our visualization.</p>
+<ul>
+<li>the dimensions of the graph</li>
+<li>the nodes in the graph</li>
+<li>the edges in the graph</li>
+<li>the distance we’d like to see between connected nodes</li>
+<li>how strongly nodes repel each other, a parameter D3.js calls <em>charge</em></li>
+</ul>
+<p>The last parameter can take a bit of trial-and-error to optimize for any particular visualization. In our case we’ll want to increase it substantially above its default (-30) because we have a lot of nodes in a small space. (Negative charge values indicate repulsion.) Here’s the code to set all of those values.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> force = <span class="ot">d3</span>.<span class="ot">layout</span>.<span class="fu">force</span>()
+    .<span class="fu">size</span>([width, height])
+    .<span class="fu">nodes</span>(nodes)
+    .<span class="fu">links</span>(edges)
+    .<span class="fu">linkDistance</span>(<span class="dv">40</span>)
+    .<span class="fu">force</span>(-<span class="dv">500</span>);</code></pre></td></tr></table>
+<p>When we tell D3.js to start its force-direction calculations, it will generate events at intermediate steps and when the calculations complete. Force-direction often takes several seconds to execute fully, and if we wait until the calculations are complete before we draw the graph, our users may think the browser has frozen. It’s usually better to update the graph at each iteration so users see some indication of progress. To do that, we can add a function to respond to the intermediate force layout calculations. That happens on a D3.js <code>tick</code> event.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">force</span>.<span class="fu">on</span>(<span class="st">&#39;tick&#39;</span>, <span class="kw">function</span>() {
+    <span class="co">// Update graph with intermediate results</span>
+});</code></pre></td></tr></table>
+<p>Each time D3.js calls our event handler function, it will have updated the <code>x</code> and <code>y</code> properties of the <code>nodes</code> array. The new values will reflect how the force-direction has nudged the nodes on the graph’s stage. We can update our graph accordingly by changing the SVG attributes of the circles and lines. Before we do that, however, we can take advantage of the fact that D3.js is giving us an opportunity to tweak the force-layout algorithm as it executes. One problem that we may encounter, especially with the large charge force we defined, is that nodes may repel each other so strongly that some tend to drift off the stage entirely. We can prevent that by ensuring that the node positions remain within the dimensions of the graph.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">force</span>.<span class="fu">on</span>(<span class="st">&#39;tick&#39;</span>, <span class="kw">function</span>() {
+    <span class="ot">nodeSelection2</span>.<span class="fu">each</span>(<span class="kw">function</span>(node) {
+        <span class="ot">node</span>.<span class="fu">x</span> = <span class="ot">Math</span>.<span class="fu">max</span>(<span class="ot">node</span>.<span class="fu">x</span>, <span class="dv">5</span>);
+        <span class="ot">node</span>.<span class="fu">y</span> = <span class="ot">Math</span>.<span class="fu">max</span>(<span class="ot">node</span>.<span class="fu">y</span>, <span class="dv">5</span>);
+        <span class="ot">node</span>.<span class="fu">x</span> = <span class="ot">Math</span>.<span class="fu">min</span>(<span class="ot">node</span>.<span class="fu">x</span>, width<span class="dv">-5</span>);
+        <span class="ot">node</span>.<span class="fu">y</span> = <span class="ot">Math</span>.<span class="fu">min</span>(<span class="ot">node</span>.<span class="fu">y</span>, height<span class="dv">-5</span>);
+    });
+    <span class="co">// Update graph with intermediate results</span>
+});</code></pre></td></tr></table>
+<p>We’ve added or subtracted <code>5</code> in the above fragment to account for the radius of the nodes’ circles.</p>
+<p>Once we’ve adjusted the nodes’ properties to keep them on the stage, we can update their positions. The code is exactly the same as the code we used to position them initially.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">nodeSelection
+    .<span class="fu">attr</span>(<span class="st">&#39;cx&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">x</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;cy&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">y</span>; });</code></pre></td></tr></table>
+<p>We’ll also want to adjust the end points of our edge lines. For these objects, however, there’s a small twist. When we initialized the <code>edges</code> array, we set the <code>source</code> and <code>target</code> properties to the indices of the respective nodes in the <code>nodes</code> array. When the D3.js force layout begins execution, it replaces those indices with direct references to the nodes themselves. That makes it a little easier for us to find the appropriate coordinates for the lines.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">edgeSelection
+    .<span class="fu">attr</span>(<span class="st">&#39;x1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">source</span>.<span class="fu">x</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;y1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">source</span>.<span class="fu">y</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;x2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">target</span>.<span class="fu">x</span>; })
+    .<span class="fu">attr</span>(<span class="st">&#39;y2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">target</span>.<span class="fu">y</span>; });</code></pre></td></tr></table>
+<p>With our function ready to handle updates from the force-direction calculations, we can tell D3.js to start its work. That’s a simple method of the <code>force</code> object.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">force</span>.<span class="fu">start</span>();</code></pre></td></tr></table>
+<p>With that statement the graph begins an animated transition to its final, force-directed state as figure <span class="nextfigure"/> shows.</p>
+<figure>
+<div id="figure2">
+
+</div>
+<figcaption>
+The D3.js force layout provides the information to reposition network graph elements.
+</figcaption>
+</figure>
+<h3 id="step-8-add-interactivity">Step 8: Add Interactivity</h3>
+<p>Since D3.js is a JavaScript library, you would expect it to support interactions with the user. It does, and to demonstrate we can add a simple interaction to the graph. When a user clicks on one of the nodes in the graph, we can emphasize that node and its neighbors.</p>
+<p>Event handlers in D3.js closely resemble those in other JavaScript libraries such as jQuery. We define an event handler using the <code>on()</code> method of a selection, as in the following code.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodeSelection</span>.<span class="fu">on</span>(<span class="st">&#39;click&#39;</span>, <span class="kw">function</span>(d) {
+    <span class="co">// Handle the click event</span>
+});</code></pre></td></tr></table>
+<p>The first parameter to <code>on()</code> is the event type, and the second parameter is a function that D3.js will call when the event occurs. The parameter to this function is the data object that corresponds to the selection element, and by convention it’s named <code>d</code>. Because we’re adding the event to the selection of nodes (<code>nodeSelection</code>), <code>d</code> will be one of the graph nodes.</p>
+<p>For our visualization we’ll emphasize the clicked node by added a CSS-accessible class to the corresponding <code>&lt;circle&gt;</code> and by increasing the circle’s size. The class makes it possible to style the circle uniquely, but a circle’s size cannot be specified with CSS rules. Ultimately, therefore, we have to do two things to the circle: add the <code>selected</code> class and increase the radius using the <code>r</code> attribute. Of course, in order to do either we have to select the <code>&lt;circle&gt;</code> element. When D3.js calls an event handler, it sets <code>this</code> equal to the target of the event; we can turn that target into a selection with <code>d3.select(this)</code>. The following code, therefore, is all it takes to change the clicked node’s circle.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"> <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
+    .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">true</span>)
+    .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="fl">1.5</span>*nodeRadius);</code></pre></td></tr></table>
+<p>We can do something similar by adding a <code>selected</code> class to all the edges that connect to the clicked node. To find those edges we can iterate through the full edge selection. D3.js has the <code>each()</code> function to do just that. As we look at each edge we check the <code>source</code> and <code>target</code> properties to see if either matches our clicked node. When we find a match, we add the <code>selected</code> class to the edge. Note that in line 3 we’re once again using <code>d3.select(this)</code>. In this case the code is inside of the <code>each()</code> function, so <code>this</code> will equal the particular element of the current iteration. In our case that’s the <code>&lt;line&gt;</code> for the edge.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">edgeSelection</span>.<span class="fu">each</span>(<span class="kw">function</span>(edge) {
+    <span class="kw">if</span> ((<span class="ot">edge</span>.<span class="fu">source</span> === d) || (<span class="ot">edge</span>.<span class="fu">target</span> === d)) {
+        <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>).<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>,<span class="kw">true</span>);
+    }
+});</code></pre></td></tr></table>
+<p>That code handles setting the <code>selected</code> class, but we still need to remove it when appropriate. We can remove it from all the other circles (and make sure their radius is restored to its default value) by operating on the node selection. Other than line 2 below, the code looks the same as we’ve seen before. In line 2 we use the D3.js <code>filter()</code> function to limit the selection to the nodes other than the one that was clicked.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">nodeSelection
+    .<span class="fu">filter</span>(<span class="kw">function</span>(node) { <span class="kw">return</span> node !== d; })
+    .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>)
+    .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, nodeRadius);</code></pre></td></tr></table>
+<p>A similar process resets the <code>selected</code> class on all the edges. We can remove the class from all edges first, before we add to the appropriate edges in the previous code fragment. Here’s the code that removes it. With D3.js it only takes a single line.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">edgeSelection</span>.<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>);</code></pre></td></tr></table>
+<p>And finally, if the user clicks on a node that’s already selected, we can restore it to it’s default state.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">    <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
+        .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">true</span>)
+        .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="fl">1.5</span>*nodeRadius);</code></pre></td></tr></table>
+<p>When you put all of the above code fragments together, you have the complete event handler below.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodeSelection3</span>.<span class="fu">on</span>(<span class="st">&#39;click&#39;</span>, <span class="kw">function</span>(d) {
+
+    nodeSelection
+        .<span class="fu">filter</span>(<span class="kw">function</span>(node) { <span class="kw">return</span> node !== d; })
+        .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>)
+        .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, nodeRadius);
+
+    <span class="ot">edgeSelection</span>.<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>);
+
+    <span class="kw">if</span> (<span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>).<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>)) {
+        <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
+            .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>)
+            .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, nodeRadius)
+
+    } <span class="kw">else</span> {
+        <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
+            .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">true</span>)
+            .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="fl">1.5</span>*nodeRadius);
+       
+       <span class="ot">edgeSelection</span>.<span class="fu">each</span>(<span class="kw">function</span>(edge) {
+            <span class="kw">if</span> ((<span class="ot">edge</span>.<span class="fu">source</span> === d) || (<span class="ot">edge</span>.<span class="fu">target</span> === d)) {
+                <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>).<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>,<span class="kw">true</span>);
+            }
+       });
+    }
+});</code></pre></td></tr></table>
+<p>Along with a bit of CSS styling to emphasize the selected circles and lines, this code results in the interactive visualization of <span class="nextfigure"/>.</p>
+<style>
+#figure3 circle, #figure3 line { cursor: pointer; }
+#figure3 circle.selected { fill: #97aceb; }
+#figure3 line { stroke: #aaa; stroke-width: 2px; }
+#figure3 line.selected { stroke: #6B7DB8; }
+</style>
+<figure>
+<div id="figure3">
+
+</div>
+<figcaption>
+D3.js includes functions to make visualizations interactive.
+</figcaption>
+</figure>
+<h3 id="step-9-the-skys-the-limit">Step 9: The Sky’s the Limit</h3>
+<p>So far our example has explored many of the features that D3.js provides for custom visualizations. The code so far, however, has only scratched the surface of D3’s capabilities. We haven’t added labels to our graph, nor have we animated the transitions in the graph’s state. In fact, it’s a pretty safe bet that if there is anything we want to add to the visualization, D3.js has tools to help. And although we don’t have the time or space to consider other enhancements here, the source code for the book does include a more full-featured implementation that takes advantage of other D3.js capabilities.</p>
+<script>
+contentLoaded.done(function() {
+
+var albums = [
+  {
+    album: "Miles Davis - Kind of Blue",
+    musicians: [
+      "Cannonball Adderley",
+      "Paul Chambers",
+      "Jimmy Cobb",
+      "John Coltrane",
+      "Miles Davis",
+      "Bill Evans"
+    ]
+  },{
+    album: "John Coltrane - A Love Supreme",
+    musicians: [
+      "John Coltrane",
+      "Jimmy Garrison",
+      "Elvin Jones",
+      "McCoy Tyner"
+    ]
+  },{
+    album: "The Dave Brubeck Quartet - Time Out",
+    musicians: [
+      "Dave Brubeck",
+      "Paul Desmond",
+      "Joe Morello",
+      "Eugene Write"
+    ]
+  },{
+    album: "Duke Ellington - Ellington at Newport",
+    musicians: [
+      "Harry Carney",
+      "John Willie Cook",
+      "Duke Ellington",
+      "Paul Gonsalves",
+      "Jimmy Grissom",
+      "Jimmy Hamilton",
+      "Johnny Hodges",
+      "Quentin Jackson",
+      "William Anderson",
+      "Ray Nance",
+      "Russell Procope",
+      "John Sanders",
+      "Clark Terry",
+      "James Woode",
+      "Britt Woodman",
+      "Sam Woodyar"
+    ]
+  },{
+    album: "The Quintet - Jazz at Massey Hall",
+    musicians: [
+      "Dizzy Gillespie",
+      "Charles Mingus",
+      "Charlie Parker",
+      "Bud Powell",
+      "Max Roach"
+    ]
+  },{
+    album: "Louis Armstrong - The Best of the Hot Five and Hot Seven Recordings",
+    musicians: [
+      "Lil Hardin Armstrong",
+      "Louis Armstrong",
+      "Clarence Babcock",
+      "Pete Briggs",
+      "Mancy Carr",
+      "Baby Dodds",
+      "Johnny Dodds",
+      "Earl Hines",
+      "Kid Ory",
+      "Don Redman",
+      "Fred Robinson",
+      "Zutty Singleton",
+      "Johnny St. Cyr",
+      "Jimmy Strong",
+      "John Thomas",
+      "Dave Wilborn"
+    ]
+  },{
+    album: "John Coltrane - Blue Trane",
+    musicians: [
+      "Paul Chambers",
+      "John Coltrane",
+      "Kenny Drew",
+      "Curtis Fuller",
+      "Philly Joe Jones",
+      "Lee Morgan"
+    ]
+  },{
+    album: "Stan Getz and João Gilberto - Getz/Gilberto",
+    musicians: [
+      "Milton Banana",
+      "Stan Getz",
+      "Astrud Gilberto",
+      "João Gilberto",
+      "Antonio Carlos Jobim",
+      "Sebastião Neto"
+    ]
+  },{
+    album: "Charles Mingus - Mingus Ah Um",
+    musicians: [
+      "Willie Dennis",
+      "Booker Ervin",
+      "Shafi Hadi",
+      "John Handy",
+      "Jimmy Knepper",
+      "Charles Mingus",
+      "Horace Parlan",
+      "Dannie Richmond"
+    ]
+  },{
+    album: "Erroll Garner - Concert by the Sea",
+    musicians: [
+     "Denzil Best",
+      "Eddie Calhoun",
+      "Erroll Garner"
+    ]
+  },{
+    album: "Miles Davis - Bitches Brew",
+    musicians: [
+      "Don Alias",
+      "Harvey Brooks",
+      "Billy Cobham",
+      "Chick Corea",
+      "Miles Davis",
+      "Jack DeJohnette",
+      "Dave Holland",
+      "Bennie Maupin",
+      "John McLaughlin",
+      "Airto Moreira",
+      "Juma Santos",
+      "Wayne Shorter",
+      "Lenny White",
+      "Larry Young",
+      "Joe Zawinul"
+    ]
+  },{
+    album: "Sonny Rollings - Saxophone Colossus",
+    musicians: [
+      "Tommy Flanagan",
+      "Sonny Rollins",
+      "Max Roach",
+      "Doug Watkins"
+    ]
+  },{
+    album: "Art Blakey and The Jazz Messengers - Moanin'",
+    musicians: [
+      "Art Blakey",
+      "Lee Morgan",
+      "Benny Golson",
+      "Bobby Timmons",
+      "Jymie Merritt"
+    ]
+  },{
+    album: "Clifford Brown and Max Roach",
+    musicians: [
+      "Clifford Brown",
+      "Harold Land",
+      "George Morrow",
+      "Richie Powell",
+      "Max Roach"
+    ]
+  },{
+    album: "Thelonious Monk with John Coltrane - At Carnegie Hall",
+    musicians: [
+      "Ahmed Abdul-Malik",
+      "John Coltrane",
+      "Thelonious Monk",
+      "Shadow Wilson"
+    ]
+  },{
+    album: "Hank Mobley - Soul Station",
+    musicians: [
+      "Art Blakey",
+      "Paul Chambers",
+      "Wynton Kelly",
+      "Hank Mobley"
+    ]
+  },{
+    album: "Cannonball Adderly - Somethin' Else",
+    musicians: [
+      "Cannonball Adderley",
+      "Art Blakey",
+      "Miles Davis",
+      "Hank Jones",
+      "Sam Jones"
+    ]
+  },{
+    album: "Wayne Shorter - Speak No Evil",
+    musicians: [
+      "Ron Carter",
+      "Herbie Hancock",
+      "Freddie Hubbard",
+      "Elvin Jones",
+      "Wayne Shorter"
+    ]
+  },{
+    album: "Miles Davis - Birth of the Cool",
+    musicians: [
+      "Bill Barber",
+      "Nelson Boyd",
+      "Kenny Clarke",
+      "Junior Collins",
+      "Miles Davis",
+      "Kenny Hagood",
+      "Al Haig",
+      "J. J. Johnson",
+      "Lee Konitz",
+      "John Lewis",
+      "Al McKibbon",
+      "Gerry Mulligan",
+      "Max Roach",
+      "Gunther Schuller",
+      "Joe Shulman",
+      "Sandy Siegelstein",
+      "Kai Winding"
+    ]
+  },{
+    album: "Herbie Hancock - Maiden Voyage",
+    musicians: [
+      "Ron Carter",
+      "George Coleman",
+      "Herbie Hancock",
+      "Freddie Hubbard",
+      "Tony Williams"
+    ]
+  },{
+    album: "Vince Guaraldi Trio- A Boy Named Charlie Brown",
+    musicians: [
+      "Colin Bailey",
+      "Monty Budwig",
+      "Vince Guaraldi"
+    ]
+  },{
+    album: "Eric Dolphy - Out to Lunch",
+    musicians: [
+      "Richard Davis",
+      "Eric Dolphy",
+      "Freddie Hubbard",
+      "Bobby Hutcherson",
+      "Tony Williams"
+    ]
+  },{
+    album: "Oliver Nelson - The Blues and the Abstract Truth",
+    musicians: [
+      "George Barrow",
+      "Paul Chambers",
+      "Eric Dolphy",
+      "Bill Evans",
+      "Roy Haynes",
+      "Freddie Hubbard",
+      "Oliver Nelson"
+    ]
+  },{
+    album: "Dexter Gordon - Go",
+    musicians: [
+      "Sonny Clark",
+      "Dexter Gordon",
+      "Billy Higgins",
+      "Butch Warren"
+    ]
+  },{
+    album: "Sarah Vaughan with Clifford Brown",
+    musicians: [
+      "Joe Benjamin",
+      "Clifford Brown",
+      "Roy Haynes",
+      "Jimmy Jones",
+      "John Malachi",
+      "Herbie Mann",
+      "Paul Quinichette",
+      "Sarah Vaughan",
+      "Ernie Wilkins"
+    ]
+  }
+];
+
+var width = 840;
+var height = 500;
+
+var nodes1 = albums.map(function(entry, idx, list) {
+    var radius = 200;
+    var node = {};
+    var theta = idx*2*Math.PI / list.length;
+    node.name = entry.album;
+    node.links = entry.musicians.slice(0);
+    node.x = (width/2) + radius*Math.sin(theta);
+    node.y = (height/2) + radius*Math.cos(theta);
+    return node;
+});
+
+var links = [];
+
+albums.forEach(function(srcNode, srcIdx, srcList) {
+    srcNode.musicians.forEach(function(srcLink) {
+        for (var tgtIdx = srcIdx + 1;
+                 tgtIdx < srcList.length;
+                 tgtIdx++) {
+
+            var tgtNode = srcList[tgtIdx];
+            if (tgtNode.musicians.some(function(tgtLink){
+                return tgtLink === srcLink;
+            })) {
+                links.push({
+                    source: srcIdx,
+                    target: tgtIdx,
+                    link: srcLink
+                });
+            }
+        }
+    });
+});
+
+var edges1 = [];
+
+links.forEach(function(link) {
+    var existingEdge = false;
+    for (var idx = 0; idx < edges1.length; idx++) {
+        if ((link.source === edges1[idx].source) &&
+            (link.target === edges1[idx].target)) {
+            existingEdge = edges1[idx];
+            break;
+        }
+    }
+    if (existingEdge) {
+        existingEdge.links.push(link.link);    
+    } else {
+        edges1.push({
+            source: link.source,
+            target: link.target,
+            links: [link.link]
+        })
+    }
+});
+
+var svg1 = d3.select('#figure1').append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+var edgeSelection1 = svg1.selectAll("line")
+    .data(edges1)
+    .enter().append("line");
+
+var nodeSelection1 = svg1.selectAll("circle")
+    .data(nodes1)
+    .enter().append("circle");
+
+nodeSelection1
+    .attr('r', width/75)
+    .attr('cx', function(d) { return d.x; })
+    .attr('cy', function(d) { return d.y; });
+    
+edgeSelection1
+    .attr('x1', function(d) { return nodes1[d.source].x; })
+    .attr('y1', function(d) { return nodes1[d.source].y; })
+    .attr('x2', function(d) { return nodes1[d.target].x; })
+    .attr('y2', function(d) { return nodes1[d.target].y; });
+
+
+
+var nodes2 = albums.map(function(entry, idx, list) {
+    var radius = 200;
+    var node = {};
+    var theta = idx*2*Math.PI / list.length;
+    node.name = entry.album;
+    node.links = entry.musicians.slice(0);
+    node.x = (width/2) + radius*Math.sin(theta);
+    node.y = (height/2) + radius*Math.cos(theta);
+    return node;
+});
+
+var edges2 = [];
+
+links.forEach(function(link) {
+    var existingEdge = false;
+    for (var idx = 0; idx < edges2.length; idx++) {
+        if ((link.source === edges2[idx].source) &&
+            (link.target === edges2[idx].target)) {
+            existingEdge = edges2[idx];
+            break;
+        }
+    }
+    if (existingEdge) {
+        existingEdge.links.push(link.link);    
+    } else {
+        edges2.push({
+            source: link.source,
+            target: link.target,
+            links: [link.link]
+        })
+    }
+});
+
+var svg2 = d3.select('#figure2').append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+var edgeSelection2 = svg2.selectAll("line")
+    .data(edges2)
+    .enter().append("line");
+
+var nodeSelection2 = svg2.selectAll("circle")
+    .data(nodes2)
+    .enter().append("circle");
+
+nodeSelection2
+    .attr('r', width/75)
+    .attr('cx', function(d) { return d.x; })
+    .attr('cy', function(d) { return d.y; });
+    
+edgeSelection2
+    .attr('x1', function(d) { return nodes2[d.source].x; })
+    .attr('y1', function(d) { return nodes2[d.source].y; })
+    .attr('x2', function(d) { return nodes2[d.target].x; })
+    .attr('y2', function(d) { return nodes2[d.target].y; });
+
+var force2 = d3.layout.force()
+    .size([width, height])
+    .nodes(nodes2)
+    .links(edges2)
+    .linkDistance(height/2)
+    .charge(-500);
+
+force2.on('tick', function() {
+    nodeSelection2.each(function(node) {
+        node.x = Math.max(node.x, width/75);
+        node.y = Math.max(node.y, width/75);
+        node.x = Math.min(node.x, width-width/75);
+        node.y = Math.min(node.y, height-width/75);
+    });
+
+    nodeSelection2
+        .attr('cx', function(d) { return d.x; })
+        .attr('cy', function(d) { return d.y; });
+        
+    edgeSelection2
+        .attr('x1', function(d) { return d.source.x; })
+        .attr('y1', function(d) { return d.source.y; })
+        .attr('x2', function(d) { return d.target.x; })
+        .attr('y2', function(d) { return d.target.y; });
+});
+
+
+force2.start();
+
+
+var nodeRadius = width/50;
+
+var nodes3 = albums.map(function(entry, idx, list) {
+    var radius = 200;
+    var node = {};
+    var theta = idx*2*Math.PI / list.length;
+    node.name = entry.album;
+    node.links = entry.musicians.slice(0);
+    node.x = (width/2) + radius*Math.sin(theta);
+    node.y = (height/2) + radius*Math.cos(theta);
+    return node;
+});
+
+var edges3 = [];
+
+links.forEach(function(link) {
+    var existingEdge = false;
+    for (var idx = 0; idx < edges3.length; idx++) {
+        if ((link.source === edges3[idx].source) &&
+            (link.target === edges3[idx].target)) {
+            existingEdge = edges3[idx];
+            break;
+        }
+    }
+    if (existingEdge) {
+        existingEdge.links.push(link.link);    
+    } else {
+        edges3.push({
+            source: link.source,
+            target: link.target,
+            links: [link.link]
+        })
+    }
+});
+
+var svg3 = d3.select('#figure3').append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+var edgeSelection3 = svg3.selectAll("line")
+    .data(edges3)
+    .enter().append("line");
+
+var nodeSelection3 = svg3.selectAll("circle")
+    .data(nodes3)
+    .enter().append("circle");
+
+nodeSelection3
+    .attr('r', nodeRadius)
+    .attr('cx', function(d) { return d.x; })
+    .attr('cy', function(d) { return d.y; });
+    
+edgeSelection3
+    .attr('x1', function(d) { return nodes3[d.source].x; })
+    .attr('y1', function(d) { return nodes3[d.source].y; })
+    .attr('x2', function(d) { return nodes3[d.target].x; })
+    .attr('y2', function(d) { return nodes3[d.target].y; });
+
+
+var force3 = d3.layout.force()
+    .size([width, height])
+    .nodes(nodes3)
+    .links(edges3)
+    .linkDistance(height/2)
+    .charge(-500);
+
+nodeSelection3.on('click', function(d) {
+    
+    nodeSelection3
+        .classed('selected', false)
+        .filter(function(node) { return node !== d; })
+        .each(function(node) { node.selected = false;})
+        .attr('r', nodeRadius)
+        
+    edgeSelection3.classed('selected', false);
+
+    if (!d.selected) {
+         d3.select(this).classed('selected', true);
+         d3.select(this).attr('r', 1.5*nodeRadius);
+
+          edgeSelection3.each(function(edge) {
+            if ((edge.source === d) || (edge.target === d)) {
+                d3.select(this).classed('selected',true);
+                nodeSelection3
+                    .filter(function(node) {return node === edge.source || node === edge.target})
+                    .classed('selected',true);
+            }
+          });
+      
+    } else {
+        d3.select(this).attr('r', nodeRadius)
+    }
+    
+    d.selected = !d.selected;
+});
+
+force3.on('tick', function() {
+    nodeSelection3.each(function(node) {
+        node.x = Math.max(node.x, 1.5*nodeRadius);
+        node.y = Math.max(node.y, 1.5*nodeRadius);
+        node.x = Math.min(node.x, width-1.5*nodeRadius);
+        node.y = Math.min(node.y, height-1.5*nodeRadius);
+    });
+
+    nodeSelection3
+        .attr('cx', function(d) { return d.x; })
+        .attr('cy', function(d) { return d.y; });
+        
+    edgeSelection3
+        .attr('x1', function(d) { return d.source.x; })
+        .attr('y1', function(d) { return d.source.y; })
+        .attr('x2', function(d) { return d.target.x; })
+        .attr('y2', function(d) { return d.target.y; });
+});
+
+
+force3.start();
+
+
+
+
+
+});
+</script>
+<h2 id="creating-a-choropleth-map">Creating a Choropleth Map</h2>
+<p>The first two examples touched on some of the capabilities of D3.js, but the library includes many others. From the examples of chapter 6, we know some of the best visualizations rely on maps, and D3.js—as a general purpose visualization library—has extensive support for mapping. We’ll look at a brief example in this section: a choropleth map of the US presidential nominating events. More specifically, we’ll show the Democratic Party’s 2012 nominating events (either primary elections or a caucuses) in each state, and we’ll color the state based on the date of that event.</p>
+<h3 id="step-1-prepare-the-data-2">Step 1: Prepare the Data</h3>
+<p>We can get the data for our visualization from the <a href="http://www.ncsl.org/research/elections-and-campaigns/2012-presidential-primary-calendar.aspx">National Conference of State Legislatures</a>. Collecting the data into a JavaScript array gives us the raw data below.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> nominatingEvents = [
+    {<span class="dt">date</span>: <span class="st">&quot;2012-01-03&quot;</span>, <span class="dt">state</span>: <span class="st">&quot;IA&quot;</span>},
+    {<span class="dt">date</span>: <span class="st">&quot;2012-01-10&quot;</span>, <span class="dt">state</span>: <span class="st">&quot;NH&quot;</span>},
+    {<span class="dt">date</span>: <span class="st">&quot;2012-01-21&quot;</span>, <span class="dt">state</span>: <span class="st">&quot;NV&quot;</span>},
+    <span class="co">// Data set continues...</span>
+];</code></pre></td></tr></table>
+<h3 id="step-2-set-up-the-page-1">Step 2: Set Up the Page</h3>
+<p>Our skeletal web page is no different from the other D3.js examples. We set aside a container for the map (line 8) and include the D3.js library (line 9).</p>
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;head&gt;</span>
+    <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&quot;utf-8&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;map&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<h3 id="step-3-create-a-color-scale">Step 3: Create a Color Scale</h3>
+<p>In the first example in this appendix we saw how D3.js provides scales to map between data values and (in the case of that example) pixel positions. For this example we can use a scale to map from a data value to a color. The data value will be the date of the nominating event, and the color will range from light to dark blue.</p>
+<p>Since all the nominiating events took place in the first six months of the year, we can set input for our scale (its <em>domain</em>) to be from January 1 to June 30. As you can see from line 2, we’re converting calendar dates to integers. We use <code>new Date()</code> to construct a JavaScript <code>Date</code> object and then convert it to an integer with the plus sign (<code>+</code>). The resulting value is the number of milliseconds since January 1, 1970 UTC, although the details aren’t really important in this case.</p>
+<p>For the scale’s range in line 3 we’re giving D3.js two colors in CSS hexidecimal format. D3.js is smart enough to recognize those as a colors and construct the scale accordingly.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> color = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
+    .<span class="fu">domain</span>([+<span class="kw">new</span> <span class="fu">Date</span>(<span class="st">&quot;2012-01-01&quot;</span>), +<span class="kw">new</span> <span class="fu">Date</span>(<span class="st">&quot;2012-06-30&quot;</span>)])
+    .<span class="fu">range</span>([<span class="st">&quot;#deebf7&quot;</span>,<span class="st">&quot;#08306b&quot;</span>]);</code></pre></td></tr></table>
+<h3 id="step-4-create-a-map-projection">Step 4: Create a Map Projection</h3>
+<p>If you can’t quite recall your geography lessons about map projections, don’t worry. D3.js can handle all of the heavy lifting. Not only does it have extensive support for common projections, but it supports extensions for custom projections as well. For our map, we’ll use a modified Albers projection that’s optimized for the United States. It repositions (and resizes) Alaska and Hawaii to give us a convenient map of all 50 states. D3.js has support for this projection built in.</p>
+<p>We set up the projection in the code below. First, in lines 1 and 2, we define the size our map in pixels. Then, in line 4, we create the modified Albers projection. Line 5 defines the scale of the map, and line 6 centers it.</p>
+<p>To draw the map on the page we’re going to use SVG <code>&lt;path&gt;</code> elements, but our map data takes the form of latitude and longitude values. D3.js has a <code>path</code> object to translate to SVG paths based on a particular map project. In lines 8 and 9 we create our path object.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> width = <span class="dv">760</span>,
+    height = <span class="dv">475</span>;
+
+<span class="kw">var</span> projection = <span class="ot">d3</span>.<span class="ot">geo</span>.<span class="fu">albersUsa</span>()
+    .<span class="fu">scale</span>(<span class="dv">1000</span>)
+    .<span class="fu">translate</span>([width / <span class="dv">2</span>, height / <span class="dv">2</span>]);
+
+<span class="kw">var</span> path = <span class="ot">d3</span>.<span class="ot">geo</span>.<span class="fu">path</span>()
+    .<span class="fu">projection</span>(projection);</code></pre></td></tr></table>
+<h3 id="step-5-initialize-the-svg-container">Step 5: Initialize the SVG container</h3>
+<p>Just as we’ve done in the previous D3.js example, we can create an SVG container to hold the map.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#map&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width)
+    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height);</code></pre></td></tr></table>
+<h3 id="step-6-retrieve-the-map-data">Step 6: Retrieve the Map Data</h3>
+<p>For our visualization, the map data is nothing but a map of the US with individual states. D3.js uses <a href="http://geojson.org">GeoJSON</a> for its map data. Unlike most image tiles that we used in chapter 6, GeoJSON data is vector-based, so it can be used at any scale. GeoJSON data is also in JSON format, which makes it especially compatible with JavaScript.</p>
+<p>The data file for our map, which you can find with the book’s source code, has the boundaries of all 50 states (plus the District of Columbia) as separate <code>feature</code>s, and each feature includes an <code>abbreviation</code> property of the state’s official two-letter abbreviation.</p>
+<p>Since our data is in a JSON format, we can use the <code>d3.json()</code> function to retrieve it. If you’re more familiar with jQuery, that function is almost identical to the jQuery <code>$.getJSON()</code> function.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">d3</span>.<span class="fu">json</span>(<span class="st">&quot;data/us-states.json&quot;</span>, <span class="kw">function</span>(data) {
+    <span class="co">// Process the JSON data</span>
+});</code></pre></td></tr></table>
+<h3 id="step-7-draw-the-map">Step 7: Draw the Map</h3>
+<p>Once we have our data we can draw the map on the page. The code in this step is very similar to that in the previous example. Each state will be a <code>&lt;path&gt;</code> element within the SVG container. Using the conventions of D3.js, we create a selection of <code>&lt;path&gt;</code> elements (line 1) and bind those elements to our data (line 2). When there is no element we create one (line 3), and we set its <code>d</code> attribute to be the path associated with the data given our projection. Note that <code>path</code> in line 4 is the object we created in step 4.</p>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="fu">data</span>(<span class="ot">data</span>.<span class="fu">features</span>)
+  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, path);</code></pre></td></tr></table>
+<h3 id="step-8-style-the-map">Step 8: Style the Map</h3>
+<p>For our final step we’ll set the color of each state according to the date of its nominating event. The style property we use is <code>fill</code>. For its value we search through the array of events to find the matching state (line 8). We then use our <code>color</code> scale to calculate an appropriate color for that date (line 14).</p>
+<table class="sourceCode javascript numberLines" data-line="5-15"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="fu">data</span>(<span class="ot">data</span>.<span class="fu">features</span>)
+  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, path)
+    .<span class="fu">style</span>(<span class="st">&quot;fill&quot;</span>, <span class="kw">function</span>(d) {
+        <span class="kw">var</span> date = <span class="st">&quot;2012-01-01&quot;</span>;
+        <span class="ot">nominatingEvents</span>.<span class="fu">some</span>(<span class="kw">function</span>(event) {
+            <span class="kw">if</span> (<span class="ot">event</span>.<span class="fu">state</span> === <span class="ot">d</span>.<span class="ot">properties</span>.<span class="fu">abbreviation</span>) {
+                date = <span class="ot">event</span>.<span class="fu">date</span>;
+                <span class="kw">return</span> <span class="kw">true</span>;
+            }
+            <span class="kw">return</span> <span class="kw">false</span>;
+        });
+        <span class="kw">return</span> <span class="fu">color</span>(+<span class="kw">new</span> <span class="fu">Date</span>(date));
+    });</code></pre></td></tr></table>
+<p>The result of our efforts is figure <span class="nextfigure"/>. The map shows all the states and colors each according to its primary or caucus date.</p>
+<figure>
+<div id="map1">
+
+</div>
+<figcaption>
+D3.js includes many features to help in the creation of map-based visualizations.
+</figcaption>
+</figure>
+<script>
+contentLoaded.done(function() {
+
+
+var nominatingEvents = [
+    {date: "2012-01-03", state: "IA"},
+    {date: "2012-01-10", state: "NH"},
+    {date: "2012-01-21", state: "NV"},
+    {date: "2012-01-28", state: "SC"},
+    {date: "2012-02-07", state: "MO"},
+    {date: "2012-02-26", state: "ME"},
+    {date: "2012-03-06", state: "CO"},
+    {date: "2012-03-06", state: "GA"},
+    {date: "2012-03-06", state: "MA"},
+    {date: "2012-03-06", state: "MN"},
+    {date: "2012-03-06", state: "OH"},
+    {date: "2012-03-06", state: "OK"},
+    {date: "2012-03-06", state: "TN"},
+    {date: "2012-03-06", state: "VT"},
+    {date: "2012-03-06", state: "VA"},
+    {date: "2012-03-07", state: "HI"},
+    {date: "2012-03-13", state: "AL"},
+    {date: "2012-03-13", state: "MS"},
+    {date: "2012-03-13", state: "UT"},
+    {date: "2012-03-20", state: "IL"},
+    {date: "2012-03-24", state: "LA"},
+    {date: "2012-03-31", state: "AZ"},
+    {date: "2012-04-03", state: "DC"},
+    {date: "2012-04-03", state: "MD"},
+    {date: "2012-04-03", state: "TX"},
+    {date: "2012-04-03", state: "WI"},
+    {date: "2012-04-09", state: "AK"},
+    {date: "2012-04-14", state: "ID"},
+    {date: "2012-04-14", state: "KS"},
+    {date: "2012-04-14", state: "NE"},
+    {date: "2012-04-14", state: "WY"},
+    {date: "2012-04-15", state: "WA"},
+    {date: "2012-04-24", state: "CT"},
+    {date: "2012-04-24", state: "DE"},
+    {date: "2012-04-24", state: "NY"},
+    {date: "2012-04-24", state: "PA"},
+    {date: "2012-04-24", state: "RI"},
+    {date: "2012-05-05", state: "FL"},
+    {date: "2012-05-05", state: "MI"},
+    {date: "2012-05-08", state: "IN"},
+    {date: "2012-05-08", state: "NC"},
+    {date: "2012-05-08", state: "WV"},
+    {date: "2012-05-15", state: "OR"},
+    {date: "2012-05-22", state: "AR"},
+    {date: "2012-05-22", state: "KY"},
+    {date: "2012-06-05", state: "CA"},
+    {date: "2012-06-05", state: "MO"},
+    {date: "2012-06-05", state: "NJ"},
+    {date: "2012-06-05", state: "NM"},
+    {date: "2012-06-05", state: "ND"},
+    {date: "2012-06-05", state: "SD"}
+];
+
+var width = 760,
+    height = 475;
+
+var color = d3.scale.linear()
+    .domain([+new Date("2012-01-01"), +new Date("2012-06-30")])
+    .range(["#deebf7","#08306b"]);
+
+var projection = d3.geo.albersUsa()
+    .scale(1000)
+    .translate([width / 2, height / 2]);
+
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("#map1").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+d3.json("data/us-states.json", function(us) {
+    svg.selectAll("path")
+        .data(us.features)
+      .enter().append("path")
+        .attr("d", path)
+        .style("fill", function(d) {
+            var date = "2012-01-03";
+            nominatingEvents.some(function(event) {
+                if (event.state === d.properties.abbreviation) {
+                    date = event.date;
+                    return true;
+                }
+                return false;
+            });
+            return color(+new Date(date));
+        });
+});
+
+
+});
+</script>
+<h2 id="summing-up">Summing Up</h2>
+<p>As we’ve seen in these examples, D3.js is a very powerful library for building JavaScript visualizations. Using it effectively requires a deeper understanding of JavaScript techniques than most of the other libraries we’ve seen in the book. If you make the investment to learn D3.js, though, you’ll have more control and flexibility over the results.</p>
+</div>
+
+        </main>
+        <footer>
+            <small>Copyright © 2012-2014 by Stephen A. Thomas. All Rights Reserved.</small>
+        </footer>
+    <script src="js/scripts.min.js"></script>
+   </body>
+</html>
