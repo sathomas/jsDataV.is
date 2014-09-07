@@ -13,83 +13,97 @@
         <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png">
         <link rel="shortcut icon" href="favicon.ico">
         <link rel="stylesheet" href="css/styles.min.css">
-        <title>Data Visualization with JavaScript</title>
-        <script>
-            var chartStyles = {
-                color: {
-                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
-                    primary:            "#CA0000",
-                    primaryLightest:    "#FE4C4C",
-                    primaryLight:       "#F71515",
-                    primaryDark:        "#A50000",
-                    primaryDarkest:     "#7B0000",
-                    secondary:          "#007979",
-                    secondaryLightest:  "#2D9999",
-                    secondaryLight:     "#0D9494",
-                    secondaryDark:      "#006363",
-                    secondaryDarkest:   "#004A4A",
-                    alternate:          "#7EBD00",
-                    alternateLightest:  "#B6ED47",
-                    alternateLight:     "#A0E714",
-                    alternateDark:      "#679A00",
-                    alternateDarkest:   "#4D7300"
-                },
-                font: {
-                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
-                }
-
-            };
-        </script>
+        <title>jsDataV.is - Data Visualization with JavaScript</title>
+        <style>
+            main {
+                margin-top: 2em;
+            }
+            svg {
+                stroke: none;
+                stroke-width: 1;
+                fill: none;
+                fill-rule: evenodd;
+            }
+            g#jsDataVis text {
+                font-family: jsDataVis;
+            }
+            circle {
+                fill: #CA0000;
+                cursor: pointer;
+            }
+            circle#center_circle {
+                cursor: default;
+            }
+            g:hover > circle {
+                fill: #F71515;
+            }
+            g:hover > circle#center_circle {
+                fill: #CA0000;
+            }
+        </style>
     </head>
     <body>
-        <nav>
-            <ul>
-                <li>
-                    <a href="index.html" alt="jsDataV.is">
-                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                            <title>jsDataV.is</title>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
-                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
-                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
-                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
-                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
-                            </g>
-                        </svg>
-                    </a>
-                </li>
-                <li>Contents ▾
-                    <ol>
-                        <li><a href="intro.html" >Introduction</a></li>
-                        <li><a href="chap01.html">Graphing Data</a></li>
-                        <li><a href="chap02.html">Making Charts Interactive</a></li>
-                        <li><a href="chap03.html">Integrating Charts in a Page</a></li>
-                        <li><a href="chap04.html">Creating Specialized Graphs</a></li>
-                        <li><a href="chap05.html">Showing Timelines</a></li>
-                        <li><a href="chap06.html">Visualizing Geographic Data</a></li>
-                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
-                        <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
-                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
-                    </ol>
-                </li>
-            </ul>
-        </nav>
         <main>
-<h1 id="data-visualization-with-javascript">Data Visualization with JavaScript</h1>
-<p>It’s getting hard to ignore the importance of <em>data</em> in our lives. Data is critical to the largest <a href="https://www.facebook.com/data">social organizations</a> in human history. It can affect even the least consequential of our <a href="http://www.nytimes.com/2010/05/02/magazine/02self-measurement-t.html?pagewanted=all&amp;_r=0">everyday decisions</a>. And its collection has widespread <a href="http://www.theguardian.com/world/the-nsa-files">geopolitical implications</a>. Yet it also seems to be getting easier to ignore the data itself. <a href="http://www.theregister.co.uk/2012/06/04/big_data_too_big/">One estimate</a> suggests that 99.5% of the data our systems collect goes to waste. No one ever analyzes it effectively.</p>
-<p><em>Data visualization</em> is a tool that addresses this gap.</p>
-<p>Effective visualizations clarify; they transform collections of abstract artifacts (otherwise known as numbers) into shapes and forms that viewers quickly grasp and understand. The best visualizations, in fact, impart this understanding subconsciously. Viewers comprehend the data immediately—without thinking. Such presentations free the viewer to more fully consider the implications of the data: the stories it tells, the insights it reveals, or even the warnings it offers. That, of course, defines the best kind of communication.</p>
-<p>If you’re developing web sites or web applications today, there’s a good chance you have data to communicate, and that data may be begging for a good visualization. But how do you know what kind of visualization is appropriate? And, even more importantly, how do you actually create one? Answers to those very questions are the core of this book. In the chapters that follow, we explore dozens of different visualizations and visualization techniques and tool kits. Each example discusses the appropriateness of the visualization (and suggests possible alternatives) and provides step-by-step instructions for including the visualization in your own web pages.</p>
-<p>As the title no doubt makes clear, these examples rely primarily on JavaScript programming. To add the examples to your own sites, you will need basic JavaScript skills and knowledge. For all but the most complex visualizations, however, no advanced skills are necessary. If, for example, your experience includes a bit of jQuery, you’ll be fine. And even the most advanced visualizations include complete step-by-step instructions.</p>
-<p>To make the text as clear and readable as possible, these examples generally contain isolated snippets of JavaScript, plus occasional fragments of <span class="smcp">HTML</span> or <span class="smcp">CSS</span>. Complete examples are available on <a href="https://github.com/sathomas/jsdataviz">GitHub</a>.</p>
-<blockquote>
-<p>A quick note about <a href="http://d3js.org"><span class="smcp">D3</span>.js</a>, perhaps the most powerful JavaScript visualization library available. <span class="lgcp">D3</span>’s enormous power does come at the cost of complexity, and as a result it’s especially well-suited for data visualization professionals. This book aims for a broader audience: web designers and developers that mostly worry about traditional web development problems (<span class="smcp">CSS3</span>, <span class="smcp">HTML5</span>, etc.) but still want to present data effectively. Its main goal is giving those designers and developers the tools they can use, without requiring a full time commitment to advanced data visualization. For those readers we’ve kept the main text at a more introductory level and gradually introduced more advanced JavaScript features within each chapter. By the time you’ve reached the final chapter, however, you’ll have all the background needed to use <span class="smcp">D3</span>.js effectively. As a starting point, the book’s appendix includes several examples that provide a whirlwind tour of the <span class="smcp">D3</span>.js library.</p>
-</blockquote>
-<p>Continue reading: <a href="chap01.html">Chapter 1: Graphing Data</a>.</p>
+            <svg width="462px" height="319px" viewBox="0 0 462 319" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <g id="Landing-Page" transform="translate(2.000000, -45.000000)">
+                    <g id="navigation" transform="translate(141.000000, 45.000000)">
+                        <path d="M219,30 L166,147" id="book_link" stroke="#444444" stroke-width="4"></path>
+                        <path d="M289,250 L166,147" id="rss_link" stroke="#444444" stroke-width="4"></path>
+                        <path d="M89,289 L166,147" id="twitter_link" stroke="#444444" stroke-width="4"></path>
+                        <path d="M30,179 L166,147" id="talk_link" stroke="#444444" stroke-width="4"></path>
+                        <circle id="center_circle" fill="#CA0000" cx="166" cy="147" r="57"></circle>
+                        <a xlink:href="http://twitter.com/jsdatavis">
+                            <g id="twitter" transform="translate(59.000000, 259.000000)">
+                                <circle id="twitter_circle" cx="30" cy="30" r="30"></circle>
+                                <path d="M51.45,20.56 C50.38,22.09 49.1,23.4 47.6,24.48 C47.63,24.69 47.63,25.02 47.63,25.46 C47.63,29.52 46.44,33.64 43.99,37.37 C41.52,41.09 38.24,44.02 33.46,45.71 C31.06,46.58 28.52,47 25.79,47 C21.49,47 17.56,45.88 14,43.6 C14.55,43.67 15.16,43.7 15.85,43.7 C19.42,43.7 22.6,42.62 25.38,40.46 C22.06,40.39 19.18,38.23 18.21,35.21 C18.73,35.28 19.2,35.33 19.66,35.33 C20.34,35.33 21.01,35.23 21.68,35.07 C18.13,34.34 15.52,31.3 15.52,27.64 L15.52,27.55 C16.59,28.13 17.75,28.46 18.99,28.51 C16.9,27.12 15.57,24.8 15.57,22.2 C15.57,20.82 15.92,19.55 16.61,18.38 C20.44,23.05 26.17,26 32.44,26.3 C32.32,25.72 32.25,25.13 32.25,24.57 C32.25,20.38 35.67,17 39.93,17 C42.14,17 44.01,17.8 45.53,19.39 C47.27,19.06 48.89,18.45 50.41,17.56 C49.81,19.37 48.7,20.75 47.03,21.73 C48.51,21.57 49.98,21.2 51.45,20.56 L51.45,20.56 L51.45,20.56 Z" id="twitter_icon" fill="#7B0000"></path>
+                            </g>
+                        </a>
+                        <a xlink:href="http://blog.sathomas.me">
+                            <g id="rss" transform="translate(259.000000, 220.000000)">
+                                <circle id="rss_circle" cx="30" cy="30" r="30"></circle>
+                                <path d="M23.92,37.09 C24.81,37.98 25.27,39.09 25.27,40.37 C25.27,42.95 23.22,45 20.64,45 C18.05,45 16,42.95 16,40.37 C16,37.79 18.05,35.74 20.64,35.74 C21.92,35.74 23.03,36.2 23.92,37.09 L23.92,37.09 L23.92,37.09 Z M37.63,43.34 C37.71,44.23 37.03,45 36.09,45 L32.83,45 C32.03,45 31.38,44.4 31.31,43.6 C30.61,36.24 24.76,30.41 17.4,29.71 C16.6,29.63 16,28.98 16,28.19 L16,24.93 C16,23.99 16.7,23.39 17.55,23.39 L17.67,23.39 C22.81,23.8 27.66,26.04 31.31,29.71 C34.98,33.35 37.22,38.2 37.63,43.34 L37.63,43.34 L37.63,43.34 Z M50,43.38 C50.07,44.25 49.34,45 48.45,45 L45,45 C44.15,45 43.48,44.35 43.45,43.55 C43.07,36.63 40.02,30.17 35.44,25.58 C30.85,21 24.38,17.96 17.45,17.55 C16.65,17.53 16,16.83 16,16.03 L16,12.58 C16,11.69 16.7,11.04 17.55,11.04 L17.62,11.04 C26.04,11.45 34.01,15.02 40,21.02 C46.01,27.01 49.58,34.97 50,43.38 L50,43.38 L50,43.38 Z" id="rss_icon" fill="#7B0000"></path>
+                            </g>
+                        </a>
+                        <a xlink:href="http://speakerdeck.com/sathomas">
+                            <g id="talk" transform="translate(0.000000, 149.000000)">
+                                <circle id="talk_circle" cx="30" cy="30" r="30"></circle>
+                                <g id="talk_icon" transform="translate(8.000000, 15.000000)" fill="#7B0000">
+                                    <path d="M42.54,0.22 L1.46,0.22 C0.56,0.22 0.02,0.76 0.02,1.65 L0.02,27.75 C0.02,28.64 0.92,29.18 1.82,29.18 L4.33,29.18 L4.33,27.25 L4.33,27.03 L2.9,27.03 C2.45,27.03 2.18,26.76 2.18,26.32 L2.18,3.08 C2.18,2.64 2.45,2.37 2.9,2.37 L41.1,2.37 C41.55,2.37 41.82,2.64 41.82,3.08 L41.82,26.32 C41.82,26.76 41.55,27.03 41.1,27.03 L22.63,27.03 L22.63,27.25 L22.63,29.18 L42.54,29.18 C43.44,29.18 43.98,28.64 43.98,27.75 L43.98,1.65 C43.98,0.76 43.44,0.22 42.54,0.22 L42.54,0.22 L42.54,0.22 Z"></path>
+                                    <path d="M13.48,8.46 C15.78,8.46 17.64,10.31 17.64,12.6 C17.64,14.88 15.78,16.73 13.48,16.73 C11.18,16.73 9.32,14.88 9.32,12.6 C9.32,10.31 11.18,8.46 13.48,8.46 L13.48,8.46 L13.48,8.46 Z"></path>
+                                    <path d="M17.7,17.87 L9.26,17.87 C7.46,17.87 6.01,19.31 6.01,21.09 L6.01,23.51 L6.01,27.07 L6.01,32.81 C6.01,33.36 6.49,33.82 7.08,33.82 L19.88,33.82 C20.47,33.82 20.95,33.36 20.95,32.81 L20.95,27.07 L20.95,23.51 L20.95,21.09 C20.95,19.31 19.5,17.87 17.7,17.87 L17.7,17.87 L17.7,17.87 Z"></path>
+                                    <path d="M24.55,7.53 C24.55,7.1 24.96,6.74 25.47,6.74 L37.43,6.74 C37.94,6.74 38.36,7.1 38.36,7.53 C38.36,7.97 37.94,8.33 37.43,8.33 L25.47,8.33 C24.96,8.33 24.55,7.97 24.55,7.53 L24.55,7.53 L24.55,7.53 Z"></path>
+                                    <path d="M24.55,15.63 C24.55,15.19 24.96,14.84 25.47,14.84 L37.43,14.84 C37.94,14.84 38.36,15.19 38.36,15.63 C38.36,16.06 37.94,16.42 37.43,16.42 L25.47,16.42 C24.96,16.42 24.55,16.06 24.55,15.63 L24.55,15.63 L24.55,15.63 Z"></path>
+                                    <path d="M24.55,11.58 C24.55,11.15 24.96,10.79 25.47,10.79 L37.43,10.79 C37.94,10.79 38.36,11.15 38.36,11.58 C38.36,12.02 37.94,12.37 37.43,12.37 L25.47,12.37 C24.96,12.37 24.55,12.02 24.55,11.58 L24.55,11.58 L24.55,11.58 Z"></path>
+                                    <path d="M24.55,19.68 C24.55,19.24 24.96,18.89 25.47,18.89 L32.85,18.89 C33.36,18.89 33.77,19.24 33.77,19.68 C33.77,20.11 33.36,20.47 32.85,20.47 L25.47,20.47 C24.96,20.47 24.55,20.11 24.55,19.68 L24.55,19.68 L24.55,19.68 Z"></path>
+                                </g>
+                            </g>
+                        </a>
+                        <a xlink:href="intro.html">
+                            <g id="book" transform="translate(189.000000, 0.000000)">
+                                <circle id="book_circle" cx="30" cy="30" r="30"></circle>
+                                <g id="book_icon" transform="translate(15.000000, 12.000000)" fill="#7B0000">
+                                    <path d="M3.54,33.3 L29.38,33.3 L29.38,1.27 L3.01,1.27 L0.85,3.09 L3.54,3.09 L3.54,33.3 L3.54,33.3 Z M2.84,0.67 C2.18,0.67 1.06,2.13 1.06,2.71 L0.78,32.25 C0.78,32.83 1.32,33.3 1.98,33.3 L29.8,33.3 C30.46,33.3 31,32.83 31,32.25 L31,1.06 C31,0.47 30.46,7.10542736e-15 29.8,7.10542736e-15 L2.84,7.10542736e-15 L2.84,0.67 L2.84,0.67 Z"></path>
+                                    <path d="M1.04,2.71 C1.09,2.7 1.15,2.7 1.2,2.7 L27.08,2.7 C27.74,2.7 28.28,3.17 28.28,3.75 L28.28,34.94 C28.28,35.53 27.74,36 27.08,36 L1.2,36 C0.54,36 0,35.53 0,34.94 L0,3.75 C0,3.65 0.02,3.55 0.05,3.46 C0.02,3.37 0,3.25 0,3.07 C0,1.37 1.22,0 2.72,0 C4.22,0 1.5,1.91 1.5,1.91 C1.5,1.91 1.29,2.3 1.04,2.71 L1.04,2.71 L1.04,2.71 Z"></path>
+                                </g>
+                            </g>
+                        </a>
+                    </g>
+                    <g id="jsDataVis">
+                        <text id="is" fill="#444444" font-size="48">
+                            <tspan x="181" y="82">is</tspan>
+                        </text>
+                        <text id="." fill="#CA0000" font-size="84">
+                            <tspan x="162" y="82">.</tspan>
+                        </text>
+                        <text id="DataV" fill="#444444" font-size="48">
+                            <tspan x="34" y="82">DataV</tspan>
+                        </text>
+                        <text id="js" fill="#CA0000" font-size="48">
+                            <tspan x="0" y="82">js</tspan>
+                        </text>
+                    </g>
+                </g>
+            </svg>
         </main>
         <footer>
             <small>Copyright © 2012-2014 by Stephen A. Thomas. All Rights Reserved.</small>
