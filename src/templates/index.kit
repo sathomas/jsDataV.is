@@ -18,6 +18,10 @@
             main {
                 margin-top: 2em;
             }
+            #container {
+                height: 0;
+                padding-bottom: 62.5%;
+            }
             svg {
                 stroke: none;
                 stroke-width: 1;
@@ -37,7 +41,8 @@
     </head>
     <body>
         <main>
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="640" height="400"  xml:space="preserve">
+            <div id="container">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 400" xml:space="preserve" preserveAspectRatio="xMinYMin meet">
                 <g id="navigation">
                     <path id="book_link" stroke="rgb(68, 68, 68)" stroke-width="4" stroke-linecap="square" stroke-miterlimit="4" d="M 388,70 L 335,187" />
                     <path id="rss_link" stroke="rgb(68, 68, 68)" stroke-width="4" stroke-linecap="square" stroke-miterlimit="4" d="M 458,290 L 335,187" />
@@ -102,6 +107,7 @@
                     </text>
                 </g>
             </svg>
+            </div>
         </main>
         <footer>
             <small>Copyright © 2012-2014 by Stephen A. Thomas. All Rights Reserved.</small>
