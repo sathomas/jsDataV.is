@@ -12,73 +12,9 @@
         <meta name="mobile-web-app-capable" content="yes">
         <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon.png">
         <link rel="shortcut icon" href="favicon.ico">
-        <link rel="stylesheet" href="css/styles.min.css">
+        <link rel="stylesheet" href="css/styles.index.min.css">
         <title>jsDataV.is - Data Visualization with JavaScript</title>
         <style>
-            @-webkit-keyframes fadeIn {
-                0%   { opacity: 0; }
-                100% { opacity: 1; }
-            }
-            @-webkit-keyframes fadeOut {
-                0%   { opacity: 1; }
-                100% { opacity: 0; }
-            }
-            .fadeIn {
-                -webkit-animation-duration: 0.25s;
-                -webkit-animation-fill-mode: both;
-                -webkit-animation-name: fadeIn;
-                transition-timing-function: ease-in;
-            }
-            .fadeOut {
-                -webkit-animation-duration: 0.25s;
-                -webkit-animation-fill-mode: both;
-                -webkit-animation-name: fadeOut;
-                transition-timing-function: ease-out;
-            }
-           main, footer {
-                max-width: 1280px;
-            }
-            #container {
-                height: 0;
-                padding-bottom: 62.5%;
-                margin-top: 2em;
-            }
-            svg {
-                stroke: none;
-                stroke-width: 0;
-                fill: none;
-                fill-rule: evenodd;
-            }
-            #jsDataVis text {
-                font-family: jsDataVis;
-            }
-            circle.background {
-                fill: #ffffff;
-            }
-            circle.icon {
-                fill: #CA0000;
-                opacity: 0;
-            }
-            a:hover > circle.icon, a:focus > circle.icon {
-                fill: #F71515;
-            }
-            .link {
-                stroke: #444444;
-                stroke-width: 4;
-                stroke-linecap: square;
-                stroke-miterlimit: 4;
-                opacity: 0;
-            }
-            path.icon {
-                fill: #7B0000;
-                opacity: 0;
-            }
-            .label {
-                fill: #444444;
-                color: #444444;
-                font-size: 20px;
-                opacity: 0;
-            }
         </style>
     </head>
     <body>
