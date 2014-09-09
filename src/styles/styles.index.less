@@ -1,0 +1,82 @@
+/*
+ * Stylesheet for landing page
+ */
+
+/* Third-party stylesheets */
+@import (less) "../../bower_components/normalize-css/normalize.css";
+@import (less) "../../bower_components/normalize-opentype.css/normalize-opentype.css";
+
+/* Customized versions of third-party stylesheets */
+
+/* Primary stylesheets */
+@import "vars.colors.less";
+@import "vars.shapes.less";
+@import "typography.less";
+@import "layout.less";
+
+/* Specific styles just for index.html */
+
+@keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes fadeOut {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
+}
+.fadeIn {
+    animation-duration: 0.25s;
+    animation-fill-mode: both;
+    animation-name: fadeIn;
+    transition-timing-function: ease-in;
+}
+.fadeOut {
+    animation-duration: 0.25s;
+    animation-fill-mode: both;
+    animation-name: fadeOut;
+    transition-timing-function: ease-out;
+}
+main, footer {
+    max-width: 1280px;
+}
+#container {
+    height: 0;
+    padding-bottom: 62.5%;
+    margin-top: 2em;
+}
+svg {
+    stroke: none;
+    stroke-width: 0;
+    fill: none;
+    fill-rule: evenodd;
+}
+#jsDataVis text {
+    font-family: jsDataVis;
+}
+circle.background {
+    fill: #ffffff;
+}
+circle.icon {
+    fill: @color-red;
+    opacity: 0;
+}
+a:hover > circle.icon, a:focus > circle.icon {
+    fill: #F71515;
+}
+.link {
+    stroke: @color-grey;
+    stroke-width: 4;
+    stroke-linecap: square;
+    stroke-miterlimit: 4;
+    opacity: 0;
+}
+path.icon {
+    fill: @color-red-darkest;
+    opacity: 0;
+}
+.label {
+    fill: @color-grey;
+    color: @color-grey;
+    font-size: 20px;
+    opacity: 0;
+}
