@@ -35,7 +35,7 @@ For our example, we'll visualize the <span class="smcp">NCAA</span> Mens' Basket
 * The bottom left corner of the court corresponds to position (0,0), and the top right corner corresponds to (10,10).
 * To avoid confusing free throws with field goals, we've given all free throws a position of (-1,-1).
 
-Here's the beginning of the data; the full data is available with the book's [source code](https://github.com/sathomas/jsdataviz).
+Here's the beginning of the data; the full data is available with the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
 ``` {.javascript .numberLines}
 var game = [

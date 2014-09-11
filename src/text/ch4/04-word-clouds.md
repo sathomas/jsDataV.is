@@ -46,7 +46,7 @@ var tags = [
     // Data set continues...
 ```
 
-In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book's [source code](https://github.com/sathomas/jsdataviz).
+In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
 The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element `["javascript", 56]` would tell wordcloud2 to draw “javascript” with a height of 56 pixels. As a result, all we need to do is convert counts to drawing sizes. The specific algorithm will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000. In chapter 2, we saw how jQuery's `.map()` function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of `.map()` even without jQuery. (This native version won't work on older browsers like jQuery will, but we're not worrying about that for this example).
 

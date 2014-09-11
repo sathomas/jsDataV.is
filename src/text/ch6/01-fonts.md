@@ -118,7 +118,7 @@ With the defined style rules, inserting multiple `<span>` elements within our ma
 
 ### Step 4: Vary the Countries Based on the Data
 
-Now we're ready to create the actual data visualization. Naturally, we'll start with actual data, in this case from the United Nations. Here's how we could format that data in a JavaScript array. (The full data set can be found with the book's [source code](https://github.com/sathomas/jsdataviz).)
+Now we're ready to create the actual data visualization. Naturally, we'll start with actual data, in this case from the United Nations. Here's how we could format that data in a JavaScript array. (The full data set can be found with the book's [source code](https://github.com/sathomas/jsDataV.is-source).)
 
 ``` {.javascript .numberLines}
 var ages = [

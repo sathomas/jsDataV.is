@@ -66,7 +66,7 @@ The data for our time line comes from [Wikipedia](http://en.wikipedia.org/wiki/C
   // Data set continues...
 ```
 
-You can see the complete data set in the book's [source code](https://github.com/sathomas/jsdataviz).
+You can see the complete data set in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
 Before we can use Chronoline.js, we have to convert the raw data into the format the library expects. Since we have jQuery available, we can take advantage of its `.map()` function for the conversion. (For details on `.map()`, see chapter 2.)
 

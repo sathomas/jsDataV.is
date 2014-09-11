@@ -25,7 +25,7 @@ Without any required libraries, the <span class="smcp">HTML</span> page for our 
 
 ### Step 2: Start JavaScript Execution
 
-As soon as the browser has finished loading our page, we can start processing the data. As before, we'll start with our data formatted as a JavaScript array. You can see the complete data set in the book's [source code](https://github.com/sathomas/jsdataviz).
+As soon as the browser has finished loading our page, we can start processing the data. As before, we'll start with our data formatted as a JavaScript array. You can see the complete data set in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
 ``` {.javascript .numberLines}
 window.onload = function () {

@@ -28,7 +28,7 @@ As you can see, we've set aside a `<div>` in line 8 to hold our graph. We've als
 
 ### Step 2: Prepare the Data
 
-Our data on the top 25 jazz albums looks like the following snippet. We're only showing the first couple of albums below, but you can see the full list in the book's [source code](https://github.com/sathomas/jsdataviz).
+Our data on the top 25 jazz albums looks like the following snippet. We're only showing the first couple of albums below, but you can see the full list in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
 ``` {.javascript .numberLines}
 var albums = [
