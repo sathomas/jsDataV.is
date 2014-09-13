@@ -1,0 +1,30 @@
+<!--
+    Adjustments to styles and JavaScript just for screen
+    captures to be used in printed book.
+ -->
+
+<script>
+
+    // Adjustments only active if page is loaded from
+    // the local file system.
+
+    if (window.location.protocol === "file:") {
+
+        // Update the properties used by JavaScript code
+        // to create the live visualizations.
+
+        chartStyles.color.text = "#000000";
+        chartStyles.font.family = "Avenir";
+
+        var css = document.createElement('style');
+        css.type = 'text/css';
+        var styles = "figure, .no-font-feature-settings figure, .no-font-feature-settings figure .lgcp {color: black; font-family: Avenir;}";
+
+        if (css.styleSheet) { css.styleSheet.cssText = styles; }
+        else                { css.appendChild(document.createTextNode(styles)); }
+
+        document.getElementsByTagName("head")[0].appendChild(css);
+
+    }
+
+</script>

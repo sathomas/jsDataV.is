@@ -34,7 +34,7 @@ body {
     line-height: 1.5;
 }
 figure {
-    font-family: print, Varela, sans-serif;  /* PRINT SCREENSHOTS: prepend 'print' */
+    font-family: Varela, sans-serif;
     font-feature-settings: "onum" 0, "lnum" 1, "smcp" 0;
 }
 .no-font-feature-settings body {
@@ -42,7 +42,7 @@ figure {
 }
 .no-font-feature-settings figure,
 .no-font-feature-settings figure .lgcp {
-    font-family: print, Varela, sans-serif;  /* PRINT SCREENSHOTS: prepend 'print' */
+    font-family: Varela, sans-serif;
 }
 @media screen and (max-width: 25em) {
   body { font-size: 90%; }
@@ -121,6 +121,3 @@ code, pre {
 
 /* Custom font for branding */
 @import (less) "../typefaces/jsdatavis-font.css";
-
-/* Font for matching print version */
-@import (less) "../typefaces/print-font.css";   /* PRINT SCREENSHOTS */
