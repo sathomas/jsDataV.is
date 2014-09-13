@@ -6,7 +6,7 @@ You might expect a data visualization for the web to be featured very prominentl
 <p style="display: inline-block;">
 <span id="sparkline-intro">170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,184,148,145,134,145,145,145,143,148,224,181,112,111,129,151,131,131,131,114,112,112,112,124,187,202,200,203,237,263,221,197,184,185,203,290,330,330,226,113,148,169,148,78,96,96,96,77,59,22,22,70,110,128</span>
 <span style="color:#CA0000">&nbsp;128&nbsp;</span>
-<strong>Glucose</strong>
+Glucose
 </p>
 <figcaption>Tufte's classic sparkline example shows a lot of information in a small space.</figcaption>
 </figure>
