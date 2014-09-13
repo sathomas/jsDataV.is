@@ -28,7 +28,6 @@
     "d3": "~3.4.9",
     "eventie": ">=1.0.4 <2",
     "eventEmitter": "4.x",
-    "heatmap.js2": "~0.0.2",
     "flot": "~0.8.3",
     "flotr2": "*",
     "headroom.js": "~0.6.0",
@@ -36,15 +35,14 @@
     "jquery.sparkline": "~2.1.2",
     "jquery-chronoline": "~0.2.6",
     "normalize-css": "~3.0.1",
-    "prismjs": "*",
     "raphael": "~2.1.2",
-    "showdown": "~0.3.1",
     "sigma": "~1.0.2",
     "wordcloud2.js": "*",
     "treemap-squared": "git://github.com/imranghory/treemap-squared.git",
     "continental": "git://github.com/sathomas/continental.git",
     "modestmaps-js": "git://github.com/modestmaps/modestmaps-js.git#~3.3.6",
     "leaflet": "git://github.com/Leaflet/Leaflet.git#~0.7.3",
-    "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1"
+    "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1",
+    "heatmap": "git://github.com/pa7/heatmap.js#develop"
   }
 }
