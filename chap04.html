@@ -17,7 +17,7 @@
         <script>
             var chartStyles = {
                 color: {
-                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
+                    text:               "#444444",
                     primary:            "#CA0000",
                     primaryLightest:    "#FE4C4C",
                     primaryLight:       "#F71515",
@@ -35,29 +35,60 @@
                     alternateDarkest:   "#4D7300"
                 },
                 font: {
-                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
+                    family:             "Varela, sans-serif"
                 }
-
             };
         </script>
+
+<!--
+    Adjustments to styles and JavaScript just for screen
+    captures to be used in printed book.
+ -->
+
+<script>
+
+    // Adjustments only active if page is loaded from
+    // the local file system.
+
+    if (window.location.protocol === "file:") {
+
+        // Update the properties used by JavaScript code
+        // to create the live visualizations.
+
+        chartStyles.color.text = "#000000";
+        chartStyles.font.family = "Avenir";
+
+        var css = document.createElement('style');
+        css.type = 'text/css';
+        var styles = "figure, .no-font-feature-settings figure, .no-font-feature-settings figure .lgcp {color: black; font-family: Avenir;}";
+
+        if (css.styleSheet) { css.styleSheet.cssText = styles; }
+        else                { css.appendChild(document.createTextNode(styles)); }
+
+        document.getElementsByTagName("head")[0].appendChild(css);
+
+    }
+
+</script>
+
     </head>
     <body>
         <nav>
             <ul>
                 <li>
                     <a href="index.html" alt="jsDataV.is">
-                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="32px" height="32px" viewBox="0 0 32 32">
                             <title>jsDataV.is</title>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
-                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
-                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
-                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
-                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
+                            <g class="jsdatavis-logo">
+                                <path d="M22.5,2.5 L16.5,15.5" ></path>
+                                <path d="M28.5,24.5 L16.5,15.5"></path>
+                                <path d="M9.5,28.5 L16.5,15.5" ></path>
+                                <path d="M2.5,18.5 L16.5,15.5" ></path>
+                                <circle cx="9"  cy="29" r="3"></circle>
+                                <circle cx="3"  cy="18" r="3"></circle>
+                                <circle cx="29" cy="25" r="3"></circle>
+                                <circle cx="22" cy="3"  r="3"></circle>
+                                <circle cx="17" cy="15" r="6"></circle>
                             </g>
                         </svg>
                     </a>
@@ -280,7 +311,7 @@ Tree maps show the relative size of data values using rectangular area.
 <p>Now when we call <code>TreeMap.draw()</code>, we can add this function to its parameters, specifically by setting it as the value for the <code>box</code> key of the options object. The treemap-squared library will then defer to our function for selecting the colors of the regions.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Treemap</span>.<span class="fu">draw</span>(<span class="st">&quot;treemap&quot;</span>, <span class="dv">600</span>, <span class="dv">450</span>, data, labels, {<span class="st">&#39;box&#39;</span> : pickColor});</code></pre></td></tr></table>
-<p>The resulting tree map of figure <span class="nextfigure"/> still shows the relative populations for all of the states. Now, through the use of color shades, it also indicates the rate of population growth compared to the national average.</p>
+<p>The resulting tree map of figure <span class="nextfigure"/> still shows the relative populations for all of the states. Now, through the use of color shades, it also indicates the rate of population growth compared to the national average. The visualization clearly shows the migration from the Northeast and Midwest to the South and West.</p>
 <figure>
 <div id="treemap-2">
 
@@ -376,17 +407,24 @@ Tree maps can use color as well as area to show data values.
         var growth = [ west.growth, midwest.growth, northeast.growth, south.growth ];
         var totalGrowth = (total2012 - total2010)/total2010;
         
-        Treemap.draw("treemap-1", 600, 440, data, labels);
+        var colors = ["#007979", "#CA5C00", "#A2005C", "#7EBD00"];
+
+        function pickColor1(coordinates, index) {
+            var regionIdx = index[0];
+            return {"fill": colors[regionIdx], "stroke": "#FFFFFF"};
+        }
+        
+        Treemap.draw("treemap-1", 640, 440, data, labels, {'box' : pickColor1, "label": {"font-family": chartStyles.font.family}});
         
         var colorRanges = { 
-          positive: [ "#FFFFBF","#D9EF8B","#A6D96A","#66BD63","#1A9850","#006837" ],
-          negative: [ "#FFFFBF","#FEE08B","#FDAE61","#F46D43","#D73027","#A50026" ]
+          positive: ["#B6ED47","#A0E714","#7EBD00","#679A00","#4D7300"],
+          negative: ["#FE9D4C","#F77B15","#CA5C00","#A54B00","#7B3800"]
         };
         
         var minDelta = Math.min(south.minGrowth, west.minGrowth, midwest.minGrowth, northeast.minGrowth) - totalGrowth;
         var maxDelta = Math.max(south.maxGrowth, west.maxGrowth, midwest.maxGrowth, northeast.maxGrowth) - totalGrowth;
         
-        function pickColor(coordinates, index) {
+        function pickColor2(coordinates, index) {
             var regionIdx = index[0];
             var stateIdx  = index[1];
             var growthRate = growth[regionIdx][stateIdx];
@@ -401,10 +439,10 @@ Tree maps can use color as well as area to show data values.
             if (colorIndex >= colorRange.length) colorIndex = colorRange.length - 1;
             
             color = colorRange[colorIndex];
-            return{ "fill" : color };
+            return{ "fill" : color, "stroke": "#FFFFFF"};
         }
         
-        Treemap.draw("treemap-2", 600, 440, data, labels, {'box' : pickColor});
+        Treemap.draw("treemap-2", 640, 440, data, labels, {'box' : pickColor2, "label": {"font-family": chartStyles.font.family}});
 
     };
     
@@ -419,7 +457,7 @@ Tree maps can use color as well as area to show data values.
 <h2 id="highlighting-regions-with-a-heat-map">Highlighting Regions with a Heat Map</h2>
 <p>If you work in the web industry, heat maps may already be a part of your job. Usability researchers often use heat maps to evaluate site designs, especially when they want to analyze which parts of a web page get the most attention from users. Heat maps work by overlaying values, represented as semi-transparent colors, over a two-dimensional area. As the example in figure <span class="nextfigure"/> shows, different colors represent different levels of attention. Users focus most on areas colored red, and the focus less on yellow, green, and blue areas.</p>
 <figure>
-<img src="img/heatmap.png" width="527" height="483">
+<img src="img/heatmap.png" width="640">
 <figcaption>
 Heat maps traditionally show where web users focus their attention on a page.
 </figcaption>
@@ -456,7 +494,7 @@ Heat maps traditionally show where web users focus their attention on a page.
 <li>The bottom left corner of the court corresponds to position (0,0), and the top right corner corresponds to (10,10).</li>
 <li>To avoid confusing free throws with field goals, we’ve given all free throws a position of (-1,-1).</li>
 </ul>
-<p>Here’s the beginning of the data; the full data is available with the book’s <a href="https://github.com/sathomas/jsdataviz">source code</a>.</p>
+<p>Here’s the beginning of the data; the full data is available with the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -470,7 +508,9 @@ Heat maps traditionally show where web users focus their attention on a page.
 <h3 id="step-3-create-the-background-image">Step 3: Create the Background Image</h3>
 <p>A simple diagram of a basketball court, like that in figure <span class="nextfigure"/>, works fine for our visualization. We can use each team’s color to highlight which side will show their points. The dimensions of our background image are 556 by 333 pixels.</p>
 <figure>
-<img src="img/basketball.png" alt="Diagram of Basketball Court" />
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="556" height="333" xml:space="preserve">
+<path id="bezier" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 3.25,5.25 L 552.75,5.25 552.75,327.34 3.25,327.34 3.25,5.25 Z M 3.25,5.25" /> <path id="bezier2" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 552.75,295.67 C 509.54,300.39 464.42,287.99 431.25,258.47 374.05,207.56 374.05,125.03 431.25,74.12 464.42,44.6 509.54,32.2 552.75,36.91 L 552.75,295.67 Z M 552.75,295.67" /> <path id="bezier3" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 3.25,295.67 C 46.46,300.39 91.58,287.99 124.75,258.47 181.95,207.56 181.95,125.03 124.75,74.12 91.58,44.6 46.46,32.2 3.25,36.91 L 3.25,295.67 Z M 3.25,295.67" /> <path id="bezier4" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 280.08,5.25 L 280.08,327.34" /> <path id="bezier5" stroke="none" fill="rgb(138, 153, 203)" d="M 3.25,131.97 L 125.47,131.97 125.47,200.62 3.25,200.62 3.25,131.97 Z M 3.25,131.97" /> <path id="bezier6" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 3.25,131.97 L 125.47,131.97 125.47,200.62 3.25,200.62 3.25,131.97 Z M 3.25,131.97" /> <path id="bezier7" stroke="none" fill="rgb(4, 10, 52)" d="M 430.53,131.97 L 552.75,131.97 552.75,200.62 430.53,200.62 430.53,131.97 Z M 430.53,131.97" /> <path id="bezier8" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 430.53,131.97 L 552.75,131.97 552.75,200.62 430.53,200.62 430.53,131.97 Z M 430.53,131.97" /> <path id="bezier9" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 150.59,142.02 C 163.82,155.43 163.82,177.16 150.59,190.56 137.36,203.97 115.91,203.97 102.68,190.56 89.45,177.16 89.45,155.43 102.68,142.02 115.91,128.62 137.36,128.62 150.59,142.02 Z M 150.59,142.02" /> <path id="bezier10" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 454.48,142.02 C 467.71,155.43 467.71,177.16 454.48,190.56 441.25,203.97 419.8,203.97 406.57,190.56 393.34,177.16 393.34,155.43 406.57,142.02 419.8,128.62 441.25,128.62 454.48,142.02 Z M 454.48,142.02" /> <path id="bezier11" stroke="rgb(164, 164, 164)" stroke-width="2.67" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 312.25,135.31 C 330.02,152.97 330.02,181.6 312.25,199.25 294.48,216.91 265.67,216.91 247.9,199.25 230.13,181.6 230.13,152.97 247.9,135.31 265.67,117.66 294.48,117.66 312.25,135.31 Z M 312.25,135.31" />
+</svg>
 <figcaption>
 A background image sets the context for the visualization.
 </figcaption>
@@ -488,7 +528,7 @@ A background image sets the context for the visualization.
 <li>the magnitude of the data point (specified by the <code>count</code> property)</li>
 </ol>
 <p>The library also requires the maximum magnitude for the entire map, and here things get a little tricky. With standard heat maps, the magnitudes of all the data points for any particular position sum together. In our case that means that all the baskets scored from layups and slam dunks—which are effectively from the same position on the court—are added together by the heat map algorithm. That one position, right underneath the basket, dominates the rest of the court. To counteract that effect, we specify a maximum value far less than what the heat map would expect. In our case, we’ll set the maximum value at <code>3</code>, which means that any location where at least three points were scored will be colored red. That ensures that any location where a three-pointer was scored will be red and we’ll easily be able to see all the baskets.</p>
-<p>We can use JavaScript to transform the <code>game</code> array into the appropriate format. We start by fetching the height and width of the containing element in lines 1-3. If those dimensions change, our code will still work fine. Then we initialize the <code>dataset</code> object with a <code>max</code> property and an empty <code>data</code> array in lines 4-6. Finally, we iterate through the game data and add relevant data points to this array. Notice that we’re filtering out free throws in line 8.</p>
+<p>We can use JavaScript to transform the <code>game</code> array into the appropriate format. We start by fetching the height and width of the containing element in lines 1-3. If those dimensions change, our code will still work fine. Then we initialize the <code>dataset</code> object with a <code>max</code> property and an empty <code>data</code> array in lines 4-6. Finally, we iterate through the game data and add relevant data points to this array. Notice that we’re filtering out free throws in line 9.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -526,14 +566,14 @@ A background image sets the context for the visualization.
 5
 6
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> heatmap = <span class="ot">h337</span>.<span class="fu">create</span>({
-    <span class="dt">element</span>: <span class="st">&quot;heatmap&quot;</span>,
+    <span class="dt">container</span>: <span class="st">&quot;heatmap&quot;</span>,
     <span class="dt">radius</span>: <span class="dv">30</span>,
     <span class="dt">opacity</span>: <span class="dv">50</span>
 });
 <span class="ot">heatmap</span>.<span class="ot">store</span>.<span class="fu">setDataSet</span>(dataset);</code></pre></td></tr></table>
 <p>The resulting visualization in figure <span class="nextfigure"/> shows where each team scored its points.</p>
 <figure>
-<div id="heatmap1" style="position:relative;width:556px;height:333px;background-image:url(&#39;img/basketball.png&#39;);">
+<div id="heatmap1" style="position:relative;width:556px;height:333px;background-image: url(&#39;data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSI1NTYiIGhlaWdodD0iMzMzIiAgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxwYXRoIGlkPSJiZXppZXIiIHN0cm9rZT0icmdiKDE2NCwgMTY0LCAxNjQpIiBzdHJva2Utd2lkdGg9IjIuNjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGZpbGw9Im5vbmUiIGQ9Ik0gMy4yNSw1LjI1IEwgNTUyLjc1LDUuMjUgNTUyLjc1LDMyNy4zNCAzLjI1LDMyNy4zNCAzLjI1LDUuMjUgWiBNIDMuMjUsNS4yNSIgLz4KPHBhdGggaWQ9ImJlemllcjIiIHN0cm9rZT0icmdiKDE2NCwgMTY0LCAxNjQpIiBzdHJva2Utd2lkdGg9IjIuNjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGZpbGw9Im5vbmUiIGQ9Ik0gNTUyLjc1LDI5NS42NyBDIDUwOS41NCwzMDAuMzkgNDY0LjQyLDI4Ny45OSA0MzEuMjUsMjU4LjQ3IDM3NC4wNSwyMDcuNTYgMzc0LjA1LDEyNS4wMyA0MzEuMjUsNzQuMTIgNDY0LjQyLDQ0LjYgNTA5LjU0LDMyLjIgNTUyLjc1LDM2LjkxIEwgNTUyLjc1LDI5NS42NyBaIE0gNTUyLjc1LDI5NS42NyIgLz4KPHBhdGggaWQ9ImJlemllcjMiIHN0cm9rZT0icmdiKDE2NCwgMTY0LCAxNjQpIiBzdHJva2Utd2lkdGg9IjIuNjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGZpbGw9Im5vbmUiIGQ9Ik0gMy4yNSwyOTUuNjcgQyA0Ni40NiwzMDAuMzkgOTEuNTgsMjg3Ljk5IDEyNC43NSwyNTguNDcgMTgxLjk1LDIwNy41NiAxODEuOTUsMTI1LjAzIDEyNC43NSw3NC4xMiA5MS41OCw0NC42IDQ2LjQ2LDMyLjIgMy4yNSwzNi45MSBMIDMuMjUsMjk1LjY3IFogTSAzLjI1LDI5NS42NyIgLz4KPHBhdGggaWQ9ImJlemllcjQiIHN0cm9rZT0icmdiKDE2NCwgMTY0LCAxNjQpIiBzdHJva2Utd2lkdGg9IjIuNjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGZpbGw9Im5vbmUiIGQ9Ik0gMjgwLjA4LDUuMjUgTCAyODAuMDgsMzI3LjM0IiAvPgo8cGF0aCBpZD0iYmV6aWVyNSIgc3Ryb2tlPSJub25lIiBmaWxsPSJyZ2IoMTM4LCAxNTMsIDIwMykiIGQ9Ik0gMy4yNSwxMzEuOTcgTCAxMjUuNDcsMTMxLjk3IDEyNS40NywyMDAuNjIgMy4yNSwyMDAuNjIgMy4yNSwxMzEuOTcgWiBNIDMuMjUsMTMxLjk3IiAvPgo8cGF0aCBpZD0iYmV6aWVyNiIgc3Ryb2tlPSJyZ2IoMTY0LCAxNjQsIDE2NCkiIHN0cm9rZS13aWR0aD0iMi42NyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZmlsbD0ibm9uZSIgZD0iTSAzLjI1LDEzMS45NyBMIDEyNS40NywxMzEuOTcgMTI1LjQ3LDIwMC42MiAzLjI1LDIwMC42MiAzLjI1LDEzMS45NyBaIE0gMy4yNSwxMzEuOTciIC8+CjxwYXRoIGlkPSJiZXppZXI3IiBzdHJva2U9Im5vbmUiIGZpbGw9InJnYig0LCAxMCwgNTIpIiBkPSJNIDQzMC41MywxMzEuOTcgTCA1NTIuNzUsMTMxLjk3IDU1Mi43NSwyMDAuNjIgNDMwLjUzLDIwMC42MiA0MzAuNTMsMTMxLjk3IFogTSA0MzAuNTMsMTMxLjk3IiAvPgo8cGF0aCBpZD0iYmV6aWVyOCIgc3Ryb2tlPSJyZ2IoMTY0LCAxNjQsIDE2NCkiIHN0cm9rZS13aWR0aD0iMi42NyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZmlsbD0ibm9uZSIgZD0iTSA0MzAuNTMsMTMxLjk3IEwgNTUyLjc1LDEzMS45NyA1NTIuNzUsMjAwLjYyIDQzMC41MywyMDAuNjIgNDMwLjUzLDEzMS45NyBaIE0gNDMwLjUzLDEzMS45NyIgLz4KPHBhdGggaWQ9ImJlemllcjkiIHN0cm9rZT0icmdiKDE2NCwgMTY0LCAxNjQpIiBzdHJva2Utd2lkdGg9IjIuNjciIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLW1pdGVybGltaXQ9IjQiIGZpbGw9Im5vbmUiIGQ9Ik0gMTUwLjU5LDE0Mi4wMiBDIDE2My44MiwxNTUuNDMgMTYzLjgyLDE3Ny4xNiAxNTAuNTksMTkwLjU2IDEzNy4zNiwyMDMuOTcgMTE1LjkxLDIwMy45NyAxMDIuNjgsMTkwLjU2IDg5LjQ1LDE3Ny4xNiA4OS40NSwxNTUuNDMgMTAyLjY4LDE0Mi4wMiAxMTUuOTEsMTI4LjYyIDEzNy4zNiwxMjguNjIgMTUwLjU5LDE0Mi4wMiBaIE0gMTUwLjU5LDE0Mi4wMiIgLz4KPHBhdGggaWQ9ImJlemllcjEwIiBzdHJva2U9InJnYigxNjQsIDE2NCwgMTY0KSIgc3Ryb2tlLXdpZHRoPSIyLjY3IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS1taXRlcmxpbWl0PSI0IiBmaWxsPSJub25lIiBkPSJNIDQ1NC40OCwxNDIuMDIgQyA0NjcuNzEsMTU1LjQzIDQ2Ny43MSwxNzcuMTYgNDU0LjQ4LDE5MC41NiA0NDEuMjUsMjAzLjk3IDQxOS44LDIwMy45NyA0MDYuNTcsMTkwLjU2IDM5My4zNCwxNzcuMTYgMzkzLjM0LDE1NS40MyA0MDYuNTcsMTQyLjAyIDQxOS44LDEyOC42MiA0NDEuMjUsMTI4LjYyIDQ1NC40OCwxNDIuMDIgWiBNIDQ1NC40OCwxNDIuMDIiIC8+CjxwYXRoIGlkPSJiZXppZXIxMSIgc3Ryb2tlPSJyZ2IoMTY0LCAxNjQsIDE2NCkiIHN0cm9rZS13aWR0aD0iMi42NyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbWl0ZXJsaW1pdD0iNCIgZmlsbD0ibm9uZSIgZD0iTSAzMTIuMjUsMTM1LjMxIEMgMzMwLjAyLDE1Mi45NyAzMzAuMDIsMTgxLjYgMzEyLjI1LDE5OS4yNSAyOTQuNDgsMjE2LjkxIDI2NS42NywyMTYuOTEgMjQ3LjksMTk5LjI1IDIzMC4xMywxODEuNiAyMzAuMTMsMTUyLjk3IDI0Ny45LDEzNS4zMSAyNjUuNjcsMTE3LjY2IDI5NC40OCwxMTcuNjYgMzEyLjI1LDEzNS4zMSBaIE0gMzEyLjI1LDEzNS4zMSIgLz4KPC9zdmc+&#39;);">
 
 </div>
 <figcaption>
@@ -783,7 +823,7 @@ Interactive heat maps can show changes over time.
             }
         }
         var heatmap1 = h337.create({
-            element: "heatmap1",
+            container: "heatmap1",
             radius: 30,
             opacity: 50
         });
@@ -879,7 +919,7 @@ Interactive heat maps can show changes over time.
 <p>Note: In most of the examples in this book, we included steps you can take to make your visualizations compatible with older web browsers such as Internet Explorer 8. In this case, however, those approaches degrade performance so severely that they are rarely workable. To view the network graph visualization, your users will need a modern browser.</p>
 </blockquote>
 <h3 id="step-2-prepare-the-data-1">Step 2: Prepare the Data</h3>
-<p>Our data on the top 25 jazz albums looks like the following snippet. We’re only showing the first couple of albums below, but you can see the full list in the book’s <a href="https://github.com/sathomas/jsdataviz">source code</a>.</p>
+<p>Our data on the top 25 jazz albums looks like the following snippet. We’re only showing the first couple of albums below, but you can see the full list in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1674,7 +1714,7 @@ An interactive graph gives users the chance to highlight specific nodes.
     [<span class="st">&quot;c++&quot;</span>, <span class="dv">269570</span>],
     [<span class="st">&quot;html&quot;</span>, <span class="dv">259946</span>],
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
-<p>In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book’s <a href="https://github.com/sathomas/jsdataviz">source code</a>.</p>
+<p>In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <p>The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element <code>[&quot;javascript&quot;, 56]</code> would tell wordcloud2 to draw “javascript” with a height of 56 pixels. As a result, all we need to do is convert counts to drawing sizes. The specific algorithm will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000. In chapter 2, we saw how jQuery’s <code>.map()</code> function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of <code>.map()</code> even without jQuery. (This native version won’t work on older browsers like jQuery will, but we’re not worrying about that for this example).</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> list = <span class="ot">tags</span>.<span class="fu">map</span>(<span class="kw">function</span>(word) { <span class="kw">return</span> [word[<span class="dv">0</span>], <span class="ot">Math</span>.<span class="fu">round</span>(word[<span class="dv">1</span>]/<span class="dv">10000</span>)]; });</code></pre></td></tr></table>

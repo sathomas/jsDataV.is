@@ -17,7 +17,7 @@
         <script>
             var chartStyles = {
                 color: {
-                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
+                    text:               "#444444",
                     primary:            "#CA0000",
                     primaryLightest:    "#FE4C4C",
                     primaryLight:       "#F71515",
@@ -35,29 +35,60 @@
                     alternateDarkest:   "#4D7300"
                 },
                 font: {
-                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
+                    family:             "Varela, sans-serif"
                 }
-
             };
         </script>
+
+<!--
+    Adjustments to styles and JavaScript just for screen
+    captures to be used in printed book.
+ -->
+
+<script>
+
+    // Adjustments only active if page is loaded from
+    // the local file system.
+
+    if (window.location.protocol === "file:") {
+
+        // Update the properties used by JavaScript code
+        // to create the live visualizations.
+
+        chartStyles.color.text = "#000000";
+        chartStyles.font.family = "Avenir";
+
+        var css = document.createElement('style');
+        css.type = 'text/css';
+        var styles = "figure, .no-font-feature-settings figure, .no-font-feature-settings figure .lgcp {color: black; font-family: Avenir;}";
+
+        if (css.styleSheet) { css.styleSheet.cssText = styles; }
+        else                { css.appendChild(document.createTextNode(styles)); }
+
+        document.getElementsByTagName("head")[0].appendChild(css);
+
+    }
+
+</script>
+
     </head>
     <body>
         <nav>
             <ul>
                 <li>
                     <a href="index.html" alt="jsDataV.is">
-                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="32px" height="32px" viewBox="0 0 32 32">
                             <title>jsDataV.is</title>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
-                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
-                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
-                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
-                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
+                            <g class="jsdatavis-logo">
+                                <path d="M22.5,2.5 L16.5,15.5" ></path>
+                                <path d="M28.5,24.5 L16.5,15.5"></path>
+                                <path d="M9.5,28.5 L16.5,15.5" ></path>
+                                <path d="M2.5,18.5 L16.5,15.5" ></path>
+                                <circle cx="9"  cy="29" r="3"></circle>
+                                <circle cx="3"  cy="18" r="3"></circle>
+                                <circle cx="29" cy="25" r="3"></circle>
+                                <circle cx="22" cy="3"  r="3"></circle>
+                                <circle cx="17" cy="15" r="6"></circle>
                             </g>
                         </svg>
                     </a>
@@ -188,7 +219,7 @@ body { counter-reset: chapter 5; }
     <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;It is known...&quot;</span> 
   },
   <span class="co">// Data set continues...</span></code></pre></td></tr></table>
-<p>You can see the complete data set in the book’s <a href="https://github.com/sathomas/jsdataviz">source code</a>.</p>
+<p>You can see the complete data set in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <p>Before we can use Chronoline.js, we have to convert the raw data into the format the library expects. Since we have jQuery available, we can take advantage of its <code>.map()</code> function for the conversion. (For details on <code>.map()</code>, see chapter 2.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -443,7 +474,7 @@ var timeline = new Chronoline($("#library-1")[0], events, {
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-2-start-javascript-execution">Step 2: Start JavaScript Execution</h3>
-<p>As soon as the browser has finished loading our page, we can start processing the data. As before, we’ll start with our data formatted as a JavaScript array. You can see the complete data set in the book’s <a href="https://github.com/sathomas/jsdataviz">source code</a>.</p>
+<p>As soon as the browser has finished loading our page, we can start processing the data. As before, we’ll start with our data formatted as a JavaScript array. You can see the complete data set in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3

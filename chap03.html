@@ -17,7 +17,7 @@
         <script>
             var chartStyles = {
                 color: {
-                    text:               "#000000",  /* PRINT SCREENSHOTS: black */
+                    text:               "#444444",
                     primary:            "#CA0000",
                     primaryLightest:    "#FE4C4C",
                     primaryLight:       "#F71515",
@@ -35,29 +35,60 @@
                     alternateDarkest:   "#4D7300"
                 },
                 font: {
-                    family:             "print"     /* PRINT SCREENSHOTS: 'print' */
+                    family:             "Varela, sans-serif"
                 }
-
             };
         </script>
+
+<!--
+    Adjustments to styles and JavaScript just for screen
+    captures to be used in printed book.
+ -->
+
+<script>
+
+    // Adjustments only active if page is loaded from
+    // the local file system.
+
+    if (window.location.protocol === "file:") {
+
+        // Update the properties used by JavaScript code
+        // to create the live visualizations.
+
+        chartStyles.color.text = "#000000";
+        chartStyles.font.family = "Avenir";
+
+        var css = document.createElement('style');
+        css.type = 'text/css';
+        var styles = "figure, .no-font-feature-settings figure, .no-font-feature-settings figure .lgcp {color: black; font-family: Avenir;}";
+
+        if (css.styleSheet) { css.styleSheet.cssText = styles; }
+        else                { css.appendChild(document.createTextNode(styles)); }
+
+        document.getElementsByTagName("head")[0].appendChild(css);
+
+    }
+
+</script>
+
     </head>
     <body>
         <nav>
             <ul>
                 <li>
                     <a href="index.html" alt="jsDataV.is">
-                        <svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="32px" height="32px" viewBox="0 0 32 32">
                             <title>jsDataV.is</title>
-                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                <path d="M22.5,2.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M28.5,24.5 L16.5,15.5" stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M9.5,28.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <path d="M2.5,18.5 L16.5,15.5"  stroke="#444444" stroke-linecap="square"></path>
-                                <circle fill="#CA0000" cx="9"  cy="29" r="3"></circle>
-                                <circle fill="#CA0000" cx="3"  cy="18" r="3"></circle>
-                                <circle fill="#CA0000" cx="29" cy="25" r="3"></circle>
-                                <circle fill="#CA0000" cx="22" cy="3"  r="3"></circle>
-                                <circle fill="#CA0000" cx="17" cy="15" r="6"></circle>
+                            <g class="jsdatavis-logo">
+                                <path d="M22.5,2.5 L16.5,15.5" ></path>
+                                <path d="M28.5,24.5 L16.5,15.5"></path>
+                                <path d="M9.5,28.5 L16.5,15.5" ></path>
+                                <path d="M2.5,18.5 L16.5,15.5" ></path>
+                                <circle cx="9"  cy="29" r="3"></circle>
+                                <circle cx="3"  cy="18" r="3"></circle>
+                                <circle cx="29" cy="25" r="3"></circle>
+                                <circle cx="22" cy="3"  r="3"></circle>
+                                <circle cx="17" cy="15" r="6"></circle>
                             </g>
                         </svg>
                     </a>
@@ -88,7 +119,7 @@ body { counter-reset: chapter 3; }
 You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That’s not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they “look pretty” on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn’t. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn’t take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes and labels and titles and legends and such to place. Edward Tufte considered this problem in his groundbreaking work <em>The Visual Display of Quantitative Information,</em> and he proposed a novel solution he called <em>sparklines.</em> Sparklines are charts stripped to their bare essentials, presented without labels, axes, titles or other elements we often see in a chart. Sparklines can present a lot of information in very little space, even to the point where it is possible to include a chart right in the middle of a sentence. There is no need for “See figure below” or “Click for larger view.” One of Tufte’s earliest examples presents the glucose level of a medical patient; figure <span class="nextfigure"/> shows a reproduction.
 <figure style="text-align: center">
 <p style="display: inline-block;">
-<span id="sparkline-intro">170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,184,148,145,134,145,145,145,143,148,224,181,112,111,129,151,131,131,131,114,112,112,112,124,187,202,200,203,237,263,221,197,184,185,203,290,330,330,226,113,148,169,148,78,96,96,96,77,59,22,22,70,110,128</span> <span style="color:#CA0000"> 128 </span> <strong>Glucose</strong>
+<span id="sparkline-intro">170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,184,148,145,134,145,145,145,143,148,224,181,112,111,129,151,131,131,131,114,112,112,112,124,187,202,200,203,237,263,221,197,184,185,203,290,330,330,226,113,148,169,148,78,96,96,96,77,59,22,22,70,110,128</span> <span style="color:#CA0000"> 128 </span> Glucose
 </p>
 <figcaption>
 Tufte’s classic sparkline example shows a lot of information in a small space.
