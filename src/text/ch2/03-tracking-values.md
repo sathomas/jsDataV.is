@@ -364,7 +364,7 @@ The chart we've created in this example is similar to the _small multiples_ appr
         
         $.each(exports, function(idx,region) {
             var div = $("<div>").css({
-                width: "460px",
+                width: "420px",
                 height: "50px"
             });
             $("#track-chart3").append(div);
@@ -388,7 +388,7 @@ The chart we've created in this example is similar to the _small multiples_ appr
         });
         
         var div = $("<div>").css({
-            width: "486px",
+            width: "446px",
             height: "15px",
             "margin-left": "-13px"
         });
@@ -401,7 +401,7 @@ The chart we've created in this example is similar to the _small multiples_ appr
         
         $.each(exports, function(idx,region) {
             var div = $("<div>").css({
-                width: "460px",
+                width: "420px",
                 height: "50px"
             });
             $("#track-chart4").append(div);
@@ -435,7 +435,7 @@ The chart we've created in this example is similar to the _small multiples_ appr
         });
         
         var div = $("<div>").css({
-            width: "486px",
+            width: "446px",
             height: "15px",
             "margin-left": "-13px"
         });
