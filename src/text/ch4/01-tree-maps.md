@@ -153,7 +153,7 @@ Now when we call `TreeMap.draw()`, we can add this function to its parameters, s
 Treemap.draw("treemap", 600, 450, data, labels, {'box' : pickColor});
 ```
 
-The resulting tree map of figure NEXTFIGURENUMBER still shows the relative populations for all of the states. Now, through the use of color shades, it also indicates the rate of population growth compared to the national average.
+The resulting tree map of figure NEXTFIGURENUMBER still shows the relative populations for all of the states. Now, through the use of color shades, it also indicates the rate of population growth compared to the national average. The visualization clearly shows the migration from the Northeast and Midwest to the South and West.
 
 <figure>
 <div id="treemap-2"></div>
@@ -248,17 +248,24 @@ The resulting tree map of figure NEXTFIGURENUMBER still shows the relative popul
         var growth = [ west.growth, midwest.growth, northeast.growth, south.growth ];
         var totalGrowth = (total2012 - total2010)/total2010;
         
-        Treemap.draw("treemap-1", 600, 440, data, labels);
+        var colors = ["#007979", "#CA5C00", "#A2005C", "#7EBD00"];
+
+        function pickColor1(coordinates, index) {
+            var regionIdx = index[0];
+            return {"fill": colors[regionIdx], "stroke": "#FFFFFF"};
+        }
+        
+        Treemap.draw("treemap-1", 640, 440, data, labels, {'box' : pickColor1, "label": {"font-family": chartStyles.font.family}});
         
         var colorRanges = { 
-          positive: [ "#FFFFBF","#D9EF8B","#A6D96A","#66BD63","#1A9850","#006837" ],
-          negative: [ "#FFFFBF","#FEE08B","#FDAE61","#F46D43","#D73027","#A50026" ]
+          positive: ["#B6ED47","#A0E714","#7EBD00","#679A00","#4D7300"],
+          negative: ["#FE9D4C","#F77B15","#CA5C00","#A54B00","#7B3800"]
         };
         
         var minDelta = Math.min(south.minGrowth, west.minGrowth, midwest.minGrowth, northeast.minGrowth) - totalGrowth;
         var maxDelta = Math.max(south.maxGrowth, west.maxGrowth, midwest.maxGrowth, northeast.maxGrowth) - totalGrowth;
         
-        function pickColor(coordinates, index) {
+        function pickColor2(coordinates, index) {
             var regionIdx = index[0];
             var stateIdx  = index[1];
             var growthRate = growth[regionIdx][stateIdx];
@@ -273,10 +280,10 @@ The resulting tree map of figure NEXTFIGURENUMBER still shows the relative popul
             if (colorIndex >= colorRange.length) colorIndex = colorRange.length - 1;
             
             color = colorRange[colorIndex];
-            return{ "fill" : color };
+            return{ "fill" : color, "stroke": "#FFFFFF"};
         }
         
-        Treemap.draw("treemap-2", 600, 440, data, labels, {'box' : pickColor});
+        Treemap.draw("treemap-2", 640, 440, data, labels, {'box' : pickColor2, "label": {"font-family": chartStyles.font.family}});
 
     };
     
