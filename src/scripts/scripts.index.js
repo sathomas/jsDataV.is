@@ -8,7 +8,7 @@
 
 // Main script for page
 
-;(function(){
+document.addEventListener("DOMContentLoaded", function(){
 
     // The main page nagivation is implemented as a network graph.
     // The vertices of the graph include a central node and references
@@ -208,4 +208,4 @@
             })
     })
 
-}());
+});

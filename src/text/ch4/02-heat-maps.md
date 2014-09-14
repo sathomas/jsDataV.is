@@ -3,7 +3,7 @@
 If you work in the web industry, heat maps may already be a part of your job. Usability researchers often use heat maps to evaluate site designs, especially when they want to analyze which parts of a web page get the most attention from users. Heat maps work by overlaying values, represented as semi-transparent colors, over a two-dimensional area. As the example in figure NEXTFIGURENUMBER shows, different colors represent different levels of attention. Users focus most on areas colored red, and the focus less on yellow, green, and blue areas.
 
 <figure>
-<img src="img/heatmap.png" width="527" height="483">
+<img src="img/heatmap.png" width="640">
 <figcaption>Heat maps traditionally show where web users focus their attention on a page.</figcaption>
 </figure>
 
@@ -50,7 +50,7 @@ var game = [
 A simple diagram of a basketball court, like that in figure NEXTFIGURENUMBER, works fine for our visualization. We can use each team's color to highlight which side will show their points. The dimensions of our background image are 556 by 333 pixels.
 
 <figure>
-![Diagram of Basketball Court](img/basketball.png)
+![](img/basketball.svg)
 <figcaption>A background image sets the context for the visualization.</figcaption>
 </figure>
 
@@ -60,7 +60,9 @@ A simple diagram of a basketball court, like that in figure NEXTFIGURENUMBER, wo
 In our web page, we need to define the element (generally a `<div>`) that will hold the heat map. For now, let's keep it simple and use a single element. In later steps we'll get fancy and add some additional markup. When we create the element, we specify its dimensions, and we define the background. The fragment below does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> style sheet in an actual implementation
 
 ``` {.html .numberLines}
-<div id='heatmap' style="position:relative;width:556px;height:333px;background-image:url('img/basketball.png');"></div>
+<div id='heatmap' 
+    style="position:relative;width:556px;height:333px;background-image:url('img/basketball.png');">
+</div>
 ```
 
 Notice that we've given the element a unique `id`. The heatmap.js library needs that `id` to place the map on the page. Most importantly, we also set the `position` property to `relative`. The heatmap.js library positions its graphics using absolute positioning, and we want to contain those graphics within the parent element.
@@ -75,7 +77,7 @@ For our next step, we must convert the game data into the proper format for the 
 
 The library also requires the maximum magnitude for the entire map, and here things get a little tricky. With standard heat maps, the magnitudes of all the data points for any particular position sum together. In our case that means that all the baskets scored from layups and slam dunks—which are effectively from the same position on the court—are added together by the heat map algorithm. That one position, right underneath the basket, dominates the rest of the court. To counteract that effect, we specify a maximum value far less than what the heat map would expect. In our case, we'll set the maximum value at `3`, which means that any location where at least three points were scored will be colored red. That ensures that any location where a three-pointer was scored will be red and we'll easily be able to see all the baskets.
 
-We can use JavaScript to transform the `game` array into the appropriate format. We start by fetching the height and width of the containing element in lines 1-3. If those dimensions change, our code will still work fine. Then we initialize the `dataset` object with a `max` property and an empty `data` array in lines 4-6. Finally, we iterate through the game data and add relevant data points to this array. Notice that we're filtering out free throws in line 8.
+We can use JavaScript to transform the `game` array into the appropriate format. We start by fetching the height and width of the containing element in lines 1-3. If those dimensions change, our code will still work fine. Then we initialize the `dataset` object with a `max` property and an empty `data` array in lines 4-6. Finally, we iterate through the game data and add relevant data points to this array. Notice that we're filtering out free throws in line 9.
 
 ``` {.javascript .numberLines}
 var docNode = document.getElementById("heatmap");
@@ -100,7 +102,7 @@ With a containing element and a formatted data set, it's a simple matter to draw
 
 ``` {.javascript .numberLines}
 var heatmap = h337.create({
-    element: "heatmap",
+    container: "heatmap",
     radius: 30,
     opacity: 50
 });
@@ -109,7 +111,10 @@ heatmap.store.setDataSet(dataset);
 
 The resulting visualization in figure NEXTFIGURENUMBER shows where each team scored its points.
 
-<figure><div id='heatmap1' style="position:relative;width:556px;height:333px;background-image:url('img/basketball.png');"></div><figcaption>The heat map shows successful shots in the game.</figcaption></figure>
+<figure>
+<div id='heatmap1' style="position:relative;width:556px;height:333px;background-image: url('img/basketball.svg');"></div>
+<figcaption>The heat map shows successful shots in the game.</figcaption>
+</figure>
 
 ### Step 7: Bring the Visualization Alive
 
@@ -313,7 +318,7 @@ $("#heatmap canvas").css("z-index", "1");
             }
         }
         var heatmap1 = h337.create({
-            element: "heatmap1",
+            container: "heatmap1",
             radius: 30,
             opacity: 50
         });
