@@ -8,7 +8,7 @@
 
 // Main script for page
 
-document.addEventListener("DOMContentLoaded", function(){
+;(function(){
 
     // The main page nagivation is implemented as a network graph.
     // The vertices of the graph include a central node and references
@@ -204,8 +204,21 @@ document.addEventListener("DOMContentLoaded", function(){
             .transition().style('opacity', 0);
         nodes.filter(function(d) { return d != clicked; }).selectAll('path.icon')
             .transition().style('opacity', 0).each('end', function(){
-                window.location = href;
-            })
-    })
+                window.location.assign(href);
+            });
+    });
 
-});
+    // Restore the page to it's initial state when the user returns
+    // via the back button. That action doesn't trigger a reload
+    // on all browsers because of the back/forward cache.
+
+    window.onpageshow = function(ev) {
+        if (ev.persisted) {
+            document.body.style.display = "none";
+            window.location.reload();
+        }
+    };
+
+})();
+
+
