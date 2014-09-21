@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="360"  xml:space="preserve">
+    <!-- http://svgeneration.com/generate/Wood-Grain?base-color=e8d5d0&grain-color=d9a17b&grain-weight=1.5&turbulence-weight=0.15 -->
+    <defs>
+        <filter y='0' color-interpolation-filters='sRGB' id='noise'>
+            <!-- <feTurbulence type='fractalNoise' baseFrequency='.8 0' result='out1' numOctaves='1'/> -->
+            <feTurbulence type='fractalNoise' baseFrequency='0 .8' result='out1' numOctaves='1'/>
+            <feColorMatrix type='saturate' in='out1' result='out2' values='0'/>
+            <feComposite operator='arithmetic' k1='0' k2='0.15' k3='0' k4='0' in='out2' in2='out1'/>
+        </filter>
+    </defs>
+    <rect fill='#e8d5d0' fill-opacity='1'     x='0'   y='0'   width='100%' height='100%'/>
+    <rect fill='#d9a17b' fill-opacity='0.15'  x='-5%'  y='5%' width='110%'  height='10%'/>
+    <rect fill='#d9a17b' fill-opacity='0.06'  x='-5%'  y='6%' width='110%'  height='10%'/>
+    <rect fill='#d9a17b' fill-opacity='0.06'  x='-5%'  y='7%' width='110%'  height='14%'/>
+    <rect fill='#d9a17b' fill-opacity='0.06'  x='-5%'  y='9%' width='110%'  height='20%'/>
+    <rect fill='#d9a17b' fill-opacity='0.06'  x='-5%' y='11%' width='110%'  height='10%'/>
+    <rect fill='#d9a17b' fill-opacity='0.12'  x='-5%' y='55%' width='110%'  height='40%'/>
+    <rect fill='#d9a17b' fill-opacity='0.045' x='-5%' y='62%' width='110%'  height='35%'/>
+    <rect fill='#d9a17b' fill-opacity='0.105' x='-5%' y='38%' width='110%'  height='20%'/>
+    <rect fill='#d9a17b' fill-opacity='0.045' x='-5%' y='85%' width='110%'  height='40%'/>
+    <rect fill='#d9a17b' fill-opacity='0.075' x='-5%' y='52%' width='110%'  height='40%'/>
+    <rect style='filter:url(#noise)' x='0' y='0' width='100%' height='100%'/>
+    <g stroke="rgb(129, 129, 129)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none">
+        <path d="M 0.27,0.28 L 599.73,0.28 599.73,359.26 0.27,359.26 0.27,0.28 Z M 0.27,0.28" />
+        <path d="M 599.73,323.97 C 552.59,329.23 503.37,315.41 467.18,282.5 404.78,225.77 404.78,133.77 467.18,77.04 503.37,44.13 552.59,30.31 599.73,35.57 L 599.73,323.97 Z M 599.73,323.97" />
+        <path d="M 0.27,323.97 C 47.41,329.23 96.63,315.41 132.82,282.5 195.22,225.77 195.22,133.77 132.82,77.04 96.63,44.13 47.41,30.31 0.27,35.57 L 0.27,323.97 Z M 0.27,323.97" />
+        <path d="M 302.26,0.28 L 302.26,359.26" />
+        <path fill="rgb(138, 153, 203)" d="M 0.27,141.52 L 133.61,141.52 133.61,218.02 0.27,218.02 0.27,141.52 Z M 0.27,141.52" />
+        <path fill="rgb(4, 10, 52)" d="M 466.39,141.52 L 599.73,141.52 599.73,218.02 466.39,218.02 466.39,141.52 Z M 466.39,141.52" />
+        <path d="M 161.01,152.72 C 175.44,167.66 175.44,191.88 161.01,206.82 146.57,221.76 123.17,221.76 108.74,206.82 94.31,191.88 94.31,167.66 108.74,152.72 123.17,137.78 146.57,137.78 161.01,152.72 Z M 161.01,152.72" />
+        <path d="M 492.53,152.72 C 506.96,167.66 506.96,191.88 492.53,206.82 478.09,221.76 454.7,221.76 440.26,206.82 425.83,191.88 425.83,167.66 440.26,152.72 454.7,137.78 478.09,137.78 492.53,152.72 Z M 492.53,152.72" />
+        <path id="M 337.36,145.24 C 356.75,164.92 356.75,196.83 337.36,216.51 317.98,236.18 286.55,236.18 267.17,216.51 247.78,196.83 247.78,164.92 267.17,145.24 286.55,125.56 317.98,125.56 337.36,145.24 Z M 337.36,145.24" />
+    </g>
+</svg>
