@@ -48,27 +48,28 @@ var tags = [
 
 In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
-The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element `["javascript", 56]` would tell wordcloud2 to draw “javascript” with a height of 56 pixels. As a result, all we need to do is convert counts to drawing sizes. The specific algorithm will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000. In chapter 2, we saw how jQuery's `.map()` function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of `.map()` even without jQuery. (This native version won't work on older browsers like jQuery will, but we're not worrying about that for this example).
-
+The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element `["javascript", 56]` would tell wordcloud2 to draw “javascript” with a height of 56 pixels. Our data, of course, isn't set up with pixel sizes. The data value for "javascript" is 557407, and a word 557407 pixels high wouldn't even fit on a billboard. As a result, we must convert counts to drawing sizes. The specific algorithm for this conversion will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000 and round to the nearest integer. In chapter 2, we saw how jQuery's `.map()` function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of `.map()` even without jQuery. (This native version won't work on older browsers like jQuery will, but we're not worrying about that for this example).
 
 ``` {.javascript .numberLines}
-var list = tags.map(function(word) { return [word[0], Math.round(word[1]/10000)]; });
+var list = tags.map(function(word) { 
+    return [word[0], Math.round(word[1]/10000)]; 
+});
 ```
 
 After executing this code, our `list` variable will contain the following:
 
 ``` {.javascript .numberLines}
 [
-  ["c#", 60],
-  ["java", 59],
-  ["javascript", 56],
-  ["php", 53],
-  ["android", 47],
-  ["jquery", 44],
-  ["python", 27],
-  ["c++", 27],
-  ["html", 26],
-  // Data set continues...
+    ["c#", 60],
+    ["java", 59],
+    ["javascript", 56],
+    ["php", 53],
+    ["android", 47],
+    ["jquery", 44],
+    ["python", 27],
+    ["c++", 27],
+    ["html", 26],
+    // Data set continues...
 ```
 
 ### Step 3: Add the Required Markup
@@ -100,7 +101,7 @@ WordCloud(document.getElementById("cloud"), {list: list});
 Even with nothing other than default values, wordcloud2 creates the attractive visualization of figure NEXTFIGURENUMBER.
 
 <figure>
-<div id="cloud-1" style="width:800px;height:450px;position:relative;"></div>
+<div id="cloud-1" style="width:640px;height:450px;position:relative;border-radius:3px;border:1px solid #d0d0d0;"></div>
 <figcaption>A word cloud can show a list of words with their relative frequency.</figcaption>
 </figure>
 
@@ -135,16 +136,17 @@ Next let's add an extra element to the markup where we can display information a
 </html>
 ```
 
-Then we define a function that can be called when the user clicks. Because our function will be called for any clicks on the cloud (including clicks on empty space), it will first check to see if the target of the click was really a word. Because the words are contained in `<span>` elements, we can verify that by looking that the `nodeName` property of the click target. As you can see from line 2, JavaScript node names are always in uppercase.
+Then we define a function that can be called when the user clicks within the cloud. Because our function will be called for any clicks on the cloud (including clicks on empty space), it will first check to see if the target of the click was really a word. Words are contained in `<span>` elements, so we can verify that by looking that the `nodeName` property of the click target. As you can see from line 2, JavaScript node names are always in uppercase.
 
 ``` {.javascript .numberLines data-line='2'}
 var clicked = function(ev) {
     if (ev.target.nodeName === "SPAN") {
+        // A <span> element was the target of the click
     }
 }
 ```
 
-If the user did click on a word, we can find out what word by looking at the `textContent` property of the event target.
+If the user did click on a word, we can find out which word by looking at the `textContent` property of the event target. After line 3 below, the variable `tag` will hold the word on which the user clicked. So, for example, if a user clicks on "javascript," then the tag variable will have the value `"javascript"`.
 
 ``` {.javascript .numberLines}
 var clicked = function(ev) {
@@ -154,11 +156,13 @@ var clicked = function(ev) {
 }
 ```
 
-To find that tag in our original array, we'd like to use something like the jQuery `.grep()` method that chapter 2 describes. Unfortunately, although there is such a native method defined (`.find()`) very few browsers (even modern browsers) currently support it. We could resort to a standard `for` or `forEach` loop, but there is an alternative that many consider an improvement over that approach. It relies on the `.some()` method, an array method that modern browsers do support today. The `.some()` method passes every element of an array to an arbitrary function and stops when that function returns true. Here's how we can use it to find the clicked tag in our `tags` array.
+Since we'd like to show users the total count when they click on a word, we're going to need to find the word in our original data set. We have the word's value, so that's simply a matter of searching through the data set to find a match. If we were using jQuery, the `.grep()` function would do just that. In this example we're sticking with native JavaScript, so we can look for an equivalent method in pure JavaScript. Unfortunately, although there is such a native method defined (`.find()`) very few browsers (even modern browsers) currently support it. We could resort to a standard `for` or `forEach` loop, but there is an alternative that many consider an improvement over that approach. It relies on the `.some()` method, an array method that modern browsers do support today. The `.some()` method passes every element of an array to an arbitrary function and stops when that function returns true. Here's how we can use it to find the clicked tag in our `tags` array.
 
 The function that's the argument to `.some()` is defined in lines 5 through 11. It is called with the parameter `el`, short for an _element_ in the `tags` array. The conditional statement in line 6 checks to see if that element's word matches the clicked node's text content. If so, the function sets the `clickedTag` variable and returns `true` to terminate the `.some()` loop.
 
-``` {.javascript .numberLines data-line='5-11'}
+If the clicked word doesn't match the element we're checking in the `tags` array, then the function supplied to `some()` returns `false` (line 10). When `some()` sees a `false` return value, it continues iterating through the array.
+
+``` {.javascript .numberLines}
 var clicked = function(ev) {
     if (ev.target.nodeName === "SPAN") {
         var tag = ev.target.textContent;
@@ -166,7 +170,7 @@ var clicked = function(ev) {
         tags.some(function(el) { 
             if (el[0] === tag) {
                 clickedTag = el; 
-                return true;  // This causes the .some() loop to terminate
+                return true;  // This ends the .some() loop
             }
             return false;
         });
@@ -176,7 +180,7 @@ var clicked = function(ev) {
 
 We can use the return value of the `.some()` method to make sure the clicked element was found in the array. When that's the case, `.some()` itself returns `true`. In lines 13 and 14 below we update the `details` variable with extra information. In line 13 we update the web page with those details.
 
-``` {.javascript .numberLines data-line='9,10,13'}
+``` {.javascript .numberLines}
 var clicked = function(ev) {
   var details = "";
   if (ev.target.nodeName === "SPAN") {
@@ -212,8 +216,8 @@ With these few lines of code, our word cloud is now interactive.
 </style>
 
 <figure>
-<div id="cloud-2" style="width:800px;height:450px;position:relative;"></div>
-<div id="details-2" style="text-align:center;font-size:17px;font-weight:bold;line-height:24px;"></div>
+<div id="cloud-2" style="width:640px;height:450px;position:relative;border-radius:3px;border:1px solid #d0d0d0;"></div>
+<div id="details-2" style="text-align:center;line-height:2em;margin-top:0.5em"></div>
 <figcaption>Because our word cloud consists of standard <span class="smcp">HTML</span> elements, we can make it interactive with simple JavaScript event handlers.</figcaption>
 </figure>
 
@@ -326,15 +330,15 @@ With these few lines of code, our word cloud is now interactive.
         ];
         
         WordCloud(document.getElementById('cloud-1'), {
-          backgroundColor: "#f3f3f3",
-          fontFamily: '"Lato","Helvetica Neue",Helvetica,Arial,sans-serif',
-          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5000)]; })
+          backgroundColor: chartStyles.color.blockBackground,
+          fontFamily: chartStyles.font.family,
+          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; })
         });
         
         WordCloud(document.getElementById('cloud-2'), {
-          backgroundColor: "#f3f3f3",
-          fontFamily: '"Lato","Helvetica Neue",Helvetica,Arial,sans-serif',
-          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5000)]; })
+          backgroundColor: chartStyles.color.blockBackground,
+          fontFamily: chartStyles.font.family,
+          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; })
         });
         
         var clicked = function(ev) {

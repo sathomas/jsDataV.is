@@ -28,7 +28,7 @@ As you can see, we've set aside a `<div>` in line 8 to hold our graph. We've als
 
 ### Step 2: Prepare the Data
 
-Our data on the top 25 jazz albums looks like the following snippet. We're only showing the first couple of albums below, but you can see the full list in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
+Our data on the top 25 jazz albums looks like the following snippet. We're only showing the first couple of albums below, but you can see the full list in the book's [source code](https://github.com/sathomas/jsDataV.is-source). For clarity, we'll only use the top 15 albums in this example.
 
 ``` {.javascript .numberLines}
 var albums = [
@@ -84,7 +84,7 @@ Finally, after defining the graph, we tell the library to draw it.
 s.refresh();
 ```
 
-With figure NEXTFIGURENUMBER now have a nicely drawn circle of the top 25 jazz albums of all time. In our initial attempt some of the labels may get in each other's way, but we'll address that shortly.
+With figure NEXTFIGURENUMBER now have a nicely drawn circle of the top 15 jazz albums of all time. In our initial attempt some of the labels may get in each other's way, but we'll address that shortly.
 
 <figure>
 <div id="graph-1" style="width:1000px;height:450px;position:relative;left:-300px;"></div>
@@ -106,20 +106,20 @@ For the last step we're using the `some()` method of JavaScript arrays. That met
 
 ``` {.javascript .numberLines}
 for (var srcIdx=0; srcIdx<albums.length; srcIdx++) {
-  var src = albums[srcIdx];
-  for (var mscIdx=0; mscIdx<src.musicians.length; mscIdx++) {
-    var msc = src.musicians[mscIdx];
-    for (var tgtIdx=srcIdx+1; tgtIdx<albums.length; tgtIdx++) {
-      var tgt = albums[tgtIdx];
-      if (tgt.musicians.some(function(tgtMsc) {return tgtMsc === msc;})) {
-        s.graph.addEdge({
-          id: srcIdx + "." + mscIdx + "-" + tgtIdx,
-          source: ""+srcIdx,
-          target: ""+tgtIdx
-        })
-      }
+    var src = albums[srcIdx];
+    for (var mscIdx=0; mscIdx<src.musicians.length; mscIdx++) {
+        var msc = src.musicians[mscIdx];
+        for (var tgtIdx=srcIdx+1; tgtIdx<albums.length; tgtIdx++) {
+            var tgt = albums[tgtIdx];
+            if (tgt.musicians.some(function(tgtMsc) {return tgtMsc === msc;})) {
+                s.graph.addEdge({
+                    id: srcIdx + "." + mscIdx + "-" + tgtIdx,
+                    source: ""+srcIdx,
+                    target: ""+tgtIdx
+                })
+            }
+        }
     }
-  }
 }
 ```
 
@@ -143,109 +143,116 @@ The underlying algorithm may be complicated, but sigmajs makes it easy to employ
 ``` {.html .numberLines data-line='10'}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div id="graph"></div>
-    <script src="js/sigma.min.js"></script>
-    <script src="js/sigma.layout.forceAtlas2.min.js"></script>
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+        <div id="graph"></div>
+        <script src="js/sigma.min.js"></script>
+        <script src="js/sigma.layout.forceAtlas2.min.js"></script>
+    </body>
 </html>
 ```
 
-Now, instead of simply refreshing the graph when we're ready to display it, we start the force directed algorithm, which perioudically refreshes the display while it performs its simulation. We also need to stop the algorithm after it's had a chance to run for awhile. In our case 1.5 seconds (`1500 ms`) is plenty of time.
+Mathieu Jacomy and Tommaso Venturini developed the specific force direction algorithm employed by this plugin; they document the algorithm, known as _Force Atlas 2_, in the 2011 paper [_ForceAtlas2, A Graph Layout Algorithm for Handy Network Visualization_](http://webatlas.fr/tempshare/ForceAtlas2_Paper.pdf)_._ Although we don't have to understand the mathematical details of the algorithm, knowing how to use it's parameters does come in handy. There are three parameters that are important for most visualizations using the plugin:
+
+* **gravity.** This parameter determines how strongly the algorithm tries to keep isolated nodes from drifting off the edges of the screen. Without any gravity, then the only force acting on isolated nodes will one that repels them from other nodes; undeterred, that force will push the nodes off the screen entirely. Since our data includes several isolated nodes, we'll want to set this value relatively high to keep those nodes on the screen
+* **scalingRatio.** This parameter determines how strongly nodes repel each other. A small value draws connected nodes closer together while a large value forces all nodes further apart.
+* **slowDown.** This parameter decreases the sensitivity of the nodes to the repulsive forces from their neighbors. Reducing the sensitivity (by increasing this value) can help reduce the instability that may result when nodes face competing forces from multiple neighbors. In our data there are many connections that will tend to draw the nodes together and that will compete with the force repelling them apart. To dampen the wild oscillations that might otherwise ensue, we'll set this value relatively high as well.
+
+The best way to settle on values for these parameters is to experiment with the actual data. For this data set, we've settled on the values in line 1 below.
+
+Now, instead of simply refreshing the graph when we're ready to display it, we start the force directed algorithm, which periodically refreshes the display while it performs its simulation. We also need to stop the algorithm after it's had a chance to run for awhile. In our case 10 seconds (`10000 ms`) is plenty of time.
 
 ``` {.javascript .numberLines}
-s.startForceAtlas2();
-setTimeout(function() { s.stopForceAtlas2(); }, 1500);
+s.startForceAtlas2({gravity:100,scalingRatio:70,slowDown:100});
+setTimeout(function() { s.stopForceAtlas2(); }, 10000);
 ```
 
 As a result, our albums start out in their original circle, but quickly migrate to a position that makes it much easier to identify the connections. Some of the top albums are tightly connected, indicating that have many musicians in common. A few, however, remain isolated. Their musicians only make the list once.
 
 <figure>
-<div id="graph-3" style="width:800px;height:600px;position:relative;left:-100px;"></div>
+<div id="graph-3" style="width:650px;height:600px;position:relative;left:-50px"></div>
 <figcaption>Force direction positions the graph nodes automatically.</figcaption>
 </figure>
 
-Note that some of the text labels overlap each other. The sigmajs library isn't intelligent enough to eliminate this overlap, but we can minimize it by adjusting the time that we allow the algorithm to run.
+As you can see, the labels for the nodes still get in the way of each other; we'll fix that in the next step. What's important here, however, is that it's much easier to identify the albums with lots of connections. The nodes representing those albums have migrated to the center of the graph, and they have many links to other nodes.
 
 ### Step 6: Adding Interactivity
 
-We can build on this last step by adding an additional level of interactivity. In addition to panning the entire graph, we'll let users click on individual nodes to highlight their connections. To do that we need a function that responds to clicks on the node elements.
+To keep the labels from interfering with each other, we can add some interactivity to the graph. By default, we'll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We'll then allow them to click on individual nodes to reveal the album title and it's connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We'll save a reference to the album title though in line 6.
+
+``` {.javascript .numberLines}
+for (var idx=0; idx<albums.length; idx++) {
+    var theta = idx*2*Math.PI / albums.length;
+    s.graph.addNode({
+        id: ""+idx,   // Note: 'id' must be a string
+        label: "",
+        album: albums[idx].album,
+        x: radius*Math.sin(theta),
+        y: radius*Math.cos(theta),
+        size: 1
+    });
+}
+```
+
+Now we need a function that responds to clicks on the node elements. The sigmajs library supports exactly this sort of function with its interface. We simply bind to the `clickNode` event.
 
 ``` {.javascript .numberLines}
 s.bind('clickNode', function(ev) {
-  var nodeIdx = ev.data.node.id;
-  // Code continues...
+    var nodeIdx = ev.data.node.id;
+    // Code continues...
 });
 ```
 
-Within that function, the `ev.data.node.id` property gives us the node that the user clicked. We can then scan through all the graph's edges to see if they connect to that node. If the edge does connect to the node, we can change it's color to something other than the default (line 5). Otherwise, we change the color back to the default (line 7).
+Within that function, the `ev.data.node.id` property gives us the index of the node that the user clicked. The complete set of nodes is available from the array returned by `s.graph.nodes()`. Since we want to display the label for the clicked node (but not for any other), we can iterate through the entire array. At each iteration, we either set the label property to an empty string (to hide it) or to the `album` property (to show it).
 
-``` {.javascript .numberLines data-line='5,7'}
+``` {.javascript .numberLines}
 s.bind('clickNode', function(ev) {
-  var nodeIdx = ev.data.node.id;
-  s.graph.edges().forEach(function(edge) {
-    if ((edge.target === nodeIdx) || (edge.source === nodeIdx)) {
-      edge.color = '#555';
-    } else {
-      edge.color = '#ec5148';
-    }
-  });
-  // Code continues...
+    var nodeIdx = ev.data.node.id;
+    var nodes = s.graph.nodes();
+    nodes.forEach(function(node) {
+        if (nodes[nodeIdx] === node) {
+            node.label = node.album;
+        } else {
+            node.label = "";
+        }
+    });
 });
 ```
 
-While we're scanning through the edges, we can also build up a list of neighbors to the clicked node. A neighbor is a node at the other end of a connected edge. We build the array of neighbors in lines 7 and 8 below. Note that we're not bothering to distinguish the node itself from its neighbors in this array. It won't cause any harm to have the node included.
+Now that users have a way to show the title of an album, they'll probably also want a way to hide it. We can support that interaction by toggling the album display with subsequent clicks on the same node. A small addition to line 5 in the above code is all it takes to enable that behavior.
 
-``` {.javascript .numberLines data-line='7,8'}
-s.bind('clickNode', function(ev) {
-  var nodeIdx = ev.data.node.id;
-  var neighbors = [];
-  s.graph.edges().forEach(function(edge) {
-    if ((edge.target === nodeIdx) || (edge.source === nodeIdx)) {
-      edge.color = '#555';
-      neighbors.push(edge.target);
-      neighbors.push(edge.source);
+``` {.javascript .numberLines}
+        if (nodes[nodeIdx] === node && node.label !== node.album) {
+```
+
+As long as we're making the graph respond to clicks, we can also take the opportunity to highlight the clicked node's connections. We do that by changing their color. Just as `s.graph.nodes()` returns an array of the graph nodes, `s.graph.edges()` returns an array of edges. Each edge object includes `target` and `source` properties that hold the index of the relevant node.
+
+We can then scan through all the graph's edges to see if they connect to the clicked node. If the edge does connect to the node, we can change it's color to something other than the default (line 4). Otherwise, we change the color back to the default (line 6). You can see in line 3 that we're using the same approach as we did with the nodes to toggle the edge colors on successive clicks.
+
+``` {.javascript .numberLines}
+s.graph.edges().forEach(function(edge) {
+    if ((nodes[nodeIdx].label === nodes[nodeIdx].album) && 
+        ((edge.target === nodeIdx) || (edge.source === nodeIdx))) {
+        edge.color = 'blue';
     } else {
-      edge.color = '#ec5148';
+        edge.color = 'black';
     }
-  });
 });
 ```
 
-To wrap up our click event handler, we can now scan through the list of nodes. If the node is a neighbor, change its color as well (line 15). And finally, once we've set all the colors appropriately, we refresh the graph.
+Now that we've changed the graph properties, we have to tell sigmajs to redraw it. That's a simple matter of calling `s.refresh()`.
 
-``` {.javascript .numberLines data-line='15'}
-s.bind('clickNode', function(ev) {
-  var nodeIdx = ev.data.node.id;
-  var neighbors = [];
-  s.graph.edges().forEach(function(edge) {
-    if ((edge.target === nodeIdx) || (edge.source === nodeIdx)) {
-      edge.color = '#555';
-      neighbors.push(edge.target);
-      neighbors.push(edge.source);
-    } else {
-      edge.color = '#ec5148';
-    }
-  });
-  s.graph.nodes().forEach(function(node) {
-    if (neighbors.some(function(n){return n === node.id})) {
-      node.color = '#555';
-    } else {
-      node.color = '#ec5148';
-    }
-  });
-  g.refresh();
-});
+``` {.javascript .numberLines}
+s.refresh();
 ```
 
-Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our users can pan, zoom, click, and tap to their heart's content.
+Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our users can get a quick sense of the connections between albums, and a simple click provides additional details.
 
 <figure>
-<div id="graph-4" style="width:750px;height:450px;position:relative;left:-200px"></div>
+<div id="graph-4" style="width:650px;height:600px;position:relative;left:-50px"></div>
 <figcaption>An interactive graph gives users the chance to highlight specific nodes.</figcaption>
 </figure>
 
@@ -311,7 +318,7 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
               "Max Roach"
             ]
           },{
-            album: "The Best of the Hot Five & Hot Seven Recordings",
+            album: "The Best of the Hot Five...",
             musicians: [
               "Lil Hardin Armstrong",
               "Louis Armstrong",
@@ -531,9 +538,9 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
         
         var s1 = new sigma("graph-1");
         s1.settings({
-        	defaultLabelColor: '#444444',
-          defaultNodeColor: '#ffa44f',
-        	font: "Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+        	  defaultLabelColor: chartStyles.color.text,
+          defaultNodeColor: chartStyles.color.primary,
+        	  font: chartStyles.font.family,
           sideMargin: 25,
           zoomMin: 1.0,
           zoomMax: 1.0
@@ -552,9 +559,10 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
         
         var s2 = new sigma("graph-2");
         s2.settings({
-        	defaultLabelColor: '#444444',
-          defaultNodeColor: '#ffa44f',
-        	font: "Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif",
+          defaultEdgeColor: chartStyles.color.text,
+          defaultLabelColor: chartStyles.color.text,
+        	  defaultNodeColor: chartStyles.color.primary,
+        	  font: chartStyles.font.family,
           sideMargin: 25,
           zoomMin: 1.0,
           zoomMax: 1.0
@@ -579,7 +587,8 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
                 s2.graph.addEdge({
                   id: srcIdx + "." + mscIdx + "-" + tgtIdx,
                   source: ""+srcIdx,
-                  target: ""+tgtIdx
+                  target: ""+tgtIdx,
+                  color: chartStyles.color.text
                 })
               }
             }
@@ -589,10 +598,11 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
         
         s3 = new sigma("graph-3");
         s3.settings({
-        	defaultLabelColor: '#444444',
-          defaultNodeColor: '#ffa44f',
-        	font: "Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-          sideMargin: 50,
+          defaultEdgeColor: chartStyles.color.text,
+          defaultLabelColor: chartStyles.color.text,
+          defaultNodeColor: chartStyles.color.primary,
+          font: chartStyles.font.family,
+          sideMargin: 25,
           zoomMin: 1.0,
           zoomMax: 1.0
         });
@@ -601,8 +611,8 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
             s3.graph.addNode({
                 id: ""+idx,   // Note: 'id' must be a string
                 label: albums[idx].album,
-                x: Math.sin(theta),
-                y: Math.cos(theta),
+                x: 200*Math.sin(theta),
+                y: 200*Math.cos(theta),
                 size: 1
             });
         }
@@ -616,21 +626,25 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
                 s3.graph.addEdge({
                   id: srcIdx + "." + mscIdx + "-" + tgtIdx,
                   source: ""+srcIdx,
-                  target: ""+tgtIdx
+                  target: ""+tgtIdx,
+                  color: chartStyles.color.text
                 })
               }
             }
           }
         }
-        setTimeout(function() {s3.startForceAtlas2({gravity:10,slowDown:100});}, 5000);
-        setTimeout(function() {s3.stopForceAtlas2();},  6350);
+        setTimeout(function() {s3.startForceAtlas2({gravity:100,scalingRatio:70,slowDown:100});},0000);
+        setTimeout(function() {s3.stopForceAtlas2();},10000);
         
         var s4 = new sigma("graph-4");
         s4.settings({
-        	defaultLabelColor: '#444444',
-          defaultNodeColor: '#ffa44f',
-        	font: "Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-          sideMargin: 50,
+          defaultEdgeColor: chartStyles.color.text,
+          defaultLabelColor: chartStyles.color.text,
+          defaultNodeColor: chartStyles.color.primary,
+          font: chartStyles.font.family,
+          enableHovering: false,
+          labelThreshold: 2,
+          sideMargin: 25,
           zoomMin: 1.0,
           zoomMax: 1.0
         });
@@ -638,7 +652,8 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
             var theta = idx*2*Math.PI / albums.length;
             s4.graph.addNode({
                 id: ""+idx,   // Note: 'id' must be a string
-                label: albums[idx].album,
+                album: albums[idx].album,
+                label: "",
                 x: Math.sin(theta),
                 y: Math.cos(theta),
                 size: 1
@@ -654,39 +669,30 @@ Now we have a fully interactive network graph in figure NEXTFIGURENUMBER. Our us
                 s4.graph.addEdge({
                   id: srcIdx + "." + mscIdx + "-" + tgtIdx,
                   source: ""+srcIdx,
-                  target: ""+tgtIdx
+                  target: ""+tgtIdx,
+                  color: chartStyles.color.text
                 })
               }
             }
           }
         }
-        setTimeout(function() {s4.startForceAtlas2({gravity:10,slowDown:100});}, 8000);
-        setTimeout(function() {s4.stopForceAtlas2();},  9400);
-        var lastClicked = null;
+        setTimeout(function() {s4.startForceAtlas2({gravity:100,scalingRatio:70,slowDown:100});},11000);
+        setTimeout(function() {s4.stopForceAtlas2();},21000);
         s4.bind('clickNode', function(ev) {
           var nodeIdx = ev.data.node.id;
-          var highlight = [];
-          if (lastClicked !== ev.data.node.id) {
-            lastClicked = ev.data.node.id;
-            highlight.push(ev.data.node.id);
-          } else {
-            lastClicked = null;
-          }
-          s4.graph.edges().forEach(function(edge) {
-            if (highlight.length && 
-                ((edge.target === nodeIdx) || (edge.source === nodeIdx)) ) {
-              edge.color = '#97aceb';
-              highlight.push(edge.target);
-              highlight.push(edge.source);
-          } else {
-              edge.color = '#ffa44f';
+          var nodes = s4.graph.nodes();
+          nodes.forEach(function(node) {
+            if (nodes[nodeIdx] === node && node.label !== node.album) {
+              node.label = node.album;
+            } else {
+              node.label = "";
             }
           });
-          s4.graph.nodes().forEach(function(node) {
-            if (highlight.length && highlight.some(function(n){return n === node.id})) {
-              node.color = '#97aceb';
+          s4.graph.edges().forEach(function(edge) {
+            if ((nodes[nodeIdx].label === nodes[nodeIdx].album) && ((edge.target === nodeIdx) || (edge.source === nodeIdx))) {
+                edge.color = chartStyles.color.secondaryLightest;
             } else {
-              node.color = '#ffa44f';
+                edge.color = chartStyles.color.text;
             }
           });
           s4.refresh();

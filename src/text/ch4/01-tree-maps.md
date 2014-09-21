@@ -255,7 +255,7 @@ The resulting tree map of figure NEXTFIGURENUMBER still shows the relative popul
             return {"fill": colors[regionIdx], "stroke": "#FFFFFF"};
         }
         
-        Treemap.draw("treemap-1", 640, 440, data, labels, {'box' : pickColor1, "label": {"font-family": chartStyles.font.family}});
+        Treemap.draw("treemap-1", 620, 440, data, labels, {'box' : pickColor1, "label": {"font-family": chartStyles.font.family}});
         
         var colorRanges = { 
           positive: ["#B6ED47","#A0E714","#7EBD00","#679A00","#4D7300"],
@@ -283,7 +283,7 @@ The resulting tree map of figure NEXTFIGURENUMBER still shows the relative popul
             return{ "fill" : color, "stroke": "#FFFFFF"};
         }
         
-        Treemap.draw("treemap-2", 640, 440, data, labels, {'box' : pickColor2, "label": {"font-family": chartStyles.font.family}});
+        Treemap.draw("treemap-2", 620, 440, data, labels, {'box' : pickColor2, "label": {"font-family": chartStyles.font.family}});
 
     };
     

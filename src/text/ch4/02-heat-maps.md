@@ -47,7 +47,7 @@ var game = [
 
 ### Step 3: Create the Background Image
 
-A simple diagram of a basketball court, like that in figure NEXTFIGURENUMBER, works fine for our visualization. We can use each team's color to highlight which side will show their points. The dimensions of our background image are 556 by 333 pixels.
+A simple diagram of a basketball court, like that in figure NEXTFIGURENUMBER, works fine for our visualization. The dimensions of our background image are 600 by 360 pixels.
 
 <figure>
 ![](img/basketball.svg)
@@ -57,11 +57,11 @@ A simple diagram of a basketball court, like that in figure NEXTFIGURENUMBER, wo
 
 ### Step 4: Set Aside an HTML Element to Contain the Visualization
 
-In our web page, we need to define the element (generally a `<div>`) that will hold the heat map. For now, let's keep it simple and use a single element. In later steps we'll get fancy and add some additional markup. When we create the element, we specify its dimensions, and we define the background. The fragment below does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> style sheet in an actual implementation
+In our web page, we need to define the element (generally a `<div>`) that will hold the heat map. When we create the element, we specify its dimensions, and we define the background. The fragment below does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> style sheet in an actual implementation
 
 ``` {.html .numberLines}
 <div id='heatmap' 
-    style="position:relative;width:556px;height:333px;background-image:url('img/basketball.png');">
+    style="position:relative;width:600px;height:360px;background-image:url('img/basketball.png');">
 </div>
 ```
 
@@ -102,7 +102,7 @@ With a containing element and a formatted data set, it's a simple matter to draw
 
 ``` {.javascript .numberLines}
 var heatmap = h337.create({
-    container: "heatmap",
+    element: "heatmap",
     radius: 30,
     opacity: 50
 });
@@ -112,105 +112,11 @@ heatmap.store.setDataSet(dataset);
 The resulting visualization in figure NEXTFIGURENUMBER shows where each team scored its points.
 
 <figure>
-<div id='heatmap1' style="position:relative;width:556px;height:333px;background-image: url('img/basketball.svg');"></div>
+<div id='heatmap1' style="position:relative;width:600px;height:360px;background-image: url('img/basketball.svg');"></div>
 <figcaption>The heat map shows successful shots in the game.</figcaption>
 </figure>
 
-### Step 7: Bring the Visualization Alive
-
-On the web we're not limited to the constraints of a static medium, so let's add some animation to this visualization. We can turn it into a time lapse review of the entire game. We'll start off with a blank court and add data points just as the teams scored in the actual game.
-
-The heatmap.js library includes a function to incrementally add data points: `addDataPoint()`. Unfortunately, that function runs afoul of the trick we employed in step 3. It won't let us keep the maximum value artificially low because it automatically recalculates that value with each addition. To circumvent the automatic calculation, we'll have to modify the library's source code. Thankfully the library is open source and the modification isn't complicated. We simply copy the existing `addDataPoint` method to a new method and remove the code that recalculates the maximum value. That's the code in lines 19 through 25 that we comment out below. As you can see, we've called our new method `augmentDataPoint`.
-
-``` {.javascript .numberLines}
-augmentDataPoint: function(x, y){
-    if(x < 0 || y < 0)
-        return;
-        
-    var me = this,
-        heatmap = me.get("heatmap"),
-        data = me.get("data");
-        
-    if(!data[x])
-        data[x] = [];
-        
-    if(!data[x][y])
-        data[x][y] = 0;
-        
-    // if count parameter is set increment by count otherwise by 1
-    data[x][y]+=(arguments.length<3)?1:arguments[2];
-            
-    me.set("data", data);
-//    // do we have a new maximum?
-//    if(me.max < data[x][y]){
-//        // max changed, we need to redraw all existing(lower) datapoints
-//        heatmap.get("actx").clearRect(0,0,heatmap.get("width"),heatmap.get("height"));
-//        me.setDataSet({ max: data[x][y], data: data }, true);
-//        return;
-//    }
-    heatmap.drawAlpha(x, y, data[x][y], true);
-},
-```
-
-The visualization setup is much the same. We create a heatmap object and an initial (empty) dataset. A simple JavaScript timer (set up in lines 22-23) is enough to activate and advance the replay. The `addPoint()` function adds data points to the heat map and reschedules itself repeatedly until all points are displayed.
-
-``` {.javascript .numberLines data-line='21-22'}
-heatmap = h337.create({
-    element: "heatmap",
-    radius: 30,
-    opacity: 50
-});
-
-dataset = {
-    max: 3,
-    data: p[
-};
-heatmap.store.setDataSet(dataset);
-
-var nextPoint = 0;
-function addPoint() {
-    var i = nextPoint++;
-    if ((game[i].x !== -1) && (game[i].y !== -1)) {
-        var x = Math.round(width  * game[i].x/10);
-        var y = height - Math.round(height * game[i].y/10);
-        heatmap.store.augmentDataPoint(x, y, game[i].points);
-        $("#heatmap2 canvas");
-    }
-    if (nextPoint < game.length) {
-        setTimeout(addPoint, 500);
-    }
-};
-```
-
-You can adapt the styling to suit your own implementation, but as the example shows below, we can even include a scoreboard to keep track of the time and the score throughout the game replay.
-
-<figure>
-<div style="width:636px; position:relative;top:25px">
-<span style="float:left;padding-left:5px">North Carolina Tar Heels</span><span style="float:right;padding-right:85px">Duke Blue Devils</span>
-</div>
-<div id='heatmap2' style="clear:both;float:left;position:relative;width:556px;height:333px;background-image:url('img/basketball.png');"></div>
-<div style="margin-top:3px;float:left;width:185px;margin-left:10px;">
-<div style="background-color:#666666;border-radius:6px;width:100%;padding:5px;">
-  <div style="background-color:#222222;border:2px solid white;border-radius:4px;font-family:digital7;font-size:60px;color:white;display:table;margin:15px auto;line-height:60px;padding:4px 8px;">
-  <span id="min">20</span>:<span id="sec">00</span>
-  </div>
-  <div style="display:table;margin:5px auto 15px auto">
-    <div style="float:left;color:white;margin:0 15px;background-color:#222222;border:2px solid white;border-radius:4px;padding:0 5px;">
-    &nbsp;&nbsp;&nbsp;UNC<br/>
-    <span style="font-family:digital7;font-size:50px;line-height:50px" id="unc">00</span>
-    </div>
-    <div style="float:left;color:white;margin:0 15px;background-color:#222222;border:2px solid white;border-radius:4px;padding:0 5px;">
-    &nbsp;&nbsp;DUKE<br/>
-    <span style="font-family:digital7;font-size:50px;line-height:50px" id="duke">00</span>
-    </div>
-   </div>
-</div>
-<div style="padding-top:90px;margin-left:36px;"><a class="btn" id="replay-game" href="#"><i class="icon-play-circle"></i> Replay Game</a></div>
-</div>
-<figcaption>Interactive heat maps can show changes over time.</figcaption>
-</figure>
-
-### Step 8: Adjust the Heat Map Z-Index
+### Step 7: Adjust the Heat Map Z-Index
 
 The heatmap.js library is especially aggressive in its manipulation of the `z-index` property. To ensure that the heat map appears above all other elements on the page, the library explicitly sets this property to a value of `10000000000`. If your web page has elements that you don't want the heat map to obscure (such as fixed position navigation menus), that value is probably too aggressive. You can fix it by modifying the source code directly. Or, as an alternative, you can simply reset the value after the library finishes drawing the map.
 
@@ -318,59 +224,12 @@ $("#heatmap canvas").css("z-index", "1");
             }
         }
         var heatmap1 = h337.create({
-            container: "heatmap1",
+            element: "heatmap1",
             radius: 30,
             opacity: 50
         });
         heatmap1.store.setDataSet(dataset);
         $("#heatmap1 canvas").css("z-index", "1");
-        
-        heatmap2 = h337.create({
-            element: "heatmap2",
-            radius: 30,
-            opacity: 50
-        });
-        
-        dataset = {};
-        dataset.max = 3;
-        dataset.data = [];
-        heatmap2.store.setDataSet(dataset);
-        
-        function pad(n) {
-          if (n<0) n = 0;
-          return (n > 9 ? ""+n : "0"+n);
-        }
-        
-        var nextPoint = 0;
-        function addPoint() {
-            var i = nextPoint++;
-            if ((game[i].x !== -1) && (game[i].y !== -1)) {
-                var x = Math.round(width  * game[i].x/10);
-                var y = height - Math.round(height * game[i].y/10);
-                heatmap2.store.augmentDataPoint(x, y, game[i].points);
-                $("#heatmap2 canvas").css("z-index", "1");
-            }
-            $("#unc").text(pad(game[i].unc));
-            $("#duke").text(pad(game[i].duke));
-            var time = (game[i].time > 20 ? 40 - game[i].time : 20 - game[i].time);
-            var min = Math.floor(time);
-            var sec = Math.round((time - min)*60);
-            $("#min").text(pad(min));
-            $("#sec").text(pad(sec));
-            if (nextPoint < game.length) {
-                setTimeout(addPoint, 500);
-            } else {
-                setTimeout(function() {
-                    $("#min").text(pad(0));
-                    $("#sec").text(pad(0));
-                }, 500);
-            }
-        };
-        
-        $("#replay-game").click(function(ev) {
-          ev.preventDefault();
-          addPoint();
-        });
 
     };
     

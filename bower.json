@@ -42,7 +42,6 @@
     "continental": "git://github.com/sathomas/continental.git",
     "modestmaps-js": "git://github.com/modestmaps/modestmaps-js.git#~3.3.6",
     "leaflet": "git://github.com/Leaflet/Leaflet.git#~0.7.3",
-    "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1",
-    "heatmap": "git://github.com/pa7/heatmap.js#develop"
+    "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1"
   }
 }
