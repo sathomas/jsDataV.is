@@ -1,8 +1,8 @@
 ## Including Maps for Context
 
-So far in this chapter we've looked at map visualizations where the main subjects are geographic regions—countries in Europe or counties in Georgia. In those cases choropleth maps can effectively show the differences between regions. Not all map visualizations have the same focus, however. In some cases we want to include a map more as context for the visualization data. The map serves as the background for the data.
+So far in this chapter we've looked at map visualizations where the main subjects are geographic regions—countries in Europe or counties in Georgia. In those cases choropleth maps were effective in showing the differences between regions. Not all map visualizations have the same focus, however. In some cases we want to include a map more as context or background for the visualization data.
 
-When we want to include a map as a visualization background, we're likely to find that traditional mapping libraries will serve us better than custom choropleth maps. The most well known mapping library is probably [Google Maps](http://maps.google.com), and you've almost certainly seen many examples of embedded Google maps on web pages. There are, however, several alternatives to Google Maps. For this example we'll make use of the open source [Modest Maps](https://github.com/modestmaps/modestmaps-js) library from Stamen Design. To show off this library, we'll visualize the major [UFO sightings in the United States](http://en.wikipedia.org/wiki/UFO_sightings_in_the_United_States), or at least those important enough to merit a Wikipedia entry.
+When we want to include a map as a visualization background, we're likely to find that traditional mapping libraries will serve us better than custom choropleth maps. The most well known mapping library is probably [Google Maps](http://maps.google.com), and you've almost certainly seen many examples of embedded Google maps on web pages. There are, however, several free and open source alternatives to Google Maps. For this example we'll use the [Modest Maps](https://github.com/modestmaps/modestmaps-js) library from Stamen Design. To show off this library, we'll visualize the major [UFO sightings in the United States](http://en.wikipedia.org/wiki/UFO_sightings_in_the_United_States), or at least those important enough to merit a Wikipedia entry.
 
 ### Step 1: Set Up the Web Page
 
@@ -27,7 +27,7 @@ We've also set aside a `<div>` in line 8 to hold the map. Not surprisingly, it h
 
 ### Step 2: Prepare the Data
 
-The Wikipedia data can be formatted as an array of JavaScript objects. We can include whatever information we wish in the objects, but we'll definitely need the latitude and longitude of the sighting in order to place it on the map. Here's how the data might be structured.
+The Wikipedia data can be formatted as an array of JavaScript objects. We can include whatever information we wish in the objects, but we'll definitely need the latitude and longitude of the sighting in order to place it on the map. Here's how you might structure the data.
 
 ``` {.javascript .numberLines}
 var ufos = [
@@ -73,17 +73,17 @@ To use the Stamen tiles we'll add an additional, small JavaScript library to our
 </html>
 ```
 
-For our example the "toner" style is a good match, so we'll use those tiles.
+For our example the "toner" style is a good match, so we'll use those tiles. To use those tiles we create a _tile layer_ for the map.
 
 ``` {.javascript .numberLines}
 var tiles = new MM.StamenTileLayer("toner");
 ```
 
-When you consider a source for image tiles, be aware of any copyright restrictions. Some image tiles must be licensed, and even those that are freely available often require that any use identify the provider as the source.
+> When you consider a source for image tiles, be aware of any copyright restrictions. Some image tiles must be licensed, and even those that are freely available often require that any use identify the provider as the source.
 
 ### Step 4: Draw the Map
 
-Now we're ready to draw the map itself. That takes two JavaScript statements. First we create a new `MM.Map` object, giving it the `id` of the HTML element containing the map and the tiles we initialized above. Then we provide the latitude and longitude for the map's center as well an initial zoom level. For your own maps you may need to experiment a bit to get the right values; we'll center and zoom the map so that it comfortably shows the continental United States.
+Now we're ready to draw the map itself. That takes two JavaScript statements. First we create a new `MM.Map` object, giving it the `id` of the element containing the map and the tiles we initialized above. Then we provide the latitude and longitude for the map's center as well an initial zoom level. For your own maps you may need to experiment a bit to get the right values, but for this example we'll center and zoom the map so that it comfortably shows the continental United States.
 
 ``` {.javascript .numberLines}
 var map = new MM.Map("map", tiles);
@@ -98,7 +98,7 @@ Map tiles by [Stamen Design](http://stamen.com)</a>, under [CC BY 3.0](http://cr
 <figcaption>Map libraries can show maps based on geographic coordinates.</figcaption>
 </figure>
 
-Notice that we've credited both Stamen Design and OpenStreeMap. That attribution is required by the terms of the Stamen Design license.
+Notice that we've credited both Stamen Design and OpenStreetMap. That attribution is required by the terms of the Stamen Design license.
 
 ### Step 5: Add the Sightings
 

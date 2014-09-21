@@ -1,8 +1,8 @@
 ## Scalable Vector Graphics
 
-Map fonts like those in the previous example are easy to use and visually effective, but only a few map fonts exist, and they definitely don't cover all the conceivable geographic regions. For visualizations of other regions, we'll have to find a different technique. Maps, of course, are ultimately images, and web browsers can display many different image formats. One format in particular, however, is especially well suited for interactive visualizations. That format is _Scalable Vector Graphics,_ or SVG. As we'll see in this example, JavaScript code (as well as CSS styles) can easily and naturally interact with SVG images
+Map fonts like those in the previous example are easy to use and visually effective, but only a few map fonts exist, and they definitely don't cover all the conceivable geographic regions. For visualizations of other regions, we'll have to find a different technique. Maps, of course, are ultimately images, and web browsers can display many different image formats. One format in particular, called _Scalable Vector Graphics,_ or SVG, is especially well suited for interactive visualizations. That's because, as we'll see in this example, JavaScript code (as well as CSS styles) can easily and naturally interact with SVG images.
 
-As an additional note, although our example is a map, the techniques in this section work aren't limited to maps. Whenever you have a diagram or illustration in SVG format, you can manipulate it directly on a web page.
+Although our example for this section deals with a map, the techniques here are by no means limited to maps. Whenever you have a diagram or illustration in SVG format, you can manipulate it directly on a web page.
 
 > There is one important consideration for using SVG: only modern web browsers support it. More specifically, Internet Explorer version 8 (and earlier) cannot display SVG images. If a significant number of your users are still using such older browsers, you might want to consider other alternatives.
 
@@ -24,7 +24,7 @@ For web developers SVG is especially convenient because its syntax uses the same
 
 Compare that to the example below, the universal symbol for first aid represented in an SVG document.
 
-> If you've been working with HTML before HTML5, the similarities might be especially striking, as the SVG header text follows the same format as HTML4.
+> If you have worked with HTML before HTML5, the similarities might be especially striking, as the SVG header text follows the same format as HTML4.
 
 ``` {.html .numberLines}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -79,11 +79,11 @@ The affinity between HTML and SVG is, in fact, far stronger than the similar syn
 
 ### Step 1: Create the SVG Map
 
-Our visualization starts with a map, so we'll need an illustration of Georgia's counties in SVG format. Although that might seem like a challenge, in fact there are many sources for SVG maps that are free to use. The [Wikimedia Commons](http://commons.wikimedia.org/wiki/Main_Page), for example, contains a large number of open source maps, including many of Georgia. We'll use [one](http://commons.wikimedia.org/wiki/File:NRHP_Georgia_Map.svg#file) showing data from the National Register of Historic Places. (If you're working with maps extensively, there are several special purpose applications that can generate SVG maps for almost any region.)
+Our visualization starts with a map, so we'll need an illustration of Georgia's counties in SVG format. Although that might seem like a challenge, in fact there are many sources for SVG maps that are free to use, as well as special purpose applications that can generate SVG maps for almost any region. The [Wikimedia Commons](http://commons.wikimedia.org/wiki/Main_Page), for example, contains a large number of open source maps, including many of Georgia. We'll use [one](http://commons.wikimedia.org/wiki/File:NRHP_Georgia_Map.svg#file) showing data from the National Register of Historic Places.
 
-After downloading the map file, we can adjust it to more exactly fit our needs, removing the legend, colors, and other elements that we don't need. Although you can do this in a text editor (just as you can edit HTML), you may find it easier to use a graphics program such as Adobe Illustrator or a more web-focused app like [Sketch](http://www.bohemiancoding.com/sketch/). You might want to take advantage of the one of the SVG optimization [web sites](http://petercollingridge.appspot.com/svg-optimiser) or [applications](https://github.com/svg). Those tools can compress an SVG by removing extraneous tags and reducing the sometimes excessive precision of graphics programs.
+After downloading the map file, we can adjust it to more exactly fit our needs, removing the legend, colors, and other elements that we don't need. Although you can do this in a text editor (just as you can edit HTML), you may find it easier to use a graphics program such as Adobe Illustrator or a more web-focused app like [Sketch](http://www.bohemiancoding.com/sketch/). You might want to take advantage of an SVG optimization [web site](http://petercollingridge.appspot.com/svg-optimiser) or [application](https://github.com/svg). Those tools can compress an SVG by removing extraneous tags and reducing the sometimes excessive precision of graphics programs.
 
-Our result with be a series of `<path>` elements, one for each county. We'll also want to assign a `class` or `id` to each path to indicate the county. The resulting SVG file might begin as in the following.
+Our result will be a series of `<path>` elements, one for each county. We'll also want to assign a `class` or `id` to each path to indicate the county. The resulting SVG file might begin as in the following.
 
 ``` {.html .numberLines}
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="497" height="558">
@@ -155,9 +155,10 @@ var counties = [
 ];
 ```
 
-For this visualization we'd like to show the variation in health outcomes among counties. The data set provides two variables for that value, a ranking and a Z score. The county health rankings provide Z scores slightly modified from the traditional statistical definition. The most significant difference is the algebraic sign. Normal Z scores are always positive; in this data set, however, measurements that are subjectively better than average are multiplied by -1 so that they are negative. A county whose health outcome is two standard deviations "better" than the mean, for example, is given a Z score of -2 instead of 2. This adjustment makes it easier to use these Z scores in our visualization.
+For this visualization we'd like to show the variation in health outcomes among counties. The data set provides two variables for that value, a ranking and a Z score (a measure of how far a sample is from the mean in terms of standard deviations). The county health rankings provide Z scores slightly modified from the traditional statistical definition. Normal Z scores are always positive; in this data set, however, measurements that are subjectively better than average are multiplied by -1 so that they are negative. A county whose health outcome is two standard deviations "better" than the mean, for example, is given a Z score of -2 instead of 2. This adjustment makes it easier to use these Z scores in our visualization.
 
-To use modified Z scores in with our map, we need to find the maximum and minimum values. We can do that by extracting the outcomes as a separate array and then using the JavaScript built-in functions for maxima and minima. The example code does use the `map()` method to extract the array, and that method is only available in modern browsers. Since we've chosen to use SVG images, however, we've already restricted our users to modern browsers, so we might as well take advantage of that when we can.
+Our first step in working with these Z scores is to find the maximum and minimum values. We can do that by extracting the outcomes as a separate array and then using the JavaScript built-in `Math.max` and `Math.min` functions. Note that the code below uses the `map()` method to extract the array, and that method is only available in modern browsers. Since we've chosen to use SVG images, however, we've already restricted our users to modern browsers, so we might as well take advantage of that when we can.
+
 
 ``` {.javascript .numberLines}
 var outcomes = counties.map(function(county) {return county.outcomes_z;});
@@ -165,7 +166,7 @@ var maxZ = Math.max.apply(null, outcomes);
 var minZ = Math.min.apply(null, outcomes);
 ```
 
-The code's use of `.apply` might be new to you. Normally the `Math.max()` and `Math.min()` functions accept a comma-separated list of arguments. We, of course, have an array instead. The `apply` method, which works with any JavaScript function, turns an array into a comma-separated list. The first parameter is the context to use which, in our case, doesn't matter.
+Notice how we've used the `.apply` method here. Normally the `Math.max()` and `Math.min()` functions accept a comma-separated list of arguments. We, of course, have an array instead. The `apply` method, which works with any JavaScript function, turns an array into a comma-separated list. The first parameter is the context to use which, in our case, doesn't matter, so we set it to `null`.
 
 To complete the data preparation, let's make sure the minimum and maximum ranges are symmetric about the mean. If, for example, the Z scores ranged from `-2` to `1.5`, we'll extend the range to `[-2, 2]`. This adjustment will make the color scales symmetric as well, thus making it easier for users to interpret.
 
@@ -199,7 +200,6 @@ The Chroma.js library is available on popular Content Distribution Networks, so 
 
 To use a predefined scale we pass the scale's name (`"BrBG"` for the Brewer's Brown to Blue/Green scale) to the `chroma.scale()` function. At the same time we indicate the domain for our scale (`minZ` to `maxZ`, although we're reversing the order because of the data set's Z score adjustment) and our desired output. The `"hex"` output is the common `"#012345"` format compatible with CSS and HTML markup.
 
-
 ``` {.javascript .numberLines}
 var scale = chroma.scale("BrBG").domain([maxZ, minZ]).out("hex");
 ```
@@ -223,7 +223,7 @@ The resulting map in figure NEXTFIGURENUMBER shows which counties are above aver
 
 ### Step 6: Add a Legend
 
-To help our users interpret the map we can add a legend to the visualization. We can take advantage of the Chroma.js scale to easily create a table that explains the variation. For the table we'll use four increments for the colors on each side of the mean value.
+To help our users interpret the map we can add a legend to the visualization. We can take advantage of the Chroma.js scale to easily create a table that explains the variation. For the table we'll use four increments for the colors on each side of the mean value. That gives us a total of 9 colors for the legend.
 
 ``` {.html .numberLines}
 <table id="legend">
@@ -232,7 +232,7 @@ To help our users interpret the map we can add a legend to the visualization. We
 </table>
 ```
 
-Some straightforward CSS will style the table appropriately.
+Some straightforward CSS will style the table appropriately. Because we have 9 colors, we set the width of each table cell to 11.1111% (1/9 is 0.111111).
 
 ``` {.css .numberLines}
 table#legend tr.scale td {
@@ -260,6 +260,8 @@ for (var idx=0; idx<cells.length; idx++) {
     td.style.backgroundColor = scale(maxZ - ((idx + 0.5) / cells.length) * (maxZ - minZ));
 };
 ```
+
+In line 5 we calculate the fraction of the current index from the total number of legend colors `((idx + 0.5) / cells.length)`, multiple that by the total range of the scale `(maxZ - minZ)`, and subtract the result from the maximum value.
 
 The result is the legend for the map in figure NEXTFIGURENUMBER.
 
@@ -328,7 +330,7 @@ We'll start by defining a table to show county details.
 </table>
 ```
 
-Initially that table won't be visible.
+Initially, we don't want that table to be visible.
 
 ``` {.css .numberLines}
 table#details {
@@ -362,7 +364,7 @@ var zToText = function(z) {
 }
 ```
 
-There are couple of noteworthy items in this function. First, the statement, `z = +z` converts the Z score from a string to a numeric value for the tests that follow. Second, the tests may seem like they're backwards, but that's how we account for the Z score adjustments in the data set.
+There are couple of noteworthy items in this function. First, the statement, `z = +z` converts the Z score from a string to a numeric value for the tests that follow. Second, remember that because of the Z score adjustments the negative Z scores are actually better than average, while the positive values are below average.
 
 We can use this function to provide the data for our details table. The first step is finding the full data set for the associated `<path>` element. To do that we search through the `counties` array looking for a `code` property that matches the `id` attribute of the path. Because JavaScript arrays don't have an arbitrary `indexOf()` method, we'll borrow the `some()` method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.
 
@@ -389,7 +391,7 @@ table.rows[4].cells[1].textContent = zToText(county.social_and_economic_factors_
 table.rows[5].cells[1].textContent = zToText(county.physical_environment_z);
 ```
 
-For the last refinement, let's add a stroke color for counties that are highlighted. We remove the stroke when the mouse leaves the path.
+For the last refinement, let's add a stroke color for counties that are highlighted (line 3). We remove the stroke (in line 7) when the mouse leaves the path.
 
 ``` {.javascript .numberLines}
 path.addEventListener('mouseleave', function(){

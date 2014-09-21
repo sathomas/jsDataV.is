@@ -1,10 +1,10 @@
 ## Map Fonts
 
-One technique for adding maps to web pages is surprisingly simple but often overlooked—map fonts. Two examples of these fonts are [Stately](http://intridea.github.io/stately/) and [Continental](http://contfont.net). Map fonts are special purpose web fonts whose character sets aren't the common letters and numbers. Their character sets are, instead, map symbols. If that doesn't make sense to you right away, follow along with this example. In just a few easy steps we'll create a visualization of Europe using Continental.
+One technique for adding maps to web pages is surprisingly simple but often overlooked—map fonts. Two examples of these fonts are [Stately](http://intridea.github.io/stately/) for the United States and [Continental](http://contfont.net) for Europe. Map fonts are special purpose web fonts whose character sets contain map symbols instead of letters and numbers. In just a few easy steps we'll create a visualization of Europe using the symbols from Continental.
 
 ### Step 1: Include the Fonts in the Page
 
-The main web sites for both Stately and Continental include more detailed instructions for installing the fonts, but all that's really necessary is including a single Cascading Style Sheet. In the case of Continental, that style sheet is called, naturally, `continental.css`. No JavaScript libraries are required.
+The main web sites for both Stately and Continental include more detailed instructions for installing the fonts, but all that's really necessary is including a single CSS style sheet. In the case of Continental, that style sheet is called, naturally, `continental.css`. No JavaScript libraries are required.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -24,7 +24,7 @@ The main web sites for both Stately and Continental include more detailed instru
 
 ### Step 2: Display One Country
 
-To show a single country, all we have to do is include an HTML `<span>` element with the appropriate attributes. We could do this right in the markup. ( "fr" is the international two-letter abbreviation for France.)
+To show a single country, all we have to do is include an HTML `<span>` element with the appropriate attributes. We can do this right in the markup, adding a class attribute set to `map-` followed by a two-letter country abbreviation. ( "fr" is the international two-letter abbreviation for France.)
 
 ``` {.html .numberLines}
 <div id="map">
@@ -32,7 +32,7 @@ To show a single country, all we have to do is include an HTML `<span>` element 
 </div>
 ```
 
-For our example, we'll do use JavaScript instead. Here we're creating a new `<span>` element, giving it a class name of `"map-fr"`, and appending it to the map `<div>`.
+For our example, we'll use JavaScript to generate the markup. Here we're creating a new `<span>` element, giving it a class name of `"map-fr"`, and appending it to the map `<div>`.
 
 ``` {.javascript .numberLines}
 var fr = document.createElement("span");
@@ -57,9 +57,9 @@ That's all it takes to add France to a web page, as we can see from figure NEXTF
 
 ### Step 3: Combine Multiple Countries into a Single Map
 
-For this example we want to show more than a single country. We'd like to visualize the median age for all of Europe's countries, based on [United Nations population data](http://www.un.org/en/development/desa/population/) for 2010. To do that, we'll create a map that includes all European countries, and we'll style each country according to the data.
+For this example we want to show more than a single country. We'd like to visualize the median age for all of Europe's countries, based on [United Nations population data](http://www.un.org/en/development/desa/population/) from 2010. To do that, we'll create a map that includes all European countries, and we'll style each country according to the data.
 
-The first step in this visualization is putting all of the countries into a single map. Since each country is a separate character in the Continental font, we want to overlay those characters on top of one another rather than spread them across the page. That requires a couple of CSS rules. First we set the position of the outer container to `relative`. This rule doesn't change the styling of the outer container at all, but it does establish a _positioning context_ for anything within the container. Those elements will be our individual country symbols, and we'll set their position to be `absolute`. We'll then place each one at the top and left of the map so they'll overlay each other.  Because we've positioned the container `relative`, the country symbols will be positioned relative to that container rather than relative to the page as a whole.
+The first step in this visualization is putting all of the countries into a single map. Since each country is a separate character in the Continental font, we want to overlay those characters on top of one another rather than spread them across the page. That requires setting a couple of CSS rules. First we set the position of the outer container to `relative`. This rule doesn't change the styling of the outer container at all, but it does establish a _positioning context_ for anything within the container. Those elements will be our individual country symbols, and we'll set their position to be `absolute`. We'll then place each one at the top and left of the map so they'll overlay each other.  Because we've positioned the container `relative`, the country symbols will be positioned relative to that container rather than relative to the page as a whole.
 
 ``` {.css .numberLines}
 #map {
@@ -72,7 +72,7 @@ The first step in this visualization is putting all of the countries into a sing
 }
 ```
 
-The selectors that we use to target individual country symbols are a little bit trickier than simple CSS. We start by selecting the element with an `id` of `map`. Nothing fancy there. The direct descendent selector (`>`), however, says that what follows should only match elements that are immediate children of that element, not arbitrary descendants. Finally the attribute selector `[class*="map-"]`specifies only children that have a class that contains the characters `map-`. Since all the county symbols will be `<span>` elements with a class of `map-XX` (where `XX` is the two-letter country abbreviation), this will match all of our countries.
+Here we're using a couple of CSS tricks to apply this positioning to all of the individual symbols within this element. We start by selecting the element with an `id` of `map`. Nothing fancy there. The direct descendent selector (`>`), however, says that what follows should only match elements that are immediate children of that element, not arbitrary descendants. Finally the attribute selector `[class*="map-"]`specifies only children that have a class that contains the characters `map-`. Since all the county symbols will be `<span>` elements with a class of `map-XX` (where `XX` is the two-letter country abbreviation), this will match all of our countries.
 
 In our JavaScript we can start with an array listing all of the countries and iterate through it. For each country we create a `<span>` element with the appropriate class and insert it in the map `<div>`.
 
@@ -118,7 +118,7 @@ With the defined style rules, inserting multiple `<span>` elements within our ma
 
 ### Step 4: Vary the Countries Based on the Data
 
-Now we're ready to create the actual data visualization. Naturally, we'll start with actual data, in this case from the United Nations. Here's how we could format that data in a JavaScript array. (The full data set can be found with the book's [source code](https://github.com/sathomas/jsDataV.is-source).)
+Now we're ready to create the actual data visualization. Naturally, we'll start with the data, in this case from the United Nations. Here's how we could format that data in a JavaScript array. (The full data set can be found with the book's [source code](https://github.com/sathomas/jsDataV.is-source).)
 
 ``` {.javascript .numberLines}
 var ages = [
@@ -132,7 +132,7 @@ var ages = [
 
 There are several ways we could use this data to modify the map. One approach would have JavaScript code set the visualization properties directly by, for example, changing the `color` style for each country symbol. That would work, but it forgoes one of the big advantages of map fonts. With map fonts our visualization is standard HTML, so we can use standard CSS to style it. If, in the future, we want to change the styles on the page, they'll all be contained within the style sheets, and we won't have to hunt through our JavaScript code just to adjust colors.
 
-To indicate which styles are appropriate for an individual country symbol, we can attach a `data-` attribute to each. The most straightforward approach is often the best, so that's what we'll do here. We set the `data-age` attribute to the mean age, rounded to the nearest whole number. To find the age for a given country, we need that country's index in the `ages` array. The `findCountryIndex()` function does that in a straightforward way.
+To indicate which styles are appropriate for an individual country symbol, we can attach a `data-` attribute to each. In the code below, we set the `data-age` attribute to the mean age, rounded to the nearest whole number. To find the age for a given country, we need that country's index in the `ages` array. The `findCountryIndex()` function does that in a straightforward way.
 
 ``` {.javascript .numberLines}
 var findCountryIndex = function(cc) {
@@ -155,12 +155,12 @@ countries.forEach(function(cc) {
 });
 ```
 
-Now we can assign CSS style rules based on that `data-age` attribute. Here's the start of a simple blue gradient for the different ages.
+Now we can assign CSS style rules based on that `data-age` attribute. Here's the start of a simple blue gradient for the different ages, where greater median ages are colored darker blue.
 
 ``` {.css .numberLines}
 #map > [data-age="44"] { color: #07306B; }
-#map > [data-age="42"] { color: #0D3A75; }
-#map > [data-age="43"] { color: #13457F; }
+#map > [data-age="43"] { color: #0D3A75; }
+#map > [data-age="42"] { color: #13457F; }
 /* CSS rules continue... */
 ```
 
