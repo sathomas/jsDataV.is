@@ -68,7 +68,7 @@ That works to reveal the details, but as figure NEXTFIGURENUMBER shows, the resu
 
 Instead of simply revealing the widget beneath the chart, it would be better to have the widget replace the chart. And if we're going to do that, we'll also want to give the users a chance to restore the chart and hide the widget. For that last function, we include a `"widget-control"` `<div>` in the code below (lines 2-4) for controlling the widget's visibility. The only content we need for this controller is a close symbol floated right. Just like the widget itself, the controller is initially hidden.
 
-``` {.html .numberLines data-line='2-4'}
+``` {.html .numberLines .line-2 .line-3 .line-4}
 <div id="stock"></div>
 <div id="widget-control" style="width:600px;display:none">
     <a href="#" style="float:right">&times;</a>
@@ -101,7 +101,7 @@ $("#widget-control a").click(function(ev) {
 
 Finally, we need to give the user some indication that this interaction is possible. On the chart, we can override the sparklines library's default tooltip in line 4 to let users know that more details are available.
 
-``` {.javascript .numberLines data-line='4'}
+``` {.javascript .numberLines .line-4}
 $('#stock')
     .sparkline(
         $.map(stock, function(wk) { return wk.adj_close; }),
@@ -111,7 +111,7 @@ $('#stock')
 
 And for the widget controller, we simple add a `title` attribute in line 3 to tell users how to hide the widget.
 
-``` {.html .numberLines data-line='3'}
+``` {.html .numberLines .line-3}
 <div id="stock"></div>
 <div id="widget-control" style="width:600px;display:none">
     <a href="#" title="Click to hide" style="float:right;">&times;</a>

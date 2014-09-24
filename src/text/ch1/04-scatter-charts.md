@@ -81,7 +81,7 @@ We've added a third parameter to the `draw()` method that contains our options. 
 
 Our chart so far looks reasonably nice, but it doesn't tell the user what they're seeing. We need to add some labels to identify the data. A few more options can clarify the chart:
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-9 .line-11}
 Flotr.draw(
     document.getElementById("chart"),
     [{
@@ -97,7 +97,7 @@ Flotr.draw(
 );
 ```
 
-The `title` and `subtitle` options give the chart its overall title and subtitle, while the `title` properties within the `xaxis` and `yaxis` options name the labels for those axes. In addition to adding labels, we've told flotr2 to drop the unnecessary decimal point from the x- and y-axis values. We did that with the `tickDecimals` property in lines 7 and 9. The chart in figure NEXTFIGURENUMBER is now looking much better.
+The `title` and `subtitle` options give the chart its overall title and subtitle, while the `title` properties within the `xaxis` and `yaxis` options name the labels for those axes. In addition to adding labels, we've told flotr2 to drop the unnecessary decimal point from the x- and y-axis values. We did that with the `tickDecimals` property in lines 9 and 11. The chart in figure NEXTFIGURENUMBER is now looking much better.
 
 <figure>
 <div id='scatter-chart3' style='width:600px;height:400px;'></div>
@@ -108,7 +108,7 @@ The `title` and `subtitle` options give the chart its overall title and subtitle
 
 Although our chart has definitely improved since the first attempt, there is still one nagging problem with the data presentation. The x-axis represents a percentage, but the labels for that axis show whole numbers. That discrepancy might cause our users some initial confusion, so lets get rid of it. Flotr2 gives us the option to format the axis labels however we want. In this example, we simply wish to add a percentage symbol to the value. That's easy enough:
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-11}
 Flotr.draw(
     document.getElementById("chart"),
     [{ 
@@ -125,7 +125,7 @@ Flotr.draw(
 );
 ```
 
-The trick is the `tickFormatter` property of the `xaxis` options. It's line 9 in the  above code. That property specifies a function. When that option is present, flotr2 doesn't draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we're simply adding a percent sign after the value.
+The trick is the `tickFormatter` property of the `xaxis` options. It's line 11 in the  above code. That property specifies a function. When that option is present, flotr2 doesn't draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we're simply adding a percent sign after the value.
 
 With figure NEXTFIGURENUMBER we have a chart that clearly presents the data. The horizontal axis clearly labels the percentage values.
 
@@ -208,9 +208,9 @@ With the countries in different data series based on regions, flotr2 is able to 
 <figcaption>Splitting the data into multiple data sets lets us assign different colors to each.</figcaption>
 </figure>
 
-For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 14) and position the legend in the northeast quadrant (line 18).
+For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 13) and position the legend in the northeast quadrant (line 17).
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-13 .line-18}
 Flotr.draw(
     document.getElementById("chart"),
     [

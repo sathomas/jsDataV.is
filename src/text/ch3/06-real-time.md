@@ -19,7 +19,7 @@ In a real dashboard example, the server would provide the data to display and up
 
 To avoid this problem, we can use the `setTimeout()` function instead. That function only executes once, so we'll have to keep calling it explicitly. By doing that, though, we can make sure that we only send a request to the server after the current one finishes. This approach avoids stacking up a queue of requests.
 
-``` {.javascript .numberLines data-line='12'}
+``` {.javascript .numberLines .line-9 .line-12}
 (function getData(){
     setTimeout(function(){
         // request the data from the server
@@ -42,7 +42,7 @@ Within the `success` callback we set up a recursive call to `getData()` in line 
 
 Whenever we receive updated information from the server, we can simply update the chart and value. The code needs only a straightforward call to the sparklines library and a jQuery function to update the value. We've added that to the code in lines 6 and 7 below.
 
-``` {.javascript .numberLines data-line='6,7'}
+``` {.javascript .numberLines .line-6 .line-7}
 (function getData(){
     setTimeout(function(){
         // request the data from the server

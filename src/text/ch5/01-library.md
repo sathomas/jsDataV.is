@@ -14,7 +14,7 @@ All of these libraries are popular enough for public content distribution networ
 
 > Note: Chapter 2 includes a more extensive discussion of content distributions networks and the trade-offs involved in using them.
 
-``` {.html .numberLines data-line='10'}
+``` {.html .numberLines .line-10}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -96,11 +96,11 @@ var events = $.map(plays, function(play) {
 
 ### Step 3: Draw the Time Line
 
-To draw the time line, we create a new `Chronoline` object, passing it the <span class="smcp">HTML</span> container element, our event data, and any options. The <span class="smcp">HTML</span> container element should be a native element and not a jQuery selection. To convert from a selection to a native element, we can simply reference the `[0]` index of the selection.
+To draw the time line, we create a new `Chronoline` object, passing it the <span class="smcp">HTML</span> container element, our event data, and any options. The <span class="smcp">HTML</span> container element should be a native element and not a jQuery selection. To convert from a selection to a native element, we use the `get()` method. In this case we want the first element, we use the parameter `0`.
 
 ``` {.javascript .numberLines}
 $(function() {
-    var timeline = new Chronoline($("#timeline")[0], events, {});
+    var timeline = new Chronoline($("#timeline").get(0), events, {});
 }
 ```
 
@@ -205,6 +205,13 @@ To change the color of the scroll buttons, we have to modify the `chronoline.css
 
 With those changes, we finally have a timeline of Shakespeare's plays.
 
+<style>
+.chronoline-left-icon, .chronoline-right-icon { background: url("../img/chronoline-sprites.png") no-repeat scroll 0px 0 transparent; }
+.chronoline-right-icon { background-position: -10px 0; }
+.chronoline-left, .chronoline-right { background-color: #7EBD00; }
+.chronoline-left:hover, .chronoline-right:hover { background-color: #7EBD00; }
+</style>
+
 <figure>
 <div id="library-1"></div>
 <figcaption>The Chronoline.js library creates a simple, interactive time line.</figcaption>
@@ -214,9 +221,11 @@ The resulting timeline looks pretty good, but the limitations of the library mak
 
 
 <script>
-contentLoaded.done(function() {
+;(function(){
 
-plays = [
+    draw = function() {
+
+        plays = [
   { "play": "The Two Gentlemen of Verona",     "date": "1589-1591", "record": "Francis Meres' Palladis Tamia (1598); referred to as \"Gentlemen of Verona\"", "published": "First Folio (1623)", "performance": "adaptation by Benjamin Victor performed at David Garrick's Theatre Royal, Drury Lane in 1762. Earliest known performance of straight Shakespearean text at Royal Opera House in 1784, although because of the reference to the play in Palladis Tamia, we know it was definitely performed in Shakespeare's day.", "evidence": "The play contains passages which seem to borrow from John Lyly's Midas (1589), meaning it could not have been written prior to 1589. Additionally, Stanley Wells argues that the scenes involving more than four characters, \"betray an uncertainty of technique suggestive of inexperience.\" As such, the play is considered to be one of the first Shakespeare composed upon arriving in London (Roger Warren, following E.A.J. Honigmann, suggests he may have written it prior to his arrival) and, as such, he lacked theatrical experience. This places the date of composition as most likely somewhere between 1589 and 1591, by which time it is known he was working on the Henry VI plays" },
   { "play": "The Taming of the Shrew",         "date": "1590-1594", "record": "possible version of play entered into Stationers' Register on 2 May 1594 as \"a booke intituled A plesant Conceyted historie called the Tayminge of a Shrowe'. First record of play as it exists today found in the First Folio (1623)", "published": "possible version of play published in quarto in 1594 as A Pleasant Conceited Historie, called The taming of a Shrew (republished in 1596 and 1607). Play as it exists today first published in the First Folio (1623) as The Taming of the Shrew.", "performance": "According to Philip Henslowe's diary, a play called The Tamynge of A Shrowe was performed at Newington Butts Theatre on 13 June 1594. This could have been either the 1594 A Shrew or the Shakespearean The Shrew, but as the Admiral's Men and the Lord Chamberlain's Men were sharing the theatre at the time, and as such Shakespeare himself would have been there, scholars tend to assume that it was The Shrew. The Shakespearean version was definitely performed at court before King Charles I and Queen Henrietta Maria on 26 November 1633, where it was described as being \"liked'.", "evidence": "Kier Elam posits a date of 1591 as a terminus post quem for the composition of The Shrew, based on Shakespeare's probable use of two sources published that year; Abraham Ortelius's map of Italy in the Theatrum Orbis Terrarum (4th ed.) and John Florio's Second Fruits. However, scholars continue to debate the relationship between the 1594 A Shrew and the 1623 The Shrew. Some theorise that A Shrew is a reported text, meaning The Shrew must have been written prior to 2 May 1594; others, that A Shrew is an early draft, meaning The Shrew must have been completed sometime after 2 May 1594. There are also arguments that A Shrew may have been a source for The Shrew, that they could be two completely unrelated plays based on the same (now lost) source (the \"Ur-Shrew\" theory), or A Shrew could be an adaptation of The Shrew. Critics remain divided on this issue, and as such, dating the play is extremely difficult." },
   { "play": "Henry VI, Part 2",                "date": "1590-1591", "record": "version of the play entered into the Stationers' Register on 12 March 1594 as \"a booke intituled, the firste parte of the Contention of the twoo famous houses of york and Lancaster'.", "published": "version of the play published in quarto in 1594 as The First part of the Contention betwixt the two famous Houses of Yorke and Lancaster, with the death of the good Duke Humphrey: And the banishment and death of the Duke of Suffolke, and the Tragicall end of the proud Cardinal of Winchester, with the notable Rebellion of Jack Cade: and the Duke of Yorke's first claim unto the Crowne (republished in 1600 and 1619). The Folio text appears under the title The second Part of Henry the Sixt, with the death of the Good Duke Humfrey.", "performance": "although it is known that the play was definitely performed in Shakespeare's day, the first recorded performance was not until 23 April 1864 at the Surrey Theatre, directed by James Anderson.", "evidence": "It is known that 3 Henry VI was on stage by June 1592, and it is also known that 3 Henry VI was definitely a sequel to 2 Henry VI, meaning 2 Henry VI must also have been on stage by early 1592. This places the likely date of composition as 1590-1591." },
@@ -258,50 +267,58 @@ plays = [
   { "play": "Cardenio",                        "date": "1612-1613", "record": "entered into the Stationers' Register in 1653, attributed to William Shakespeare and John Fletcher", "published": "an adaptation was published in 1727 by Lewis Theobald entitled Double Falshood; or, the Distrest Lovers", "performance": "1613, performed at the Globe by the King's Company", "evidence": "A lost play, published only in an adaptation by Lewis Theobald entitled Double Falshood (1728)." },
   { "play": "Henry VIII, or All is True",      "date": "1613",      "record": "", "published": "First Folio (1623) as The Famous History of the Life of King Henry the Eight", "performance": "29 June 1613, the night the Globe burnt down.", "evidence": "Probably written in collaboration with John Fletcher" },
   { "play": "The Two Noble Kinsmen",           "date": "1613",      "record": "entered into the Stationer' Register on 8 April 1634", "published": "published in quarto in 1634", "performance": "", "evidence": "Not included in the First Folio; written in collaboration with John Fletcher." }
-];
+    ];
 
-var events = $.map(plays, function(play) {
-    var event = {};
-    event.title = play.play;
-    if (play.date.indexOf("-") !== -1) {
-        var daterange = play.date.split("-");
-        event.dates = [new Date(daterange[0], 0, 1), new Date(daterange[1], 11, 31)]
+    var events = $.map(plays, function(play) {
+        var event = {};
+        event.title = play.play;
+        if (play.date.indexOf("-") !== -1) {
+            var daterange = play.date.split("-");
+            event.dates = [new Date(daterange[0], 0, 1), new Date(daterange[1], 11, 31)]
+        } else {
+            event.dates = [new Date(play.date, 0, 1), new Date(play.date, 11, 31)]
+        }
+        return event;
+    });
+
+    var timeline = new Chronoline($("#library-1")[0], events, {
+        animated: true,
+        defaultStartDate: new Date(1589, 0, 1),
+        draggable: true,
+        eventAttrs: {  // attrs for the bars and circles of the events
+            fill: chartStyles.color.secondary,
+            stroke: chartStyles.color.secondary,
+            "stroke-width": 1
+        },
+        eventHeight: 10,
+        hashInterval: function(date) {
+            return date.getDate() === 1;
+        },
+        labelInterval: function(date) {
+            return date.getMonth() === 0 && date.getDate() === 1;
+        },
+        labelFormat: "%Y",
+        markToday: false,
+        scrollLeft: function(date) {
+            return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+        },
+        scrollRight: function(date) {
+            return new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
+        },
+        subLabel: null,
+        subSubLabel: null,
+        timelinePadding: DAY_IN_MILLISECONDS * 366 / 4,
+        tooltips: false,
+        visibleSpan: DAY_IN_MILLISECONDS * 366 * 5
+    });
+
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
     } else {
-        event.dates = [new Date(play.date, 0, 1), new Date(play.date, 11, 31)]
+        window.addEventListener('load', draw);
     }
-    return event;
-});
 
-var timeline = new Chronoline($("#library-1")[0], events, {
-    animated: true,
-    defaultStartDate: new Date(1589, 0, 1),
-    draggable: true,
-    eventAttrs: {  // attrs for the bars and circles of the events
-        fill: '#ffa44f',
-        stroke: '#ffa44f',
-        "stroke-width": 1
-    },
-    eventHeight: 10,
-    hashInterval: function(date) {
-        return date.getDate() === 1;
-    },
-    labelInterval: function(date) {
-        return date.getMonth() === 0 && date.getDate() === 1;
-    },
-    labelFormat: "%Y",
-    markToday: false,
-    scrollLeft: function(date) {
-        return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
-    },
-    scrollRight: function(date) {
-        return new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
-    },
-    subLabel: null,
-    subSubLabel: null,
-    timelinePadding: DAY_IN_MILLISECONDS * 366 / 4,
-    tooltips: true,
-    visibleSpan: DAY_IN_MILLISECONDS * 366 * 5
-});
-
-});
+}());
 </script>

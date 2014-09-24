@@ -76,7 +76,7 @@ After executing this code, our `list` variable will contain the following:
 
 The wordcloud2 library can build its graphics either using the <span class="smcp">HTML</span> `<canvas>` interface or in pure <span class="smcp">HTML</span>. As we've seen with many graphing libraries, `<canvas>` is a convenient interface for creating graphic elements. For word clouds, however, there aren't many benefits to using `<canvas>`. Native <span class="smcp">HTML</span>, on the other hand, let's use all the standard <span class="smcp">HTML</span> tools (such as <span class="smcp">CSS</span> style sheets or JavaScript event handling). That's the approach we'll take in this example. When using native <span class="smcp">HTML</span>, we do have to make sure that the containing element has a `position: relative` style, because wordcloud2 relies on that when placing the words in their proper location in the cloud. You can see in line 8 below that we've set that style inline.
 
-``` {.html .numberLines data-line='8'}
+``` {.html .numberLines .line-8}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -121,7 +121,7 @@ First we'll want to let users know that interactions are supported by changing t
 
 Next let's add an extra element to the markup where we can display information about any clicked word. That element is the `<div>` with the id `details` in line 9.
 
-``` {.html .numberLines data-line='9'}
+``` {.html .numberLines .line-9}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -138,7 +138,7 @@ Next let's add an extra element to the markup where we can display information a
 
 Then we define a function that can be called when the user clicks within the cloud. Because our function will be called for any clicks on the cloud (including clicks on empty space), it will first check to see if the target of the click was really a word. Words are contained in `<span>` elements, so we can verify that by looking that the `nodeName` property of the click target. As you can see from line 2, JavaScript node names are always in uppercase.
 
-``` {.javascript .numberLines data-line='2'}
+``` {.javascript .numberLines .line-2}
 var clicked = function(ev) {
     if (ev.target.nodeName === "SPAN") {
         // A <span> element was the target of the click
@@ -178,9 +178,9 @@ var clicked = function(ev) {
 }
 ```
 
-We can use the return value of the `.some()` method to make sure the clicked element was found in the array. When that's the case, `.some()` itself returns `true`. In lines 13 and 14 below we update the `details` variable with extra information. In line 13 we update the web page with those details.
+We can use the return value of the `.some()` method to make sure the clicked element was found in the array. When that's the case, `.some()` itself returns `true`. In lines 13 and 14 below we update the `details` variable with extra information. In line 17 we update the web page with those details.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-13 .line-14 .line-17}
 var clicked = function(ev) {
   var details = "";
   if (ev.target.nodeName === "SPAN") {
@@ -329,16 +329,46 @@ With these few lines of code, our word cloud is now interactive.
          ["unit-testing", 23249]
         ];
         
+        var colors = [
+            chartStyles.color.primary,
+            chartStyles.color.primaryLightest,
+            chartStyles.color.primaryLight,
+            chartStyles.color.primaryDark,
+            chartStyles.color.primaryDarkest,
+            chartStyles.color.secondary,
+            chartStyles.color.secondaryLightest,
+            chartStyles.color.secondaryLight,
+            chartStyles.color.secondaryDark,
+            chartStyles.color.secondaryDarkest,
+            chartStyles.color.alternate,
+            chartStyles.color.alternateLightest,
+            chartStyles.color.alternateLight,
+            chartStyles.color.alternateDark,
+            chartStyles.color.alternateDarkest,
+            chartStyles.color.tertiary,
+            chartStyles.color.tertiaryLightest,
+            chartStyles.color.tertiaryLight,
+            chartStyles.color.tertiaryDark,
+            chartStyles.color.tertiaryDarkest,
+            chartStyles.color.quaternary,
+            chartStyles.color.quaternaryLightest,
+            chartStyles.color.quaternaryLight,
+            chartStyles.color.quaternaryDark,
+            chartStyles.color.quaternaryDarkest
+        ];
+        
         WordCloud(document.getElementById('cloud-1'), {
           backgroundColor: chartStyles.color.blockBackground,
           fontFamily: chartStyles.font.family,
-          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; })
+          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; }),
+          color: function() {return colors[Math.floor(Math.random()*colors.length)];}
         });
         
         WordCloud(document.getElementById('cloud-2'), {
           backgroundColor: chartStyles.color.blockBackground,
           fontFamily: chartStyles.font.family,
-          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; })
+          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; }),
+          color: function() {return colors[Math.floor(Math.random()*colors.length)];}
         });
         
         var clicked = function(ev) {

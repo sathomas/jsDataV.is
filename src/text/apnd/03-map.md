@@ -108,7 +108,7 @@ svg.selectAll("path")
 
 For our final step we'll set the color of each state according to the date of its nominating event. The style property we use is `fill`. For its value we search through the array of events to find the matching state (line 8). We then use our `color` scale to calculate an appropriate color for that date (line 14).
 
-``` {.javascript .numberLines data-line='5-15'}
+``` {.javascript .numberLines}
 svg.selectAll("path")
     .data(data.features)
   .enter().append("path")

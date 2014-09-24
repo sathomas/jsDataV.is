@@ -20,6 +20,10 @@ table.sourceCode td.lineNumbers {
     color: @color-grey-text;
 }
 
+table.sourceCode td.lineNumbers .emphasized {
+    color: @color-dark-grey-text;
+}
+
 table.sourceCode td.lineNumbers pre {
     width: 1.5em;
 }
@@ -35,6 +39,13 @@ table.sourceCode td.sourceCode pre {
 table.sourceCode pre {
     margin: 0;
 }
+
+table.sourceCode pre code .emphasized {
+    display: inline-block;
+    min-width: 100%;
+    background-color: @color-block-medium-background;
+}
+
 
 .sourceCode .ch, .sourceCode .st { color: @color-pink-dark; }                   /* character, string */
 .sourceCode .co { color: @color-pink-lightest; font-style: italic; }            /* comment */

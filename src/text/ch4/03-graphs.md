@@ -8,7 +8,7 @@ Constructing network graphs can be a bit tricky, as the underlying mathematics a
 
 The sigmajs library does not depend on any other JavaScript libraries, so we don't need any other included scripts. It is not, however, available on common Content Distribution Networks. Consequently, we'll have to serve it from our own web host.
 
-``` {.html .numberLines}
+``` {.html .numberLines .line-8}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -140,7 +140,7 @@ The mathematics behind this approach go by the name of "force directed graphing.
 
 The underlying algorithm may be complicated, but sigmajs makes it easy to employ. First we have to add an optional plugin to the sigmajs library. That's the `forceAtlas2` plugin in line 10 below.
 
-``` {.html .numberLines data-line='10'}
+``` {.html .numberLines .line-10}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -183,7 +183,7 @@ As you can see, the labels for the nodes still get in the way of each other; we'
 
 To keep the labels from interfering with each other, we can add some interactivity to the graph. By default, we'll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We'll then allow them to click on individual nodes to reveal the album title and it's connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We'll save a reference to the album title though in line 6.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-5}
 for (var idx=0; idx<albums.length; idx++) {
     var theta = idx*2*Math.PI / albums.length;
     s.graph.addNode({

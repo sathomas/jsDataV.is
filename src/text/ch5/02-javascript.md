@@ -10,7 +10,7 @@ That's exactly what we'll do in this example. We'll start with the same data set
 
 Without any required libraries, the <span class="smcp">HTML</span> page for our timeline is pretty simple. All we need is a containing `<div>` with a unique `id` attribute in line 8.
 
-``` {.html .numberLines data-line='8'}
+``` {.html .numberLines .line-8}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -79,7 +79,10 @@ plays.forEach(function(play) {
 
 Here's a truncated version of the resulting list. It may not look like much (yet), but it has the essential data and structure.
 
-<div id="javascript-1"></div>
+<figure>
+<div id="javascript-1" style="font-size:0.8em"></div>
+<figcaption>A pure <span class="smcp">HTML</span> timeline can start out as a simple ordered list.</figcaption>
+</figure>
 
 If you look at the resulting <span class="smcp">HTML</span> that underlies that list, it's pretty simple:
 
@@ -124,7 +127,10 @@ plays.forEach(function(play) {
 
 Because we're no longer including the punctuation, the resulting output might look a little worse than before. Don't worry, though, we'll fix it soon.
 
-<div id="javascript-2"></div>
+<figure>
+<div id="javascript-2" style="font-size:0.8em"></div>
+<figcaption>Semantic markup simplifies the required <span class="smcp">HTML</span>, but it may require special styling.</figcaption>
+</figure>
 
 What is much improved is the underlying <span class="smcp">HTML</span>. The markup clearly identifies the type of content it contains, an ordered list of dates and citations.
 
@@ -166,7 +172,7 @@ var descTerms = [
 
 With that array we can quickly add the descriptions to our content. We iterate over the array using `.forEach()`. At each iteration we make sure that the data has content (line 6) before creating the description item. A description item contains the term(s) being described in one `<dt>` tag and the description itself in a `<dd>` tag.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-6}
 plays.forEach(function(play) {
     // Additional code...
     listItem.appendChild(cite);
@@ -188,7 +194,16 @@ plays.forEach(function(play) {
 
 Our timeline is still lacking a bit of visual appeal, but it has a much richer set of content. In fact, even without any styling at all, it still communicates the essential data quite well.
 
+<style>
+#javascript-3 { font-size: 0.8em; }
+#javascript-3 dt { width: 14em; }
+#javascript-3 dd { margin-left: 16em; }
+</style>
+
+<figure>
 <div id="javascript-3"></div>
+<figcaption><span class="lgcp">HTML</span> makes it easy to add extra content to the list.</figcaption>
+</figure>
 
 Here's the resulting markup (truncated for brevity):
 
@@ -239,7 +254,7 @@ We can also use CSS rules to add some punctuation to our semantic HTML. First we
 }
 ```
 
-If you haven't seen the `>` before in a CSS rule, it's the direct descendent selector. In this example, it means that the `<time>` element must be an immediate child of the `<li>` element. We're using this selector so our rules won't inadvertently apply to other `<time>` elements that may be nested deeper within the list item's content.
+If you haven't seen the `>` before in a CSS rule, it's the direct descendant selector. In this example, it means that the `<time>` element must be an immediate child of the `<li>` element. We're using this selector so our rules won't inadvertently apply to other `<time>` elements that may be nested deeper within the list item's content.
 
 To finish up the punctuation, let's add a colon and space after the last of the `<time>` elements in each list item. We have to use two pseudo-selectors for this rule. The `:last-of-type` selector will target the last `<time>` element in the list item. That's the first `<time>` if there's only one and the second `<time>` if both are present. Then we add the `:after` pseudo-selector to insert content after that `<time>` element.
 
@@ -254,6 +269,7 @@ With these changes we've cleaned up all of the obvious problems with our time li
 <style>
 .timeline1 {
     padding-top: 1em;
+    font-size: 0.8em;
 }
 .timeline1 li {
     list-style-type: none;
@@ -264,28 +280,33 @@ With these changes we've cleaned up all of the obvious problems with our time li
 .timeline1 li > time:last-of-type:after {
     content: ": ";
 }
+.timeline1 dt { width: 14em; }
+.timeline1 dd { margin-left: 16em; }
 </style>
 
+<figure>
 <ol class="timeline1">
-    <li>
-        <time>1589</time><time>1591</time><cite>The Two Gentlemen of Verona</cite>
-        <dl>
-            <dt>First official record</dt><dd>Francis Meres'...</dd>
-            <dt>First published</dt><dd>First Folio (1623)</dd>
-            <dt>First recorded performance</dt><dd>adaptation by...</dd>
-            <dt>Evidence</dt><dd>The play contains...</dd>
-        </dl>
-    </li>
-    <li>
-        <time>1590</time><time>1594</time><cite>The Taming of the Shrew</cite>
-        <dl>
-            <dt>First official record</dt><dd>possible version...</dd>
-            <dt>First published</dt><dd>possible version...</dd>
-            <dt>First recorded performance</dt><dd>According to Philip...</dd>
-            <dt>Evidence</dt><dd>Kier Elam posits...</dd>
-        </dl>
-    </li>
+<li>
+<time>1589</time><time>1591</time><cite>The Two Gentlemen of Verona</cite>
+<dl>
+<dt>First official record</dt><dd>Francis Meres'...</dd>
+<dt>First published</dt><dd>First Folio (1623)</dd>
+<dt>First recorded performance</dt><dd>adaptation by...</dd>
+<dt>Evidence</dt><dd>The play contains...</dd>
+</dl>
+</li>
+<li>
+<time>1590</time><time>1594</time><cite>The Taming of the Shrew</cite>
+<dl>
+<dt>First official record</dt><dd>possible version...</dd>
+<dt>First published</dt><dd>possible version...</dd>
+<dt>First recorded performance</dt><dd>According to Philip...</dd>
+<dt>Evidence</dt><dd>Kier Elam posits...</dd>
+</dl>
+</li>
 </ol>
+<figcaption><span class="lgcp">CSS</span> styles make the timeline easier to read without changing the markup.</figcaption>
+</figure>
 
 Now we can add a little flair to the visualization.
 
@@ -339,10 +360,15 @@ After moving the dates to the left of the vertical line, we'll also want to shif
 
 With the dates and the main content on opposite sides of our vertical line, there's no longer any need for any punctuation after the date. We can, therefore, remove the style that adds a colon after the last `<time>` element.
 
-<pre class="css" style="text-decoration:line-through"><code class="  css">.timeline li &gt; time:last-of-type:after {
+<style>
+.strikeThrough td.sourceCode { text-decoration: line-through; }
+</style>
+
+``` {.css .numberLines .strikeThrough}
+.timeline li > time:last-of-type:after {
     content: ": ";
 }
-</code></pre>
+```
 
 The fact that we're able to make this change highlights one of the reasons for using CSS to add the colon in the first place. If we had included the punctuation explicitly in the markup (by, for example, generating it in the JavaScript code), then our markup would be more tightly coupled to our styles. If a style modification changed whether or not the colon was appropriate, we would have to go back and change the JavaScript as well. With the approach that we're using here, however, styles and markup are much more independent. Any style changes are isolated to our CSS rules; no modifications to the JavaScript are required.
 
@@ -359,89 +385,62 @@ As part of the improved visual styling we can make a few other changes to our ti
 }
 ```
 
-For a last bit of polish let's add a bullet right on the vertical line to mark each plan and tie the title more closely to the dates. We use a large bullet (roughly 5 times the normal size) and position it right over the line. As you can see from the rules below, the unicode character for a bullet can be represented as `"\00B7"`.
+For a last bit of polish let's add a bullet right on the vertical line to mark each plan and tie the title more closely to the dates. We use a large bullet (several times the normal size) and position it right over the line. As you can see from the rules below, the unicode character for a bullet can be represented as `"\2022"`. The exact position values will depend on the specific font, but a bit of trial and error can perfect the adjustments.
 
 ``` {.css .numberLines}
 .timeline li > time:first-of-type:after {
-	content: "\00B7";
-	font-size: 5.2em;
+	content: "\2022";
+	font-size: 3em;
+	line-height: 0.4em;
 	position: absolute;
-	right: -0.35em;
-	top: -0.05em;
+	right: -0.65em;
+	top: 0.1em;
 }
 ```
 
 Now our time line is starting to look like an actual time _line._ In your own pages you could include additional styles to define fonts, colors, and so on, but even without those decorations the visualization is effective.
 
 <style>
-.timeline2 li {
-    list-style-type: none;
-}
-.timeline2 li > time + time:before {
-    content: "-";
-}
-.timeline2 li {
-    border-left: 2px solid #444444;
-}
-.timeline2 dl,
-.timeline2 li {
-    margin: 0;
-}
-.timeline2 li {
-    position: relative;
-    padding-left: 1em;
-    padding-bottom: 1em;
-}
-.timeline2 li > time {
-    position: absolute;
-    left: -3.5em;
-}
-.timeline2 li > time + time {
-    top: 1em;
-    left: -3.85em;
-}
-.timeline2 {
-    padding-left: 5em;
-    padding-top: 1.5em;
-}
-.timeline2 li > cite {
-    display: block;
-    font-size: 1.5em;
-    line-height: 1em;
-    padding-bottom: 0.5em;
-}
-.timeline2 li > time:first-of-type:after {
-	content: "\00B7";
-	position: absolute;
-	right: -0.35em;
-	top: -0.05em;
-	font-size: 5.2em;
-}
-.timeline2 dl {
-    padding-left: 1.5em;
-}
+.timeline2 { font-size: 0.8em; }
+.timeline2 li { list-style-type: none; }
+.timeline2 li > time + time:before { content: "-"; }
+.timeline2 li { border-left: 2px solid #444444; }
+.timeline2 dl, .timeline2 li { margin: 0; }
+.timeline2 li { position: relative; padding-left: 1em; padding-bottom: 1em; }
+.timeline2 li > time { position: absolute; left: -3.5em; }
+.timeline2 li > time + time { top: 1em; left: -3.85em; }
+.timeline2 { padding-left: 5em; padding-top: 1.5em; }
+.timeline2 li > cite { display: block; font-size: 1.5em; line-height: 1em; padding-bottom: 0.5em; }
+.timeline2 li > time:first-of-type:after { content: "\2022"; font-size: 3em; line-height: 0.4em; position: absolute; right: -0.47em; top: 0.1em; }
+.localfile .timeline2 li > time:first-of-type:after { right: -0.65em; }
+.timeline2 dl { padding-left: 1.5em; }
+.timeline2 dt { width: 14em; }
+.timeline2 dd { margin-left: 16em; }
 </style>
 
+<figure>
 <ol class="timeline2">
-    <li>
-        <time>1589</time><time>1591</time><cite>The Two Gentlemen of Verona</cite>
-        <dl>
-            <dt>First official record</dt><dd>Francis Meres'...</dd>
-            <dt>First published</dt><dd>First Folio (1623)</dd>
-            <dt>First recorded performance</dt><dd>adaptation by...</dd>
-            <dt>Evidence</dt><dd>The play contains...</dd>
-        </dl>
-    </li>
-    <li>
-        <time>1590</time><time>1594</time><cite>The Taming of the Shrew</cite>
-        <dl>
-            <dt>First official record</dt><dd>possible version...</dd>
-            <dt>First published</dt><dd>possible version...</dd>
-            <dt>First recorded performance</dt><dd>According to Philip...</dd>
-            <dt>Evidence</dt><dd>Kier Elam posits...</dd>
-        </dl>
-    </li>
+<li>
+<time>1589</time><time>1591</time><cite>The Two Gentlemen of Verona</cite>
+<dl>
+<dt>First official record</dt><dd>Francis Meres'...</dd>
+<dt>First published</dt><dd>First Folio (1623)</dd>
+<dt>First recorded performance</dt><dd>adaptation by...</dd>
+<dt>Evidence</dt><dd>The play contains...</dd>
+</dl>
+</li>
+<li>
+<time>1590</time><time>1594</time><cite>The Taming of the Shrew</cite>
+<dl>
+<dt>First official record</dt><dd>possible version...</dd>
+<dt>First published</dt><dd>possible version...</dd>
+<dt>First recorded performance</dt><dd>According to Philip...</dd>
+<dt>Evidence</dt><dd>Kier Elam posits...</dd>
+</dl>
+</li>
 </ol>
+<figcaption>Additional styles clarify the structure of the timeline elements.</figcaption>
+</figure>
 
 ### Step 8: Add Interactivity
 
@@ -551,77 +550,38 @@ There is one final complication with CSS transitions. Most browsers implemented 
 Now our hand-crafted time line responds perfectly to user interactions. Here's the complete visualization.
 
 <style>
-.timeline3 li {
-    list-style-type: none;
-}
-.timeline3 li > time + time:before {
-    content: "-";
-}
-.timeline3 li {
-    border-left: 2px solid #444444;
-}
-.timeline3 dl,
-.timeline3 li {
-    margin: 0;
-}
-.timeline3 li {
-    position: relative;
-    padding-left: 1em;
-    padding-bottom: 1em;
-}
-.timeline3 li > time {
-    position: absolute;
-    left: -3.5em;
-}
-.timeline3 li > time + time {
-    top: 1em;
-    left: -3.85em;
-}
-.timeline3 {
-    padding-left: 5em;
-    padding-top: 1.5em;
-}
-.timeline3 li > cite {
-    display: block;
-    font-size: 1.5em;
-    line-height: 1em;
-    padding-bottom: 0.5em;
-}
-.timeline3 li > time:first-of-type:after {
-	content: "\00B7";
-	position: absolute;
-	right: -0.35em;
-	top: -0.05em;
-	font-size: 5.2em;
-}
-.timeline3 dl {
-    padding-left: 1.5em;
-}
-.timeline3 li > cite {
-    display: block;
-    cursor: pointer;
-}
-.timeline3 li dl {
-    max-height: 0;
-    overflow: hidden;
-}
-.timeline3 li.expanded dl {
-    max-height: 60em;
-}
-.timeline3 li dl {
-    -webkit-transition: max-height 500ms ease-in-out;
-       -moz-transition: max-height 500ms ease-in-out;
-         -o-transition: max-height 500ms ease-in-out;
-           transition: max-height 500ms ease-in-out;
-}
+.timeline3 { font-size: 0.8em; }
+.timeline3 li { list-style-type: none; }
+.timeline3 li > time + time:before { content: "-"; }
+.timeline3 li { border-left: 2px solid #444444; }
+.timeline3 dl, .timeline3 li { margin: 0; }
+.timeline3 li { position: relative; padding-left: 1em; padding-bottom: 1em; }
+.timeline3 li > time { position: absolute; left: -3.5em; }
+.timeline3 li > time + time { top: 1em; left: -3.85em; }
+.timeline3 { padding-left: 5em; padding-top: 1.5em; }
+.timeline3 li > cite { display: block; font-size: 1.5em; line-height: 1em; padding-bottom: 0.5em; }
+.timeline3 li > time:first-of-type:after { content: "\2022"; font-size: 3em; line-height: 0.4em; position: absolute; right: -0.47em; top: 0.1em; }
+.localfile .timeline3 li > time:first-of-type:after { right: -0.65em; }
+.timeline3 dl { padding-left: 1.5em; }
+.timeline3 li > cite { display: block; cursor: pointer; }
+.timeline3 li dl { max-height: 0; overflow: hidden; }
+.timeline3 li.expanded dl { max-height: 60em; }
+.timeline3 li dl { -webkit-transition: max-height 500ms ease-in-out; -moz-transition: max-height 500ms ease-in-out; -o-transition: max-height 500ms ease-in-out; transition: max-height 500ms ease-in-out; }
+.timeline3 dt { width: 14em; }
+.timeline3 dd { margin-left: 16em; }
 </style>
 
+<figure>
 <div class="timeline3" id="javascript-4"></div>
+<figcaption>A fully interactive timeline requires only <span class="smcp">HTML</span>, <span class="smcp">CSS</span>, and a little JavaScript.</figcaption>
+</figure>
 
 <script>
-contentLoaded.done(function() {
+;(function(){
 
-allplays = [
+    draw = function() {
+
+        allplays = [
   { "play": "The Two Gentlemen of Verona",     "date": "1589-1591", "record": "Francis Meres' Palladis Tamia (1598); referred to as \"Gentlemen of Verona\"", "published": "First Folio (1623)", "performance": "adaptation by Benjamin Victor performed at David Garrick's Theatre Royal, Drury Lane in 1762. Earliest known performance of straight Shakespearean text at Royal Opera House in 1784, although because of the reference to the play in Palladis Tamia, we know it was definitely performed in Shakespeare's day.", "evidence": "The play contains passages which seem to borrow from John Lyly's Midas (1589), meaning it could not have been written prior to 1589. Additionally, Stanley Wells argues that the scenes involving more than four characters, \"betray an uncertainty of technique suggestive of inexperience.\" As such, the play is considered to be one of the first Shakespeare composed upon arriving in London (Roger Warren, following E.A.J. Honigmann, suggests he may have written it prior to his arrival) and, as such, he lacked theatrical experience. This places the date of composition as most likely somewhere between 1589 and 1591, by which time it is known he was working on the Henry VI plays" },
   { "play": "The Taming of the Shrew",         "date": "1590-1594", "record": "possible version of play entered into Stationers' Register on 2 May 1594 as \"a booke intituled A plesant Conceyted historie called the Tayminge of a Shrowe'. First record of play as it exists today found in the First Folio (1623)", "published": "possible version of play published in quarto in 1594 as A Pleasant Conceited Historie, called The taming of a Shrew (republished in 1596 and 1607). Play as it exists today first published in the First Folio (1623) as The Taming of the Shrew.", "performance": "According to Philip Henslowe's diary, a play called The Tamynge of A Shrowe was performed at Newington Butts Theatre on 13 June 1594. This could have been either the 1594 A Shrew or the Shakespearean The Shrew, but as the Admiral's Men and the Lord Chamberlain's Men were sharing the theatre at the time, and as such Shakespeare himself would have been there, scholars tend to assume that it was The Shrew. The Shakespearean version was definitely performed at court before King Charles I and Queen Henrietta Maria on 26 November 1633, where it was described as being \"liked'.", "evidence": "Kier Elam posits a date of 1591 as a terminus post quem for the composition of The Shrew, based on Shakespeare's probable use of two sources published that year; Abraham Ortelius's map of Italy in the Theatrum Orbis Terrarum (4th ed.) and John Florio's Second Fruits. However, scholars continue to debate the relationship between the 1594 A Shrew and the 1623 The Shrew. Some theorise that A Shrew is a reported text, meaning The Shrew must have been written prior to 2 May 1594; others, that A Shrew is an early draft, meaning The Shrew must have been completed sometime after 2 May 1594. There are also arguments that A Shrew may have been a source for The Shrew, that they could be two completely unrelated plays based on the same (now lost) source (the \"Ur-Shrew\" theory), or A Shrew could be an adaptation of The Shrew. Critics remain divided on this issue, and as such, dating the play is extremely difficult." },
   { "play": "Henry VI, Part 2",                "date": "1590-1591", "record": "version of the play entered into the Stationers' Register on 12 March 1594 as \"a booke intituled, the firste parte of the Contention of the twoo famous houses of york and Lancaster'.", "published": "version of the play published in quarto in 1594 as The First part of the Contention betwixt the two famous Houses of Yorke and Lancaster, with the death of the good Duke Humphrey: And the banishment and death of the Duke of Suffolke, and the Tragicall end of the proud Cardinal of Winchester, with the notable Rebellion of Jack Cade: and the Duke of Yorke's first claim unto the Crowne (republished in 1600 and 1619). The Folio text appears under the title The second Part of Henry the Sixt, with the death of the Good Duke Humfrey.", "performance": "although it is known that the play was definitely performed in Shakespeare's day, the first recorded performance was not until 23 April 1864 at the Surrey Theatre, directed by James Anderson.", "evidence": "It is known that 3 Henry VI was on stage by June 1592, and it is also known that 3 Henry VI was definitely a sequel to 2 Henry VI, meaning 2 Henry VI must also have been on stage by early 1592. This places the likely date of composition as 1590-1591." },
@@ -663,132 +623,140 @@ allplays = [
   { "play": "Cardenio",                        "date": "1612-1613", "record": "entered into the Stationers' Register in 1653, attributed to William Shakespeare and John Fletcher", "published": "an adaptation was published in 1727 by Lewis Theobald entitled Double Falshood; or, the Distrest Lovers", "performance": "1613, performed at the Globe by the King's Company", "evidence": "A lost play, published only in an adaptation by Lewis Theobald entitled Double Falshood (1728)." },
   { "play": "Henry VIII, or All is True",      "date": "1613",      "record": "", "published": "First Folio (1623) as The Famous History of the Life of King Henry the Eight", "performance": "29 June 1613, the night the Globe burnt down.", "evidence": "Probably written in collaboration with John Fletcher" },
   { "play": "The Two Noble Kinsmen",           "date": "1613",      "record": "entered into the Stationer' Register on 8 April 1634", "published": "published in quarto in 1634", "performance": "", "evidence": "Not included in the First Folio; written in collaboration with John Fletcher." }
-];
+        ];
 
-plays = allplays.slice(0,5);
-var container = document.getElementById("javascript-1");
-var list = document.createElement("ol");
-container.appendChild(list);
-plays.forEach(function(play) {
-    var listItem = document.createElement("li");
-    listItem.textContent = play.date + ": " + play.play;
-    list.appendChild(listItem);
-});
+        plays = allplays.slice(0,5);
+        var container = document.getElementById("javascript-1");
+        var list = document.createElement("ol");
+        container.appendChild(list);
+        plays.forEach(function(play) {
+            var listItem = document.createElement("li");
+            listItem.textContent = play.date + ": " + play.play;
+            list.appendChild(listItem);
+        });
+        
+        container = document.getElementById("javascript-2");
+        list = document.createElement("ol");
+        container.appendChild(list);
+        plays.forEach(function(play) {
+            var listItem = document.createElement("li");
+            if (play.date.indexOf("-") !== -1) {
+                var dates = play.date.split("-");
+                var time = document.createElement("time");
+                time.textContent = dates[0];
+                listItem.appendChild(time);
+                time = document.createElement("time");
+                time.textContent = dates[1];
+                listItem.appendChild(time);
+            } else {
+                var time = document.createElement("time");
+                time.textContent = play.date;
+                listItem.appendChild(time);
+            }
+            var cite = document.createElement("cite");
+            cite.textContent = play.play;
+            listItem.appendChild(cite);
+            list.appendChild(listItem);
+        })
+        
+        var descTerms = [
+            { key: "record",      label: "First official record"},
+            { key: "published",   label: "First published"},
+            { key: "performance", label: "First recorded performance"},
+            { key: "evidence",    label: "Evidence"},
+        ];
+        plays = allplays.slice(0,2);
+        container = document.getElementById("javascript-3");
+        list = document.createElement("ol");
+        container.appendChild(list);
+        plays.forEach(function(play) {
+            var listItem = document.createElement("li");
+            if (play.date.indexOf("-") !== -1) {
+                var dates = play.date.split("-");
+                var time = document.createElement("time");
+                time.textContent = dates[0];
+                listItem.appendChild(time);
+                time = document.createElement("time");
+                time.textContent = dates[1];
+                listItem.appendChild(time);
+            } else {
+                var time = document.createElement("time");
+                time.textContent = play.date;
+                listItem.appendChild(time);
+            }
+            var cite = document.createElement("cite");
+            cite.textContent = play.play;
+            listItem.appendChild(cite);
+            var descList = document.createElement("dl");
+            descTerms.forEach(function(term)  {
+                if (play[term.key]) {
+                    var descTerm = document.createElement("dt");
+                    descTerm.textContent = term.label;
+                    descList.appendChild(descTerm);
+                    var descElem = document.createElement("dd");
+                    descElem.textContent = play[term.key];
+                    descList.appendChild(descElem);
+                }
+            });
+            listItem.appendChild(descList);
+            list.appendChild(listItem);
+        })
+        
+        plays = allplays;
+        container = document.getElementById("javascript-4");
+        list = document.createElement("ol");
+        container.appendChild(list);
+        plays.forEach(function(play) {
+            var listItem = document.createElement("li");
+            if (play.date.indexOf("-") !== -1) {
+                var dates = play.date.split("-");
+                var time = document.createElement("time");
+                time.textContent = dates[0];
+                listItem.appendChild(time);
+                time = document.createElement("time");
+                time.textContent = dates[1];
+                listItem.appendChild(time);
+            } else {
+                var time = document.createElement("time");
+                time.textContent = play.date;
+                listItem.appendChild(time);
+            }
+            var cite = document.createElement("cite");
+            cite.textContent = play.play;
+            listItem.appendChild(cite);
+            var descList = document.createElement("dl");
+            descTerms.forEach(function(term)  {
+                if (play[term.key]) {
+                    var descTerm = document.createElement("dt");
+                    descTerm.textContent = term.label;
+                    descList.appendChild(descTerm);
+                    var descElem = document.createElement("dd");
+                    descElem.textContent = play[term.key];
+                    descList.appendChild(descElem);
+                }
+            });
+            listItem.appendChild(descList);
+            list.appendChild(listItem);
+        })
+        var clicked = function(ev) {
+            if (ev.target.nodeName === "CITE") {
+                var li = ev.target.parentNode;
+                if (li.className === "expanded") {
+                    li.className = "";
+                } else {
+                    li.className = "expanded";
+                }
+            }
+        };
+        document.getElementById("javascript-4").addEventListener("click", clicked);
 
-container = document.getElementById("javascript-2");
-list = document.createElement("ol");
-container.appendChild(list);
-plays.forEach(function(play) {
-    var listItem = document.createElement("li");
-    if (play.date.indexOf("-") !== -1) {
-        var dates = play.date.split("-");
-        var time = document.createElement("time");
-        time.textContent = dates[0];
-        listItem.appendChild(time);
-        time = document.createElement("time");
-        time.textContent = dates[1];
-        listItem.appendChild(time);
+    };
+    
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
     } else {
-        var time = document.createElement("time");
-        time.textContent = play.date;
-        listItem.appendChild(time);
+        window.addEventListener('load', draw);
     }
-    var cite = document.createElement("cite");
-    cite.textContent = play.play;
-    listItem.appendChild(cite);
-    list.appendChild(listItem);
-})
 
-var descTerms = [
-    { key: "record",      label: "First official record"},
-    { key: "published",   label: "First published"},
-    { key: "performance", label: "First recorded performance"},
-    { key: "evidence",    label: "Evidence"},
-];
-plays = allplays.slice(0,2);
-container = document.getElementById("javascript-3");
-list = document.createElement("ol");
-container.appendChild(list);
-plays.forEach(function(play) {
-    var listItem = document.createElement("li");
-    if (play.date.indexOf("-") !== -1) {
-        var dates = play.date.split("-");
-        var time = document.createElement("time");
-        time.textContent = dates[0];
-        listItem.appendChild(time);
-        time = document.createElement("time");
-        time.textContent = dates[1];
-        listItem.appendChild(time);
-    } else {
-        var time = document.createElement("time");
-        time.textContent = play.date;
-        listItem.appendChild(time);
-    }
-    var cite = document.createElement("cite");
-    cite.textContent = play.play;
-    listItem.appendChild(cite);
-    var descList = document.createElement("dl");
-    descTerms.forEach(function(term)  {
-        if (play[term.key]) {
-            var descTerm = document.createElement("dt");
-            descTerm.textContent = term.label;
-            descList.appendChild(descTerm);
-            var descElem = document.createElement("dd");
-            descElem.textContent = play[term.key];
-            descList.appendChild(descElem);
-        }
-    });
-    listItem.appendChild(descList);
-    list.appendChild(listItem);
-})
-
-plays = allplays;
-container = document.getElementById("javascript-4");
-list = document.createElement("ol");
-container.appendChild(list);
-plays.forEach(function(play) {
-    var listItem = document.createElement("li");
-    if (play.date.indexOf("-") !== -1) {
-        var dates = play.date.split("-");
-        var time = document.createElement("time");
-        time.textContent = dates[0];
-        listItem.appendChild(time);
-        time = document.createElement("time");
-        time.textContent = dates[1];
-        listItem.appendChild(time);
-    } else {
-        var time = document.createElement("time");
-        time.textContent = play.date;
-        listItem.appendChild(time);
-    }
-    var cite = document.createElement("cite");
-    cite.textContent = play.play;
-    listItem.appendChild(cite);
-    var descList = document.createElement("dl");
-    descTerms.forEach(function(term)  {
-        if (play[term.key]) {
-            var descTerm = document.createElement("dt");
-            descTerm.textContent = term.label;
-            descList.appendChild(descTerm);
-            var descElem = document.createElement("dd");
-            descElem.textContent = play[term.key];
-            descList.appendChild(descElem);
-        }
-    });
-    listItem.appendChild(descList);
-    list.appendChild(listItem);
-})
-var clicked = function(ev) {
-    if (ev.target.nodeName === "CITE") {
-        var li = ev.target.parentNode;
-        if (li.className === "expanded") {
-            li.className = "";
-        } else {
-            li.className = "expanded";
-        }
-    }
-};
-document.getElementById("javascript-4").addEventListener("click", clicked);
-
-});
+}());
 </script>

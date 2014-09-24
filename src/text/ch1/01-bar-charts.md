@@ -8,7 +8,7 @@ Since we're using the flotr2 library to create the chart, we need to include tha
 
 Flotr2 doesn't require any other JavaScript libraries (such as jQuery), but it does rely on the <span class="smcp">HTML</span> _canvas_ feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can add an additional library (`excanvas.min.js`) to our pages. That library is available from [Google](https://code.google.com/p/explorercanvas/). Since other browsers don't need this library, we use some special markup to make sure only <span class="smcp">IE8</span> and earlier will bother to load it. (Line 9.) Start with the following skeleton for your <span class="smcp">HTML</span> document:
 
-``` {.html .numberLines}
+``` {.html .numberLines .line-9}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -141,7 +141,7 @@ Another problem is a lack of spacing between the bars. By default, flotr2 has ea
 
 Here's how we pass those options to flotr2. Note in line 11 that we use the `ticks` property of the x-axis to tell flotr2 which labels match which x-values.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-11}
 Flotr.draw(document.getElementById("chart"), wins, {
     bars: {
         show: true,

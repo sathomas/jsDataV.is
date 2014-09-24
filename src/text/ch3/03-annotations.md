@@ -22,7 +22,7 @@ var stock = [
 
 Our visualization will include three distinct areas, each in a `<div>` element. The primary `<div>` created in line 3 will hold the chart. Underneath the chart we'll add the primary tool tip information in its own `<div>` (line 4), and we'll include supplementary details to the right (line 7). The example below uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.
 
-``` {.html .numberLines data-line='3,4,7'}
+``` {.html .numberLines}
 <div id="stock">
     <div style="float:left">
         <div class="chart"></div>
@@ -83,11 +83,11 @@ $(".chart")
     });
 ```
 
-As the comment in line 4 indicates, the library sometimes generates the event when the mouse leaves the chart area. In those cases a defined value for the offset will not exist.
+As the comment in lines 4 and 5 indicate, the library sometimes generates the event when the mouse leaves the chart area. In those cases a defined value for the offset will not exist.
 
 Once we have the mouse position, we can place our tooltip information in the `<div>` we set aside for it. We get the information in lines 3 and 5 from the `stock` array using the index value from the `sparklineRegionChange` event.
 
-``` {.javascript .numberLines data-line='3,5'}
+``` {.javascript .numberLines .line-3 .line-5}
         if (idx) {
             $(".info").html(
                 "Week of " + stock[idx].date 

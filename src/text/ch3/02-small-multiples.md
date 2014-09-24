@@ -269,7 +269,7 @@ You can think of the call to `.extend()` as a two-stage process.
 
 The resulting object will hold the options we want for charts of Barclay's technology stocks. Here's a complete code listing, using these objects to create the charts.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-12 .line-13}
 var sparkline_default = {
     lineColor: "#006363",
     fillColor: "#2D9999",
@@ -326,7 +326,7 @@ Sparklines lets you add special attributes directly to the <span class="smcp">HT
 In order to use <span class="smcp">HTML</span>-compliant attribute names to refer to sparklines' custom attributes, we just need to tell the sparklines library how to find those attribute names. For our <span class="smcp">HTML</span>, we use the standard `data-` prefix instead of `spark` in line 4.
 
 
-``` {.html .numberLines data-line='4'}
+``` {.html .numberLines .line-4}
 <tr>
     <td>BMY</td>
     <td>Bristol Meyers Squibb Co.</td>

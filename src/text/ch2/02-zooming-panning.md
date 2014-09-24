@@ -12,7 +12,7 @@ For this example, we'll walk through the steps required to support zooming with 
 
 Because we're sticking with the same data, most of the preparation is identical to the last example. We do, however, have to add the selection plugin to the page. That plugin is not available on common <span class="smcp">CDN</span>s, so we host it on our own server as you can see in line 12.
 
-``` {.html .numberLines}
+``` {.html .numberLines .line-12}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -114,7 +114,7 @@ var options = {
 
 And with that addition, our chart is now interactive. Users can zoom in to see as much detail as they want. There is a small problem, though. Our visualization doesn't give users a way to zoom back out. Obviously we can't use the selection plugin to zoom out since that would require selecting outside of the current chart area. Instead, we can add a button to the page to reset the zoom level. You can see the button in line 9 of the markup below. It's right after the `<div>` that holds the chart.
 
-``` {.html .numberLines}
+``` {.html .numberLines .line-9}
 <!DOCTYPE html>
 <html lang="en">
   <head>

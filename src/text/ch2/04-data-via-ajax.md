@@ -54,7 +54,7 @@ With an understanding of the data format (so far), let's write some code to retr
 
 As you might expect, the `.getJSON()` function will do most of the work for us. The simplest way to use that function might be something like the following. Note that we're adding `format=json` to the query in line 3 to tell the World Bank what format we want. Without that parameter their server returns <span class="smcp">XML</span>, which isn't at all what `getJSON()` expects. 
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-3}
 $.getJSON(
     "http://api.worldbank.org/regions/",
     {format: "json"},
@@ -245,7 +245,7 @@ deferredRegionsAvailable.done(function(regions) {
 
 Retrieving the actual <span class="smcp">GDP</span> data for each region requires a new <span class="smcp">AJAX</span> request. As you might expect, we'll save the `Deferred` objects for those requests so we can process the responses when they're available. The jQuery `.each()` function is a convenient way to iterate through the list of regions to initiate these requests. (The "<span class="smcp">NY</span>.<span class="smcp">GDP</span>.<span class="smcp">MKTP</span>.<span class="smcp">CD</span>" part of each request <span class="smcp">URL</span> in line 6 is the World Bank's code for <span class="smcp">GDP</span> data.)
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-6}
 deferredRegionsAvailable.done(function(regions) {
     $.each(regions, function(idx, regionObj) {
         regionObj.deferredDataRequest = $.getJSON(
@@ -261,7 +261,7 @@ deferredRegionsAvailable.done(function(regions) {
 
 As long as we're iterating through the regions, we can include the code to handle the processing of the <span class="smcp">GDP</span> data. By now it won't surprise you that we'll create a `Deferred` object to track when that processing is complete. The processing itself will simply store the returned response (after skipping past the paging information) in the region object.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-12}
 deferredRegionsAvailable.done(function(regions) {
     $.each(regions, function(idx, regionObj) {
         regionObj.deferredDataRequest = $.getJSON(
@@ -333,7 +333,7 @@ As you can see, we're iterating through the list of regions with the `.each()` f
 
 Since we've made it this far with a clear separation between code that handles events and code that processes the results, there's no reason not to continue the approach when we actually create the chart. Yet another `Deferred` object creates that separation. We've taken the code fragments from above and wrapped them in deferred object handling. Once all the data has been processed, we resolve that deferred object (line 17).
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-17}
 var deferredChartDataReady = $.Deferred();
 
 deferredAllDataAvailable.done(function(regions) {

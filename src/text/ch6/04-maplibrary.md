@@ -6,9 +6,7 @@ In the 1940s, two private railroads were in competition for passenger traffic in
 
 ### Step 1: Prepare the Data
 
-The data for our visualization is readily available as timetables for the two routes. A more precise comparison might consider timetables from the same year, but for this example we'll use the [Southerner's timetable from 1941](http://www.streamlinerschedules.com/concourse/track1/southerner194112.html) and the [Silver Comet's timetable from 1947](http://www.streamlinerschedules.com/concourse/track1/silvercomet194706.html). Those timetables only include station names, so we will have to look up latitude and longitude values for all of the stations in order to place them on a map. We can also calculate the time difference between stops, in minutes. Those calculations result in two arrays, one for each train.
-
-{>> Some questions that pop up for me here: why using different years? how'd you calculate these coordinates?<<}
+The data for our visualization is readily available as timetables for the two routes. A more precise comparison might consider timetables from the same year, but for this example we'll use the [Southerner's timetable from 1941](http://www.streamlinerschedules.com/concourse/track1/southerner194112.html) and the [Silver Comet's timetable from 1947](http://www.streamlinerschedules.com/concourse/track1/silvercomet194706.html) as those timetables are readily available on the internet. The timetables only include station names, so we will have to look up latitude and longitude values (using, for example, Google Maps) for all of the stations in order to place them on a map. We can also calculate the time difference between stops, in minutes. Those calculations result in two arrays, one for each train.
 
 ``` {.javascript .numberLines}
 var seaboard = [
@@ -46,24 +44,24 @@ To add Leaflet maps to our web page we'll need to include the library and its co
 
 ### Step 3: Draw the Base Map
 
-The _Silver Comet_ and _The Southerner_ traveled between New York and Birmingham (and, in the case of The Southerner, all the way to New Orleans). But the region that's relevant for our visualization lies between Washington, DC and Atlanta, GA, because that's the only region where the train routes differed--for the rest of their journeys the routes were essentially the same. Our map, therefore, will extend from Atlanta in the south west to Washington in the north east. Using a bit of trial and error we can determine the best center point and zoom level for the map. The center point defines the latitude and longitude for the map's center, and the zoom level determines the area covered by the map on its initial display. When we create the map object, we give it the `id` of the containing element as well as those parameters.
+The _Silver Comet_ and _The Southerner_ traveled between New York and Birmingham (and, in the case of The Southerner, all the way to New Orleans). But the region that's relevant for our visualization lies between Washington, <span class="smcp">DC</span> and Atlanta, <span class="smcp">GA</span>, because that's the only region where the train routes differed--for the rest of their journeys the routes were essentially the same. Our map, therefore, will extend from Atlanta in the south west to Washington in the north east. Using a bit of trial and error we can determine the best center point and zoom level for the map. The center point defines the latitude and longitude for the map's center, and the zoom level determines the area covered by the map on its initial display. When we create the map object, we give it the `id` of the containing element as well as those parameters.
 
-``` {.javascript .numberLines}```
+``` {.javascript .numberLines}
 var map = L.map('map',{
     center: [36.3, -80.2],
-    zoom: 7
+    zoom: 6
 });
 ```
 
 For this particular visualization, there is little point in zooming or panning the map, so we can include additional options to disable those interactions. Setting both the minimum zoom level (line 5) and the maximum zoom level (line 6) to be equal to the initial zoom level disables zooming. We'll also disable the on-screen map controls for zooming in line 8. The other zoom controls are likewise disabled (lines 9 through 12). For panning, we disable dragging the map (line 7) and keyboard arrow keys (line 13). We also specify the latitude/longitude bounds for the map (line 3).
 
-``` {.javascript .numberLines}```
+``` {.javascript .numberLines}
 var map = L.map('map',{
     center: [36.3, -80.2],
     maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
-    zoom: 7,
-    minZoom: 7,
-    maxZoom: 7,
+    zoom: 6,
+    minZoom: 6,
+    maxZoom: 6,
     dragging: false,
     zoomControl: false,
     touchZoom: false,
@@ -82,7 +80,7 @@ Because we've disabled the ability of the user to pan or zoom the map, we should
 }
 ```
 
-As with the Modest Maps example, we base our map on a set of tiles. There are many tile providers that support Leaflet; some are open source while others are commercial. Leaflet has a [demo page](http://leaflet-extras.github.io/leaflet-providers/preview/) you can use to compare some of the open source tile providers. For our example we want to avoid tiles with roads, as the highway network looked very different in the 1940s. Esri has a neutral _WorldGrayCanvas_ set that works well for our visualization. It does include current county boundaries, and some counties may have changed their borders since the 1940s. For our example we won't worry about that detail, though you might consider it in any production visualization. Leaflet's API let's us create the tile layer and add it to the map in a single statement. Note that Leaflet includes a built-in option to handle attribution so we can be sure to credit the tile source appropriately.
+As with the Modest Maps example, we base our map on a set of tiles. There are many tile providers that support Leaflet; some are open source while others are commercial. Leaflet has a [demo page](http://leaflet-extras.github.io/leaflet-providers/preview/) you can use to compare some of the open source tile providers. For our example we want to avoid tiles with roads, as the highway network looked very different in the 1940s. Esri has a neutral _WorldGrayCanvas_ set that works well for our visualization. It does include current county boundaries, and some counties may have changed their borders since the 1940s. For our example we won't worry about that detail, though you might consider it in any production visualization. Leaflet's <span class="smcp">API</span> let's us create the tile layer and add it to the map in a single statement. Note that Leaflet includes a built-in option to handle attribution so we can be sure to credit the tile source appropriately.
 
 ``` {.javascript .numberLines}
 L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
@@ -99,7 +97,7 @@ With a map and a base tile layer, we have a good starting point for our visualiz
 .leaflet-container { cursor: default; }
 </style>
 <figure style="margin-left:0;margin-right:0;">
-<div id="map-library-1" style="width:840px;height:660px"></div>
+<div id="map-library-1" style="width:640px;height:500px;"></div>
 <figcaption>A base layer map provides the canvas for a visualization.</figcaption>
 </figure>
 
@@ -138,7 +136,7 @@ L.polyline(
 With this addition the visualization of figure NEXTFIGURENUMBER is starting to convey the relative distances of the two routes.
 
 <figure style="margin-left:0;margin-right:0;">
-<div id="map-library-2" style="width:840px;height:660px"></div>
+<div id="map-library-2" style="width:640px;height:500px;"></div>
 <figcaption>Additional map layers add data to the canvas.</figcaption>
 </figure>
 
@@ -169,11 +167,9 @@ L.Control.Animate = L.Control.extend({
     },
 ```
 
-For our example we're using UTF-8 characters for the play and pause control. In a production visualization you might consider using icon fonts or images to have maximum control over the appearance.
+For our example we're using <span class="smcp">UTF</span>-8 characters for the play and pause control. In a production visualization you might consider using icon fonts or images to have maximum control over the appearance.
 
-Our animation control also needs an `onAdd()` method for Leaflet to call when it adds a control to a map. This method constructs the HTML markup for the control and returns that to the caller.
-
-{>> I think this reads better with the line-by-line explanation after the code listing, but if you prefer to switch it back up here let me know <<}
+Our animation control also needs an `onAdd()` method for Leaflet to call when it adds a control to a map. This method constructs the <span class="smcp">HTML</span> markup for the control and returns that to the caller.
 
 ``` {.javascript .numberLines}
     onAdd: function () {
@@ -188,21 +184,19 @@ Our animation control also needs an `onAdd()` method for Leaflet to call when it
     },
 ```
 
-Our implementation of `onAdd()` constructs the markup in two stages. First, starting at line 2, it creates a `<div>` element and gives that element two classes: `leaflet-control-animate` and `leaflet-bar`. The first class is unique to our animation control, and we can use it to apply CSS rules uniquely to our control. The second class is a general Leaflet class for all toolbars. By adding it to the animation control we're making that control consistent with other Leaflet controls. Note that Leaflet includes the `L.DomUtil.create()` method in line 3 to handle the details of creating the element.
+Our implementation of `onAdd()` constructs the markup in two stages. First, starting at line 3, it creates a `<div>` element and gives that element two classes: `leaflet-control-animate` and `leaflet-bar`. The first class is unique to our animation control, and we can use it to apply <span class="smcp">CSS</span> rules uniquely to our control. The second class is a general Leaflet class for all toolbars. By adding it to the animation control we're making that control consistent with other Leaflet controls. Note that Leaflet includes the `L.DomUtil.create()` method in line 3 to handle the details of creating the element.
 
 The second part of `onAdd()` creates a button element within this `<div>` container. Most of the work takes place in the `_createButton()` function at line 6 which we'll examine shortly. The parameters to the function include:
 
 * the text for the button,
 * the tooltip (title) to display when the mouse hovers over the button,
-* the CSS class to apply to the button,
+* the <span class="smcp">CSS</span> class to apply to the button,
 * the container in which to insert the button, and
 * a function to call when the button is clicked.
 
 If you're wondering why the name of this function begins with an underscore (_), that's the convention that Leaflet uses for private methods (and attributes). It's only a convention so there's no requirement to follow it, but doing so will make it easier for someone familiar with Leaflet to understand our code.
 
-The `_createButton()` method itself relies on Leaflet utility functions. It creates the button as an `<a>` element with the specified text, title, and class, and it creates that element within the appropriate container (lines 2-5). It then binds several events to this `<a>` element. First it ignores initial `mousedown` and double-click events (line 8). It also prevents standard `click` events from propagating up the document tree and from implementing their default behavior (line 9). Finally, it executes the callback function on `click` events (line 10).
-
-{>> The explanation of line 9 is a bit confusing to me. "Standard click events" sounds like it's meant to contrast with other kinds of click events--but is that right? Can you clarify what you mean there? <<}
+The `_createButton()` method itself relies on Leaflet utility functions. It creates the button as an `<a>` element with the specified text, title, and class, and it creates that element within the appropriate container (lines 2-5). It then binds several events to this `<a>` element. First it ignores initial `mousedown` and double-click events (line 8). It also prevents single-click events from propagating up the document tree and from implementing their default behavior (line 9). Finally, it executes the callback function on `click` events (line 10).
 
 
 ``` {.javascript .numberLines}
@@ -362,11 +356,9 @@ var animateStep = function() {
 }
 ```
 
-First we check to see whether or not this is the very first step in the animation. If it isn't, then we remove the previous step's polylines from the map.
+First we check to see whether or not this is the very first step in the animation. If it isn't, `step` will be greater than 0 and we can remove the previous step's polylines from the map in line 3.
 
-{>>I don't quite follow, what are you removing here exactly?<<}
-
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-3}
     if (step > 0) {
         routeAnimations.forEach(function(animation) {
             map.removeLayer(animation[step-1]);
@@ -425,9 +417,9 @@ control.addTo(map);
 
 ### Step 8: Create Labels for the Stops
 
-Before we wrap up the animation we'll add some labels for each train stop. To emphasize the passage of time, we'll reveal each label as the animation reaches the corresponding stop. Since Leaflet doesn't have a predefined object for labels, we can once again create our own custom object. We start with the basic Leaflet `Class`.
+Before we wrap up the animation we'll add some labels for each train stop. To emphasize the passage of time, we'll reveal each label as the animation reaches the corresponding stop. To do that we'll create the labels using a special object; then we'll create a method to add labels to the map, and, to finish the label object, we'll create methods that the animation control can call to get or set a label's status.
 
-{>>Might help to offer a little more overview on how you are adding labels, splitting the process into three steps<<}
+Since Leaflet doesn't have a predefined object for labels, we can once again create our own custom object. We start with the basic Leaflet `Class`.
 
 ``` {.javascript .numberLines}
 L.Label = L.Class.extend({
@@ -435,9 +427,9 @@ L.Label = L.Class.extend({
 });
 ```
 
-Our `Label` object accepts parameters for its position on the map, its label text, and any options. Below, we extend the `initialize()` method of the Leaflet `Class` to handle those parameters. For position and text we simply save their values for later use. For the options we use a Leaflet utility in line 4 to easily support default values. The object includes one variable to keep track of its status. Initially all labels are hidden, so `this._status` is initialized appropriately.
+Our `Label` object accepts parameters for its position on the map, its label text, and any options. Below, we extend the `initialize()` method of the Leaflet `Class` to handle those parameters. For position and text we simply save their values for later use. For the options we use a Leaflet utility in line 4 to easily support default values. The object includes one variable to keep track of its status. Initially all labels are hidden, so `this._status` is initialized appropriately in line 5.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-5}
     initialize: function(latLng, label, options) {
         this._latlng = latLng;
         this._label = label;
@@ -459,7 +451,7 @@ This `options` attribute, combined with the call to `L.Util.setOptions` in the `
 
 Next we write the method that adds a label to a map. This method
 
-1. creates a new `<div>` element with the CSS class `leaflet-label` (line 2),
+1. creates a new `<div>` element with the <span class="smcp">CSS</span> class `leaflet-label` (line 2),
 2. sets the `line-height` of that element to `0` to work around a quirk in the way Leaflet calculates position (line 3),
 3. sets the `opacity` of the element to `0` to match its initial `hidden` status (line 4),
 4. adds the new element to the `markerPane` layer in the map (line 5),
@@ -576,7 +568,7 @@ To use our new function, we call and pass in all the routes to animate.
 var labels = buildLabelAnimation(seaboard, southern);
 ```
 
-Because we're not animating the start (Washington, DC) or end (Atlanta, GA) of any routes, we can go ahead and display those on the map from the start. We can get the coordinates from any route; the example below uses the `seaboard` data set.
+Because we're not animating the start (Washington, <span class="smcp">DC</span>) or end (Atlanta, <span class="smcp">GA</span>) of any routes, we can go ahead and display those on the map from the start. We can get the coordinates from any route; the example below uses the `seaboard` data set.
 
 ``` {.javascript .numberLines}
 var start = seaboard[0];
@@ -671,7 +663,7 @@ The final code block in our animation step function is the same as before. We re
     return ++step === maxSteps;
 ```
 
-There's one more improvement we can make the animation, in this case with a judicious bit of CSS. Because we use the `opacity` property to change the status of the labels, we can define a CSS transition for that property that will make any changes less abrupt. To accommodate all popular browsers we use appropriate vendor prefixes, but the effect of the rule is consistent. Whenever the browser changes the opacity of elements within a `leaflet-label` class, it will ease the transition in and out over a 500 millisecond period. This transition prevents the label animations from distracting users too much from the path animation that is the visualization's main effect.
+There's one more improvement we can make the animation, in this case with a judicious bit of <span class="smcp">CSS</span>. Because we use the `opacity` property to change the status of the labels, we can define a <span class="smcp">CSS</span> transition for that property that will make any changes less abrupt. To accommodate all popular browsers we use appropriate vendor prefixes, but the effect of the rule is consistent. Whenever the browser changes the opacity of elements within a `leaflet-label` class, it will ease the transition in and out over a 500 millisecond period. This transition prevents the label animations from distracting users too much from the path animation that is the visualization's main effect.
 
 ``` {.css .numberLines}
 .leaflet-label {
@@ -710,15 +702,13 @@ L.control.title = function(title, options) {
 };
 ```
 
-Now we can use the following code to create a Title object with our desired content and immediately add it to the map.
+Now we can use the following code to create a Title object with our desired content and immediately add it to the map. Here's a simple implementation; you can see a more elaborate title in the example of figure NEXTFIGURENUMBER.
 
 ``` {.javascript .numberLines}
 L.control.title("Geography as a Competitive Advantage").addTo(map);
 ```
 
-{>> Mention that for the actual final graph you've added some extra, HTML formatted description to this title? <<}
-
-To set the title's appearance, we can define CSS rules for children of the `leaflet-control-title` class.
+To set the title's appearance, we can define <span class="smcp">CSS</span> rules for children of the `leaflet-control-title` class.
 
 At this point we have the interactive visualization of the two train routes in figure NEXTFIGURENUMBER. Our users can clearly see that the Southerner has a quicker route from Washington to Atlanta.
 
@@ -735,20 +725,36 @@ At this point we have the interactive visualization of the two train routes in f
     margin: 0;
     padding-left: 10px;
     padding-top: 0;
-    width: 450px;
+    width: 340px;
     background-color: white;
     background-color: rgba(255,255,255,0.8);
     border: 1px solid #CECDD2;
 }
-.leaflet-control-title h1 {
-    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    font-size: 22px;
+.leaflet-control-title div {
+    font-family: 'Varela', sans-serif;
+    font-weight: bold;
+    font-size: 1.3em;
+    padding-top: 0.2em;
     margin: 0;
 }
 .leaflet-control-title p {
+    font-family: 'Varela', sans-serif;
+    font-size: 1.1em;
     padding-right: 15px;
     -webkit-hyphens: auto;
     hyphens: auto;
+}
+.leaflet-label, .leaflet-control-attribution.leaflet-control {
+    font-family: 'Varela', sans-serif;
+}
+.localfile .leaflet-control-title div {
+    font-family: 'Avenir';
+}
+.localfile .leaflet-control-title p {
+    font-family: 'Avenir';
+}
+.localfile .leaflet-label, .localfile .leaflet-control-attribution.leaflet-control {
+    font-family: 'Avenir';
 }
 .seaboard {color: #88020B;}
 .southern {color: #106634;}
@@ -756,393 +762,407 @@ At this point we have the interactive visualization of the two train routes in f
     position: relative;
     top: 1px;
 }
+.leaflet-container a {
+    text-shadow: none;
+    background-image: none;
+    color: rgb(51, 51, 51);
+}
 </style>
 
 <figure style="margin-left:0;margin-right:0;">
-<div id="map-library-3" style="width:840px;height:660px"></div>
+<div id="map-library-3" style="width:640px;height:500px;"></div>
 <figcaption>Maps built in the browser with a map library can use interactivity to build interest.</figcaption>
 </figure>
 
 
 
 <script>
-contentLoaded.done(function() {
+;(function(){
 
+    draw = function() {
 
-var seaboard = [
-    { "stop": "Washington",     "latitude": 38.895111, "longitude": -77.036667, "duration":  77, "offset": [-30,-10] },
-    { "stop": "Fredericksburg", "latitude": 38.301806, "longitude": -77.470833, "duration":  89, "offset": [  6,  4] },
-    { "stop": "Richmond",       "latitude": 37.533333, "longitude": -77.466667, "duration":  29, "offset": [  6,  4] },
-    { "stop": "Petersburg",     "latitude": 37.21295,  "longitude": -77.400417, "duration":  93, "offset": [  6,  4] },
-    { "stop": "Henderson",      "latitude": 36.324722, "longitude": -78.408611, "duration":  44, "offset": [  6,  4] },
-    { "stop": "Raleigh",        "latitude": 35.818889, "longitude": -78.644722, "duration": 116, "offset": [  6,  4] },
-    { "stop": "Hamlet",         "latitude": 34.888056, "longitude": -79.706111, "duration":  74, "offset": [  6,  6] },
-    { "stop": "Monroe",         "latitude": 34.988889, "longitude": -80.549722, "duration":  58, "offset": [  6, -8] },
-    { "stop": "Chester",        "latitude": 34.705556, "longitude": -81.211667, "duration":  54, "offset": [  6,  6] },
-    { "stop": "Clinton",        "latitude": 34.471389, "longitude": -81.875,    "duration":  34, "offset": [  6,  6] },
-    { "stop": "Greenwood",      "latitude": 34.189722, "longitude": -82.154722, "duration":  22, "offset": [ 10, -2] },
-    { "stop": "Abbeville",      "latitude": 34.178611, "longitude": -82.379167, "duration":  39, "offset": [  4, 10] },
-    { "stop": "Elberton",       "latitude": 34.109722, "longitude": -82.865556, "duration":  41, "offset": [  6, 10] },
-    { "stop": "Athens",         "latitude": 33.95,     "longitude": -83.383333, "duration":  75, "offset": [  6,  6] },
-    { "stop": "Emory",          "latitude": 33.791111, "longitude": -84.323333, "duration":  25, "offset": [ 10,  4] },
-    { "stop": "Atlanta",        "latitude": 33.755,    "longitude": -84.39,     "duration":   0, "offset": [-21, 10] }
-];
-
-var southern = [
-    { "stop": "Washington",      "latitude": 38.895111, "longitude": -77.036667, "duration":  14, "offset": [-30,-10] },
-    { "stop": "Alexandria",      "latitude": 38.804722, "longitude": -77.047222, "duration": 116, "offset": [  4,  4] },
-    { "stop": "Charlottesville", "latitude": 38.0299,   "longitude": -78.479,    "duration":  77, "offset": [-85,  0] },
-    { "stop": "Lynchburg",       "latitude": 37.403672, "longitude": -79.170205, "duration":  71, "offset": [-62,  0] },
-    { "stop": "Danville",        "latitude": 36.587238, "longitude": -79.404404, "duration":  64, "offset": [-48, -1] },
-    { "stop": "Greensboro",      "latitude": 36.08,     "longitude": -79.819444, "duration":  18, "offset": [-69, -4] },
-    { "stop": "High Point",      "latitude": 35.970556, "longitude": -79.9975,   "duration":  47, "offset": [  5,  7] },
-    { "stop": "Salisbury",       "latitude": 35.668333, "longitude": -80.478611, "duration":  50, "offset": [-57,  0] },
-    { "stop": "Charlotte",       "latitude": 35.226944, "longitude": -80.843333, "duration":  25, "offset": [  8,  0] },
-    { "stop": "Gastonia",        "latitude": 35.255278, "longitude": -81.180278, "duration":  63, "offset": [-26,-10] },
-    { "stop": "Spartanburg",     "latitude": 34.946667, "longitude": -81.9275,   "duration":  43, "offset": [-80, -7] },
-    { "stop": "Greenville",      "latitude": 34.844444, "longitude": -82.385556, "duration": 187, "offset": [-70,  2] },
-    { "stop": "Atlanta",         "latitude": 33.755,    "longitude": -84.39,     "duration":   0, "offset": [-21, 10] }
-];
-
-var map1 = L.map('map-library-1',{
-    center: [36.3, -80.6],
-    maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
-    zoom: 7,
-    minZoom: 7,
-    maxZoom: 7,
-    dragging: false,
-    zoomControl: false,
-    touchZoom: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    boxZoom: false,
-    keyboard: false
-});
-
-L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-     maxZoom: 16
-}).addTo(map1);
-
-var map2 = L.map('map-library-2',{
-    center: [36.3, -80.6],
-    maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
-    zoom: 7,
-    minZoom: 7,
-    maxZoom: 7,
-    dragging: false,
-    zoomControl: false,
-    touchZoom: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    boxZoom: false,
-    keyboard: false
-});
-
-L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-     maxZoom: 16
-}).addTo(map2);
- 
-L.polyline(
-    seaboard.map(function(stop) {return [stop.latitude, stop.longitude]}),
-    {clickable: false, color: "#88020B", weight: 1}
-).addTo(map2);
-
-L.polyline(
-    southern.map(function(stop) {return [stop.latitude, stop.longitude]}),
-    {clickable: false, color: "#106634", weight: 1}
-).addTo(map2);
-
-
-
-var map3 = L.map('map-library-3',{
-    center: [36.3, -80.6],
-    maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
-    zoom: 7,
-    minZoom: 7,
-    maxZoom: 7,
-    dragging: false,
-    zoomControl: false,
-    touchZoom: false,
-    scrollWheelZoom: false,
-    doubleClickZoom: false,
-    boxZoom: false,
-    keyboard: false
-});
-
-L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-     maxZoom: 16
-}).addTo(map3);
-
-L.polyline(
-    seaboard.map(function(stop) {return [stop.latitude, stop.longitude]}),
-    {clickable: false, color: "#88020B", weight: 1}
-).addTo(map3);
-
-L.polyline(
-    southern.map(function(stop) {return [stop.latitude, stop.longitude]}),
-    {clickable: false, color: "#106634", weight: 1}
-).addTo(map3);
-
-
-L.Control.Animate = L.Control.extend({
-    options: {
-        position: 'bottomleft',
-        animateStartText: '▶︎',
-        animateStartTitle: 'Start animation',
-        animatePauseText: '◼︎',
-        animatePauseTitle: 'Pause animation',
-        animateResumeText: '▶︎',
-        animateResumeTitle: 'Resume animation',
-        animateStartFn: null,
-        animateStopFn: null
-    },
-    
-    onAdd: function () {
-        var animateName = 'leaflet-control-animate',
-            container = L.DomUtil.create('div', animateName + ' leaflet-bar'),
-            options = this.options;
-
-        this._button  = this._createButton(options.animateStartText, options.animateStartTitle,
-                animateName,  container, this._clicked);
-
-        return container;
-    },
-
-    _createButton: function (html, title, className, container, fn) {
-        var link = L.DomUtil.create('a', className, container);
-        link.innerHTML = html;
-        link.href = '#';
-        link.title = title;
-
-        L.DomEvent
-            .on(link, 'mousedown dblclick', L.DomEvent.stopPropagation)
-            .on(link, 'click', L.DomEvent.stop)
-            .on(link, 'click', fn, this);
-
-        return link;
-    },
-    
-    _running: false,
-    
-    _clicked: function() {
-        if (this._running) {
-            this._button.innerHTML = this.options.animateResumeText;
-            this._button.title = this.options.animateResumeTitle;
-            if (this.options.animateStopFn) {
-                this.options.animateStopFn();
+        var seaboard = [
+            { "stop": "Washington",     "latitude": 38.895111, "longitude": -77.036667, "duration":  77, "offset": [-30,-10] },
+            { "stop": "Fredericksburg", "latitude": 38.301806, "longitude": -77.470833, "duration":  89, "offset": [  6,  4] },
+            { "stop": "Richmond",       "latitude": 37.533333, "longitude": -77.466667, "duration":  29, "offset": [  6,  4] },
+            { "stop": "Petersburg",     "latitude": 37.21295,  "longitude": -77.400417, "duration":  93, "offset": [  6,  4] },
+            { "stop": "Henderson",      "latitude": 36.324722, "longitude": -78.408611, "duration":  44, "offset": [  6,  4] },
+            { "stop": "Raleigh",        "latitude": 35.818889, "longitude": -78.644722, "duration": 116, "offset": [  6,  4] },
+            { "stop": "Hamlet",         "latitude": 34.888056, "longitude": -79.706111, "duration":  74, "offset": [  6,  6] },
+            { "stop": "Monroe",         "latitude": 34.988889, "longitude": -80.549722, "duration":  58, "offset": [  6, -8] },
+            { "stop": "Chester",        "latitude": 34.705556, "longitude": -81.211667, "duration":  54, "offset": [  6,  6] },
+            { "stop": "Clinton",        "latitude": 34.471389, "longitude": -81.875,    "duration":  34, "offset": [  6,  6] },
+            { "stop": "Greenwood",      "latitude": 34.189722, "longitude": -82.154722, "duration":  22, "offset": [ 10, -2] },
+            { "stop": "Abbeville",      "latitude": 34.178611, "longitude": -82.379167, "duration":  39, "offset": [  4, 10] },
+            { "stop": "Elberton",       "latitude": 34.109722, "longitude": -82.865556, "duration":  41, "offset": [  6, 10] },
+            { "stop": "Athens",         "latitude": 33.95,     "longitude": -83.383333, "duration":  75, "offset": [  6,  6] },
+            { "stop": "Emory",          "latitude": 33.791111, "longitude": -84.323333, "duration":  25, "offset": [ 10,  4] },
+            { "stop": "Atlanta",        "latitude": 33.755,    "longitude": -84.39,     "duration":   0, "offset": [-21, 10] }
+        ];
+        
+        var southern = [
+            { "stop": "Washington",      "latitude": 38.895111, "longitude": -77.036667, "duration":  14, "offset": [-30,-10] },
+            { "stop": "Alexandria",      "latitude": 38.804722, "longitude": -77.047222, "duration": 116, "offset": [  4,  4] },
+            { "stop": "Charlottesville", "latitude": 38.0299,   "longitude": -78.479,    "duration":  77, "offset": [-85,  0] },
+            { "stop": "Lynchburg",       "latitude": 37.403672, "longitude": -79.170205, "duration":  71, "offset": [-62,  0] },
+            { "stop": "Danville",        "latitude": 36.587238, "longitude": -79.404404, "duration":  64, "offset": [-48, -1] },
+            { "stop": "Greensboro",      "latitude": 36.08,     "longitude": -79.819444, "duration":  18, "offset": [-69, -4] },
+            { "stop": "High Point",      "latitude": 35.970556, "longitude": -79.9975,   "duration":  47, "offset": [  5,  7] },
+            { "stop": "Salisbury",       "latitude": 35.668333, "longitude": -80.478611, "duration":  50, "offset": [-57,  0] },
+            { "stop": "Charlotte",       "latitude": 35.226944, "longitude": -80.843333, "duration":  25, "offset": [  8,  0] },
+            { "stop": "Gastonia",        "latitude": 35.255278, "longitude": -81.180278, "duration":  63, "offset": [-26,-10] },
+            { "stop": "Spartanburg",     "latitude": 34.946667, "longitude": -81.9275,   "duration":  43, "offset": [-80, -7] },
+            { "stop": "Greenville",      "latitude": 34.844444, "longitude": -82.385556, "duration": 187, "offset": [-70,  2] },
+            { "stop": "Atlanta",         "latitude": 33.755,    "longitude": -84.39,     "duration":   0, "offset": [-21, 10] }
+        ];
+        
+        var map1 = L.map('map-library-1',{
+            center: [36.3, -80.6],
+            maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
+            zoom: 6,
+            minZoom: 6,
+            maxZoom: 6,
+            dragging: false,
+            zoomControl: false,
+            touchZoom: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false
+        });
+        
+        L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+             maxZoom: 16
+        }).addTo(map1);
+        
+        var map2 = L.map('map-library-2',{
+            center: [36.3, -80.6],
+            maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
+            zoom: 6,
+            minZoom: 6,
+            maxZoom: 6,
+            dragging: false,
+            zoomControl: false,
+            touchZoom: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false
+        });
+        
+        L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+             maxZoom: 16
+        }).addTo(map2);
+         
+        L.polyline(
+            seaboard.map(function(stop) {return [stop.latitude, stop.longitude]}),
+            {clickable: false, color: "#88020B", weight: 1}
+        ).addTo(map2);
+        
+        L.polyline(
+            southern.map(function(stop) {return [stop.latitude, stop.longitude]}),
+            {clickable: false, color: "#106634", weight: 1}
+        ).addTo(map2);
+        
+        
+        
+        var map3 = L.map('map-library-3',{
+            center: [36.3, -80.6],
+            maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
+            zoom: 6,
+            minZoom: 6,
+            maxZoom: 6,
+            dragging: false,
+            zoomControl: false,
+            touchZoom: false,
+            scrollWheelZoom: false,
+            doubleClickZoom: false,
+            boxZoom: false,
+            keyboard: false
+        });
+        
+        L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+             maxZoom: 16
+        }).addTo(map3);
+        
+        L.polyline(
+            seaboard.map(function(stop) {return [stop.latitude, stop.longitude]}),
+            {clickable: false, color: "#88020B", weight: 1}
+        ).addTo(map3);
+        
+        L.polyline(
+            southern.map(function(stop) {return [stop.latitude, stop.longitude]}),
+            {clickable: false, color: "#106634", weight: 1}
+        ).addTo(map3);
+        
+        
+        L.Control.Animate = L.Control.extend({
+            options: {
+                position: 'bottomleft',
+                animateStartText: '▶︎',
+                animateStartTitle: 'Start animation',
+                animatePauseText: '◼︎',
+                animatePauseTitle: 'Pause animation',
+                animateResumeText: '▶︎',
+                animateResumeTitle: 'Resume animation',
+                animateStartFn: null,
+                animateStopFn: null
+            },
+            
+            onAdd: function () {
+                var animateName = 'leaflet-control-animate',
+                    container = L.DomUtil.create('div', animateName + ' leaflet-bar'),
+                    options = this.options;
+        
+                this._button  = this._createButton(options.animateStartText, options.animateStartTitle,
+                        animateName,  container, this._clicked);
+        
+                return container;
+            },
+        
+            _createButton: function (html, title, className, container, fn) {
+                var link = L.DomUtil.create('a', className, container);
+                link.innerHTML = html;
+                link.href = '#';
+                link.title = title;
+        
+                L.DomEvent
+                    .on(link, 'mousedown dblclick', L.DomEvent.stopPropagation)
+                    .on(link, 'click', L.DomEvent.stop)
+                    .on(link, 'click', fn, this);
+        
+                return link;
+            },
+            
+            _running: false,
+            
+            _clicked: function() {
+                if (this._running) {
+                    this._button.innerHTML = this.options.animateResumeText;
+                    this._button.title = this.options.animateResumeTitle;
+                    if (this.options.animateStopFn) {
+                        this.options.animateStopFn();
+                    }
+                } else {
+                    this._button.innerHTML = this.options.animatePauseText;
+                    this._button.title = this.options.animatePauseTitle;
+                    if (this.options.animateStartFn) {
+                        this.options.animateStartFn();
+                    }
+                }
+                this._running = !this._running;
+            },
+            
+            reset: function() {
+                this._running = false;
+                this._button.innerHTML = this.options.animateStartText;
+                this._button.title = this.options.animateStartTitle;
             }
-        } else {
-            this._button.innerHTML = this.options.animatePauseText;
-            this._button.title = this.options.animatePauseTitle;
-            if (this.options.animateStartFn) {
-                this.options.animateStartFn();
-            }
+        });
+        
+        L.control.animate = function(options) {
+            return new L.Control.Animate(options);
+        };
+        
+        var buildAnimation = function(route, options) {
+            var animation = [];
+        
+            for (var stopIdx=0, prevStops=[]; stopIdx < route.length-1; stopIdx++) {
+        	    var stop = route[stopIdx];
+        	    var nextStop = route[stopIdx+1]
+        	    prevStops.push([stop.latitude, stop.longitude]);
+        	    for (var minutes = 1; minutes <= stop.duration; minutes++) {
+        	        var position = [
+        	            stop.latitude +  (nextStop.latitude  - stop.latitude)  * (minutes/stop.duration),
+        	            stop.longitude + (nextStop.longitude - stop.longitude) * (minutes/stop.duration)
+        	        ];
+        	        animation.push(L.polyline(prevStops.concat([position]),options));
+        	    }
+        	}
+        	return animation;
         }
-        this._running = !this._running;
-    },
-    
-    reset: function() {
-        this._running = false;
-        this._button.innerHTML = this.options.animateStartText;
-        this._button.title = this.options.animateStartTitle;
-    }
-});
-
-L.control.animate = function(options) {
-    return new L.Control.Animate(options);
-};
-
-var buildAnimation = function(route, options) {
-    var animation = [];
-
-    for (var stopIdx=0, prevStops=[]; stopIdx < route.length-1; stopIdx++) {
-	    var stop = route[stopIdx];
-	    var nextStop = route[stopIdx+1]
-	    prevStops.push([stop.latitude, stop.longitude]);
-	    for (var minutes = 1; minutes <= stop.duration; minutes++) {
-	        var position = [
-	            stop.latitude +  (nextStop.latitude  - stop.latitude)  * (minutes/stop.duration),
-	            stop.longitude + (nextStop.longitude - stop.longitude) * (minutes/stop.duration)
-	        ];
-	        animation.push(L.polyline(prevStops.concat([position]),options));
-	    }
-	}
-	return animation;
-}
-
-
-L.Label = L.Class.extend({
-    initialize: function(latLng, label, options) {
-        this._latlng = latLng;
-        this._label = label;
-        L.Util.setOptions(this, options);
-        this._status = "hidden";
-    },
-    options: {
-        offset: new L.Point(0, 0)
-    },
-    onAdd: function(map) {
-        this._container = L.DomUtil.create('div', 'leaflet-label');
-        this._container.style.lineHeight = "0";
-        this._container.style.opacity = "0";
-        map.getPanes().markerPane.appendChild(this._container);
-        this._container.innerHTML = this._label;
-        var pos = map.latLngToLayerPoint(this._latlng);
-        var op = new L.Point(pos.x + this.options.offset.x, pos.y + this.options.offset.y);
-        L.DomUtil.setPosition(this._container, op);
-    },
-    getStatus: function() {
-        return this._status;
-    },
-    setStatus: function(status) {
-        switch (status) {
-            case "hidden":
+        
+        
+        L.Label = L.Class.extend({
+            initialize: function(latLng, label, options) {
+                this._latlng = latLng;
+                this._label = label;
+                L.Util.setOptions(this, options);
                 this._status = "hidden";
+            },
+            options: {
+                offset: new L.Point(0, 0)
+            },
+            onAdd: function(map) {
+                this._container = L.DomUtil.create('div', 'leaflet-label');
+                this._container.style.lineHeight = "0";
                 this._container.style.opacity = "0";
-                break;
-            case "shown":
-                this._status = "shown";
-                this._container.style.opacity = "1";
-                break;
-            case "dimmed":
-                this._status = "dimmed";
-                this._container.style.opacity = "0.5";
-                break;
-        }
-    }
-});
-
-var start = seaboard[0];
-var label = new L.Label([start.latitude,start.longitude], start.stop, {offset: new L.Point(start.offset[0], start.offset[1])});
-map3.addLayer(label);
-label.setStatus("shown");
-var finish = seaboard[seaboard.length-1];
-label = new L.Label([finish.latitude,finish.longitude], finish.stop, {offset: new L.Point(finish.offset[0], finish.offset[1])});
-map3.addLayer(label);
-label.setStatus("shown");
-
-
-var buildLabelAnimation = function() {
-    var args = Array.prototype.slice.call(arguments),
-        labels = [];
-    
-    args.forEach(function(route) {
-        var minutes = 0;
-        route.forEach(function(stop,idx) {
-            if (idx !== 0 && idx < route.length-1) {
-                var label = new L.Label([stop.latitude,stop.longitude], stop.stop, {offset: new L.Point(stop.offset[0], stop.offset[1])});
-                map3.addLayer(label);
-                labels.push({minutes: minutes, label: label, status: "shown"});
-                labels.push({minutes: minutes+50, label: label, status: "dimmed"});
+                map.getPanes().markerPane.appendChild(this._container);
+                this._container.innerHTML = this._label;
+                var pos = map.latLngToLayerPoint(this._latlng);
+                var op = new L.Point(pos.x + this.options.offset.x, pos.y + this.options.offset.y);
+                L.DomUtil.setPosition(this._container, op);
+            },
+            getStatus: function() {
+                return this._status;
+            },
+            setStatus: function(status) {
+                switch (status) {
+                    case "hidden":
+                        this._status = "hidden";
+                        this._container.style.opacity = "0";
+                        break;
+                    case "shown":
+                        this._status = "shown";
+                        this._container.style.opacity = "1";
+                        break;
+                    case "dimmed":
+                        this._status = "dimmed";
+                        this._container.style.opacity = "0.5";
+                        break;
+                }
             }
-            minutes += stop.duration;
         });
-    });
-
-    labels.sort(function(a,b) {return a.minutes - b.minutes;})
-    
-    return labels;
-}
-
-var labels = buildLabelAnimation(seaboard, southern);
-var labelAnimation = labels.slice(0);
-
-var routeAnimations = [
-    buildAnimation(seaboard, {clickable: false, color: "#88020B", weight: 8, opacity: 1.0}),
-    buildAnimation(southern, {clickable: false, color: "#106634", weight: 8, opacity: 1.0})
-];
-var maxPathSteps = Math.min.apply(null,routeAnimations.map(function(animation) {return animation.length}));
-var maxLabelSteps = labels[labels.length-1].minutes;
-var maxSteps = Math.max(maxPathSteps, maxLabelSteps);
-var step = 0;
-var animateStep = function() {
-    if (step > 0 && step < maxPathSteps) {
-        routeAnimations.forEach(function(animation) {
-            map3.removeLayer(animation[step-1]);
-        });
-    }
-    if (step === maxSteps) {
-        routeAnimations.forEach(function(animation) {
-            map3.removeLayer(animation[maxPathSteps-1]);
-        });
-        step = 0;
-        labelAnimation = labels.slice(0);
-        labelAnimation.forEach(function(label) {
-            label.label.setStatus("hidden");
-        });
-    }
-    while (labelAnimation.length && step === labelAnimation[0].minutes) {
-        var label = labelAnimation[0].label;
-        if (label.getStatus() === "shown" || step < maxPathSteps) {
-            label.setStatus(labelAnimation[0].status);
+        
+        var start = seaboard[0];
+        var label = new L.Label([start.latitude,start.longitude], start.stop, {offset: new L.Point(start.offset[0], start.offset[1])});
+        map3.addLayer(label);
+        label.setStatus("shown");
+        var finish = seaboard[seaboard.length-1];
+        label = new L.Label([finish.latitude,finish.longitude], finish.stop, {offset: new L.Point(finish.offset[0], finish.offset[1])});
+        map3.addLayer(label);
+        label.setStatus("shown");
+        
+        
+        var buildLabelAnimation = function() {
+            var args = Array.prototype.slice.call(arguments),
+                labels = [];
+            
+            args.forEach(function(route) {
+                var minutes = 0;
+                route.forEach(function(stop,idx) {
+                    if (idx !== 0 && idx < route.length-1) {
+                        var label = new L.Label([stop.latitude,stop.longitude], stop.stop, {offset: new L.Point(stop.offset[0], stop.offset[1])});
+                        map3.addLayer(label);
+                        labels.push({minutes: minutes, label: label, status: "shown"});
+                        labels.push({minutes: minutes+50, label: label, status: "dimmed"});
+                    }
+                    minutes += stop.duration;
+                });
+            });
+        
+            labels.sort(function(a,b) {return a.minutes - b.minutes;})
+            
+            return labels;
         }
-        labelAnimation.shift();       
-    }
-    if (step < maxPathSteps) {
-        routeAnimations.forEach(function(animation) {
-            map3.addLayer(animation[step]);
-        });
-    }
-    return ++step === maxSteps;
-}
-
-var interval = null;
-var animate = function() {
-    interval = window.setInterval(function() {
-        if (animateStep()) {
+        
+        var labels = buildLabelAnimation(seaboard, southern);
+        var labelAnimation = labels.slice(0);
+        
+        var routeAnimations = [
+            buildAnimation(seaboard, {clickable: false, color: "#88020B", weight: 6, opacity: 1.0}),
+            buildAnimation(southern, {clickable: false, color: "#106634", weight: 6, opacity: 1.0})
+        ];
+        var maxPathSteps = Math.min.apply(null,routeAnimations.map(function(animation) {return animation.length}));
+        var maxLabelSteps = labels[labels.length-1].minutes;
+        var maxSteps = Math.max(maxPathSteps, maxLabelSteps);
+        var step = 0;
+        var animateStep = function() {
+            if (step > 0 && step < maxPathSteps) {
+                routeAnimations.forEach(function(animation) {
+                    map3.removeLayer(animation[step-1]);
+                });
+            }
+            if (step === maxSteps) {
+                routeAnimations.forEach(function(animation) {
+                    map3.removeLayer(animation[maxPathSteps-1]);
+                });
+                step = 0;
+                labelAnimation = labels.slice(0);
+                labelAnimation.forEach(function(label) {
+                    label.label.setStatus("hidden");
+                });
+            }
+            while (labelAnimation.length && step === labelAnimation[0].minutes) {
+                var label = labelAnimation[0].label;
+                if (label.getStatus() === "shown" || step < maxPathSteps) {
+                    label.setStatus(labelAnimation[0].status);
+                }
+                labelAnimation.shift();       
+            }
+            if (step < maxPathSteps) {
+                routeAnimations.forEach(function(animation) {
+                    map3.addLayer(animation[step]);
+                });
+            }
+            return ++step === maxSteps;
+        }
+        
+        var interval = null;
+        var animate = function() {
+            interval = window.setInterval(function() {
+                if (animateStep()) {
+                    window.clearInterval(interval);
+                    control.reset();
+                }
+            }, 30);
+        }
+        var pause = function() {
             window.clearInterval(interval);
-            control.reset();
         }
-    }, 30);
-}
-var pause = function() {
-    window.clearInterval(interval);
-}
+        
+        var control = L.control.animate({
+            animateStartFn: animate,
+            animateStopFn:  pause
+        });
+        
+        L.Control.Title = L.Control.extend({
+            options: {
+                position: "topleft"
+            },
+        
+            initialize: function (title, options) {
+                L.setOptions(this, options);
+                this._title = title;
+            },
+        
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'leaflet-control-title');
+                container.innerHTML = this._title;
+                return container;
+            }
+        });
+        
+        L.control.title = function(title, options) {
+            return new L.Control.Title(title, options);
+        };
+        
+        L.control.title(
+            "<div>Geography as Competitive Advantage</div>" +
+            "<p>In the 1940s, the route of Southern Railways' <i>Southerner</i> " +
+            "(<span class='southern'>━━</span>) " +
+            "was shorter than the rival " +
+            "<i>Silver Comet</i> of the Seaboard Air Line " +
+            "(<span class='seaboard'>━━</span>)." +
+            "Passengers traveling on the <i>Southerner</i> " +
+            "could expect to arrive more than 90 minutes sooner " +
+            "than those on the <i>Silver Comet</i>.</p>" +
+            "<p>Click the play button to trace the journeys " +
+            "of both trains between Washington, DC and Atlanta, GA.</p>"
+        ).addTo(map3);
+        
+        control.addTo(map3);
 
-var control = L.control.animate({
-    animateStartFn: animate,
-    animateStopFn:  pause
-});
+    };
 
-L.Control.Title = L.Control.extend({
-    options: {
-        position: "topleft"
-    },
-
-    initialize: function (title, options) {
-        L.setOptions(this, options);
-        this._title = title;
-    },
-
-    onAdd: function (map) {
-        var container = L.DomUtil.create('div', 'leaflet-control-title');
-        container.innerHTML = this._title;
-        return container;
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
     }
-});
 
-L.control.title = function(title, options) {
-    return new L.Control.Title(title, options);
-};
-
-L.control.title(
-    "<h1>Geography as a Competitive Advantage</h1>" +
-    "<p>In the 1940s, the route of Southern Railways' <i>Southerner</i> " +
-    "(<span class='southern'>━━━</span>) " +
-    "was shorter than the rival " +
-    "<i>Silver Comet</i> of the Seaboard Air Line " +
-    "(<span class='seaboard'>━━━</span>)." +
-    "Passengers traveling on the <i>Southerner</i> " +
-    "could expect to arrive more than 90 minutes sooner " +
-    "than those on the <i>Silver Comet</i>.</p>" +
-    "<p>Click the play button below to trace the journeys " +
-    "of both trains between Washington, DC and Atlanta, GA.</p>"
-).addTo(map3);
-
-control.addTo(map3);
-
-});
+}());
 </script>

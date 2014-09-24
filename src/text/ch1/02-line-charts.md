@@ -135,7 +135,7 @@ As you can see, we've placed the zero line first among the data sets. With that 
 
 For the last step in this example, we'll add appropriate labels to the chart. That includes an overall title, as well as labels for individual data sets. And to make it clear which axis refers to temperature, we'll add a "°C" suffix to the temperature scale. We identify the label for each data series in the `label` option for that series. The overall chart title merits its own option, and we add the "°C" suffix using a `tickFormatter` function. That option expects a function. For each value on the axis, the formatter function is called with the value, and flotr2 expects it to return a string to use for the label. As you can see in line 26, we simply append the `" °C"` string to the value.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-26}
 Flotr.draw(
     document.getElementById("line-chart5"),
     [ {

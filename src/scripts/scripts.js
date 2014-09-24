@@ -7,3 +7,4 @@
 
 // Custom code
 //@codekit-prepend "fonts.js"
+//@codekit-prepend "code.js"

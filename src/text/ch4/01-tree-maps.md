@@ -10,7 +10,7 @@ The treemap-squared library itself depends on the [Raphaël](http://raphaeljs.co
 
 > Note: Chapter 2 includes a more extensive discussion of content distributions networks and the trade-offs involved in using them.
 
-``` {.html .numberLines data-line='9,10'}
+``` {.html .numberLines .line-9 .line-10}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -59,7 +59,7 @@ for (var i=0; i<census.length; i++) {
 
 Now we're ready to use the library to construct our tree map. We need to assemble the individual data and label arrays and then call the library's main function. The first two parameters in line 3 are the width and height of the map.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-3}
 var data = [ west.data, midwest.data, northeast.data, south.data ];
 var labels = [ west.labels, midwest.labels, northeast.labels, south.labels ];
 Treemap.draw("treemap", 600, 450, data, labels);
@@ -82,7 +82,7 @@ The tree map above does a nice job of showing the <span class="smcp">US</span> p
 
 Here's an expanded version of our earlier code fragment that includes these additional calculations.
 
-``` {.javascript .numberLines data-line='11,12,13,18,19'}
+``` {.javascript .numberLines}
 var total2010 = 0;
 var total2012 = 0;
 var south = {

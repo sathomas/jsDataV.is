@@ -20,7 +20,7 @@ In this example we'll use a two-phase approach to solve both of those problems. 
 Within our document, we need to create a `<div>` element to contain the charts we'll construct. This element won't contain the charts directly; rather, we'll be placing other `<div>`s within it, which will each contain a chart. It's line 8 of the code below. We're also including the required JavaScript libraries here, just like the previous examples.
 
 
-``` {.html .numberLines}
+``` {.html .numberLines .line-8}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -250,7 +250,7 @@ $("#marker").on("mouseout", function(ev) {
 
 The last part of our interaction shows the values of all charts corresponding to the horizontal position of the mouse. We can create `<div>`s to hold these values back when we create each chart. Because these `<div>`s might extend beyond the chart area proper, we'll place them in the outer `charts-wrapper` `<div>`. Notice that as we create these `<div>`s, we set all the properties except the left position, since that will vary with the mouse. We also hide the elements with a `display` property of `none` in line 5.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-5}
 $.each(exports, function(idx,region) {
     var value = $("<div>").css({
         'position':  "absolute",

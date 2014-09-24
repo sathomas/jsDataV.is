@@ -8,7 +8,7 @@ Since we're using the jQuery sparklines library to create the chart, we need to 
 
 In addition to the jQuery library, sparklines relies on the <span class="smcp">HTML</span> _canvas_ feature. Since Internet Explorer didn't support canvas until version 9, we'll use some special markup in line 9 to ensure that <span class="smcp">IE</span> 8 and earlier will load an additional library (`excanvas.min.js`), just like we did in Chapter 2. Here's the skeleton with which we start:
 
-``` {.html .numberLines data-line='9'}
+``` {.html .numberLines .line-9}
 <!DOCTYPE html>
 <html lang="en">
   <head>

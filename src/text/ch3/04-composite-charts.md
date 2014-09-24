@@ -12,7 +12,7 @@ Even though we're including a chart of trading volume, the most important quanti
 
 The code for trading volume is very similar to the stock price from the previous example. Instead of an area chart, however, we'll use a bar chart. We use the jQuery `.map()` function to extract the `volume` property from our data array. Setting the `type` option to `"bar"` in line 3 is all it takes to tell the sparklines library to create a bar chart.
 
-``` {.javascript .numberLines data-line='3'}
+``` {.javascript .numberLines .line-3}
 $('#stock .chart').sparkline(
     $.map(stock, function(wk) { return wk.volume; }),
     { type: "bar" }
@@ -38,7 +38,7 @@ Figure NEXTFIGURENUMBER shows the results.
 
 To add the price chart on top of the volume chart, we can call the sparklines library once again. We give it the same containing element and, most importantly, set the `composite` option to `true` in line 10. This parameter tells the library not to erase any existing chart in the element but to simply draw over it.
 
-``` {.javascript .numberLines data-line='10'}
+``` {.javascript .numberLines .line-10}
 $('#stock .chart')
     .sparkline(
         $.map(stock, function(wk) { return wk.volume; }),
@@ -80,7 +80,7 @@ We can add annotations to the chart using the same approach as in the previous e
 In addition to moving the text from one area to the other, there are two significant changes.
 
 1. We get the ``idx`` value from the second element of the event's `sparklines` array (`sparklines[1]`) in line 2. That's because the first element of that array is the first chart. The sparklines library doesn't really return any useful information about bar charts in the `sparklineRegionChange` event. Fortunately, we can get all the information we need from the line chart.2. We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 7. It's much easier for our users to quickly grasp "24.4M" than "24402100."
-``` {.javascript .numberLines data-line='2,7'}
+``` {.javascript .numberLines .line-2 .line-7}
     .on('sparklineRegionChange', function(ev) {
         var idx = ev.sparklines[1].getCurrentRegionFields().offset;
         if (idx) {

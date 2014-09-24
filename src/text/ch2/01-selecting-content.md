@@ -28,7 +28,7 @@ There isn't a clear-cut answer for all cases, so you'll have to weigh the option
 
 In addition to the jQuery library, flot relies on the <span class="smcp">HTML</span> _canvas_ feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can add an additional library (`excanvas.min.js`) to our pages. Since other browsers don't need this library, we use some special markup (line 9) to ensure that only <span class="smcp">IE8</span> and earlier will bother to load it. Also, since excanvas isn't available on a public <span class="smcp">CDN</span>, we'll have to host it on our own server. Here's the skeleton to start with:
 
-``` {.html .numberLines}
+``` {.html .numberLines .line-9}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -50,7 +50,7 @@ As you can see, we're including the JavaScript libraries at the end of the docum
 
 Within our document, we need to create a `<div>` element to contain the chart we'll construct. You can see it below in line 8. This element must have an explicit height and width, or flot won't be able to construct the chart. We can indicate the element's size in a <span class="smcp">CSS</span> style sheet, or we can place it directly on the element itself. Here's how the document might look with the latter approach. Note that we've given it an explicit `id` so we can reference it later.
 
-``` {.html .numberLines}
+``` {.html .numberLines .line-8}
 <!DOCTYPE html>
 <html lang="en">
   <head>
