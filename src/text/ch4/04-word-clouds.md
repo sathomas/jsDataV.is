@@ -100,8 +100,13 @@ WordCloud(document.getElementById("cloud"), {list: list});
 
 Even with nothing other than default values, wordcloud2 creates the attractive visualization of figure NEXTFIGURENUMBER.
 
+<style>
+#cloud-1, #cloud-2 { border-radius:3px;border:1px solid #d0d0d0;}
+.localfile #cloud-1, .localfile #cloud-2 { border-radius:none;border:none;}
+</style>
+
 <figure>
-<div id="cloud-1" style="width:640px;height:450px;position:relative;border-radius:3px;border:1px solid #d0d0d0;"></div>
+<div id="cloud-1" style="width:640px;height:450px;position:relative;"></div>
 <figcaption>A word cloud can show a list of words with their relative frequency.</figcaption>
 </figure>
 
@@ -216,7 +221,7 @@ With these few lines of code, our word cloud is now interactive.
 </style>
 
 <figure>
-<div id="cloud-2" style="width:640px;height:450px;position:relative;border-radius:3px;border:1px solid #d0d0d0;"></div>
+<div id="cloud-2" style="width:640px;height:450px;position:relative;"></div>
 <div id="details-2" style="text-align:center;line-height:2em;margin-top:0.5em"></div>
 <figcaption>Because our word cloud consists of standard <span class="smcp">HTML</span> elements, we can make it interactive with simple JavaScript event handlers.</figcaption>
 </figure>
@@ -358,14 +363,14 @@ With these few lines of code, our word cloud is now interactive.
         ];
         
         WordCloud(document.getElementById('cloud-1'), {
-          backgroundColor: chartStyles.color.blockBackground,
+          backgroundColor: (window.location.protocol === "file:") ? "white" : chartStyles.color.blockBackground,
           fontFamily: chartStyles.font.family,
           list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; }),
           color: function() {return colors[Math.floor(Math.random()*colors.length)];}
         });
         
         WordCloud(document.getElementById('cloud-2'), {
-          backgroundColor: chartStyles.color.blockBackground,
+          backgroundColor: (window.location.protocol === "file:") ? "white" : chartStyles.color.blockBackground,
           fontFamily: chartStyles.font.family,
           list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; }),
           color: function() {return colors[Math.floor(Math.random()*colors.length)];}

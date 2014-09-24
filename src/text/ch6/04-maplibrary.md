@@ -1143,10 +1143,10 @@ At this point we have the interactive visualization of the two train routes in f
         L.control.title(
             "<div>Geography as Competitive Advantage</div>" +
             "<p>In the 1940s, the route of Southern Railways' <i>Southerner</i> " +
-            "(<span class='southern'>━━</span>) " +
+            "(<span class='southern'>━</span>) " +
             "was shorter than the rival " +
             "<i>Silver Comet</i> of the Seaboard Air Line " +
-            "(<span class='seaboard'>━━</span>)." +
+            "(<span class='seaboard'>━</span>)." +
             "Passengers traveling on the <i>Southerner</i> " +
             "could expect to arrive more than 90 minutes sooner " +
             "than those on the <i>Silver Comet</i>.</p>" +
