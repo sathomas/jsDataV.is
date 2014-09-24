@@ -537,6 +537,12 @@ table tfoot {
 body {
   color: #444444;
   font-family: Varela, sans-serif;
+  -webkit-font-feature-settings: "kern" on;
+     -moz-font-feature-settings: "kern" on;
+          font-feature-settings: "kern" on;
+  -webkit-font-kerning: normal;
+     -moz-font-kerning: normal;
+          font-kerning: normal;
   font-size: 100%;
   line-height: 1.5;
 }

@@ -33,6 +33,16 @@
                     alternateLight:     "#A0E714",
                     alternateDark:      "#679A00",
                     alternateDarkest:   "#4D7300",
+                    tertiary:           "#CA5C00",
+                    tertiaryLightest:   "#FE9D4C",
+                    tertiaryLight:      "#F77B15",
+                    tertiaryDark:       "#A54B00",
+                    tertiaryDarkest:    "#7B3800",
+                    quaternary:         "#A2005C",
+                    quaternaryLightest: "#CC3D8E",
+                    quaternaryLight:    "#C61177",
+                    quaternaryDark:     "#85004B",
+                    quaternaryDarkest:  "#630038",
                     blockBackground:    "#F5F5F5"
                 },
                 font: {
@@ -67,6 +77,8 @@
         else                { css.appendChild(document.createTextNode(styles)); }
 
         document.getElementsByTagName("head")[0].appendChild(css);
+
+        document.getElementsByTagName('html')[0].classList.add("localfile");
 
     }
 
@@ -154,7 +166,7 @@ body { counter-reset: chapter 2; }
 </ul>
 <p>There isn’t a clear-cut answer for all cases, so you’ll have to weigh the options against your own requirements. For this example (and the others in this chapter), we’ll use the CloudFlare <span class="smcp">CDN</span>.</p>
 <p>In addition to the jQuery library, flot relies on the <span class="smcp">HTML</span> <em>canvas</em> feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can add an additional library (<code>excanvas.min.js</code>) to our pages. Since other browsers don’t need this library, we use some special markup (line 9) to ensure that only <span class="smcp">IE8</span> and earlier will bother to load it. Also, since excanvas isn’t available on a public <span class="smcp">CDN</span>, we’ll have to host it on our own server. Here’s the skeleton to start with:</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -183,7 +195,7 @@ body { counter-reset: chapter 2; }
 <p>As you can see, we’re including the JavaScript libraries at the end of the document. This approach lets the browser load the document’s entire <span class="smcp">HTML</span> markup and begin laying out the page while it waits for the server to provide the JavaScript libraries.</p>
 <h3 id="step-2-set-aside-a-div-element-to-hold-the-chart">Step 2: Set Aside a &lt;div&gt; Element to Hold the Chart</h3>
 <p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the chart we’ll construct. You can see it below in line 8. This element must have an explicit height and width, or flot won’t be able to construct the chart. We can indicate the element’s size in a <span class="smcp">CSS</span> style sheet, or we can place it directly on the element itself. Here’s how the document might look with the latter approach. Note that we’ve given it an explicit <code>id</code> so we can reference it later.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -646,7 +658,7 @@ An interactive chart gives users control over the visualization.
 <p>For this example, we’ll walk through the steps required to support zooming with the selection plugin. Of course, the best approach for your own website and visualizations will vary from case to case.</p>
 <h3 id="step-1-prepare-the-page">Step 1: Prepare the Page</h3>
 <p>Because we’re sticking with the same data, most of the preparation is identical to the last example. We do, however, have to add the selection plugin to the page. That plugin is not available on common <span class="smcp">CDN</span>s, so we host it on our own server as you can see in line 12.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -768,7 +780,7 @@ The starting point for most interactive charts is a good static chart.
     <span class="dt">selection</span>: {<span class="dt">mode</span>: <span class="st">&quot;xy&quot;</span>}
 };</code></pre></td></tr></table>
 <p>And with that addition, our chart is now interactive. Users can zoom in to see as much detail as they want. There is a small problem, though. Our visualization doesn’t give users a way to zoom back out. Obviously we can’t use the selection plugin to zoom out since that would require selecting outside of the current chart area. Instead, we can add a button to the page to reset the zoom level. You can see the button in line 9 of the markup below. It’s right after the <code>&lt;div&gt;</code> that holds the chart.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -899,7 +911,7 @@ Plotting multiple data sets on a single chart can be confusing for users.
 <p>In this example we’ll use a two-phase approach to solve both of those problems. First, we’ll change the visualization from a single chart with multiple series to multiple charts, each with a single series. That will isolate each region’s data, making it easier to see a particular region’s trends. Then we’ll add an advanced mouse tracking feature that spans all of the charts. This feature will let users see individual values in all the charts at once.</p>
 <h3 id="step-1-set-aside-a-div-element-to-hold-the-charts">Step 1: Set Aside a &lt;div&gt; Element to Hold the Charts</h3>
 <p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the charts we’ll construct. This element won’t contain the charts directly; rather, we’ll be placing other <code>&lt;div&gt;</code>s within it, which will each contain a chart. It’s line 8 of the code below. We’re also including the required JavaScript libraries here, just like the previous examples.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1195,7 +1207,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
       <span class="fu">$</span>(<span class="st">&quot;#marker&quot;</span>).<span class="fu">hide</span>();
 });</code></pre></td></tr></table>
 <p>The last part of our interaction shows the values of all charts corresponding to the horizontal position of the mouse. We can create <code>&lt;div&gt;</code>s to hold these values back when we create each chart. Because these <code>&lt;div&gt;</code>s might extend beyond the chart area proper, we’ll place them in the outer <code>charts-wrapper</code> <code>&lt;div&gt;</code>. Notice that as we create these <code>&lt;div&gt;</code>s, we set all the properties except the left position, since that will vary with the mouse. We also hide the elements with a <code>display</code> property of <code>none</code> in line 5.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1540,7 +1552,7 @@ The final visualization combines multiple charts with mouse tracking to more cle
 <h3 id="step-2-get-the-first-level-of-data-via-ajax">Step 2: Get the First Level of Data via AJAX</h3>
 <p>With an understanding of the data format (so far), let’s write some code to retrieve it. Since we have jQuery loaded, we’ll take advantage of many of its utilities. Let’s start at the simplest level and work up to a full implementation.</p>
 <p>As you might expect, the <code>.getJSON()</code> function will do most of the work for us. The simplest way to use that function might be something like the following. Note that we’re adding <code>format=json</code> to the query in line 3 to tell the World Bank what format we want. Without that parameter their server returns <span class="smcp">XML</span>, which isn’t at all what <code>getJSON()</code> expects.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1748,7 +1760,7 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
     <span class="co">// now we have the regions, go get the data    </span>
 });</code></pre></td></tr></table>
 <p>Retrieving the actual <span class="smcp">GDP</span> data for each region requires a new <span class="smcp">AJAX</span> request. As you might expect, we’ll save the <code>Deferred</code> objects for those requests so we can process the responses when they’re available. The jQuery <code>.each()</code> function is a convenient way to iterate through the list of regions to initiate these requests. (The “<span class="smcp">NY</span>.<span class="smcp">GDP</span>.<span class="smcp">MKTP</span>.<span class="smcp">CD</span>” part of each request <span class="smcp">URL</span> in line 6 is the World Bank’s code for <span class="smcp">GDP</span> data.)</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1771,7 +1783,7 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
     });
 });</code></pre></td></tr></table>
 <p>As long as we’re iterating through the regions, we can include the code to handle the processing of the <span class="smcp">GDP</span> data. By now it won’t surprise you that we’ll create a <code>Deferred</code> object to track when that processing is complete. The processing itself will simply store the returned response (after skipping past the paging information) in the region object.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1857,7 +1869,7 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
 <p>As you can see, we’re iterating through the list of regions with the <code>.each()</code> function of line 2. For each region, we create an object of data for the flot library. (No points for originality in naming that object <code>flotData</code> in line 3.) Then we filter the data in lines 4-6 to eliminate any data points with <code>null</code> values. The function that creates our flot data array is in lines 7-12. It takes, as input, a single data object from the World Bank, and returns the data as a two-dimensional data point. The first value is the date, which we extract as an integer in line 9, and the second value is the <span class="smcp">GDP</span> data, which we extract as a floating point number in line 10. Dividing by <code>1e12</code> converts the <span class="smcp">GDP</span> data to trillions.</p>
 <h3 id="step-6-create-the-chart">Step 6: Create the Chart</h3>
 <p>Since we’ve made it this far with a clear separation between code that handles events and code that processes the results, there’s no reason not to continue the approach when we actually create the chart. Yet another <code>Deferred</code> object creates that separation. We’ve taken the code fragments from above and wrapped them in deferred object handling. Once all the data has been processed, we resolve that deferred object (line 17).</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4

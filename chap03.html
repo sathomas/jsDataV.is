@@ -33,6 +33,16 @@
                     alternateLight:     "#A0E714",
                     alternateDark:      "#679A00",
                     alternateDarkest:   "#4D7300",
+                    tertiary:           "#CA5C00",
+                    tertiaryLightest:   "#FE9D4C",
+                    tertiaryLight:      "#F77B15",
+                    tertiaryDark:       "#A54B00",
+                    tertiaryDarkest:    "#7B3800",
+                    quaternary:         "#A2005C",
+                    quaternaryLightest: "#CC3D8E",
+                    quaternaryLight:    "#C61177",
+                    quaternaryDark:     "#85004B",
+                    quaternaryDarkest:  "#630038",
                     blockBackground:    "#F5F5F5"
                 },
                 font: {
@@ -67,6 +77,8 @@
         else                { css.appendChild(document.createTextNode(styles)); }
 
         document.getElementsByTagName("head")[0].appendChild(css);
+
+        document.getElementsByTagName('html')[0].classList.add("localfile");
 
     }
 
@@ -166,7 +178,7 @@ Tufte’s classic sparkline example shows a lot of information in a small space.
 <h3 id="step-1-include-the-required-javascript-libraries">Step 1: Include the Required JavaScript Libraries</h3>
 <p>Since we’re using the jQuery sparklines library to create the chart, we need to include that library in our web pages, along with jQuery. Both jQuery and sparklines are available on public content distribution networks (<span class="smcp">CDN</span>s). For this example (and the others in this chapter), we’ll use the CloudFlare <span class="smcp">CDN</span>, but for some notes on the advantages and disadvantages of using <span class="smcp">CDN</span>s, see Chapter 2.</p>
 <p>In addition to the jQuery library, sparklines relies on the <span class="smcp">HTML</span> <em>canvas</em> feature. Since Internet Explorer didn’t support canvas until version 9, we’ll use some special markup in line 9 to ensure that <span class="smcp">IE</span> 8 and earlier will load an additional library (<code>excanvas.min.js</code>), just like we did in Chapter 2. Here’s the skeleton with which we start:</p>
-<table class="sourceCode html numberLines" data-line="9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -782,7 +794,7 @@ The sparkline options let us adjust the chart styles.
 <li>Our target now has the same properties as <code>sparkline_default</code>, and the second merge will modify it by updating the two properties in the last parameter, <code>lineColor</code> and <code>fillColor</code>.</li>
 </ol>
 <p>The resulting object will hold the options we want for charts of Barclay’s technology stocks. Here’s a complete code listing, using these objects to create the charts.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-12 line-13"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -867,7 +879,7 @@ Different visual styles distinguish different types of data.
 <p>For the final step in this example, let’s consider the single stock at the top of <span class="smcp">CR</span> Magazine’s list. Suppose we want to add distinct styles to its chart, and we only know those styles when we’re generating the <span class="smcp">HTML</span>, not when we’re writing the JavaScript. How can we adjust the chart style if we can’t modify any JavaScript?</p>
 <p>Sparklines lets you add special attributes directly to the <span class="smcp">HTML</span> element containing a chart. To set the line color, for example, you need to specify the attribute <code>sparkLineColor</code>. The problem is, if we were to enter this attribute directly in the <span class="smcp">HTML</span>, the result would’t be valid <span class="smcp">HTML</span>, because the <span class="smcp">HTML</span> specification doesn’t recognize the <code>sparkLineColor</code> attribute. To conform to the <span class="smcp">HTML</span> standard, custom attributes need to have names that begin with the prefix <code>data-</code>.</p>
 <p>In order to use <span class="smcp">HTML</span>-compliant attribute names to refer to sparklines’ custom attributes, we just need to tell the sparklines library how to find those attribute names. For our <span class="smcp">HTML</span>, we use the standard <code>data-</code> prefix instead of <code>spark</code> in line 4.</p>
-<table class="sourceCode html numberLines" data-line="4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1309,7 +1321,7 @@ A complete example distinguishes different individual data sets in a larger coll
   <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-2-prepare-the-html-markup">Step 2: Prepare the HTML Markup</h3>
 <p>Our visualization will include three distinct areas, each in a <code>&lt;div&gt;</code> element. The primary <code>&lt;div&gt;</code> created in line 3 will hold the chart. Underneath the chart we’ll add the primary tool tip information in its own <code>&lt;div&gt;</code> (line 4), and we’ll include supplementary details to the right (line 7). The example below uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.</p>
-<table class="sourceCode html numberLines" data-line="3,4,7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1386,9 +1398,9 @@ A static sparkline shows the change in the data set over time.
         <span class="co">/* if it&#39;s defined, idx has the index into the</span>
 <span class="co">           data array corresponding to the mouse pointer */</span>
     });</code></pre></td></tr></table>
-<p>As the comment in line 4 indicates, the library sometimes generates the event when the mouse leaves the chart area. In those cases a defined value for the offset will not exist.</p>
+<p>As the comment in lines 4 and 5 indicate, the library sometimes generates the event when the mouse leaves the chart area. In those cases a defined value for the offset will not exist.</p>
 <p>Once we have the mouse position, we can place our tooltip information in the <code>&lt;div&gt;</code> we set aside for it. We get the information in lines 3 and 5 from the <code>stock</code> array using the index value from the <code>sparklineRegionChange</code> event.</p>
-<table class="sourceCode javascript numberLines" data-line="3,5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-3 line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1652,7 +1664,7 @@ Interactive sparklines can show additional information in many ways.
 <h3 id="step-1-draw-the-trading-volume-chart">Step 1: Draw the Trading Volume Chart</h3>
 <p>Even though we’re including a chart of trading volume, the most important quantity is the stock price. To keep the emphasis on stock price, we want to draw that chart <em>on top of</em> the chart for trading volume. That means we need to draw the trading volume chart first.</p>
 <p>The code for trading volume is very similar to the stock price from the previous example. Instead of an area chart, however, we’ll use a bar chart. We use the jQuery <code>.map()</code> function to extract the <code>volume</code> property from our data array. Setting the <code>type</code> option to <code>&quot;bar&quot;</code> in line 3 is all it takes to tell the sparklines library to create a bar chart.</p>
-<table class="sourceCode javascript numberLines" data-line="3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1683,7 +1695,7 @@ The sparklines library can create bar charts as well as line charts.
 </figure>
 <h3 id="step-2-add-the-closing-price-chart">Step 2: Add the Closing Price Chart</h3>
 <p>To add the price chart on top of the volume chart, we can call the sparklines library once again. We give it the same containing element and, most importantly, set the <code>composite</code> option to <code>true</code> in line 10. This parameter tells the library not to erase any existing chart in the element but to simply draw over it.</p>
-<table class="sourceCode javascript numberLines" data-line="10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1740,7 +1752,7 @@ Multiple charts may be combined in the same space.
 <p>In addition to moving the text from one area to the other, there are two significant changes.</p>
 <ol type="1">
 <li><p>We get the <code>idx</code> value from the second element of the event’s <code>sparklines</code> array (<code>sparklines[1]</code>) in line 2. That’s because the first element of that array is the first chart. The sparklines library doesn’t really return any useful information about bar charts in the <code>sparklineRegionChange</code> event. Fortunately, we can get all the information we need from the line chart.2. We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 7. It’s much easier for our users to quickly grasp “24.4M” than “24402100.”</p>
-<table class="sourceCode javascript numberLines" data-line="2,7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-2 line-7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2130,7 +2142,7 @@ Mouse clicks can reveal more details for a chart.
 </figure>
 <h3 id="step-3-improve-the-transitions">Step 3: Improve the Transitions</h3>
 <p>Instead of simply revealing the widget beneath the chart, it would be better to have the widget replace the chart. And if we’re going to do that, we’ll also want to give the users a chance to restore the chart and hide the widget. For that last function, we include a <code>&quot;widget-control&quot;</code> <code>&lt;div&gt;</code> in the code below (lines 2-4) for controlling the widget’s visibility. The only content we need for this controller is a close symbol floated right. Just like the widget itself, the controller is initially hidden.</p>
-<table class="sourceCode html numberLines" data-line="2-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-2 line-3 line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2169,7 +2181,7 @@ Mouse clicks can reveal more details for a chart.
     <span class="fu">$</span>(<span class="st">&quot;#stock&quot;</span>).<span class="fu">show</span>();
 })</code></pre></td></tr></table>
 <p>Finally, we need to give the user some indication that this interaction is possible. On the chart, we can override the sparklines library’s default tooltip in line 4 to let users know that more details are available.</p>
-<table class="sourceCode javascript numberLines" data-line="4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2180,7 +2192,7 @@ Mouse clicks can reveal more details for a chart.
         { <span class="dt">tooltipFormatter</span>: <span class="kw">function</span>() {<span class="kw">return</span> <span class="st">&quot;Click for details&quot;</span>; } }
     );</code></pre></td></tr></table>
 <p>And for the widget controller, we simple add a <code>title</code> attribute in line 3 to tell users how to hide the widget.</p>
-<table class="sourceCode html numberLines" data-line="3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2424,7 +2436,7 @@ Animating transitions can make the visualization less jarring to users.
 <h3 id="step-1-retrieve-the-data">Step 1: Retrieve the Data</h3>
 <p>In a real dashboard example, the server would provide the data to display and updates to that data. As long as the frequency of the updates was modest (not faster than once every five seconds or so), we could simply poll the server for updates on a regular interval. It’s probably not a good idea, however, to use the JavaScript <code>setInterval()</code> function to control the polling interval. That may seem strange at first because <code>setInterval()</code> executes a function periodically, which would seem to meet the requirements exactly. The situation is not quite that simple, however. If the server or network encounters a problem, then requests triggered by <code>setInterval()</code>will continue unabated, stacking up in a queue. Then, when communications with the server is restored, all of the pending requests will immediately finish, and we’d have a flood of data to handle.</p>
 <p>To avoid this problem, we can use the <code>setTimeout()</code> function instead. That function only executes once, so we’ll have to keep calling it explicitly. By doing that, though, we can make sure that we only send a request to the server after the current one finishes. This approach avoids stacking up a queue of requests.</p>
-<table class="sourceCode javascript numberLines" data-line="12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-9 line-12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2452,7 +2464,7 @@ Animating transitions can make the visualization less jarring to users.
 <p>Within the <code>success</code> callback we set up a recursive call to <code>getData()</code> in line 9 so the function executes again whenever the server responds with data.</p>
 <h3 id="step-2-update-the-visualization">Step 2: Update the Visualization</h3>
 <p>Whenever we receive updated information from the server, we can simply update the chart and value. The code needs only a straightforward call to the sparklines library and a jQuery function to update the value. We’ve added that to the code in lines 6 and 7 below.</p>
-<table class="sourceCode javascript numberLines" data-line="6,7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-6 line-7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4

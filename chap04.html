@@ -33,6 +33,16 @@
                     alternateLight:     "#A0E714",
                     alternateDark:      "#679A00",
                     alternateDarkest:   "#4D7300",
+                    tertiary:           "#CA5C00",
+                    tertiaryLightest:   "#FE9D4C",
+                    tertiaryLight:      "#F77B15",
+                    tertiaryDark:       "#A54B00",
+                    tertiaryDarkest:    "#7B3800",
+                    quaternary:         "#A2005C",
+                    quaternaryLightest: "#CC3D8E",
+                    quaternaryLight:    "#C61177",
+                    quaternaryDark:     "#85004B",
+                    quaternaryDarkest:  "#630038",
                     blockBackground:    "#F5F5F5"
                 },
                 font: {
@@ -67,6 +77,8 @@
         else                { css.appendChild(document.createTextNode(styles)); }
 
         document.getElementsByTagName("head")[0].appendChild(css);
+
+        document.getElementsByTagName('html')[0].classList.add("localfile");
 
     }
 
@@ -133,7 +145,7 @@ body { counter-reset: chapter 4; }
 <blockquote>
 <p>Note: Chapter 2 includes a more extensive discussion of content distributions networks and the trade-offs involved in using them.</p>
 </blockquote>
-<table class="sourceCode html numberLines" data-line="9,10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-9 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -192,7 +204,7 @@ body { counter-reset: chapter 4; }
 }</code></pre></td></tr></table>
 <h3 id="step-3-draw-the-tree-map">Step 3: Draw the Tree Map</h3>
 <p>Now we’re ready to use the library to construct our tree map. We need to assemble the individual data and label arrays and then call the library’s main function. The first two parameters in line 3 are the width and height of the map.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [ <span class="ot">west</span>.<span class="fu">data</span>, <span class="ot">midwest</span>.<span class="fu">data</span>, <span class="ot">northeast</span>.<span class="fu">data</span>, <span class="ot">south</span>.<span class="fu">data</span> ];
@@ -215,7 +227,7 @@ Tree maps show the relative size of data values using rectangular area.
 <li>For each region, we save both the minimum and maximum growth rates in lines 18 and 19.</li>
 </ul>
 <p>Here’s an expanded version of our earlier code fragment that includes these additional calculations.</p>
-<table class="sourceCode javascript numberLines" data-line="11,12,13,18,19"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -708,7 +720,7 @@ The heat map shows successful shots in the game.
 <p>Constructing network graphs can be a bit tricky, as the underlying mathematics are not always trivial. Fortunately the <a href="http://sigmajs.org">sigmajs</a> library takes care of most of the complicated calculations. By using that library, we can create full-featured network graphs with just a little bit of JavaScript. For our example, we’ll consider one critic’s list of the <a href="http://www.thejazzresource.com/top_25_jazz_albums.html">Top 25 Jazz Albums of All Time</a>. Several musicians performed on more than one of these albums, and a network graph let’s us explore those connections.</p>
 <h3 id="step-1-include-the-required-libraries-1">Step 1: Include the Required Libraries</h3>
 <p>The sigmajs library does not depend on any other JavaScript libraries, so we don’t need any other included scripts. It is not, however, available on common Content Distribution Networks. Consequently, we’ll have to serve it from our own web host.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -870,7 +882,7 @@ Sigmajs can then connect graph nodes using lines to represent edges.
 <p>So far we’ve manually placed the nodes in our graph in a circle. That’s not a terrible approach, but it can make it hard to discern some of the connections. It would be better if we could let the library calculate a more optimal layout than the simple circle. That’s exactly what we’ll do now.</p>
 <p>The mathematics behind this approach go by the name of “force directed graphing.” In a nutshell, the algorithm proceeds by treating the graph’s nodes and edges as physical objects subject to real forces such as gravity and electromagnetism. It simulates the effect of those forces, pushing and prodding the nodes into new positions on the graph.</p>
 <p>The underlying algorithm may be complicated, but sigmajs makes it easy to employ. First we have to add an optional plugin to the sigmajs library. That’s the <code>forceAtlas2</code> plugin in line 10 below.</p>
-<table class="sourceCode html numberLines" data-line="10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -918,7 +930,7 @@ Force direction positions the graph nodes automatically.
 <p>As you can see, the labels for the nodes still get in the way of each other; we’ll fix that in the next step. What’s important here, however, is that it’s much easier to identify the albums with lots of connections. The nodes representing those albums have migrated to the center of the graph, and they have many links to other nodes.</p>
 <h3 id="step-6-adding-interactivity">Step 6: Adding Interactivity</h3>
 <p>To keep the labels from interfering with each other, we can add some interactivity to the graph. By default, we’ll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We’ll then allow them to click on individual nodes to reveal the album title and it’s connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We’ll save a reference to the album title though in line 6.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1546,7 +1558,7 @@ An interactive graph gives users the chance to highlight specific nodes.
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-3-add-the-required-markup">Step 3: Add the Required Markup</h3>
 <p>The wordcloud2 library can build its graphics either using the <span class="smcp">HTML</span> <code>&lt;canvas&gt;</code> interface or in pure <span class="smcp">HTML</span>. As we’ve seen with many graphing libraries, <code>&lt;canvas&gt;</code> is a convenient interface for creating graphic elements. For word clouds, however, there aren’t many benefits to using <code>&lt;canvas&gt;</code>. Native <span class="smcp">HTML</span>, on the other hand, let’s use all the standard <span class="smcp">HTML</span> tools (such as <span class="smcp">CSS</span> style sheets or JavaScript event handling). That’s the approach we’ll take in this example. When using native <span class="smcp">HTML</span>, we do have to make sure that the containing element has a <code>position: relative</code> style, because wordcloud2 relies on that when placing the words in their proper location in the cloud. You can see in line 8 below that we’ve set that style inline.</p>
-<table class="sourceCode html numberLines" data-line="8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1592,7 +1604,7 @@ A word cloud can show a list of words with their relative frequency.
     <span class="kw">cursor:</span> <span class="dt">pointer</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
 <p>Next let’s add an extra element to the markup where we can display information about any clicked word. That element is the <code>&lt;div&gt;</code> with the id <code>details</code> in line 9.</p>
-<table class="sourceCode html numberLines" data-line="9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1617,7 +1629,7 @@ A word cloud can show a list of words with their relative frequency.
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <p>Then we define a function that can be called when the user clicks within the cloud. Because our function will be called for any clicks on the cloud (including clicks on empty space), it will first check to see if the target of the click was really a word. Words are contained in <code>&lt;span&gt;</code> elements, so we can verify that by looking that the <code>nodeName</code> property of the click target. As you can see from line 2, JavaScript node names are always in uppercase.</p>
-<table class="sourceCode javascript numberLines" data-line="2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1667,8 +1679,8 @@ A word cloud can show a list of words with their relative frequency.
         });
     }
 }</code></pre></td></tr></table>
-<p>We can use the return value of the <code>.some()</code> method to make sure the clicked element was found in the array. When that’s the case, <code>.some()</code> itself returns <code>true</code>. In lines 13 and 14 below we update the <code>details</code> variable with extra information. In line 13 we update the web page with those details.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<p>We can use the return value of the <code>.some()</code> method to make sure the clicked element was found in the array. When that’s the case, <code>.some()</code> itself returns <code>true</code>. In lines 13 and 14 below we update the <code>details</code> variable with extra information. In line 17 we update the web page with those details.</p>
+<table class="sourceCode javascript numberLines line-13 line-14 line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1832,16 +1844,46 @@ Because our word cloud consists of standard <span class="smcp">HTML</span> eleme
          ["unit-testing", 23249]
         ];
         
+        var colors = [
+            chartStyles.color.primary,
+            chartStyles.color.primaryLightest,
+            chartStyles.color.primaryLight,
+            chartStyles.color.primaryDark,
+            chartStyles.color.primaryDarkest,
+            chartStyles.color.secondary,
+            chartStyles.color.secondaryLightest,
+            chartStyles.color.secondaryLight,
+            chartStyles.color.secondaryDark,
+            chartStyles.color.secondaryDarkest,
+            chartStyles.color.alternate,
+            chartStyles.color.alternateLightest,
+            chartStyles.color.alternateLight,
+            chartStyles.color.alternateDark,
+            chartStyles.color.alternateDarkest,
+            chartStyles.color.tertiary,
+            chartStyles.color.tertiaryLightest,
+            chartStyles.color.tertiaryLight,
+            chartStyles.color.tertiaryDark,
+            chartStyles.color.tertiaryDarkest,
+            chartStyles.color.quaternary,
+            chartStyles.color.quaternaryLightest,
+            chartStyles.color.quaternaryLight,
+            chartStyles.color.quaternaryDark,
+            chartStyles.color.quaternaryDarkest
+        ];
+        
         WordCloud(document.getElementById('cloud-1'), {
           backgroundColor: chartStyles.color.blockBackground,
           fontFamily: chartStyles.font.family,
-          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; })
+          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; }),
+          color: function() {return colors[Math.floor(Math.random()*colors.length)];}
         });
         
         WordCloud(document.getElementById('cloud-2'), {
           backgroundColor: chartStyles.color.blockBackground,
           fontFamily: chartStyles.font.family,
-          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; })
+          list : tags.map(function(word) { return [word[0], Math.round(word[1]/5500)]; }),
+          color: function() {return colors[Math.floor(Math.random()*colors.length)];}
         });
         
         var clicked = function(ev) {

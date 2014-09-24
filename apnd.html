@@ -33,6 +33,16 @@
                     alternateLight:     "#A0E714",
                     alternateDark:      "#679A00",
                     alternateDarkest:   "#4D7300",
+                    tertiary:           "#CA5C00",
+                    tertiaryLightest:   "#FE9D4C",
+                    tertiaryLight:      "#F77B15",
+                    tertiaryDark:       "#A54B00",
+                    tertiaryDarkest:    "#7B3800",
+                    quaternary:         "#A2005C",
+                    quaternaryLightest: "#CC3D8E",
+                    quaternaryLight:    "#C61177",
+                    quaternaryDark:     "#85004B",
+                    quaternaryDarkest:  "#630038",
                     blockBackground:    "#F5F5F5"
                 },
                 font: {
@@ -67,6 +77,8 @@
         else                { css.appendChild(document.createTextNode(styles)); }
 
         document.getElementsByTagName("head")[0].appendChild(css);
+
+        document.getElementsByTagName('html')[0].classList.add("localfile");
 
     }
 
@@ -1824,7 +1836,7 @@ force3.start();
     .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, path);</code></pre></td></tr></table>
 <h3 id="step-8-style-the-map">Step 8: Style the Map</h3>
 <p>For our final step we’ll set the color of each state according to the date of its nominating event. The style property we use is <code>fill</code>. For its value we search through the array of events to find the matching state (line 8). We then use our <code>color</code> scale to calculate an appropriate color for that date (line 14).</p>
-<table class="sourceCode javascript numberLines" data-line="5-15"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4

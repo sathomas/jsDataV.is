@@ -33,6 +33,16 @@
                     alternateLight:     "#A0E714",
                     alternateDark:      "#679A00",
                     alternateDarkest:   "#4D7300",
+                    tertiary:           "#CA5C00",
+                    tertiaryLightest:   "#FE9D4C",
+                    tertiaryLight:      "#F77B15",
+                    tertiaryDark:       "#A54B00",
+                    tertiaryDarkest:    "#7B3800",
+                    quaternary:         "#A2005C",
+                    quaternaryLightest: "#CC3D8E",
+                    quaternaryLight:    "#C61177",
+                    quaternaryDark:     "#85004B",
+                    quaternaryDarkest:  "#630038",
                     blockBackground:    "#F5F5F5"
                 },
                 font: {
@@ -67,6 +77,8 @@
         else                { css.appendChild(document.createTextNode(styles)); }
 
         document.getElementsByTagName("head")[0].appendChild(css);
+
+        document.getElementsByTagName('html')[0].classList.add("localfile");
 
     }
 
@@ -143,7 +155,7 @@ body { counter-reset: chapter 1; }
 <h3 id="step-1-include-the-required-javascript">Step 1: Include the Required JavaScript</h3>
 <p>Since we’re using the flotr2 library to create the chart, we need to include that library in our web pages. The flotr2 package isn’t currently popular enough for public content distribution networks, so you’ll need to download a copy and host it on your own web server. We’ll use the minimized version (<code>flotr2.min.js</code>) since it provides the best performance.</p>
 <p>Flotr2 doesn’t require any other JavaScript libraries (such as jQuery), but it does rely on the <span class="smcp">HTML</span> <em>canvas</em> feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can add an additional library (<code>excanvas.min.js</code>) to our pages. That library is available from <a href="https://code.google.com/p/explorercanvas/">Google</a>. Since other browsers don’t need this library, we use some special markup to make sure only <span class="smcp">IE8</span> and earlier will bother to load it. (Line 9.) Start with the following skeleton for your <span class="smcp">HTML</span> document:</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -299,7 +311,7 @@ Simple options help flotr2 construct a better vertical axis.</figcation>
 ];</code></pre></td></tr></table>
 <p>Another problem is a lack of spacing between the bars. By default, flotr2 has each bar take up its full horizontal space, but that makes the chart look very cramped. We can adjust that with the <code>barWidth</code> property. Let’s set it to <code>0.5</code> so each bar only takes up half the available space.</p>
 <p>Here’s how we pass those options to flotr2. Note in line 11 that we use the <code>ticks</code> property of the x-axis to tell flotr2 which labels match which x-values.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -746,7 +758,7 @@ A dummy data set can emphasize a position on a chart axis.
 </figure>
 <h3 id="step-6-label-the-chart">Step 6: Label the Chart</h3>
 <p>For the last step in this example, we’ll add appropriate labels to the chart. That includes an overall title, as well as labels for individual data sets. And to make it clear which axis refers to temperature, we’ll add a “°C” suffix to the temperature scale. We identify the label for each data series in the <code>label</code> option for that series. The overall chart title merits its own option, and we add the “°C” suffix using a <code>tickFormatter</code> function. That option expects a function. For each value on the axis, the formatter function is called with the value, and flotr2 expects it to return a string to use for the label. As you can see in line 26, we simply append the <code>&quot; °C&quot;</code> string to the value.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-26"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1344,7 +1356,7 @@ Specifying our own axes makes the chart easier to read.
 </figure>
 <h3 id="step-5-label-the-data">Step 5: Label the Data</h3>
 <p>Our chart so far looks reasonably nice, but it doesn’t tell the user what they’re seeing. We need to add some labels to identify the data. A few more options can clarify the chart:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-9 line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1370,7 +1382,7 @@ Specifying our own axes makes the chart easier to read.
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
     }
 );</code></pre></td></tr></table>
-<p>The <code>title</code> and <code>subtitle</code> options give the chart its overall title and subtitle, while the <code>title</code> properties within the <code>xaxis</code> and <code>yaxis</code> options name the labels for those axes. In addition to adding labels, we’ve told flotr2 to drop the unnecessary decimal point from the x- and y-axis values. We did that with the <code>tickDecimals</code> property in lines 7 and 9. The chart in figure <span class="nextfigure"/> is now looking much better.</p>
+<p>The <code>title</code> and <code>subtitle</code> options give the chart its overall title and subtitle, while the <code>title</code> properties within the <code>xaxis</code> and <code>yaxis</code> options name the labels for those axes. In addition to adding labels, we’ve told flotr2 to drop the unnecessary decimal point from the x- and y-axis values. We did that with the <code>tickDecimals</code> property in lines 9 and 11. The chart in figure <span class="nextfigure"/> is now looking much better.</p>
 <figure>
 <div id="scatter-chart3" style="width:600px;height:400px;">
 
@@ -1381,7 +1393,7 @@ Labels and titles clarify the chart’s content.
 </figure>
 <h3 id="step-6-clarify-the-x-axis">Step 6: Clarify the X Axis</h3>
 <p>Although our chart has definitely improved since the first attempt, there is still one nagging problem with the data presentation. The x-axis represents a percentage, but the labels for that axis show whole numbers. That discrepancy might cause our users some initial confusion, so lets get rid of it. Flotr2 gives us the option to format the axis labels however we want. In this example, we simply wish to add a percentage symbol to the value. That’s easy enough:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1409,7 +1421,7 @@ Labels and titles clarify the chart’s content.
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
     }
 );</code></pre></td></tr></table>
-<p>The trick is the <code>tickFormatter</code> property of the <code>xaxis</code> options. It’s line 9 in the above code. That property specifies a function. When that option is present, flotr2 doesn’t draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we’re simply adding a percent sign after the value.</p>
+<p>The trick is the <code>tickFormatter</code> property of the <code>xaxis</code> options. It’s line 11 in the above code. That property specifies a function. When that option is present, flotr2 doesn’t draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we’re simply adding a percent sign after the value.</p>
 <p>With figure <span class="nextfigure"/> we have a chart that clearly presents the data. The horizontal axis clearly labels the percentage values.</p>
 <figure>
 <div id="scatter-chart4" style="width:600px;height:400px;">
@@ -1520,8 +1532,8 @@ Formatting the axis labels clarifies the content.
 Splitting the data into multiple data sets lets us assign different colors to each.
 </figcaption>
 </figure>
-<p>For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 14) and position the legend in the northeast quadrant (line 18).</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<p>For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 13) and position the legend in the northeast quadrant (line 17).</p>
+<table class="sourceCode javascript numberLines line-13 line-18"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
