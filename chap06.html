@@ -203,6 +203,12 @@
 .map-uk:before { content: "\e003"; }
 .map-va:before { content: "\e002"; }
 .map-eur:before { content: "\e001"; }
+@font-face {
+    font-family: 'Continental-Symbol-ST';
+    src:url('fonts/Continental-Symbol-ST.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 /* required styles */
 
 .leaflet-map-pane,
@@ -6677,10 +6683,10 @@ Maps built in the browser with a map library can use interactivity to build inte
         L.control.title(
             "<div>Geography as Competitive Advantage</div>" +
             "<p>In the 1940s, the route of Southern Railways' <i>Southerner</i> " +
-            "(<span class='southern'>━━</span>) " +
+            "(<span class='southern'>━</span>) " +
             "was shorter than the rival " +
             "<i>Silver Comet</i> of the Seaboard Air Line " +
-            "(<span class='seaboard'>━━</span>)." +
+            "(<span class='seaboard'>━</span>)." +
             "Passengers traveling on the <i>Southerner</i> " +
             "could expect to arrive more than 90 minutes sooner " +
             "than those on the <i>Silver Comet</i>.</p>" +
