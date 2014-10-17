@@ -243,7 +243,7 @@ line {
 </style>
 
 <figure>
-<div style="position:relative;left:-200px" id='figure1'></div>
+<div style="position:relative;left:-100px" id='figure1'></div>
 <figcaption>D3.js provides tools to help draw the circles and lines for a network graph.</figcaption>
 </figure>
 
@@ -284,7 +284,7 @@ Each time D3.js calls our event handler function, it will have updated the `x` a
 
 ``` {.javascript .numberLines}
 force.on('tick', function() {
-	nodeSelection2.each(function(node) {
+	nodeSelection.each(function(node) {
 	    node.x = Math.max(node.x, 5);
 	    node.y = Math.max(node.y, 5);
 	    node.x = Math.min(node.x, width-5);
@@ -387,7 +387,7 @@ And finally, if the user clicks on a node that's already selected, we can restor
 When you put all of the above code fragments together, you have the complete event handler below.
 
 ``` {.javascript .numberLines}
-nodeSelection3.on('click', function(d) {
+nodeSelection.on('click', function(d) {
 
     nodeSelection
         .filter(function(node) { return node !== d; })
@@ -436,574 +436,579 @@ So far our example has explored many of the features that D3.js provides for cus
 
 
 <script>
-contentLoaded.done(function() {
+;(function(){
 
-var albums = [
-  {
-    album: "Miles Davis - Kind of Blue",
-    musicians: [
-      "Cannonball Adderley",
-      "Paul Chambers",
-      "Jimmy Cobb",
-      "John Coltrane",
-      "Miles Davis",
-      "Bill Evans"
-    ]
-  },{
-    album: "John Coltrane - A Love Supreme",
-    musicians: [
-      "John Coltrane",
-      "Jimmy Garrison",
-      "Elvin Jones",
-      "McCoy Tyner"
-    ]
-  },{
-    album: "The Dave Brubeck Quartet - Time Out",
-    musicians: [
-      "Dave Brubeck",
-      "Paul Desmond",
-      "Joe Morello",
-      "Eugene Write"
-    ]
-  },{
-    album: "Duke Ellington - Ellington at Newport",
-    musicians: [
-      "Harry Carney",
-      "John Willie Cook",
-      "Duke Ellington",
-      "Paul Gonsalves",
-      "Jimmy Grissom",
-      "Jimmy Hamilton",
-      "Johnny Hodges",
-      "Quentin Jackson",
-      "William Anderson",
-      "Ray Nance",
-      "Russell Procope",
-      "John Sanders",
-      "Clark Terry",
-      "James Woode",
-      "Britt Woodman",
-      "Sam Woodyar"
-    ]
-  },{
-    album: "The Quintet - Jazz at Massey Hall",
-    musicians: [
-      "Dizzy Gillespie",
-      "Charles Mingus",
-      "Charlie Parker",
-      "Bud Powell",
-      "Max Roach"
-    ]
-  },{
-    album: "Louis Armstrong - The Best of the Hot Five and Hot Seven Recordings",
-    musicians: [
-      "Lil Hardin Armstrong",
-      "Louis Armstrong",
-      "Clarence Babcock",
-      "Pete Briggs",
-      "Mancy Carr",
-      "Baby Dodds",
-      "Johnny Dodds",
-      "Earl Hines",
-      "Kid Ory",
-      "Don Redman",
-      "Fred Robinson",
-      "Zutty Singleton",
-      "Johnny St. Cyr",
-      "Jimmy Strong",
-      "John Thomas",
-      "Dave Wilborn"
-    ]
-  },{
-    album: "John Coltrane - Blue Trane",
-    musicians: [
-      "Paul Chambers",
-      "John Coltrane",
-      "Kenny Drew",
-      "Curtis Fuller",
-      "Philly Joe Jones",
-      "Lee Morgan"
-    ]
-  },{
-    album: "Stan Getz and João Gilberto - Getz/Gilberto",
-    musicians: [
-      "Milton Banana",
-      "Stan Getz",
-      "Astrud Gilberto",
-      "João Gilberto",
-      "Antonio Carlos Jobim",
-      "Sebastião Neto"
-    ]
-  },{
-    album: "Charles Mingus - Mingus Ah Um",
-    musicians: [
-      "Willie Dennis",
-      "Booker Ervin",
-      "Shafi Hadi",
-      "John Handy",
-      "Jimmy Knepper",
-      "Charles Mingus",
-      "Horace Parlan",
-      "Dannie Richmond"
-    ]
-  },{
-    album: "Erroll Garner - Concert by the Sea",
-    musicians: [
-     "Denzil Best",
-      "Eddie Calhoun",
-      "Erroll Garner"
-    ]
-  },{
-    album: "Miles Davis - Bitches Brew",
-    musicians: [
-      "Don Alias",
-      "Harvey Brooks",
-      "Billy Cobham",
-      "Chick Corea",
-      "Miles Davis",
-      "Jack DeJohnette",
-      "Dave Holland",
-      "Bennie Maupin",
-      "John McLaughlin",
-      "Airto Moreira",
-      "Juma Santos",
-      "Wayne Shorter",
-      "Lenny White",
-      "Larry Young",
-      "Joe Zawinul"
-    ]
-  },{
-    album: "Sonny Rollings - Saxophone Colossus",
-    musicians: [
-      "Tommy Flanagan",
-      "Sonny Rollins",
-      "Max Roach",
-      "Doug Watkins"
-    ]
-  },{
-    album: "Art Blakey and The Jazz Messengers - Moanin'",
-    musicians: [
-      "Art Blakey",
-      "Lee Morgan",
-      "Benny Golson",
-      "Bobby Timmons",
-      "Jymie Merritt"
-    ]
-  },{
-    album: "Clifford Brown and Max Roach",
-    musicians: [
-      "Clifford Brown",
-      "Harold Land",
-      "George Morrow",
-      "Richie Powell",
-      "Max Roach"
-    ]
-  },{
-    album: "Thelonious Monk with John Coltrane - At Carnegie Hall",
-    musicians: [
-      "Ahmed Abdul-Malik",
-      "John Coltrane",
-      "Thelonious Monk",
-      "Shadow Wilson"
-    ]
-  },{
-    album: "Hank Mobley - Soul Station",
-    musicians: [
-      "Art Blakey",
-      "Paul Chambers",
-      "Wynton Kelly",
-      "Hank Mobley"
-    ]
-  },{
-    album: "Cannonball Adderly - Somethin' Else",
-    musicians: [
-      "Cannonball Adderley",
-      "Art Blakey",
-      "Miles Davis",
-      "Hank Jones",
-      "Sam Jones"
-    ]
-  },{
-    album: "Wayne Shorter - Speak No Evil",
-    musicians: [
-      "Ron Carter",
-      "Herbie Hancock",
-      "Freddie Hubbard",
-      "Elvin Jones",
-      "Wayne Shorter"
-    ]
-  },{
-    album: "Miles Davis - Birth of the Cool",
-    musicians: [
-      "Bill Barber",
-      "Nelson Boyd",
-      "Kenny Clarke",
-      "Junior Collins",
-      "Miles Davis",
-      "Kenny Hagood",
-      "Al Haig",
-      "J. J. Johnson",
-      "Lee Konitz",
-      "John Lewis",
-      "Al McKibbon",
-      "Gerry Mulligan",
-      "Max Roach",
-      "Gunther Schuller",
-      "Joe Shulman",
-      "Sandy Siegelstein",
-      "Kai Winding"
-    ]
-  },{
-    album: "Herbie Hancock - Maiden Voyage",
-    musicians: [
-      "Ron Carter",
-      "George Coleman",
-      "Herbie Hancock",
-      "Freddie Hubbard",
-      "Tony Williams"
-    ]
-  },{
-    album: "Vince Guaraldi Trio- A Boy Named Charlie Brown",
-    musicians: [
-      "Colin Bailey",
-      "Monty Budwig",
-      "Vince Guaraldi"
-    ]
-  },{
-    album: "Eric Dolphy - Out to Lunch",
-    musicians: [
-      "Richard Davis",
-      "Eric Dolphy",
-      "Freddie Hubbard",
-      "Bobby Hutcherson",
-      "Tony Williams"
-    ]
-  },{
-    album: "Oliver Nelson - The Blues and the Abstract Truth",
-    musicians: [
-      "George Barrow",
-      "Paul Chambers",
-      "Eric Dolphy",
-      "Bill Evans",
-      "Roy Haynes",
-      "Freddie Hubbard",
-      "Oliver Nelson"
-    ]
-  },{
-    album: "Dexter Gordon - Go",
-    musicians: [
-      "Sonny Clark",
-      "Dexter Gordon",
-      "Billy Higgins",
-      "Butch Warren"
-    ]
-  },{
-    album: "Sarah Vaughan with Clifford Brown",
-    musicians: [
-      "Joe Benjamin",
-      "Clifford Brown",
-      "Roy Haynes",
-      "Jimmy Jones",
-      "John Malachi",
-      "Herbie Mann",
-      "Paul Quinichette",
-      "Sarah Vaughan",
-      "Ernie Wilkins"
-    ]
-  }
-];
+    draw = function() {
 
-var width = 840;
-var height = 500;
+		var albums = [
+		  {
+		    album: "Miles Davis - Kind of Blue",
+		    musicians: [
+		      "Cannonball Adderley",
+		      "Paul Chambers",
+		      "Jimmy Cobb",
+		      "John Coltrane",
+		      "Miles Davis",
+		      "Bill Evans"
+		    ]
+		  },{
+		    album: "John Coltrane - A Love Supreme",
+		    musicians: [
+		      "John Coltrane",
+		      "Jimmy Garrison",
+		      "Elvin Jones",
+		      "McCoy Tyner"
+		    ]
+		  },{
+		    album: "The Dave Brubeck Quartet - Time Out",
+		    musicians: [
+		      "Dave Brubeck",
+		      "Paul Desmond",
+		      "Joe Morello",
+		      "Eugene Write"
+		    ]
+		  },{
+		    album: "Duke Ellington - Ellington at Newport",
+		    musicians: [
+		      "Harry Carney",
+		      "John Willie Cook",
+		      "Duke Ellington",
+		      "Paul Gonsalves",
+		      "Jimmy Grissom",
+		      "Jimmy Hamilton",
+		      "Johnny Hodges",
+		      "Quentin Jackson",
+		      "William Anderson",
+		      "Ray Nance",
+		      "Russell Procope",
+		      "John Sanders",
+		      "Clark Terry",
+		      "James Woode",
+		      "Britt Woodman",
+		      "Sam Woodyar"
+		    ]
+		  },{
+		    album: "The Quintet - Jazz at Massey Hall",
+		    musicians: [
+		      "Dizzy Gillespie",
+		      "Charles Mingus",
+		      "Charlie Parker",
+		      "Bud Powell",
+		      "Max Roach"
+		    ]
+		  },{
+		    album: "Louis Armstrong - The Best of the Hot Five and Hot Seven Recordings",
+		    musicians: [
+		      "Lil Hardin Armstrong",
+		      "Louis Armstrong",
+		      "Clarence Babcock",
+		      "Pete Briggs",
+		      "Mancy Carr",
+		      "Baby Dodds",
+		      "Johnny Dodds",
+		      "Earl Hines",
+		      "Kid Ory",
+		      "Don Redman",
+		      "Fred Robinson",
+		      "Zutty Singleton",
+		      "Johnny St. Cyr",
+		      "Jimmy Strong",
+		      "John Thomas",
+		      "Dave Wilborn"
+		    ]
+		  },{
+		    album: "John Coltrane - Blue Trane",
+		    musicians: [
+		      "Paul Chambers",
+		      "John Coltrane",
+		      "Kenny Drew",
+		      "Curtis Fuller",
+		      "Philly Joe Jones",
+		      "Lee Morgan"
+		    ]
+		  },{
+		    album: "Stan Getz and João Gilberto - Getz/Gilberto",
+		    musicians: [
+		      "Milton Banana",
+		      "Stan Getz",
+		      "Astrud Gilberto",
+		      "João Gilberto",
+		      "Antonio Carlos Jobim",
+		      "Sebastião Neto"
+		    ]
+		  },{
+		    album: "Charles Mingus - Mingus Ah Um",
+		    musicians: [
+		      "Willie Dennis",
+		      "Booker Ervin",
+		      "Shafi Hadi",
+		      "John Handy",
+		      "Jimmy Knepper",
+		      "Charles Mingus",
+		      "Horace Parlan",
+		      "Dannie Richmond"
+		    ]
+		  },{
+		    album: "Erroll Garner - Concert by the Sea",
+		    musicians: [
+		     "Denzil Best",
+		      "Eddie Calhoun",
+		      "Erroll Garner"
+		    ]
+		  },{
+		    album: "Miles Davis - Bitches Brew",
+		    musicians: [
+		      "Don Alias",
+		      "Harvey Brooks",
+		      "Billy Cobham",
+		      "Chick Corea",
+		      "Miles Davis",
+		      "Jack DeJohnette",
+		      "Dave Holland",
+		      "Bennie Maupin",
+		      "John McLaughlin",
+		      "Airto Moreira",
+		      "Juma Santos",
+		      "Wayne Shorter",
+		      "Lenny White",
+		      "Larry Young",
+		      "Joe Zawinul"
+		    ]
+		  },{
+		    album: "Sonny Rollings - Saxophone Colossus",
+		    musicians: [
+		      "Tommy Flanagan",
+		      "Sonny Rollins",
+		      "Max Roach",
+		      "Doug Watkins"
+		    ]
+		  },{
+		    album: "Art Blakey and The Jazz Messengers - Moanin'",
+		    musicians: [
+		      "Art Blakey",
+		      "Lee Morgan",
+		      "Benny Golson",
+		      "Bobby Timmons",
+		      "Jymie Merritt"
+		    ]
+		  },{
+		    album: "Clifford Brown and Max Roach",
+		    musicians: [
+		      "Clifford Brown",
+		      "Harold Land",
+		      "George Morrow",
+		      "Richie Powell",
+		      "Max Roach"
+		    ]
+		  },{
+		    album: "Thelonious Monk with John Coltrane - At Carnegie Hall",
+		    musicians: [
+		      "Ahmed Abdul-Malik",
+		      "John Coltrane",
+		      "Thelonious Monk",
+		      "Shadow Wilson"
+		    ]
+		  },{
+		    album: "Hank Mobley - Soul Station",
+		    musicians: [
+		      "Art Blakey",
+		      "Paul Chambers",
+		      "Wynton Kelly",
+		      "Hank Mobley"
+		    ]
+		  },{
+		    album: "Cannonball Adderly - Somethin' Else",
+		    musicians: [
+		      "Cannonball Adderley",
+		      "Art Blakey",
+		      "Miles Davis",
+		      "Hank Jones",
+		      "Sam Jones"
+		    ]
+		  },{
+		    album: "Wayne Shorter - Speak No Evil",
+		    musicians: [
+		      "Ron Carter",
+		      "Herbie Hancock",
+		      "Freddie Hubbard",
+		      "Elvin Jones",
+		      "Wayne Shorter"
+		    ]
+		  },{
+		    album: "Miles Davis - Birth of the Cool",
+		    musicians: [
+		      "Bill Barber",
+		      "Nelson Boyd",
+		      "Kenny Clarke",
+		      "Junior Collins",
+		      "Miles Davis",
+		      "Kenny Hagood",
+		      "Al Haig",
+		      "J. J. Johnson",
+		      "Lee Konitz",
+		      "John Lewis",
+		      "Al McKibbon",
+		      "Gerry Mulligan",
+		      "Max Roach",
+		      "Gunther Schuller",
+		      "Joe Shulman",
+		      "Sandy Siegelstein",
+		      "Kai Winding"
+		    ]
+		  },{
+		    album: "Herbie Hancock - Maiden Voyage",
+		    musicians: [
+		      "Ron Carter",
+		      "George Coleman",
+		      "Herbie Hancock",
+		      "Freddie Hubbard",
+		      "Tony Williams"
+		    ]
+		  },{
+		    album: "Vince Guaraldi Trio- A Boy Named Charlie Brown",
+		    musicians: [
+		      "Colin Bailey",
+		      "Monty Budwig",
+		      "Vince Guaraldi"
+		    ]
+		  },{
+		    album: "Eric Dolphy - Out to Lunch",
+		    musicians: [
+		      "Richard Davis",
+		      "Eric Dolphy",
+		      "Freddie Hubbard",
+		      "Bobby Hutcherson",
+		      "Tony Williams"
+		    ]
+		  },{
+		    album: "Oliver Nelson - The Blues and the Abstract Truth",
+		    musicians: [
+		      "George Barrow",
+		      "Paul Chambers",
+		      "Eric Dolphy",
+		      "Bill Evans",
+		      "Roy Haynes",
+		      "Freddie Hubbard",
+		      "Oliver Nelson"
+		    ]
+		  },{
+		    album: "Dexter Gordon - Go",
+		    musicians: [
+		      "Sonny Clark",
+		      "Dexter Gordon",
+		      "Billy Higgins",
+		      "Butch Warren"
+		    ]
+		  },{
+		    album: "Sarah Vaughan with Clifford Brown",
+		    musicians: [
+		      "Joe Benjamin",
+		      "Clifford Brown",
+		      "Roy Haynes",
+		      "Jimmy Jones",
+		      "John Malachi",
+		      "Herbie Mann",
+		      "Paul Quinichette",
+		      "Sarah Vaughan",
+		      "Ernie Wilkins"
+		    ]
+		  }
+		];
 
-var nodes1 = albums.map(function(entry, idx, list) {
-    var radius = 200;
-	var node = {};
-    var theta = idx*2*Math.PI / list.length;
-	node.name = entry.album;
-	node.links = entry.musicians.slice(0);
-	node.x = (width/2) + radius*Math.sin(theta);
-	node.y = (height/2) + radius*Math.cos(theta);
-	return node;
-});
+		var width = 640;
+		var height = 400;
 
-var links = [];
+		var nodes1 = albums.map(function(entry, idx, list) {
+		    var radius = 180;
+			var node = {};
+		    var theta = idx*2*Math.PI / list.length;
+			node.name = entry.album;
+			node.links = entry.musicians.slice(0);
+			node.x = (width/2) + radius*Math.sin(theta);
+			node.y = (height/2) + radius*Math.cos(theta);
+			return node;
+		});
 
-albums.forEach(function(srcNode, srcIdx, srcList) {
-    srcNode.musicians.forEach(function(srcLink) {
-        for (var tgtIdx = srcIdx + 1;
-                 tgtIdx < srcList.length;
-                 tgtIdx++) {
+		var links = [];
 
-            var tgtNode = srcList[tgtIdx];
-            if (tgtNode.musicians.some(function(tgtLink){
-                return tgtLink === srcLink;
-            })) {
-                links.push({
-                    source: srcIdx,
-                    target: tgtIdx,
-                    link: srcLink
-                });
-            }
-        }
-    });
-});
+		albums.forEach(function(srcNode, srcIdx, srcList) {
+		    srcNode.musicians.forEach(function(srcLink) {
+		        for (var tgtIdx = srcIdx + 1;
+		                 tgtIdx < srcList.length;
+		                 tgtIdx++) {
 
-var edges1 = [];
+		            var tgtNode = srcList[tgtIdx];
+		            if (tgtNode.musicians.some(function(tgtLink){
+		                return tgtLink === srcLink;
+		            })) {
+		                links.push({
+		                    source: srcIdx,
+		                    target: tgtIdx,
+		                    link: srcLink
+		                });
+		            }
+		        }
+		    });
+		});
 
-links.forEach(function(link) {
-    var existingEdge = false;
-    for (var idx = 0; idx < edges1.length; idx++) {
-        if ((link.source === edges1[idx].source) &&
-            (link.target === edges1[idx].target)) {
-            existingEdge = edges1[idx];
-            break;
-        }
-    }
-    if (existingEdge) {
-        existingEdge.links.push(link.link);    
-    } else {
-        edges1.push({
-            source: link.source,
-            target: link.target,
-            links: [link.link]
-        })
-    }
-});
+		var edges1 = [];
 
-var svg1 = d3.select('#figure1').append('svg')
-    .attr('width', width)
-    .attr('height', height);
+		links.forEach(function(link) {
+		    var existingEdge = false;
+		    for (var idx = 0; idx < edges1.length; idx++) {
+		        if ((link.source === edges1[idx].source) &&
+		            (link.target === edges1[idx].target)) {
+		            existingEdge = edges1[idx];
+		            break;
+		        }
+		    }
+		    if (existingEdge) {
+		        existingEdge.links.push(link.link);    
+		    } else {
+		        edges1.push({
+		            source: link.source,
+		            target: link.target,
+		            links: [link.link]
+		        })
+		    }
+		});
 
-var edgeSelection1 = svg1.selectAll("line")
-    .data(edges1)
-    .enter().append("line");
+		var svg1 = d3.select('#figure1').append('svg')
+		    .attr('width', width)
+		    .attr('height', height);
 
-var nodeSelection1 = svg1.selectAll("circle")
-    .data(nodes1)
-    .enter().append("circle");
+		var edgeSelection1 = svg1.selectAll("line")
+		    .data(edges1)
+		    .enter().append("line");
 
-nodeSelection1
-    .attr('r', width/75)
-    .attr('cx', function(d) { return d.x; })
-    .attr('cy', function(d) { return d.y; });
+		var nodeSelection1 = svg1.selectAll("circle")
+		    .data(nodes1)
+		    .enter().append("circle");
+
+		nodeSelection1
+		    .attr('r', width/75)
+		    .attr('cx', function(d) { return d.x; })
+		    .attr('cy', function(d) { return d.y; });
     
-edgeSelection1
-    .attr('x1', function(d) { return nodes1[d.source].x; })
-    .attr('y1', function(d) { return nodes1[d.source].y; })
-    .attr('x2', function(d) { return nodes1[d.target].x; })
-    .attr('y2', function(d) { return nodes1[d.target].y; });
+		edgeSelection1
+		    .attr('x1', function(d) { return nodes1[d.source].x; })
+		    .attr('y1', function(d) { return nodes1[d.source].y; })
+		    .attr('x2', function(d) { return nodes1[d.target].x; })
+		    .attr('y2', function(d) { return nodes1[d.target].y; });
 
 
 
-var nodes2 = albums.map(function(entry, idx, list) {
-    var radius = 200;
-	var node = {};
-    var theta = idx*2*Math.PI / list.length;
-	node.name = entry.album;
-	node.links = entry.musicians.slice(0);
-	node.x = (width/2) + radius*Math.sin(theta);
-	node.y = (height/2) + radius*Math.cos(theta);
-	return node;
-});
+		var nodes2 = albums.map(function(entry, idx, list) {
+		    var radius = 180;
+			var node = {};
+		    var theta = idx*2*Math.PI / list.length;
+			node.name = entry.album;
+			node.links = entry.musicians.slice(0);
+			node.x = (width/2) + radius*Math.sin(theta);
+			node.y = (height/2) + radius*Math.cos(theta);
+			return node;
+		});
 
-var edges2 = [];
+		var edges2 = [];
 
-links.forEach(function(link) {
-    var existingEdge = false;
-    for (var idx = 0; idx < edges2.length; idx++) {
-        if ((link.source === edges2[idx].source) &&
-            (link.target === edges2[idx].target)) {
-            existingEdge = edges2[idx];
-            break;
-        }
-    }
-    if (existingEdge) {
-        existingEdge.links.push(link.link);    
-    } else {
-        edges2.push({
-            source: link.source,
-            target: link.target,
-            links: [link.link]
-        })
-    }
-});
+		links.forEach(function(link) {
+		    var existingEdge = false;
+		    for (var idx = 0; idx < edges2.length; idx++) {
+		        if ((link.source === edges2[idx].source) &&
+		            (link.target === edges2[idx].target)) {
+		            existingEdge = edges2[idx];
+		            break;
+		        }
+		    }
+		    if (existingEdge) {
+		        existingEdge.links.push(link.link);    
+		    } else {
+		        edges2.push({
+		            source: link.source,
+		            target: link.target,
+		            links: [link.link]
+		        })
+		    }
+		});
 
-var svg2 = d3.select('#figure2').append('svg')
-    .attr('width', width)
-    .attr('height', height);
+		var svg2 = d3.select('#figure2').append('svg')
+		    .attr('width', width)
+		    .attr('height', height);
 
-var edgeSelection2 = svg2.selectAll("line")
-    .data(edges2)
-    .enter().append("line");
+		var edgeSelection2 = svg2.selectAll("line")
+		    .data(edges2)
+		    .enter().append("line");
 
-var nodeSelection2 = svg2.selectAll("circle")
-    .data(nodes2)
-    .enter().append("circle");
+		var nodeSelection2 = svg2.selectAll("circle")
+		    .data(nodes2)
+		    .enter().append("circle");
 
-nodeSelection2
-    .attr('r', width/75)
-    .attr('cx', function(d) { return d.x; })
-    .attr('cy', function(d) { return d.y; });
+		nodeSelection2
+		    .attr('r', width/75)
+		    .attr('cx', function(d) { return d.x; })
+		    .attr('cy', function(d) { return d.y; });
     
-edgeSelection2
-    .attr('x1', function(d) { return nodes2[d.source].x; })
-    .attr('y1', function(d) { return nodes2[d.source].y; })
-    .attr('x2', function(d) { return nodes2[d.target].x; })
-    .attr('y2', function(d) { return nodes2[d.target].y; });
+		edgeSelection2
+		    .attr('x1', function(d) { return nodes2[d.source].x; })
+		    .attr('y1', function(d) { return nodes2[d.source].y; })
+		    .attr('x2', function(d) { return nodes2[d.target].x; })
+		    .attr('y2', function(d) { return nodes2[d.target].y; });
 
-var force2 = d3.layout.force()
-    .size([width, height])
-    .nodes(nodes2)
-    .links(edges2)
-    .linkDistance(height/2)
-    .charge(-500);
+		var force2 = d3.layout.force()
+		    .size([width, height])
+		    .nodes(nodes2)
+		    .links(edges2)
+		    .linkDistance(height/2)
+		    .charge(-500);
 
-force2.on('tick', function() {
-	nodeSelection2.each(function(node) {
-	    node.x = Math.max(node.x, width/75);
-	    node.y = Math.max(node.y, width/75);
-	    node.x = Math.min(node.x, width-width/75);
-	    node.y = Math.min(node.y, height-width/75);
-	});
+		force2.on('tick', function() {
+			nodeSelection2.each(function(node) {
+			    node.x = Math.max(node.x, width/75);
+			    node.y = Math.max(node.y, width/75);
+			    node.x = Math.min(node.x, width-width/75);
+			    node.y = Math.min(node.y, height-width/75);
+			});
 
-    nodeSelection2
-        .attr('cx', function(d) { return d.x; })
-        .attr('cy', function(d) { return d.y; });
+		    nodeSelection2
+		        .attr('cx', function(d) { return d.x; })
+		        .attr('cy', function(d) { return d.y; });
         
-    edgeSelection2
-        .attr('x1', function(d) { return d.source.x; })
-        .attr('y1', function(d) { return d.source.y; })
-        .attr('x2', function(d) { return d.target.x; })
-        .attr('y2', function(d) { return d.target.y; });
-});
+		    edgeSelection2
+		        .attr('x1', function(d) { return d.source.x; })
+		        .attr('y1', function(d) { return d.source.y; })
+		        .attr('x2', function(d) { return d.target.x; })
+		        .attr('y2', function(d) { return d.target.y; });
+		});
 
 
-force2.start();
+		force2.start();
 
 
-var nodeRadius = width/50;
+		var nodeRadius = width/50;
 
-var nodes3 = albums.map(function(entry, idx, list) {
-    var radius = 200;
-	var node = {};
-    var theta = idx*2*Math.PI / list.length;
-	node.name = entry.album;
-	node.links = entry.musicians.slice(0);
-	node.x = (width/2) + radius*Math.sin(theta);
-	node.y = (height/2) + radius*Math.cos(theta);
-	return node;
-});
+		var nodes3 = albums.map(function(entry, idx, list) {
+		    var radius = 180;
+			var node = {};
+		    var theta = idx*2*Math.PI / list.length;
+			node.name = entry.album;
+			node.links = entry.musicians.slice(0);
+			node.x = (width/2) + radius*Math.sin(theta);
+			node.y = (height/2) + radius*Math.cos(theta);
+			return node;
+		});
 
-var edges3 = [];
+		var edges3 = [];
 
-links.forEach(function(link) {
-    var existingEdge = false;
-    for (var idx = 0; idx < edges3.length; idx++) {
-        if ((link.source === edges3[idx].source) &&
-            (link.target === edges3[idx].target)) {
-            existingEdge = edges3[idx];
-            break;
-        }
-    }
-    if (existingEdge) {
-        existingEdge.links.push(link.link);    
-    } else {
-        edges3.push({
-            source: link.source,
-            target: link.target,
-            links: [link.link]
-        })
-    }
-});
+		links.forEach(function(link) {
+		    var existingEdge = false;
+		    for (var idx = 0; idx < edges3.length; idx++) {
+		        if ((link.source === edges3[idx].source) &&
+		            (link.target === edges3[idx].target)) {
+		            existingEdge = edges3[idx];
+		            break;
+		        }
+		    }
+		    if (existingEdge) {
+		        existingEdge.links.push(link.link);    
+		    } else {
+		        edges3.push({
+		            source: link.source,
+		            target: link.target,
+		            links: [link.link]
+		        })
+		    }
+		});
 
-var svg3 = d3.select('#figure3').append('svg')
-    .attr('width', width)
-    .attr('height', height);
+		var svg3 = d3.select('#figure3').append('svg')
+		    .attr('width', width)
+		    .attr('height', height);
 
-var edgeSelection3 = svg3.selectAll("line")
-    .data(edges3)
-    .enter().append("line");
+		var edgeSelection3 = svg3.selectAll("line")
+		    .data(edges3)
+		    .enter().append("line");
 
-var nodeSelection3 = svg3.selectAll("circle")
-    .data(nodes3)
-    .enter().append("circle");
+		var nodeSelection3 = svg3.selectAll("circle")
+		    .data(nodes3)
+		    .enter().append("circle");
 
-nodeSelection3
-    .attr('r', nodeRadius)
-    .attr('cx', function(d) { return d.x; })
-    .attr('cy', function(d) { return d.y; });
+		nodeSelection3
+		    .attr('r', nodeRadius)
+		    .attr('cx', function(d) { return d.x; })
+		    .attr('cy', function(d) { return d.y; });
     
-edgeSelection3
-    .attr('x1', function(d) { return nodes3[d.source].x; })
-    .attr('y1', function(d) { return nodes3[d.source].y; })
-    .attr('x2', function(d) { return nodes3[d.target].x; })
-    .attr('y2', function(d) { return nodes3[d.target].y; });
+		edgeSelection3
+		    .attr('x1', function(d) { return nodes3[d.source].x; })
+		    .attr('y1', function(d) { return nodes3[d.source].y; })
+		    .attr('x2', function(d) { return nodes3[d.target].x; })
+		    .attr('y2', function(d) { return nodes3[d.target].y; });
 
 
-var force3 = d3.layout.force()
-    .size([width, height])
-    .nodes(nodes3)
-    .links(edges3)
-    .linkDistance(height/2)
-    .charge(-500);
+		var force3 = d3.layout.force()
+		    .size([width, height])
+		    .nodes(nodes3)
+		    .links(edges3)
+		    .linkDistance(height/2)
+		    .charge(-500);
 
-nodeSelection3.on('click', function(d) {
+		nodeSelection3.on('click', function(d) {
     
-    nodeSelection3
-        .classed('selected', false)
-        .filter(function(node) { return node !== d; })
-        .each(function(node) { node.selected = false;})
-        .attr('r', nodeRadius)
+		    nodeSelection3
+		        .classed('selected', false)
+		        .filter(function(node) { return node !== d; })
+		        .each(function(node) { node.selected = false;})
+		        .attr('r', nodeRadius)
         
-    edgeSelection3.classed('selected', false);
+		    edgeSelection3.classed('selected', false);
 
-    if (!d.selected) {
-    	 d3.select(this).classed('selected', true);
-    	 d3.select(this).attr('r', 1.5*nodeRadius);
+		    if (!d.selected) {
+		    	 d3.select(this).classed('selected', true);
+		    	 d3.select(this).attr('r', 1.5*nodeRadius);
 
-  		  edgeSelection3.each(function(edge) {
-      	    if ((edge.source === d) || (edge.target === d)) {
-      	        d3.select(this).classed('selected',true);
-      	        nodeSelection3
-      	            .filter(function(node) {return node === edge.source || node === edge.target})
-      	            .classed('selected',true);
-      	    }
-  		  });
+		  		  edgeSelection3.each(function(edge) {
+		      	    if ((edge.source === d) || (edge.target === d)) {
+		      	        d3.select(this).classed('selected',true);
+		      	        nodeSelection3
+		      	            .filter(function(node) {return node === edge.source || node === edge.target})
+		      	            .classed('selected',true);
+		      	    }
+		  		  });
       
-    } else {
-        d3.select(this).attr('r', nodeRadius)
-    }
+		    } else {
+		        d3.select(this).attr('r', nodeRadius)
+		    }
     
-    d.selected = !d.selected;
-});
+		    d.selected = !d.selected;
+		});
 
-force3.on('tick', function() {
-	nodeSelection3.each(function(node) {
-	    node.x = Math.max(node.x, 1.5*nodeRadius);
-	    node.y = Math.max(node.y, 1.5*nodeRadius);
-	    node.x = Math.min(node.x, width-1.5*nodeRadius);
-	    node.y = Math.min(node.y, height-1.5*nodeRadius);
-	});
+		force3.on('tick', function() {
+			nodeSelection3.each(function(node) {
+			    node.x = Math.max(node.x, 1.5*nodeRadius);
+			    node.y = Math.max(node.y, 1.5*nodeRadius);
+			    node.x = Math.min(node.x, width-1.5*nodeRadius);
+			    node.y = Math.min(node.y, height-1.5*nodeRadius);
+			});
 
-    nodeSelection3
-        .attr('cx', function(d) { return d.x; })
-        .attr('cy', function(d) { return d.y; });
+		    nodeSelection3
+		        .attr('cx', function(d) { return d.x; })
+		        .attr('cy', function(d) { return d.y; });
         
-    edgeSelection3
-        .attr('x1', function(d) { return d.source.x; })
-        .attr('y1', function(d) { return d.source.y; })
-        .attr('x2', function(d) { return d.target.x; })
-        .attr('y2', function(d) { return d.target.y; });
-});
+		    edgeSelection3
+		        .attr('x1', function(d) { return d.source.x; })
+		        .attr('y1', function(d) { return d.source.y; })
+		        .attr('x2', function(d) { return d.target.x; })
+		        .attr('y2', function(d) { return d.target.y; });
+		});
 
+		force3.start();
 
-force3.start();
+    };
 
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
 
-
-
-
-});
+}());
 </script>
 

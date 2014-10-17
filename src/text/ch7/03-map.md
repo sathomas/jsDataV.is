@@ -135,100 +135,108 @@ The result of our efforts is figure NEXTFIGURENUMBER. The map shows all the stat
 
 
 <script>
-contentLoaded.done(function() {
+;(function(){
 
+    draw = function() {
 
-var nominatingEvents = [
-    {date: "2012-01-03", state: "IA"},
-    {date: "2012-01-10", state: "NH"},
-    {date: "2012-01-21", state: "NV"},
-    {date: "2012-01-28", state: "SC"},
-    {date: "2012-02-07", state: "MO"},
-    {date: "2012-02-26", state: "ME"},
-    {date: "2012-03-06", state: "CO"},
-    {date: "2012-03-06", state: "GA"},
-    {date: "2012-03-06", state: "MA"},
-    {date: "2012-03-06", state: "MN"},
-    {date: "2012-03-06", state: "OH"},
-    {date: "2012-03-06", state: "OK"},
-    {date: "2012-03-06", state: "TN"},
-    {date: "2012-03-06", state: "VT"},
-    {date: "2012-03-06", state: "VA"},
-    {date: "2012-03-07", state: "HI"},
-    {date: "2012-03-13", state: "AL"},
-    {date: "2012-03-13", state: "MS"},
-    {date: "2012-03-13", state: "UT"},
-    {date: "2012-03-20", state: "IL"},
-    {date: "2012-03-24", state: "LA"},
-    {date: "2012-03-31", state: "AZ"},
-    {date: "2012-04-03", state: "DC"},
-    {date: "2012-04-03", state: "MD"},
-    {date: "2012-04-03", state: "TX"},
-    {date: "2012-04-03", state: "WI"},
-    {date: "2012-04-09", state: "AK"},
-    {date: "2012-04-14", state: "ID"},
-    {date: "2012-04-14", state: "KS"},
-    {date: "2012-04-14", state: "NE"},
-    {date: "2012-04-14", state: "WY"},
-    {date: "2012-04-15", state: "WA"},
-    {date: "2012-04-24", state: "CT"},
-    {date: "2012-04-24", state: "DE"},
-    {date: "2012-04-24", state: "NY"},
-    {date: "2012-04-24", state: "PA"},
-    {date: "2012-04-24", state: "RI"},
-    {date: "2012-05-05", state: "FL"},
-    {date: "2012-05-05", state: "MI"},
-    {date: "2012-05-08", state: "IN"},
-    {date: "2012-05-08", state: "NC"},
-    {date: "2012-05-08", state: "WV"},
-    {date: "2012-05-15", state: "OR"},
-    {date: "2012-05-22", state: "AR"},
-    {date: "2012-05-22", state: "KY"},
-    {date: "2012-06-05", state: "CA"},
-    {date: "2012-06-05", state: "MO"},
-    {date: "2012-06-05", state: "NJ"},
-    {date: "2012-06-05", state: "NM"},
-    {date: "2012-06-05", state: "ND"},
-    {date: "2012-06-05", state: "SD"}
-];
+		var nominatingEvents = [
+		    {date: "2012-01-03", state: "IA"},
+		    {date: "2012-01-10", state: "NH"},
+		    {date: "2012-01-21", state: "NV"},
+		    {date: "2012-01-28", state: "SC"},
+		    {date: "2012-02-07", state: "MO"},
+		    {date: "2012-02-26", state: "ME"},
+		    {date: "2012-03-06", state: "CO"},
+		    {date: "2012-03-06", state: "GA"},
+		    {date: "2012-03-06", state: "MA"},
+		    {date: "2012-03-06", state: "MN"},
+		    {date: "2012-03-06", state: "OH"},
+		    {date: "2012-03-06", state: "OK"},
+		    {date: "2012-03-06", state: "TN"},
+		    {date: "2012-03-06", state: "VT"},
+		    {date: "2012-03-06", state: "VA"},
+		    {date: "2012-03-07", state: "HI"},
+		    {date: "2012-03-13", state: "AL"},
+		    {date: "2012-03-13", state: "MS"},
+		    {date: "2012-03-13", state: "UT"},
+		    {date: "2012-03-20", state: "IL"},
+		    {date: "2012-03-24", state: "LA"},
+		    {date: "2012-03-31", state: "AZ"},
+		    {date: "2012-04-03", state: "DC"},
+		    {date: "2012-04-03", state: "MD"},
+		    {date: "2012-04-03", state: "TX"},
+		    {date: "2012-04-03", state: "WI"},
+		    {date: "2012-04-09", state: "AK"},
+		    {date: "2012-04-14", state: "ID"},
+		    {date: "2012-04-14", state: "KS"},
+		    {date: "2012-04-14", state: "NE"},
+		    {date: "2012-04-14", state: "WY"},
+		    {date: "2012-04-15", state: "WA"},
+		    {date: "2012-04-24", state: "CT"},
+		    {date: "2012-04-24", state: "DE"},
+		    {date: "2012-04-24", state: "NY"},
+		    {date: "2012-04-24", state: "PA"},
+		    {date: "2012-04-24", state: "RI"},
+		    {date: "2012-05-05", state: "FL"},
+		    {date: "2012-05-05", state: "MI"},
+		    {date: "2012-05-08", state: "IN"},
+		    {date: "2012-05-08", state: "NC"},
+		    {date: "2012-05-08", state: "WV"},
+		    {date: "2012-05-15", state: "OR"},
+		    {date: "2012-05-22", state: "AR"},
+		    {date: "2012-05-22", state: "KY"},
+		    {date: "2012-06-05", state: "CA"},
+		    {date: "2012-06-05", state: "MO"},
+		    {date: "2012-06-05", state: "NJ"},
+		    {date: "2012-06-05", state: "NM"},
+		    {date: "2012-06-05", state: "ND"},
+		    {date: "2012-06-05", state: "SD"}
+		];
 
-var width = 760,
-    height = 475;
+		var width = 760,
+		    height = 475;
 
-var color = d3.scale.linear()
-    .domain([+new Date("2012-01-01"), +new Date("2012-06-30")])
-    .range(["#deebf7","#08306b"]);
+		var color = d3.scale.linear()
+		    .domain([+new Date("2012-01-01"), +new Date("2012-06-30")])
+		    .range(["#deebf7","#08306b"]);
 
-var projection = d3.geo.albersUsa()
-    .scale(1000)
-    .translate([width / 2, height / 2]);
+		var projection = d3.geo.albersUsa()
+		    .scale(1000)
+		    .translate([width / 2, height / 2]);
 
-var path = d3.geo.path()
-    .projection(projection);
+		var path = d3.geo.path()
+		    .projection(projection);
 
-var svg = d3.select("#map1").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+		var svg = d3.select("#map1").append("svg")
+		    .attr("width", width)
+		    .attr("height", height);
 
-d3.json("data/us-states.json", function(us) {
-    svg.selectAll("path")
-        .data(us.features)
-      .enter().append("path")
-        .attr("d", path)
-        .style("fill", function(d) {
-            var date = "2012-01-03";
-            nominatingEvents.some(function(event) {
-                if (event.state === d.properties.abbreviation) {
-                    date = event.date;
-                    return true;
-                }
-                return false;
-            });
-            return color(+new Date(date));
-        });
-});
+		d3.json("data/us-states.json", function(us) {
+		    svg.selectAll("path")
+		        .data(us.features)
+		      .enter().append("path")
+		        .attr("d", path)
+		        .style("fill", function(d) {
+		            var date = "2012-01-03";
+		            nominatingEvents.some(function(event) {
+		                if (event.state === d.properties.abbreviation) {
+		                    date = event.date;
+		                    return true;
+		                }
+		                return false;
+		            });
+		            return color(+new Date(date));
+		        });
+		});
 
+    };
 
-});
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
+    } else {
+        window.addEventListener('load', draw);
+    }
+
+}());
 </script>
 
