@@ -1,10 +1,10 @@
 ## Frameworks and Libraries
 
-If we're using JavaScript to add data visualizations to traditional web pages, we don't have to worry too much about organizing and structuring our JavaScript. After all, it's often a relatively small amount of code, especially compared to the HTML markup and CSS styles that are also part of the page. With web applications, however, the code can grow to be more extensive and more complex. To help keep our code organized and manageable, we'll take advantage of a JavaScript application library, sometimes also known as a framework.
+If we're using JavaScript to add data visualizations to traditional web pages, we don't have to worry too much about organizing and structuring our JavaScript. After all, it's often a relatively small amount of code, especially compared to the <span class="smcp">HTML</span> markup and <span class="smcp">CSS</span> styles that are also part of the page. With web applications, however, the code can grow to be more extensive and more complex. To help keep our code organized and manageable, we'll take advantage of a JavaScript application library, sometimes also known as a framework.
 
 ### Step 1: Select an Application Library
 
-Deciding to use _an_ application library might be easier than deciding _which_ one to use. The number of these libraries has exploded in the past few years; there are now over 30 high quality libraries from which to choose. A good place to see all the alternatives is [TodoMVC](http://todomvc.com). That site serves as a showcase for application libraries; it shows how to implement a simple to-do application in each.
+Deciding to use _an_ application library might be easier than deciding _which_ one to use. The number of these libraries has exploded in the past few years; there are now over 30 high quality libraries from which to choose. A good place to see all the alternatives is [Todo<span class="smcp">MVC</span>](http://todomvc.com). That site serves as a showcase for application libraries; it shows how to implement a simple to-do application in each.
 
 There is an important difference between these application libraries that can help narrow the choice: Is an application library a pure library or an application framework? Those terms are often used interchangeably, but there is an important distinction. A pure library functions like jQuery or other libraries we've used throughout this book. It provides a set of tools for our application, and we can use as many—or as little—of those tools as we like. An application framework, on the other hand, dictates exactly how the application should work. The code that we write must follow the strictures and conventions of the framework. Fundamentally the difference is about control. With a pure library our code is in control and the library is at our disposal. With a framework the framework code is in control, and we simply add the code that makes our application unique.
 
@@ -18,7 +18,7 @@ When you start building your first real web application, deciding how to begin c
 
 Before we can use Yeoman we must first install [node.js](http://nodejs.org). Node.js is a powerful application development platform all by itself, but we won't need to worry about the details here. It is, however, the application platform required by many modern web development tools like Yeoman. To install node.js, follow the instructions on the [node.js web site](http://nodejs.org).
 
-With node.js installed, we can install the main Yeoman application as well as everything necessary to create a [Backbone.js application](https://github.com/yeoman/generator-backbone) with one command. You can execute this command in the Terminal app (on Mac OS X) or from the Windows Command Prompt.
+With node.js installed, we can install the main Yeoman application as well as everything necessary to create a [Backbone.js application](https://github.com/yeoman/generator-backbone) with one command. You can execute this command in the Terminal app (on Mac <span class="smcp">OS</span> <span class="smcp">X</span>) or from the Windows Command Prompt.
 
 ``` {.bash .numberLines}
 $ npm install -g generator-backbone
@@ -144,7 +144,7 @@ Concatenating and compressing 75 files...
 	Gzipped: 32.71 KB
 ```
 
-All that's left to do is adding the additional libraries into our HTML files. That's easy enough. The main page for our app is `index.html` in the `app` folder. There's already a block of code that includes jQuery, Underscore.js, and Backbone.js:
+All that's left to do is adding the additional libraries into our <span class="smcp">HTML</span> files. That's easy enough. The main page for our app is `index.html` in the `app` folder. There's already a block of code that includes jQuery, Underscore.js, and Backbone.js:
 
 ``` {.html .numberLines}
 <!-- build:js scripts/vendor.js -->

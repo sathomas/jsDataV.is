@@ -1,12 +1,12 @@
 ## Connecting with the Nike+ Service
 
-Although our example application relies on the Nike+ service for its data, we haven't looked at the details of that service's interface. We have seen hints Nike+ doesn't quite conform to common REST API conventions that application libraries such as Backbone.js expect. That's true, but it isn't all that unusual. There really isn't a true _standard_ for REST APIs, and many other services take approaches similar to Nike+. Fortunately Backbone.js anticipates this variation. As we'll see in the following steps, extending Backbone.js to support REST API variations isn't all that difficult.
+Although our example application relies on the Nike+ service for its data, we haven't looked at the details of that service's interface. We have seen hints Nike+ doesn't quite conform to common <span class="smcp">REST</span> <span class="smcp">API</span> conventions that application libraries such as Backbone.js expect. That's true, but it isn't all that unusual. There really isn't a true _standard_ for <span class="smcp">REST</span> <span class="smcp">API</span>s, and many other services take approaches similar to Nike+. Fortunately Backbone.js anticipates this variation. As we'll see in the following steps, extending Backbone.js to support <span class="smcp">REST</span> <span class="smcp">API</span> variations isn't all that difficult.
 
 ### Step 1: User Authorization
 
 As you might expect, Nike+ doesn't allow anyone on the internet to retrieve details for any user's runs. Users expect at least some level of privacy for that information. Before our app can retrieve any running information, therefore, it will need the user's permission. We won't go into the details of that process here, but it's result will be an `authorization_token`. This object is an arbitrary string that our app will have to include with every Nike+ request. If the token is missing or invalid, Nike+ will deny our app access to the data.
 
-Up until now we've left all of the details of the REST API to Backbone.js, and you might think it would be tricky to modify how Backbone.js constructs its AJAX calls. In fact,though, it's not. All we need to do is add a `sync` method to our Runs collection. When a `sync` method is present in a collection, Backbone.js calls it whenever it makes an AJAX request. (If there is no such method for a collection, Backbone.js calls its primary `Backbone.sync` method.) We'll define the new method directly in the collection.
+Up until now we've left all of the details of the <span class="smcp">REST</span> <span class="smcp">API</span> to Backbone.js, and you might think it would be tricky to modify how Backbone.js constructs its <span class="smcp">AJAX</span> calls. In fact,though, it's not. All we need to do is add a `sync` method to our Runs collection. When a `sync` method is present in a collection, Backbone.js calls it whenever it makes an <span class="smcp">AJAX</span> request. (If there is no such method for a collection, Backbone.js calls its primary `Backbone.sync` method.) We'll define the new method directly in the collection.
 
 ``` {.javascript .numberLines}
 Running.Collections.Runs = Backbone.Collection.extend({
@@ -31,7 +31,7 @@ sync: function(method, collection, options) {
 
 The first line in the method makes sure that the `options` parameter exists. If the caller doesn't provide a value, we set it to an empty object (`{}`). The rest of the code adds a `data` property to the `options` object by extending that object. We're taking advantage of one of the Underscore.js utilities that we saw in the previous chapter.
 
-Before we see how to supply the `this.settings.authorization_token`, let's finish up the `sync` method by actually making the AJAX request. Now that we've added the token, our request is a standard AJAX request so we can let Backbone.js take it from here. Here's the resulting `sync` method in full.
+Before we see how to supply the `this.settings.authorization_token`, let's finish up the `sync` method by actually making the <span class="smcp">AJAX</span> request. Now that we've added the token, our request is a standard <span class="smcp">AJAX</span> request so we can let Backbone.js take it from here. Here's the resulting `sync` method in full.
 
 ``` {.javascript .numberLines}
 sync: function(method, collection, options) {
@@ -68,7 +68,7 @@ When we first create the Runs collection, we can pass the authorization token as
 var runs = new Running.Collections.Runs([], {authorization_token: "authorize me"});
 ```
 
-With just a small bit of extra code we've added the authorization token to our AJAX requests to Nike+.
+With just a small bit of extra code we've added the authorization token to our <span class="smcp">AJAX</span> requests to Nike+.
 
 ### Step 2: Accepting the Nike+ Response
 
@@ -111,7 +111,7 @@ Running.Collections.Runs = Backbone.Collection.extend({
 
 ### Step 3: Paging the Collection
 
-The next aspect of the Nike+ API we'll tackle is its paging. When we request the activities for a user, the service doesn't normally return _all_ of them. Users may have thousands of activities stored in Nike+, and returning all of them at once might overwhelm the app. It can certainly add a noticeable delay as the app would have to wait for the entire response before it could process it. To avoid this problem, Nike+ divides user activities into pages, and it responds with one page of activities at a time. We'll have to adjust our app for that behavior, but we'll gain the benefit of a more responsive user experience when we do.
+The next aspect of the Nike+ <span class="smcp">API</span> we'll tackle is its paging. When we request the activities for a user, the service doesn't normally return _all_ of them. Users may have thousands of activities stored in Nike+, and returning all of them at once might overwhelm the app. It can certainly add a noticeable delay as the app would have to wait for the entire response before it could process it. To avoid this problem, Nike+ divides user activities into pages, and it responds with one page of activities at a time. We'll have to adjust our app for that behavior, but we'll gain the benefit of a more responsive user experience when we do.
 
 The first adjustment we'll make is in our request. We can add parameters to that request to indicate how many activities we're prepared to accept in the response. The two parameters are `offset` and `count`. The `offset` tells Nike+ which activity we want to be first in the response, while `count` indicates how many activities Nike+ should return. If we wanted the first 20 activities, for example, we can set `offset` to `1` and `count` to `20`. Then, to get the next 20 activities, we'd set `offset` to `21` (and keep `count` at `20`).
 
@@ -174,7 +174,7 @@ Running.Collections.Runs = Backbone.Collection.extend({
     },
 ```
 
-By adding a `success` callback to the AJAX request, we're asking to be notified when the request completes. In fact, we've said that we want the `this.fetchMore` function to be called. It's time to write that function; it too is a method of the Runs collection. This function checks to see if there are more activities left. If so, it executes another call to Backbone.js's regular collection `fetch` just as above.
+By adding a `success` callback to the <span class="smcp">AJAX</span> request, we're asking to be notified when the request completes. In fact, we've said that we want the `this.fetchMore` function to be called. It's time to write that function; it too is a method of the Runs collection. This function checks to see if there are more activities left. If so, it executes another call to Backbone.js's regular collection `fetch` just as above.
 
 ``` {.javascript .numberLines}
 fetchMore: function() {
@@ -223,7 +223,7 @@ fetchMore: function() {
 }
 ```
 
-There is still a small problem with the `fetchMore` method. That code references properties of the collection (`this.fetchoptions` and `this.settings`) but the method will be called asynchronously when the AJAX request completes. When that occurs, the collection won't be in context, so `this` won't be set to the collection. To fix that, we can bind `fetchMore` to the collection during initialization. Once again an Underscore.js utility function comes in handy.
+There is still a small problem with the `fetchMore` method. That code references properties of the collection (`this.fetchoptions` and `this.settings`) but the method will be called asynchronously when the <span class="smcp">AJAX</span> request completes. When that occurs, the collection won't be in context, so `this` won't be set to the collection. To fix that, we can bind `fetchMore` to the collection during initialization. Once again an Underscore.js utility function comes in handy.
 
 ``` {.javascript .numberLines}
 initialize: function(models, options) {
@@ -327,9 +327,9 @@ This property lets Backbone.js know that for our Runs, the `activityId` property
 
 ### Step 7: Retrieving Details
 
-The last change that Nike+ requires of our Backbone.js app lets us retrieve all the details for a run. So far we've been relying on the collection's fetch method to get running data. That method retrieves a list of runs from the server. When Nike+ returns a list of activities, however, it doesn't include the full details of each activity. It does return summary information, but it omits the detailed metrics arrays and any GPS data. Getting that information requires additional requests.
+The last change that Nike+ requires of our Backbone.js app lets us retrieve all the details for a run. So far we've been relying on the collection's fetch method to get running data. That method retrieves a list of runs from the server. When Nike+ returns a list of activities, however, it doesn't include the full details of each activity. It does return summary information, but it omits the detailed metrics arrays and any <span class="smcp">GPS</span> data. Getting that information requires additional requests.
 
-We'll first request the detailed metrics on which our Charts view bases its graphs. When the Runs collection fetches its list of runs from the server, each Run model will initially have an empty `metrics` array. To get the details for this array, we must make another request to the server. The request takes the same form as the request for the list, but it adds the activity identifier to the URL. More specifically, if the URL to get a list of runs is `https://api.nike.com/v1/me/sport/activities`, then the URL to get the details for a specific run, including its metrics, is `https://api.nike.com/v1/me/sport/activities/2126456911`. The number `2126456911` at the end of that URL is the run's `activityId`.
+We'll first request the detailed metrics on which our Charts view bases its graphs. When the Runs collection fetches its list of runs from the server, each Run model will initially have an empty `metrics` array. To get the details for this array, we must make another request to the server. The request takes the same form as the request for the list, but it adds the activity identifier to the <span class="smcp">URL</span>. More specifically, if the <span class="smcp">URL</span> to get a list of runs is `https://api.nike.com/v1/me/sport/activities`, then the <span class="smcp">URL</span> to get the details for a specific run, including its metrics, is `https://api.nike.com/v1/me/sport/activities/2126456911`. The number `2126456911` at the end of that <span class="smcp">URL</span> is the run's `activityId`.
 
 Because of the steps we've taken earlier in this section, Backbone.js makes it easy to get these details. All we have to do is `fetch` the model.
 
@@ -337,7 +337,7 @@ Because of the steps we've taken earlier in this section, Backbone.js makes it e
 run.fetch();
 ```
 
-Backbone.js knows the root of the URL because we set that in the Runs collection (and our model is a member of that collection). Backbone.js also knows that the unique identifier for each run is the `activityId` because we set that property in the previous step. And, fortunately for us, Backbone.js is smart enough to combine those bits of information and make the request.
+Backbone.js knows the root of the <span class="smcp">URL</span> because we set that in the Runs collection (and our model is a member of that collection). Backbone.js also knows that the unique identifier for each run is the `activityId` because we set that property in the previous step. And, fortunately for us, Backbone.js is smart enough to combine those bits of information and make the request.
 
 We will have to help Backbone.js in one respect, though. The Nike+ requires an authorization token for all requests, and so far we've only added code for that token to the collection. We have to add the same code to the model. The code below is almost identical to the code from step 1 in this section. We first make sure that the `options` object exists, then we extend it by adding the authorization token. Finally, we defer to the regular Backbone.js `sync` method. As you can see, we're getting the value for the token directly from the collection. When a model is part of a collection, Backbone.js sets the `collection` property of the model to reference that collection. We use that property to get the collection's settings, specifically the authorization token.
 
@@ -395,9 +395,9 @@ There's quite a lot going on in this process, so it may help to look at it one s
 
 Whew! It's a good thing that Backbone.js takes care of all that complexity.
 
-At this point we've managed to retrieve the detailed metrics for a run, but we haven't yet added any GPS data. Nike+ requires an additional request for that data, so we'll use a similar process. In this case, though, we can't rely on Backbone.js because the URL for the GPS request is unique to Nike+. That URL is formed by taking the individual activity's URL and appending `/gps`. A complete example would be `https://api.nike.com/v1/me/sport/activities/2126456911/gps`.
+At this point we've managed to retrieve the detailed metrics for a run, but we haven't yet added any <span class="smcp">GPS</span> data. Nike+ requires an additional request for that data, so we'll use a similar process. In this case, though, we can't rely on Backbone.js because the <span class="smcp">URL</span> for the <span class="smcp">GPS</span> request is unique to Nike+. That <span class="smcp">URL</span> is formed by taking the individual activity's <span class="smcp">URL</span> and appending `/gps`. A complete example would be `https://api.nike.com/v1/me/sport/activities/2126456911/gps`.
 
-To make the additional request we can add some code to the regular `fetch` method. We'll request the GPS data at the same time Backbone.js asks for the metrics details. The basic approach, which the code fragment below illustrates, is simple. We'll first see if the activity even has any GPS data. We can do that by checking the `isGpsActivity` property which the server provides on activity summaries. If it does, then we can request it. In either case we also want to execute the normal `fetch` process for the model. We do that by getting a reference to the standard `fetch` method for the model (`Backbone.Model.prototype.fetch`) and then calling that method. We pass is the same `options` passed to us.
+To make the additional request we can add some code to the regular `fetch` method. We'll request the <span class="smcp">GPS</span> data at the same time Backbone.js asks for the metrics details. The basic approach, which the code fragment below illustrates, is simple. We'll first see if the activity even has any <span class="smcp">GPS</span> data. We can do that by checking the `isGpsActivity` property which the server provides on activity summaries. If it does, then we can request it. In either case we also want to execute the normal `fetch` process for the model. We do that by getting a reference to the standard `fetch` method for the model (`Backbone.Model.prototype.fetch`) and then calling that method. We pass is the same `options` passed to us.
 
 ``` {.javascript .numberLines}
 Running.Models.Run = Backbone.Model.extend({
@@ -409,7 +409,7 @@ Running.Models.Run = Backbone.Model.extend({
     },
 ```
 
-To make the request to Nike+ we can use jQuery's AJAX function. Since we're asking for Javascipt objects (JSON data), the `$.getJSON` function is the most appropriate. First we set aside a reference to the run by assigning `this` to the local variable `model`. We'll need that variable because `this` won't reference the model when jQuery executes our callback. Then we call `$.getJSON` with three parameters. First is the URL for the request. We get that from Backbone.js by calling the `url` method for the model and appending the trailing `/gps`. The second parameter are data values to be included with the request. As always we need to include an authorization token. Just as we did aboe, we can get that token's value from the collection. The final parameter is a callback function that JQuery executes when it receives the server's response. In our case the function simply sets the `gps` property of the model to the response data.
+To make the request to Nike+ we can use jQuery's <span class="smcp">AJAX</span> function. Since we're asking for Javascipt objects (<span class="smcp">JSON</span> data), the `$.getJSON` function is the most appropriate. First we set aside a reference to the run by assigning `this` to the local variable `model`. We'll need that variable because `this` won't reference the model when jQuery executes our callback. Then we call `$.getJSON` with three parameters. First is the <span class="smcp">URL</span> for the request. We get that from Backbone.js by calling the `url` method for the model and appending the trailing `/gps`. The second parameter are data values to be included with the request. As always we need to include an authorization token. Just as we did aboe, we can get that token's value from the collection. The final parameter is a callback function that JQuery executes when it receives the server's response. In our case the function simply sets the `gps` property of the model to the response data.
 
 
 ``` {.javascript .numberLines}
@@ -423,5 +423,5 @@ if (this.get("isGpsActivity")) {
 }
 ```
 
-Not surprisingly, the process of retrieving GPS data works the same way as retrieving the detailed metrics. Initially our Map view won't have the data it needs to create a map for the run. Because it's listening to changes to the `gps` property of the model, however, it will be notified when that data is available. At that point it can complete the `render` function and the user will be able to view a nice map of the run.
+Not surprisingly, the process of retrieving <span class="smcp">GPS</span> data works the same way as retrieving the detailed metrics. Initially our Map view won't have the data it needs to create a map for the run. Because it's listening to changes to the `gps` property of the model, however, it will be notified when that data is available. At that point it can complete the `render` function and the user will be able to view a nice map of the run.
 

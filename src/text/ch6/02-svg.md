@@ -356,17 +356,17 @@ In addition to making the details table visible, we'll also want to update it wi
 ``` {.javascript .numberLines}
 var zToText = function(z) {
     z = +z;
-    if (z >  0.25) return "Far below average";
-    if (z >  0.1)  return "Below average";
-    if (z > -0.1)  return "Average";
-    if (z > -0.25) return "Above average";
+    if (z >  0.25) { return "Far below average"; }
+    if (z >  0.1)  { return "Below average"; }
+    if (z > -0.1)  { return "Average"; }
+    if (z > -0.25) { return "Above average"; }
     return "Far above average";
 }
 ```
 
 There are couple of noteworthy items in this function. First, the statement, `z = +z` converts the Z score from a string to a numeric value for the tests that follow. Second, remember that because of the Z score adjustments the negative Z scores are actually better than average, while the positive values are below average.
 
-We can use this function to provide the data for our details table. The first step is finding the full data set for the associated `<path>` element. To do that we search through the `counties` array looking for a `code` property that matches the `id` attribute of the path. Because JavaScript arrays don't have an arbitrary `indexOf()` method, we'll borrow the `some()` method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.
+We can use this function to provide the data for our details table. The first step is finding the full data set for the associated `<path>` element. To do that we search through the `counties` array looking for a `code` property that matches the `id` attribute of the path. Because `indexOf()` doesn't allow us to find objects by key, we'll borrow the `some()` method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.
 
 ``` {.javascript .numberLines}
 var county = null;
@@ -399,7 +399,7 @@ path.addEventListener('mouseleave', function(){
     this.setAttribute("stroke", "#444444");
 });
 path.addEventListener('mouseleave', function(){
-    document.getElementById("details-svg-2").style.display = "none";
+    // Previous code
     this.setAttribute("stroke", "none");
 });
 ```

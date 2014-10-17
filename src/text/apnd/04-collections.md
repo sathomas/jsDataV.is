@@ -1,6 +1,6 @@
 ## Manipulating Collections
 
-Another set of Underscore.js tools provide simple but powerful functions for manipulating collections. In Underscore.js both arrays and objects are _collections_. We're most likely dealing with arrays of objects in the context of data visualization, so that's what the following examples use. It's worth remembering, though, that the Underscore.js functions work in a natural way with pure arrays or pure objects as well.
+So far we've seen various Underscore.js tools that are suited specifically for either arrays or objects. Next, we'll see some tools for manipulating collections in general. In Underscore.js both arrays and objects are _collections_, so the tools in this section can be applied to pure arrays, pure objects, or data structures that combine both. In this section, we'll try out these utilities on an array of objects, since that's the data structure we most often deal with in the context of data visualization.
 
 Here's a small data set we can use for the examples below. It contains a few statistics from the 2012 Major League Baseball season.
 
@@ -50,15 +50,19 @@ The Underscore.js `map()` method iterates through a collection and transforms ea
   [50, 58, 38, 60, 40, 34, 53, 43, 51, 46, 50, 49, 47, 58, 54, 60]
 ```
 
-The `reduce()` method converts a collection into a single value by iterating through the collection's elements. Its parameters include a starting point for that value and an arbitrary function that updates the value for each element in the collection. We can use `reduce()` for example, to calculate how many teams have a winning percentage over 500.
+The `reduce()` method iterates through a collection and returns a single value. One parameter initializes this value, and the other parameter is an arbitrary function that updates the value for each element in the collection. We can use `reduce()` for example, to calculate how many teams have a winning percentage over 500.
 
 ``` {.javascript .numberLines}
 > _(national_league).reduce(
-      function(count, team) { return count + (team.wins > team.losses); },
+      function(count, team) { 
+		  return count + (team.wins > team.losses); 
+      },
       0  // starting point for reduced value
   )
   7
 ```
+
+As the comment in line 5 indicates, we start our count at 0. That value is passed as the first parameter to the function in line 2, and the function returns an updated value in line 3.
 
 > Note: If you've followed the development of "big data" implementations such as Hadoop or Google's search, you may know that the fundamental algorithm behind those technologies is _mapReduce_. Although the context differs, the same concepts underlie the `map()` and `reduce()` utilities in Underscore.js.
 
@@ -71,9 +75,7 @@ Underscore.js has several methods to help us find elements or sets of elements i
   {name: "Atlanta Braves", wins: 94, losses: 68, division: "east"}
 ```
 
-The `find()` function returns the first element in the array that meets the criteria.
-
-If we want to find all elements that meet our criteria, the `filter()` function makes that easy.
+The `find()` function just returns the first element in the array that meets the criteria. To find all elements that meet our criteria, use the `filter()` function.
 
 ``` {.javascript .numberLines}
 > _(national_league).filter( function(team) { return team.wins > 90; })

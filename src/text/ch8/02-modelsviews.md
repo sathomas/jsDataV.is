@@ -1,6 +1,6 @@
 ## Models and Views
 
-There are many application libraries available for web apps, and that number may lead you to assume that there are lots of opinions on how web apps should be built. In fact, though, most of the libraries agree on the key principles that should guide an app's architecture. Perhaps the most fundamental of those principles is separating _models_ from _views._ The code that keeps track of the core data for the app—the models—should be separate from the code that presents that data to the user—the views. Enforcing this separation makes it easier to update and modify either. If you want to present your data in a table instead of a chart, you can do that without any changes to the models. And if you need to change your data source from a local file to a REST API, you can do that without any changes to the views. We've been employing this principle in an informal way throughout the book. In all of the examples we've isolated the steps required to obtain and format our data from the steps we used to visualize it. Using an application library like Backbone.js gives us the tools to manage models and views more explicitly.
+There are many application libraries available for web apps, and that number may lead you to assume that there are lots of opinions on how web apps should be built. In fact, though, most of the libraries agree on the key principles that should guide an app's architecture. Perhaps the most fundamental of those principles is separating _models_ from _views._ The code that keeps track of the core data for the app—the models—should be separate from the code that presents that data to the user—the views. Enforcing this separation makes it easier to update and modify either. If you want to present your data in a table instead of a chart, you can do that without any changes to the models. And if you need to change your data source from a local file to a <span class="smcp">REST</span> <span class="smcp">API</span>, you can do that without any changes to the views. We've been employing this principle in an informal way throughout the book. In all of the examples we've isolated the steps required to obtain and format our data from the steps we used to visualize it. Using an application library like Backbone.js gives us the tools to manage models and views more explicitly.
 
 ### Step 1: Define the Application's Models
 
@@ -67,9 +67,9 @@ When you define a variable in JavaScript, that variable is a _global_ variable, 
 
 ### Step 2: Implement the Model
 
-Our application really only needs one model, so now we can finally start implementing. The lengthy explanation in the previous step might make you a little wary. If simply defining the model requires that much work (although, to be fair, it was only a single command), the prospect of actual coding might be even more intimidating. Fortunately there is no need to fear. This step is surely the easiest in the entire book. It's already complete! That's right, the scaffolding that Yeoman has set up for us is a complete and functioning model for a Run. In fact, if it weren't for some quirks in Nike's REST API, we wouldn't have to touch the model code at all. We'll address those quirks in a later section.
+Our application really only needs one model, so now we can finally start implementing. The lengthy explanation in the previous step might make you a little wary. If simply defining the model requires that much work (although, to be fair, it was only a single command), the prospect of actual coding might be even more intimidating. Fortunately there is no need to fear. This step is surely the easiest in the entire book. It's already complete! That's right, the scaffolding that Yeoman has set up for us is a complete and functioning model for a Run. In fact, if it weren't for some quirks in Nike's <span class="smcp">REST</span> <span class="smcp">API</span>, we wouldn't have to touch the model code at all. We'll address those quirks in a later section.
 
-Rather than simply moving on to the next step, though, let's spend a little time looking at what we can do with our newly created model. To do that we can make one temporary addition to the model code. This change is temporary because we won't need it in the final app. From the Nike+ documentation we find that the URL to retrieve details about a run (Nike+ uses the more general term "activity") is `https://api.nike.com/v1/me/sport/activities/{activityId}`. The final part depends on the specific activity, so we'll add only the general part of the URL to our model.
+Rather than simply moving on to the next step, though, let's spend a little time looking at what we can do with our newly created model. To do that we can make one temporary addition to the model code. This change is temporary because we won't need it in the final app. From the Nike+ documentation we find that the <span class="smcp">URL</span> to retrieve details about a run (Nike+ uses the more general term "activity") is `https://api.nike.com/v1/me/sport/activities/{activityId}`. The final part depends on the specific activity, so we'll add only the general part of the <span class="smcp">URL</span> to our model.
 
 ``` {.javascript .numberLines}
 Running.Models.Run = Backbone.Model.extend({
@@ -86,7 +86,7 @@ Running.Models.Run = Backbone.Model.extend({
 });
 ```
 
-Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of `2126456911`. If the Nike+ API followed typical conventions, we could create a variable representing that run, _and get all it's data,_ with two statements.
+Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of `2126456911`. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, _and get all it's data,_ with two statements.
 
 ``` {.javascript .numberLines}
 var run = new Running.Models.Run({id: 2126456911});
@@ -144,7 +144,7 @@ Running.Collections = Running.Collections || {};
 })();
 ```
 
-This file is even simpler than our model; the default collection only has a single property to indicate what type of model the collection contains. Unfortunately, Yeoman isn't smart enough to handle plurals, so it assumes the name of the model is the same as the name of the collection. That's not true for our app, as our model is a _Run_ (singular) and the collection is _Runs_ (plural). We'll need to change that by removing the `s`. While we're making this change, we can also add a property to specify the REST API for the collection. That's a URL from the Nike+ service.
+This file is even simpler than our model; the default collection only has a single property to indicate what type of model the collection contains. Unfortunately, Yeoman isn't smart enough to handle plurals, so it assumes the name of the model is the same as the name of the collection. That's not true for our app, as our model is a _Run_ (singular) and the collection is _Runs_ (plural). We'll need to change that by removing the `s`. While we're making this change, we can also add a property to specify the <span class="smcp">REST</span> <span class="smcp">API</span> for the collection. That's a <span class="smcp">URL</span> from the Nike+ service.
 
 ``` {.javascript .numberLines}
 Running.Collections.Runs = Backbone.Collection.extend({
@@ -153,7 +153,7 @@ Running.Collections.Runs = Backbone.Collection.extend({
 });
 ```
 
-With those two small changes, we're ready to take advantage of our new collection. (Well, we would be if the Nike+ API didn't have a few quirks that we'll address later; we'll ignore that complication for now.) All we need to do is create a new instance of the Runs collection and then fetch its data.
+With those two small changes, we're ready to take advantage of our new collection. (Well, we would be if the Nike+ <span class="smcp">API</span> didn't have a few quirks that we'll address later; we'll ignore that complication for now.) All we need to do is create a new instance of the Runs collection and then fetch its data.
 
 ``` {.javascript .numberLines}
 var runs = new Running.Collections.Runs();
@@ -216,15 +216,15 @@ Running.Views = Running.Views || {};
 })();
 ```
 
-The overall structure of the file is the same as our model and our collection, but there's a bit more going on in the view itself. Let's step through view's properties one at a time. The first property is `template`. That's where we define the exact HTML markup for the view, and we'll look at this in more detail in the next step.
+The overall structure of the file is the same as our model and our collection, but there's a bit more going on in the view itself. Let's step through view's properties one at a time. The first property is `template`. That's where we define the exact <span class="smcp">HTML</span> markup for the view, and we'll look at this in more detail in the next step.
 
-The `tagName` property defines the HTML tag that our view will use as it's parent. Yeoman defaults it to a generic `<div>`, but we know that in our case it will be a `<table>`. It's easy enough to change it, and we'll do so in a moment.
+The `tagName` property defines the <span class="smcp">HTML</span> tag that our view will use as it's parent. Yeoman defaults it to a generic `<div>`, but we know that in our case it will be a `<table>`. It's easy enough to change it, and we'll do so in a moment.
 
-The `id` and `className` properties specify HTML `id` attributes or `class` values to add to the main container (in our case the `<table>`). We could, for example, base some CSS styles on these values. For our example we're not considering styles, so we can leave both properties blank or delete them entirely.
+The `id` and `className` properties specify <span class="smcp">HTML</span> `id` attributes or `class` values to add to the main container (in our case the `<table>`). We could, for example, base some <span class="smcp">CSS</span> styles on these values. For our example we're not considering styles, so we can leave both properties blank or delete them entirely.
 
 Next is the `events` property. This object identifies user events (such as mouse clicks) that are relevant for the view. In the case of the Summary view, there are no events, so we can leave the object empty or simply delete it.
 
-The last two properties, `initialize` and `render`, are both methods. Backbone.js will call `initialize` when it first creates a view, and it will call `render` when the view should build or update the HTML markup. In the default Yeoman scaffolding, neither method has a return value. It's quite handy, however, if a view's methods return the view itself. That return value makes it easy to chain methods together in a single JavaScript statement. We can add the return statement to both methods. We'll also make a small change to the `initialize` method. The first statement within it refers to `this.model` because Yeoman assumes that views are model views. The Summary view is for a collection rather than a model, so we should change the code accordingly. The `render` function also refers to a model; it has the fragment `this.model.toJSON()`. Rather than change this code to `collection`, we'll simply delete it entirely. We'll see why in the next section on templates.
+The last two properties, `initialize` and `render`, are both methods. Backbone.js will call `initialize` when it first creates a view, and it will call `render` when the view should build or update the <span class="smcp">HTML</span> markup. In the default Yeoman scaffolding, neither method has a return value. It's quite handy, however, if a view's methods return the view itself. That return value makes it easy to chain methods together in a single JavaScript statement. We can add the return statement to both methods. We'll also make a small change to the `initialize` method. The first statement within it refers to `this.model` because Yeoman assumes that views are model views. The Summary view is for a collection rather than a model, so we should change the code accordingly. The `render` function also refers to a model; it has the fragment `this.model.toJSON()`. Rather than change this code to `collection`, we'll simply delete it entirely. We'll see why in the next section on templates.
 
 Before we consider the implementation of the last two methods, let's take a look at the resulting Summary view so far.
 
@@ -245,7 +245,7 @@ Running.Views.Summary = Backbone.View.extend({
 
 Now let's look inside the last two methods, starting with `initialize`. That method has a single statement (other than the `return` statement that we just added). By calling `listenTo`, it tells Backbone.js that the view wants to listen for events. The first parameter, `this.collection`, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view's `render` method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.
 
-Most of the real work of a view takes place in its `render` method. After all, this is the code that actually creates the HTML markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that's not enough. The template takes care of the HTML for the collection as a whole, but it doesn't handle the models that are part of the collection. For the individual runs, we can use Underscore.js to iterate through the collection and render each run.
+Most of the real work of a view takes place in its `render` method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that's not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn't handle the models that are part of the collection. For the individual runs, we can use Underscore.js to iterate through the collection and render each run.
 
 ``` {.javascript .numberLines}
     render: function () {
@@ -259,7 +259,7 @@ Now we have to write the `renderRun` method that handles each individual run. He
 
 1. Create a new SummaryRow view for the run.
 2. Render that Summary Row view.
-3. Append the resulting HTML to the `<tbody>` in the Summary view.
+3. Append the resulting <span class="smcp">HTML</span> to the `<tbody>` in the Summary view.
 
 The code to implement those steps is straightforward, but it's helpful to take each step one at a time.
 
@@ -299,9 +299,9 @@ Now we have all the JavaScript code we need to show the main summary view for ou
 
 ### Step 5: Define the Main View Templates
 
-So far we've developed the JavaScript code to manipulate our Summary and SummaryRow views. That code doesn't generate the actual HTML markup, though. For that task we rely on templates. Templates are skeletal HTML markup with placeholders for individual values. Confining HTML markup to templates helps keep our JavaScript code clean, well-structured, and easy to maintain.
+So far we've developed the JavaScript code to manipulate our Summary and SummaryRow views. That code doesn't generate the actual <span class="smcp">HTML</span> markup, though. For that task we rely on templates. Templates are skeletal <span class="smcp">HTML</span> markup with placeholders for individual values. Confining <span class="smcp">HTML</span> markup to templates helps keep our JavaScript code clean, well-structured, and easy to maintain.
 
-Just as there are many popular JavaScript application libraries, there are also many template languages. Our application doesn't require any fancy template functionality, however, so we'll stick with the default template process that Yeoman has set up for us. That process relies on a [JST tool](https://github.com/gruntjs/grunt-contrib-jst) to process templates, and the tool uses the [Underscore.js template language](http://underscorejs.org/#template). It's easy to see how this works through an example, so let's dive in.
+Just as there are many popular JavaScript application libraries, there are also many template languages. Our application doesn't require any fancy template functionality, however, so we'll stick with the default template process that Yeoman has set up for us. That process relies on a [<span class="smcp">JST</span> tool](https://github.com/gruntjs/grunt-contrib-jst) to process templates, and the tool uses the [Underscore.js template language](http://underscorejs.org/#template). It's easy to see how this works through an example, so let's dive in.
 
 The first template we'll tackle is the template for a SummaryRow. In our view we've already established that the SummaryRow is a `<tr>` element, so the template only needs to supply the content that lives within that `<tr>`. We'll get that content from the associated Run model which, in turn, comes from the Nike+ service. Here's an example activity that Nike+ could return.
 
@@ -438,7 +438,7 @@ render: function () {
     run.date = moment(this.model.get("startTime")).calendar();
 ```
 
-> In the interest of brevity, we're cheating a little with the code above because it converts the UTC timestamp to the local time zone of the browser. It would probably be more correct to convert it to the time zone for the run, which Nike+ provides in the data.
+> In the interest of brevity, we're cheating a little with the code above because it converts the <span class="smcp">UTC</span> timestamp to the local time zone of the browser. It would probably be more correct to convert it to the time zone for the run, which Nike+ provides in the data.
 
 Next up is the run's duration. It's doubtful that we need to show the fractions of seconds that Nike+ includes, so let's simply drop them from the attribute. (It would be more precise to round up or down, but assuming our users are Olympic athletes in training, a second here or there won't matter. Besides, Nike+ seems to always record these sub-second durations as ".000" anyway.)
 
@@ -446,7 +446,7 @@ Next up is the run's duration. It's doubtful that we need to show the fractions 
 run.duration = this.model.get("metricSummary").duration.split(".")[0];
 ```
 
-The distance property can also use some adjustment. In addition to rounding it to a reasonable number of decimal places, we can convert from km to Miles for our US users. A single statement takes care of both.
+The distance property can also use some adjustment. In addition to rounding it to a reasonable number of decimal places, we can convert from km to Miles for our <span class="smcp">US</span> users. A single statement takes care of both.
 
 ``` {.javascript .numberLines}
 run.distance = Math.round(62.1371*this.model.get("metricSummary").distance)/100 + " Miles";

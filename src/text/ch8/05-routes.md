@@ -1,6 +1,6 @@
 ## Putting it All Together
 
-At this point in the chapter we have all the pieces for a simple data-driven web application. Now we'll take those pieces and assemble them into the app. At the end of this section we'll have a complete application. Users start the app by visiting a web page, and our JavaScript code takes it from there. The result is a _single page application,_ or SPA. SPAs have become popular because JavaScript code can respond to user interaction immediately in the browser, which is much quicker than traditional web sites communicating with a server located halfway across the internet. Users are often pleased with the snappy and responsive result.
+At this point in the chapter we have all the pieces for a simple data-driven web application. Now we'll take those pieces and assemble them into the app. At the end of this section we'll have a complete application. Users start the app by visiting a web page, and our JavaScript code takes it from there. The result is a _single page application,_ or <span class="smcp">SPA</span>. <span class="lgcp">SPA</span>s have become popular because JavaScript code can respond to user interaction immediately in the browser, which is much quicker than traditional web sites communicating with a server located halfway across the internet. Users are often pleased with the snappy and responsive result.
 
 Even though our app is executing in a single web page, our users still expect certain behaviors from their web browsers. They expect to be able to bookmark a page, share it with friends, or navigate using the browser's forward and back buttons. Traditional web sites can rely on the browser to support all of those behaviors, but a single page application can't. As we'll see in the steps that follow, we have to write some additional code to give our users the behavior they expect.
 
@@ -17,7 +17,7 @@ $ yo backbone:router app
 
 Notice that we've named our router `app`. As you might expect from this name, we're using this router as the main controller for our application. That approach has pros and cons. Some developers feel that a router should be limited strictly to routing, while others view the router as the natural place to coordinate the overall application. For a simple example such as our's, there isn't really any harm in adding a bit of extra code to the router to control the app. In complex applications, however, it might be better to separate routing from application control. One of the nice things about Backbone.js is that it's happy to support either approach.
 
-With the scaffolding in place, we can start adding our router code to the `app.js` file. The first property we'll define are the `routes`. This property is an object whose keys are URL fragments and whose values are methods of the router. Here's our starting point.
+With the scaffolding in place, we can start adding our router code to the `app.js` file. The first property we'll define are the `routes`. This property is an object whose keys are <span class="smcp">URL</span> fragments and whose values are methods of the router. Here's our starting point.
 
 ``` {.javascript .numberLines}
 Running.Routers.App = Backbone.Router.extend({
@@ -28,7 +28,7 @@ Running.Routers.App = Backbone.Router.extend({
 });
 ```
 
-The first route has an empty URL fragment (`''`). When a user visits our page without specifying a path, the Router will call its `summary` method. If, for example, we were hosting our app using the `greatrunningapp.com` domain name, then users entering `http://greatrunningapp.com` in their browsers would trigger that route. Before we look at the second route, let's see what the `summary` method does.
+The first route has an empty <span class="smcp">URL</span> fragment (`''`). When a user visits our page without specifying a path, the Router will call its `summary` method. If, for example, we were hosting our app using the `greatrunningapp.com` domain name, then users entering `http://greatrunningapp.com` in their browsers would trigger that route. Before we look at the second route, let's see what the `summary` method does.
 
 The code is exactly what we've seen before. The `summary` method creates a new Runs Collection, fetches that collection, creates a Summary View of the collection, and renders that view onto the page. Users visiting the home page for our app will see a summary of their runs on the page.
 
@@ -41,7 +41,7 @@ summary: function() {
 },
 ```
 
-Now we can consider our second route. It has a URL fragment of `runs/:id`. The `runs/` part is a standard URL path while `:id` is how Backbone.js identifies an arbitrary variable. With this route we're telling Backbone.js to look for a URL that starts out as `http://greatrunningapp.com/runs/` and to consider whatever follows as the value for the `id` parameter. We'll use that parameter in the router's `details` method. Here's how we'll start the development of that method.
+Now we can consider our second route. It has a <span class="smcp">URL</span> fragment of `runs/:id`. The `runs/` part is a standard <span class="smcp">URL</span> path while `:id` is how Backbone.js identifies an arbitrary variable. With this route we're telling Backbone.js to look for a <span class="smcp">URL</span> that starts out as `http://greatrunningapp.com/runs/` and to consider whatever follows as the value for the `id` parameter. We'll use that parameter in the router's `details` method. Here's how we'll start the development of that method.
 
 ``` {.javascript .numberLines}
 details: function(id) {
@@ -53,11 +53,11 @@ details: function(id) {
     },
 ```
 
-As you can see, the code is almost the same as the summary method, except we're only showing a single run instead of the whole collection. We create a new Run model, set its `id` to the value in the URL, fetch the model from the server, create a Details view, and render that view on the page.
+As you can see, the code is almost the same as the summary method, except we're only showing a single run instead of the whole collection. We create a new Run model, set its `id` to the value in the <span class="smcp">URL</span>, fetch the model from the server, create a Details view, and render that view on the page.
 
-The router lets users go straight to an individual run by using the appropriate URL. A URL of `http://greatrunningapp.com/runs/2126456911`, for example, will fetch and display the details for the run that has an `activityId` equal `2126456911`. Notice that the router doesn't have to worry about what specific attribute defines the model's unique identifier. It uses the generic `id` property. Only the model itself needs to know the actual property name that the server uses.
+The router lets users go straight to an individual run by using the appropriate <span class="smcp">URL</span>. A <span class="smcp">URL</span> of `http://greatrunningapp.com/runs/2126456911`, for example, will fetch and display the details for the run that has an `activityId` equal `2126456911`. Notice that the router doesn't have to worry about what specific attribute defines the model's unique identifier. It uses the generic `id` property. Only the model itself needs to know the actual property name that the server uses.
 
-With the router in place, our single page application can support multiple URLs. One shows a summary of all runs while others show the details of a specific run. Because the URLs are distinct, our users can treat them just like different web pages. They can bookmark them; they can email them, or they can share them on social networks. And whenever they or their friends return to a URL, it will show the same contents as before. That's exactly how users expect the web to behave.
+With the router in place, our single page application can support multiple <span class="smcp">URL</span>s. One shows a summary of all runs while others show the details of a specific run. Because the <span class="smcp">URL</span>s are distinct, our users can treat them just like different web pages. They can bookmark them; they can email them, or they can share them on social networks. And whenever they or their friends return to a <span class="smcp">URL</span>, it will show the same contents as before. That's exactly how users expect the web to behave.
 
 There is another behavior that users expect, though, that we haven't yet supported. Users expect to use their browser's back and forward buttons to navigate through their browsing histories. Fortunately, Backbone.js has a utility that takes care of that functionality. It's the _history_ feature, and we can enable it during the app Router's initialization.
 
@@ -70,12 +70,12 @@ Running.Routers.App = Backbone.Router.extend({
 
 For our simple app, that's all we have to do to handle browsing histories. Backbone.js takes care of everything else.
 
-> Support for multiple URLs will probably require some configuration of your web server. More specifically, you'll want the server to map all URLs to the same `index.html` file. The details of this configuration depend on the web server technology. With open source apache servers, the `.htaccess` file can define the mapping.
+> Support for multiple <span class="smcp">URL</span>s will probably require some configuration of your web server. More specifically, you'll want the server to map all <span class="smcp">URL</span>s to the same `index.html` file. The details of this configuration depend on the web server technology. With open source apache servers, the `.htaccess` file can define the mapping.
 
 
 ### Step 2: Support Run Models Outside of Any Collection
 
-Unfortunately, if we try to use the code above with our existing Run model, we'll run into some problems. First among them is the fact that our Run model relies on its parent collection. It finds the authorization token, for example, using `this.collection.settings.authorization_token`. When the browser goes directly to the URL for a specific run, however, there won't be a collection. We can fix by providing the token to the Run model when we create it. We can also make its value an option passed to the router on creation. Here's the code that results.
+Unfortunately, if we try to use the code above with our existing Run model, we'll run into some problems. First among them is the fact that our Run model relies on its parent collection. It finds the authorization token, for example, using `this.collection.settings.authorization_token`. When the browser goes directly to the <span class="smcp">URL</span> for a specific run, however, there won't be a collection. We can fix by providing the token to the Run model when we create it. We can also make its value an option passed to the router on creation. Here's the code that results.
 
 ``` {.javascript .numberLines}
 Running.Routers.App = Backbone.Router.extend({
@@ -118,7 +118,7 @@ Running.Models.Run = Backbone.Model.extend({
     },
 ```
 
-Now that we have an authorization token, we can add it to the model's AJAX requests. The code is again pretty much the same as our code in the Runs collection. We'll need a property that specifies the URL for the REST service, and we'll need to override the regular `sync` method to add the token to any requests.
+Now that we have an authorization token, we can add it to the model's <span class="smcp">AJAX</span> requests. The code is again pretty much the same as our code in the Runs collection. We'll need a property that specifies the <span class="smcp">URL</span> for the <span class="smcp">REST</span> service, and we'll need to override the regular `sync` method to add the token to any requests.
 
 ``` {.javascript .numberLines}
 urlRoot: 'https://api.nike.com/v1/me/sport/activities',
@@ -132,9 +132,9 @@ sync: function(method, model, options) {
 },
 ```
 
-This extra code takes care of the authorization, but there's still a problem with our model. In the previous section Run models only existed as part of a Runs collection, and the act of fetching that collection populated each of its models with summary attributes including, for example, `isGpsActivity`. The model could safely check that property whenever we tried to fetch the model details and, if appropriate, simultaneously initiate a request for the GPS data. Now, however, we're creating a Run model on its own without the benefit of a collection. When we fetch the model, the only property we'll know is the unique identifier. We can't decide whether or not to request GPS data, therefore until after the server responds to the fetch.
+This extra code takes care of the authorization, but there's still a problem with our model. In the previous section Run models only existed as part of a Runs collection, and the act of fetching that collection populated each of its models with summary attributes including, for example, `isGpsActivity`. The model could safely check that property whenever we tried to fetch the model details and, if appropriate, simultaneously initiate a request for the <span class="smcp">GPS</span> data. Now, however, we're creating a Run model on its own without the benefit of a collection. When we fetch the model, the only property we'll know is the unique identifier. We can't decide whether or not to request <span class="smcp">GPS</span> data, therefore until after the server responds to the fetch.
 
-To separate the request for GPS data from the general fetch we can move that request to its own method. The code is the same as before (except, of course, we get the authorization token from local settings).
+To separate the request for <span class="smcp">GPS</span> data from the general fetch we can move that request to its own method. The code is the same as before (except, of course, we get the authorization token from local settings).
 
 ``` {.javascript .numberLines}
 fetchGps: function() {
@@ -189,7 +189,7 @@ The code above asks Backbone.js to watch for `click` events within the `<tbody>`
 
 Before we develop any code for that `clicked` method, we're going to need a way for it to figure out which specific run model the user has selected. The event handler will be able to tell which row the user clicked, but how will it know which model that row represents? To make the answer easy for the handler, we can embed the necessary information directly in the markup for the row. That requires a few small adjustments to the `renderRun` method we created earlier.
 
-The revised method still creates a SummaryRow view for each model, renders that view, and appends the result to the table body. Now, though, we'll add one extra step just before the row is added to the page. We add a special attribute, `data-id`, to the row and set its value equal to the model's unique identifier. We use `data-id` because the HTML5 standard allows any attribute with a name that begins `data-`. Custom attributes in this form won't violate the standard and won't cause browser errors.
+The revised method still creates a SummaryRow view for each model, renders that view, and appends the result to the table body. Now, though, we'll add one extra step just before the row is added to the page. We add a special attribute, `data-id`, to the row and set its value equal to the model's unique identifier. We use `data-id` because the <span class="smcp">HTML5</span> standard allows any attribute with a name that begins `data-`. Custom attributes in this form won't violate the standard and won't cause browser errors.
 
 ``` {.javascript .numberLines}
 renderRun: function (run) {
@@ -212,7 +212,7 @@ The resulting markup for a run with an identifier of `2126456911` would look lik
 </tr>
 ```
 
-Once we've made sure that the markup in the page has a reference back to the run models, we can take advantage of that markup in our `clicked` event handler. When Backbone.js calls the handler, it passes it an event object. From that object we can find the target of the event. In the case of a `click` event, the target is the HTML element on which the user clicked.
+Once we've made sure that the markup in the page has a reference back to the run models, we can take advantage of that markup in our `clicked` event handler. When Backbone.js calls the handler, it passes it an event object. From that object we can find the target of the event. In the case of a `click` event, the target is the <span class="smcp">HTML</span> element on which the user clicked.
 
 ``` {.javascript .numberLines}
 clicked: function (ev) {
@@ -263,7 +263,7 @@ Running.Routers.App = Backbone.Router.extend({
     }
 ```
 
-As you can see, the event handler code is quite simple. It constructs a URL that corresponds to the Details view (`'runs/' + id`) and passes that URL to the router's own `navigate` method. That method updates the browser's navigation history. The second parameter (`{ trigger: true }`) tells Backbone.js to also act as if the user had actually navigated to the URL. Because we've set up the `details` method to respond to URLs of the form `runs/:id`, Backbone.js will call `details` and our router will show the details for the selected run.
+As you can see, the event handler code is quite simple. It constructs a <span class="smcp">URL</span> that corresponds to the Details view (`'runs/' + id`) and passes that <span class="smcp">URL</span> to the router's own `navigate` method. That method updates the browser's navigation history. The second parameter (`{ trigger: true }`) tells Backbone.js to also act as if the user had actually navigated to the <span class="smcp">URL</span>. Because we've set up the `details` method to respond to <span class="smcp">URL</span>s of the form `runs/:id`, Backbone.js will call `details` and our router will show the details for the selected run.
 
 When users are looking at a Detailed view, we'd also like to let them easily navigate to the Summary view. A button in details template will serve for this demonstration. As with the Summary view, we can add an event handler for the button and trigger a custom event when a user clicks it.
 
@@ -291,9 +291,9 @@ Running.Routers.App = Backbone.Router.extend({
     },
 ```
 
-Once again we respond to the user by constructing an appropriate URL and triggering a navigation to it.
+Once again we respond to the user by constructing an appropriate <span class="smcp">URL</span> and triggering a navigation to it.
 
-You might be wondering why we have to explicitly trigger the navigation change. Shouldn't that be the default behavior? Although that may seem reasonable in most cases it wouldn't be appropriate. Our application is simple enough that triggering the route works fine. More complex applications, however, probably want to take different actions depending on whether the user performs an action within the app or navigates directly to a particular URL. It's better to have different code handling each of those cases. In the first case the app would still want to update the browser's history, but it wouldn't want to trigger a full navigation action.
+You might be wondering why we have to explicitly trigger the navigation change. Shouldn't that be the default behavior? Although that may seem reasonable in most cases it wouldn't be appropriate. Our application is simple enough that triggering the route works fine. More complex applications, however, probably want to take different actions depending on whether the user performs an action within the app or navigates directly to a particular <span class="smcp">URL</span>. It's better to have different code handling each of those cases. In the first case the app would still want to update the browser's history, but it wouldn't want to trigger a full navigation action.
 
 ### Step 4: Fine-Tuning the Application
 

@@ -34,7 +34,7 @@
         {
             id: "book",
             fixed: false,
-            href: "",
+            href: "intro.html",
             r: 30,
             x: 388,
             y: 70,

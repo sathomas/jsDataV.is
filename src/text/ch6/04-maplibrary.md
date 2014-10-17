@@ -1,6 +1,6 @@
 ## Integrating a Full-Featured Mapping Library
 
-The Modest Maps library of the previous example is a fine library for simple map visualizations, but it doesn't have all of the features and support of a full-featured service such as Google Maps. There is, however, an open source library that does provide those features, [Leaflet](http://leafletjs.com). In this example we'll build a more complex visualization that features a Leaflet-based map.
+The Modest Maps library of the previous example is a fine library for simple map visualizations, but it doesn't have all of the features and support of a full-featured service such as Google Maps. There is, however, an open source library that does provide those features: [Leaflet](http://leafletjs.com). In this example we'll build a more complex visualization that features a Leaflet-based map.
 
 In the 1940s, two private railroads were in competition for passenger traffic in the southeastern United States. Two routes that competed most directly with each other were the _Silver Comet_ run by Seaboard Air Lines, and the _Southerner_ operated by Southern Railways. Both served passengers traveling between New York and Birmingham, Alabama. One factor cited in the Southerner's ultimate success was the shorter distance of its route. Trips on the Southerner were quicker, giving Southern Railways a competitive advantage. Let's create a visualization to demonstrate that advantage.
 

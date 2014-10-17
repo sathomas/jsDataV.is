@@ -11,8 +11,8 @@ Unlike most other chapters, we won't be considering multiple independent example
 * How to structure a web application using a framework or library.
 * How to organize an application into models and views.
 * How to incorporate visualizations in views.
-* How to connect application models with an external REST API.
+* How to connect application models with an external <span class="smcp">REST</span> <span class="smcp">API</span>.
 * How to support web browser conventions in a single page application. 
 
-> Note 2: To use the Nike+ data in an actual product, you must register your application with Nike and get the necessary credentials and security keys. That process also grants access to the full documentation for the service, which is not publicly available. Since we're not building a real application in this example, we won't cover that step. We will, however, base the application on the Nike+ API, which is documented publicly on [Nike's developer web site](https://developer.nike.com/index.html). Because the example doesn't include the credentials and security keys, it won't be able to access the real Nike+ service. The book's source code, however, does include actual Nike+ data that can be used to emulate the Nike+ service for testing and development.
+> Note 2: To use the Nike+ data in an actual product, you must register your application with Nike and get the necessary credentials and security keys. That process also grants access to the full documentation for the service, which is not publicly available. Since we're not building a real application in this example, we won't cover that step. We will, however, base the application on the Nike+ <span class="smcp">API</span>, which is documented publicly on [Nike's developer web site](https://developer.nike.com/index.html). Because the example doesn't include the credentials and security keys, it won't be able to access the real Nike+ service. The book's source code, however, does include actual Nike+ data that can be used to emulate the Nike+ service for testing and development.
 
