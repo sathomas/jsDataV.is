@@ -1,13 +1,12 @@
-# Chapter 7: Managing Data in the Browser
+# Chapter 7: Custom Visualizations with D3.js
 
-In the first six chapters we've looked at a lot of visualization tools and techniques, but we haven't spent much time considering the _data_ part of data visualization. The emphasis on visualization is appropriate in many cases. Especially if the data is static, we can take all the time we need to clean and groom it before it's even represented in JavaScript. But what if we're not so lucky. Our data may be dynamic, and we may have no choice but to retrieve the raw source directly into our JavaScript application. We have much less control over data from third party REST APIs, Google Docs spreadsheets, or automatically generated CSV files. With those types of data sources, we often need to validate, reformat, recalculate, or otherwise manipulate the data in the browser.
+In this book we've looked a many different JavaScript libraries that were designed for specific types of visualizations. If you need a visualization for your web page and there's a library that can create that type of visualization, that library often provides the quickest and easiest way to create your visualization. There are drawbacks to such libraries, however. They all make assumptions about how the visualization should look and act, and despite the configuration options they provide, you don't have complete control over the results. Sometimes that's not an acceptable trade-off.
 
-This chapter considers a JavaScript library that is particularly helpful for managing large data sets in the web browser--[Underscore.js](http://underscorejs.org). We'll cover several aspects of Underscore in the following sections:
+In this chapter we'll look at an entirely different approach to JavaScript visualizations, one where we retain complete control and creativity over the results. As you might expect, that approach isn't always as easy as, for example, adding a charting library and feeding it data. Fortunately, there is a very powerful JavaScript library that can help: [D3.js](http://d3js.org). D3.js doesn't provide pre-defined visualizations such as charts, graphs, or maps. Instead, it's a toolbox for data visualization, and it gives you the tools to create _your own_ charts, graphs, maps, and more.
 
-* A programming style that Underscore.js encourages called "functional programming."
-* Working with simple arrays using Underscore.js utilities.
-* Enhancing JavaScript objects.
-* Manipulating collections of objects.
+To see some of the powerful features of D3.js, we'll take a whirlwind tour. Its examples include:
 
-The format of this chapter differs from the other chapters in the book. Instead of covering a few examples of moderate complexity, we'll look a lot of simple, small examples. Each section collects several related examples together, but each of the small examples is independent. The first section differs even further. It's a brief introduction to functional programming cast as a step-by-step migration from the more common programming style. Understanding functional programming is very helpful, however, as its philosophy underlies almost all of the Underscore.js utilities. This chapter serves as a tour of the Underscore.js library with a special focus on managing data. (As a concession to the book's overall focus on data visualization, it also includes many illustrations.)
+* Creating a custom chart not available in an off-the-shelf library.
+* Building a force-directed graph that responds to user interactions.
+* Displaying map-based data using high quality, scalable vector graphics.
 

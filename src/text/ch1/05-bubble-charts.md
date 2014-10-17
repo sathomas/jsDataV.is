@@ -20,7 +20,7 @@ var katrina = [
     // Data set continues...
 ```
 
-For its bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, an optional parameter can specify a filter function. And while we're extracting data points, we can reverse the sign of the longitude so that west to east displays right to left.
+For its bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, an optional parameter can specify a filter function. And while we're extracting data points, we can reverse the sign of the longitude so that west to east displays left to right.
 
 The code for our function starts by setting the return value (`result`) to an empty array in line 2. Then it iterates through the input `source_array` one element at a time. If the `filter_function` parameter is available, and if it is a valid function, our code calls that function with the source array element as a parameter. If the function returns `true`, or if no function was passed in the parameter, then our code extracts the data point from the source element and pushes it onto the result array.
 

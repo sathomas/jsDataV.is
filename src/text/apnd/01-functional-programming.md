@@ -50,7 +50,7 @@ To understand why imperative programming can introduce these bugs, let's fix the
 
 One bug is in the `for` loop on line 9:
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines startFrom="9"}
     for (i=2; i<=n; i++) {
 ```
 
@@ -58,7 +58,7 @@ The conditional that determines the loop termination checks for a less-than-or-e
 
 A second bug occurs on line 13:
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines startFrom="13"}
         f0 = f1 = f;
 ```
 
@@ -71,7 +71,7 @@ Although we think and read left to right (at least in English), JavaScript execu
 
 The final bug is the most subtle, and it's back on line 9 in the `for` statement. We're using the local variable `i`, but we haven't declared it. As a result, JavaScript will treat it as a global variable. That won't cause our function to return incorrect results, but it could well introduce a conflict--and a hard-to-find bug--elsewhere in our application. The correct code declares the variable as local:
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines startFrom="9"}
     for (var i=2; i<n; i++) {
 ```
 
@@ -164,8 +164,10 @@ The problem with the recursive implementation is that it results in many unneces
 
 This approach is known as _memoizing_, and the Underscore library has a simple method to automatically and transparently memoize JavaScript functions. Not surprisingly, that method is `memoize()`. To use it, we first wrap the function we want to memoize within the Underscore object. Just as jQuery uses the bling character ($) for wrapping, Underscore uses the underscore character. After wrapping our function, we simply call the `memoize()` method. Here's the complete code:
 
-```langugage-javascript
-var fib = _( function(n) { return n < 2 ? n : fib(n-1) + fib(n-2); } ).memoize()
+``` {.javascript .numberLines}
+var fib = _( function(n) { 
+        return n < 2 ? n : fib(n-1) + fib(n-2); 
+    } ).memoize()
 ```
 As you can see, we haven't really lost any of the readability or conciseness of functional programming. And it would still be a challenge to introduce a bug in this implementation. The only real change is performance, and it's substantially better.
 
@@ -178,10 +180,3 @@ As you can see, we haven't really lost any of the readability or conciseness of 
 Just by including the Underscore library and using one of its methods, our functional implementation has nearly the same performance as the imperative version.
 
 For the rest of this chapter, we'll look at many of the other improvements and utilities that Underscore provides. With its support for functional programming, Underscore makes it significantly easier to work with data in the browser.
-
-<script>
-contentLoaded.done(function() {
-
-
-});
-</script>

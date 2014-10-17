@@ -3,11 +3,16 @@
 Although the previous section's examples show numeric arrays, often our visualization data consists of JavaScript objects instead of simple numbers. That's especially likely if we get the data via a REST interface, as such interfaces almost always deliver data in JavaScript Object Notation (JSON). If we need to enhance or transform objects, Underscore.js has another set of utilities that can help. For the following examples, we can use a simple `pizza` object.
 
 ``` {.javascript .numberLines}
-var pizza = { size: 10, crust: "thin", cheese: true, toppings: ["pepperoni","sausage"]}
+var pizza = { 
+    size: 10, 
+    crust: "thin", 
+    cheese: true, 
+    toppings: ["pepperoni","sausage"]
+};
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.png)
+![](local/underscore.obj.svg)
 <figcaption>Underscore has many utilities for working with arbitrary JavaScript objects.</figcaption>
 </figure>
 
@@ -21,7 +26,7 @@ Underscore.js includes several methods to work with the keys and values that mak
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.keys.png)
+![](local/underscore.obj.keys.svg)
 <figcaption>The keys() function returns the keys of an object as an array.</figcaption>
 </figure>
 
@@ -33,7 +38,7 @@ Similarly, the `values()` function creates an array consisting solely of an obje
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.values.png)
+![](local/underscore.obj.values.svg)
 <figcaption>The values() function returns just the values of an object as an array.</figcaption>
 </figure>
 
@@ -45,7 +50,7 @@ The `pairs()` function creates a two-dimensional array. Each element of the oute
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.pairs.png)
+![](local/underscore.obj.pairs.svg)
 <figcaption>The pairs() function converts an object into an array of array pairs.</figcaption>
 </figure>
 
@@ -65,7 +70,7 @@ Finally, we can swap the roles of keys and values in an object with the `invert(
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.invert.png)
+![](local/underscore.obj.invert.svg)
 <figcaption>The invert() function swaps keys and values in an object.</figcaption>
 </figure>
 
@@ -83,7 +88,7 @@ If the objects that contain our data include attributes that we don't need, it m
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.pick.png)
+![](local/underscore.obj.pick.svg)
 <figcaption>The pick() function selects specific properties from an object.</figcaption>
 </figure>
 
@@ -95,7 +100,7 @@ We can also do the opposite of `pick()` by listing the attributes that we want t
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.omit.png)
+![](local/underscore.obj.omit.svg)
 <figcaption>The omit() function removes properties from an object.</figcaption>
 </figure>
 
@@ -107,42 +112,50 @@ The two utilities, `extend()` and `defaults()` both start with one object it and
 
 ``` {.javascript .numberLines}
 > var standard = { size: 12, crust: "regular", cheese: true }
-> var order = { size: 10, crust: "thin", toppings: ["pepperoni","sausage"] };
+> var order = { size: 10, crust: "thin", 
+  toppings: ["pepperoni","sausage"] };
 > _.extend(standard, order)
-  { size: 10, crust: "thin", cheese: true, toppings: ["pepperoni","sausage"] };
+  { size: 10, crust: "thin", cheese: true, 
+  toppings: ["pepperoni","sausage"] };
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.extend.png)
+![](local/underscore.obj.extend.svg)
 <figcaption>The extend() function updates and adds missing properties to an object.</figcaption>
 </figure>
 
 ``` {.javascript .numberLines}
-> var order = { size: 10, crust: "thin", toppings: ["pepperoni","sausage"] };
+> var order = { size: 10, crust: "thin", 
+  toppings: ["pepperoni","sausage"] };
 > var standard = { size: 12, crust: "regular", cheese: true }
 > _.defaults(order, standard)
-  { size: 10, crust: "thin", toppings ["pepperoni","sausage"], cheese: true };
+  { size: 10, crust: "thin", 
+  toppings ["pepperoni","sausage"], cheese: true };
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/obj.defaults.png)
+![](local/underscore.obj.defaults.svg)
 <figcaption>The defaults() function adds missing properties to an object.</figcaption>
 </figure>
 
 It's important to note that both `extend()` and `defaults()` modify the original object directly; they do not make a copy of that object and return the copy. Consider, for example, the following
 
 ``` {.javascript .numberLines}
-> var order = { size: 10, crust: "thin", toppings: ["pepperoni","sausage"] };
+> var order = { size: 10, crust: "thin", 
+  toppings: ["pepperoni","sausage"] };
 > var standard = { size: 12, crust: "regular", cheese: true }
 > var pizza = _.extend(standard, order)
-  { size: 10, crust: "thin", cheese: true, toppings: ["pepperoni","sausage"] };
+  { size: 10, crust: "thin", cheese: true, 
+  toppings: ["pepperoni","sausage"] };
 ```
 
 That code sets the `pizza` variable as you would expect, _but it also sets the `standard` variable to that same object_. More specifically, the code modifies `standard` with the properties from `order`, and then it sets a new variable `pizza` equal to `standard`. The modification of `standard` is probably not intended. If you need to use either `extend()` or `defaults()` in a way that does not modify input parameters, start with an empty object. We can rewrite the code above to avoid modifying `standard`.
 
 ``` {.javascript .numberLines}
-> var order = { size: 10, crust: "thin", toppings: ["pepperoni","sausage"] };
+> var order = { size: 10, crust: "thin", 
+  toppings: ["pepperoni","sausage"] };
 > var standard = { size: 12, crust: "regular", cheese: true }
 > var pizza = _.extend({}, standard, order)
-  { size: 10, crust: "thin", cheese: true, toppings: ["pepperoni","sausage"] };
+  { size: 10, crust: "thin", cheese: true, 
+  toppings: ["pepperoni","sausage"] };
 ```

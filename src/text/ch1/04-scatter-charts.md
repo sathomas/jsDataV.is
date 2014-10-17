@@ -395,7 +395,7 @@ This addition gives us the final chart of figure NEXTFIGURENUMBER.
                 { data: americas, points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.alternateLight },
                 { data: mideast,  points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondaryLightest },
                 { data: asia,     points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondaryDarkest },
-                { data: us,       points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.alternateLight },
+                { data: us,       points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.primary },
             ]
             ,{ 
                 fontColor: chartStyles.color.text,

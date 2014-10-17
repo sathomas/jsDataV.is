@@ -11,7 +11,7 @@ var arr = [1,2,3,4,5,6,7,8,9];
 ```
 
 <figure>
-![](img/underscore.arr.svg)
+![](local/underscore.arr.svg)
 <figcaption>Underscore has many utilities to make it easy to work with arrays.</figcaption>
 </figure>
 
@@ -25,12 +25,12 @@ Underscore provides a simple way to extract the first element of an array, or th
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.first.png)
+![](local/underscore.arr.first.svg)
 <figcaption>The first() function returns the first element in an array.</figcaption>
 </figure>
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.first.3.png)
+![](local/underscore.arr.first.3.svg)
 <figcaption>The first() function can also return the first <b>n</b> elements in an array.</figcaption>
 </figure>
 
@@ -46,12 +46,12 @@ If Underscore.js has a `first()` method, you might expect it would also have a `
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.last.png)
+![](local/underscore.arr.last.svg)
 <figcaption>The last() function returns the last element in an array.</figcaption>
 </figure>
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.last.3.png)
+![](local/underscore.arr.last.3.svg)
 <figcaption>The last() function can also return the last <b>n</b> elements in an array.</figcaption>
 </figure>
 
@@ -67,12 +67,12 @@ What if you want to extract from the beginning of the array, but instead of know
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.initial.png)
+![](local/underscore.arr.initial.svg)
 <figcaption>The initial() function returns all but the last element in an array.</figcaption>
 </figure>
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.initial.3.png)
+![](local/underscore.arr.initial.3.svg)
 <figcaption>The initial() function can also return all but the last <b>n</b> elements in an array.</figcaption>
 </figure>
 
@@ -86,13 +86,13 @@ Finally, you may need the opposite of `initial()`. The `rest()` method skips pas
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.rest.png)
+![](local/underscore.arr.rest.svg)
 <figcaption>The rest() function returns all but the first element in an array.</figcaption>
 </figure>
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arr.rest.3.png)
-<figcaption>The rest() function can also return all but the first <b>n</n> elements in an array.</figcaption>
+![](local/underscore.arr.rest.3.svg)
+<figcaption>The rest() function can also return all but the first <em>n</em> elements in an array.</figcaption>
 </figure>
 
 
@@ -106,7 +106,7 @@ var even = [0, 2, 4, 6, 8];
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arrs.png)
+![](local/underscore.arrs.svg)
 <figcaption>Underscore also has many utilities to work with multiple arrays.</figcaption>
 </figure>
 
@@ -118,7 +118,7 @@ The `union()` method is a straightforward combination of multiple arrays. It ret
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arrs.union.png)
+![](local/underscore.arrs.union.svg)
 <figcaption>The union() function creates the union of multiple arrays, removing any duplicates.</figcaption>
 </figure>
 
@@ -134,7 +134,7 @@ The `intersection()` method acts just as you would expect, returning only those 
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arrs.intersection.png)
+![](local/underscore.arrs.intersection.svg)
 <figcaption>The intersection() function returns elements in common among multiple arrays.</figcaption>
 </figure>
 
@@ -146,7 +146,7 @@ The `difference()` method is the opposite of `intersection()`. It returns those 
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arrs.difference.png)
+![](local/underscore.arrs.difference.svg)
 <figcaption>The difference() function returns elements that are <b>only</b> present in the first of multiple arrays.</figcaption>
 </figure>
 
@@ -158,7 +158,7 @@ If you need to eliminate duplicate elements but only have one array (making `uni
 ```
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arrs.uniq.png)
+![](local/underscore.arrs.uniq.svg)
 <figcaption>The uniq() function removes duplicate elements from an array.</figcaption>
 </figure>
 
@@ -167,7 +167,7 @@ Finally, Underscore.js has a `zip()` method. It's name doesn't come from the pop
 The operations is perhaps most clearly understood through a picture.
 
 <figure style="margin-left:0;margin-right:0;">
-![](img/arrs.zip.png)
+![](local/underscore.arrs.zip.svg)
 <figcaption>The zip() function pairs elements from multiple arrays together into a single array.</figcaption>
 </figure>
 

@@ -167,7 +167,7 @@ With the added decoration, the presentation of figure NEXTFIGURENUMBER looks gre
 <figcaption>Carefully stacking multiple charts on top of each other creates the appearance of a unified chart.</figcaption>
 </figure>
 
-### Step 4: Implement for the Interaction
+### Step 4: Implement the Interaction
 
 For our visualization, we want to track the mouse as it hovers over any our charts. The flot library makes that relatively easy. The `plot()` function's `grid` options include the `hoverable` property, which is set to `false` by default. If you set this property to `true`, flot will trigger "plothover" events as the mouse moves over the chart area. It sends these events to the `<div>` that contains the chart. If there is code listening for those events, that code can respond to them. If you use this feature, flot will also highlight the data point nearest the mouse. That's a behavior we don't want, so we'll disable it by setting `autoHighlight` to `false`.
 
