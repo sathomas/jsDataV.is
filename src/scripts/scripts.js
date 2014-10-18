@@ -6,5 +6,6 @@
 // Third party libraries
 
 // Custom code
+//@codekit-prepend "analytics.js"
 //@codekit-prepend "fonts.js"
 //@codekit-prepend "code.js"

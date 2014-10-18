@@ -6,6 +6,10 @@
 
 //@codekit-prepend "../../bower_components/d3/d3.js"
 
+// Component scripts
+
+//@codekit-prepend "analytics.js"
+
 // Main script for page
 
 ;(function(){

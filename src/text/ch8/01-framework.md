@@ -52,7 +52,7 @@ Out of the box I include HTML5 Boilerplate, jQuery, Backbone.js and Modernizr.
 Yeoman will then do it's magic, creating several sub-folders, installing extra tools and applications, and setting up reasonable defaults. As we watch all the pages and pages of installation information scroll by in our window, we can be glad that Yeoman is doing all this work for us. When Yeoman finishes, we'll have a project structure like the one in figure NEXTFIGURENUMBER's screenshot. It may not look exactly like the following since web applications may have changed since this text was written. Rest assured, though, that it will follow the best practices and conventions.
 
 <figure>
-![](img/yoproject.png)
+<img width="640" src="img/yoskeleton.png" />
 <figcaption>Yeoman creates a default project structure for a web application.</figcaption>
 </figure>
  
@@ -90,7 +90,7 @@ Waiting...
 The `grunt` command runs one of the tools that's part of the Yeoman package. When passed the `serve` option, it cleans up the application folder, starts a web server to host the application, launches a web browser, and navigates to the skeleton app. You'll see something like figure NEXTFIGURENUMBER in your browser.
 
 <figure>
-![](img/yoskeleton.png)
+<img width="640" src="img/yoproject.png" />
 <figcaption>The default Yeoman web application runs in the browser.</figcaption>
 </figure>
 
