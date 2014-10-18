@@ -115,9 +115,9 @@
                         <li><a href="chap04.html">Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html">Showing Timelines</a></li>
                         <li><a href="chap06.html">Visualizing Geographic Data</a></li>
-                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap07.html">Custom Visualizations with D3.js</a></li>
                         <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
-                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                        <li><a href="apnd.html"  >Managing Data in the Browser</a></li>
                     </ol>
                 </li>
             </ul>
@@ -126,6 +126,484 @@
 
 <style>
 body { counter-reset: chapter 8; }
+/* required styles */
+
+.leaflet-map-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-pane,
+.leaflet-tile-container,
+.leaflet-overlay-pane,
+.leaflet-shadow-pane,
+.leaflet-marker-pane,
+.leaflet-popup-pane,
+.leaflet-overlay-pane svg,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	-ms-touch-action: none;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	-webkit-user-drag: none;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+/* map is broken in FF if you have max-width: 100% on tiles */
+.leaflet-container img {
+	max-width: none !important;
+	}
+/* stupid Android 2 doesn't understand "max-width: none" properly */
+.leaflet-container img.leaflet-image-layer {
+	max-width: 15000px !important;
+	}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	}
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+
+.leaflet-tile-pane    { z-index: 2; }
+.leaflet-objects-pane { z-index: 3; }
+.leaflet-overlay-pane { z-index: 4; }
+.leaflet-shadow-pane  { z-index: 5; }
+.leaflet-marker-pane  { z-index: 6; }
+.leaflet-popup-pane   { z-index: 7; }
+
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+
+
+/* control positioning */
+
+.leaflet-control {
+	position: relative;
+	z-index: 7;
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+
+
+/* zoom and fade animations */
+
+.leaflet-fade-anim .leaflet-tile,
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	     -o-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-tile-loaded,
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	     -o-transition:      -o-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile,
+.leaflet-touching .leaflet-zoom-animated {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	     -o-transition: none;
+	        transition: none;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+
+
+/* cursors */
+
+.leaflet-clickable {
+	cursor: pointer;
+	}
+.leaflet-container {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-container,
+.leaflet-dragging .leaflet-clickable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	}
+
+
+/* visual tweaks */
+
+.leaflet-container {
+	background: #ddd;
+	outline: 0;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-container a.leaflet-active {
+	outline: 2px solid orange;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+
+
+/* general typography */
+.leaflet-container {
+	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+	}
+
+
+/* general toolbar styles */
+
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a,
+.leaflet-bar a:hover {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+
+
+/* zoom control */
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+.leaflet-control-zoom-out {
+	font-size: 20px;
+	}
+
+.leaflet-touch .leaflet-control-zoom-in {
+	font-size: 22px;
+	}
+.leaflet-touch .leaflet-control-zoom-out {
+	font-size: 24px;
+	}
+
+
+/* layers control */
+
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+
+
+/* attribution and scale controls */
+
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.7);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover {
+	text-decoration: underline;
+	}
+.leaflet-container .leaflet-control-attribution,
+.leaflet-container .leaflet-control-scale {
+	font-size: 11px;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	font-size: 11px;
+	white-space: nowrap;
+	overflow: hidden;
+	-moz-box-sizing: content-box;
+	     box-sizing: content-box;
+
+	background: #fff;
+	background: rgba(255, 255, 255, 0.5);
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+
+
+/* popup */
+
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 19px;
+	line-height: 1.4;
+	}
+.leaflet-popup-content p {
+	margin: 18px 0;
+	}
+.leaflet-popup-tip-container {
+	margin: 0 auto;
+	width: 40px;
+	height: 20px;
+	position: relative;
+	overflow: hidden;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	     -o-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 4px 4px 0 0;
+	text-align: center;
+	width: 18px;
+	height: 14px;
+	font: 16px/14px Tahoma, Verdana, sans-serif;
+	color: #c3c3c3;
+	text-decoration: none;
+	font-weight: bold;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover {
+	color: #999;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	}
+
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+.leaflet-oldie .leaflet-popup-tip-container {
+	margin-top: -1px;
+	}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+
+
+/* div icon */
+
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
 </style>
 
 <h1 id="chapter-8-building-data-driven-web-applications">Chapter 8: Building Data-Driven Web Applications</h1>
@@ -139,23 +617,23 @@ body { counter-reset: chapter 8; }
 <li>How to structure a web application using a framework or library.</li>
 <li>How to organize an application into models and views.</li>
 <li>How to incorporate visualizations in views.</li>
-<li>How to connect application models with an external REST API.</li>
+<li>How to connect application models with an external <span class="smcp">REST</span> <span class="smcp">API</span>.</li>
 <li>How to support web browser conventions in a single page application.</li>
 </ul>
 <blockquote>
-<p>Note 2: To use the Nike+ data in an actual product, you must register your application with Nike and get the necessary credentials and security keys. That process also grants access to the full documentation for the service, which is not publicly available. Since we’re not building a real application in this example, we won’t cover that step. We will, however, base the application on the Nike+ API, which is documented publicly on <a href="https://developer.nike.com/index.html">Nike’s developer web site</a>. Because the example doesn’t include the credentials and security keys, it won’t be able to access the real Nike+ service. The book’s source code, however, does include actual Nike+ data that can be used to emulate the Nike+ service for testing and development.</p>
+<p>Note 2: To use the Nike+ data in an actual product, you must register your application with Nike and get the necessary credentials and security keys. That process also grants access to the full documentation for the service, which is not publicly available. Since we’re not building a real application in this example, we won’t cover that step. We will, however, base the application on the Nike+ <span class="smcp">API</span>, which is documented publicly on <a href="https://developer.nike.com/index.html">Nike’s developer web site</a>. Because the example doesn’t include the credentials and security keys, it won’t be able to access the real Nike+ service. The book’s source code, however, does include actual Nike+ data that can be used to emulate the Nike+ service for testing and development.</p>
 </blockquote>
 <h2 id="frameworks-and-libraries">Frameworks and Libraries</h2>
-<p>If we’re using JavaScript to add data visualizations to traditional web pages, we don’t have to worry too much about organizing and structuring our JavaScript. After all, it’s often a relatively small amount of code, especially compared to the HTML markup and CSS styles that are also part of the page. With web applications, however, the code can grow to be more extensive and more complex. To help keep our code organized and manageable, we’ll take advantage of a JavaScript application library, sometimes also known as a framework.</p>
+<p>If we’re using JavaScript to add data visualizations to traditional web pages, we don’t have to worry too much about organizing and structuring our JavaScript. After all, it’s often a relatively small amount of code, especially compared to the <span class="smcp">HTML</span> markup and <span class="smcp">CSS</span> styles that are also part of the page. With web applications, however, the code can grow to be more extensive and more complex. To help keep our code organized and manageable, we’ll take advantage of a JavaScript application library, sometimes also known as a framework.</p>
 <h3 id="step-1-select-an-application-library">Step 1: Select an Application Library</h3>
-<p>Deciding to use <em>an</em> application library might be easier than deciding <em>which</em> one to use. The number of these libraries has exploded in the past few years; there are now over 30 high quality libraries from which to choose. A good place to see all the alternatives is <a href="http://todomvc.com">TodoMVC</a>. That site serves as a showcase for application libraries; it shows how to implement a simple to-do application in each.</p>
+<p>Deciding to use <em>an</em> application library might be easier than deciding <em>which</em> one to use. The number of these libraries has exploded in the past few years; there are now over 30 high quality libraries from which to choose. A good place to see all the alternatives is <a href="http://todomvc.com">Todo<span class="smcp">MVC</span></a>. That site serves as a showcase for application libraries; it shows how to implement a simple to-do application in each.</p>
 <p>There is an important difference between these application libraries that can help narrow the choice: Is an application library a pure library or an application framework? Those terms are often used interchangeably, but there is an important distinction. A pure library functions like jQuery or other libraries we’ve used throughout this book. It provides a set of tools for our application, and we can use as many—or as little—of those tools as we like. An application framework, on the other hand, dictates exactly how the application should work. The code that we write must follow the strictures and conventions of the framework. Fundamentally the difference is about control. With a pure library our code is in control and the library is at our disposal. With a framework the framework code is in control, and we simply add the code that makes our application unique.</p>
 <p>The main advantage of a pure library is flexibility. Our code is in control of the application, and we have full latitude to structure the application to our own requirements. That’s not always a good thing, however. The constraints of a framework can protect us from making poor design decisions. Some of the world’s best JavaScript developers are responsible for the popular frameworks, and they’ve put a lot of thought into what makes a good web application. There’s another benefit to frameworks: Because the framework assumes more responsibility for the application, there’s generally less code we’re required to write.</p>
 <p>Having made the distinction between frameworks and pure libraries, it’s worth noting that almost any web application can be built effectively with either. Both approaches provide the organization and structure necessary for a high quality application. For our example we’ll use the <a href="http://backbonejs.org">Backbone.js</a> library. It is by far the most popular of the pure (i.e. non-framework) libraries, and it’s used by dozens of the largest sites on the web. The general approach that we’ll follow, however, (including tools such as Yeoman) work well with almost any popular application library.</p>
 <h3 id="step-2-install-development-tools">Step 2: Install Development Tools</h3>
 <p>When you start building your first real web application, deciding how to begin can be a bit intimidating. One tool that can be a big help at this stage is <a href="http://yeoman.io">Yeoman</a>, which describes itself as “The Web’s Scaffolding Tool for Modern Webapps.” That’s a pretty accurate description. Yeoman can define and initialize a project structure for a large number of different web application frameworks, including Backbone.js. As we’ll see, it also sets up and configures most of the other tools we’ll need during the application’s development.</p>
 <p>Before we can use Yeoman we must first install <a href="http://nodejs.org">node.js</a>. Node.js is a powerful application development platform all by itself, but we won’t need to worry about the details here. It is, however, the application platform required by many modern web development tools like Yeoman. To install node.js, follow the instructions on the <a href="http://nodejs.org">node.js web site</a>.</p>
-<p>With node.js installed, we can install the main Yeoman application as well as everything necessary to create a <a href="https://github.com/yeoman/generator-backbone">Backbone.js application</a> with one command. You can execute this command in the Terminal app (on Mac OS X) or from the Windows Command Prompt.</p>
+<p>With node.js installed, we can install the main Yeoman application as well as everything necessary to create a <a href="https://github.com/yeoman/generator-backbone">Backbone.js application</a> with one command. You can execute this command in the Terminal app (on Mac <span class="smcp">OS</span> <span class="smcp">X</span>) or from the Windows Command Prompt.</p>
 <table class="sourceCode bash numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode bash">$ <span class="kw">npm</span> install -g generator-backbone</code></pre></td></tr></table>
 <h3 id="step-3-define-a-new-project">Step 3: Define a New Project</h3>
@@ -180,7 +658,7 @@ $ <span class="kw">cd</span> running</code></pre></td></tr></table>
  ⬡ <span class="kw">Use</span> RequireJs</code></pre></td></tr></table>
 <p>Yeoman will then do it’s magic, creating several sub-folders, installing extra tools and applications, and setting up reasonable defaults. As we watch all the pages and pages of installation information scroll by in our window, we can be glad that Yeoman is doing all this work for us. When Yeoman finishes, we’ll have a project structure like the one in figure <span class="nextfigure"/>’s screenshot. It may not look exactly like the following since web applications may have changed since this text was written. Rest assured, though, that it will follow the best practices and conventions.</p>
 <figure>
-<img src="img/yoproject.png" />
+<img width="640" src="img/yoskeleton.png" />
 <figcaption>
 Yeoman creates a default project structure for a web application.
 </figcaption>
@@ -231,7 +709,7 @@ Yeoman creates a default project structure for a web application.
 <span class="kw">Waiting...</span></code></pre></td></tr></table>
 <p>The <code>grunt</code> command runs one of the tools that’s part of the Yeoman package. When passed the <code>serve</code> option, it cleans up the application folder, starts a web server to host the application, launches a web browser, and navigates to the skeleton app. You’ll see something like figure <span class="nextfigure"/> in your browser.</p>
 <figure>
-<img src="img/yoskeleton.png" />
+<img width="640" src="img/yoproject.png" />
 <figcaption>
 The default Yeoman web application runs in the browser.
 </figcaption>
@@ -297,7 +775,7 @@ $ <span class="kw">npm</span> install jake -g</code></pre></td></tr></table>
     <span class="kw">Uncompressed</span>: 217.22 KB (unchanged)
     <span class="kw">Compressed</span>: 122.27 KB (unchanged)
     <span class="kw">Gzipped</span>: 32.71 KB</code></pre></td></tr></table>
-<p>All that’s left to do is adding the additional libraries into our HTML files. That’s easy enough. The main page for our app is <code>index.html</code> in the <code>app</code> folder. There’s already a block of code that includes jQuery, Underscore.js, and Backbone.js:</p>
+<p>All that’s left to do is adding the additional libraries into our <span class="smcp">HTML</span> files. That’s easy enough. The main page for our app is <code>index.html</code> in the <code>app</code> folder. There’s already a block of code that includes jQuery, Underscore.js, and Backbone.js:</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -337,7 +815,7 @@ $ <span class="kw">npm</span> install jake -g</code></pre></td></tr></table>
 <span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href=</span><span class="st">&quot;styles/main.css&quot;</span><span class="kw">&gt;</span>
 <span class="co">&lt;!-- endbuild --&gt;</span></code></pre></td></tr></table>
 <p>Now that we’ve set up the structure of our app and installed the necessary libraries, it’s time to start development.## Models and Views</p>
-<p>There are many application libraries available for web apps, and that number may lead you to assume that there are lots of opinions on how web apps should be built. In fact, though, most of the libraries agree on the key principles that should guide an app’s architecture. Perhaps the most fundamental of those principles is separating <em>models</em> from <em>views.</em> The code that keeps track of the core data for the app—the models—should be separate from the code that presents that data to the user—the views. Enforcing this separation makes it easier to update and modify either. If you want to present your data in a table instead of a chart, you can do that without any changes to the models. And if you need to change your data source from a local file to a REST API, you can do that without any changes to the views. We’ve been employing this principle in an informal way throughout the book. In all of the examples we’ve isolated the steps required to obtain and format our data from the steps we used to visualize it. Using an application library like Backbone.js gives us the tools to manage models and views more explicitly.</p>
+<p>There are many application libraries available for web apps, and that number may lead you to assume that there are lots of opinions on how web apps should be built. In fact, though, most of the libraries agree on the key principles that should guide an app’s architecture. Perhaps the most fundamental of those principles is separating <em>models</em> from <em>views.</em> The code that keeps track of the core data for the app—the models—should be separate from the code that presents that data to the user—the views. Enforcing this separation makes it easier to update and modify either. If you want to present your data in a table instead of a chart, you can do that without any changes to the models. And if you need to change your data source from a local file to a <span class="smcp">REST</span> <span class="smcp">API</span>, you can do that without any changes to the views. We’ve been employing this principle in an informal way throughout the book. In all of the examples we’ve isolated the steps required to obtain and format our data from the steps we used to visualize it. Using an application library like Backbone.js gives us the tools to manage models and views more explicitly.</p>
 <h3 id="step-1-define-the-applications-models">Step 1: Define the Application’s Models</h3>
 <p>In the case of our running application, it’s pretty easy to identify the models. Nike+ provides details about runs—training runs, interval workouts, trail runs, races, etc. The data set we want consists of nothing but runs, so our app’s core model is, naturally, a run.</p>
 <p>The Yeoman tool makes it very easy to define a model for our app. A simple command defines a new model and creates the JavaScript files and scaffolding for that model.</p>
@@ -405,8 +883,8 @@ $ <span class="kw">npm</span> install jake -g</code></pre></td></tr></table>
 <p>The statement defines a JavaScript function with a function expression, <code>function () { /* ... */ }</code>, and then, with the concluding <code>()</code>, calls (technically <em>invokes</em>) that newly created function. All we’re really doing, therefore, is putting our code inside of a function and calling that function. You’ll see this pattern a lot in professional JavaScript because it protects a block of code from interfering with other code blocks in the application.</p>
 <p>When you define a variable in JavaScript, that variable is a <em>global</em> variable, available everywhere in the code. As a consequence, if two different sections of code try to define the same global variable, those definitions will clash. This interaction can cause bugs that are very hard to find, as code in once section inadvertently interferes with code in a completely different section. To prevent this problem we can avoid using global variables, and the easiest way to do that in JavaScript is to define our variables inside a function. That’s the purpose of an immediately-invoked function expression. It makes sure that any variables our code defines are local to the function rather than global, and it prevents our code blocks from interfering with each other.</p>
 <h3 id="step-2-implement-the-model">Step 2: Implement the Model</h3>
-<p>Our application really only needs one model, so now we can finally start implementing. The lengthy explanation in the previous step might make you a little wary. If simply defining the model requires that much work (although, to be fair, it was only a single command), the prospect of actual coding might be even more intimidating. Fortunately there is no need to fear. This step is surely the easiest in the entire book. It’s already complete! That’s right, the scaffolding that Yeoman has set up for us is a complete and functioning model for a Run. In fact, if it weren’t for some quirks in Nike’s REST API, we wouldn’t have to touch the model code at all. We’ll address those quirks in a later section.</p>
-<p>Rather than simply moving on to the next step, though, let’s spend a little time looking at what we can do with our newly created model. To do that we can make one temporary addition to the model code. This change is temporary because we won’t need it in the final app. From the Nike+ documentation we find that the URL to retrieve details about a run (Nike+ uses the more general term “activity”) is <code>https://api.nike.com/v1/me/sport/activities/{activityId}</code>. The final part depends on the specific activity, so we’ll add only the general part of the URL to our model.</p>
+<p>Our application really only needs one model, so now we can finally start implementing. The lengthy explanation in the previous step might make you a little wary. If simply defining the model requires that much work (although, to be fair, it was only a single command), the prospect of actual coding might be even more intimidating. Fortunately there is no need to fear. This step is surely the easiest in the entire book. It’s already complete! That’s right, the scaffolding that Yeoman has set up for us is a complete and functioning model for a Run. In fact, if it weren’t for some quirks in Nike’s <span class="smcp">REST</span> <span class="smcp">API</span>, we wouldn’t have to touch the model code at all. We’ll address those quirks in a later section.</p>
+<p>Rather than simply moving on to the next step, though, let’s spend a little time looking at what we can do with our newly created model. To do that we can make one temporary addition to the model code. This change is temporary because we won’t need it in the final app. From the Nike+ documentation we find that the <span class="smcp">URL</span> to retrieve details about a run (Nike+ uses the more general term “activity”) is <code>https://api.nike.com/v1/me/sport/activities/{activityId}</code>. The final part depends on the specific activity, so we’ll add only the general part of the <span class="smcp">URL</span> to our model.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -431,7 +909,7 @@ $ <span class="kw">npm</span> install jake -g</code></pre></td></tr></table>
         <span class="kw">return</span> response;
     }
 });</code></pre></td></tr></table>
-<p>Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of <code>2126456911</code>. If the Nike+ API followed typical conventions, we could create a variable representing that run, <em>and get all it’s data,</em> with two statements.</p>
+<p>Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of <code>2126456911</code>. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, <em>and get all it’s data,</em> with two statements.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> run = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Models</span>.<span class="fu">Run</span>({<span class="dt">id</span>: <span class="dv">2126456911</span>});
@@ -493,7 +971,7 @@ $ <span class="kw">npm</span> install jake -g</code></pre></td></tr></table>
         <span class="dt">model</span>: <span class="ot">Running</span>.<span class="ot">Models</span>.<span class="fu">Runs</span>
     });
 })();</code></pre></td></tr></table>
-<p>This file is even simpler than our model; the default collection only has a single property to indicate what type of model the collection contains. Unfortunately, Yeoman isn’t smart enough to handle plurals, so it assumes the name of the model is the same as the name of the collection. That’s not true for our app, as our model is a <em>Run</em> (singular) and the collection is <em>Runs</em> (plural). We’ll need to change that by removing the <code>s</code>. While we’re making this change, we can also add a property to specify the REST API for the collection. That’s a URL from the Nike+ service.</p>
+<p>This file is even simpler than our model; the default collection only has a single property to indicate what type of model the collection contains. Unfortunately, Yeoman isn’t smart enough to handle plurals, so it assumes the name of the model is the same as the name of the collection. That’s not true for our app, as our model is a <em>Run</em> (singular) and the collection is <em>Runs</em> (plural). We’ll need to change that by removing the <code>s</code>. While we’re making this change, we can also add a property to specify the <span class="smcp">REST</span> <span class="smcp">API</span> for the collection. That’s a <span class="smcp">URL</span> from the Nike+ service.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -502,7 +980,7 @@ $ <span class="kw">npm</span> install jake -g</code></pre></td></tr></table>
     <span class="dt">url</span>: <span class="st">&#39;https://api.nike.com/v1/me/sport/activities/&#39;</span>,
     <span class="dt">model</span>: <span class="ot">Running</span>.<span class="ot">Models</span>.<span class="fu">Run</span>
 });</code></pre></td></tr></table>
-<p>With those two small changes, we’re ready to take advantage of our new collection. (Well, we would be if the Nike+ API didn’t have a few quirks that we’ll address later; we’ll ignore that complication for now.) All we need to do is create a new instance of the Runs collection and then fetch its data.</p>
+<p>With those two small changes, we’re ready to take advantage of our new collection. (Well, we would be if the Nike+ <span class="smcp">API</span> didn’t have a few quirks that we’ll address later; we’ll ignore that complication for now.) All we need to do is create a new instance of the Runs collection and then fetch its data.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> runs = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Collections</span>.<span class="fu">Runs</span>();
@@ -582,11 +1060,11 @@ $ <span class="kw">yo</span> backbone:view summaryRow
         }
     });
 })();</code></pre></td></tr></table>
-<p>The overall structure of the file is the same as our model and our collection, but there’s a bit more going on in the view itself. Let’s step through view’s properties one at a time. The first property is <code>template</code>. That’s where we define the exact HTML markup for the view, and we’ll look at this in more detail in the next step.</p>
-<p>The <code>tagName</code> property defines the HTML tag that our view will use as it’s parent. Yeoman defaults it to a generic <code>&lt;div&gt;</code>, but we know that in our case it will be a <code>&lt;table&gt;</code>. It’s easy enough to change it, and we’ll do so in a moment.</p>
-<p>The <code>id</code> and <code>className</code> properties specify HTML <code>id</code> attributes or <code>class</code> values to add to the main container (in our case the <code>&lt;table&gt;</code>). We could, for example, base some CSS styles on these values. For our example we’re not considering styles, so we can leave both properties blank or delete them entirely.</p>
+<p>The overall structure of the file is the same as our model and our collection, but there’s a bit more going on in the view itself. Let’s step through view’s properties one at a time. The first property is <code>template</code>. That’s where we define the exact <span class="smcp">HTML</span> markup for the view, and we’ll look at this in more detail in the next step.</p>
+<p>The <code>tagName</code> property defines the <span class="smcp">HTML</span> tag that our view will use as it’s parent. Yeoman defaults it to a generic <code>&lt;div&gt;</code>, but we know that in our case it will be a <code>&lt;table&gt;</code>. It’s easy enough to change it, and we’ll do so in a moment.</p>
+<p>The <code>id</code> and <code>className</code> properties specify <span class="smcp">HTML</span> <code>id</code> attributes or <code>class</code> values to add to the main container (in our case the <code>&lt;table&gt;</code>). We could, for example, base some <span class="smcp">CSS</span> styles on these values. For our example we’re not considering styles, so we can leave both properties blank or delete them entirely.</p>
 <p>Next is the <code>events</code> property. This object identifies user events (such as mouse clicks) that are relevant for the view. In the case of the Summary view, there are no events, so we can leave the object empty or simply delete it.</p>
-<p>The last two properties, <code>initialize</code> and <code>render</code>, are both methods. Backbone.js will call <code>initialize</code> when it first creates a view, and it will call <code>render</code> when the view should build or update the HTML markup. In the default Yeoman scaffolding, neither method has a return value. It’s quite handy, however, if a view’s methods return the view itself. That return value makes it easy to chain methods together in a single JavaScript statement. We can add the return statement to both methods. We’ll also make a small change to the <code>initialize</code> method. The first statement within it refers to <code>this.model</code> because Yeoman assumes that views are model views. The Summary view is for a collection rather than a model, so we should change the code accordingly. The <code>render</code> function also refers to a model; it has the fragment <code>this.model.toJSON()</code>. Rather than change this code to <code>collection</code>, we’ll simply delete it entirely. We’ll see why in the next section on templates.</p>
+<p>The last two properties, <code>initialize</code> and <code>render</code>, are both methods. Backbone.js will call <code>initialize</code> when it first creates a view, and it will call <code>render</code> when the view should build or update the <span class="smcp">HTML</span> markup. In the default Yeoman scaffolding, neither method has a return value. It’s quite handy, however, if a view’s methods return the view itself. That return value makes it easy to chain methods together in a single JavaScript statement. We can add the return statement to both methods. We’ll also make a small change to the <code>initialize</code> method. The first statement within it refers to <code>this.model</code> because Yeoman assumes that views are model views. The Summary view is for a collection rather than a model, so we should change the code accordingly. The <code>render</code> function also refers to a model; it has the fragment <code>this.model.toJSON()</code>. Rather than change this code to <code>collection</code>, we’ll simply delete it entirely. We’ll see why in the next section on templates.</p>
 <p>Before we consider the implementation of the last two methods, let’s take a look at the resulting Summary view so far.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -613,7 +1091,7 @@ $ <span class="kw">yo</span> backbone:view summaryRow
     }
 });</code></pre></td></tr></table>
 <p>Now let’s look inside the last two methods, starting with <code>initialize</code>. That method has a single statement (other than the <code>return</code> statement that we just added). By calling <code>listenTo</code>, it tells Backbone.js that the view wants to listen for events. The first parameter, <code>this.collection</code>, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view’s <code>render</code> method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.</p>
-<p>Most of the real work of a view takes place in its <code>render</code> method. After all, this is the code that actually creates the HTML markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that’s not enough. The template takes care of the HTML for the collection as a whole, but it doesn’t handle the models that are part of the collection. For the individual runs, we can use Underscore.js to iterate through the collection and render each run.</p>
+<p>Most of the real work of a view takes place in its <code>render</code> method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that’s not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn’t handle the models that are part of the collection. For the individual runs, we can use Underscore.js to iterate through the collection and render each run.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -628,7 +1106,7 @@ $ <span class="kw">yo</span> backbone:view summaryRow
 <ol type="1">
 <li>Create a new SummaryRow view for the run.</li>
 <li>Render that Summary Row view.</li>
-<li>Append the resulting HTML to the <code>&lt;tbody&gt;</code> in the Summary view.</li>
+<li>Append the resulting <span class="smcp">HTML</span> to the <code>&lt;tbody&gt;</code> in the Summary view.</li>
 </ol>
 <p>The code to implement those steps is straightforward, but it’s helpful to take each step one at a time.</p>
 <ol type="1">
@@ -676,8 +1154,8 @@ $ <span class="kw">yo</span> backbone:view summaryRow
 });</code></pre></td></tr></table>
 <p>Now we have all the JavaScript code we need to show the main summary view for our app.</p>
 <h3 id="step-5-define-the-main-view-templates">Step 5: Define the Main View Templates</h3>
-<p>So far we’ve developed the JavaScript code to manipulate our Summary and SummaryRow views. That code doesn’t generate the actual HTML markup, though. For that task we rely on templates. Templates are skeletal HTML markup with placeholders for individual values. Confining HTML markup to templates helps keep our JavaScript code clean, well-structured, and easy to maintain.</p>
-<p>Just as there are many popular JavaScript application libraries, there are also many template languages. Our application doesn’t require any fancy template functionality, however, so we’ll stick with the default template process that Yeoman has set up for us. That process relies on a <a href="https://github.com/gruntjs/grunt-contrib-jst">JST tool</a> to process templates, and the tool uses the <a href="http://underscorejs.org/#template">Underscore.js template language</a>. It’s easy to see how this works through an example, so let’s dive in.</p>
+<p>So far we’ve developed the JavaScript code to manipulate our Summary and SummaryRow views. That code doesn’t generate the actual <span class="smcp">HTML</span> markup, though. For that task we rely on templates. Templates are skeletal <span class="smcp">HTML</span> markup with placeholders for individual values. Confining <span class="smcp">HTML</span> markup to templates helps keep our JavaScript code clean, well-structured, and easy to maintain.</p>
+<p>Just as there are many popular JavaScript application libraries, there are also many template languages. Our application doesn’t require any fancy template functionality, however, so we’ll stick with the default template process that Yeoman has set up for us. That process relies on a <a href="https://github.com/gruntjs/grunt-contrib-jst"><span class="smcp">JST</span> tool</a> to process templates, and the tool uses the <a href="http://underscorejs.org/#template">Underscore.js template language</a>. It’s easy to see how this works through an example, so let’s dive in.</p>
 <p>The first template we’ll tackle is the template for a SummaryRow. In our view we’ve already established that the SummaryRow is a <code>&lt;tr&gt;</code> element, so the template only needs to supply the content that lives within that <code>&lt;tr&gt;</code>. We’ll get that content from the associated Run model which, in turn, comes from the Nike+ service. Here’s an example activity that Nike+ could return.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -833,12 +1311,12 @@ $ <span class="kw">yo</span> backbone:view summaryRow
     <span class="kw">var</span> run = {};
     <span class="ot">run</span>.<span class="fu">date</span> = <span class="fu">moment</span>(<span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">get</span>(<span class="st">&quot;startTime&quot;</span>)).<span class="fu">calendar</span>();</code></pre></td></tr></table>
 <blockquote>
-<p>In the interest of brevity, we’re cheating a little with the code above because it converts the UTC timestamp to the local time zone of the browser. It would probably be more correct to convert it to the time zone for the run, which Nike+ provides in the data.</p>
+<p>In the interest of brevity, we’re cheating a little with the code above because it converts the <span class="smcp">UTC</span> timestamp to the local time zone of the browser. It would probably be more correct to convert it to the time zone for the run, which Nike+ provides in the data.</p>
 </blockquote>
 <p>Next up is the run’s duration. It’s doubtful that we need to show the fractions of seconds that Nike+ includes, so let’s simply drop them from the attribute. (It would be more precise to round up or down, but assuming our users are Olympic athletes in training, a second here or there won’t matter. Besides, Nike+ seems to always record these sub-second durations as “.000” anyway.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">run</span>.<span class="fu">duration</span> = <span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">get</span>(<span class="st">&quot;metricSummary&quot;</span>).<span class="ot">duration</span>.<span class="fu">split</span>(<span class="st">&quot;.&quot;</span>)[<span class="dv">0</span>];</code></pre></td></tr></table>
-<p>The distance property can also use some adjustment. In addition to rounding it to a reasonable number of decimal places, we can convert from km to Miles for our US users. A single statement takes care of both.</p>
+<p>The distance property can also use some adjustment. In addition to rounding it to a reasonable number of decimal places, we can convert from km to Miles for our <span class="smcp">US</span> users. A single statement takes care of both.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">run</span>.<span class="fu">distance</span> = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="fl">62.1371</span>*<span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">get</span>(<span class="st">&quot;metricSummary&quot;</span>).<span class="fu">distance</span>)/<span class="dv">100</span> + <span class="st">&quot; Miles&quot;</span>;</code></pre></td></tr></table>
 <p>The calories attribute is one value that’s fine as it is, so we’ll just copy it into our temporary object.</p>
@@ -961,8 +1439,8 @@ $ <span class="kw">yo</span> backbone:view summaryRow
 </tbody>
 </table>
 <h2 id="views-for-visualizations">Views for Visualizations</h2>
-<p>Now that we’ve seen how to use Backbone.js views to separate data from its presentation, we can consider how to use the same approach for data visualizations. When the presentation is simple HTML markup—as in the previous section’s table—it’s easy to use templates to view a model. Templates, however, aren’t sophisticated enough to handle data visualizations. For those we’ll need to modify our approach.</p>
-<p>The data from the Nike+ service offers lots of opportunity for visualizations. Each run, for example, may include a record of the user’s heart rate, instantaneous pace, and cumulative distance, recorded every 10 seconds. Runs may also include the user’s GPS coordinates captured every second. That type of data suggests both charts and maps, and in this section we’ll add both to our application.</p>
+<p>Now that we’ve seen how to use Backbone.js views to separate data from its presentation, we can consider how to use the same approach for data visualizations. When the presentation is simple <span class="smcp">HTML</span> markup—as in the previous section’s table—it’s easy to use templates to view a model. Templates, however, aren’t sophisticated enough to handle data visualizations. For those we’ll need to modify our approach.</p>
+<p>The data from the Nike+ service offers lots of opportunity for visualizations. Each run, for example, may include a record of the user’s heart rate, instantaneous pace, and cumulative distance, recorded every 10 seconds. Runs may also include the user’s <span class="smcp">GPS</span> coordinates captured every second. That type of data suggests both charts and maps, and in this section we’ll add both to our application.</p>
 <h3 id="step-1-define-the-additional-views">Step 1: Define the Additional Views</h3>
 <p>As we did in the previous section, we’ll rely on Yeoman to create the scaffolding for our additional views. One view, we’ll call it <em>Details,</em> will act as the overall view for the details of an individual run. Within that view we’ll create three additional views each showing a different aspect of the run. We can think of these views in a hierarchy.</p>
 <ul>
@@ -1092,7 +1570,7 @@ $ <span class="kw">yo</span> backbone:view map</code></pre></td></tr></table>
 
 <span class="co">// Code continues...</span></code></pre></td></tr></table>
 <p>Notice that we’ve also added the global variable for Underscore.js (<code>_</code>) to the initial comment in the file.</p>
-<p>The most straightforward way to present this information in HTML is with a description list (<code>&lt;dl&gt;</code>). Each property can be an individual item in the list, with a description term (<code>&lt;dt&gt;</code>) holding the property name and the description data (<code>&lt;dd&gt;</code>) its value. To implement this, we set the <code>tagName</code> property of the view to be <code>'dl'</code>, and we create a generic list item template. Here’s the start of our Properties view code.</p>
+<p>The most straightforward way to present this information in <span class="smcp">HTML</span> is with a description list (<code>&lt;dl&gt;</code>). Each property can be an individual item in the list, with a description term (<code>&lt;dt&gt;</code>) holding the property name and the description data (<code>&lt;dd&gt;</code>) its value. To implement this, we set the <code>tagName</code> property of the view to be <code>'dl'</code>, and we create a generic list item template. Here’s the start of our Properties view code.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1122,7 +1600,7 @@ $ <span class="kw">yo</span> backbone:view map</code></pre></td></tr></table>
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;dt&gt;</span><span class="er">&lt;</span>%= key %&gt;<span class="kw">&lt;/dt&gt;</span>
 <span class="kw">&lt;dd&gt;</span><span class="er">&lt;</span>%= value %&gt;<span class="kw">&lt;/dd&gt;</span></code></pre></td></tr></table>
-<p>A quick glance at the Nike+ data shows that it contains nested objects. The <code>metricSummary</code> property of the main object is itself an object. That suggests that recursion might be a good strategy for processing the model. To implement recursion we’ll need a function (so it can call itself), so let’s add an <code>obj2Html</code> method to our view. That function should iterate through all the properties in the input object building the HTML markup as it does. The Underscore.js <code>reduce</code> function supports exactly that operation, so we’ll use that as the core of our method.</p>
+<p>A quick glance at the Nike+ data shows that it contains nested objects. The <code>metricSummary</code> property of the main object is itself an object. That suggests that recursion might be a good strategy for processing the model. To implement recursion we’ll need a function (so it can call itself), so let’s add an <code>obj2Html</code> method to our view. That function should iterate through all the properties in the input object building the <span class="smcp">HTML</span> markup as it does. The Underscore.js <code>reduce</code> function supports exactly that operation, so we’ll use that as the core of our method.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1380,13 +1858,13 @@ drawMap: <span class="kw">function</span> () {
     <span class="kw">return</span> <span class="kw">this</span>;
 },</code></pre></td></tr></table>
 <blockquote>
-<p>If you’re wondering “Why would the <code>gps</code> property of the Run model ever change?” be patient. We’ll get to that when we cover the quirks of the Nike+ REST API.</p>
+<p>If you’re wondering “Why would the <code>gps</code> property of the Run model ever change?” be patient. We’ll get to that when we cover the quirks of the Nike+ <span class="smcp">REST</span> <span class="smcp">API</span>.</p>
 </blockquote>
 <p>With the preliminaries out of the way, we can implement the <code>drawMap</code> function. It turns out to be a very easy implementation. The steps are</p>
 <ol type="1">
 <li>Make sure the model has a <code>gps</code> property and there are waypoints associated with it.</li>
 <li>If an old map exists, remove it.</li>
-<li>Extract the GPS coordinates from the waypoints array.</li>
+<li>Extract the <span class="smcp">GPS</span> coordinates from the waypoints array.</li>
 <li>Create a path using those coordinates.</li>
 <li>Create a map that contains that path and draw the path on the map.</li>
 <li>Add the map tiles.</li>
@@ -1434,8 +1912,15 @@ drawMap: <span class="kw">function</span> () {
 }</code></pre></td></tr></table>
 <p>As you can see from the code, we’re storing a reference to the Leaflet map object as a property of the view. From within the view, we can access that object using <code>this.map</code>.</p>
 <p>The result is a nice map of the run’s route in figure <span class="nextfigure"/>.</p>
+<style>
+.leaflet-container a {
+    text-shadow: none;
+    background-image: none;
+    color: rgb(51, 51, 51);
+}
+</style>
 <figure style="margin-left:0;margin-right:0">
-<div id="map" style="width:840px;height:600px;">
+<div id="map" style="width:640px;height:450px;">
 
 </div>
 <figcaption>
@@ -1446,9 +1931,9 @@ A map view shows the route of a run.
 <p>The last remaining view that we need to implement is the Charts view. This view is the most complex of any, but nearly all of the code identical to the <em>Tracking Values</em> example in chapter 2. There’s no need to repeat that material here, but the source code for the book includes the complete implementation. If you’re looking in detail at that implementation, here a few points to note.</p>
 <ul>
 <li>Just as Leaflet and the map container, Flot expects a container for its chart to be present in the web page. We can use the same <code>defer</code> trick to prevent Flot errors.</li>
-<li>Nike+ returns at least four types of charts as metrics: distance, heart rate, speed, and GPS signal strength. We really only care about the first two. Speed isn’t present in all activities, but distance is. Because we want to graph pace, we can only count on distance to derive it. And as long as we’re getting pace from the distance graph, the speed metrics are redundant. GPS signal strength doesn’t seem useful enough to bother.</li>
-<li>If GPS waypoint data is available, we can also graph elevation, but that data is in a separate attribute of the model (not the metrics attribute).</li>
-<li>At least as of this writing, there’s a bit of a bug in Nike’s response for GPS data. It claims that the measurements are on the same time scale as the other metrics (every 10 seconds), but, in fact, the GPS measurements are reported on different intervals. To work around this bug, we ignore the reported interval, and calculate one ourselves. Also, we want to normalize the elevation graph to the same time scale as all the others. Doing that will give us the additional benefit of averaging the GPS elevation data; averaging is useful here because GPS elevation measurements aren’t generally very accurate.</li>
+<li>Nike+ returns at least four types of charts as metrics: distance, heart rate, speed, and <span class="smcp">GPS</span> signal strength. We really only care about the first two. Speed isn’t present in all activities, but distance is. Because we want to graph pace, we can only count on distance to derive it. And as long as we’re getting pace from the distance graph, the speed metrics are redundant. <span class="lgcp">GPS</span> signal strength doesn’t seem useful enough to bother.</li>
+<li>If <span class="smcp">GPS</span> waypoint data is available, we can also graph elevation, but that data is in a separate attribute of the model (not the metrics attribute).</li>
+<li>At least as of this writing, there’s a bit of a bug in Nike’s response for <span class="smcp">GPS</span> data. It claims that the measurements are on the same time scale as the other metrics (every 10 seconds), but, in fact, the <span class="smcp">GPS</span> measurements are reported on different intervals. To work around this bug, we ignore the reported interval, and calculate one ourselves. Also, we want to normalize the elevation graph to the same time scale as all the others. Doing that will give us the additional benefit of averaging the <span class="smcp">GPS</span> elevation data; averaging is useful here because <span class="smcp">GPS</span> elevation measurements aren’t generally very accurate.</li>
 </ul>
 <p>You can see the interactive result in figure <span class="nextfigure"/>.</p>
 <style>
@@ -1468,14 +1953,14 @@ A map view shows the route of a run.
 .charts-graphs .figure {
     padding: 0;
     margin: 0;
-    width: 600px;
+    width: 420px;
     height: 100px;
 }
 .charts-graphs .flot-tick-label {
     display:none;
 }
 .charts-graphs .x-axis {
-    width: 600px;
+    width: 420px;
     height: 15px;
 }
 .charts-graphs .x-axis .flot-tick-label {
@@ -1483,15 +1968,16 @@ A map view shows the route of a run.
 }
 .charts-legend {
     float: left;
+    padding-bottom: 16px;
 }
 .charts-legend p {
     margin: 0 0 0 15px;
     padding: 2px 0 2px 0;
-    font-size: 15px;
-    line-height: 15px;
+    font-size: 13px;
+    line-height: 13px;
 }
 .charts-legend p:first-child {
-    padding-top: 14px;
+    padding-top: 6px;
 }
 .charts-legend p:last-child {
     padding-bottom: 14px;
@@ -1499,694 +1985,707 @@ A map view shows the route of a run.
 </style>
 <figure style="margin-left:0;margin-right:0">
 <div class="charts-wrapper">
-<pre><code>&lt;div class=&quot;charts-marker&quot;&gt;&lt;/div&gt;
-&lt;div class=&quot;charts-graphs&quot;&gt;&lt;/div&gt;
-&lt;div class=&quot;charts-legend&quot;&gt;&lt;/div&gt;
-&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;</code></pre>
+<div class="charts-marker">
+
+</div>
+<div class="charts-graphs">
+
+</div>
+<div class="charts-legend">
+
+</div>
+<div class="clearfix">
+
+</div>
 </div>
 <figcaption>
 An alternative view shows charts of the run.
 </figcaption>
 </figure>
 <script>
-contentLoaded.done(function() {
+;(function(){
+
+    draw = function() {
+
+        var run = {
+          "activityId": "2126456911",
+          "activityType": "RUN",
+          "startTime": "2013-04-09T10:54:33Z",
+          "activityTimeZone": "GMT-04:00",
+          "status": "COMPLETE",
+          "deviceType": "IPOD",
+          "metricSummary": {
+            "calories": 240,
+            "fuel": 790,
+            "distance": 3.7524,
+            "steps": 0,
+            "duration": "0:22:39.000"
+          },
+          "tags": [
+            {
+              "tagType": "WEATHER",
+              "tagValue": "SUNNY"
+            },
+            {
+              "tagType": "NOTE"
+            },
+            {
+              "tagType": "TERRAIN",
+              "tagValue": "TRAIL"
+            },
+            {
+              "tagType": "SHOES",
+              "tagValue": "Neo Trail"
+            },
+            {
+              "tagType": "EMOTION",
+              "tagValue": "GREAT"
+            }
+          ],
+          "metrics": [
+            {
+              "intervalMetric": 10,
+              "intervalUnit": "SEC",
+              "metricType": "SPEED",
+              "values": [
+                "0.0", "4.9135", "3.2307", "5.0095", "6.0155", "6.5154", "6.7831", "7.1405", "7.5132", "7.8049",
+                "7.7402", "7.9067", "8.0318", "8.2706", "8.3555", "8.386", "8.4463", "8.4236", "8.4649", "8.4926",
+                "8.6085", "8.6471", "9.0973", "9.2853", "9.2844", "9.3911", "9.3469", "9.3066", "9.304", "9.2558",
+                "9.3002", "9.5552", "9.478", "9.3987", "9.2454", "9.216", "9.1343", "9.1113", "9.1629", "9.2077",
+                "9.1606", "9.0644", "9.1917", "9.0194", "9.1034", "8.947", "9.0625", "9.0759", "8.9977", "8.9849",
+                "9.0857", "8.9276", "8.8995", "8.9162", "9.0587", "9.0453", "9.0598", "9.0965", "9.1834", "9.1012",
+                "8.9835", "9.0078", "9.0594", "9.2988", "9.3044", "9.5607", "9.6065", "9.6938", "9.8038", "9.8606",
+                "9.7489", "9.8001", "9.8019", "9.8791", "9.8576", "9.9681", "10.1237", "10.0901", "9.9859", "9.9119",
+                "9.9398", "10.013", "10.0642", "9.9803", "9.9153", "9.9509", "9.9189", "9.8162", "9.7896", "9.779",
+                "9.9002", "9.8719", "9.8701", "9.9112", "10.0053", "10.0311", "10.0641", "10.024", "10.0852",
+                "10.0374", "10.0784", "10.1319", "10.0765", "10.015", "9.9827", "9.7291", "9.5821", "9.7238",
+                "9.6546", "9.495", "9.3582", "9.3695", "9.4641", "9.4965", "9.4442", "9.3592", "9.4442", "9.6883",
+                "9.8628", "9.8331", "13.1376", "10.123", "9.9875", "10.0217", "10.0433", "10.1553", "10.2953",
+                "10.1597", "10.3634", "10.7035", "10.8371", "11.0624", "11.044", "11.2021", "11.1301", "11.2593"
+              ]
+            },
+            {
+              "intervalMetric": 10,
+              "intervalUnit": "SEC",
+              "metricType": "HEARTRATE",
+              "values": [
+                "0", "45", "51", "57", "77", "90", "105", "108", "110", "111", "113", "116", "118", "118", "116",
+                "117", "113", "112", "111", "112", "110", "109", "110", "113", "117", "116", "114", "117", "117",
+                "114", "111", "109", "116", "112", "113", "118", "122", "127", "132", "131", "130", "129", "127",
+                "125", "122", "123", "124", "125", "128", "131", "131", "127", "124", "121", "120", "125", "128",
+                "129", "129", "128", "125", "121", "122", "124", "125", "124", "121", "120", "120", "124", "129",
+                "130", "129", "129", "131", "131", "132", "133", "131", "132", "134", "134", "132", "132", "129",
+                "128", "126", "129", "131", "134", "134", "132", "131", "129", "127", "128", "128", "129", "133",
+                "136", "138", "140", "141", "140", "138", "137", "137", "138", "138", "137", "138", "140", "139",
+                "138", "136", "137", "136", "135", "134", "135", "137", "141", "144", "144", "144", "143", "140",
+                "137", "138", "138", "136", "137", "135", "132", "133", "136"
+              ]
+            },
+            {
+              "intervalMetric": 10,
+              "intervalUnit": "SEC",
+              "metricType": "DISTANCE",
+              "values": [
+                "0.0", "0.0124", "0.0178", "0.0412", "0.0667", "0.0906", "0.1131", "0.1389", "0.1671", "0.1951",
+                "0.215", "0.2416", "0.2677", "0.2986", "0.3249", "0.3494", "0.3754", "0.3978", "0.4232", "0.4482",
+                "0.4782", "0.5061", "0.5287", "0.5567", "0.5829", "0.612", "0.6332", "0.6558", "0.6817", "0.7093",
+                "0.7358", "0.769", "0.7952", "0.8194", "0.8389", "0.8615", "0.8834", "0.9051", "0.9323", "0.9594",
+                "0.9859", "1.0097", "1.0376", "1.059", "1.0877", "1.1076", "1.1373", "1.1615", "1.1816", "1.2072",
+                "1.239", "1.2642", "1.2904", "1.3147", "1.3427", "1.3636", "1.3896", "1.4117", "1.4419", "1.4647",
+                "1.4868", "1.5093", "1.5405", "1.5747", "1.6049", "1.6408", "1.6702", "1.7003", "1.727", "1.7555",
+                "1.7782", "1.809", "1.8367", "1.8647", "1.8916", "1.9217", "1.9486", "1.9722", "1.996", "2.0165",
+                "2.0423", "2.0666", "2.0972", "2.127", "2.1538", "2.1899", "2.2217", "2.2457", "2.2705", "2.2992",
+                "2.3293", "2.3568", "2.3854", "2.4149", "2.4477", "2.48", "2.506", "2.5292", "2.5563", "2.5815",
+                "2.603", "2.6304", "2.6559", "2.6828", "2.709", "2.7297", "2.7537", "2.7859", "2.8057", "2.8264",
+                "2.8489", "2.8764", "2.9104", "2.9426", "2.9719", "2.9994", "3.0302", "3.0689", "3.1037", "3.1301",
+                "3.2963", "3.2963", "3.2963", "3.2963", "3.2963", "3.2963", "3.3249", "3.3533", "3.3861", "3.421",
+                "3.4559", "3.4888", "3.5238", "3.5626", "3.5933", "3.6246"
+              ]
+            }
+          ],
+          "gps": {
+            "elevationLoss": 114.400024,
+            "elevationGain": 109.00003,
+            "elevationMax": 296.2,
+            "elevationMin": 257,
+            "intervalMetric": 10,
+            "intervalUnit": "SEC",
+            "waypoints": [
+              { "latitude": 34.063286, "longitude": -84.407074, "elevation": 291 },
+              { "latitude": 34.063293, "longitude": -84.407074, "elevation": 291 },
+              { "latitude": 34.063175, "longitude": -84.40712, "elevation": 290.6 },
+              { "latitude": 34.06317, "longitude": -84.40713, "elevation": 290.6 },
+              { "latitude": 34.063168, "longitude": -84.407135, "elevation": 290.6 },
+              { "latitude": 34.063164, "longitude": -84.407135, "elevation": 290.6 },
+              { "latitude": 34.06315, "longitude": -84.40715, "elevation": 290.6 },
+              { "latitude": 34.06307, "longitude": -84.4073, "elevation": 290.2 },
+              { "latitude": 34.063023, "longitude": -84.40747, "elevation": 289.6 },
+              { "latitude": 34.063023, "longitude": -84.407555, "elevation": 289.6 },
+              { "latitude": 34.063034, "longitude": -84.40772, "elevation": 290.6 },
+              { "latitude": 34.063026, "longitude": -84.40777, "elevation": 291.2 },
+              { "latitude": 34.0629, "longitude": -84.407906, "elevation": 292.6 },
+              { "latitude": 34.062885, "longitude": -84.40799, "elevation": 293.6 },
+              { "latitude": 34.06279, "longitude": -84.40813, "elevation": 295 },
+              { "latitude": 34.062653, "longitude": -84.40824, "elevation": 295 },
+              { "latitude": 34.062572, "longitude": -84.40838, "elevation": 294.6 },
+              { "latitude": 34.06245, "longitude": -84.40853, "elevation": 293.6 },
+              { "latitude": 34.062374, "longitude": -84.408646, "elevation": 293 },
+              { "latitude": 34.062366, "longitude": -84.40867, "elevation": 293.2 },
+              { "latitude": 34.062424, "longitude": -84.40882, "elevation": 293.6 },
+              { "latitude": 34.06254, "longitude": -84.40887, "elevation": 295.2 },
+              { "latitude": 34.06261, "longitude": -84.40895, "elevation": 296.2 },
+              { "latitude": 34.06272, "longitude": -84.40913, "elevation": 296.2 },
+              { "latitude": 34.062706, "longitude": -84.40932, "elevation": 295.2 },
+              { "latitude": 34.062622, "longitude": -84.40942, "elevation": 293.2 },
+              { "latitude": 34.062485, "longitude": -84.409515, "elevation": 292.6 },
+              { "latitude": 34.06234, "longitude": -84.40957, "elevation": 292.6 },
+              { "latitude": 34.06222, "longitude": -84.4096, "elevation": 293.2 },
+              { "latitude": 34.06213, "longitude": -84.4096, "elevation": 293.2 },
+              { "latitude": 34.062096, "longitude": -84.4097, "elevation": 292.2 },
+              { "latitude": 34.06214, "longitude": -84.40987, "elevation": 290.2 },
+              { "latitude": 34.062244, "longitude": -84.40987, "elevation": 289.2 },
+              { "latitude": 34.062393, "longitude": -84.4098, "elevation": 288.6 },
+              { "latitude": 34.062523, "longitude": -84.40973, "elevation": 288.6 },
+              { "latitude": 34.06267, "longitude": -84.40968, "elevation": 288 },
+              { "latitude": 34.06271, "longitude": -84.409676, "elevation": 287.6 },
+              { "latitude": 34.062885, "longitude": -84.409615, "elevation": 287.6 },
+              { "latitude": 34.063004, "longitude": -84.40946, "elevation": 287 },
+              { "latitude": 34.06301, "longitude": -84.40945, "elevation": 287 },
+              { "latitude": 34.06316, "longitude": -84.40958, "elevation": 286.6 },
+              { "latitude": 34.06327, "longitude": -84.40965, "elevation": 285.6 },
+              { "latitude": 34.06341, "longitude": -84.409645, "elevation": 286.2 },
+              { "latitude": 34.063606, "longitude": -84.40965, "elevation": 285.6 },
+              { "latitude": 34.06372, "longitude": -84.4096, "elevation": 286.2 },
+              { "latitude": 34.06389, "longitude": -84.40956, "elevation": 284 },
+              { "latitude": 34.063988, "longitude": -84.40947, "elevation": 283.6 },
+              { "latitude": 34.064148, "longitude": -84.40945, "elevation": 283.2 },
+              { "latitude": 34.064224, "longitude": -84.409424, "elevation": 283.2 },
+              { "latitude": 34.064262, "longitude": -84.40932, "elevation": 284 },
+              { "latitude": 34.06428, "longitude": -84.40917, "elevation": 284.2 },
+              { "latitude": 34.0644, "longitude": -84.40919, "elevation": 282.6 },
+              { "latitude": 34.06444, "longitude": -84.409225, "elevation": 282 },
+              { "latitude": 34.064552, "longitude": -84.409355, "elevation": 280.6 },
+              { "latitude": 34.06458, "longitude": -84.40936, "elevation": 280 },
+              { "latitude": 34.064762, "longitude": -84.40937, "elevation": 276.6 },
+              { "latitude": 34.0648, "longitude": -84.40937, "elevation": 276.2 },
+              { "latitude": 34.06494, "longitude": -84.40933, "elevation": 275 },
+              { "latitude": 34.0651, "longitude": -84.40931, "elevation": 272.6 },
+              { "latitude": 34.065216, "longitude": -84.409325, "elevation": 271 },
+              { "latitude": 34.065407, "longitude": -84.40941, "elevation": 268.6 },
+              { "latitude": 34.06547, "longitude": -84.409454, "elevation": 268.2 },
+              { "latitude": 34.06553, "longitude": -84.40939, "elevation": 265.6 },
+              { "latitude": 34.065502, "longitude": -84.40928, "elevation": 265 },
+              { "latitude": 34.065475, "longitude": -84.40925, "elevation": 264.6 },
+              { "latitude": 34.065437, "longitude": -84.409195, "elevation": 265 },
+              { "latitude": 34.06536, "longitude": -84.40914, "elevation": 266.6 },
+              { "latitude": 34.065334, "longitude": -84.409065, "elevation": 266.6 },
+              { "latitude": 34.065346, "longitude": -84.40895, "elevation": 266.2 },
+              { "latitude": 34.065422, "longitude": -84.40893, "elevation": 266.2 },
+              { "latitude": 34.06557, "longitude": -84.409004, "elevation": 267 },
+              { "latitude": 34.06567, "longitude": -84.40905, "elevation": 269 },
+              { "latitude": 34.065807, "longitude": -84.409065, "elevation": 271.6 },
+              { "latitude": 34.06593, "longitude": -84.40897, "elevation": 273.6 },
+              { "latitude": 34.066074, "longitude": -84.40889, "elevation": 274.2 },
+              { "latitude": 34.066113, "longitude": -84.408844, "elevation": 274 },
+              { "latitude": 34.06611, "longitude": -84.408646, "elevation": 274.6 },
+              { "latitude": 34.066082, "longitude": -84.408485, "elevation": 275.2 },
+              { "latitude": 34.066097, "longitude": -84.408424, "elevation": 274.6 },
+              { "latitude": 34.066162, "longitude": -84.408325, "elevation": 274 },
+              { "latitude": 34.066246, "longitude": -84.40832, "elevation": 274.2 },
+              { "latitude": 34.066372, "longitude": -84.40831, "elevation": 274.2 },
+              { "latitude": 34.06654, "longitude": -84.40824, "elevation": 273.2 },
+              { "latitude": 34.066563, "longitude": -84.40824, "elevation": 273.2 },
+              { "latitude": 34.066696, "longitude": -84.4082, "elevation": 273.2 },
+              { "latitude": 34.066727, "longitude": -84.40809, "elevation": 272.2 },
+              { "latitude": 34.0667, "longitude": -84.40791, "elevation": 270.6 },
+              { "latitude": 34.06669, "longitude": -84.40786, "elevation": 270.6 },
+              { "latitude": 34.06668, "longitude": -84.40767, "elevation": 271.2 },
+              { "latitude": 34.066708, "longitude": -84.407684, "elevation": 272 },
+              { "latitude": 34.066765, "longitude": -84.40776, "elevation": 271 },
+              { "latitude": 34.066925, "longitude": -84.40789, "elevation": 271.2 },
+              { "latitude": 34.067043, "longitude": -84.40797, "elevation": 272.6 },
+              { "latitude": 34.06721, "longitude": -84.40798, "elevation": 274.2 },
+              { "latitude": 34.06723, "longitude": -84.40798, "elevation": 274.6 },
+              { "latitude": 34.06733, "longitude": -84.40796, "elevation": 276.6 },
+              { "latitude": 34.0674, "longitude": -84.40794, "elevation": 277.2 },
+              { "latitude": 34.06748, "longitude": -84.40786, "elevation": 277.2 },
+              { "latitude": 34.067574, "longitude": -84.40772, "elevation": 275.2 },
+              { "latitude": 34.06758, "longitude": -84.407455, "elevation": 274.2 },
+              { "latitude": 34.067623, "longitude": -84.407326, "elevation": 273.2 },
+              { "latitude": 34.06767, "longitude": -84.40721, "elevation": 272.2 },
+              { "latitude": 34.067745, "longitude": -84.407265, "elevation": 271.2 },
+              { "latitude": 34.0678, "longitude": -84.407326, "elevation": 270.2 },
+              { "latitude": 34.067814, "longitude": -84.40725, "elevation": 268.2 },
+              { "latitude": 34.06781, "longitude": -84.40722, "elevation": 267.6 },
+              { "latitude": 34.067734, "longitude": -84.40705, "elevation": 266.2 },
+              { "latitude": 34.067715, "longitude": -84.40702, "elevation": 266.2 },
+              { "latitude": 34.06771, "longitude": -84.40686, "elevation": 265 },
+              { "latitude": 34.06773, "longitude": -84.406784, "elevation": 265.6 },
+              { "latitude": 34.067814, "longitude": -84.40677, "elevation": 267.6 },
+              { "latitude": 34.067944, "longitude": -84.406815, "elevation": 269.2 },
+              { "latitude": 34.067963, "longitude": -84.40684, "elevation": 269.6 },
+              { "latitude": 34.068142, "longitude": -84.40682, "elevation": 269.2 },
+              { "latitude": 34.068264, "longitude": -84.406784, "elevation": 268.2 },
+              { "latitude": 34.068367, "longitude": -84.40677, "elevation": 268.2 },
+              { "latitude": 34.068485, "longitude": -84.406654, "elevation": 269 },
+              { "latitude": 34.068584, "longitude": -84.40652, "elevation": 268 },
+              { "latitude": 34.068573, "longitude": -84.406334, "elevation": 268.6 },
+              { "latitude": 34.068577, "longitude": -84.4063, "elevation": 268.2 },
+              { "latitude": 34.06852, "longitude": -84.40625, "elevation": 267.6 },
+              { "latitude": 34.06859, "longitude": -84.406204, "elevation": 265.6 },
+              { "latitude": 34.068615, "longitude": -84.40621, "elevation": 265.6 },
+              { "latitude": 34.068752, "longitude": -84.40619, "elevation": 264.2 },
+              { "latitude": 34.068844, "longitude": -84.40602, "elevation": 264.2 },
+              { "latitude": 34.06884, "longitude": -84.405754, "elevation": 264.2 },
+              { "latitude": 34.06882, "longitude": -84.405624, "elevation": 265.2 },
+              { "latitude": 34.068825, "longitude": -84.40553, "elevation": 266 },
+              { "latitude": 34.068893, "longitude": -84.40535, "elevation": 266.6 },
+              { "latitude": 34.068928, "longitude": -84.405266, "elevation": 265 },
+              { "latitude": 34.068947, "longitude": -84.40511, "elevation": 263 },
+              { "latitude": 34.068947, "longitude": -84.404915, "elevation": 260.6 },
+              { "latitude": 34.06895, "longitude": -84.40469, "elevation": 259.6 },
+              { "latitude": 34.06887, "longitude": -84.40456, "elevation": 257.2 },
+              { "latitude": 34.068737, "longitude": -84.40447, "elevation": 257.2 },
+              { "latitude": 34.068577, "longitude": -84.4044, "elevation": 257.6 },
+              { "latitude": 34.068417, "longitude": -84.4044, "elevation": 257 },
+              { "latitude": 34.06826, "longitude": -84.40444, "elevation": 257.6 },
+              { "latitude": 34.06808, "longitude": -84.404465, "elevation": 258.6 },
+              { "latitude": 34.067986, "longitude": -84.40453, "elevation": 260.2 },
+              { "latitude": 34.067886, "longitude": -84.404655, "elevation": 261.6 },
+              { "latitude": 34.067753, "longitude": -84.40475, "elevation": 262 },
+              { "latitude": 34.067608, "longitude": -84.4048, "elevation": 261.2 },
+              { "latitude": 34.067516, "longitude": -84.40487, "elevation": 261.6 },
+              { "latitude": 34.067482, "longitude": -84.4049, "elevation": 262 },
+              { "latitude": 34.067352, "longitude": -84.40503, "elevation": 263 },
+              { "latitude": 34.06724, "longitude": -84.40516, "elevation": 263.6 },
+              { "latitude": 34.06712, "longitude": -84.40526, "elevation": 264.6 },
+              { "latitude": 34.067028, "longitude": -84.40536, "elevation": 265.6 },
+              { "latitude": 34.06687, "longitude": -84.40546, "elevation": 265.2 },
+              { "latitude": 34.066772, "longitude": -84.40552, "elevation": 265.6 },
+              { "latitude": 34.066616, "longitude": -84.40555, "elevation": 267 },
+              { "latitude": 34.06651, "longitude": -84.40559, "elevation": 268.2 },
+              { "latitude": 34.06637, "longitude": -84.40558, "elevation": 266.2 },
+              { "latitude": 34.066257, "longitude": -84.405495, "elevation": 263 },
+              { "latitude": 34.06617, "longitude": -84.40539, "elevation": 263.2 },
+              { "latitude": 34.066135, "longitude": -84.40533, "elevation": 264.2 },
+              { "latitude": 34.066143, "longitude": -84.40519, "elevation": 267 },
+              { "latitude": 34.066257, "longitude": -84.40513, "elevation": 267.2 },
+              { "latitude": 34.06637, "longitude": -84.40503, "elevation": 268.2 },
+              { "latitude": 34.066475, "longitude": -84.40493, "elevation": 268.6 },
+              { "latitude": 34.06661, "longitude": -84.40487, "elevation": 267.6 },
+              { "latitude": 34.06672, "longitude": -84.40483, "elevation": 267 },
+              { "latitude": 34.06692, "longitude": -84.40466, "elevation": 265.2 },
+              { "latitude": 34.067013, "longitude": -84.40457, "elevation": 264.2 },
+              { "latitude": 34.067135, "longitude": -84.40445, "elevation": 264.2 },
+              { "latitude": 34.06725, "longitude": -84.40431, "elevation": 263.6 },
+              { "latitude": 34.06734, "longitude": -84.40411, "elevation": 263.2 },
+              { "latitude": 34.067417, "longitude": -84.40393, "elevation": 262 },
+              { "latitude": 34.067368, "longitude": -84.40378, "elevation": 262.6 },
+              { "latitude": 34.06729, "longitude": -84.40368, "elevation": 264 },
+              { "latitude": 34.06723, "longitude": -84.40361, "elevation": 264.6 },
+              { "latitude": 34.06715, "longitude": -84.403534, "elevation": 266 },
+              { "latitude": 34.067116, "longitude": -84.4035, "elevation": 266.6 },
+              { "latitude": 34.066998, "longitude": -84.40337, "elevation": 266.6 },
+              { "latitude": 34.06688, "longitude": -84.40326, "elevation": 267.6 },
+              { "latitude": 34.06671, "longitude": -84.403175, "elevation": 268.2 },
+              { "latitude": 34.06653, "longitude": -84.40312, "elevation": 267.6 },
+              { "latitude": 34.066452, "longitude": -84.40306, "elevation": 267.6 },
+              { "latitude": 34.06637, "longitude": -84.40293, "elevation": 267.2 },
+              { "latitude": 34.066265, "longitude": -84.4028, "elevation": 266.6 },
+              { "latitude": 34.066086, "longitude": -84.4027, "elevation": 267 },
+              { "latitude": 34.066044, "longitude": -84.402626, "elevation": 266.6 },
+              { "latitude": 34.065956, "longitude": -84.40245, "elevation": 266 },
+              { "latitude": 34.065933, "longitude": -84.402374, "elevation": 265.2 },
+              { "latitude": 34.065823, "longitude": -84.402214, "elevation": 263 },
+              { "latitude": 34.065647, "longitude": -84.40205, "elevation": 262.6 },
+              { "latitude": 34.065533, "longitude": -84.40196, "elevation": 263 },
+              { "latitude": 34.065403, "longitude": -84.401794, "elevation": 264.2 },
+              { "latitude": 34.06527, "longitude": -84.401764, "elevation": 266.6 },
+              { "latitude": 34.06514, "longitude": -84.40169, "elevation": 268.2 },
+              { "latitude": 34.065018, "longitude": -84.40153, "elevation": 270.6 },
+              { "latitude": 34.064896, "longitude": -84.401436, "elevation": 272.2 },
+              { "latitude": 34.06486, "longitude": -84.40141, "elevation": 273 },
+              { "latitude": 34.064804, "longitude": -84.40137, "elevation": 274.2 },
+              { "latitude": 34.0647, "longitude": -84.40125, "elevation": 276.2 },
+              { "latitude": 34.064564, "longitude": -84.40118, "elevation": 277.6 },
+              { "latitude": 34.064484, "longitude": -84.40119, "elevation": 278.6 },
+              { "latitude": 34.06429, "longitude": -84.40119, "elevation": 278.6 },
+              { "latitude": 34.064243, "longitude": -84.40119, "elevation": 279 },
+              { "latitude": 34.064102, "longitude": -84.40116, "elevation": 277.6 },
+              { "latitude": 34.06389, "longitude": -84.40117, "elevation": 277.2 },
+              { "latitude": 34.063778, "longitude": -84.40116, "elevation": 278.2 },
+              { "latitude": 34.063633, "longitude": -84.40111, "elevation": 279.2 },
+              { "latitude": 34.06357, "longitude": -84.40111, "elevation": 279 },
+              { "latitude": 34.06347, "longitude": -84.4011, "elevation": 281 },
+              { "latitude": 34.063232, "longitude": -84.4011, "elevation": 281.6 },
+              { "latitude": 34.06321, "longitude": -84.40112, "elevation": 281.6 },
+              { "latitude": 34.063168, "longitude": -84.40116, "elevation": 281.6 },
+              { "latitude": 34.063248, "longitude": -84.40121, "elevation": 282.6 },
+              { "latitude": 34.063347, "longitude": -84.40126, "elevation": 281.2 },
+              { "latitude": 34.06337, "longitude": -84.40124, "elevation": 281.2 },
+              { "latitude": 34.063534, "longitude": -84.40126, "elevation": 281.6 },
+              { "latitude": 34.06366, "longitude": -84.401306, "elevation": 284 },
+              { "latitude": 34.063744, "longitude": -84.40133, "elevation": 284 },
+              { "latitude": 34.06391, "longitude": -84.40136, "elevation": 283.6 },
+              { "latitude": 34.06409, "longitude": -84.40141, "elevation": 284.6 },
+              { "latitude": 34.064243, "longitude": -84.401436, "elevation": 285 },
+              { "latitude": 34.064396, "longitude": -84.40148, "elevation": 285 },
+              { "latitude": 34.064514, "longitude": -84.40156, "elevation": 283 },
+              { "latitude": 34.064644, "longitude": -84.40174, "elevation": 283.2 },
+              { "latitude": 34.064697, "longitude": -84.40192, "elevation": 283.6 },
+              { "latitude": 34.064705, "longitude": -84.40195, "elevation": 283.2 },
+              { "latitude": 34.06479, "longitude": -84.4021, "elevation": 284.6 },
+              { "latitude": 34.064842, "longitude": -84.40217, "elevation": 284.2 },
+              { "latitude": 34.064957, "longitude": -84.40238, "elevation": 284 },
+              { "latitude": 34.064953, "longitude": -84.40265, "elevation": 284.2 },
+              { "latitude": 34.064915, "longitude": -84.402855, "elevation": 284 },
+              { "latitude": 34.064945, "longitude": -84.4031, "elevation": 282.6 },
+              { "latitude": 34.064957, "longitude": -84.40326, "elevation": 282.2 },
+              { "latitude": 34.064896, "longitude": -84.40339, "elevation": 284.6 },
+              { "latitude": 34.064884, "longitude": -84.403435, "elevation": 285.6 },
+              { "latitude": 34.06481, "longitude": -84.40353, "elevation": 287 },
+              { "latitude": 34.06477, "longitude": -84.40355, "elevation": 287.6 },
+              { "latitude": 34.064606, "longitude": -84.4036, "elevation": 289 },
+              { "latitude": 34.06446, "longitude": -84.40368, "elevation": 289.6 },
+              { "latitude": 34.06432, "longitude": -84.40376, "elevation": 291.2 },
+              { "latitude": 34.06423, "longitude": -84.40381, "elevation": 292.2 },
+              { "latitude": 34.06405, "longitude": -84.40379, "elevation": 292.2 },
+              { "latitude": 34.063885, "longitude": -84.40383, "elevation": 293.2 },
+              { "latitude": 34.06372, "longitude": -84.403854, "elevation": 293 },
+              { "latitude": 34.063667, "longitude": -84.40396, "elevation": 294 },
+              { "latitude": 34.063793, "longitude": -84.40403, "elevation": 292.6 },
+              { "latitude": 34.063873, "longitude": -84.404045, "elevation": 292.2 },
+              { "latitude": 34.06409, "longitude": -84.404144, "elevation": 291 },
+              { "latitude": 34.06417, "longitude": -84.40425, "elevation": 290.2 },
+              { "latitude": 34.064198, "longitude": -84.40441, "elevation": 290.6 },
+              { "latitude": 34.06411, "longitude": -84.40461, "elevation": 292.2 },
+              { "latitude": 34.064102, "longitude": -84.40463, "elevation": 292.6 },
+              { "latitude": 34.064075, "longitude": -84.40487, "elevation": 292 },
+              { "latitude": 34.06397, "longitude": -84.40499, "elevation": 291.2 },
+              { "latitude": 34.063942, "longitude": -84.405014, "elevation": 291.2 },
+              { "latitude": 34.063736, "longitude": -84.40513, "elevation": 290.6 },
+              { "latitude": 34.063683, "longitude": -84.40514, "elevation": 291 },
+              { "latitude": 34.063583, "longitude": -84.4052, "elevation": 291 },
+              { "latitude": 34.063385, "longitude": -84.40534, "elevation": 288.2 },
+              { "latitude": 34.063374, "longitude": -84.405464, "elevation": 287 },
+              { "latitude": 34.06337, "longitude": -84.40568, "elevation": 285.6 },
+              { "latitude": 34.06331, "longitude": -84.40574, "elevation": 285.6 },
+              { "latitude": 34.063213, "longitude": -84.40595, "elevation": 284.6 },
+              { "latitude": 34.06321, "longitude": -84.406204, "elevation": 284.6 },
+              { "latitude": 34.063183, "longitude": -84.40638, "elevation": 286.2 },
+              { "latitude": 34.06324, "longitude": -84.40648, "elevation": 286.6 },
+              { "latitude": 34.063183, "longitude": -84.40676, "elevation": 286.2 },
+              { "latitude": 34.063156, "longitude": -84.40697, "elevation": 285.6 },
+              { "latitude": 34.063152, "longitude": -84.40699, "elevation": 285.6 }
+            ]
+          }
+        };
 
 
+        var points = _(run.gps.waypoints).map(function(pt) {
+            return [pt.latitude, pt.longitude];
+        });
+        var path = new L.Polyline(points, {color: '#1788cc'});
+        var map = L.map('map').fitBounds(path.getBounds()).addLayer(path);
+        var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+            maxZoom: 16
+        });
+        map.addLayer(tiles);
 
-var run = {
-  "activityId": "2126456911",
-  "activityType": "RUN",
-  "startTime": "2013-04-09T10:54:33Z",
-  "activityTimeZone": "GMT-04:00",
-  "status": "COMPLETE",
-  "deviceType": "IPOD",
-  "metricSummary": {
-    "calories": 240,
-    "fuel": 790,
-    "distance": 3.7524,
-    "steps": 0,
-    "duration": "0:22:39.000"
-  },
-  "tags": [
-    {
-      "tagType": "WEATHER",
-      "tagValue": "SUNNY"
-    },
-    {
-      "tagType": "NOTE"
-    },
-    {
-      "tagType": "TERRAIN",
-      "tagValue": "TRAIL"
-    },
-    {
-      "tagType": "SHOES",
-      "tagValue": "Neo Trail"
-    },
-    {
-      "tagType": "EMOTION",
-      "tagValue": "GREAT"
-    }
-  ],
-  "metrics": [
-    {
-      "intervalMetric": 10,
-      "intervalUnit": "SEC",
-      "metricType": "SPEED",
-      "values": [
-        "0.0", "4.9135", "3.2307", "5.0095", "6.0155", "6.5154", "6.7831", "7.1405", "7.5132", "7.8049",
-        "7.7402", "7.9067", "8.0318", "8.2706", "8.3555", "8.386", "8.4463", "8.4236", "8.4649", "8.4926",
-        "8.6085", "8.6471", "9.0973", "9.2853", "9.2844", "9.3911", "9.3469", "9.3066", "9.304", "9.2558",
-        "9.3002", "9.5552", "9.478", "9.3987", "9.2454", "9.216", "9.1343", "9.1113", "9.1629", "9.2077",
-        "9.1606", "9.0644", "9.1917", "9.0194", "9.1034", "8.947", "9.0625", "9.0759", "8.9977", "8.9849",
-        "9.0857", "8.9276", "8.8995", "8.9162", "9.0587", "9.0453", "9.0598", "9.0965", "9.1834", "9.1012",
-        "8.9835", "9.0078", "9.0594", "9.2988", "9.3044", "9.5607", "9.6065", "9.6938", "9.8038", "9.8606",
-        "9.7489", "9.8001", "9.8019", "9.8791", "9.8576", "9.9681", "10.1237", "10.0901", "9.9859", "9.9119",
-        "9.9398", "10.013", "10.0642", "9.9803", "9.9153", "9.9509", "9.9189", "9.8162", "9.7896", "9.779",
-        "9.9002", "9.8719", "9.8701", "9.9112", "10.0053", "10.0311", "10.0641", "10.024", "10.0852",
-        "10.0374", "10.0784", "10.1319", "10.0765", "10.015", "9.9827", "9.7291", "9.5821", "9.7238",
-        "9.6546", "9.495", "9.3582", "9.3695", "9.4641", "9.4965", "9.4442", "9.3592", "9.4442", "9.6883",
-        "9.8628", "9.8331", "13.1376", "10.123", "9.9875", "10.0217", "10.0433", "10.1553", "10.2953",
-        "10.1597", "10.3634", "10.7035", "10.8371", "11.0624", "11.044", "11.2021", "11.1301", "11.2593"
-      ]
-    },
-    {
-      "intervalMetric": 10,
-      "intervalUnit": "SEC",
-      "metricType": "HEARTRATE",
-      "values": [
-        "0", "45", "51", "57", "77", "90", "105", "108", "110", "111", "113", "116", "118", "118", "116",
-        "117", "113", "112", "111", "112", "110", "109", "110", "113", "117", "116", "114", "117", "117",
-        "114", "111", "109", "116", "112", "113", "118", "122", "127", "132", "131", "130", "129", "127",
-        "125", "122", "123", "124", "125", "128", "131", "131", "127", "124", "121", "120", "125", "128",
-        "129", "129", "128", "125", "121", "122", "124", "125", "124", "121", "120", "120", "124", "129",
-        "130", "129", "129", "131", "131", "132", "133", "131", "132", "134", "134", "132", "132", "129",
-        "128", "126", "129", "131", "134", "134", "132", "131", "129", "127", "128", "128", "129", "133",
-        "136", "138", "140", "141", "140", "138", "137", "137", "138", "138", "137", "138", "140", "139",
-        "138", "136", "137", "136", "135", "134", "135", "137", "141", "144", "144", "144", "143", "140",
-        "137", "138", "138", "136", "137", "135", "132", "133", "136"
-      ]
-    },
-    {
-      "intervalMetric": 10,
-      "intervalUnit": "SEC",
-      "metricType": "DISTANCE",
-      "values": [
-        "0.0", "0.0124", "0.0178", "0.0412", "0.0667", "0.0906", "0.1131", "0.1389", "0.1671", "0.1951",
-        "0.215", "0.2416", "0.2677", "0.2986", "0.3249", "0.3494", "0.3754", "0.3978", "0.4232", "0.4482",
-        "0.4782", "0.5061", "0.5287", "0.5567", "0.5829", "0.612", "0.6332", "0.6558", "0.6817", "0.7093",
-        "0.7358", "0.769", "0.7952", "0.8194", "0.8389", "0.8615", "0.8834", "0.9051", "0.9323", "0.9594",
-        "0.9859", "1.0097", "1.0376", "1.059", "1.0877", "1.1076", "1.1373", "1.1615", "1.1816", "1.2072",
-        "1.239", "1.2642", "1.2904", "1.3147", "1.3427", "1.3636", "1.3896", "1.4117", "1.4419", "1.4647",
-        "1.4868", "1.5093", "1.5405", "1.5747", "1.6049", "1.6408", "1.6702", "1.7003", "1.727", "1.7555",
-        "1.7782", "1.809", "1.8367", "1.8647", "1.8916", "1.9217", "1.9486", "1.9722", "1.996", "2.0165",
-        "2.0423", "2.0666", "2.0972", "2.127", "2.1538", "2.1899", "2.2217", "2.2457", "2.2705", "2.2992",
-        "2.3293", "2.3568", "2.3854", "2.4149", "2.4477", "2.48", "2.506", "2.5292", "2.5563", "2.5815",
-        "2.603", "2.6304", "2.6559", "2.6828", "2.709", "2.7297", "2.7537", "2.7859", "2.8057", "2.8264",
-        "2.8489", "2.8764", "2.9104", "2.9426", "2.9719", "2.9994", "3.0302", "3.0689", "3.1037", "3.1301",
-        "3.2963", "3.2963", "3.2963", "3.2963", "3.2963", "3.2963", "3.3249", "3.3533", "3.3861", "3.421",
-        "3.4559", "3.4888", "3.5238", "3.5626", "3.5933", "3.6246"
-      ]
-    }
-  ],
-  "gps": {
-    "elevationLoss": 114.400024,
-    "elevationGain": 109.00003,
-    "elevationMax": 296.2,
-    "elevationMin": 257,
-    "intervalMetric": 10,
-    "intervalUnit": "SEC",
-    "waypoints": [
-      { "latitude": 34.063286, "longitude": -84.407074, "elevation": 291 },
-      { "latitude": 34.063293, "longitude": -84.407074, "elevation": 291 },
-      { "latitude": 34.063175, "longitude": -84.40712, "elevation": 290.6 },
-      { "latitude": 34.06317, "longitude": -84.40713, "elevation": 290.6 },
-      { "latitude": 34.063168, "longitude": -84.407135, "elevation": 290.6 },
-      { "latitude": 34.063164, "longitude": -84.407135, "elevation": 290.6 },
-      { "latitude": 34.06315, "longitude": -84.40715, "elevation": 290.6 },
-      { "latitude": 34.06307, "longitude": -84.4073, "elevation": 290.2 },
-      { "latitude": 34.063023, "longitude": -84.40747, "elevation": 289.6 },
-      { "latitude": 34.063023, "longitude": -84.407555, "elevation": 289.6 },
-      { "latitude": 34.063034, "longitude": -84.40772, "elevation": 290.6 },
-      { "latitude": 34.063026, "longitude": -84.40777, "elevation": 291.2 },
-      { "latitude": 34.0629, "longitude": -84.407906, "elevation": 292.6 },
-      { "latitude": 34.062885, "longitude": -84.40799, "elevation": 293.6 },
-      { "latitude": 34.06279, "longitude": -84.40813, "elevation": 295 },
-      { "latitude": 34.062653, "longitude": -84.40824, "elevation": 295 },
-      { "latitude": 34.062572, "longitude": -84.40838, "elevation": 294.6 },
-      { "latitude": 34.06245, "longitude": -84.40853, "elevation": 293.6 },
-      { "latitude": 34.062374, "longitude": -84.408646, "elevation": 293 },
-      { "latitude": 34.062366, "longitude": -84.40867, "elevation": 293.2 },
-      { "latitude": 34.062424, "longitude": -84.40882, "elevation": 293.6 },
-      { "latitude": 34.06254, "longitude": -84.40887, "elevation": 295.2 },
-      { "latitude": 34.06261, "longitude": -84.40895, "elevation": 296.2 },
-      { "latitude": 34.06272, "longitude": -84.40913, "elevation": 296.2 },
-      { "latitude": 34.062706, "longitude": -84.40932, "elevation": 295.2 },
-      { "latitude": 34.062622, "longitude": -84.40942, "elevation": 293.2 },
-      { "latitude": 34.062485, "longitude": -84.409515, "elevation": 292.6 },
-      { "latitude": 34.06234, "longitude": -84.40957, "elevation": 292.6 },
-      { "latitude": 34.06222, "longitude": -84.4096, "elevation": 293.2 },
-      { "latitude": 34.06213, "longitude": -84.4096, "elevation": 293.2 },
-      { "latitude": 34.062096, "longitude": -84.4097, "elevation": 292.2 },
-      { "latitude": 34.06214, "longitude": -84.40987, "elevation": 290.2 },
-      { "latitude": 34.062244, "longitude": -84.40987, "elevation": 289.2 },
-      { "latitude": 34.062393, "longitude": -84.4098, "elevation": 288.6 },
-      { "latitude": 34.062523, "longitude": -84.40973, "elevation": 288.6 },
-      { "latitude": 34.06267, "longitude": -84.40968, "elevation": 288 },
-      { "latitude": 34.06271, "longitude": -84.409676, "elevation": 287.6 },
-      { "latitude": 34.062885, "longitude": -84.409615, "elevation": 287.6 },
-      { "latitude": 34.063004, "longitude": -84.40946, "elevation": 287 },
-      { "latitude": 34.06301, "longitude": -84.40945, "elevation": 287 },
-      { "latitude": 34.06316, "longitude": -84.40958, "elevation": 286.6 },
-      { "latitude": 34.06327, "longitude": -84.40965, "elevation": 285.6 },
-      { "latitude": 34.06341, "longitude": -84.409645, "elevation": 286.2 },
-      { "latitude": 34.063606, "longitude": -84.40965, "elevation": 285.6 },
-      { "latitude": 34.06372, "longitude": -84.4096, "elevation": 286.2 },
-      { "latitude": 34.06389, "longitude": -84.40956, "elevation": 284 },
-      { "latitude": 34.063988, "longitude": -84.40947, "elevation": 283.6 },
-      { "latitude": 34.064148, "longitude": -84.40945, "elevation": 283.2 },
-      { "latitude": 34.064224, "longitude": -84.409424, "elevation": 283.2 },
-      { "latitude": 34.064262, "longitude": -84.40932, "elevation": 284 },
-      { "latitude": 34.06428, "longitude": -84.40917, "elevation": 284.2 },
-      { "latitude": 34.0644, "longitude": -84.40919, "elevation": 282.6 },
-      { "latitude": 34.06444, "longitude": -84.409225, "elevation": 282 },
-      { "latitude": 34.064552, "longitude": -84.409355, "elevation": 280.6 },
-      { "latitude": 34.06458, "longitude": -84.40936, "elevation": 280 },
-      { "latitude": 34.064762, "longitude": -84.40937, "elevation": 276.6 },
-      { "latitude": 34.0648, "longitude": -84.40937, "elevation": 276.2 },
-      { "latitude": 34.06494, "longitude": -84.40933, "elevation": 275 },
-      { "latitude": 34.0651, "longitude": -84.40931, "elevation": 272.6 },
-      { "latitude": 34.065216, "longitude": -84.409325, "elevation": 271 },
-      { "latitude": 34.065407, "longitude": -84.40941, "elevation": 268.6 },
-      { "latitude": 34.06547, "longitude": -84.409454, "elevation": 268.2 },
-      { "latitude": 34.06553, "longitude": -84.40939, "elevation": 265.6 },
-      { "latitude": 34.065502, "longitude": -84.40928, "elevation": 265 },
-      { "latitude": 34.065475, "longitude": -84.40925, "elevation": 264.6 },
-      { "latitude": 34.065437, "longitude": -84.409195, "elevation": 265 },
-      { "latitude": 34.06536, "longitude": -84.40914, "elevation": 266.6 },
-      { "latitude": 34.065334, "longitude": -84.409065, "elevation": 266.6 },
-      { "latitude": 34.065346, "longitude": -84.40895, "elevation": 266.2 },
-      { "latitude": 34.065422, "longitude": -84.40893, "elevation": 266.2 },
-      { "latitude": 34.06557, "longitude": -84.409004, "elevation": 267 },
-      { "latitude": 34.06567, "longitude": -84.40905, "elevation": 269 },
-      { "latitude": 34.065807, "longitude": -84.409065, "elevation": 271.6 },
-      { "latitude": 34.06593, "longitude": -84.40897, "elevation": 273.6 },
-      { "latitude": 34.066074, "longitude": -84.40889, "elevation": 274.2 },
-      { "latitude": 34.066113, "longitude": -84.408844, "elevation": 274 },
-      { "latitude": 34.06611, "longitude": -84.408646, "elevation": 274.6 },
-      { "latitude": 34.066082, "longitude": -84.408485, "elevation": 275.2 },
-      { "latitude": 34.066097, "longitude": -84.408424, "elevation": 274.6 },
-      { "latitude": 34.066162, "longitude": -84.408325, "elevation": 274 },
-      { "latitude": 34.066246, "longitude": -84.40832, "elevation": 274.2 },
-      { "latitude": 34.066372, "longitude": -84.40831, "elevation": 274.2 },
-      { "latitude": 34.06654, "longitude": -84.40824, "elevation": 273.2 },
-      { "latitude": 34.066563, "longitude": -84.40824, "elevation": 273.2 },
-      { "latitude": 34.066696, "longitude": -84.4082, "elevation": 273.2 },
-      { "latitude": 34.066727, "longitude": -84.40809, "elevation": 272.2 },
-      { "latitude": 34.0667, "longitude": -84.40791, "elevation": 270.6 },
-      { "latitude": 34.06669, "longitude": -84.40786, "elevation": 270.6 },
-      { "latitude": 34.06668, "longitude": -84.40767, "elevation": 271.2 },
-      { "latitude": 34.066708, "longitude": -84.407684, "elevation": 272 },
-      { "latitude": 34.066765, "longitude": -84.40776, "elevation": 271 },
-      { "latitude": 34.066925, "longitude": -84.40789, "elevation": 271.2 },
-      { "latitude": 34.067043, "longitude": -84.40797, "elevation": 272.6 },
-      { "latitude": 34.06721, "longitude": -84.40798, "elevation": 274.2 },
-      { "latitude": 34.06723, "longitude": -84.40798, "elevation": 274.6 },
-      { "latitude": 34.06733, "longitude": -84.40796, "elevation": 276.6 },
-      { "latitude": 34.0674, "longitude": -84.40794, "elevation": 277.2 },
-      { "latitude": 34.06748, "longitude": -84.40786, "elevation": 277.2 },
-      { "latitude": 34.067574, "longitude": -84.40772, "elevation": 275.2 },
-      { "latitude": 34.06758, "longitude": -84.407455, "elevation": 274.2 },
-      { "latitude": 34.067623, "longitude": -84.407326, "elevation": 273.2 },
-      { "latitude": 34.06767, "longitude": -84.40721, "elevation": 272.2 },
-      { "latitude": 34.067745, "longitude": -84.407265, "elevation": 271.2 },
-      { "latitude": 34.0678, "longitude": -84.407326, "elevation": 270.2 },
-      { "latitude": 34.067814, "longitude": -84.40725, "elevation": 268.2 },
-      { "latitude": 34.06781, "longitude": -84.40722, "elevation": 267.6 },
-      { "latitude": 34.067734, "longitude": -84.40705, "elevation": 266.2 },
-      { "latitude": 34.067715, "longitude": -84.40702, "elevation": 266.2 },
-      { "latitude": 34.06771, "longitude": -84.40686, "elevation": 265 },
-      { "latitude": 34.06773, "longitude": -84.406784, "elevation": 265.6 },
-      { "latitude": 34.067814, "longitude": -84.40677, "elevation": 267.6 },
-      { "latitude": 34.067944, "longitude": -84.406815, "elevation": 269.2 },
-      { "latitude": 34.067963, "longitude": -84.40684, "elevation": 269.6 },
-      { "latitude": 34.068142, "longitude": -84.40682, "elevation": 269.2 },
-      { "latitude": 34.068264, "longitude": -84.406784, "elevation": 268.2 },
-      { "latitude": 34.068367, "longitude": -84.40677, "elevation": 268.2 },
-      { "latitude": 34.068485, "longitude": -84.406654, "elevation": 269 },
-      { "latitude": 34.068584, "longitude": -84.40652, "elevation": 268 },
-      { "latitude": 34.068573, "longitude": -84.406334, "elevation": 268.6 },
-      { "latitude": 34.068577, "longitude": -84.4063, "elevation": 268.2 },
-      { "latitude": 34.06852, "longitude": -84.40625, "elevation": 267.6 },
-      { "latitude": 34.06859, "longitude": -84.406204, "elevation": 265.6 },
-      { "latitude": 34.068615, "longitude": -84.40621, "elevation": 265.6 },
-      { "latitude": 34.068752, "longitude": -84.40619, "elevation": 264.2 },
-      { "latitude": 34.068844, "longitude": -84.40602, "elevation": 264.2 },
-      { "latitude": 34.06884, "longitude": -84.405754, "elevation": 264.2 },
-      { "latitude": 34.06882, "longitude": -84.405624, "elevation": 265.2 },
-      { "latitude": 34.068825, "longitude": -84.40553, "elevation": 266 },
-      { "latitude": 34.068893, "longitude": -84.40535, "elevation": 266.6 },
-      { "latitude": 34.068928, "longitude": -84.405266, "elevation": 265 },
-      { "latitude": 34.068947, "longitude": -84.40511, "elevation": 263 },
-      { "latitude": 34.068947, "longitude": -84.404915, "elevation": 260.6 },
-      { "latitude": 34.06895, "longitude": -84.40469, "elevation": 259.6 },
-      { "latitude": 34.06887, "longitude": -84.40456, "elevation": 257.2 },
-      { "latitude": 34.068737, "longitude": -84.40447, "elevation": 257.2 },
-      { "latitude": 34.068577, "longitude": -84.4044, "elevation": 257.6 },
-      { "latitude": 34.068417, "longitude": -84.4044, "elevation": 257 },
-      { "latitude": 34.06826, "longitude": -84.40444, "elevation": 257.6 },
-      { "latitude": 34.06808, "longitude": -84.404465, "elevation": 258.6 },
-      { "latitude": 34.067986, "longitude": -84.40453, "elevation": 260.2 },
-      { "latitude": 34.067886, "longitude": -84.404655, "elevation": 261.6 },
-      { "latitude": 34.067753, "longitude": -84.40475, "elevation": 262 },
-      { "latitude": 34.067608, "longitude": -84.4048, "elevation": 261.2 },
-      { "latitude": 34.067516, "longitude": -84.40487, "elevation": 261.6 },
-      { "latitude": 34.067482, "longitude": -84.4049, "elevation": 262 },
-      { "latitude": 34.067352, "longitude": -84.40503, "elevation": 263 },
-      { "latitude": 34.06724, "longitude": -84.40516, "elevation": 263.6 },
-      { "latitude": 34.06712, "longitude": -84.40526, "elevation": 264.6 },
-      { "latitude": 34.067028, "longitude": -84.40536, "elevation": 265.6 },
-      { "latitude": 34.06687, "longitude": -84.40546, "elevation": 265.2 },
-      { "latitude": 34.066772, "longitude": -84.40552, "elevation": 265.6 },
-      { "latitude": 34.066616, "longitude": -84.40555, "elevation": 267 },
-      { "latitude": 34.06651, "longitude": -84.40559, "elevation": 268.2 },
-      { "latitude": 34.06637, "longitude": -84.40558, "elevation": 266.2 },
-      { "latitude": 34.066257, "longitude": -84.405495, "elevation": 263 },
-      { "latitude": 34.06617, "longitude": -84.40539, "elevation": 263.2 },
-      { "latitude": 34.066135, "longitude": -84.40533, "elevation": 264.2 },
-      { "latitude": 34.066143, "longitude": -84.40519, "elevation": 267 },
-      { "latitude": 34.066257, "longitude": -84.40513, "elevation": 267.2 },
-      { "latitude": 34.06637, "longitude": -84.40503, "elevation": 268.2 },
-      { "latitude": 34.066475, "longitude": -84.40493, "elevation": 268.6 },
-      { "latitude": 34.06661, "longitude": -84.40487, "elevation": 267.6 },
-      { "latitude": 34.06672, "longitude": -84.40483, "elevation": 267 },
-      { "latitude": 34.06692, "longitude": -84.40466, "elevation": 265.2 },
-      { "latitude": 34.067013, "longitude": -84.40457, "elevation": 264.2 },
-      { "latitude": 34.067135, "longitude": -84.40445, "elevation": 264.2 },
-      { "latitude": 34.06725, "longitude": -84.40431, "elevation": 263.6 },
-      { "latitude": 34.06734, "longitude": -84.40411, "elevation": 263.2 },
-      { "latitude": 34.067417, "longitude": -84.40393, "elevation": 262 },
-      { "latitude": 34.067368, "longitude": -84.40378, "elevation": 262.6 },
-      { "latitude": 34.06729, "longitude": -84.40368, "elevation": 264 },
-      { "latitude": 34.06723, "longitude": -84.40361, "elevation": 264.6 },
-      { "latitude": 34.06715, "longitude": -84.403534, "elevation": 266 },
-      { "latitude": 34.067116, "longitude": -84.4035, "elevation": 266.6 },
-      { "latitude": 34.066998, "longitude": -84.40337, "elevation": 266.6 },
-      { "latitude": 34.06688, "longitude": -84.40326, "elevation": 267.6 },
-      { "latitude": 34.06671, "longitude": -84.403175, "elevation": 268.2 },
-      { "latitude": 34.06653, "longitude": -84.40312, "elevation": 267.6 },
-      { "latitude": 34.066452, "longitude": -84.40306, "elevation": 267.6 },
-      { "latitude": 34.06637, "longitude": -84.40293, "elevation": 267.2 },
-      { "latitude": 34.066265, "longitude": -84.4028, "elevation": 266.6 },
-      { "latitude": 34.066086, "longitude": -84.4027, "elevation": 267 },
-      { "latitude": 34.066044, "longitude": -84.402626, "elevation": 266.6 },
-      { "latitude": 34.065956, "longitude": -84.40245, "elevation": 266 },
-      { "latitude": 34.065933, "longitude": -84.402374, "elevation": 265.2 },
-      { "latitude": 34.065823, "longitude": -84.402214, "elevation": 263 },
-      { "latitude": 34.065647, "longitude": -84.40205, "elevation": 262.6 },
-      { "latitude": 34.065533, "longitude": -84.40196, "elevation": 263 },
-      { "latitude": 34.065403, "longitude": -84.401794, "elevation": 264.2 },
-      { "latitude": 34.06527, "longitude": -84.401764, "elevation": 266.6 },
-      { "latitude": 34.06514, "longitude": -84.40169, "elevation": 268.2 },
-      { "latitude": 34.065018, "longitude": -84.40153, "elevation": 270.6 },
-      { "latitude": 34.064896, "longitude": -84.401436, "elevation": 272.2 },
-      { "latitude": 34.06486, "longitude": -84.40141, "elevation": 273 },
-      { "latitude": 34.064804, "longitude": -84.40137, "elevation": 274.2 },
-      { "latitude": 34.0647, "longitude": -84.40125, "elevation": 276.2 },
-      { "latitude": 34.064564, "longitude": -84.40118, "elevation": 277.6 },
-      { "latitude": 34.064484, "longitude": -84.40119, "elevation": 278.6 },
-      { "latitude": 34.06429, "longitude": -84.40119, "elevation": 278.6 },
-      { "latitude": 34.064243, "longitude": -84.40119, "elevation": 279 },
-      { "latitude": 34.064102, "longitude": -84.40116, "elevation": 277.6 },
-      { "latitude": 34.06389, "longitude": -84.40117, "elevation": 277.2 },
-      { "latitude": 34.063778, "longitude": -84.40116, "elevation": 278.2 },
-      { "latitude": 34.063633, "longitude": -84.40111, "elevation": 279.2 },
-      { "latitude": 34.06357, "longitude": -84.40111, "elevation": 279 },
-      { "latitude": 34.06347, "longitude": -84.4011, "elevation": 281 },
-      { "latitude": 34.063232, "longitude": -84.4011, "elevation": 281.6 },
-      { "latitude": 34.06321, "longitude": -84.40112, "elevation": 281.6 },
-      { "latitude": 34.063168, "longitude": -84.40116, "elevation": 281.6 },
-      { "latitude": 34.063248, "longitude": -84.40121, "elevation": 282.6 },
-      { "latitude": 34.063347, "longitude": -84.40126, "elevation": 281.2 },
-      { "latitude": 34.06337, "longitude": -84.40124, "elevation": 281.2 },
-      { "latitude": 34.063534, "longitude": -84.40126, "elevation": 281.6 },
-      { "latitude": 34.06366, "longitude": -84.401306, "elevation": 284 },
-      { "latitude": 34.063744, "longitude": -84.40133, "elevation": 284 },
-      { "latitude": 34.06391, "longitude": -84.40136, "elevation": 283.6 },
-      { "latitude": 34.06409, "longitude": -84.40141, "elevation": 284.6 },
-      { "latitude": 34.064243, "longitude": -84.401436, "elevation": 285 },
-      { "latitude": 34.064396, "longitude": -84.40148, "elevation": 285 },
-      { "latitude": 34.064514, "longitude": -84.40156, "elevation": 283 },
-      { "latitude": 34.064644, "longitude": -84.40174, "elevation": 283.2 },
-      { "latitude": 34.064697, "longitude": -84.40192, "elevation": 283.6 },
-      { "latitude": 34.064705, "longitude": -84.40195, "elevation": 283.2 },
-      { "latitude": 34.06479, "longitude": -84.4021, "elevation": 284.6 },
-      { "latitude": 34.064842, "longitude": -84.40217, "elevation": 284.2 },
-      { "latitude": 34.064957, "longitude": -84.40238, "elevation": 284 },
-      { "latitude": 34.064953, "longitude": -84.40265, "elevation": 284.2 },
-      { "latitude": 34.064915, "longitude": -84.402855, "elevation": 284 },
-      { "latitude": 34.064945, "longitude": -84.4031, "elevation": 282.6 },
-      { "latitude": 34.064957, "longitude": -84.40326, "elevation": 282.2 },
-      { "latitude": 34.064896, "longitude": -84.40339, "elevation": 284.6 },
-      { "latitude": 34.064884, "longitude": -84.403435, "elevation": 285.6 },
-      { "latitude": 34.06481, "longitude": -84.40353, "elevation": 287 },
-      { "latitude": 34.06477, "longitude": -84.40355, "elevation": 287.6 },
-      { "latitude": 34.064606, "longitude": -84.4036, "elevation": 289 },
-      { "latitude": 34.06446, "longitude": -84.40368, "elevation": 289.6 },
-      { "latitude": 34.06432, "longitude": -84.40376, "elevation": 291.2 },
-      { "latitude": 34.06423, "longitude": -84.40381, "elevation": 292.2 },
-      { "latitude": 34.06405, "longitude": -84.40379, "elevation": 292.2 },
-      { "latitude": 34.063885, "longitude": -84.40383, "elevation": 293.2 },
-      { "latitude": 34.06372, "longitude": -84.403854, "elevation": 293 },
-      { "latitude": 34.063667, "longitude": -84.40396, "elevation": 294 },
-      { "latitude": 34.063793, "longitude": -84.40403, "elevation": 292.6 },
-      { "latitude": 34.063873, "longitude": -84.404045, "elevation": 292.2 },
-      { "latitude": 34.06409, "longitude": -84.404144, "elevation": 291 },
-      { "latitude": 34.06417, "longitude": -84.40425, "elevation": 290.2 },
-      { "latitude": 34.064198, "longitude": -84.40441, "elevation": 290.6 },
-      { "latitude": 34.06411, "longitude": -84.40461, "elevation": 292.2 },
-      { "latitude": 34.064102, "longitude": -84.40463, "elevation": 292.6 },
-      { "latitude": 34.064075, "longitude": -84.40487, "elevation": 292 },
-      { "latitude": 34.06397, "longitude": -84.40499, "elevation": 291.2 },
-      { "latitude": 34.063942, "longitude": -84.405014, "elevation": 291.2 },
-      { "latitude": 34.063736, "longitude": -84.40513, "elevation": 290.6 },
-      { "latitude": 34.063683, "longitude": -84.40514, "elevation": 291 },
-      { "latitude": 34.063583, "longitude": -84.4052, "elevation": 291 },
-      { "latitude": 34.063385, "longitude": -84.40534, "elevation": 288.2 },
-      { "latitude": 34.063374, "longitude": -84.405464, "elevation": 287 },
-      { "latitude": 34.06337, "longitude": -84.40568, "elevation": 285.6 },
-      { "latitude": 34.06331, "longitude": -84.40574, "elevation": 285.6 },
-      { "latitude": 34.063213, "longitude": -84.40595, "elevation": 284.6 },
-      { "latitude": 34.06321, "longitude": -84.406204, "elevation": 284.6 },
-      { "latitude": 34.063183, "longitude": -84.40638, "elevation": 286.2 },
-      { "latitude": 34.06324, "longitude": -84.40648, "elevation": 286.6 },
-      { "latitude": 34.063183, "longitude": -84.40676, "elevation": 286.2 },
-      { "latitude": 34.063156, "longitude": -84.40697, "elevation": 285.6 },
-      { "latitude": 34.063152, "longitude": -84.40699, "elevation": 285.6 }
-    ]
-  }
-};
+        // Smooth an array of data using an arbitrarily-weighted moving average
+        //   sum of weights should equal 1.0 (unless scaling is desired)
+        var smooth = function(data, weights) {
+            // Preload the weighted values using the first value in the data set
+            var weighted = Array.apply(null, new Array(weights.length-1)).map(Number.prototype.valueOf,data[0]);
 
-
-var points = _(run.gps.waypoints).map(function(pt) {
-    return [pt.latitude, pt.longitude];
-});
-var path = new L.Polyline(points, {color: '#1788cc'});
-var map = L.map('map').fitBounds(path.getBounds()).addLayer(path);
-var tiles = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
-    maxZoom: 16
-});
-map.addLayer(tiles);
-
-// Smooth an array of data using an arbitrarily-weighted moving average
-//   sum of weights should equal 1.0 (unless scaling is desired)
-var smooth = function(data, weights) {
-    // Preload the weighted values using the first value in the data set
-    var weighted = Array.apply(null, new Array(weights.length-1)).map(Number.prototype.valueOf,data[0]);
-
-    // Re-map the data to it's smoothed values
-    return _(data).map(function(d) {
+            // Re-map the data to it's smoothed values
+            return _(data).map(function(d) {
     
-        // Calculate a smoothed value from the weighted values
-        var smoothed = _(weighted).reduce(function(s, w, i) {
-            // s : intermediate calculation of smoothed value
-            // w : current weighted value
-            // i : current index into weighted values array
-            return s + weights[i+1] * w;
-        }, weights[0] * d);
+                // Calculate a smoothed value from the weighted values
+                var smoothed = _(weighted).reduce(function(s, w, i) {
+                    // s : intermediate calculation of smoothed value
+                    // w : current weighted value
+                    // i : current index into weighted values array
+                    return s + weights[i+1] * w;
+                }, weights[0] * d);
         
-        // Add the newly calculated value to the weighted values
-        weighted.unshift(smoothed);
+                // Add the newly calculated value to the weighted values
+                weighted.unshift(smoothed);
         
-        // Remove the oldest weighted value
-        weighted = weighted.slice(0, -1);
+                // Remove the oldest weighted value
+                weighted = weighted.slice(0, -1);
         
-        // Return the new smoothed value for the map result
-        return smoothed;
-    });
-};
+                // Return the new smoothed value for the map result
+                return smoothed;
+            });
+        };
 
-// Gradually ramp up a data set to eliminate noise in initial values
-//   cnt: how many data points to smooth
-//   rate: how fast to ramp
-var ramp = function(data, cnt, rate) {
-    var finalValue = data[cnt];
-    for (var idx=0; idx<cnt; idx++) {
-        // We're using a scaled/shifted Logistic function to ramp
-        data[idx] = ((2/(1+Math.exp(-rate*idx/cnt)))-1) * finalValue;
-    }
-    return data;
-};
+        // Gradually ramp up a data set to eliminate noise in initial values
+        //   cnt: how many data points to smooth
+        //   rate: how fast to ramp
+        var ramp = function(data, cnt, rate) {
+            var finalValue = data[cnt];
+            for (var idx=0; idx<cnt; idx++) {
+                // We're using a scaled/shifted Logistic function to ramp
+                data[idx] = ((2/(1+Math.exp(-rate*idx/cnt)))-1) * finalValue;
+            }
+            return data;
+        };
 
-// Clean noisy GPS-derived data based observed problems
-//    z: maximum z-value to permit
-var clean = function(data, z) {
-    var deltas = _(data).map(function(d, idx, arr) {
-        if (idx < arr.length-1) {
-            return arr[idx+1] - d;
-        } else {
-            return 0;
-        }
-    });
-    deltas.pop();
-    var sum = _(deltas).reduce(function(s, d) { return s+d; }, 0);
-    var mean = sum / deltas.length;
-    var variance = _(deltas).reduce(function(s,d) { return s+Math.pow(d - mean, 2) }, 0) / deltas.length;
-    var stdev = Math.sqrt(variance);
+        // Clean noisy GPS-derived data based observed problems
+        //    z: maximum z-value to permit
+        var clean = function(data, z) {
+            var deltas = _(data).map(function(d, idx, arr) {
+                if (idx < arr.length-1) {
+                    return arr[idx+1] - d;
+                } else {
+                    return 0;
+                }
+            });
+            deltas.pop();
+            var sum = _(deltas).reduce(function(s, d) { return s+d; }, 0);
+            var mean = sum / deltas.length;
+            var variance = _(deltas).reduce(function(s,d) { return s+Math.pow(d - mean, 2) }, 0) / deltas.length;
+            var stdev = Math.sqrt(variance);
 
-    for (idx=1; idx<data.length; idx++) {
-        if ((data[idx] - data[idx-1]) > (z * stdev)) {
-            data[idx] = data[idx-1] + z * stdev;
-        }
-    }
+            for (idx=1; idx<data.length; idx++) {
+                if ((data[idx] - data[idx-1]) > (z * stdev)) {
+                    data[idx] = data[idx-1] + z * stdev;
+                }
+            }
     
-    return data;
-}
+            return data;
+        }
 
-var dist = _(run.metrics).find(function(metric) {
-    return metric.metricType.toUpperCase() === "DISTANCE";
-});
-dist = dist && _(dist.values).map(function(value) {
-    return parseFloat(value) * 0.621371;
-});
-dist = smooth(dist, [ 0.40, 0.30, 0.15, 0.05, 0.05, 0.05 ]);
-dist = clean(dist, 5);
+        var dist = _(run.metrics).find(function(metric) {
+            return metric.metricType.toUpperCase() === "DISTANCE";
+        });
+        dist = dist && _(dist.values).map(function(value) {
+            return parseFloat(value) * 0.621371;
+        });
+        dist = smooth(dist, [ 0.40, 0.30, 0.15, 0.05, 0.05, 0.05 ]);
+        dist = clean(dist, 5);
 
-var interval = parseInt(run.metrics[0].intervalMetric, 10);
-var time = _.range(0, interval*run.metrics[0].values.length, interval);
-var maxTime = Math.max.apply(null, time);
-var tickCount = Math.floor(maxTime/300);
-var tickScale = Math.ceil(tickCount/8)*5;
-var timeTicks = _.range(tickScale*60, Math.floor(maxTime/tickScale)*tickScale, tickScale*60);
-timeTicks = _(timeTicks).map(function(t) {
-    if (t < 3600) { return [t, t/60 + ":00"];}
-    return [t, Math.floor(t/3600) + ":" + _((t%3600)/60).pad(2, "0") + ":00"];
-});
-var pace = dist && _(dist).map(function(pt, idx) {
-    if (idx === 0) {
-        return interval / (60* (dist[1] - dist[0]));
-    } else if (idx === dist.length-1) {
-        return interval / (60* (dist[idx] - dist[idx-1]));
+        var interval = parseInt(run.metrics[0].intervalMetric, 10);
+        var time = _.range(0, interval*run.metrics[0].values.length, interval);
+        var maxTime = Math.max.apply(null, time);
+        var tickCount = Math.floor(maxTime/300);
+        var tickScale = Math.ceil(tickCount/8)*5;
+        var timeTicks = _.range(tickScale*60, Math.floor(maxTime/tickScale)*tickScale, tickScale*60);
+        timeTicks = _(timeTicks).map(function(t) {
+            if (t < 3600) { return [t, t/60 + ":00"];}
+            return [t, Math.floor(t/3600) + ":" + _((t%3600)/60).pad(2, "0") + ":00"];
+        });
+        var pace = dist && _(dist).map(function(pt, idx) {
+            if (idx === 0) {
+                return interval / (60* (dist[1] - dist[0]));
+            } else if (idx === dist.length-1) {
+                return interval / (60* (dist[idx] - dist[idx-1]));
+            } else {
+                return interval / (30* (dist[idx+1] - dist[idx-1]));
+            }
+        });
+
+        pace = ramp(pace, 12, 20);
+
+        var heartrate = _(run.metrics).find(function(metric) {
+            return metric.metricType.toUpperCase() === "HEARTRATE";
+        });
+        heartrate = heartrate && _(heartrate.values).map(function(value, idx) {
+            return parseInt(value,10) || null;
+        });
+        var elevation = run.gps && run.gps.waypoints &&
+          _(run.gps.waypoints)
+              .chain()
+              .pluck("elevation")
+              .map(function(pt) {
+                  return 3.28084*parseFloat(pt);
+              })
+              .value();
+        var gps_ratio = elevation && (elevation.length / time.length);
+        elevation = elevation && _(time).map(function(pt, idx){
+            var range = _.range(
+                Math.round(Math.max(gps_ratio*idx-gps_ratio/2, 0)),
+                Math.round(Math.min(gps_ratio*idx+gps_ratio/2, elevation.length))
+            );
+            return _(range).reduce(function(avg,idx,cnt){
+                return ((avg*cnt + elevation[idx]) / (cnt+1));
+            }, 0);
+        });
+        var plots = [];
+        var plot;
+        var options = {
+            legend: {show: false},
+            series: {lines: {fill: false, lineWidth: 2}, shadowSize: 1},
+            xaxis:  {show: true, min: 0, max: Math.max.apply(null, time), ticks: timeTicks, labelHeight: 0, autoscaleMargin: 0, tickFormatter: function() {return "";}},
+            yaxis:  {show: false},
+            grid:   {show: true, margin: 0, borderWidth: 0, borderColor: null, margin: 0, labelMargin: 0, axisMargin: 0, minBorderMargin: 0, hoverable: true, autoHighlight: false},
+        };
+        var clean, min, max, mean, div;
+        if (pace) {
+            plot = {};
+            plot.placeholder = $("<div>").addClass("figure");
+            $(".charts-graphs").append(plot.placeholder);
+            plot.data = _.zip(time, pace);
+            plot.options = _({}).extend(options,{
+                yaxis:  {show: false, min: 0, max: 1.2*Math.max.apply(null, pace)},
+                series: {lines: {fill: true, fillColor: "#9fceea", lineWidth: 1}, shadowSize: 0},
+                colors: ["#1788cc"],
+            });
+            plot.format = function(val) {
+                if (!_(val).isFinite()) { return ""; }
+                return Math.floor(val)  + ":" + _(Math.round((val  % Math.floor(val))*60)).pad(2, "0");
+            };
+            plots.push(plot);
+            clean = _(pace).chain()
+                .filter(function(pt) {return _(pt).isFinite();})
+                .reject(function(pt) {return pt === 0;})
+                .value();
+            min = Math.min.apply(null, clean);
+            max = Math.max.apply(null, clean);
+            mean = _(clean).reduce(function(sum, pt) {return sum+pt;}, 0)/clean.length;
+            div = $("<div>")
+                .append($("<p>").html("<strong>Pace</strong>"))
+                .append($("<p>").text("Slowest: " + plot.format(max)  + " per Mile"))
+                .append($("<p>").text("Average: " + plot.format(mean) + " per Mile"))
+                .append($("<p>").text("Fastest: " + plot.format(min)  + " per Mile"));
+            $(".charts-legend").append(div);
+        }
+        if (heartrate) {
+            plot = {};
+            plot.placeholder = $("<div>").addClass("figure");
+            $(".charts-graphs").append(plot.placeholder);
+            plot.data = _.zip(time, heartrate);
+            plot.options = _({}).extend(options,{
+                yaxis:  {show: false, min: 0, max: 1.2*Math.max.apply(null, heartrate)},
+                series: {lines: {fill: true, fillColor: "#eaaa9f", lineWidth: 1}, shadowSize: 0},
+                colors: ["#cc3217"],
+            });
+            plot.format = function(val) {
+                if (!_(val).isFinite() || (val === 0)) { return ""; }
+                return Math.round(val);
+            };
+            plots.push(plot);
+            clean = _(heartrate).chain()
+                .filter(function(pt) {return _(pt).isFinite();})
+                .reject(function(pt) {return pt === 0;})
+                .value();
+            min = Math.min.apply(null, clean);
+            max = Math.max.apply(null, clean);
+            mean = _(clean).reduce(function(sum, pt) {return sum+pt;}, 0)/clean.length;
+            div = $("<div>")
+                .append($("<p>").html("<strong>Heart Rate</strong>"))
+                .append($("<p>").text("Minimum: " + plot.format(min)  + " bpm"))
+                .append($("<p>").text("Average: " + plot.format(mean) + " bpm"))
+                .append($("<p>").text("Maximum: " + plot.format(max)  + " bpm"));
+            $(".charts-legend").append(div);
+        }
+        if (elevation) {
+            plot = {};
+            plot.placeholder = $("<div>").addClass("figure");
+            $(".charts-graphs").append(plot.placeholder);
+            plot.data = _.zip(time, elevation);
+            var min = Math.min.apply(null,elevation);
+            var max = Math.max.apply(null,elevation);
+            var range = max - min;
+            min -= 0.2*range;
+            max += 0.2*range;
+            plot.options = _({}).extend(options,{
+                yaxis:  {show: false, min: min, max: max},
+                series: {lines: {fill: true, fillColor: "#ead19f", lineWidth: 1}, shadowSize: 0},
+                colors: ["#cc9117"],
+            });
+            plot.format = function(val) {
+                if (!_(val).isFinite()) { return ""; }
+                return Math.round(val);
+            };
+            plots.push(plot);
+            min = Math.min.apply(null, elevation);
+            max = Math.max.apply(null, elevation);
+            mean = _(elevation).reduce(function(sum, pt) {return sum+pt;}, 0)/elevation.length;
+            div = $("<div>")
+                .append($("<p>").html("<strong>Elevation</strong>"))
+                .append($("<p>").text("Minimum: " + plot.format(min)  + " ft"))
+                .append($("<p>").text("Average: " + plot.format(mean) + " ft"))
+                .append($("<p>").text("Maximum: " + plot.format(max)  + " ft"));
+            $(".charts-legend").append(div);
+        }
+        plot = {};
+        plot.placeholder = $("<div>").addClass("x-axis");
+        $(".charts-graphs").append(plot.placeholder);
+        plot.data = _(time).map(function(t) { return [t, null];});
+        plot.options = _({}).extend(options,{
+            xaxis:  {
+                show: true,
+                min: 0,
+                max: Math.max.apply(null, time),
+                ticks: timeTicks,
+                labelHeight: 12,
+                autoscaleMargin: 0,
+            },
+            yaxis:  {show: false, min: 100, max: 200},
+            grid:   {show: true, margin: 0, borderWidth: 0, margin: 0, labelMargin: 0, axisMargin: 0, minBorderMargin: 0},
+        });
+        plot.format = function(val) {return ""; };
+        plots.push(plot);
+
+        _(plots).each(function(plot) {
+            plot.plot = $.plot(plot.placeholder, [plot.data], plot.options);
+            plot.value = $("<div>").css({
+                'position':  "absolute",
+                'top':       plot.placeholder.position().top + "px",
+                'display':   "none",
+                'z-index':   1,
+                'font-size': "11px",
+                'color':     "black"
+            });
+            $(".charts-wrapper").append(plot.value);
+        }, this);
+
+        $(".charts-graphs .figure").css("height", "80px");
+
+        $(".charts-graphs").on("plothover", function(ev, pos) {
+            var xvalue = Math.round(pos.x/10);
+            var left = _(plots).last().plot.pointOffset(pos).left;
+            var height = $(".charts-graphs").height() - 15;
+            $(".charts-marker").css({
+                'top':    0,
+                'left':   left,
+                'width':  "1px",
+                'height': height
+            }).show();
+            _(plots).each(function(plot){
+                if ((xvalue >= 0) && (xvalue < plot.data.length)) {
+                    $(plot.value).text(plot.format(plot.data[xvalue][1])).css("left", (left+4)+"px").show();
+                }
+            });
+        }).on("mouseout", function(ev) {
+            if (ev.relatedTarget.className !== "charts-marker") {
+                $(".charts-marker").hide();
+                _(plots).each(function(plot) { plot.value.hide(); });
+            }
+        });
+        $(".charts-marker").on("mouseout", function(ev) {
+            $(".charts-marker").hide();
+            _(plots).each(function(plot) { plot.value.hide(); });
+        });
+
+    };
+
+    if (typeof contentLoaded != "undefined") {
+        contentLoaded.done(draw);
     } else {
-        return interval / (30* (dist[idx+1] - dist[idx-1]));
+        window.addEventListener('load', draw);
     }
-});
 
-pace = ramp(pace, 12, 20);
-
-var heartrate = _(run.metrics).find(function(metric) {
-    return metric.metricType.toUpperCase() === "HEARTRATE";
-});
-heartrate = heartrate && _(heartrate.values).map(function(value, idx) {
-    return parseInt(value,10) || null;
-});
-var elevation = run.gps && run.gps.waypoints &&
-  _(run.gps.waypoints)
-      .chain()
-      .pluck("elevation")
-      .map(function(pt) {
-          return 3.28084*parseFloat(pt);
-      })
-      .value();
-var gps_ratio = elevation && (elevation.length / time.length);
-elevation = elevation && _(time).map(function(pt, idx){
-    var range = _.range(
-        Math.round(Math.max(gps_ratio*idx-gps_ratio/2, 0)),
-        Math.round(Math.min(gps_ratio*idx+gps_ratio/2, elevation.length))
-    );
-    return _(range).reduce(function(avg,idx,cnt){
-        return ((avg*cnt + elevation[idx]) / (cnt+1));
-    }, 0);
-});
-var plots = [];
-var plot;
-var options = {
-    legend: {show: false},
-    series: {lines: {fill: false, lineWidth: 2}, shadowSize: 1},
-    xaxis:  {show: true, min: 0, max: Math.max.apply(null, time), ticks: timeTicks, labelHeight: 0, autoscaleMargin: 0, tickFormatter: function() {return "";}},
-    yaxis:  {show: false},
-    grid:   {show: true, margin: 0, borderWidth: 0, borderColor: null, margin: 0, labelMargin: 0, axisMargin: 0, minBorderMargin: 0, hoverable: true, autoHighlight: false},
-};
-var clean, min, max, mean, div;
-if (pace) {
-    plot = {};
-    plot.placeholder = $("<div>").addClass("figure");
-    $(".charts-graphs").append(plot.placeholder);
-    plot.data = _.zip(time, pace);
-    plot.options = _({}).extend(options,{
-        yaxis:  {show: false, min: 0, max: 1.2*Math.max.apply(null, pace)},
-        series: {lines: {fill: true, fillColor: "#9fceea", lineWidth: 1}, shadowSize: 0},
-        colors: ["#1788cc"],
-    });
-    plot.format = function(val) {
-        if (!_(val).isFinite()) { return ""; }
-        return Math.floor(val)  + ":" + _(Math.round((val  % Math.floor(val))*60)).pad(2, "0");
-    };
-    plots.push(plot);
-    clean = _(pace).chain()
-        .filter(function(pt) {return _(pt).isFinite();})
-        .reject(function(pt) {return pt === 0;})
-        .value();
-    min = Math.min.apply(null, clean);
-    max = Math.max.apply(null, clean);
-    mean = _(clean).reduce(function(sum, pt) {return sum+pt;}, 0)/clean.length;
-    div = $("<div>")
-        .append($("<p>").html("<strong>Pace</strong>"))
-        .append($("<p>").text("Slowest: " + plot.format(max)  + " per Mile"))
-        .append($("<p>").text("Average: " + plot.format(mean) + " per Mile"))
-        .append($("<p>").text("Fastest: " + plot.format(min)  + " per Mile"));
-    $(".charts-legend").append(div);
-}
-if (heartrate) {
-    plot = {};
-    plot.placeholder = $("<div>").addClass("figure");
-    $(".charts-graphs").append(plot.placeholder);
-    plot.data = _.zip(time, heartrate);
-    plot.options = _({}).extend(options,{
-        yaxis:  {show: false, min: 0, max: 1.2*Math.max.apply(null, heartrate)},
-        series: {lines: {fill: true, fillColor: "#eaaa9f", lineWidth: 1}, shadowSize: 0},
-        colors: ["#cc3217"],
-    });
-    plot.format = function(val) {
-        if (!_(val).isFinite() || (val === 0)) { return ""; }
-        return Math.round(val);
-    };
-    plots.push(plot);
-    clean = _(heartrate).chain()
-        .filter(function(pt) {return _(pt).isFinite();})
-        .reject(function(pt) {return pt === 0;})
-        .value();
-    min = Math.min.apply(null, clean);
-    max = Math.max.apply(null, clean);
-    mean = _(clean).reduce(function(sum, pt) {return sum+pt;}, 0)/clean.length;
-    div = $("<div>")
-        .append($("<p>").html("<strong>Heart Rate</strong>"))
-        .append($("<p>").text("Minimum: " + plot.format(min)  + " bpm"))
-        .append($("<p>").text("Average: " + plot.format(mean) + " bpm"))
-        .append($("<p>").text("Maximum: " + plot.format(max)  + " bpm"));
-    $(".charts-legend").append(div);
-}
-if (elevation) {
-    plot = {};
-    plot.placeholder = $("<div>").addClass("figure");
-    $(".charts-graphs").append(plot.placeholder);
-    plot.data = _.zip(time, elevation);
-    var min = Math.min.apply(null,elevation);
-    var max = Math.max.apply(null,elevation);
-    var range = max - min;
-    min -= 0.2*range;
-    max += 0.2*range;
-    plot.options = _({}).extend(options,{
-        yaxis:  {show: false, min: min, max: max},
-        series: {lines: {fill: true, fillColor: "#ead19f", lineWidth: 1}, shadowSize: 0},
-        colors: ["#cc9117"],
-    });
-    plot.format = function(val) {
-        if (!_(val).isFinite()) { return ""; }
-        return Math.round(val);
-    };
-    plots.push(plot);
-    min = Math.min.apply(null, elevation);
-    max = Math.max.apply(null, elevation);
-    mean = _(elevation).reduce(function(sum, pt) {return sum+pt;}, 0)/elevation.length;
-    div = $("<div>")
-        .append($("<p>").html("<strong>Elevation</strong>"))
-        .append($("<p>").text("Minimum: " + plot.format(min)  + " ft"))
-        .append($("<p>").text("Average: " + plot.format(mean) + " ft"))
-        .append($("<p>").text("Maximum: " + plot.format(max)  + " ft"));
-    $(".charts-legend").append(div);
-}
-plot = {};
-plot.placeholder = $("<div>").addClass("x-axis");
-$(".charts-graphs").append(plot.placeholder);
-plot.data = _(time).map(function(t) { return [t, null];});
-plot.options = _({}).extend(options,{
-    xaxis:  {
-        show: true,
-        min: 0,
-        max: Math.max.apply(null, time),
-        ticks: timeTicks,
-        labelHeight: 12,
-        autoscaleMargin: 0,
-    },
-    yaxis:  {show: false, min: 100, max: 200},
-    grid:   {show: true, margin: 0, borderWidth: 0, margin: 0, labelMargin: 0, axisMargin: 0, minBorderMargin: 0},
-});
-plot.format = function(val) {return ""; };
-plots.push(plot);
-
-_(plots).each(function(plot) {
-    plot.plot = $.plot(plot.placeholder, [plot.data], plot.options);
-    plot.value = $("<div>").css({
-        'position':  "absolute",
-        'top':       plot.placeholder.position().top + "px",
-        'display':   "none",
-        'z-index':   1,
-        'font-size': "11px",
-        'color':     "black"
-    });
-    $(".charts-wrapper").append(plot.value);
-}, this);
-
-$(".charts-graphs").on("plothover", function(ev, pos) {
-    var xvalue = Math.round(pos.x/10);
-    var left = _(plots).last().plot.pointOffset(pos).left;
-    var height = $(".charts-graphs").height() - 15;
-    $(".charts-marker").css({
-        'top':    0,
-        'left':   left,
-        'width':  "1px",
-        'height': height
-    }).show();
-    _(plots).each(function(plot){
-        if ((xvalue >= 0) && (xvalue < plot.data.length)) {
-            $(plot.value).text(plot.format(plot.data[xvalue][1])).css("left", (left+4)+"px").show();
-        }
-    });
-}).on("mouseout", function(ev) {
-    if (ev.relatedTarget.className !== "charts-marker") {
-        $(".charts-marker").hide();
-        _(plots).each(function(plot) { plot.value.hide(); });
-    }
-});
-$(".charts-marker").on("mouseout", function(ev) {
-    $(".charts-marker").hide();
-    _(plots).each(function(plot) { plot.value.hide(); });
-});
-
-
-
-
-
-
-});
+}());
 </script>
 <h2 id="connecting-with-the-nike-service">Connecting with the Nike+ Service</h2>
-<p>Although our example application relies on the Nike+ service for its data, we haven’t looked at the details of that service’s interface. We have seen hints Nike+ doesn’t quite conform to common REST API conventions that application libraries such as Backbone.js expect. That’s true, but it isn’t all that unusual. There really isn’t a true <em>standard</em> for REST APIs, and many other services take approaches similar to Nike+. Fortunately Backbone.js anticipates this variation. As we’ll see in the following steps, extending Backbone.js to support REST API variations isn’t all that difficult.</p>
+<p>Although our example application relies on the Nike+ service for its data, we haven’t looked at the details of that service’s interface. We have seen hints Nike+ doesn’t quite conform to common <span class="smcp">REST</span> <span class="smcp">API</span> conventions that application libraries such as Backbone.js expect. That’s true, but it isn’t all that unusual. There really isn’t a true <em>standard</em> for <span class="smcp">REST</span> <span class="smcp">API</span>s, and many other services take approaches similar to Nike+. Fortunately Backbone.js anticipates this variation. As we’ll see in the following steps, extending Backbone.js to support <span class="smcp">REST</span> <span class="smcp">API</span> variations isn’t all that difficult.</p>
 <h3 id="step-1-user-authorization">Step 1: User Authorization</h3>
 <p>As you might expect, Nike+ doesn’t allow anyone on the internet to retrieve details for any user’s runs. Users expect at least some level of privacy for that information. Before our app can retrieve any running information, therefore, it will need the user’s permission. We won’t go into the details of that process here, but it’s result will be an <code>authorization_token</code>. This object is an arbitrary string that our app will have to include with every Nike+ request. If the token is missing or invalid, Nike+ will deny our app access to the data.</p>
-<p>Up until now we’ve left all of the details of the REST API to Backbone.js, and you might think it would be tricky to modify how Backbone.js constructs its AJAX calls. In fact,though, it’s not. All we need to do is add a <code>sync</code> method to our Runs collection. When a <code>sync</code> method is present in a collection, Backbone.js calls it whenever it makes an AJAX request. (If there is no such method for a collection, Backbone.js calls its primary <code>Backbone.sync</code> method.) We’ll define the new method directly in the collection.</p>
+<p>Up until now we’ve left all of the details of the <span class="smcp">REST</span> <span class="smcp">API</span> to Backbone.js, and you might think it would be tricky to modify how Backbone.js constructs its <span class="smcp">AJAX</span> calls. In fact,though, it’s not. All we need to do is add a <code>sync</code> method to our Runs collection. When a <code>sync</code> method is present in a collection, Backbone.js calls it whenever it makes an <span class="smcp">AJAX</span> request. (If there is no such method for a collection, Backbone.js calls its primary <code>Backbone.sync</code> method.) We’ll define the new method directly in the collection.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2215,7 +2714,7 @@ $(".charts-marker").on("mouseout", function(ev) {
     <span class="co">// Code continues...</span>
 }</code></pre></td></tr></table>
 <p>The first line in the method makes sure that the <code>options</code> parameter exists. If the caller doesn’t provide a value, we set it to an empty object (<code>{}</code>). The rest of the code adds a <code>data</code> property to the <code>options</code> object by extending that object. We’re taking advantage of one of the Underscore.js utilities that we saw in the previous chapter.</p>
-<p>Before we see how to supply the <code>this.settings.authorization_token</code>, let’s finish up the <code>sync</code> method by actually making the AJAX request. Now that we’ve added the token, our request is a standard AJAX request so we can let Backbone.js take it from here. Here’s the resulting <code>sync</code> method in full.</p>
+<p>Before we see how to supply the <code>this.settings.authorization_token</code>, let’s finish up the <code>sync</code> method by actually making the <span class="smcp">AJAX</span> request. Now that we’ve added the token, our request is a standard <span class="smcp">AJAX</span> request so we can let Backbone.js take it from here. Here’s the resulting <code>sync</code> method in full.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2253,7 +2752,7 @@ $(".charts-marker").on("mouseout", function(ev) {
 <p>When we first create the Runs collection, we can pass the authorization token as a parameter. We supply an empty array as the first parameter because we don’t have any models for the collection. Those will come from Nike+.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> runs = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Collections</span>.<span class="fu">Runs</span>([], {<span class="dt">authorization_token</span>: <span class="st">&quot;authorize me&quot;</span>});</code></pre></td></tr></table>
-<p>With just a small bit of extra code we’ve added the authorization token to our AJAX requests to Nike+.</p>
+<p>With just a small bit of extra code we’ve added the authorization token to our <span class="smcp">AJAX</span> requests to Nike+.</p>
 <h3 id="step-2-accepting-the-nike-response">Step 2: Accepting the Nike+ Response</h3>
 <p>When our collection queries Nike+ for a list of user activities, Backbone.js is prepared for a response in a particular format. More specifically, Backbone.js expects the response to be a simple array of models.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -2299,7 +2798,7 @@ $(".charts-marker").on("mouseout", function(ev) {
         <span class="kw">return</span> <span class="ot">response</span>.<span class="fu">data</span>;
     },</code></pre></td></tr></table>
 <h3 id="step-3-paging-the-collection">Step 3: Paging the Collection</h3>
-<p>The next aspect of the Nike+ API we’ll tackle is its paging. When we request the activities for a user, the service doesn’t normally return <em>all</em> of them. Users may have thousands of activities stored in Nike+, and returning all of them at once might overwhelm the app. It can certainly add a noticeable delay as the app would have to wait for the entire response before it could process it. To avoid this problem, Nike+ divides user activities into pages, and it responds with one page of activities at a time. We’ll have to adjust our app for that behavior, but we’ll gain the benefit of a more responsive user experience when we do.</p>
+<p>The next aspect of the Nike+ <span class="smcp">API</span> we’ll tackle is its paging. When we request the activities for a user, the service doesn’t normally return <em>all</em> of them. Users may have thousands of activities stored in Nike+, and returning all of them at once might overwhelm the app. It can certainly add a noticeable delay as the app would have to wait for the entire response before it could process it. To avoid this problem, Nike+ divides user activities into pages, and it responds with one page of activities at a time. We’ll have to adjust our app for that behavior, but we’ll gain the benefit of a more responsive user experience when we do.</p>
 <p>The first adjustment we’ll make is in our request. We can add parameters to that request to indicate how many activities we’re prepared to accept in the response. The two parameters are <code>offset</code> and <code>count</code>. The <code>offset</code> tells Nike+ which activity we want to be first in the response, while <code>count</code> indicates how many activities Nike+ should return. If we wanted the first 20 activities, for example, we can set <code>offset</code> to <code>1</code> and <code>count</code> to <code>20</code>. Then, to get the next 20 activities, we’d set <code>offset</code> to <code>21</code> (and keep <code>count</code> at <code>20</code>).</p>
 <p>We add these parameters to our request the same way we added the authorization token, in the <code>sync</code> method.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -2374,7 +2873,7 @@ $(".charts-marker").on("mouseout", function(ev) {
         <span class="fu">_</span>(<span class="kw">this</span>.<span class="fu">fetchoptions</span>).<span class="fu">extend</span>({ <span class="dt">success</span>: <span class="kw">this</span>.<span class="fu">fetchMore</span> });
         <span class="kw">return</span> <span class="ot">Backbone</span>.<span class="ot">Collection</span>.<span class="ot">prototype</span>.<span class="ot">fetch</span>.<span class="fu">call</span>(<span class="kw">this</span>, <span class="kw">this</span>.<span class="fu">fetchoptions</span>);
     },</code></pre></td></tr></table>
-<p>By adding a <code>success</code> callback to the AJAX request, we’re asking to be notified when the request completes. In fact, we’ve said that we want the <code>this.fetchMore</code> function to be called. It’s time to write that function; it too is a method of the Runs collection. This function checks to see if there are more activities left. If so, it executes another call to Backbone.js’s regular collection <code>fetch</code> just as above.</p>
+<p>By adding a <code>success</code> callback to the <span class="smcp">AJAX</span> request, we’re asking to be notified when the request completes. In fact, we’ve said that we want the <code>this.fetchMore</code> function to be called. It’s time to write that function; it too is a method of the Runs collection. This function checks to see if there are more activities left. If so, it executes another call to Backbone.js’s regular collection <code>fetch</code> just as above.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2433,7 +2932,7 @@ $(".charts-marker").on("mouseout", function(ev) {
         <span class="ot">Backbone</span>.<span class="ot">Collection</span>.<span class="ot">prototype</span>.<span class="ot">fetch</span>.<span class="fu">call</span>(<span class="kw">this</span>, <span class="kw">this</span>.<span class="fu">fetchoptions</span>);
     }
 }</code></pre></td></tr></table>
-<p>There is still a small problem with the <code>fetchMore</code> method. That code references properties of the collection (<code>this.fetchoptions</code> and <code>this.settings</code>) but the method will be called asynchronously when the AJAX request completes. When that occurs, the collection won’t be in context, so <code>this</code> won’t be set to the collection. To fix that, we can bind <code>fetchMore</code> to the collection during initialization. Once again an Underscore.js utility function comes in handy.</p>
+<p>There is still a small problem with the <code>fetchMore</code> method. That code references properties of the collection (<code>this.fetchoptions</code> and <code>this.settings</code>) but the method will be called asynchronously when the <span class="smcp">AJAX</span> request completes. When that occurs, the collection won’t be in context, so <code>this</code> won’t be set to the collection. To fix that, we can bind <code>fetchMore</code> to the collection during initialization. Once again an Underscore.js utility function comes in handy.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">initialize: <span class="kw">function</span>(models, options) {
@@ -2542,12 +3041,12 @@ $(".charts-marker").on("mouseout", function(ev) {
     <span class="dt">idAttribute</span>: <span class="st">&#39;activityId&#39;</span>,</code></pre></td></tr></table>
 <p>This property lets Backbone.js know that for our Runs, the <code>activityId</code> property is the unique identifier.</p>
 <h3 id="step-7-retrieving-details">Step 7: Retrieving Details</h3>
-<p>The last change that Nike+ requires of our Backbone.js app lets us retrieve all the details for a run. So far we’ve been relying on the collection’s fetch method to get running data. That method retrieves a list of runs from the server. When Nike+ returns a list of activities, however, it doesn’t include the full details of each activity. It does return summary information, but it omits the detailed metrics arrays and any GPS data. Getting that information requires additional requests.</p>
-<p>We’ll first request the detailed metrics on which our Charts view bases its graphs. When the Runs collection fetches its list of runs from the server, each Run model will initially have an empty <code>metrics</code> array. To get the details for this array, we must make another request to the server. The request takes the same form as the request for the list, but it adds the activity identifier to the URL. More specifically, if the URL to get a list of runs is <code>https://api.nike.com/v1/me/sport/activities</code>, then the URL to get the details for a specific run, including its metrics, is <code>https://api.nike.com/v1/me/sport/activities/2126456911</code>. The number <code>2126456911</code> at the end of that URL is the run’s <code>activityId</code>.</p>
+<p>The last change that Nike+ requires of our Backbone.js app lets us retrieve all the details for a run. So far we’ve been relying on the collection’s fetch method to get running data. That method retrieves a list of runs from the server. When Nike+ returns a list of activities, however, it doesn’t include the full details of each activity. It does return summary information, but it omits the detailed metrics arrays and any <span class="smcp">GPS</span> data. Getting that information requires additional requests.</p>
+<p>We’ll first request the detailed metrics on which our Charts view bases its graphs. When the Runs collection fetches its list of runs from the server, each Run model will initially have an empty <code>metrics</code> array. To get the details for this array, we must make another request to the server. The request takes the same form as the request for the list, but it adds the activity identifier to the <span class="smcp">URL</span>. More specifically, if the <span class="smcp">URL</span> to get a list of runs is <code>https://api.nike.com/v1/me/sport/activities</code>, then the <span class="smcp">URL</span> to get the details for a specific run, including its metrics, is <code>https://api.nike.com/v1/me/sport/activities/2126456911</code>. The number <code>2126456911</code> at the end of that <span class="smcp">URL</span> is the run’s <code>activityId</code>.</p>
 <p>Because of the steps we’ve taken earlier in this section, Backbone.js makes it easy to get these details. All we have to do is <code>fetch</code> the model.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">run</span>.<span class="fu">fetch</span>();</code></pre></td></tr></table>
-<p>Backbone.js knows the root of the URL because we set that in the Runs collection (and our model is a member of that collection). Backbone.js also knows that the unique identifier for each run is the <code>activityId</code> because we set that property in the previous step. And, fortunately for us, Backbone.js is smart enough to combine those bits of information and make the request.</p>
+<p>Backbone.js knows the root of the <span class="smcp">URL</span> because we set that in the Runs collection (and our model is a member of that collection). Backbone.js also knows that the unique identifier for each run is the <code>activityId</code> because we set that property in the previous step. And, fortunately for us, Backbone.js is smart enough to combine those bits of information and make the request.</p>
 <p>We will have to help Backbone.js in one respect, though. The Nike+ requires an authorization token for all requests, and so far we’ve only added code for that token to the collection. We have to add the same code to the model. The code below is almost identical to the code from step 1 in this section. We first make sure that the <code>options</code> object exists, then we extend it by adding the authorization token. Finally, we defer to the regular Backbone.js <code>sync</code> method. As you can see, we’re getting the value for the token directly from the collection. When a model is part of a collection, Backbone.js sets the <code>collection</code> property of the model to reference that collection. We use that property to get the collection’s settings, specifically the authorization token.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -2607,8 +3106,8 @@ $(".charts-marker").on("mouseout", function(ev) {
 <li>Because chart data is now available, the <code>render</code> method is able to create the charts and add them to the page.</li>
 </ol>
 <p>Whew! It’s a good thing that Backbone.js takes care of all that complexity.</p>
-<p>At this point we’ve managed to retrieve the detailed metrics for a run, but we haven’t yet added any GPS data. Nike+ requires an additional request for that data, so we’ll use a similar process. In this case, though, we can’t rely on Backbone.js because the URL for the GPS request is unique to Nike+. That URL is formed by taking the individual activity’s URL and appending <code>/gps</code>. A complete example would be <code>https://api.nike.com/v1/me/sport/activities/2126456911/gps</code>.</p>
-<p>To make the additional request we can add some code to the regular <code>fetch</code> method. We’ll request the GPS data at the same time Backbone.js asks for the metrics details. The basic approach, which the code fragment below illustrates, is simple. We’ll first see if the activity even has any GPS data. We can do that by checking the <code>isGpsActivity</code> property which the server provides on activity summaries. If it does, then we can request it. In either case we also want to execute the normal <code>fetch</code> process for the model. We do that by getting a reference to the standard <code>fetch</code> method for the model (<code>Backbone.Model.prototype.fetch</code>) and then calling that method. We pass is the same <code>options</code> passed to us.</p>
+<p>At this point we’ve managed to retrieve the detailed metrics for a run, but we haven’t yet added any <span class="smcp">GPS</span> data. Nike+ requires an additional request for that data, so we’ll use a similar process. In this case, though, we can’t rely on Backbone.js because the <span class="smcp">URL</span> for the <span class="smcp">GPS</span> request is unique to Nike+. That <span class="smcp">URL</span> is formed by taking the individual activity’s <span class="smcp">URL</span> and appending <code>/gps</code>. A complete example would be <code>https://api.nike.com/v1/me/sport/activities/2126456911/gps</code>.</p>
+<p>To make the additional request we can add some code to the regular <code>fetch</code> method. We’ll request the <span class="smcp">GPS</span> data at the same time Backbone.js asks for the metrics details. The basic approach, which the code fragment below illustrates, is simple. We’ll first see if the activity even has any <span class="smcp">GPS</span> data. We can do that by checking the <code>isGpsActivity</code> property which the server provides on activity summaries. If it does, then we can request it. In either case we also want to execute the normal <code>fetch</code> process for the model. We do that by getting a reference to the standard <code>fetch</code> method for the model (<code>Backbone.Model.prototype.fetch</code>) and then calling that method. We pass is the same <code>options</code> passed to us.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2623,7 +3122,7 @@ $(".charts-marker").on("mouseout", function(ev) {
         }
         <span class="kw">return</span> <span class="ot">Backbone</span>.<span class="ot">Model</span>.<span class="ot">prototype</span>.<span class="ot">fetch</span>.<span class="fu">call</span>(<span class="kw">this</span>, options);
     },</code></pre></td></tr></table>
-<p>To make the request to Nike+ we can use jQuery’s AJAX function. Since we’re asking for Javascipt objects (JSON data), the <code>$.getJSON</code> function is the most appropriate. First we set aside a reference to the run by assigning <code>this</code> to the local variable <code>model</code>. We’ll need that variable because <code>this</code> won’t reference the model when jQuery executes our callback. Then we call <code>$.getJSON</code> with three parameters. First is the URL for the request. We get that from Backbone.js by calling the <code>url</code> method for the model and appending the trailing <code>/gps</code>. The second parameter are data values to be included with the request. As always we need to include an authorization token. Just as we did aboe, we can get that token’s value from the collection. The final parameter is a callback function that JQuery executes when it receives the server’s response. In our case the function simply sets the <code>gps</code> property of the model to the response data.</p>
+<p>To make the request to Nike+ we can use jQuery’s <span class="smcp">AJAX</span> function. Since we’re asking for Javascipt objects (<span class="smcp">JSON</span> data), the <code>$.getJSON</code> function is the most appropriate. First we set aside a reference to the run by assigning <code>this</code> to the local variable <code>model</code>. We’ll need that variable because <code>this</code> won’t reference the model when jQuery executes our callback. Then we call <code>$.getJSON</code> with three parameters. First is the <span class="smcp">URL</span> for the request. We get that from Backbone.js by calling the <code>url</code> method for the model and appending the trailing <code>/gps</code>. The second parameter are data values to be included with the request. As always we need to include an authorization token. Just as we did aboe, we can get that token’s value from the collection. The final parameter is a callback function that JQuery executes when it receives the server’s response. In our case the function simply sets the <code>gps</code> property of the model to the response data.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2640,9 +3139,9 @@ $(".charts-marker").on("mouseout", function(ev) {
         <span class="kw">function</span>(data) { <span class="ot">model</span>.<span class="fu">set</span>(<span class="st">&quot;gps&quot;</span>, data); }
     );
 }</code></pre></td></tr></table>
-<p>Not surprisingly, the process of retrieving GPS data works the same way as retrieving the detailed metrics. Initially our Map view won’t have the data it needs to create a map for the run. Because it’s listening to changes to the <code>gps</code> property of the model, however, it will be notified when that data is available. At that point it can complete the <code>render</code> function and the user will be able to view a nice map of the run.</p>
+<p>Not surprisingly, the process of retrieving <span class="smcp">GPS</span> data works the same way as retrieving the detailed metrics. Initially our Map view won’t have the data it needs to create a map for the run. Because it’s listening to changes to the <code>gps</code> property of the model, however, it will be notified when that data is available. At that point it can complete the <code>render</code> function and the user will be able to view a nice map of the run.</p>
 <h2 id="putting-it-all-together">Putting it All Together</h2>
-<p>At this point in the chapter we have all the pieces for a simple data-driven web application. Now we’ll take those pieces and assemble them into the app. At the end of this section we’ll have a complete application. Users start the app by visiting a web page, and our JavaScript code takes it from there. The result is a <em>single page application,</em> or SPA. SPAs have become popular because JavaScript code can respond to user interaction immediately in the browser, which is much quicker than traditional web sites communicating with a server located halfway across the internet. Users are often pleased with the snappy and responsive result.</p>
+<p>At this point in the chapter we have all the pieces for a simple data-driven web application. Now we’ll take those pieces and assemble them into the app. At the end of this section we’ll have a complete application. Users start the app by visiting a web page, and our JavaScript code takes it from there. The result is a <em>single page application,</em> or <span class="smcp">SPA</span>. <span class="lgcp">SPA</span>s have become popular because JavaScript code can respond to user interaction immediately in the browser, which is much quicker than traditional web sites communicating with a server located halfway across the internet. Users are often pleased with the snappy and responsive result.</p>
 <p>Even though our app is executing in a single web page, our users still expect certain behaviors from their web browsers. They expect to be able to bookmark a page, share it with friends, or navigate using the browser’s forward and back buttons. Traditional web sites can rely on the browser to support all of those behaviors, but a single page application can’t. As we’ll see in the steps that follow, we have to write some additional code to give our users the behavior they expect.</p>
 <h3 id="step-1-create-a-backbone.js-router">Step 1: Create a Backbone.js Router</h3>
 <p>So far we’ve looked at three Backbone.js components, Models, Collections, and Views, all of which may be helpful in any JavaScript application. The fourth component, the <em>Router,</em> is especially helpful for single page applications. You won’t be surprised to learn that we can use Yeoman to create the scaffolding for a Router.</p>
@@ -2655,7 +3154,7 @@ $(".charts-marker").on("mouseout", function(ev) {
    <span class="kw">invoke</span>   backbone-mocha:router
    <span class="kw">create</span>     test/routers/app.spec.js</code></pre></td></tr></table>
 <p>Notice that we’ve named our router <code>app</code>. As you might expect from this name, we’re using this router as the main controller for our application. That approach has pros and cons. Some developers feel that a router should be limited strictly to routing, while others view the router as the natural place to coordinate the overall application. For a simple example such as our’s, there isn’t really any harm in adding a bit of extra code to the router to control the app. In complex applications, however, it might be better to separate routing from application control. One of the nice things about Backbone.js is that it’s happy to support either approach.</p>
-<p>With the scaffolding in place, we can start adding our router code to the <code>app.js</code> file. The first property we’ll define are the <code>routes</code>. This property is an object whose keys are URL fragments and whose values are methods of the router. Here’s our starting point.</p>
+<p>With the scaffolding in place, we can start adding our router code to the <code>app.js</code> file. The first property we’ll define are the <code>routes</code>. This property is an object whose keys are <span class="smcp">URL</span> fragments and whose values are methods of the router. Here’s our starting point.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2668,7 +3167,7 @@ $(".charts-marker").on("mouseout", function(ev) {
         <span class="st">&#39;runs/:id&#39;</span>: <span class="st">&#39;details&#39;</span>
     },
 });</code></pre></td></tr></table>
-<p>The first route has an empty URL fragment (<code>''</code>). When a user visits our page without specifying a path, the Router will call its <code>summary</code> method. If, for example, we were hosting our app using the <code>greatrunningapp.com</code> domain name, then users entering <code>http://greatrunningapp.com</code> in their browsers would trigger that route. Before we look at the second route, let’s see what the <code>summary</code> method does.</p>
+<p>The first route has an empty <span class="smcp">URL</span> fragment (<code>''</code>). When a user visits our page without specifying a path, the Router will call its <code>summary</code> method. If, for example, we were hosting our app using the <code>greatrunningapp.com</code> domain name, then users entering <code>http://greatrunningapp.com</code> in their browsers would trigger that route. Before we look at the second route, let’s see what the <code>summary</code> method does.</p>
 <p>The code is exactly what we’ve seen before. The <code>summary</code> method creates a new Runs Collection, fetches that collection, creates a Summary View of the collection, and renders that view onto the page. Users visiting the home page for our app will see a summary of their runs on the page.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -2682,7 +3181,7 @@ $(".charts-marker").on("mouseout", function(ev) {
     <span class="kw">this</span>.<span class="fu">summaryView</span> = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Views</span>.<span class="fu">Summary</span>({<span class="dt">collection</span>: <span class="kw">this</span>.<span class="fu">runs</span>});
     <span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">html</span>(<span class="kw">this</span>.<span class="ot">summaryView</span>.<span class="fu">render</span>().<span class="fu">el</span>);
 },</code></pre></td></tr></table>
-<p>Now we can consider our second route. It has a URL fragment of <code>runs/:id</code>. The <code>runs/</code> part is a standard URL path while <code>:id</code> is how Backbone.js identifies an arbitrary variable. With this route we’re telling Backbone.js to look for a URL that starts out as <code>http://greatrunningapp.com/runs/</code> and to consider whatever follows as the value for the <code>id</code> parameter. We’ll use that parameter in the router’s <code>details</code> method. Here’s how we’ll start the development of that method.</p>
+<p>Now we can consider our second route. It has a <span class="smcp">URL</span> fragment of <code>runs/:id</code>. The <code>runs/</code> part is a standard <span class="smcp">URL</span> path while <code>:id</code> is how Backbone.js identifies an arbitrary variable. With this route we’re telling Backbone.js to look for a <span class="smcp">URL</span> that starts out as <code>http://greatrunningapp.com/runs/</code> and to consider whatever follows as the value for the <code>id</code> parameter. We’ll use that parameter in the router’s <code>details</code> method. Here’s how we’ll start the development of that method.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2697,9 +3196,9 @@ $(".charts-marker").on("mouseout", function(ev) {
     <span class="kw">this</span>.<span class="fu">detailsView</span> = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Views</span>.<span class="fu">Details</span>({<span class="dt">model</span>: <span class="kw">this</span>.<span class="fu">run</span>});
     <span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">html</span>(<span class="kw">this</span>.<span class="ot">detailsView</span>.<span class="fu">render</span>().<span class="fu">el</span>);
     },</code></pre></td></tr></table>
-<p>As you can see, the code is almost the same as the summary method, except we’re only showing a single run instead of the whole collection. We create a new Run model, set its <code>id</code> to the value in the URL, fetch the model from the server, create a Details view, and render that view on the page.</p>
-<p>The router lets users go straight to an individual run by using the appropriate URL. A URL of <code>http://greatrunningapp.com/runs/2126456911</code>, for example, will fetch and display the details for the run that has an <code>activityId</code> equal <code>2126456911</code>. Notice that the router doesn’t have to worry about what specific attribute defines the model’s unique identifier. It uses the generic <code>id</code> property. Only the model itself needs to know the actual property name that the server uses.</p>
-<p>With the router in place, our single page application can support multiple URLs. One shows a summary of all runs while others show the details of a specific run. Because the URLs are distinct, our users can treat them just like different web pages. They can bookmark them; they can email them, or they can share them on social networks. And whenever they or their friends return to a URL, it will show the same contents as before. That’s exactly how users expect the web to behave.</p>
+<p>As you can see, the code is almost the same as the summary method, except we’re only showing a single run instead of the whole collection. We create a new Run model, set its <code>id</code> to the value in the <span class="smcp">URL</span>, fetch the model from the server, create a Details view, and render that view on the page.</p>
+<p>The router lets users go straight to an individual run by using the appropriate <span class="smcp">URL</span>. A <span class="smcp">URL</span> of <code>http://greatrunningapp.com/runs/2126456911</code>, for example, will fetch and display the details for the run that has an <code>activityId</code> equal <code>2126456911</code>. Notice that the router doesn’t have to worry about what specific attribute defines the model’s unique identifier. It uses the generic <code>id</code> property. Only the model itself needs to know the actual property name that the server uses.</p>
+<p>With the router in place, our single page application can support multiple <span class="smcp">URL</span>s. One shows a summary of all runs while others show the details of a specific run. Because the <span class="smcp">URL</span>s are distinct, our users can treat them just like different web pages. They can bookmark them; they can email them, or they can share them on social networks. And whenever they or their friends return to a <span class="smcp">URL</span>, it will show the same contents as before. That’s exactly how users expect the web to behave.</p>
 <p>There is another behavior that users expect, though, that we haven’t yet supported. Users expect to use their browser’s back and forward buttons to navigate through their browsing histories. Fortunately, Backbone.js has a utility that takes care of that functionality. It’s the <em>history</em> feature, and we can enable it during the app Router’s initialization.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -2711,10 +3210,10 @@ $(".charts-marker").on("mouseout", function(ev) {
     },</code></pre></td></tr></table>
 <p>For our simple app, that’s all we have to do to handle browsing histories. Backbone.js takes care of everything else.</p>
 <blockquote>
-<p>Support for multiple URLs will probably require some configuration of your web server. More specifically, you’ll want the server to map all URLs to the same <code>index.html</code> file. The details of this configuration depend on the web server technology. With open source apache servers, the <code>.htaccess</code> file can define the mapping.</p>
+<p>Support for multiple <span class="smcp">URL</span>s will probably require some configuration of your web server. More specifically, you’ll want the server to map all <span class="smcp">URL</span>s to the same <code>index.html</code> file. The details of this configuration depend on the web server technology. With open source apache servers, the <code>.htaccess</code> file can define the mapping.</p>
 </blockquote>
 <h3 id="step-2-support-run-models-outside-of-any-collection">Step 2: Support Run Models Outside of Any Collection</h3>
-<p>Unfortunately, if we try to use the code above with our existing Run model, we’ll run into some problems. First among them is the fact that our Run model relies on its parent collection. It finds the authorization token, for example, using <code>this.collection.settings.authorization_token</code>. When the browser goes directly to the URL for a specific run, however, there won’t be a collection. We can fix by providing the token to the Run model when we create it. We can also make its value an option passed to the router on creation. Here’s the code that results.</p>
+<p>Unfortunately, if we try to use the code above with our existing Run model, we’ll run into some problems. First among them is the fact that our Run model relies on its parent collection. It finds the authorization token, for example, using <code>this.collection.settings.authorization_token</code>. When the browser goes directly to the <span class="smcp">URL</span> for a specific run, however, there won’t be a collection. We can fix by providing the token to the Run model when we create it. We can also make its value an option passed to the router on creation. Here’s the code that results.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2782,7 +3281,7 @@ $(".charts-marker").on("mouseout", function(ev) {
         <span class="fu">_</span>(<span class="kw">this</span>.<span class="fu">settings</span>).<span class="fu">extend</span>(<span class="fu">_</span>(options)
             .<span class="fu">pick</span>(<span class="fu">_</span>(<span class="kw">this</span>.<span class="fu">settings</span>).<span class="fu">keys</span>()));
     },</code></pre></td></tr></table>
-<p>Now that we have an authorization token, we can add it to the model’s AJAX requests. The code is again pretty much the same as our code in the Runs collection. We’ll need a property that specifies the URL for the REST service, and we’ll need to override the regular <code>sync</code> method to add the token to any requests.</p>
+<p>Now that we have an authorization token, we can add it to the model’s <span class="smcp">AJAX</span> requests. The code is again pretty much the same as our code in the Runs collection. We’ll need a property that specifies the <span class="smcp">URL</span> for the <span class="smcp">REST</span> service, and we’ll need to override the regular <code>sync</code> method to add the token to any requests.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2801,8 +3300,8 @@ sync: <span class="kw">function</span>(method, model, options) {
     });
     <span class="ot">Backbone</span>.<span class="fu">sync</span>(method, model, options);
 },</code></pre></td></tr></table>
-<p>This extra code takes care of the authorization, but there’s still a problem with our model. In the previous section Run models only existed as part of a Runs collection, and the act of fetching that collection populated each of its models with summary attributes including, for example, <code>isGpsActivity</code>. The model could safely check that property whenever we tried to fetch the model details and, if appropriate, simultaneously initiate a request for the GPS data. Now, however, we’re creating a Run model on its own without the benefit of a collection. When we fetch the model, the only property we’ll know is the unique identifier. We can’t decide whether or not to request GPS data, therefore until after the server responds to the fetch.</p>
-<p>To separate the request for GPS data from the general fetch we can move that request to its own method. The code is the same as before (except, of course, we get the authorization token from local settings).</p>
+<p>This extra code takes care of the authorization, but there’s still a problem with our model. In the previous section Run models only existed as part of a Runs collection, and the act of fetching that collection populated each of its models with summary attributes including, for example, <code>isGpsActivity</code>. The model could safely check that property whenever we tried to fetch the model details and, if appropriate, simultaneously initiate a request for the <span class="smcp">GPS</span> data. Now, however, we’re creating a Run model on its own without the benefit of a collection. When we fetch the model, the only property we’ll know is the unique identifier. We can’t decide whether or not to request <span class="smcp">GPS</span> data, therefore until after the server responds to the fetch.</p>
+<p>To separate the request for <span class="smcp">GPS</span> data from the general fetch we can move that request to its own method. The code is the same as before (except, of course, we get the authorization token from local settings).</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2858,7 +3357,7 @@ sync: <span class="kw">function</span>(method, model, options) {
     },</code></pre></td></tr></table>
 <p>The code above asks Backbone.js to watch for <code>click</code> events within the <code>&lt;tbody&gt;</code> element of our view. When an event occurs, Backbone.js will call the <code>clicked</code> method of our view.</p>
 <p>Before we develop any code for that <code>clicked</code> method, we’re going to need a way for it to figure out which specific run model the user has selected. The event handler will be able to tell which row the user clicked, but how will it know which model that row represents? To make the answer easy for the handler, we can embed the necessary information directly in the markup for the row. That requires a few small adjustments to the <code>renderRun</code> method we created earlier.</p>
-<p>The revised method still creates a SummaryRow view for each model, renders that view, and appends the result to the table body. Now, though, we’ll add one extra step just before the row is added to the page. We add a special attribute, <code>data-id</code>, to the row and set its value equal to the model’s unique identifier. We use <code>data-id</code> because the HTML5 standard allows any attribute with a name that begins <code>data-</code>. Custom attributes in this form won’t violate the standard and won’t cause browser errors.</p>
+<p>The revised method still creates a SummaryRow view for each model, renders that view, and appends the result to the table body. Now, though, we’ll add one extra step just before the row is added to the page. We add a special attribute, <code>data-id</code>, to the row and set its value equal to the model’s unique identifier. We use <code>data-id</code> because the <span class="smcp">HTML5</span> standard allows any attribute with a name that begins <code>data-</code>. Custom attributes in this form won’t violate the standard and won’t cause browser errors.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2886,7 +3385,7 @@ sync: <span class="kw">function</span>(method, model, options) {
     <span class="kw">&lt;td&gt;</span>240<span class="kw">&lt;/td&gt;</span>
     <span class="kw">&lt;td&gt;</span>9:43<span class="kw">&lt;/td&gt;</span>
 <span class="kw">&lt;/tr&gt;</span></code></pre></td></tr></table>
-<p>Once we’ve made sure that the markup in the page has a reference back to the run models, we can take advantage of that markup in our <code>clicked</code> event handler. When Backbone.js calls the handler, it passes it an event object. From that object we can find the target of the event. In the case of a <code>click</code> event, the target is the HTML element on which the user clicked.</p>
+<p>Once we’ve made sure that the markup in the page has a reference back to the run models, we can take advantage of that markup in our <code>clicked</code> event handler. When Backbone.js calls the handler, it passes it an event object. From that object we can find the target of the event. In the case of a <code>click</code> event, the target is the <span class="smcp">HTML</span> element on which the user clicked.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">clicked: <span class="kw">function</span> (ev) {
@@ -2937,7 +3436,7 @@ sync: <span class="kw">function</span>(method, model, options) {
     <span class="dt">selected</span>: <span class="kw">function</span>(id) {
         <span class="kw">this</span>.<span class="fu">navigate</span>(<span class="st">&#39;runs/&#39;</span> + id, { <span class="dt">trigger</span>: <span class="kw">true</span> });
     }</code></pre></td></tr></table>
-<p>As you can see, the event handler code is quite simple. It constructs a URL that corresponds to the Details view (<code>'runs/' + id</code>) and passes that URL to the router’s own <code>navigate</code> method. That method updates the browser’s navigation history. The second parameter (<code>{ trigger: true }</code>) tells Backbone.js to also act as if the user had actually navigated to the URL. Because we’ve set up the <code>details</code> method to respond to URLs of the form <code>runs/:id</code>, Backbone.js will call <code>details</code> and our router will show the details for the selected run.</p>
+<p>As you can see, the event handler code is quite simple. It constructs a <span class="smcp">URL</span> that corresponds to the Details view (<code>'runs/' + id</code>) and passes that <span class="smcp">URL</span> to the router’s own <code>navigate</code> method. That method updates the browser’s navigation history. The second parameter (<code>{ trigger: true }</code>) tells Backbone.js to also act as if the user had actually navigated to the <span class="smcp">URL</span>. Because we’ve set up the <code>details</code> method to respond to <span class="smcp">URL</span>s of the form <code>runs/:id</code>, Backbone.js will call <code>details</code> and our router will show the details for the selected run.</p>
 <p>When users are looking at a Detailed view, we’d also like to let them easily navigate to the Summary view. A button in details template will serve for this demonstration. As with the Summary view, we can add an event handler for the button and trigger a custom event when a user clicks it.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -2972,8 +3471,8 @@ sync: <span class="kw">function</span>(method, model, options) {
     <span class="dt">summarize</span>: <span class="kw">function</span>() {
         <span class="kw">this</span>.<span class="fu">navigate</span>(<span class="st">&#39;&#39;</span>, { <span class="dt">trigger</span>: <span class="kw">true</span> });
     },</code></pre></td></tr></table>
-<p>Once again we respond to the user by constructing an appropriate URL and triggering a navigation to it.</p>
-<p>You might be wondering why we have to explicitly trigger the navigation change. Shouldn’t that be the default behavior? Although that may seem reasonable in most cases it wouldn’t be appropriate. Our application is simple enough that triggering the route works fine. More complex applications, however, probably want to take different actions depending on whether the user performs an action within the app or navigates directly to a particular URL. It’s better to have different code handling each of those cases. In the first case the app would still want to update the browser’s history, but it wouldn’t want to trigger a full navigation action.</p>
+<p>Once again we respond to the user by constructing an appropriate <span class="smcp">URL</span> and triggering a navigation to it.</p>
+<p>You might be wondering why we have to explicitly trigger the navigation change. Shouldn’t that be the default behavior? Although that may seem reasonable in most cases it wouldn’t be appropriate. Our application is simple enough that triggering the route works fine. More complex applications, however, probably want to take different actions depending on whether the user performs an action within the app or navigates directly to a particular <span class="smcp">URL</span>. It’s better to have different code handling each of those cases. In the first case the app would still want to update the browser’s history, but it wouldn’t want to trigger a full navigation action.</p>
 <h3 id="step-4-fine-tuning-the-application">Step 4: Fine-Tuning the Application</h3>
 <p>At this point our app is completely functional. Our users can view their summaries, bookmark and share details of specific runs, and navigate the app using the browser’s back and forward buttons. Before we can call it complete, however, there’s one last bit of housekeeping for us. The app’s performance isn’t optimal, and, even more critically, it <em>leaks</em> memory, using small amounts of the browser’s memory without ever releasing them.</p>
 <p>The most obvious problem is in the router’s <code>summary</code> method, reproduced below.</p>
@@ -3099,7 +3598,10 @@ sync: <span class="kw">function</span>(method, model, options) {
     <span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">html</span>(<span class="kw">this</span>.<span class="ot">summaryView</span>.<span class="fu">el</span>);
 },</code></pre></td></tr></table>
 <p>And with that change our application is complete. You can take a look at the complete result in the book’s source code.## Summing Up</p>
-<p>In this chapter we’ve seen how to build an entire web application based on data and data visualizations. To help organize and coordinate our application we based it on the Backbone.js library, and we relied on the Yeoman tool to create the application’s scaffolding and boilerplate code and templates. Backbone.js lets us separate our application into models and views so that the code responsible for managing the data doesn’t have to worry about how that data is presented (and vice versa). It also gives us the flexibility to interact with REST APIs that don’t quite follow the normal conventions. The final Backbone.js component that we considered, the router, provided the support we needed to make sure our single page application behaves like a full web site so that our users can interact with it just as they would expect.</p>
+<p>In this chapter we’ve seen how to build an entire web application based on data and data visualizations. To help organize and coordinate our application we based it on the Backbone.js library, and we relied on the Yeoman tool to create the application’s scaffolding and boilerplate code and templates. Backbone.js lets us separate our application into models and views so that the code responsible for managing the data doesn’t have to worry about how that data is presented (and vice versa). It also gives us the flexibility to interact with <span class="smcp">REST</span> <span class="smcp">API</span>s that don’t quite follow the normal conventions. The final Backbone.js component that we considered, the router, provided the support we needed to make sure our single page application behaves like a full web site so that our users can interact with it just as they would expect.</p>
+<p>Continue reading: <a href="apnd.html">Appendix: Managing Data in the Browser</a>.</p>
+<script src="js/scripts.08.min.js"></script>
+<script>_.mixin(_.str.exports());</script>
         </main>
         <footer>
             <small>Copyright © 2012-2014 by Stephen A. Thomas. All Rights Reserved.</small>

@@ -115,9 +115,9 @@
                         <li><a href="chap04.html">Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html">Showing Timelines</a></li>
                         <li><a href="chap06.html">Visualizing Geographic Data</a></li>
-                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap07.html">Custom Visualizations with D3.js</a></li>
                         <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
-                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                        <li><a href="apnd.html"  >Managing Data in the Browser</a></li>
                     </ol>
                 </li>
             </ul>
@@ -1110,7 +1110,7 @@ Separating individual data sets into multiple charts can make it easier to see t
 Carefully stacking multiple charts on top of each other creates the appearance of a unified chart.
 </figcaption>
 </figure>
-<h3 id="step-4-implement-for-the-interaction">Step 4: Implement for the Interaction</h3>
+<h3 id="step-4-implement-the-interaction">Step 4: Implement the Interaction</h3>
 <p>For our visualization, we want to track the mouse as it hovers over any our charts. The flot library makes that relatively easy. The <code>plot()</code> function’s <code>grid</code> options include the <code>hoverable</code> property, which is set to <code>false</code> by default. If you set this property to <code>true</code>, flot will trigger “plothover” events as the mouse moves over the chart area. It sends these events to the <code>&lt;div&gt;</code> that contains the chart. If there is code listening for those events, that code can respond to them. If you use this feature, flot will also highlight the data point nearest the mouse. That’s a behavior we don’t want, so we’ll disable it by setting <code>autoHighlight</code> to <code>false</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1599,7 +1599,7 @@ Getting data using <span class="smcp">AJAX</span> often requires the cooperation
 <p>Note: Although it will probably be fixed before this book is published, at the time of this writing the World Bank has a significant bug in their <span class="smcp">API</span>. The server doesn’t preserve the case (uppercase vs. lowercase) of the callback function. The full source code for this example includes a workaround for the bug, but you’re unlikely to need this workaround for other servers. Just in case, though, you can look at the comments in the source code for a complete documentation of the fix.</p>
 </blockquote>
 <p>Now let’s get back to the code itself. In the snippet above, we’re defining a callback function directly in the call to <code>.getJSON()</code>. You’ll see this code structure in many implementations. This certainly works, but if we continue along these lines, things are going to get real messy real soon. We’ve already added a couple of layers of indentation before we even start processing the response. As you can guess, once we get this initial response, we’ll need to make several more requests for additional data. If we try to build our code in one monolithic block, we’ll end up with so many levels of indentation that there won’t be any room for actual code. More significantly, the result would be one massive interconnected block of code that would be challenging to even understand, much less debug or enhance.</p>
-<p>Fortunately, jQuery gives us the tool for a much better approach; that tool is the <code>.Deferred</code> object. A <code>Deferred</code> acts as a central dispatcher and scheduler for events. Once the <code>Deferred</code> object is created, different parts of our code indicate that they want to know when the event completes, while other parts of out code signal the event’s status. The <code>Deferred</code> coordinates all those different activities, letting us separate how we trigger and manage events from dealing with their consequences.</p>
+<p>Fortunately, jQuery gives us the tool for a much better approach; that tool is the <code>$.Deferred</code> object. A <code>Deferred</code> acts as a central dispatcher and scheduler for events. Once the <code>Deferred</code> object is created, different parts of our code indicate that they want to know when the event completes, while other parts of out code signal the event’s status. The <code>Deferred</code> coordinates all those different activities, letting us separate how we trigger and manage events from dealing with their consequences.</p>
 <p>Let’s see how to improve our <span class="smcp">AJAX</span> request with <code>Deferred</code> objects. Our main goal is to separate the initiation of the event (the <span class="smcp">AJAX</span> request) from dealing with its consequences (processing the response). With that separation, we won’t need a success function as a callback parameter to the request itself. Instead, we’ll rely on the fact that the <code>.getJSON()</code> call returns a <code>Deferred</code> object. (Technically, the function returns a restricted form of the <code>Deferred</code> object known as a <code>promise</code>; the differences aren’t important for us now, though.) We want to save that returned object in a variable.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2

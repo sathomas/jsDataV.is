@@ -115,9 +115,9 @@
                         <li><a href="chap04.html">Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html">Showing Timelines</a></li>
                         <li><a href="chap06.html">Visualizing Geographic Data</a></li>
-                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap07.html">Custom Visualizations with D3.js</a></li>
                         <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
-                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                        <li><a href="apnd.html"  >Managing Data in the Browser</a></li>
                     </ol>
                 </li>
             </ul>
@@ -125,7 +125,6 @@
         <main>
 
 <style>
-
 body { counter-reset: chapter 1; }
 
 .flotr-title, .flotr-axis-title { font-weight: normal !important; }
@@ -136,6 +135,8 @@ body { counter-reset: chapter 1; }
 .flotr-legend>table thead th { vertical-align: bottom;}
 .flotr-legend>table th, .flotr-legend>table td { padding: 0 0.2em; line-height: 1.3; border-top: none; }
 .flotr-legend>table th, .flotr-legend>table td { border-left: none; }
+
+#bubble-chart3 .flotr-legend { padding: 0; background-color: rgba(0, 0, 0, 0); }
 
 </style>
 
@@ -1736,7 +1737,7 @@ Adding a legend completes the chart.
                 { data: americas, points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.alternateLight },
                 { data: mideast,  points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondaryLightest },
                 { data: asia,     points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.secondaryDarkest },
-                { data: us,       points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.alternateLight },
+                { data: us,       points: {show:true, shadowSize: 0, fillColor: null, radius: 5}, color: chartStyles.color.primary },
             ]
             ,{ 
                 fontColor: chartStyles.color.text,
@@ -1799,7 +1800,7 @@ Adding a legend completes the chart.
     { <span class="dt">north</span>: <span class="fl">24.0</span>, <span class="dt">west</span>: <span class="fl">76.4</span>, <span class="dt">wind</span>:  <span class="dv">35</span> },
     { <span class="dt">north</span>: <span class="fl">25.2</span>, <span class="dt">west</span>: <span class="fl">77.0</span>, <span class="dt">wind</span>:  <span class="dv">45</span> },
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
-<p>For its bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, an optional parameter can specify a filter function. And while we’re extracting data points, we can reverse the sign of the longitude so that west to east displays right to left.</p>
+<p>For its bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, an optional parameter can specify a filter function. And while we’re extracting data points, we can reverse the sign of the longitude so that west to east displays left to right.</p>
 <p>The code for our function starts by setting the return value (<code>result</code>) to an empty array in line 2. Then it iterates through the input <code>source_array</code> one element at a time. If the <code>filter_function</code> parameter is available, and if it is a valid function, our code calls that function with the source array element as a parameter. If the function returns <code>true</code>, or if no function was passed in the parameter, then our code extracts the data point from the source element and pushes it onto the result array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2

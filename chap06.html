@@ -115,9 +115,9 @@
                         <li><a href="chap04.html">Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html">Showing Timelines</a></li>
                         <li><a href="chap06.html">Visualizing Geographic Data</a></li>
-                        <li><a href="chap07.html">Managing Data in the Browser</a></li>
+                        <li><a href="chap07.html">Custom Visualizations with D3.js</a></li>
                         <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
-                        <li><a href="apnd.html"  >Custom Visualizations with D3.js</a></li>
+                        <li><a href="apnd.html"  >Managing Data in the Browser</a></li>
                     </ol>
                 </li>
             </ul>
@@ -1580,14 +1580,14 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
 8
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> zToText = <span class="kw">function</span>(z) {
     z = +z;
-    <span class="kw">if</span> (z &gt;  <span class="fl">0.25</span>) <span class="kw">return</span> <span class="st">&quot;Far below average&quot;</span>;
-    <span class="kw">if</span> (z &gt;  <span class="fl">0.1</span>)  <span class="kw">return</span> <span class="st">&quot;Below average&quot;</span>;
-    <span class="kw">if</span> (z &gt; -<span class="fl">0.1</span>)  <span class="kw">return</span> <span class="st">&quot;Average&quot;</span>;
-    <span class="kw">if</span> (z &gt; -<span class="fl">0.25</span>) <span class="kw">return</span> <span class="st">&quot;Above average&quot;</span>;
+    <span class="kw">if</span> (z &gt;  <span class="fl">0.25</span>) { <span class="kw">return</span> <span class="st">&quot;Far below average&quot;</span>; }
+    <span class="kw">if</span> (z &gt;  <span class="fl">0.1</span>)  { <span class="kw">return</span> <span class="st">&quot;Below average&quot;</span>; }
+    <span class="kw">if</span> (z &gt; -<span class="fl">0.1</span>)  { <span class="kw">return</span> <span class="st">&quot;Average&quot;</span>; }
+    <span class="kw">if</span> (z &gt; -<span class="fl">0.25</span>) { <span class="kw">return</span> <span class="st">&quot;Above average&quot;</span>; }
     <span class="kw">return</span> <span class="st">&quot;Far above average&quot;</span>;
 }</code></pre></td></tr></table>
 <p>There are couple of noteworthy items in this function. First, the statement, <code>z = +z</code> converts the Z score from a string to a numeric value for the tests that follow. Second, remember that because of the Z score adjustments the negative Z scores are actually better than average, while the positive values are below average.</p>
-<p>We can use this function to provide the data for our details table. The first step is finding the full data set for the associated <code>&lt;path&gt;</code> element. To do that we search through the <code>counties</code> array looking for a <code>code</code> property that matches the <code>id</code> attribute of the path. Because JavaScript arrays don’t have an arbitrary <code>indexOf()</code> method, we’ll borrow the <code>some()</code> method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.</p>
+<p>We can use this function to provide the data for our details table. The first step is finding the full data set for the associated <code>&lt;path&gt;</code> element. To do that we search through the <code>counties</code> array looking for a <code>code</code> property that matches the <code>id</code> attribute of the path. Because <code>indexOf()</code> doesn’t allow us to find objects by key, we’ll borrow the <code>some()</code> method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1633,7 +1633,7 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
     <span class="kw">this</span>.<span class="fu">setAttribute</span>(<span class="st">&quot;stroke&quot;</span>, <span class="st">&quot;#444444&quot;</span>);
 });
 <span class="ot">path</span>.<span class="fu">addEventListener</span>(<span class="st">&#39;mouseleave&#39;</span>, <span class="kw">function</span>(){
-    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;details-svg-2&quot;</span>).<span class="ot">style</span>.<span class="fu">display</span> = <span class="st">&quot;none&quot;</span>;
+    <span class="co">// Previous code</span>
     <span class="kw">this</span>.<span class="fu">setAttribute</span>(<span class="st">&quot;stroke&quot;</span>, <span class="st">&quot;none&quot;</span>);
 });</code></pre></td></tr></table>
 <style>
@@ -5439,7 +5439,7 @@ Adding layers in a map library can add emphasis to regions of a map.
 }());
 </script>
 <h2 id="integrating-a-full-featured-mapping-library">Integrating a Full-Featured Mapping Library</h2>
-<p>The Modest Maps library of the previous example is a fine library for simple map visualizations, but it doesn’t have all of the features and support of a full-featured service such as Google Maps. There is, however, an open source library that does provide those features, <a href="http://leafletjs.com">Leaflet</a>. In this example we’ll build a more complex visualization that features a Leaflet-based map.</p>
+<p>The Modest Maps library of the previous example is a fine library for simple map visualizations, but it doesn’t have all of the features and support of a full-featured service such as Google Maps. There is, however, an open source library that does provide those features: <a href="http://leafletjs.com">Leaflet</a>. In this example we’ll build a more complex visualization that features a Leaflet-based map.</p>
 <p>In the 1940s, two private railroads were in competition for passenger traffic in the southeastern United States. Two routes that competed most directly with each other were the <em>Silver Comet</em> run by Seaboard Air Lines, and the <em>Southerner</em> operated by Southern Railways. Both served passengers traveling between New York and Birmingham, Alabama. One factor cited in the Southerner’s ultimate success was the shorter distance of its route. Trips on the Southerner were quicker, giving Southern Railways a competitive advantage. Let’s create a visualization to demonstrate that advantage.</p>
 <h3 id="step-1-prepare-the-data">Step 1: Prepare the Data</h3>
 <p>The data for our visualization is readily available as timetables for the two routes. A more precise comparison might consider timetables from the same year, but for this example we’ll use the <a href="http://www.streamlinerschedules.com/concourse/track1/southerner194112.html">Southerner’s timetable from 1941</a> and the <a href="http://www.streamlinerschedules.com/concourse/track1/silvercomet194706.html">Silver Comet’s timetable from 1947</a> as those timetables are readily available on the internet. The timetables only include station names, so we will have to look up latitude and longitude values (using, for example, Google Maps) for all of the stations in order to place them on a map. We can also calculate the time difference between stops, in minutes. Those calculations result in two arrays, one for each train.</p>
@@ -6708,7 +6708,7 @@ Maps built in the browser with a map library can use interactivity to build inte
 </script>
 <h2 id="summing-up">Summing Up</h2>
 <p>In this chapter we’ve looked at several visualizations based on maps. In the first two examples, geographic regions were the main subjects of the visualization, and we built choropleth maps to compare and contrast those regions. Map fonts are quick and convenient, but only if they’re available for the regions the visualization needs. Although it usually takes more effort, we have far more control over the map regions if we use Scalable Vector Graphics to create our own custom maps. Unlike other image formats, <span class="smcp">SVG</span> can be easily manipulated in a web page with just <span class="smcp">CSS</span> and JavaScript. This chapter also looked at examples based on traditional mapping libraries. Mapping libraries are especially convenient when your data sets include latitude and longitude values, as the libraries take care of the complicated mathematics required to position those points on a two-dimensional projection. As we saw, some libraries are relatively simple yet are perfectly capable of mapping a data set. Full featured libraries such as Leaflet offer much more power and customization, and we relied on that extensibility for a custom, animated map.</p>
-<p>Continue reading: <a href="chap06.html">Chapter 7: Managing Data in the Browser</a>.</p>
+<p>Continue reading: <a href="chap07.html">Chapter 7: Custom Visualizations with D3.js</a>.</p>
 <script src="js/scripts.06.min.js"></script>
         </main>
         <footer>

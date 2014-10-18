@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="426"  xml:space="preserve">
+    <defs>
+        <filter id="shadow-outer" filterUnits="userSpaceOnUse">
+            <feGaussianBlur stdDeviation="2.5" />
+            <feOffset dx="0.1" dy="3.1" result="blur" />
+            <feFlood flood-color="rgb(0, 0, 0)" flood-opacity="0.5" />
+            <feComposite in2="blur" operator="in" result="colorShadow" />
+            <feComposite in="SourceGraphic" in2="colorShadow" operator="over" />
+        </filter>
+        <filter id="smallShadow-outer" filterUnits="userSpaceOnUse">
+            <feGaussianBlur stdDeviation="2" />
+            <feOffset dx="0.1" dy="2.1" result="blur" />
+            <feFlood flood-color="rgb(0, 0, 0)" flood-opacity="0.5" />
+            <feComposite in2="blur" operator="in" result="colorShadow" />
+            <feComposite in="SourceGraphic" in2="colorShadow" operator="over" />
+        </filter>
+    </defs>
+    <path id="bezier" stroke="none" fill="rgb(255, 255, 255)" d="M 313.07,240.8 L 389.87,240.8 389.87,279.2 313.07,279.2 313.07,240.8 Z M 313.07,240.8" />
+    <path id="bezier2" stroke="none" fill="rgb(255, 255, 255)" d="M 313.07,317.6 L 389.87,317.6 389.87,356 313.07,356 313.07,317.6 Z M 313.07,317.6" />
+    <path id="bezier3" stroke="none" fill="rgb(255, 255, 255)" d="M 313.07,356 L 389.87,356 389.87,394.4 313.07,394.4 313.07,356 Z M 313.07,356" />
+    <path id="bezier4" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" d="M 41.07,29.6 L 258.67,29.6 C 267.5,29.6 274.67,36.76 274.67,45.6 L 274.67,167.2 C 274.67,176.04 267.5,183.2 258.67,183.2 L 41.07,183.2 C 32.23,183.2 25.07,176.04 25.07,167.2 L 25.07,45.6 C 25.07,36.76 32.23,29.6 41.07,29.6 Z M 41.07,29.6" />
+    <path id="bezier5" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 41.07,29.6 L 258.67,29.6 C 267.5,29.6 274.67,36.76 274.67,45.6 L 274.67,167.2 C 274.67,176.04 267.5,183.2 258.67,183.2 L 41.07,183.2 C 32.23,183.2 25.07,176.04 25.07,167.2 L 25.07,45.6 C 25.07,36.76 32.23,29.6 41.07,29.6 Z M 41.07,29.6" />
+    <path id="bezier6" stroke="none" fill="rgb(255, 255, 255)" d="M 25.07,125.6 L 101.87,125.6 101.87,164 25.07,164 25.07,125.6 Z M 25.07,125.6" />
+    <path id="bezier7" stroke="none" fill="rgb(255, 255, 255)" d="M 111.47,125.6 L 265.07,125.6 265.07,164 111.47,164 111.47,125.6 Z M 111.47,125.6" />
+    <g id="group5">
+        <path id="bezier8" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,58.4 L 34.67,48.8" />
+        <path id="bezier9" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,68 L 44.27,48.8" />
+        <path id="bezier10" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,77.6 L 53.87,48.8" />
+        <path id="bezier11" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,87.2 L 63.47,48.8" />
+        <path id="bezier12" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 245.87,87.2 L 274.67,58.4" />
+        <path id="bezier13" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 255.47,87.2 L 274.67,68" />
+        <path id="bezier14" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 265.07,87.2 L 274.67,77.6" />
+        <path id="bezier15" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 34.67,87.2 L 73.07,48.8" />
+        <path id="bezier16" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 44.27,87.2 L 82.67,48.8" />
+        <path id="bezier17" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 53.87,87.2 L 92.27,48.8" />
+        <path id="bezier18" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 63.47,87.2 L 101.87,48.8" />
+        <path id="bezier19" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 73.07,87.2 L 111.47,48.8" />
+        <path id="bezier20" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 82.67,87.2 L 121.07,48.8" />
+        <path id="bezier21" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 92.27,87.2 L 130.67,48.8" />
+        <path id="bezier22" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 101.87,87.2 L 140.27,48.8" />
+        <path id="bezier23" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 111.47,87.2 L 149.87,48.8" />
+        <path id="bezier24" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 121.07,87.2 L 159.47,48.8" />
+        <path id="bezier25" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 130.67,87.2 L 169.07,48.8" />
+        <path id="bezier26" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 140.27,87.2 L 178.67,48.8" />
+        <path id="bezier27" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 149.87,87.2 L 188.27,48.8" />
+        <path id="bezier28" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 159.47,87.2 L 197.87,48.8" />
+        <path id="bezier29" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 169.07,87.2 L 207.47,48.8" />
+        <path id="bezier30" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 178.67,87.2 L 217.07,48.8" />
+        <path id="bezier31" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 188.27,87.2 L 226.67,48.8" />
+        <path id="bezier32" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 197.87,87.2 L 236.27,48.8" />
+        <path id="bezier33" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 207.47,87.2 L 245.87,48.8" />
+        <path id="bezier34" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 217.07,87.2 L 255.47,48.8" />
+        <path id="bezier35" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 226.67,87.2 L 265.07,48.8" />
+        <path id="bezier36" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 236.27,87.2 L 274.67,48.8" />
+    </g>
+    <path id="bezier37" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,48.8 L 274.67,48.8 274.67,87.2 25.07,87.2 25.07,48.8 Z M 25.07,48.8" />
+    <g id="group">
+        <path id="bezier38" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,96.8 L 34.67,87.2" />
+        <path id="bezier39" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,106.4 L 44.27,87.2" />
+        <path id="bezier40" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,116 L 53.87,87.2" />
+        <path id="bezier41" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,125.6 L 63.47,87.2" />
+        <path id="bezier42" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 245.87,125.6 L 274.67,96.8" />
+        <path id="bezier43" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 255.47,125.6 L 274.67,106.4" />
+        <path id="bezier44" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 265.07,125.6 L 274.67,116" />
+        <path id="bezier45" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 34.67,125.6 L 73.07,87.2" />
+        <path id="bezier46" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 44.27,125.6 L 82.67,87.2" />
+        <path id="bezier47" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 53.87,125.6 L 92.27,87.2" />
+        <path id="bezier48" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 63.47,125.6 L 101.87,87.2" />
+        <path id="bezier49" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 73.07,125.6 L 111.47,87.2" />
+        <path id="bezier50" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 82.67,125.6 L 121.07,87.2" />
+        <path id="bezier51" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 92.27,125.6 L 130.67,87.2" />
+        <path id="bezier52" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 101.87,125.6 L 140.27,87.2" />
+        <path id="bezier53" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 111.47,125.6 L 149.87,87.2" />
+        <path id="bezier54" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 121.07,125.6 L 159.47,87.2" />
+        <path id="bezier55" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 130.67,125.6 L 169.07,87.2" />
+        <path id="bezier56" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 140.27,125.6 L 178.67,87.2" />
+        <path id="bezier57" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 149.87,125.6 L 188.27,87.2" />
+        <path id="bezier58" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 159.47,125.6 L 197.87,87.2" />
+        <path id="bezier59" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 169.07,125.6 L 207.47,87.2" />
+        <path id="bezier60" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 178.67,125.6 L 217.07,87.2" />
+        <path id="bezier61" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 188.27,125.6 L 226.67,87.2" />
+        <path id="bezier62" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 197.87,125.6 L 236.27,87.2" />
+        <path id="bezier63" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 207.47,125.6 L 245.87,87.2" />
+        <path id="bezier64" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 217.07,125.6 L 255.47,87.2" />
+        <path id="bezier65" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 226.67,125.6 L 265.07,87.2" />
+        <path id="bezier66" stroke="rgb(193, 193, 193)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 236.27,125.6 L 274.67,87.2" />
+    </g>
+    <path id="bezier67" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,87.2 L 274.67,87.2 274.67,125.6 25.07,125.6 25.07,87.2 Z M 25.07,87.2" />
+    <path id="bezier68" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 25.07,125.6 L 274.67,125.6 274.67,164 25.07,164 25.07,125.6 Z M 25.07,125.6" />
+    <path id="bezier69" stroke="none" fill="rgb(255, 255, 255)" d="M 313.07,48.8 L 389.87,48.8 389.87,87.2 313.07,87.2 313.07,48.8 Z M 313.07,48.8" />
+    <path id="bezier70" stroke="none" fill="rgb(255, 255, 255)" d="M 313.07,87.2 L 389.87,87.2 389.87,125.6 313.07,125.6 313.07,87.2 Z M 313.07,87.2" />
+    <path id="bezier71" stroke="none" fill="rgb(255, 255, 255)" d="M 313.07,125.6 L 389.87,125.6 389.87,164 313.07,164 313.07,125.6 Z M 313.07,125.6" />
+    <path id="bezier72" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" d="M 329.07,29.6 L 546.67,29.6 C 555.5,29.6 562.67,36.76 562.67,45.6 L 562.67,167.2 C 562.67,176.04 555.5,183.2 546.67,183.2 L 329.07,183.2 C 320.23,183.2 313.07,176.04 313.07,167.2 L 313.07,45.6 C 313.07,36.76 320.23,29.6 329.07,29.6 Z M 329.07,29.6" />
+    <path id="bezier73" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 329.07,29.6 L 546.67,29.6 C 555.5,29.6 562.67,36.76 562.67,45.6 L 562.67,167.2 C 562.67,176.04 555.5,183.2 546.67,183.2 L 329.07,183.2 C 320.23,183.2 313.07,176.04 313.07,167.2 L 313.07,45.6 C 313.07,36.76 320.23,29.6 329.07,29.6 Z M 329.07,29.6" />
+    <path id="bezier74" stroke="none" fill="rgb(255, 255, 255)" d="M 389.87,48.8 L 553.07,48.8 553.07,87.2 389.87,87.2 389.87,48.8 Z M 389.87,48.8" />
+    <path id="bezier75" stroke="none" fill="rgb(255, 255, 255)" d="M 389.87,87.2 L 553.07,87.2 553.07,125.6 389.87,125.6 389.87,87.2 Z M 389.87,87.2" />
+    <path id="bezier76" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 313.07,87.2 L 562.67,87.2 562.67,125.6 313.07,125.6 313.07,87.2 Z M 313.07,87.2" />
+    <path id="bezier77" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 313.07,48.8 L 562.67,48.8 562.67,87.2 313.07,87.2 313.07,48.8 Z M 313.07,48.8" />
+    <path id="bezier78" stroke="none" fill="rgb(255, 255, 255)" d="M 389.87,125.6 L 553.07,125.6 553.07,164 389.87,164 389.87,125.6 Z M 389.87,125.6" />
+    <path id="bezier79" stroke="none" fill="rgb(255, 255, 255)" filter="url(#smallShadow-outer)" d="M 399.47,132.8 L 543.47,132.8 543.47,156.8 399.47,156.8 399.47,132.8 Z M 399.47,132.8" />
+    <path id="bezier80" stroke="none" fill="rgb(255, 255, 255)" d="M 399.47,132.8 L 476.27,132.8 476.27,156.8 399.47,156.8 399.47,132.8 Z M 399.47,132.8" />
+    <path id="bezier81" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 399.47,132.8 L 476.27,132.8 476.27,156.8 399.47,156.8 399.47,132.8 Z M 399.47,132.8" />
+    <path id="bezier82" stroke="none" fill="rgb(255, 255, 255)" d="M 476.27,132.8 L 543.47,132.8 543.47,156.8 476.27,156.8 476.27,132.8 Z M 476.27,132.8" />
+    <path id="bezier83" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 476.27,132.8 L 543.47,132.8 543.47,156.8 476.27,156.8 476.27,132.8 Z M 476.27,132.8" />
+    <path id="bezier84" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 313.07,125.6 L 562.67,125.6 562.67,164 313.07,164 313.07,125.6 Z M 313.07,125.6" />
+    <path id="bezier85" stroke="none" fill="rgb(255, 255, 255)" d="M 313.07,279.2 L 389.87,279.2 389.87,317.6 313.07,317.6 313.07,279.2 Z M 313.07,279.2" />
+    <path id="bezier86" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" d="M 329.07,221.6 L 546.67,221.6 C 555.5,221.6 562.67,228.76 562.67,237.6 L 562.67,397.6 C 562.67,406.44 555.5,413.6 546.67,413.6 L 329.07,413.6 C 320.23,413.6 313.07,406.44 313.07,397.6 L 313.07,237.6 C 313.07,228.76 320.23,221.6 329.07,221.6 Z M 329.07,221.6" />
+    <path id="bezier87" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 329.07,221.6 L 546.67,221.6 C 555.5,221.6 562.67,228.76 562.67,237.6 L 562.67,397.6 C 562.67,406.44 555.5,413.6 546.67,413.6 L 329.07,413.6 C 320.23,413.6 313.07,406.44 313.07,397.6 L 313.07,237.6 C 313.07,228.76 320.23,221.6 329.07,221.6 Z M 329.07,221.6" />
+    <path id="bezier88" stroke="none" fill="rgb(255, 255, 255)" d="M 389.87,240.8 L 553.07,240.8 553.07,279.2 389.87,279.2 389.87,240.8 Z M 389.87,240.8" />
+    <path id="bezier89" stroke="none" fill="rgb(255, 255, 255)" d="M 389.87,279.2 L 553.07,279.2 553.07,317.6 389.87,317.6 389.87,279.2 Z M 389.87,279.2" />
+    <path id="bezier90" stroke="none" fill="rgb(255, 255, 255)" d="M 389.87,317.6 L 553.07,317.6 553.07,356 389.87,356 389.87,317.6 Z M 389.87,317.6" />
+    <path id="bezier91" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 313.07,317.6 L 562.67,317.6 562.67,356 313.07,356 313.07,317.6 Z M 313.07,317.6" />
+    <path id="bezier92" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 313.07,279.2 L 562.67,279.2 562.67,317.6 313.07,317.6 313.07,279.2 Z M 313.07,279.2" />
+    <path id="bezier93" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 313.07,240.8 L 562.67,240.8 562.67,279.2 313.07,279.2 313.07,240.8 Z M 313.07,240.8" />
+    <path id="bezier94" stroke="none" fill="rgb(255, 255, 255)" d="M 389.87,356 L 553.07,356 553.07,394.4 389.87,394.4 389.87,356 Z M 389.87,356" />
+    <path id="bezier95" stroke="none" fill="rgb(255, 255, 255)" filter="url(#smallShadow-outer)" d="M 399.47,363.2 L 543.47,363.2 543.47,387.2 399.47,387.2 399.47,363.2 Z M 399.47,363.2" />
+    <path id="bezier96" stroke="none" fill="rgb(255, 255, 255)" d="M 399.47,363.2 L 476.27,363.2 476.27,387.2 399.47,387.2 399.47,363.2 Z M 399.47,363.2" />
+    <path id="bezier97" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 399.47,363.2 L 476.27,363.2 476.27,387.2 399.47,387.2 399.47,363.2 Z M 399.47,363.2" />
+    <path id="bezier98" stroke="none" fill="rgb(255, 255, 255)" d="M 476.27,363.2 L 543.47,363.2 543.47,387.2 476.27,387.2 476.27,363.2 Z M 476.27,363.2" />
+    <path id="bezier99" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 476.27,363.2 L 543.47,363.2 543.47,387.2 476.27,387.2 476.27,363.2 Z M 476.27,363.2" />
+    <path id="bezier100" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 313.07,356 L 562.67,356 562.67,394.4 313.07,394.4 313.07,356 Z M 313.07,356" />
+    <rect id="rectangle6" stroke="none" fill="none" x="32" y="7" width="80" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="32" y="7">
+        <tspan x="32" y="19">standard</tspan>
+    </text>
+    <rect id="rectangle9" stroke="none" fill="none" x="25" y="135" width="69" height="27" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="46.07" y="135">
+        <tspan x="46.07" y="149">cheese:</tspan>
+    </text>
+    <rect id="rectangle10" stroke="none" fill="none" x="118.13" y="135.32" width="53.33" height="26.67" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="118.13" y="135.32">
+        <tspan x="118.13" y="149.32">true</tspan>
+    </text>
+    <rect id="rectangle11" stroke="none" fill="none" x="46" y="59" width="48" height="26" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="66.52" y="59">
+        <tspan x="66.52" y="73">size:</tspan>
+    </text>
+    <rect id="rectangle13" stroke="none" fill="none" x="118.13" y="58.52" width="26.67" height="26.67" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="118.13" y="58.52">
+        <tspan x="118.13" y="72.52">12</tspan>
+    </text>
+    <rect id="rectangle14" stroke="none" fill="none" x="32" y="97" width="62" height="27" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="58.63" y="97">
+        <tspan x="58.63" y="111">crust:</tspan>
+    </text>
+    <rect id="rectangle16" stroke="none" fill="none" x="118" y="97" width="79" height="27" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="118" y="97">
+        <tspan x="118" y="111">“regular”</tspan>
+    </text>
+    <rect id="rectangle23" stroke="none" fill="none" x="320" y="7" width="35" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="320" y="7">
+        <tspan x="320" y="19">order</tspan>
+    </text>
+    <rect id="rectangle25" stroke="none" fill="none" x="396.53" y="58.52" width="26.67" height="26.67" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="396.53" y="58.52">
+        <tspan x="396.53" y="72.52">10</tspan>
+    </text>
+    <rect id="rectangle26" stroke="none" fill="none" x="396.53" y="96.92" width="66.67" height="26.67" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="396.53" y="96.92">
+        <tspan x="396.53" y="110.92">“thin”</tspan>
+    </text>
+    <rect id="rectangle28" stroke="none" fill="none" x="399" y="137" width="77" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="403.09" y="137">
+        <tspan x="403.09" y="149">“pepperoni”</tspan>
+    </text>
+    <rect id="rectangle29" stroke="none" fill="none" x="476" y="137" width="67" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="481.17" y="137">
+        <tspan x="481.17" y="149">“sausage”</tspan>
+    </text>
+    <rect id="rectangle32" stroke="none" fill="none" x="185" y="285" width="72" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="185" y="285">
+        <tspan x="185" y="297">_.extend(</tspan>
+    </text>
+    <rect id="rectangle34" stroke="none" fill="none" x="198" y="301" width="72" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="198" y="301">
+        <tspan x="198" y="313">standard,</tspan>
+    </text>
+    <rect id="rectangle37" stroke="none" fill="none" x="197.33" y="317.47" width="72" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="197.33" y="317.47">
+        <tspan x="197.33" y="329.47">order</tspan>
+    </text>
+    <rect id="rectangle39" stroke="none" fill="none" x="185.33" y="333.47" width="12" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="185.33" y="333.47">
+        <tspan x="185.33" y="345.47">)</tspan>
+    </text>
+    <rect id="rectangle40" stroke="none" fill="none" x="396.53" y="250.52" width="26.67" height="26.67" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="396.53" y="250.52">
+        <tspan x="396.53" y="264.52">10</tspan>
+    </text>
+    <rect id="rectangle41" stroke="none" fill="none" x="396.53" y="288.92" width="66.67" height="26.67" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="396.53" y="288.92">
+        <tspan x="396.53" y="302.92">“thin”</tspan>
+    </text>
+    <rect id="rectangle43" stroke="none" fill="none" x="396.53" y="327.32" width="53.33" height="26.67" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="396.53" y="327.32">
+        <tspan x="396.53" y="341.32">true</tspan>
+    </text>
+    <rect id="rectangle44" stroke="none" fill="none" x="399" y="367" width="77" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="403.09" y="367">
+        <tspan x="403.09" y="379">“pepperoni”</tspan>
+    </text>
+    <rect id="rectangle45" stroke="none" fill="none" x="476" y="367" width="67" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="481.17" y="367">
+        <tspan x="481.17" y="379">“sausage”</tspan>
+    </text>
+    <rect id="rectangle30" stroke="none" fill="none" x="337" y="289" width="46" height="27" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="347.63" y="289">
+        <tspan x="347.63" y="303">crust:</tspan>
+    </text>
+    <rect id="rectangle22" stroke="none" fill="none" x="313" y="135" width="70" height="27" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="323.12" y="135">
+        <tspan x="323.12" y="149">toppings:</tspan>
+    </text>
+    <rect id="rectangle20" stroke="none" fill="none" x="323" y="97" width="60" height="27" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="347.63" y="97">
+        <tspan x="347.63" y="111">crust:</tspan>
+    </text>
+    <rect id="rectangle18" stroke="none" fill="none" x="323" y="59" width="60" height="26" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="355.52" y="59">
+        <tspan x="355.52" y="73">size:</tspan>
+    </text>
+    <rect id="rectangle5" stroke="none" fill="none" x="320" y="366" width="63" height="26" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="323.12" y="366">
+        <tspan x="323.12" y="380">toppings:</tspan>
+    </text>
+    <rect id="rectangle4" stroke="none" fill="none" x="332" y="327" width="51" height="27" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="335.07" y="327">
+        <tspan x="335.07" y="341">cheese:</tspan>
+    </text>
+    <rect id="rectangle2" stroke="none" fill="none" x="348" y="251" width="35" height="26" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="355.52" y="251">
+        <tspan x="355.52" y="265">size:</tspan>
+    </text>
+</svg>
