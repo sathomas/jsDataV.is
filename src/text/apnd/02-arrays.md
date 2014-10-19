@@ -1,12 +1,13 @@
+
 ## Working with Arrays
 
-If your visualization relies on a significant amount of data, that data is most likely contained in arrays. The core JavaScript language includes a few utilities and methods to help applications cope with arrays, but Underscore.js adds many others. This sections describes many array utilities most helpful for data visualizations.
+If your visualization relies on a significant amount of data, that data is most likely contained in arrays. Unfortunately, it's very tempting to resort to imperative programming when working with arrays. Arrays suggest the use of programming loops, and, as we saw above, programming loops are an imperative construct that often causes errors. If we can avoid loops and rely on functional programming instead, we can improve the quality of our JavaScript. The core JavaScript language includes a few utilities and methods to help applications cope with arrays in a functional style, but Underscore.js adds many others. This section describes many of Underscore's array utilities most helpful for data visualizations.
 
 ### Extracting Elements by Position
 
 If you only need a subset of an array for your visualization, Underscore.js has many utilities that make it easy to extract the right subset. For the examples below, we'll consider a simple array.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 var arr = [1,2,3,4,5,6,7,8,9];
 ```
 
@@ -17,7 +18,7 @@ var arr = [1,2,3,4,5,6,7,8,9];
 
 Underscore's  provides `first()` method a simple way to extract the first element of an array, or the first _n_ elements.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(arr).first()
   1
 > _(arr).first(3)
@@ -38,7 +39,7 @@ Notice that `first()` (without any parameter) returns a simple element, while `f
 
 As you might expect, Underscore.js also has a `last()` method to extract elements from the end of an array.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(arr).last()
   9
 > _(arr).last(3)
@@ -57,9 +58,11 @@ As you might expect, Underscore.js also has a `last()` method to extract element
 
 Without any parameters, `last()` returns the last element in the array. With a parameter `n` it returns a new array with the last _n_ elements from the original.
 
+The more general versions of both of these functions (`.first(3)` and `.last(3)`) would require some potentially tricky (and error-prone) code to implement in an imperative style. In the functional style that Underscore supports, however, our code is clean and simple.
+
 What if you want to extract from the beginning of the array, but instead of knowing how many elements you want in the result, you only know how many elements you want to omit? In other words, you need "all but the last _n_" elements.  The `initial()` method performs this extraction. As with all of these methods, if you omit the optional parameter, Underscore.js assumes a value of 1. 
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(arr).initial()
   [1, 2, 3, 4, 5, 6, 7, 8]
 > _(arr).initial(3)
@@ -78,7 +81,7 @@ What if you want to extract from the beginning of the array, but instead of know
 
 Finally, you may need the opposite of `initial()`. The `rest()` method skips past a defined number of elements in the beginning of the array and returns whatever remains.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(arr).rest()
   [2, 3, 4, 5, 6, 7, 8, 9]
 > _(arr).rest(3)
@@ -95,12 +98,13 @@ Finally, you may need the opposite of `initial()`. The `rest()` method skips pas
 <figcaption>The rest() function can also return all but the first <em>n</em> elements in an array.</figcaption>
 </figure>
 
+Again, these functions would be tricky to implement using traditional, imperative programming, but are a breeze with the help of Underscore.
 
 ### Combining Arrays
 
 Underscore.js includes another set of utilities for combining two or more arrays. These include functions that mimic standard mathematical _set_ operations, as well as more sophisticated combinations. For the next few examples, we'll use two arrays, one containing the first few Fibonacci numbers and the other containing the first five even integers.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 var fibs = [0, 1, 1, 2, 3, 5, 8];
 var even = [0, 2, 4, 6, 8];
 ```
@@ -112,7 +116,7 @@ var even = [0, 2, 4, 6, 8];
 
 The `union()` method is a straightforward combination of multiple arrays. It returns an array containing all elements that are in any of the inputs, and it removes any duplicates.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(fibs).union(even)
   [0, 1, 2, 3, 5, 8, 4, 6]
 ```
@@ -128,7 +132,7 @@ Notice that `union()` removes duplicates whether they appear in separate inputs 
 
 The `intersection()` method acts just as you would expect, returning only those elements that appear in all of the input arrays.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(fibs).intersection(even)
   [0, 2, 8]
 ```
@@ -140,7 +144,7 @@ The `intersection()` method acts just as you would expect, returning only those 
 
 The `difference()` method is the opposite of `intersection()`. It returns those elements in the first input array that are **not** present in the other inputs.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(fibs).difference(even)
   [1, 1, 3, 5]
 ```
@@ -152,7 +156,7 @@ The `difference()` method is the opposite of `intersection()`. It returns those 
 
 If you need to eliminate duplicate elements but only have one array (making `union()` inappropriate), then you can use the `uniq()` method.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(fibs).uniq()
   [0, 1, 2, 3, 5, 8]
 ```
@@ -171,7 +175,7 @@ The operations is perhaps most clearly understood through a picture.
 <figcaption>The zip() function pairs elements from multiple arrays together into a single array.</figcaption>
 </figure>
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var naturals = [1, 2, 3, 4, 5];
 > var primes = [2, 3, 5, 7, 11];
 > _.zip(naturals, primes)
@@ -188,7 +192,7 @@ To avoid such an unpleasant error, we should validate all data sets and remove i
 
 The simplest of these Underscore.js methods is `compact()`. This function removes any data values that JavaScript treats as `false` from the input arrays. Eliminated values include the boolean value `false`, the numeric value `0`, an empty string, and the special values `NaN` (not a number, for example `1/0`) and `undefined`.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var raw = [0, 1, false, 2, "", 3, NaN, 4, , 5];
 > _(raw).compact()
   [1, 2, 3, 4, 5]
@@ -198,7 +202,7 @@ It is worth emphasizing that `compact()` removes elements with a value of `0`. I
 
 Another common problem with raw data is excessively nested arrays. If you want to eliminate extra nesting levels from a data set, the `flatten()` method is available to help.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var raw = [1, 2, 3, [[4]], 5];
 > _(raw).flatten()
   [1, 2, 3, 4, 5]
@@ -206,7 +210,7 @@ Another common problem with raw data is excessively nested arrays. If you want t
 
 By default, `flatten()` removes all nesting, even multiple levels of nesting, from arrays. If you set the `shallow` parameter to `true`, however, it only removes a single level of nesting.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var raw = [1, 2, 3, [[4]], 5];
 > _(raw).flatten(true)
   [1, 2, 3, [4], 5]
@@ -214,7 +218,7 @@ By default, `flatten()` removes all nesting, even multiple levels of nesting, fr
 
 Finally, if you have specific values that you want to eliminate from an array, you can use the `without()` method. It's parameters provide a list of values that the function should remove from the input array.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var raw = [1, 2, 3, 4];
 > _(raw).without(2, 3)
   [1, 4]
@@ -226,7 +230,7 @@ JavaScript has always defined the `indexOf` method for strings. It returns the p
 
 Underscore.js provides it'a own `indexOf()` method to fill the gap those older browsers create. If Underscore.js finds itself running in an environment with native support for array `indexOf`, then it defers to the native method to avoid any performance penalty.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var primes = [2, 3, 5, 7, 11];
 > _(primes).indexOf(5)
   2
@@ -234,7 +238,7 @@ Underscore.js provides it'a own `indexOf()` method to fill the gap those older b
 
 To begin your search somewhere in the middle of the array, you can specify that starting position as the second argument to `indexOf()`.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var arr = [2, 3, 5, 7, 11, 7, 5, 3, 2];
 > _(arr).indexOf(5, 4)
   6
@@ -242,7 +246,7 @@ To begin your search somewhere in the middle of the array, you can specify that 
 
 You can also search backwards from the end of an array using the `lastIndexOf()` method.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var arr = [2, 3, 5, 7, 11, 7, 5, 3, 2];
 > _(arr).lastIndexOf(5)
   6
@@ -254,7 +258,7 @@ Underscore.js provides a few helpful optimizations for sorted arrays. Both the `
 
 The library also includes the special `sortedIndex()` function. This function also assumes that the input array is sorted. It finds the position at which a specific value _should_ be inserted to maintain the array's sort order.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var arr = [2, 3, 5, 7, 11];
 > _(arr).sortedIndex(6)
   3
@@ -266,7 +270,7 @@ If you have a custom sorting function, you can pass that to `sortedIndex()` as w
 
 The final array utility function I'll mention is a convenient method to generate arrays. The `range()` method tells Underscore to create an array with the specified number of elements. You may also specify a starting value (the default is `0`) and the increment between adjacent values (the default is `1`).
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _.range(10)
   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 > _.range(20,10)
@@ -277,7 +281,7 @@ The final array utility function I'll mention is a convenient method to generate
 
 The `range()` function can be quite useful if you need to generate x-axis values to match an array of y-axis values, The `zip()` method can then combine the two.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > var yvalues = [0.1277, 1.2803, 1.7697, 3.1882]
 > _.zip(_.range(yvalues.length),yvalues)
   [ [0, 0.1277], [1, 1.2803], [2, 1.7697], [3, 3.1882] ]

@@ -38,8 +38,12 @@ In addition to the jQuery library, flot relies on the <span class="smcp">HTML</s
   <body>
     <!-- Content goes here -->
     <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js">
+    </script>
   </body>
 </html>
 ```
@@ -60,8 +64,12 @@ Within our document, we need to create a `<div>` element to contain the chart we
   <body>
     <div id='chart' style="width:600px;height:400px;"></div>
     <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js">
+    </script>
   </body>
 </html>
 ```
@@ -71,12 +79,12 @@ Within our document, we need to create a `<div>` element to contain the chart we
 In later examples we'll see how to get the data directly from the World Bank's web service, but for this example, let's keep things simple and assume we have the data already downloaded and formatted for JavaScript. (For brevity, only excerpts are shown below. The book's source code includes the full data set.)
 
 ``` {.javascript .numberLines}
-var eas = [[1960,0.155758351823196],[1961,0.154708338465889],[1962,0.15736247758304098], // Data continues...
-var ecs = [[1960,0.442123789761523],[1961,0.470625042294723],[1962,0.514526712663984], // Data continues...
-var lcn = [[1960,0.0810583157769874],[1961,0.086039249513451],[1962,0.09898911106657761], // Data continues...
-var mea = [[1968,0.0382776953642079],[1969,0.042624369594480696],[1970,0.0470598970641582], // Data continues...
-var sas = [[1960,0.0478247732151856],[1961,0.0383225958869648],[1962,0.0388874166372837], // Data continues...
-var ssf = [[1960,0.0297069247951595],[1961,0.030839996076188498],[1962,0.0334481365054735], // Data continues...
+var eas = [[1960,0.156],[1961,0.155],[1962,0.157], // Data continues...
+var ecs = [[1960,0.442],[1961,0.471],[1962,0.515], // Data continues...
+var lcn = [[1960,0.081],[1961,0.086],[1962,0.099], // Data continues...
+var mea = [[1968,0.038],[1969,0.043],[1970,0.047], // Data continues...
+var sas = [[1960,0.048],[1961,0.038],[1962,0.039], // Data continues...
+var ssf = [[1960,0.030],[1961,0.031],[1962,0.033], // Data continues...
 ```
 
 This data includes the historical <span class="smcp">GDP</span> (in current <span class="smcp">US</span> dollars) for major regions of the world, from 1960 to 2011. The names of the variables are the World Bank region codes.
@@ -210,10 +218,10 @@ Now that the general layout looks good, we can turn back to JavaScript. First we
 
 ``` {.javascript .numberLines}
 var source = [
-    { data: eas, show: true, color: "#FE4C4C", name: "East Asia & Pacific" },
-    { data: ecs, show: true, color: "#B6ED47", name: "Europe & Central Asia" },
-    { data: lcn, show: true, color: "#2D9999", name: "Latin America & Caribbean" },
-    { data: mea, show: true, color: "#A50000", name: "Middle East & North Africa" },
+    { data: eas, show: true, color: "#FE4C4C", name: "East Asia ..." },
+    { data: ecs, show: true, color: "#B6ED47", name: "Europe ..." },
+    { data: lcn, show: true, color: "#2D9999", name: "Latin America ..." },
+    { data: mea, show: true, color: "#A50000", name: "Middle East ..." },
     { data: sas, show: true, color: "#679A00", name: "South Asia" },
     { data: ssf, show: true, color: "#006363", name: "Sub-Saharan Africa" }
 ];
@@ -290,7 +298,8 @@ $.each(source, function(idx, region) {
         'width':            "0.9em",
         'margin-right':     "0.25em",
     });
-    var label = $("<label>").append(input).append(span).append(region.name);
+    var label = $("<label>")
+        .append(input).append(span).append(region.name);
     $("#controls").append(label);
 });
 ```

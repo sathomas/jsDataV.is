@@ -111,7 +111,9 @@ for (var srcIdx=0; srcIdx<albums.length; srcIdx++) {
         var msc = src.musicians[mscIdx];
         for (var tgtIdx=srcIdx+1; tgtIdx<albums.length; tgtIdx++) {
             var tgt = albums[tgtIdx];
-            if (tgt.musicians.some(function(tgtMsc) {return tgtMsc === msc;})) {
+            if (tgt.musicians.some(function(tgtMsc) {
+                return tgtMsc === msc;
+            })) {
                 s.graph.addEdge({
                     id: srcIdx + "." + mscIdx + "-" + tgtIdx,
                     source: ""+srcIdx,
@@ -130,7 +132,7 @@ We'll want to insert this code before we `refresh` the graph. When we've done th
 <figcaption>Sigmajs can then connect graph nodes using lines to represent edges.</figcaption>
 </figure>
 
-Again, you can pan and zoom the graph to focus on different parts.
+Again, you can pan the graph to focus on different parts.
 
 ### Step 5: Automating the Layout
 

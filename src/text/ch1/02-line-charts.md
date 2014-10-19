@@ -113,7 +113,8 @@ When we add it to the chart, we need to indicate that it corresponds to the seco
 Flotr.draw(
     document.getElementById("chart"),
     [
-        { data: zero, lines: {show:true, lineWidth: 1}, yaxis: 2, shadowSize: 0, color: "#545454" },
+        { data: zero, lines: {show:true, lineWidth: 1}, yaxis: 2, 
+          shadowSize: 0, color: "#545454" },
         { data: co2, lines: {show:true} },
         { data: temp, lines: {show:true}, yaxis: 2 }
     ],{
@@ -158,7 +159,7 @@ Flotr.draw(
       }
     ],
     {
-        title: "Global Temperature and CO<sub>2</sub> Concentration (NOAA Data)",
+        title: "Global Temperature and CO2 Concentration (NOAA Data)",
         grid: {horizontalLines: false, verticalLines: false},
         yaxis: {min: 300, max: 400},
         y2axis: {min: -0.15, max: 0.69, 

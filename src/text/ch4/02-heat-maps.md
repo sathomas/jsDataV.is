@@ -39,9 +39,12 @@ Here's the beginning of the data; the full data is available with the book's [so
 
 ``` {.javascript .numberLines}
 var game = [
-    { team: "UNC",  points: 2, time: 0.85, unc: 2, duke: 0, x: 0.506, y: 5.039 },
-    { team: "UNC",  points: 3, time: 1.22, unc: 5, duke: 0, x: 1.377, y: 1.184 },
-    { team: "DUKE", points: 2, time: 1.65  unc: 5, duke: 2, x: 8.804, y: 7.231 },
+    { team: "UNC",  points: 2, time: 0.85, 
+      unc: 2, duke: 0, x: 0.506, y: 5.039 },
+    { team: "UNC",  points: 3, time: 1.22, 
+      unc: 5, duke: 0, x: 1.377, y: 1.184 },
+    { team: "DUKE", points: 2, time: 1.65  
+      unc: 5, duke: 2, x: 8.804, y: 7.231 },
     // Data set continues...
 ```
 
@@ -61,7 +64,8 @@ In our web page, we need to define the element (generally a `<div>`) that will h
 
 ``` {.html .numberLines}
 <div id='heatmap' 
-    style="position:relative;width:600px;height:360px;background-image:url('img/basketball.png');">
+    style="position:relative;width:600px;height:360px;"+
+          "background-image:url('img/basketball.png');">
 </div>
 ```
 

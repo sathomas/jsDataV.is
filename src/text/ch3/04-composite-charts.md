@@ -79,15 +79,20 @@ We can add annotations to the chart using the same approach as in the previous e
 
 In addition to moving the text from one area to the other, there are two significant changes.
 
-1. We get the ``idx`` value from the second element of the event's `sparklines` array (`sparklines[1]`) in line 2. That's because the first element of that array is the first chart. The sparklines library doesn't really return any useful information about bar charts in the `sparklineRegionChange` event. Fortunately, we can get all the information we need from the line chart.2. We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 7. It's much easier for our users to quickly grasp "24.4M" than "24402100."
-``` {.javascript .numberLines .line-2 .line-7}
+1. We get the ``idx`` value from the second element of the event's `sparklines` array (`sparklines[1]`) in line 2. That's because the first element of that array is the first chart. The sparklines library doesn't really return any useful information about bar charts in the `sparklineRegionChange` event. Fortunately, we can get all the information we need from the line chart.
+
+2. We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 8. It's much easier for our users to quickly grasp "24.4M" than "24402100."
+
+
+``` {.javascript .numberLines .line-2 .line-8}
     .on('sparklineRegionChange', function(ev) {
         var idx = ev.sparklines[1].getCurrentRegionFields().offset;
         if (idx) {
             $(".info").html(
               "Week of " + stock[idx].date 
             + "&nbsp;&nbsp;&nbsp; Close: $" + stock[idx].adj_close
-            + "&nbsp;&nbsp;&nbsp; Volume: " + Math.round(stock[idx].volume/10000)/100 + "M"
+            + "&nbsp;&nbsp;&nbsp; Volume: " 
+            + Math.round(stock[idx].volume/10000)/100 + "M"
             );
             $(".details").html(
                 "Open: $" + stock[idx].open + "<br/>"

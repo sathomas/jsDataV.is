@@ -211,18 +211,18 @@ The code that gets the actual region data needs the list of regions, of course. 
 Let's take a look at the big picture so we can see how all the pieces fit together. First, in lines 2-5, we request the list of regions. Then in line 8, we create a second deferred object to track our processing of the response. In the block of lines 11 through 26 we handle the response from our initial request. Most importantly, we resolve the second deferred object (line 13) to single that our processing is complete. Finally, starting with line 29, we can begin processing the response.
 
 ``` {.javascript .numberLines}
-// request the regions list and save status of the request in a Deferred object
+// request regions list and save status of request in Deferred object
 var deferredRegionsRequest = $.getJSON(
     "http://api.worldbank.org/regions/?prefix=?",
     {format: "jsonp"}
 );
 
-// create a second Deferred object to track when list processing is complete
+// second Deferred object to track when list processing completes
 var deferredRegionsAvailable = $.Deferred();
 
 // when the request finishes, start processing
 deferredRegionsRequest.done(function(response) {
-    // when we finish processing, resolve the second Deferred with the results
+    // when processing complete, resolve second Deferred with the results
     deferredRegionsAvailable.resolve(
         $.map(
             $.grep(response[1], function(regionObj) {

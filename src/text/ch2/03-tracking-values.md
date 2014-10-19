@@ -30,8 +30,12 @@ Within our document, we need to create a `<div>` element to contain the charts w
   <body>
     <div id='charts'></div>
     <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js"></script>
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js">
+    </script>
   </body>
 </html>
 ```
@@ -58,19 +62,19 @@ We'll see how to get data directly from the World Bank's web service in the next
 ``` {.javascript .numberLines}
 var exports = [
     { label: "East Asia & Pacific", 
-      data: [[1960,13.2276851887342],[1961,11.7963550115751], // Data continues...
+      data: [[1960,13.3],[1961,11.8], // Data continues...
     { label: "Europe & Central Asia", 
-      data: [[1960,19.6961338419723],[1961,19.4263903109578], // Data continues...
+      data: [[1960,19.7],[1961,19.4], // Data continues...
     { label: "Latin America & Caribbean",
-      data: [[1960,11.6801502887395],[1961,11.3068909825283], // Data continues...
+      data: [[1960,11.7],[1961,11.3], // Data continues...
     { label: "Middle East & North Africa",
-      data: [[1968,31.1954177605503],[1969,31.7532529831496], // Data continues...
+      data: [[1968,31.2],[1969,31.8], // Data continues...
     { label: "North America", 
-      data: [[1960,5.94754327218195],[1961,5.92748715818847], // Data continues...
+      data: [[1960,5.95],[1961,5.93], // Data continues...
     { label: "South Asia", 
-      data: [[1960,5.70858107039607],[1961,5.58067092255634], // Data continues...
+      data: [[1960,5.71],[1961,5.58], // Data continues...
     { label: "Sub-Saharan Africa",
-      data: [[1960,25.5082919987422],[1961,25.3967773829262], // Data continues...
+      data: [[1960,25.5],[1961,25.4], // Data continues...
 ];
 ```
 
@@ -270,9 +274,13 @@ With the `<div>`s waiting for us in the document, our event handler for "plothov
 ``` {.javascript .numberLines}
 $("#charts").on("plothover", function(ev, pos) {
     $.each(exports, function(idx, region) {
-        matched = $.grep(region.data, function(pt) { return pt[0] === year; });
+        matched = $.grep(region.data, function(pt) { 
+            return pt[0] === year; 
+        });
         if (matched.length > 0) {
-            region.value.text(year + ": " + Math.round(matched[0][1]) + "%");
+            region.value.text(
+                year + ": " + Math.round(matched[0][1]) + "%"
+            );
         } else {
             region.value.text("");
         }

@@ -21,9 +21,11 @@ Figure NEXTFIGURENUMBER shows what the [spreadsheet](https://docs.google.com/spr
 The <span class="smcp">HTML</span> snippet that Timeline <span class="smcp">JS</span> creates for this time line is
 
 ``` {.html .numberLines}
-<iframe src='http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?
-    source=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E&font=Bevan-PotanoSans&
-    maptype=toner&lang=en&height=650' width='100%' height='650' frameborder='0'>
+<iframe 
+    src='http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?
+    source=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E&
+    font=Bevan-PotanoSans&maptype=toner&lang=en&height=650'
+    width='100%' height='650' frameborder='0'>
 </iframe>
 ```
 
@@ -60,7 +62,9 @@ It's not obvious, but Timeline <span class="smcp">JS</span> also requires jQuery
     <link rel="stylesheet" type="text/css" href="css/timeline.css">
   </head>
   <body>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
+    </script>
     <script src="js/timeline-min.js"></script>
   </body>
 </html>
@@ -98,7 +102,7 @@ var plays = [
     "published": "version of the...",   
     "performance": "although it is known...",         
     "evidence": "It is known..." 
-    "media": "http://upload.wikimedia.org/wikipedia/commons/9/96/FirstFolioHenryVI2.jpg",
+    "media": "http://upload.wikimedia.org/wikipedia/commons/...",
     "credit": "Wikimedia Commons",
     "caption": "Photo of the first page..."
   // Data set continues...
@@ -245,15 +249,18 @@ Customizing other aspects of the Timeline <span class="smcp">JS</span> visualiza
 For our example we'll change the blue color that Timeline <span class="smcp">JS</span> uses in the bottom section of the visualization. It uses that color to highlight the active item, show the time line marker, and for the event line. Finding the specific rules to override takes a bit of detective work with your browser's developer tools, but here is how we can change the color from blue to green.
 
 ``` {.css .numberLines}
-.vco-timeline .vco-navigation .timenav .content .marker.active .flag .flag-content h3,
-.vco-timeline .vco-navigation .timenav .content .marker.active .flag-small .flag-content h3 {
+.vco-timeline .vco-navigation .timenav .content 
+  .marker.active .flag .flag-content h3,
+.vco-timeline .vco-navigation .timenav .content 
+  .marker.active .flag-small .flag-content h3 {
     color: green;
 }
 .vco-timeline .vco-navigation .timenav-background .timenav-line {
     background-color: green;
 }
 .vco-timeline .vco-navigation .timenav .content .marker .line .event-line,
-.vco-timeline .vco-navigation .timenav .content .marker.active .line .event-line,
+.vco-timeline .vco-navigation .timenav .content .marker.active
+  .line .event-line,
 .vco-timeline .vco-navigation .timenav .content .marker.active .dot,
 .vco-timeline .vco-navigation .timenav .content .marker.active .line {
     background: green;

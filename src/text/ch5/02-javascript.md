@@ -210,7 +210,8 @@ Here's the resulting markup (truncated for brevity):
 ``` {.html .numberLines}
 <ol class="timeline">
     <li>
-        <time>1589</time><time>1591</time><cite>The Two Gentlemen of Verona</cite>
+        <time>1589</time><time>1591</time>
+        <cite>The Two Gentlemen of Verona</cite>
         <dl>
             <dt>First official record</dt><dd>Francis Meres'...</dd>
             <dt>First published</dt><dd>First Folio (1623)</dd>
@@ -219,11 +220,12 @@ Here's the resulting markup (truncated for brevity):
         </dl>
     </li>
     <li>
-        <time>1590</time><time>1594</time><cite>The Taming of the Shrew</cite>
+        <time>1590</time><time>1594</time>
+        <cite>The Taming of the Shrew</cite>
         <dl>
             <dt>First official record</dt><dd>possible version...</dd>
             <dt>First published</dt><dd>possible version...</dd>
-            <dt>First recorded performance</dt><dd>According to Philip...</dd>
+            <dt>First recorded performance</dt><dd>According to...</dd>
             <dt>Evidence</dt><dd>Kier Elam posits...</dd>
         </dl>
     </li>

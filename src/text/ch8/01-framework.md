@@ -20,7 +20,7 @@ Before we can use Yeoman we must first install [node.js](http://nodejs.org). Nod
 
 With node.js installed, we can install the main Yeoman application as well as everything necessary to create a [Backbone.js application](https://github.com/yeoman/generator-backbone) with one command. You can execute this command in the Terminal app (on Mac <span class="smcp">OS</span> <span class="smcp">X</span>) or from the Windows Command Prompt.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ npm install -g generator-backbone
 ```
 
@@ -28,20 +28,20 @@ $ npm install -g generator-backbone
 
 The development tools we just installed will make it easy to create a new web app project. We'll create a new folder (named `running`) for our application and then change directory into that folder.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ mkdir running
 $ cd running
 ```
 
 From within that new folder, executing the command `yo backbone` will initialize the project structure.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ yo backbone
 ```
 
 As part of the initialization, Yeoman will ask for permission to send diagnostic information (mainly which frameworks and features our app uses) back to the Yeoman developers. It will then give us a choice to add a few additional tools to the app. For our example we'll skip any of the suggested options.
 
-``` {.bash .numberLines}
+``` {.bash}
 Out of the box I include HTML5 Boilerplate, jQuery, Backbone.js and Modernizr.
 [?] What more would you like? (Press <space> to select)
 ❯⬡ Bootstrap for Sass
@@ -67,7 +67,7 @@ Yeoman will then do it's magic, creating several sub-folders, installing extra t
 
 At this point Yeoman has set up a complete web app (albeit one that doesn't do anything). You can execute the command `grunt serve` from the command prompt to see it in a browser.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ grunt serve
 Running "serve" task
 
@@ -100,7 +100,7 @@ Congratulations! Our web app, as basic as it is, is now running.
 
 Yeoman sets up sensible defaults and tools for a new app, but our app needs a few JavaScript libraries that aren't part of those defaults—Leaflet for maps and Flot for charts. The [Moment.js](http://momentjs.com) library for dealing with dates and times will also come in handy, as will the [Underscore.string](http://epeli.github.io/underscore.string/) library. We can add these libraries to our project with some simple commands. The `--save` option tells bower to remember that our project depends on these libraries.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ bower install leaflet --save
 $ bower install flot --save
 $ bower install momentjs --save
@@ -113,14 +113,14 @@ Even more importantly, Yeoman (technically, it's the _bower_ tool that's part of
 
 For most libraries `bower` can completely install all the necessary components and files. In the case of Leaflet, however, we need to perform a few extra steps. Change directory to the `leaflet` folder within `app/bower_components`. From there, run two commands to install the unique tools that Leaflet requires.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ npm install
 $ npm install jake -g
 ```
 
 Executing the command `jake` will then run all of Leaflet's tests and, provided they pass, create a `leaflet.js` library for our app.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ jake
 Checking for JS errors...
 	Check passed.
@@ -164,7 +164,9 @@ We can add our new libraries after Backbone.js.
 <script src="bower_components/flot/jquery.flot.js"></script>
 <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
 <script src="bower_components/momentjs/moment.js"></script>
-<script src="bower_components/underscore.string/lib/underscore.string.js"></script>
+<script 
+    src="bower_components/underscore.string/lib/underscore.string.js">
+</script>
 <!-- endbuild -->
 ```
 
@@ -178,3 +180,4 @@ Leaflet, as we saw in chapter 6, also requires it's own style sheet. We add that
 ```
 
 Now that we've set up the structure of our app and installed the necessary libraries, it's time to start development.
+

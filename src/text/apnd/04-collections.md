@@ -4,7 +4,7 @@ So far we've seen various Underscore.js tools that are suited specifically for e
 
 Here's a small data set we can use for the examples below. It contains a few statistics from the 2012 Major League Baseball season.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 var national_league = [
     { name: "Arizona Diamondbacks",  wins: 81, losses:  81, division: "west"    },
     { name: "Atlanta Braves",        wins: 94, losses:  68, division: "east"    },
@@ -31,7 +31,7 @@ In this chapter's first section we saw some of the pitfalls of traditional JavaS
 
 The most basic Underscore utility is `each()`. It executes an arbitrary function on every element in a collection and often serves as a direct functional replacement for the traditional `for (i=0; i<len; i++)` loop.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).each(function(team) { console.log(team.name); })
   Arizona Diamondbacks
   Atlanta Braves
@@ -43,7 +43,7 @@ The most basic Underscore utility is `each()`. It executes an arbitrary function
 
 The Underscore.js `map()` method iterates through a collection and transforms each element with an arbitrary function. It returns a new collection containing the transformed elements. Here, for example, is how to create an array of all the team's winning percentages.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).map(function(team) {
       return Math.round(100*team.wins/(team.wins + team.losses);
   })
@@ -52,7 +52,7 @@ The Underscore.js `map()` method iterates through a collection and transforms ea
 
 The `reduce()` method iterates through a collection and returns a single value. One parameter initializes this value, and the other parameter is an arbitrary function that updates the value for each element in the collection. We can use `reduce()` for example, to calculate how many teams have a winning percentage over 500.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).reduce(
       function(count, team) { 
 		  return count + (team.wins > team.losses); 
@@ -70,14 +70,14 @@ As the comment in line 5 indicates, we start our count at 0. That value is passe
 
 Underscore.js has several methods to help us find elements or sets of elements in a collection. We can, for example, use `find()` to get a team with more than 90 wins.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).find( function(team) { return team.wins > 90; })
   {name: "Atlanta Braves", wins: 94, losses: 68, division: "east"}
 ```
 
 The `find()` function just returns the first element in the array that meets the criteria. To find all elements that meet our criteria, use the `filter()` function.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).filter( function(team) { return team.wins > 90; })
   [ {name: "Atlanta Braves", wins: 94, losses: 68, division: "east"},
     { name: "Cincinnati Reds", wins: 97, losses: 65, division: "central" },
@@ -88,7 +88,7 @@ The `find()` function just returns the first element in the array that meets the
 
 The opposite of the `filter()` function is `reject()`. It returns an array of elements that don't meet the criteria.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).reject( function(team) { return team.wins > 90; })
   [ { name: "Arizona Diamondbacks", wins: 81, losses:  81, division: "west" },
     { name: "Chicago Cubs", wins: 61, losses: 101, division: "central" },
@@ -99,7 +99,7 @@ The opposite of the `filter()` function is `reject()`. It returns an array of el
 
 If your criteria can be described as a property value, you can use a simpler version of `filter()`, the `where()` function. Instead of an arbitrary function to check for a match, `where()` takes for its parameter a set of properties that must match. We can use it to extract all the teams in the Eastern division.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).where({division: "east"})
    [ { name: "Atlanta Braves", wins: 94, losses: 68, division: "east" },
      { name: "Miami Marlins", wins: 69, losses: 93, division: "east" },
@@ -111,16 +111,21 @@ If your criteria can be described as a property value, you can use a simpler ver
 
 The `findWhere()` method combines the functionality of `find()` with the simplicity of `where()`. It returns the first element in a collection with properties that match specific values.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).where({name: "Atlanta Braves"})
   {name: "Atlanta Braves", wins: 94, losses: 68, division: "east"}
 ```
 
 Another Underscore.js utility that's especially handy is `pluck()`. This function creates an array by extracting only the specified property from a collection. We could use it to extract an array of nothing but team names, for example.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).pluck("team")
-  ["Arizona Diamondbacks", "Atlanta Braves", /* Data continues... */, "Washington Nationals"]
+  [
+    "Arizona Diamondbacks", 
+    "Atlanta Braves", 
+    /* Data continues... */, 
+    "Washington Nationals"
+  ]
 ```
 
 ### Testing a Collection
@@ -129,28 +134,28 @@ Sometimes we don't necessarily need to transform a collection; we simply want to
 
 The `every()` function tells us whether or not all elements in a collection pass an arbitrary test. We could use it to check if every team in our data set had at least 70 wins.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).every(function(team) { return team.wins >= 70; })
   false
 ```
 
 Perhaps we'd like to know if _any_ team had at least 70 wins. In that case the `any()` function provides an answer.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).any(function(team) { return team.wins >= 70; })
   true
 ```
 
 Underscore.js also lets us use arbitrary functions to find the maximum and minimum elements in a collection. If our criteria is number of wins, we use `max()` to find the "maximum" team.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).max(function(team) { return team.wins; })
   {name: "Washington Nationals", wins: 98, losses: 64, division: "east"}
 ```
 
 Not surprisingly, the `min()` function works the same way.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).min(function(team) { return team.wins; })
   {name: "Houston Astros", wins: 55, losses: 107, division: "central"}
 ```
@@ -159,7 +164,7 @@ Not surprisingly, the `min()` function works the same way.
 
 To sort a collection, we can use the `sortBy()` method and supply an arbitrary function to provide sortable values. Here's how to reorder our collection in order of increasing wins.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).sortBy(function(team) { return team.wins; })
   [ {name: "Houston Astros", wins: 55, losses: 107, division: "central"}
     { name: "Chicago Cubs", wins: 61, losses: 101, division: "central" },
@@ -169,7 +174,7 @@ To sort a collection, we can use the `sortBy()` method and supply an arbitrary f
 
 We could also reorganize our collection by grouping its elements according to a property. The Underscore.js function that helps in this case is `groupBy()`. One possibility is reorganizing the teams according to their division.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).groupBy("division")
   {
     { west: 
@@ -199,7 +204,7 @@ We could also reorganize our collection by grouping its elements according to a 
 
 We can also use the `countBy()` function to simply count the number of elements in each group.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 > _(national_league).countBy("division")
   {west: 5, east: 5, central: 6}
 ```
@@ -208,6 +213,6 @@ We can also use the `countBy()` function to simply count the number of elements 
 
 As a final trick, Underscore.js let's us randomly reorder a collection using the `shuffle()` function.
 
-``` {.javascript .numberLines}
+``` {.javascript}
 _(national_league).shuffle()
 ```

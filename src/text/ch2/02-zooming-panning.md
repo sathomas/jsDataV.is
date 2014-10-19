@@ -22,8 +22,12 @@ Because we're sticking with the same data, most of the preparation is identical 
   <body>
     <!-- Content goes here -->
     <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js"></script>
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script
+      src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js">
+    </script>
     <script src="js/jquery.flot.selection.js"></script>
   </body>
 </html>
@@ -125,8 +129,12 @@ And with that addition, our chart is now interactive. Users can zoom in to see a
     <div id='chart' style="width:600px;height:400px;"></div>
     <button id='unzoom'>Reset Zoom</button>
     <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js">
+    </script>
     <script src="js/jquery.flot.selection.js"></script>
   </body>
 </html>

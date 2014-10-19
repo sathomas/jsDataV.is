@@ -1,8 +1,10 @@
 ## Annotating Sparklines
 
 Because they're designed to maximize information density, sparklines omit many traditional chart components such as axes and labels. This approach certainly focuses on the data itself, but it can sometimes leave users without enough context to understand the data. Print versions usually rely on traditional text to supply this context, but on the web we have more flexibility. We can present the data by itself in a sparkline, and we can give users the chance to explore the data's context through interactions.
-Tooltips, which show additional information as users hover their mouse pointers over sections of a web page, can be an effective way to annotate a sparkline, so long as the users are accessing the page from a desktop computer. (Touch-based devices such as smartphones and tablets don't typically support the concept of hover.) We'll walk through a visualization that includes tooltips in this example; other examples in the chapter consider alternative approaches that may be more effective for touch devices.
-Let's see how we can use a customized form of tooltips by enhancing the charts in the previous example.
+
+Tooltips, which show additional information as users hover their mouse pointers over sections of a web page, can be an effective way to annotate a sparkline, so long as the users are accessing the page from a desktop computer. (Touch-based devices such as smartphones and tablets don't typically support the concept of hover.) We'll walk through a visualization that includes tooltips in this example; other examples in the chapter consider alternative approaches that may be more effective for touch devices.
+
+Let's see how we can use a customized form of tooltips by enhancing the charts in the previous example.
 
 Just as in this chapter's first example, we need to include the sparklines and jQuery libraries in our web page.
 
@@ -12,9 +14,12 @@ In the previous examples we've embedded the data directly in the <span class="sm
 
 ``` {.javascript .numberLines}
 var stock = [
-  { date: "2012-01-03", open: 409.40, high: 422.75, low: 409.00, close: 422.40, volume: 10283900, adj_close: 416.26 },
-  { date: "2012-01-09", open: 425.50, high: 427.75, low: 418.66, close: 419.81, volume:  9327900, adj_close: 413.70 },
-  { date: "2012-01-17", open: 424.20, high: 431.37, low: 419.75, close: 420.30, volume: 10673200, adj_close: 414.19 },
+  { date: "2012-01-03", open: 409.40, high: 422.75, low: 409.00, 
+    close: 422.40, volume: 10283900, adj_close: 416.26 },
+  { date: "2012-01-09", open: 425.50, high: 427.75, low: 418.66, 
+    close: 419.81, volume:  9327900, adj_close: 413.70 },
+  { date: "2012-01-17", open: 424.20, high: 431.37, low: 419.75, 
+    close: 420.30, volume: 10673200, adj_close: 414.19 },
   // Data set continues...
 ```
 

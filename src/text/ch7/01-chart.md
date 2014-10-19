@@ -52,7 +52,9 @@ hubble_data = [
   </head>
   <body>
     <div id="container"></div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js">
+    </script>
   </body>
 </html>
 ```
@@ -102,7 +104,9 @@ To make sure our chart honors the defined margins, we'll construct it entirely w
 
 ``` {.javascript .numberLines}
 var chart = svg.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", 
+        "translate(" + margin.left + "," + margin.top + ")"
+    );
 ```
 
 Visualizations must often re-scale the source data. In our case, we'll need to re-scale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, we want to scale galactic distance to between 0 and 920 pixels. Since this type of requirement is common for visualizations, <span class="smcp">D3</span>.js has tools to help. Not surprisingly, they're `scale` objects. We'll create scales for both the x- and the y-dimensions.
@@ -131,13 +135,21 @@ We can't simply find the minimum value in the data because we have to account fo
 
 ``` {.javascript .numberLines}
 xScale.domain([
-        d3.min(hubble_data, function(nebulae) { return nebulae.distance - nebulae.distance_error; }),
-        d3.max(hubble_data, function(nebulae) { return nebulae.distance + nebulae.distance_error; })
+        d3.min(hubble_data, function(nebulae) { 
+            return nebulae.distance - nebulae.distance_error; 
+        }),
+        d3.max(hubble_data, function(nebulae) { 
+            return nebulae.distance + nebulae.distance_error; 
+        })
     ])
     .nice();
 yScale.domain([
-        d3.min(hubble_data, function(nebulae) { return nebulae.velocity - nebulae.velocity_error; }),
-        d3.max(hubble_data, function(nebulae) { return nebulae.velocity + nebulae.velocity_error; })
+        d3.min(hubble_data, function(nebulae) { 
+            return nebulae.velocity - nebulae.velocity_error; 
+        }),
+        d3.max(hubble_data, function(nebulae) { 
+            return nebulae.velocity + nebulae.velocity_error; 
+        })
     ])
     .nice();
 ```

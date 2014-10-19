@@ -1,3 +1,4 @@
+
 ## Views for Visualizations
 
 Now that we've seen how to use Backbone.js views to separate data from its presentation, we can consider how to use the same approach for data visualizations. When the presentation is simple <span class="smcp">HTML</span> markup—as in the previous section's table—it's easy to use templates to view a model. Templates, however, aren't sophisticated enough to handle data visualizations. For those we'll need to modify our approach.
@@ -15,7 +16,7 @@ As we did in the previous section, we'll rely on Yeoman to create the scaffoldin
  
 To start the development of these views, we return to the command line and execute four Yeoman commands.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ yo backbone:view details
 $ yo backbone:view properties
 $ yo backbone:view charts
@@ -30,9 +31,15 @@ The Details view is really nothing more than a container for its three children,
 Running.Views.Details = Backbone.View.extend({
     render: function () {
         this.$el.html("");
-        this.$el.append(new Running.Views.Properties({model: this.model}).render().el);
-        this.$el.append(new Running.Views.Charts({model: this.model}).render().el);
-        this.$el.append(new Running.Views.Map({model: this.model}).render().el);
+        this.$el.append(
+            new Running.Views.Properties({model: this.model}).render().el
+        );
+        this.$el.append(
+            new Running.Views.Charts({model: this.model}).render().el
+        );
+        this.$el.append(
+            new Running.Views.Map({model: this.model}).render().el
+        );
         return this;
     }
 });
@@ -69,9 +76,12 @@ For the Properties view, we want to show all of the properties that Nike+ has as
         { "tagType": "EMOTION", "tagValue": "GREAT"     }
     ],
     "metrics": [
-        { "intervalMetric": 10, "intervalUnit": "SEC", "metricType": "SPEED",     "values": [/* Data continues... */] },
-        { "intervalMetric": 10, "intervalUnit": "SEC", "metricType": "HEARTRATE", "values": [/* Data continues... */] },
-        { "intervalMetric": 10, "intervalUnit": "SEC", "metricType": "DISTANCE",  "values": [/* Data continues... */] },
+        { "intervalMetric": 10, "intervalUnit": "SEC", 
+          "metricType": "SPEED", "values": [/* Data continues... */] },
+        { "intervalMetric": 10, "intervalUnit": "SEC",
+          "metricType": "HEARTRATE", "values": [/* Data continues... */] },
+        { "intervalMetric": 10, "intervalUnit": "SEC",
+          "metricType": "DISTANCE", "values": [/* Data continues... */] },
     ],
     "gps": {
         "elevationLoss": 114.400024,
@@ -130,7 +140,8 @@ obj2Html: function(obj) {
     return (
         _(obj).reduce(function(html, value, key) {
 
-            // create the markup for the current key/value pair and add it to the html variable
+            // create the markup for the current 
+            // key/value pair and add it to the html variable
 
             return html;
 
@@ -314,11 +325,14 @@ drawMap: function () {
             return [pt.latitude, pt.longitude];
         });
         var path = new L.Polyline(points, {color: '#1788cc'});
-        this.map = L.map(this.id).fitBounds(path.getBounds()).addLayer(path);
+        this.map = L.map(this.id).fitBounds(path.getBounds())
+            .addLayer(path);
         var tiles = L.tileLayer(
-            'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+            'http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/'+
+            'World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
             {
-                attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+                attribution: 'Tiles &copy; Esri &mdash; '+
+                             'Esri, DeLorme, NAVTEQ',
                 maxZoom: 16
             }
         );

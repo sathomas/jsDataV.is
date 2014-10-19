@@ -10,22 +10,34 @@ The data for our visualization is readily available as timetables for the two ro
 
 ``` {.javascript .numberLines}
 var seaboard = [
-    { "stop": "Washington", "latitude": 38.895111, "longitude": -77.036667, "duration": 77 },
-    { "stop": "Fredericksburg", "latitude": 38.301806, "longitude": -77.470833, "duration": 89 },
-    { "stop": "Richmond", "latitude": 37.533333, "longitude": -77.466667, "duration": 29 },
+    { "stop": "Washington", 
+      "latitude": 38.895111, "longitude": -77.036667, 
+      "duration": 77 },
+    { "stop": "Fredericksburg", 
+      "latitude": 38.301806, "longitude": -77.470833, 
+      "duration": 89 },
+    { "stop": "Richmond", 
+      "latitude": 37.533333, "longitude": -77.466667, 
+      "duration": 29 },
     // Data set continues...
 ];
 var southern = [
-    { "stop": "Washington", "latitude": 38.895111, "longitude": -77.036667, "duration": 14 },
-    { "stop": "Alexandria", "latitude": 38.804722, "longitude": -77.047222, "duration": 116 },
-    { "stop": "Charlottesville", "latitude": 38.0299, "longitude": -78.479, "duration": 77 },
+    { "stop": "Washington", 
+      "latitude": 38.895111, "longitude": -77.036667, 
+      "duration": 14 },
+    { "stop": "Alexandria", 
+      "latitude": 38.804722, "longitude": -77.047222, 
+      "duration": 116 },
+    { "stop": "Charlottesville", 
+      "latitude": 38.0299, "longitude": -78.479, 
+      "duration": 77 },
     // Data set continues...
 ];
 ```
 
 ### Step 2: Set up the Web Page and Libraries
 
-To add Leaflet maps to our web page we'll need to include the library and its companion style sheet. Both are available from a content distribution network, so there's no need to host them on our own servers. When we create our page we also define a `<div>` container for the map in line 9.
+To add Leaflet maps to our web page we'll need to include the library and its companion style sheet. Both are available from a content distribution network, so there's no need to host them on our own servers. When we create our page we also define a `<div>` container for the map in line 10.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -33,11 +45,14 @@ To add Leaflet maps to our web page we'll need to include the library and its co
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <link rel="stylesheet" 
+     href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
   </head>
   <body>
     <div id="map"></div>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script 
+      src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js">
+    </script>
   </body>
 </html>
 ```
@@ -53,12 +68,13 @@ var map = L.map('map',{
 });
 ```
 
-For this particular visualization, there is little point in zooming or panning the map, so we can include additional options to disable those interactions. Setting both the minimum zoom level (line 5) and the maximum zoom level (line 6) to be equal to the initial zoom level disables zooming. We'll also disable the on-screen map controls for zooming in line 8. The other zoom controls are likewise disabled (lines 9 through 12). For panning, we disable dragging the map (line 7) and keyboard arrow keys (line 13). We also specify the latitude/longitude bounds for the map (line 3).
+For this particular visualization, there is little point in zooming or panning the map, so we can include additional options to disable those interactions. Setting both the minimum zoom level (line 6) and the maximum zoom level (line 7) to be equal to the initial zoom level disables zooming. We'll also disable the on-screen map controls for zooming in line 9. The other zoom controls are likewise disabled (lines 10 through 13). For panning, we disable dragging the map (line 8) and keyboard arrow keys (line 14). We also specify the latitude/longitude bounds for the map (lines 3 and 4).
 
 ``` {.javascript .numberLines}
 var map = L.map('map',{
     center: [36.3, -80.2],
-    maxBounds: [ [33.32134852669881, -85.20996093749999], [39.16414104768742, -75.9814453125] ],
+    maxBounds: [ [33.32134852669881, -85.20996093749999], 
+                 [39.16414104768742, -75.9814453125] ],
     zoom: 6,
     minZoom: 6,
     maxZoom: 6,
@@ -83,7 +99,8 @@ Because we've disabled the ability of the user to pan or zoom the map, we should
 As with the Modest Maps example, we base our map on a set of tiles. There are many tile providers that support Leaflet; some are open source while others are commercial. Leaflet has a [demo page](http://leaflet-extras.github.io/leaflet-providers/preview/) you can use to compare some of the open source tile providers. For our example we want to avoid tiles with roads, as the highway network looked very different in the 1940s. Esri has a neutral _WorldGrayCanvas_ set that works well for our visualization. It does include current county boundaries, and some counties may have changed their borders since the 1940s. For our example we won't worry about that detail, though you might consider it in any production visualization. Leaflet's <span class="smcp">API</span> let's us create the tile layer and add it to the map in a single statement. Note that Leaflet includes a built-in option to handle attribution so we can be sure to credit the tile source appropriately.
 
 ``` {.javascript .numberLines}
-L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/'+
+            'Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
      maxZoom: 16
 }).addTo(map);
@@ -116,7 +133,13 @@ seaboard.map(function(stop) {
 This statement returns an array of latitude/longitude pairs:
 
 ``` {.javascript .numberLines}
-[ [38.895111,-77.036667], [38.301806,-77.470833], [37.533333,-77.466667], [37.21295,-77.400417], /* Data set continues... */ ]
+[ 
+  [38.895111,-77.036667], 
+  [38.301806,-77.470833],
+  [37.533333,-77.466667], 
+  [37.21295,-77.400417],
+  /* Data set continues... */
+]
 ```
 
 That result is the perfect input to the `polyline` function. We'll use it for each of the routes. The options let us specify a color for the lines which we'll match with the associated railroad's official color from the era. We also indicate that the lines have no function when clicked by setting the `clickable` option to `false`.
@@ -174,11 +197,16 @@ Our animation control also needs an `onAdd()` method for Leaflet to call when it
 ``` {.javascript .numberLines}
     onAdd: function () {
         var animateName = 'leaflet-control-animate',
-            container = L.DomUtil.create('div', animateName + ' leaflet-bar'),
+            container = L.DomUtil.create(
+                'div', animateName + ' leaflet-bar'),
             options = this.options;
 
-        this._button  = this._createButton(this.options.animateStartText, 
-            this.options.animateStartTitle, animateName,  container, this._clicked);
+        this._button  = this._createButton(
+            this.options.animateStartText, 
+            this.options.animateStartTitle,
+            animateName,  
+            container,
+            this._clicked);
 
         return container;
     },
@@ -283,7 +311,8 @@ To build the paths we iterate through the stops on the route. We want to keep tr
 
 
 ``` {.javascript .numberLines}
-    for (var stopIdx=0, prevStops=[]; stopIdx < route.length-1; stopIdx++) {
+    for (var stopIdx=0, prevStops=[]; 
+             stopIdx < route.length-1; stopIdx++) {
         // Code to calculate steps between current stop and next stop
     }
 ```
@@ -301,10 +330,16 @@ For each stop in our data sets, the `duration` property stores the number of min
 ``` {.javascript .numberLines}
         for (var minutes = 1; minutes <= stop.duration; minutes++) {
             var position = [
-                stop.latitude +  (nextStop.latitude  - stop.latitude)  * (minutes/stop.duration),
-                stop.longitude + (nextStop.longitude - stop.longitude) * (minutes/stop.duration)
+                stop.latitude +  
+                  (nextStop.latitude - stop.latitude) *
+                  (minutes/stop.duration),
+                stop.longitude + 
+                  (nextStop.longitude - stop.longitude) * 
+                  (minutes/stop.duration)
             ];
-            animation.push(L.polyline(prevStops.concat([position]), options));
+            animation.push(
+                L.polyline(prevStops.concat([position]), options)
+            );
         }
 ```
 
@@ -321,15 +356,23 @@ Now it's finally time to execute the animation. To initialize it we create an ar
 
 ``` {.javascript .numberLines}
 var routeAnimations = [
-    buildAnimation(seaboard, {clickable: false, color: "#88020B", weight: 8, opacity: 1.0}),
-    buildAnimation(southern, {clickable: false, color: "#106634", weight: 8, opacity: 1.0})
+    buildAnimation(seaboard, 
+      {clickable: false, color: "#88020B", weight: 8, opacity: 1.0}
+    ),
+    buildAnimation(southern, 
+      {clickable: false, color: "#106634", weight: 8, opacity: 1.0}
+    )
 ];
 ```
 
 Next we calculate the maximum number of animation steps. That's the minimum of the length of the two animation arrays.
 
 ``` {.javascript .numberLines}
-var maxSteps = Math.min.apply(null, routeAnimations.map(function(animation) {return animation.length}));
+var maxSteps = Math.min.apply(null, 
+    routeAnimations.map(function(animation) {
+        return animation.length
+    })
+);
 ```
 
 That statement might seem overly complex for finding the minimum length, but it works with an arbitrary number of routes. If, in the future, we decided to animate a third route on our map, we wouldn't have to change the code. The best way to understand the statement is to start in the middle and work out. The fragment
@@ -456,8 +499,8 @@ Next we write the method that adds a label to a map. This method
 3. sets the `opacity` of the element to `0` to match its initial `hidden` status (line 4),
 4. adds the new element to the `markerPane` layer in the map (line 5),
 5. sets the contents of the element to the label text (line 6),
-6. calculates a position for the label using its defined latitude/longitude (line 7) and then adjusting for any offset (line 8), and
-7. positions the element on the map (line 9).
+6. calculates a position for the label using its defined latitude/longitude (line 7) and then adjusting for any offset (lines 8-11), and
+7. positions the element on the map (line 12).
 
 ``` {.javascript .numberLines}
     onAdd: function(map) {
@@ -467,7 +510,10 @@ Next we write the method that adds a label to a map. This method
         map.getPanes().markerPane.appendChild(this._container);
         this._container.innerHTML = this._label;
         var position = map.latLngToLayerPoint(this._latlng);
-        position = new L.Point(position.x + this.options.offset.x, position.y + this.options.offset.y);
+        position = new L.Point(
+            position.x + this.options.offset.x, 
+            position.y + this.options.offset.y
+        );
         L.DomUtil.setPosition(this._container, position);
     },
 ```
@@ -538,7 +584,7 @@ With the routes converted into an array, we can use `forEach` to iterate through
     });
 ```
 
-For each stop in the route we first check to see whether that stop is the first or last one. If so, we don't want to animate a label for that stop. Otherwise we create a new `Label` object in line 3 below, and add it to the map. Then we append that Label object to the `labels` array that's accumulating the label animation data. Notice that we add each label to this array twice. The first time we add it in line 9 is at the time the animation reaches the stop; in this case we add it with a status of `shown`. We also add the label to the array 50 minutes later in line 10, this time with a status of `dimmed`. When we execute the animation, it will show the label when the route first reaches the station and then dim it a bit later.
+For each stop in the route we first check to see whether that stop is the first or last one. If so, we don't want to animate a label for that stop. Otherwise we create a new `Label` object in line 3 below, and add it to the map. Then we append that Label object to the `labels` array that's accumulating the label animation data. Notice that we add each label to this array twice. The first time we add it in line 9 is at the time the animation reaches the stop; in this case we add it with a status of `shown`. We also add the label to the array 50 minutes later in line 12, this time with a status of `dimmed`. When we execute the animation, it will show the label when the route first reaches the station and then dim it a bit later.
 
 ``` {.javascript .numberLines}
         route.forEach(function(stop,idx) {
@@ -549,8 +595,12 @@ For each stop in the route we first check to see whether that stop is the first 
                     {offset: new L.Point(stop.offset[0], stop.offset[1])}
                 );
                 map.addLayer(label);
-                labels.push({minutes: minutes, label: label, status: "shown"});
-                labels.push({minutes: minutes+50, label: label, status: "dimmed"});
+                labels.push(
+                    {minutes: minutes, label: label, status: "shown"}
+                );
+                labels.push(
+                    {minutes: minutes+50, label: label, status: "dimmed"}
+                );
             }
             minutes += stop.duration;
         });
@@ -595,7 +645,11 @@ label.setStatus("shown");
 Now that the label animation data is available, we can make some adjustments to our animation function to incorporate the labels as well as the polyline paths. The first change is deciding when to conclude the animation. Because we're dimming the labels some time after the route passes their stops, we can't simply stop when all the paths are drawn. That might leave some labels undimmed. We'll need separate variables to store the number of steps for each animation, and the total number of animation steps will be whichever is greater.
 
 ``` {.javascript .numberLines}
-var maxPathSteps = Math.min.apply(null,routeAnimations.map(function(animation) {return animation.length}));
+var maxPathSteps = Math.min.apply(null,
+    routeAnimations.map(function(animation) {
+        return animation.length
+    })
+);
 var maxLabelSteps = labels[labels.length-1].minutes;
 var maxSteps = Math.max(maxPathSteps, maxLabelSteps);
 ```

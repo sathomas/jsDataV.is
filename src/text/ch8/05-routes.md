@@ -8,7 +8,7 @@ Even though our app is executing in a single web page, our users still expect ce
 
 So far we've looked at three Backbone.js components, Models, Collections, and Views, all of which may be helpful in any JavaScript application. The fourth component, the _Router,_ is especially helpful for single page applications. You won't be surprised to learn that we can use Yeoman to create the scaffolding for a Router.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ yo backbone:router app 
    create app/scripts/routes/app.js
    invoke   backbone-mocha:router
@@ -34,7 +34,8 @@ The code is exactly what we've seen before. The `summary` method creates a new R
 
 ``` {.javascript .numberLines}
 summary: function() {
-    this.runs = new Running.Collections.Runs([], {authorizationToken: 'authorize me'});
+    this.runs = new Running.Collections.Runs([], 
+        {authorizationToken: 'authorize me'});
     this.runs.fetch();
     this.summaryView = new Running.Views.Summary({collection: this.runs});
     $('body').html(this.summaryView.render().el);
@@ -88,16 +89,20 @@ Running.Routers.App = Backbone.Router.extend({
         Backbone.history.start({pushState: true});
     },
     summary: function() {
-        this.runs = new Running.Collections.Runs([], {authorizationToken: this.options.token});
+        this.runs = new Running.Collections.Runs([], 
+            {authorizationToken: this.options.token});
         this.runs.fetch();
-        this.summaryView = new Running.Views.Summary({collection: this.runs});
+        this.summaryView = new Running.Views.Summary({
+            collection: this.runs});
         $('body').html(this.summaryView.render().el);
     },
     details: function(id) {
-        this.run = new Running.Models.Run({}, {authorizationToken: this.options.token});
+        this.run = new Running.Models.Run({}, 
+            {authorizationToken: this.options.token});
         this.run.id = id;
         this.run.fetch();
-        this.detailsView = new Running.Views.Details({model: this.run});
+        this.detailsView = new Running.Views.Details({
+            model: this.run});
         $('body').html(this.detailsView.render().el);
 });
 ```
@@ -224,7 +229,8 @@ From the markup shown above, it's clear that most of the table row is made up of
 ``` {.javascript .numberLines}
 clicked: function (ev) {
     var $target = $(ev.target)
-    var id = $target.attr('data-id') || $target.parents('[data-id]').attr('data-id');
+    var id = $target.attr('data-id') || 
+             $target.parents('[data-id]').attr('data-id');
 ```
 
 After retrieving the attribute value our view knows which run the user selected; now it has to do something with the information. Though it might be tempting to have the Summary view directly render the Details view for the run, that action would not be appropriate. A Backbone.js view should only take responsibility for itself and any child views that it contains. That approach allows the view to be safely re-used in a variety of contexts. Our Summary view, for example, might well be used in a context in which the Details view wasn't even available. In that case trying to switch directly to the Details view would, at best, generate an error.
@@ -236,7 +242,8 @@ Here's how we can generate a custom event in our view. We're calling the event `
 ``` {.javascript .numberLines}
 clicked: function (ev) {
     var $target = $(ev.target)
-    var id = $target.attr('data-id') || $target.parents('[data-id]').attr('data-id');
+    var id = $target.attr('data-id') || 
+             $target.parents('[data-id]').attr('data-id');
     this.trigger('select', id);
 }
 ```
@@ -246,9 +253,11 @@ The component that should respond to this custom event is the same component tha
 ``` {.javascript .numberLines}
 Running.Routers.App = Backbone.Router.extend({
     summary: function() {
-        this.runs = new Running.Collections.Runs([], {authorizationToken: this.options.token});
+        this.runs = new Running.Collections.Runs([], 
+            {authorizationToken: this.options.token});
         this.runs.fetch();
-        this.summaryView = new Running.Views.Summary({collection: this.runs});
+        this.summaryView = new Running.Views.Summary({
+            collection: this.runs});
         $('body').html(this.summaryView.render().el);
         this.summaryView.on('select', this.selected, this);
     },
@@ -304,9 +313,11 @@ The most obvious problem is in the router's `summary` method, reproduced below.
 ``` {.javascript .numberLines}
 Running.Routers.App = Backbone.Router.extend({
     summary: function() {
-        this.runs = new Running.Collections.Runs([], {authorizationToken: this.options.token});
+        this.runs = new Running.Collections.Runs([], 
+            {authorizationToken: this.options.token});
         this.runs.fetch();
-        this.summaryView = new Running.Views.Summary({collection: this.runs});
+        this.summaryView = new Running.Views.Summary({
+            collection: this.runs});
         $('body').html(this.summaryView.render().el);
         this.summaryView.on('select', this.selected, this);
     },
@@ -317,9 +328,11 @@ Every time this method executes it creates a new collection, fetches that collec
 ``` {.javascript .numberLines}
 summary: function() {
     if (!this.summaryView) {
-        this.runs = new Running.Collections.Runs([], {authorizationToken: this.options.token});
+        this.runs = new Running.Collections.Runs([], 
+            {authorizationToken: this.options.token});
         this.runs.fetch();
-        this.summaryView = new Running.Views.Summary({collection: this.runs});
+        this.summaryView = new Running.Views.Summary({
+            collection: this.runs});
         this.summaryView.render();
         this.summaryView.on('select', this.selected, this);
     }
@@ -334,7 +347,8 @@ details: function(id) {
     if (this.summaryView) {
         this.summaryView.$el.detach();
     }
-    this.run = new Running.Models.Run({}, {authorizationToken: this.options.token});
+    this.run = new Running.Models.Run({}, 
+        {authorizationToken: this.options.token});
     this.run.id = id;
     this.run.fetch();
     $('body').html(this.detailsView.render().el);
@@ -347,7 +361,8 @@ Those changes make switching to and from the summary view more efficient. We can
 ``` {.javascript .numberLines}
 details: function(id) {
     if (!this.runs || !(this.run = this.runs.get(id))) {
-        this.run = new Running.Models.Run({}, {authorizationToken: this.options.token});
+        this.run = new Running.Models.Run({}, 
+            {authorizationToken: this.options.token});
         this.run.id = id;
         this.run.fetch();
     }
@@ -374,9 +389,11 @@ summary: function() {
         this.detailsView = null;
     }
     if (!this.summaryView) {
-        this.runs = new Running.Collections.Runs([], {authorizationToken: this.options.token});
+        this.runs = new Running.Collections.Runs([], 
+            {authorizationToken: this.options.token});
         this.runs.fetch();
-        this.summaryView = new Running.Views.Summary({collection: this.runs});
+        this.summaryView = new Running.Views.Summary({
+            collection: this.runs});
         this.summaryView.render();
         this.summaryView.on('select', this.selected, this);
     }

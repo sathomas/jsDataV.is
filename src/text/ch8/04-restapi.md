@@ -65,7 +65,9 @@ The final statement uses a few Underscore.js utilities. It extracts all the keys
 When we first create the Runs collection, we can pass the authorization token as a parameter. We supply an empty array as the first parameter because we don't have any models for the collection. Those will come from Nike+.
 
 ``` {.javascript .numberLines}
-var runs = new Running.Collections.Runs([], {authorization_token: "authorize me"});
+var runs = new Running.Collections.Runs([], {
+    authorization_token: "authorize me"
+});
 ```
 
 With just a small bit of extra code we've added the authorization token to our <span class="smcp">AJAX</span> requests to Nike+.
@@ -170,7 +172,9 @@ Running.Collections.Runs = Backbone.Collection.extend({
     fetch: function(options) {
         this.fetchoptions = options = options || {};
         _(this.fetchoptions).extend({ success: this.fetchMore });
-        return Backbone.Collection.prototype.fetch.call(this, this.fetchoptions);
+        return Backbone.Collection.prototype.fetch.call(
+            this, this.fetchoptions
+        );
     },
 ```
 
@@ -208,7 +212,9 @@ fetch: function(options) {
         success: this.fetchMore,
         remove: true
      });
-    return Backbone.Collection.prototype.fetch.call(this, this.fetchoptions);
+    return Backbone.Collection.prototype.fetch.call(this, 
+        this.fetchoptions
+    );
 }
 ```
 
@@ -240,7 +246,9 @@ fetch: function(options) {
         success: this.fetchMore,
         remove: true
         });
-    return Backbone.Collection.prototype.fetch.call(this, this.fetchoptions);
+    return Backbone.Collection.prototype.fetch.call(this,
+        this.fetchoptions
+    );
 }
 ```
 
@@ -308,7 +316,9 @@ Running.Collections.Runs = Backbone.Collection.extend({
             remove: true,
             validate: true
           });
-        return Backbone.Collection.prototype.fetch.call(this, this.fetchoptions);
+        return Backbone.Collection.prototype.fetch.call(this,
+          this.fetchoptions
+        );
     },
 ```
 
@@ -346,7 +356,10 @@ Running.Models.Run = Backbone.Model.extend({
     sync: function(method, model, options) {
         options = options || {};
         _(options).extend({
-            data: { authorization_token: this.collection.settings.authorization_token }
+            data: { 
+                authorization_token: 
+                    this.collection.settings.authorization_token 
+            }
         });
         Backbone.sync(method, model, options);
     },
@@ -357,7 +370,8 @@ Now we have to decide when and where to call a model's `fetch` method. We don't 
 ``` {.javascript .numberLines}
 Running.Views.Details = Backbone.View.extend({
     initialize: function () {
-        if (!this.model.get("metrics") || this.model.get("metrics").length === 0) {
+        if (!this.model.get("metrics") || 
+            this.model.get("metrics").length === 0) {
             this.model.fetch();
         }            
     },
@@ -370,7 +384,8 @@ The magic is a single statement in the `initialize` method of our Charts view.
 ``` {.javascript .numberLines}
 Running.Views.Charts = Backbone.View.extend({
     initialize: function () {
-        this.listenTo(this.model, 'change:metrics change:gps', this.render);
+        this.listenTo(this.model, 
+            'change:metrics change:gps', this.render);
         // Code continues...
 ```
 
@@ -417,7 +432,8 @@ if (this.get("isGpsActivity")) {
     var model = this;
     $.getJSON(
         this.url() + "/gps",
-        { authorization_token: this.collection.settings.authorization_token },
+        { authorization_token: 
+          this.collection.settings.authorization_token },
         function(data) { model.set("gps", data); }
     );
 }

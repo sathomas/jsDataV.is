@@ -210,7 +210,7 @@ With the countries in different data series based on regions, flotr2 is able to 
 
 For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 13) and position the legend in the northeast quadrant (line 17).
 
-``` {.javascript .numberLines .line-13 .line-18}
+``` {.javascript .numberLines .line-13 .line-17}
 Flotr.draw(
     document.getElementById("chart"),
     [

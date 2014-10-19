@@ -18,8 +18,13 @@ In addition to the jQuery library, sparklines relies on the <span class="smcp">H
   <body>
     <!-- Content goes here -->
     <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/jquery.sparkline.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/"+
+          "jquery.sparkline.min.js">
+    </script>
   </body>
 </html>
 ```

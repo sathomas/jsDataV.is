@@ -101,7 +101,9 @@ As we noted in the previous example, <span class="smcp">D3</span>.js doesn't dep
   </head>
   <body>
     <div id="container"></div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js">
+    </script>
   </body>
 </html>
 ```

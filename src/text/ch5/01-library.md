@@ -20,14 +20,21 @@ All of these libraries are popular enough for public content distribution networ
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
+    <link rel="stylesheet" type="text/css" 
+     href="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
     <link rel="stylesheet" type="text/css" href="css/chronoline.css">
   </head>
   <body>
     <div id="timeline"></div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script
+     src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js">
+    </script>
+    <script 
+     src="//cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js">
+    </script>
+    <script 
+     src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js">
+    </script>
    <script src="js/chronoline.js"></script>
   </body>
 </html>
@@ -76,9 +83,9 @@ var events = $.map(plays, function(play) {
 });
 ```
 
-As you can see from our data set, some of the plays have a single year as their date, while others have a range of years (two dates separated by a dash). To set the date range for Chronoline.js, we check for a dash on line 4. If one is present, we split the date string at that dash and set a multi-year range in line 6. Otherwise we set the range to a single year in line 8.
+As you can see from our data set, some of the plays have a single year as their date, while others have a range of years (two dates separated by a dash). To set the date range for Chronoline.js, we check for a dash on line 4. If one is present, we split the date string at that dash and set a multi-year range in line 6. Otherwise we set the range to a single year in line 9.
 
-> Recall that the JavaScript `Date()` object numbers months from `0` rather than `1`.
+> Recall that the JavaScript `Date()` object numbers months beginning with the value `0` rather than `1`.
 
 ``` {.javascript .numberLines}
 var events = $.map(plays, function(play) {
@@ -86,9 +93,12 @@ var events = $.map(plays, function(play) {
     event.title = play.play;
     if (play.date.indexOf("-") !== -1) {
         var daterange = play.date.split("-");
-        event.dates = [new Date(daterange[0], 0, 1), new Date(daterange[1], 11, 31)]
+        event.dates = [new Date(daterange[0], 0, 1), 
+            new Date(daterange[1], 11, 31)];
     } else {
-        event.dates = [new Date(play.date, 0, 1), new Date(play.date, 11, 31)]
+        event.dates = [
+            new Date(play.date, 0, 1), new Date(play.date, 11, 31)
+        ];
     }
     return event;
 });
@@ -160,10 +170,10 @@ Now we can address the time line scrolling. Chronoline.js normally advances the 
 
 ``` {.javascript .numberLines}
 scrollLeft: function(date) {
-    return new Date(date.getFullYear() - 1, date.getMonth(), date.getDate());
+    return new Date(date.getFullYear()-1, date.getMonth(), date.getDate());
 },
 scrollRight: function(date) {
-    return new Date(date.getFullYear() + 1, date.getMonth(), date.getDate());
+    return new Date(date.getFullYear()+1, date.getMonth(), date.getDate());
 },
 ```
 

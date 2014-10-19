@@ -28,7 +28,9 @@ Our skeletal web page is no different from the other <span class="smcp">D3</span
   </head>
   <body>
     <div id="map"></div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js">
+    </script>
   </body>
 </html>
 ```

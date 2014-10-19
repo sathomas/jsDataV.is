@@ -24,13 +24,13 @@ The sparklines library makes is easy to embed the data directly inside the <span
         <tr class='barclays'>
             <td>AAPL</td>
             <td>Apple Inc.</td>
-            <td class='sparkline'>418.68,416.11,416.6,443.34,455.63,489.08,497.7,517.81,...</td>
+            <td class='sparkline'>418.68,416.11,416.6,443.34,...</td>
             <td>27%</td>
         </tr>
         <tr class='barclays'>
             <td>ALTR</td>
             <td>Altera Corporation</td>
-            <td class='sparkline'>37.1,36.92,39.93,39.81,40.43,39.76,39.73,38.55,36.89,...</td>
+            <td class='sparkline'>37.1,36.92,39.93,39.81,40.43,...</td>
             <td>-7%</td>
         </tr>
         // Markup continues... 
@@ -325,13 +325,14 @@ Sparklines lets you add special attributes directly to the <span class="smcp">HT
 
 In order to use <span class="smcp">HTML</span>-compliant attribute names to refer to sparklines' custom attributes, we just need to tell the sparklines library how to find those attribute names. For our <span class="smcp">HTML</span>, we use the standard `data-` prefix instead of `spark` in line 4.
 
-
 ``` {.html .numberLines .line-4}
 <tr>
-    <td>BMY</td>
-    <td>Bristol Meyers Squibb Co.</td>
-    <td class='sparkline' data-LineColor='#679A00' data-FillColor='#B6ED47'>32.86,32.46,31.36,...</td>
-    <td>(2%)</td>
+   <td>BMY</td>
+   <td>Bristol Meyers Squibb Co.</td>
+   <td class='sparkline' data-LineColor='#679A00' data-FillColor='#B6ED47'>
+      32.86,32.46,31.36,...
+   </td>
+   <td>(2%)</td>
 </tr>
 ```
 

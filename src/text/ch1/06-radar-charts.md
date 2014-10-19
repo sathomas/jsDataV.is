@@ -29,11 +29,16 @@ We'll start with a typical JavaScript expression of the team's statistics. For o
 
 ``` {.javascript .numberLines}
 var players = [
-    { player: "Chris Bosh",     points: 17.2, rebounds: 7.9, assists: 1.6, steals: 0.8, blocks: 0.8 },
-    { player: "Shane Battier",  points:  5.4, rebounds: 2.6, assists: 1.2, steals: 1.0, blocks: 0.5 },
-    { player: "LeBron James",   points: 28.0, rebounds: 8.4, assists: 6.1, steals: 1.9, blocks: 0.8 },
-    { player: "Dwayne Wade",    points: 22.3, rebounds: 5.0, assists: 4.5, steals: 1.7, blocks: 1.3 },
-    { player: "Mario Chalmers", points: 10.2, rebounds: 2.9, assists: 3.6, steals: 1.4, blocks: 0.2 }
+    { player: "Chris Bosh",     points: 17.2, rebounds: 7.9, 
+      assists: 1.6, steals: 0.8, blocks: 0.8 },
+    { player: "Shane Battier",  points:  5.4, rebounds: 2.6, 
+      assists: 1.2, steals: 1.0, blocks: 0.5 },
+    { player: "LeBron James",   points: 28.0, rebounds: 8.4, 
+      assists: 6.1, steals: 1.9, blocks: 0.8 },
+    { player: "Dwayne Wade",    points: 22.3, rebounds: 5.0, 
+      assists: 4.5, steals: 1.7, blocks: 1.3 },
+    { player: "Mario Chalmers", points: 10.2, rebounds: 2.9, 
+      assists: 3.6, steals: 1.4, blocks: 0.2 }
 ];
 var team = {
     points:   98.2,
@@ -110,7 +115,7 @@ Flotr.draw(document.getElementById("chart"),
         player_data("Dwayne Wade"),
         player_data("Mario Chalmers")
     ],{
-        title:  "2011/12 Miami Heat Starting Lineup - Contribution to Team Total",
+        title:  "2011/12 Miami Heat - Contribution to Team Total",
         radar:  { show: true },
         grid:   { circular: true },
         xaxis:  { ticks: labels },

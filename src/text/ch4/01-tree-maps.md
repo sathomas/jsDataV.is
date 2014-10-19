@@ -19,7 +19,9 @@ The treemap-squared library itself depends on the [Raphaël](http://raphaeljs.co
   </head>
   <body>
     <div id="treemap"></div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js">
+    </script>
     <script src="js/treemap-squared-0.5.min.js"></script>
   </body>
 </html>
@@ -60,8 +62,12 @@ for (var i=0; i<census.length; i++) {
 Now we're ready to use the library to construct our tree map. We need to assemble the individual data and label arrays and then call the library's main function. The first two parameters in line 3 are the width and height of the map.
 
 ``` {.javascript .numberLines .line-3}
-var data = [ west.data, midwest.data, northeast.data, south.data ];
-var labels = [ west.labels, midwest.labels, northeast.labels, south.labels ];
+var data = [ 
+    west.data, midwest.data, northeast.data, south.data
+];
+var labels = [ 
+    west.labels, midwest.labels, northeast.labels, south.labels
+];
 Treemap.draw("treemap", 600, 450, data, labels);
 ```
 
@@ -110,7 +116,9 @@ for (var i=0; i<census.length; i++) {
 In the same way that we created a master object for the data and the labels, we create another master object for the growth rates. Let's also calculate the total growth rate for the country overall.
 
 ``` {.javascript .numberLines}
-var growth = [ west.growth, midwest.growth, northeast.growth, south.growth ];
+var growth = [ 
+    west.growth, midwest.growth, northeast.growth, south.growth
+];
 var totalGrowth = (total2012 - total2010)/total2010;
 ```
 
@@ -118,8 +126,12 @@ Now we need a function to calculate the color for a tree map rectangle. We start
 
 ``` {.javascript .numberLines}
 var colorRanges = { 
-  positive: [ "#FFFFBF","#D9EF8B","#A6D96A","#66BD63","#1A9850","#006837" ],
-  negative: [ "#FFFFBF","#FEE08B","#FDAE61","#F46D43","#D73027","#A50026" ]
+  positive: [ 
+    "#FFFFBF","#D9EF8B","#A6D96A","#66BD63","#1A9850","#006837" 
+  ],
+  negative: [ 
+    "#FFFFBF","#FEE08B","#FDAE61","#F46D43","#D73027","#A50026" 
+  ]
 };
 ```
 
@@ -139,8 +151,11 @@ function pickColor(coordinates, index) {
         colorRange = colorRanges.negative;
         deltaGrowth = -1 * deltaGrowth;
     }
-    var colorIndex = Math.floor(colorRange.length*(deltaGrowth-minDelta)/(maxDelta-minDelta));
-    if (colorIndex >= colorRange.length) { colorIndex = colorRange.length - 1; }
+    var colorIndex = Math.floor(colorRange.length * 
+        (deltaGrowth - minDelta) / (maxDelta - minDelta));
+    if (colorIndex >= colorRange.length) { 
+        colorIndex = colorRange.length - 1; 
+    }
     
     color = colorRange[colorIndex];
     return{ "fill" : color };

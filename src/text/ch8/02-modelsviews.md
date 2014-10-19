@@ -1,3 +1,4 @@
+
 ## Models and Views
 
 There are many application libraries available for web apps, and that number may lead you to assume that there are lots of opinions on how web apps should be built. In fact, though, most of the libraries agree on the key principles that should guide an app's architecture. Perhaps the most fundamental of those principles is separating _models_ from _views._ The code that keeps track of the core data for the app—the models—should be separate from the code that presents that data to the user—the views. Enforcing this separation makes it easier to update and modify either. If you want to present your data in a table instead of a chart, you can do that without any changes to the models. And if you need to change your data source from a local file to a <span class="smcp">REST</span> <span class="smcp">API</span>, you can do that without any changes to the views. We've been employing this principle in an informal way throughout the book. In all of the examples we've isolated the steps required to obtain and format our data from the steps we used to visualize it. Using an application library like Backbone.js gives us the tools to manage models and views more explicitly.
@@ -8,7 +9,7 @@ In the case of our running application, it's pretty easy to identify the models.
 
 The Yeoman tool makes it very easy to define a model for our app. A simple command defines a new model and creates the JavaScript files and scaffolding for that model.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ yo backbone:model run
    create app/scripts/models/run.js
    invoke   backbone-mocha:model
@@ -107,7 +108,7 @@ run.fetch({success: function() {
 
 The output in the browser's console would be:
 
-``` {.bash .numberLines}
+``` {.bash}
 Run started at 2013-04-09T10:54:33Z
     Duration: 0:22:39.000
     Distance: 3.7524
@@ -122,7 +123,7 @@ If our application only needed a single object for its data, then we could easil
 
 Yeoman makes it easy to define and set up scaffolding for our collection. We execute the single command `yo backbone:collection runs` from the command line. (Yes, we're being very original and calling our collection of runs, well, _runs._)
 
-``` {.bash .numberLines}
+``` {.bash}
 $ yo backbone:collection runs
    create app/scripts/collections/runs.js
    invoke   backbone-mocha:collection
@@ -178,7 +179,7 @@ Now that we have all the running data for a user, it's time to present that data
 
 A Backbone.js view is responsible for the presenting data to the user, and that data may be maintained in a collection or a model. For the main page of our app, we want to show summary information for all of a user's runs. That view, therefore, is a view of the entire collection. We'll call the view _Summary._ Before we stop thinking about views, though, consider what's going to make up that summary table. The bulk of the table will be a series of table rows, and each row will present summary data about an individual run. That suggests an additional view for our app, the view of a single Run model presented as a table row. Let's use that view as well, so that our main Summary view is made up (mostly) of many _SummaryRow_ views. We can once again rely on Yeoman to set up the scaffolding for both of those types of views.
 
-``` {.bash .numberLines}
+``` {.bash}
 $ yo backbone:view summary
    create app/scripts/templates/summary.ejs
    create app/scripts/views/summary.js
@@ -354,7 +355,12 @@ The other template we need to supply is the Summary template. Since we've alread
 
 ``` {.html .numberLines}
 <thead>
-	<tr><th>Time</th><th>Duration</th><th>Distance</th><th>Calories</th></tr>
+	<tr>
+        <th>Time</th>
+        <th>Duration</th>
+        <th>Distance</th>
+        <th>Calories</th>
+    </tr>
 </thead>
 <tbody></tbody>
 ```
@@ -380,19 +386,32 @@ We can access the constructed `<table>` as the `el` (short for _element_) proper
 ``` {.html .numberLines}
 <table>
   <thead>
-    <tr><th>Time</th><th>Duration</th><th>Distance</th><th>Calories</th></tr>
+    <tr>
+        <th>Time</th>
+        <th>Duration</th>
+        <th>Distance</th>
+        <th>Calories</th>
+    </tr>
   </thead>
   <tbody>
-    <tr><td>2013-04-09T10:54:33Z</td><td>0:22:39.000</td><td>3.7524</td><td>240</td></tr>
-    <tr><td>2013-04-07T12:34:40Z</td><td>0:44:59.000</td><td>8.1724</td><td>569</td></tr>
-    <tr><td>2013-04-06T13:28:36Z</td><td>1:28:59.000</td><td>16.068001</td><td>1200</td></tr>
-    <tr><td>2013-04-04T11:57:16Z</td><td>0:58:44.000</td><td>9.623</td><td>736</td></tr>
-    <tr><td>2013-04-02T11:42:47Z</td><td>0:22:37.000</td><td>3.6368</td><td>293</td></tr>
-    <tr><td>2013-03-31T12:44:00Z</td><td>0:34:04.000</td><td>6.3987</td><td>445</td></tr>
-    <tr><td>2013-03-30T13:15:35Z</td><td>1:29:31.000</td><td>16.0548</td><td>1203</td></tr>
-    <tr><td>2013-03-28T11:42:17Z</td><td>1:04:09.000</td><td>11.1741</td><td>852</td></tr>
-    <tr><td>2013-03-26T12:21:52Z</td><td>0:39:33.000</td><td>7.3032</td><td>514</td></tr>
-    <tr><td>2013-03-24T20:15:31Z</td><td>0:33:49.000</td><td>6.2886</td><td>455</td></tr>
+    <tr>
+        <td>2013-04-09T10:54:33Z</td>
+        <td>0:22:39.000</td>
+        <td>3.7524</td>
+        <td>240</td>
+    </tr>
+    <tr>
+        <td>2013-04-07T12:34:40Z</td>
+        <td>0:44:59.000</td>
+        <td>8.1724</td>
+        <td>569</td>
+    </tr>
+    <tr>
+        <td>2013-04-06T13:28:36Z</td>
+        <td>1:28:59.000</td>
+        <td>16.068001</td>
+        <td>1200</td>
+    </tr>
   </tbody>
 </table>
 ```
@@ -400,21 +419,21 @@ We can access the constructed `<table>` as the `el` (short for _element_) proper
 When we insert that markup in the page, our users can see a simple summary table listing their runs.
 
 <table>
-  <thead>
-    <tr><th>Time</th><th>Duration</th><th>Distance</th><th>Calories</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>2013-04-09T10:54:33Z</td><td>0:22:39.000</td><td>3.7524</td><td>240</td></tr>
-    <tr><td>2013-04-07T12:34:40Z</td><td>0:44:59.000</td><td>8.1724</td><td>569</td></tr>
-    <tr><td>2013-04-06T13:28:36Z</td><td>1:28:59.000</td><td>16.068001</td><td>1200</td></tr>
-    <tr><td>2013-04-04T11:57:16Z</td><td>0:58:44.000</td><td>9.623</td><td>736</td></tr>
-    <tr><td>2013-04-02T11:42:47Z</td><td>0:22:37.000</td><td>3.6368</td><td>293</td></tr>
-    <tr><td>2013-03-31T12:44:00Z</td><td>0:34:04.000</td><td>6.3987</td><td>445</td></tr>
-    <tr><td>2013-03-30T13:15:35Z</td><td>1:29:31.000</td><td>16.0548</td><td>1203</td></tr>
-    <tr><td>2013-03-28T11:42:17Z</td><td>1:04:09.000</td><td>11.1741</td><td>852</td></tr>
-    <tr><td>2013-03-26T12:21:52Z</td><td>0:39:33.000</td><td>7.3032</td><td>514</td></tr>
-    <tr><td>2013-03-24T20:15:31Z</td><td>0:33:49.000</td><td>6.2886</td><td>455</td></tr>
-  </tbody>
+<thead>
+<tr><th>Time</th><th>Duration</th><th>Distance</th><th>Calories</th></tr>
+</thead>
+<tbody>
+<tr><td>2013-04-09T10:54:33Z</td><td>0:22:39.000</td><td>3.7524</td><td>240</td></tr>
+<tr><td>2013-04-07T12:34:40Z</td><td>0:44:59.000</td><td>8.1724</td><td>569</td></tr>
+<tr><td>2013-04-06T13:28:36Z</td><td>1:28:59.000</td><td>16.068001</td><td>1200</td></tr>
+<tr><td>2013-04-04T11:57:16Z</td><td>0:58:44.000</td><td>9.623</td><td>736</td></tr>
+<tr><td>2013-04-02T11:42:47Z</td><td>0:22:37.000</td><td>3.6368</td><td>293</td></tr>
+<tr><td>2013-03-31T12:44:00Z</td><td>0:34:04.000</td><td>6.3987</td><td>445</td></tr>
+<tr><td>2013-03-30T13:15:35Z</td><td>1:29:31.000</td><td>16.0548</td><td>1203</td></tr>
+<tr><td>2013-03-28T11:42:17Z</td><td>1:04:09.000</td><td>11.1741</td><td>852</td></tr>
+<tr><td>2013-03-26T12:21:52Z</td><td>0:39:33.000</td><td>7.3032</td><td>514</td></tr>
+<tr><td>2013-03-24T20:15:31Z</td><td>0:33:49.000</td><td>6.2886</td><td>455</td></tr>
+</tbody>
 </table>
 
 ### Step 6: Refine the Main View
@@ -449,7 +468,9 @@ run.duration = this.model.get("metricSummary").duration.split(".")[0];
 The distance property can also use some adjustment. In addition to rounding it to a reasonable number of decimal places, we can convert from km to Miles for our <span class="smcp">US</span> users. A single statement takes care of both.
 
 ``` {.javascript .numberLines}
-run.distance = Math.round(62.1371*this.model.get("metricSummary").distance)/100 + " Miles";
+run.distance = Math.round(62. *
+    this.model.get("metricSummary").distance)/100 +
+    " Miles";
 ```
 
 The calories attribute is one value that's fine as it is, so we'll just copy it into our temporary object.
@@ -487,7 +508,13 @@ And here's the Summary template with the additional column for pace.
 
 ``` {.html .numberLines}
 <thead>
-	<tr><th>Date</th><th>Duration</th><th>Distance</th><th>Calories</th><th>Pace</th></tr>
+  <tr>
+    <th>Date</th>
+    <th>Duration</th>
+    <th>Distance</th>
+    <th>Calories</th>
+    <th>Pace</th>
+  </tr>
 </thead>
 <tbody></tbody>
 ```

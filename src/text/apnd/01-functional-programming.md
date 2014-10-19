@@ -64,7 +64,7 @@ A second bug occurs on line 13:
 
 Although we think and read left to right (at least in English), JavaScript executes multiple assignments from right to left. Instead of shifting the values in our variables, this statement simply assigns the value of `f` to all three. We need to break the single statement into two:
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines startFrom="13"}
         f0 = f1;
         f1 = f;
 ```
@@ -107,30 +107,10 @@ In our specific case the `fib()` function calls itself twice at every level unti
 
 As you might imagine, the resulting performance is simply unacceptable. Here are the execution times for both the functional and the imperative versions of `fib()`:
 
-<table>
-<thead>
-<tr>
-<th id="version" style="text-align:left;"> Version </th>
-<th id="parameter" style="text-align:left;"> Parameter </th>
-<th id="execution_time" style="text-align:left;"> Execution Time </th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td style="text-align:left;"><p>Imperative <code>fib()</code> </p></td>
-<td style="text-align:left;"><p><code>28</code> </p></td>
-<td style="text-align:left;"><p>0.231 ms </p></td>
-</tr>
-
-<tr>
-<td style="text-align:left;"><p>Functional <code>fib()</code> </p></td>
-<td style="text-align:left;"><p><code>28</code> </p></td>
-<td style="text-align:left;"><p>296.9 ms </p></td>
-</tr>
-
-</tbody>
-</table>
+| Version    | Parameter | Execution Time |
+|------------|-----------|----------------|
+| Imperative | `28`      | 0.231 ms       |
+| Functional | `28`      | 296.9 ms       |
 
 As you can see, the functional programming version is over a thousand times slower. In the real world, such performance is rarely acceptable.
 
@@ -151,7 +131,10 @@ Of course we need to include that library in our web pages. If you're including 
   </head>
   <body>
     <!-- Content goes here -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+    <script 
+      src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/"+
+          "underscore-min.js">
+    </script>
   </body>
 </html>
 ```
@@ -178,3 +161,4 @@ As you can see, we haven't really lost any of the readability or conciseness of 
 Just by including the Underscore library and using one of its methods, our functional implementation has nearly the same performance as the imperative version.
 
 For the rest of this chapter, we'll look at many of the other improvements and utilities that Underscore provides. With its support for functional programming, Underscore makes it significantly easier to work with data in the browser.
+

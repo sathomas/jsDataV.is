@@ -52,7 +52,11 @@ Now we can tackle the data that we want to display. For this example, I'll use t
 
 ``` {.html .numberLines}
 <script>
-var wins = [[[2006,13],[2007,11],[2008,15],[2009,15],[2010,18],[2011,21],[2012,28]]];
+var wins = [
+    [ [2006,13],[2007,11],[2008,15],[2009,15],
+      [2010,18],[2011,21],[2012,28]
+    ]
+];
 </script>
 ```
 

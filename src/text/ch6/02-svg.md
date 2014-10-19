@@ -28,8 +28,10 @@ Compare that to the example below, the universal symbol for first aid represente
 
 ``` {.html .numberLines}
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg id="firstaid" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+    "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg id="firstaid" version="1.1" xmlns="http://www.w3.org/2000/svg" 
+     width="100" height="100">
     <rect id="background" x="0" y="0" width="100" height="100" rx="20" />
     <rect id="vertical"   x="39" y="19" width="22" height="62" />
     <rect id="horizontal" x="19" y="39" width="62" height="22" />
@@ -86,7 +88,8 @@ After downloading the map file, we can adjust it to more exactly fit our needs, 
 Our result will be a series of `<path>` elements, one for each county. We'll also want to assign a `class` or `id` to each path to indicate the county. The resulting <span class="smcp">SVG</span> file might begin as in the following.
 
 ``` {.html .numberLines}
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="497" height="558">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
+    width="497" height="558">
     <path id="ck" d="M 216.65,131.53 L 216.41,131.53 216.17,131.53..." />
     <path id="me" d="M 74.32,234.01 L 74.32,232.09 74.32,231.61..." />
     <path id="ms" d="M 64.96,319.22 L 64.72,319.22 64.48,318.98..." />
@@ -102,7 +105,7 @@ To summarize, here are the steps I normally take to create the <span class="smcp
 
 ### Step 2: Embed the Map in the Page
 
-The simplest way to include an <span class="smcp">SVG</span> map in a web page is to embed the <span class="smcp">SVG</span> markup directly within the <span class="smcp">HTML</span> markup. To include the first aid symbol, for example, just include the <span class="smcp">SVG</span> tags within the page itself, as in lines 9 through 13. As the example below shows, you don't have to include the header tags that are normally present in a standalone <span class="smcp">SVG</span> file.
+The simplest way to include an <span class="smcp">SVG</span> map in a web page is to embed the <span class="smcp">SVG</span> markup directly within the <span class="smcp">HTML</span> markup. To include the first aid symbol, for example, just include the <span class="smcp">SVG</span> tags within the page itself, as in lines 9 through 18. As the example below shows, you don't have to include the header tags that are normally present in a standalone <span class="smcp">SVG</span> file.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -113,10 +116,15 @@ The simplest way to include an <span class="smcp">SVG</span> map in a web page i
   </head>
   <body>
     <div>
-      <svg id="firstaid" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
-        <rect id="background" x="0" y="0" width="100" height="100" rx="20" />
-        <rect id="vertical"   x="39" y="19" width="22" height="62" />
-        <rect id="horizontal" x="19" y="39" width="62" height="22" />
+      <svg id="firstaid" version="1.1" 
+           xmlns="http://www.w3.org/2000/svg" 
+        width="100" height="100">
+        <rect id="background" x="0" y="0" 
+              width="100" height="100" rx="20" />
+        <rect id="vertical" x="39" y="19" 
+              width="22" height="62" />
+        <rect id="horizontal" x="19" y="39" 
+              width="62" height="22" />
       </svg>
    </div>
   </body>
@@ -193,7 +201,9 @@ The Chroma.js library is available on popular Content Distribution Networks, so 
   </head>
   <body>
     <div id="map"></div>
-    <script src="///cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.2/chroma.min.js"></script>
+    <script 
+     src="///cdnjs.cloudflare.com/ajax/libs/chroma-js/0.5.2/chroma.min.js">
+    </script>
   </body>
 </html>
 ```
@@ -210,7 +220,8 @@ With our color scheme established, we can now apply the appropriate colors to ea
 
 ``` {.javascript .numberLines}
 counties.forEach(function(county) {
-    document.getElementById(county.code).setAttribute("fill", scale(county.outcomes_z));
+    document.getElementById(county.code)
+      .setAttribute("fill", scale(county.outcomes_z));
 })
 ```
 
@@ -227,8 +238,15 @@ To help our users interpret the map we can add a legend to the visualization. We
 
 ``` {.html .numberLines}
 <table id="legend">
-    <tr class="scale"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="text"><td colspan="4">Worse than Average</td>Average<td></td><td colspan="4">Better than Average</td></tr>
+    <tr class="scale">
+        <td></td><td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td>
+    </tr>
+    <tr class="text">
+        <td colspan="4">Worse than Average</td>
+        <td>Average</td>
+        <td colspan="4">Better than Average</td>
+    </tr>
 </table>
 ```
 
@@ -257,7 +275,8 @@ var legend = document.getElementById("legend");
 var cells = legend.rows[0].cells;
 for (var idx=0; idx<cells.length; idx++) {
     var td = cells[idx];
-    td.style.backgroundColor = scale(maxZ - ((idx + 0.5) / cells.length) * (maxZ - minZ));
+    td.style.backgroundColor = scale(maxZ - 
+        ((idx + 0.5) / cells.length) * (maxZ - minZ));
 };
 ```
 
@@ -341,14 +360,16 @@ table#details {
 To show the table we use event handler functions that tracks when the mouse enters or leaves an <span class="smcp">SVG</span> path for a county. To find these `<path>` elements we can use the `querySelectorAll()` function that modern browsers support. Unfortunately that function doesn't return a true array of elements, so we can't use array methods such as `forEach` to iterate through those elements. There's a trick, however, that will let us convert the returned list into a true array. The following code shows the trick; it calls the `[].slice.call()` function with the "not quite array" object as its parameter. The result is a true array with all of its useful methods.
 
 ``` {.javascript .numberLines}
-[].slice.call(document.querySelectorAll('#map path')).forEach(function(path){
-    path.addEventListener('mouseenter', function(){
-        document.getElementById("details").style.display = "table";
-    });
-    path.addEventListener('mouseleave', function(){
-        document.getElementById("details").style.display = "none";
-    });
-})
+[].slice.call(document.querySelectorAll('#map path'))
+    .forEach(function(path) {
+        path.addEventListener('mouseenter', function(){
+            document.getElementById("details").style.display = "table";
+        });
+        path.addEventListener('mouseleave', function(){
+            document.getElementById("details").style.display = "none";
+        });
+    }
+);
 ```
 
 In addition to making the details table visible, we'll also want to update it with the appropriate information. To help with this display, we can write a function that converts a Z score into a more user-friendly explanation. The specific values in the example below are arbitrary since we're not trying for statistical precision in this visualization.
@@ -383,12 +404,18 @@ Once we've found the county data, it's a straightforward process to update the t
 
 ``` {.javascript .numberLines}
 var table = document.getElementById("details");
-table.rows[0].cells[1].textContent = county.name;
-table.rows[1].cells[1].textContent = county.outcomes_rank + " out of " + counties.length;
-table.rows[2].cells[1].textContent = zToText(county.health_behaviors_z);
-table.rows[3].cells[1].textContent = zToText(county.clinical_care_z);
-table.rows[4].cells[1].textContent = zToText(county.social_and_economic_factors_z);
-table.rows[5].cells[1].textContent = zToText(county.physical_environment_z);
+table.rows[0].cells[1].textContent = 
+    county.name;
+table.rows[1].cells[1].textContent = 
+    county.outcomes_rank + " out of " + counties.length;
+table.rows[2].cells[1].textContent = 
+    zToText(county.health_behaviors_z);
+table.rows[3].cells[1].textContent = 
+    zToText(county.clinical_care_z);
+table.rows[4].cells[1].textContent = 
+    zToText(county.social_and_economic_factors_z);
+table.rows[5].cells[1].textContent = 
+    zToText(county.physical_environment_z);
 ```
 
 For the last refinement, let's add a stroke color for counties that are highlighted (line 3). We remove the stroke (in line 7) when the mouse leaves the path.
