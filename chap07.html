@@ -454,11 +454,11 @@ svg { font: 10px sans-serif; }
 }
 </style>
 <figure>
-<div id="chart1" style="height:400px;width:640px;">
+<div id="chart1">
 
 </div>
 <figcaption>
-<span class="smcp">D3</span>.js provides tools to create the framework for a chart.
+<span class="lgcp">D3</span>.js provides tools to create the framework for a chart.
 </figcaption>
 </figure>
 <p>As you can tell, we’ve had to write quite a bit of code just to get a couple of axes on the page. That’s the nature of <span class="smcp">D3</span>.js. It’s not a library to which you can simply pass a data set and get a chart as an output. Instead, it’s better thought of as a collection of very useful utilities that you can use to help create your own charts.</p>
@@ -480,11 +480,11 @@ svg { font: 10px sans-serif; }
 });</code></pre></td></tr></table>
 <p>The approach above works fine for this example and results in the chart of figure <span class="nextfigure"/>. Typically, however, <span class="smcp">D3</span>.js visualizations combine their data sets directly with markup elements and rely on <span class="smcp">D3</span>’s <code>enter</code>, <code>update</code>, and <code>exit</code> selections to add the data to the page. We’ll defer further discussion of this alternative approach until the next example.</p>
 <figure>
-<div id="chart2" style="height:500px;width:640px;">
+<div id="chart2">
 
 </div>
 <figcaption>
-<span class="smcp">D3</span>.js can render the data elements using any valid markup, including <span class="smcp">SVG</span> &lt;rect&gt; elements with defined dimensions.
+<span class="lgcp">D3</span>.js can render the data elements using any valid markup, including <span class="smcp">SVG</span> &lt;rect&gt; elements with defined dimensions.
 </figcaption>
 </figure>
 <h3 id="step-7-answer-users-questions">Step 7: Answer Users’ Questions</h3>
@@ -502,7 +502,7 @@ svg { font: 10px sans-serif; }
     .<span class="fu">attr</span>(<span class="st">&quot;y2&quot;</span>,<span class="fu">yScale</span>(<span class="dv">1400</span>));</code></pre></td></tr></table>
 <p>In figure <span class="nextfigure"/> we can see that Hubble’s Law remains a good approximation.</p>
 <figure>
-<div id="chart3" style="height:400px;width:640px;">
+<div id="chart3">
 
 </div>
 <figcaption>
@@ -870,14 +870,14 @@ The complete custom chart shows the data set exactly as we wish.
 <figure>
 <img src="img/selection.svg" />
 <figcaption>
-<span class="smcp">D3</span>.js selections can associate page content such as &lt;circle&gt; elements with data items such as albums.
+<span class="lgcp">D3</span>.js selections can associate page content such as &lt;circle&gt; elements with data items such as albums.
 </figcaption>
 </figure>
 <p>In general, though, we can’t guarantee that there will be exactly as many elements as data values. Suppose, for example, only two <code>&lt;circle&gt;</code> elements existed for our four albums. As figure <span class="nextfigure"/> shows, <span class="smcp">D3</span>.js still creates a selection of four objects, even though there aren’t enough circles for all of them. Two of the objects will have a data value but no element.</p>
 <figure>
 <img src="img/selection2.svg" />
 <figcaption>
-<span class="smcp">D3</span>.js selections keep track of page content that doesn’t exist (yet).
+<span class="lgcp">D3</span>.js selections keep track of page content that doesn’t exist (yet).
 </figcaption>
 </figure>
 <p>Our code fragment is an even more extreme example. When it executes, there are absolutely no circles on the page. There are, however, values in the <code>nodes</code> array that we’re telling <span class="smcp">D3</span>.js to use as data. <span class="lgcp">D3</span>.js, therefore, creates an object for each of those data values. It just won’t have a <code>&lt;circle&gt;</code> element to go with them.</p>
@@ -965,7 +965,7 @@ line {
 
 </div>
 <figcaption>
-<span class="smcp">D3</span>.js provides tools to help draw the circles and lines for a network graph.
+<span class="lgcp">D3</span>.js provides tools to help draw the circles and lines for a network graph.
 </figcaption>
 </figure>
 <h3 id="step-7-add-force-direction-to-the-graph">Step 7: Add Force-Direction to the Graph</h3>
@@ -1161,7 +1161,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 
 </div>
 <figcaption>
-<span class="smcp">D3</span>.js includes functions to make visualizations interactive.
+<span class="lgcp">D3</span>.js includes functions to make visualizations interactive.
 </figcaption>
 </figure>
 <h3 id="step-9-the-skys-the-limit">Step 9: The Sky’s the Limit</h3>
@@ -1880,7 +1880,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 
 </div>
 <figcaption>
-<span class="smcp">D3</span>.js includes many features to help in the creation of map-based visualizations.
+<span class="lgcp">D3</span>.js includes many features to help in the creation of map-based visualizations.
 </figcaption>
 </figure>
 <script>
