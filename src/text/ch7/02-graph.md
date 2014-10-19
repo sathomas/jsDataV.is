@@ -147,14 +147,14 @@ The result is easiest to understand when there are exactly as many elements as t
 
 <figure>
 ![](img/selection.svg)
-<figcaption><span class="smcp">D3</span>.js selections can associate page content such as &lt;circle&gt; elements with data items such as albums.</figcaption>
+<figcaption><span class="lgcp">D3</span>.js selections can associate page content such as &lt;circle&gt; elements with data items such as albums.</figcaption>
 </figure>
 
 In general, though, we can't guarantee that there will be exactly as many elements as data values. Suppose, for example, only two `<circle>` elements existed for our four albums. As figure NEXTFIGURENUMBER shows, <span class="smcp">D3</span>.js still creates a selection of four objects, even though there aren't enough circles for all of them. Two of the objects will have a data value but no element.
 
 <figure>
 ![](img/selection2.svg)
-<figcaption><span class="smcp">D3</span>.js selections keep track of page content that doesn't exist (yet).</figcaption>
+<figcaption><span class="lgcp">D3</span>.js selections keep track of page content that doesn't exist (yet).</figcaption>
 </figure>
 
 Our code fragment is an even more extreme example. When it executes, there are absolutely no circles on the page. There are, however, values in the `nodes` array that we're telling <span class="smcp">D3</span>.js to use as data. <span class="lgcp">D3</span>.js, therefore, creates an object for each of those data values. It just won't have a `<circle>` element to go with them.
@@ -244,7 +244,7 @@ line {
 
 <figure>
 <div style="position:relative;left:-100px" id='figure1'></div>
-<figcaption><span class="smcp">D3</span>.js provides tools to help draw the circles and lines for a network graph.</figcaption>
+<figcaption><span class="lgcp">D3</span>.js provides tools to help draw the circles and lines for a network graph.</figcaption>
 </figure>
 
 ### Step 7: Add Force-Direction to the Graph
@@ -426,7 +426,7 @@ Along with a bit of <span class="smcp">CSS</span> styling to emphasize the selec
 
 <figure>
 <div id='figure3'></div>
-<figcaption><span class="smcp">D3</span>.js includes functions to make visualizations interactive.</figcaption>
+<figcaption><span class="lgcp">D3</span>.js includes functions to make visualizations interactive.</figcaption>
 </figure>
 
 

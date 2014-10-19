@@ -130,7 +130,7 @@ The result of our efforts is figure NEXTFIGURENUMBER. The map shows all the stat
 
 <figure>
 <div id='map1'></div>
-<figcaption><span class="smcp">D3</span>.js includes many features to help in the creation of map-based visualizations.</figcaption>
+<figcaption><span class="lgcp">D3</span>.js includes many features to help in the creation of map-based visualizations.</figcaption>
 </figure>
 
 

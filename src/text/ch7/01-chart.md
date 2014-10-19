@@ -242,8 +242,8 @@ svg { font: 10px sans-serif; }
 </style>
 
 <figure>
-<div id='chart1' style="height:400px;width:640px;"></div>
-<figcaption><span class="smcp">D3</span>.js provides tools to create the framework for a chart.</figcaption>
+<div id='chart1'></div>
+<figcaption><span class="lgcp">D3</span>.js provides tools to create the framework for a chart.</figcaption>
 </figure>
 
 As you can tell, we've had to write quite a bit of code just to get a couple of axes on the page. That's the nature of <span class="smcp">D3</span>.js. It's not a library to which you can simply pass a data set and get a chart as an output. Instead, it's better thought of as a collection of very useful utilities that you can use to help create your own charts.
@@ -265,8 +265,8 @@ hubble_data.forEach(function(nebulae) {
 The approach above works fine for this example and results in the chart of figure NEXTFIGURENUMBER. Typically, however, <span class="smcp">D3</span>.js visualizations combine their data sets directly with markup elements and rely on <span class="smcp">D3</span>'s `enter`, `update`, and `exit` selections to add the data to the page. We'll defer further discussion of this alternative approach until the next example. 
 
 <figure>
-<div id='chart2' style="height:500px;width:640px;"></div>
-<figcaption><span class="smcp">D3</span>.js can render the data elements using any valid markup, including <span class="smcp">SVG</span> &lt;rect&gt; elements with defined dimensions.</figcaption>
+<div id='chart2'></div>
+<figcaption><span class="lgcp">D3</span>.js can render the data elements using any valid markup, including <span class="smcp">SVG</span> &lt;rect&gt; elements with defined dimensions.</figcaption>
 </figure>
 
 ### Step 7: Answer Users' Questions
@@ -286,7 +286,7 @@ chart.append("line")
 In figure NEXTFIGURENUMBER we can see that Hubble's Law remains a good approximation.
 
 <figure>
-<div id='chart3' style="height:400px;width:640px;"></div>
+<div id='chart3'></div>
 <figcaption>The complete custom chart shows the data set exactly as we wish.</figcaption>
 </figure>
 
