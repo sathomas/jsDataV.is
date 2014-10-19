@@ -91,7 +91,7 @@ The "functional" in "functional programming" does not refer to functions in prog
 
 Here's how we can implement the Fibonacci algorithm with functional programming:
 
-```langugage-javascript
+``` {.javascript .numberLines}
 var fib = function(n) { return n < 2 ? n : fib(n-1) + fib(n-2); }
 ```
 
