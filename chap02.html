@@ -136,7 +136,10 @@ body { counter-reset: chapter 2; }
 </style>
 
 <h1 id="chapter-2-making-charts-interactive">Chapter 2: Making Charts Interactive</h1>
-<p>In chapter 1 we saw how to create a wide variety of simple, static charts. In many cases such charts are the ideal visualization, but they don’t take advantage of an important characteristic of the web—interactivity. Sometimes you want to do more than just present data to your users; you want to give them a chance to explore the data, to focus on the elements they find particularly interesting, or to consider alternative scenarios. In those cases we can take advantage of the web as a medium by adding interactivity to our visualizations. Because they’re designed for the web, virtually all of the libraries and toolkits we examine in this book include support for interactivity. That’s certainly true of the flotr2 library used in chapter 1. But let’s take the opportunity to explore an alternative. In this chapter, we’ll use the <a href="http://www.flotcharts.org/">Flot library</a>, which is based on jQuery, and features exceptionally strong support for interactive and real time charts. For this chapter, we’re also going to stick with a single data source: the Gross Domestic Product (<span class="smcp">GDP</span>) for countries worldwide. This data is publicly available from the <a href="http://data.worldbank.org">World Bank</a>. It may not seem like the most exciting data to work with, but effective visualizations can bring even the most mundane data alive. Here’s what you’ll learn:</p>
+<p>In chapter 1 we saw how to create a wide variety of simple, static charts. In many cases such charts are the ideal visualization, but they don’t take advantage of an important characteristic of the web—interactivity. Sometimes you want to do more than just present data to your users; you want to give them a chance to explore the data, to focus on the elements they find particularly interesting, or to consider alternative scenarios. In those cases we can take advantage of the web as a medium by adding interactivity to our visualizations.</p>
+<p>Because they’re designed for the web, virtually all of the libraries and toolkits we examine in this book include support for interactivity. That’s certainly true of the flotr2 library used in chapter 1. But let’s take the opportunity to explore an alternative. In this chapter, we’ll use the <a href="http://www.flotcharts.org/">Flot library</a>, which is based on jQuery, and features exceptionally strong support for interactive and real time charts.</p>
+<p>For this chapter, we’re also going to stick with a single data source: the Gross Domestic Product (<span class="smcp">GDP</span>) for countries worldwide. This data is publicly available from the <a href="http://data.worldbank.org">World Bank</a>. It may not seem like the most exciting data to work with, but effective visualizations can bring even the most mundane data alive.</p>
+<p>Here’s what you’ll learn:</p>
 <ul>
 <li>How to let users select the content for a chart</li>
 <li>How to let users zoom into a chart to see more details</li>
@@ -179,6 +182,10 @@ body { counter-reset: chapter 2; }
 11
 12
 13
+14
+15
+16
+17
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -188,8 +195,12 @@ body { counter-reset: chapter 2; }
   <span class="kw">&lt;body&gt;</span>
     <span class="co">&lt;!-- Content goes here --&gt;</span>
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <p>As you can see, we’re including the JavaScript libraries at the end of the document. This approach lets the browser load the document’s entire <span class="smcp">HTML</span> markup and begin laying out the page while it waits for the server to provide the JavaScript libraries.</p>
@@ -208,6 +219,10 @@ body { counter-reset: chapter 2; }
 11
 12
 13
+14
+15
+16
+17
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -217,8 +232,12 @@ body { counter-reset: chapter 2; }
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&#39;chart&#39;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;height:400px;&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-prepare-the-data">Step 3: Prepare the Data</h3>
@@ -229,12 +248,12 @@ body { counter-reset: chapter 2; }
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> eas = [[<span class="dv">1960</span>,<span class="fl">0.155758351823196</span>],[<span class="dv">1961</span>,<span class="fl">0.154708338465889</span>],[<span class="dv">1962</span>,<span class="fl">0.15736247758304098</span>], <span class="co">// Data continues...</span>
-<span class="kw">var</span> ecs = [[<span class="dv">1960</span>,<span class="fl">0.442123789761523</span>],[<span class="dv">1961</span>,<span class="fl">0.470625042294723</span>],[<span class="dv">1962</span>,<span class="fl">0.514526712663984</span>], <span class="co">// Data continues...</span>
-<span class="kw">var</span> lcn = [[<span class="dv">1960</span>,<span class="fl">0.0810583157769874</span>],[<span class="dv">1961</span>,<span class="fl">0.086039249513451</span>],[<span class="dv">1962</span>,<span class="fl">0.09898911106657761</span>], <span class="co">// Data continues...</span>
-<span class="kw">var</span> mea = [[<span class="dv">1968</span>,<span class="fl">0.0382776953642079</span>],[<span class="dv">1969</span>,<span class="fl">0.042624369594480696</span>],[<span class="dv">1970</span>,<span class="fl">0.0470598970641582</span>], <span class="co">// Data continues...</span>
-<span class="kw">var</span> sas = [[<span class="dv">1960</span>,<span class="fl">0.0478247732151856</span>],[<span class="dv">1961</span>,<span class="fl">0.0383225958869648</span>],[<span class="dv">1962</span>,<span class="fl">0.0388874166372837</span>], <span class="co">// Data continues...</span>
-<span class="kw">var</span> ssf = [[<span class="dv">1960</span>,<span class="fl">0.0297069247951595</span>],[<span class="dv">1961</span>,<span class="fl">0.030839996076188498</span>],[<span class="dv">1962</span>,<span class="fl">0.0334481365054735</span>], <span class="co">// Data continues...</span></code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> eas = [[<span class="dv">1960</span>,<span class="fl">0.156</span>],[<span class="dv">1961</span>,<span class="fl">0.155</span>],[<span class="dv">1962</span>,<span class="fl">0.157</span>], <span class="co">// Data continues...</span>
+<span class="kw">var</span> ecs = [[<span class="dv">1960</span>,<span class="fl">0.442</span>],[<span class="dv">1961</span>,<span class="fl">0.471</span>],[<span class="dv">1962</span>,<span class="fl">0.515</span>], <span class="co">// Data continues...</span>
+<span class="kw">var</span> lcn = [[<span class="dv">1960</span>,<span class="fl">0.081</span>],[<span class="dv">1961</span>,<span class="fl">0.086</span>],[<span class="dv">1962</span>,<span class="fl">0.099</span>], <span class="co">// Data continues...</span>
+<span class="kw">var</span> mea = [[<span class="dv">1968</span>,<span class="fl">0.038</span>],[<span class="dv">1969</span>,<span class="fl">0.043</span>],[<span class="dv">1970</span>,<span class="fl">0.047</span>], <span class="co">// Data continues...</span>
+<span class="kw">var</span> sas = [[<span class="dv">1960</span>,<span class="fl">0.048</span>],[<span class="dv">1961</span>,<span class="fl">0.038</span>],[<span class="dv">1962</span>,<span class="fl">0.039</span>], <span class="co">// Data continues...</span>
+<span class="kw">var</span> ssf = [[<span class="dv">1960</span>,<span class="fl">0.030</span>],[<span class="dv">1961</span>,<span class="fl">0.031</span>],[<span class="dv">1962</span>,<span class="fl">0.033</span>], <span class="co">// Data continues...</span></code></pre></td></tr></table>
 <p>This data includes the historical <span class="smcp">GDP</span> (in current <span class="smcp">US</span> dollars) for major regions of the world, from 1960 to 2011. The names of the variables are the World Bank region codes.</p>
 <blockquote>
 <p>Note: At the time of this writing, World Bank data for North America was temporarily unavailable.</p>
@@ -376,10 +395,10 @@ Interaction controls can also serve as chart elements such as legends.
 7
 8
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> source = [
-    { <span class="dt">data</span>: eas, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#FE4C4C&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;East Asia &amp; Pacific&quot;</span> },
-    { <span class="dt">data</span>: ecs, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#B6ED47&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Europe &amp; Central Asia&quot;</span> },
-    { <span class="dt">data</span>: lcn, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#2D9999&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Latin America &amp; Caribbean&quot;</span> },
-    { <span class="dt">data</span>: mea, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#A50000&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Middle East &amp; North Africa&quot;</span> },
+    { <span class="dt">data</span>: eas, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#FE4C4C&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;East Asia ...&quot;</span> },
+    { <span class="dt">data</span>: ecs, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#B6ED47&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Europe ...&quot;</span> },
+    { <span class="dt">data</span>: lcn, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#2D9999&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Latin America ...&quot;</span> },
+    { <span class="dt">data</span>: mea, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#A50000&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Middle East ...&quot;</span> },
     { <span class="dt">data</span>: sas, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#679A00&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;South Asia&quot;</span> },
     { <span class="dt">data</span>: ssf, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#006363&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Sub-Saharan Africa&quot;</span> }
 ];</code></pre></td></tr></table>
@@ -453,6 +472,7 @@ The jQuery library has utility functions to help transform and filter data.
 13
 14
 15
+16
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">$</span>.<span class="fu">each</span>(source, <span class="kw">function</span>(idx, region) {
     <span class="kw">var</span> input = <span class="fu">$</span>(<span class="st">&quot;&lt;input&gt;&quot;</span>).<span class="fu">attr</span>(<span class="st">&quot;type&quot;</span>,<span class="st">&quot;checkbox&quot;</span>).<span class="fu">attr</span>(<span class="st">&quot;id&quot;</span>,<span class="st">&quot;chk-&quot;</span>+idx);
     <span class="kw">if</span> (<span class="ot">region</span>.<span class="fu">show</span>) {
@@ -465,7 +485,8 @@ The jQuery library has utility functions to help transform and filter data.
         <span class="st">&#39;width&#39;</span>:            <span class="st">&quot;0.9em&quot;</span>,
         <span class="st">&#39;margin-right&#39;</span>:     <span class="st">&quot;0.25em&quot;</span>,
     });
-    <span class="kw">var</span> label = <span class="fu">$</span>(<span class="st">&quot;&lt;label&gt;&quot;</span>).<span class="fu">append</span>(input).<span class="fu">append</span>(span).<span class="fu">append</span>(<span class="ot">region</span>.<span class="fu">name</span>);
+    <span class="kw">var</span> label = <span class="fu">$</span>(<span class="st">&quot;&lt;label&gt;&quot;</span>)
+        .<span class="fu">append</span>(input).<span class="fu">append</span>(span).<span class="fu">append</span>(<span class="ot">region</span>.<span class="fu">name</span>);
     <span class="fu">$</span>(<span class="st">&quot;#controls&quot;</span>).<span class="fu">append</span>(label);
 });</code></pre></td></tr></table>
 <p>Within the iteration function we do four things. First, we create the checkbox <code>&lt;input&gt;</code> control. As you can see, we’re giving each control a unique <code>id</code> attribute that combines the “chk-” prefix with the source array index. If the chart is showing that region, the control’s <code>checked</code> property is set to <code>true</code>. Next we create the <code>&lt;span&gt;</code> for the color block. We’re setting all the styles, including the region’s color, using the <code>css()</code> function. The third element we create in the function is the <code>&lt;label&gt;</code>. To that element we append the checkbox <code>&lt;input&gt;</code> control, the color box <code>&lt;span&gt;</code>, and the region’s name. Finally, we add the <code>&lt;label&gt;</code> to the document.</p>
@@ -672,6 +693,10 @@ An interactive chart gives users control over the visualization.
 12
 13
 14
+15
+16
+17
+18
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -681,8 +706,12 @@ An interactive chart gives users control over the visualization.
   <span class="kw">&lt;body&gt;</span>
     <span class="co">&lt;!-- Content goes here --&gt;</span>
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span>
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span>
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/jquery.flot.selection.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
@@ -795,6 +824,10 @@ The starting point for most interactive charts is a good static chart.
 13
 14
 15
+16
+17
+18
+19
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -805,8 +838,12 @@ The starting point for most interactive charts is a good static chart.
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&#39;chart&#39;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;height:400px;&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
     <span class="kw">&lt;button</span><span class="ot"> id=</span><span class="st">&#39;unzoom&#39;</span><span class="kw">&gt;</span>Reset Zoom<span class="kw">&lt;/button&gt;</span>
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/jquery.flot.selection.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
@@ -924,6 +961,10 @@ Plotting multiple data sets on a single chart can be confusing for users.
 11
 12
 13
+14
+15
+16
+17
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -933,8 +974,12 @@ Plotting multiple data sets on a single chart can be confusing for users.
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&#39;charts&#39;</span><span class="kw">&gt;&lt;/div&gt;</span>
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span>
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span>
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/flot/0.7/jquery.flot.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <p>We’ll use JavaScript to create the <code>&lt;div&gt;</code>s for the charts themselves. These elements must have an explicit height and width, or flot won’t be able to construct the charts. You can indicate the element’s size in a <span class="smcp">CSS</span> style sheet, or you can define it when we create the <code>&lt;div&gt;</code> (as in the example below). This creates a new <code>&lt;div&gt;</code>, sets its width and height, saves a reference to it, and then appends it to the containing <code>&lt;div&gt;</code> already in our document.</p>
@@ -975,19 +1020,19 @@ Plotting multiple data sets on a single chart can be confusing for users.
 16
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> exports = [
     { <span class="dt">label</span>: <span class="st">&quot;East Asia &amp; Pacific&quot;</span>, 
-      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">13.2276851887342</span>],[<span class="dv">1961</span>,<span class="fl">11.7963550115751</span>], <span class="co">// Data continues...</span>
+      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">13.3</span>],[<span class="dv">1961</span>,<span class="fl">11.8</span>], <span class="co">// Data continues...</span>
     { <span class="dt">label</span>: <span class="st">&quot;Europe &amp; Central Asia&quot;</span>, 
-      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">19.6961338419723</span>],[<span class="dv">1961</span>,<span class="fl">19.4263903109578</span>], <span class="co">// Data continues...</span>
+      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">19.7</span>],[<span class="dv">1961</span>,<span class="fl">19.4</span>], <span class="co">// Data continues...</span>
     { <span class="dt">label</span>: <span class="st">&quot;Latin America &amp; Caribbean&quot;</span>,
-      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">11.6801502887395</span>],[<span class="dv">1961</span>,<span class="fl">11.3068909825283</span>], <span class="co">// Data continues...</span>
+      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">11.7</span>],[<span class="dv">1961</span>,<span class="fl">11.3</span>], <span class="co">// Data continues...</span>
     { <span class="dt">label</span>: <span class="st">&quot;Middle East &amp; North Africa&quot;</span>,
-      <span class="dt">data</span>: [[<span class="dv">1968</span>,<span class="fl">31.1954177605503</span>],[<span class="dv">1969</span>,<span class="fl">31.7532529831496</span>], <span class="co">// Data continues...</span>
+      <span class="dt">data</span>: [[<span class="dv">1968</span>,<span class="fl">31.2</span>],[<span class="dv">1969</span>,<span class="fl">31.8</span>], <span class="co">// Data continues...</span>
     { <span class="dt">label</span>: <span class="st">&quot;North America&quot;</span>, 
-      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">5.94754327218195</span>],[<span class="dv">1961</span>,<span class="fl">5.92748715818847</span>], <span class="co">// Data continues...</span>
+      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">5.95</span>],[<span class="dv">1961</span>,<span class="fl">5.93</span>], <span class="co">// Data continues...</span>
     { <span class="dt">label</span>: <span class="st">&quot;South Asia&quot;</span>, 
-      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">5.70858107039607</span>],[<span class="dv">1961</span>,<span class="fl">5.58067092255634</span>], <span class="co">// Data continues...</span>
+      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">5.71</span>],[<span class="dv">1961</span>,<span class="fl">5.58</span>], <span class="co">// Data continues...</span>
     { <span class="dt">label</span>: <span class="st">&quot;Sub-Saharan Africa&quot;</span>,
-      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">25.5082919987422</span>],[<span class="dv">1961</span>,<span class="fl">25.3967773829262</span>], <span class="co">// Data continues...</span>
+      <span class="dt">data</span>: [[<span class="dv">1960</span>,<span class="fl">25.5</span>],[<span class="dv">1961</span>,<span class="fl">25.4</span>], <span class="co">// Data continues...</span>
 ];</code></pre></td></tr></table>
 <p>The <code>exports</code> array contains an object for each region, and each object contains a label and a data series.</p>
 <h3 id="step-3-draw-the-charts">Step 3: Draw the Charts</h3>
@@ -1243,11 +1288,19 @@ Carefully stacking multiple charts on top of each other creates the appearance o
 9
 10
 11
+12
+13
+14
+15
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;#charts&quot;</span>).<span class="fu">on</span>(<span class="st">&quot;plothover&quot;</span>, <span class="kw">function</span>(ev, pos) {
     <span class="ot">$</span>.<span class="fu">each</span>(exports, <span class="kw">function</span>(idx, region) {
-        matched = <span class="ot">$</span>.<span class="fu">grep</span>(<span class="ot">region</span>.<span class="fu">data</span>, <span class="kw">function</span>(pt) { <span class="kw">return</span> pt[<span class="dv">0</span>] === year; });
+        matched = <span class="ot">$</span>.<span class="fu">grep</span>(<span class="ot">region</span>.<span class="fu">data</span>, <span class="kw">function</span>(pt) { 
+            <span class="kw">return</span> pt[<span class="dv">0</span>] === year; 
+        });
         <span class="kw">if</span> (<span class="ot">matched</span>.<span class="fu">length</span> &gt; <span class="dv">0</span>) {
-            <span class="ot">region</span>.<span class="ot">value</span>.<span class="fu">text</span>(year + <span class="st">&quot;: &quot;</span> + <span class="ot">Math</span>.<span class="fu">round</span>(matched[<span class="dv">0</span>][<span class="dv">1</span>]) + <span class="st">&quot;%&quot;</span>);
+            <span class="ot">region</span>.<span class="ot">value</span>.<span class="fu">text</span>(
+                year + <span class="st">&quot;: &quot;</span> + <span class="ot">Math</span>.<span class="fu">round</span>(matched[<span class="dv">0</span>][<span class="dv">1</span>]) + <span class="st">&quot;%&quot;</span>
+            );
         } <span class="kw">else</span> {
             <span class="ot">region</span>.<span class="ot">value</span>.<span class="fu">text</span>(<span class="st">&quot;&quot;</span>);
         }
@@ -1729,18 +1782,18 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
 28
 29
 30
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="co">// request the regions list and save status of the request in a Deferred object</span>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="co">// request regions list and save status of request in Deferred object</span>
 <span class="kw">var</span> deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</span>(
     <span class="st">&quot;http://api.worldbank.org/regions/?prefix=?&quot;</span>,
     {<span class="dt">format</span>: <span class="st">&quot;jsonp&quot;</span>}
 );
 
-<span class="co">// create a second Deferred object to track when list processing is complete</span>
+<span class="co">// second Deferred object to track when list processing completes</span>
 <span class="kw">var</span> deferredRegionsAvailable = <span class="ot">$</span>.<span class="fu">Deferred</span>();
 
 <span class="co">// when the request finishes, start processing</span>
 <span class="ot">deferredRegionsRequest</span>.<span class="fu">done</span>(<span class="kw">function</span>(response) {
-    <span class="co">// when we finish processing, resolve the second Deferred with the results</span>
+    <span class="co">// when processing complete, resolve second Deferred with the results</span>
     <span class="ot">deferredRegionsAvailable</span>.<span class="fu">resolve</span>(
         <span class="ot">$</span>.<span class="fu">map</span>(
             <span class="ot">$</span>.<span class="fu">grep</span>(response[<span class="dv">1</span>], <span class="kw">function</span>(regionObj) {

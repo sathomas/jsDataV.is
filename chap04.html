@@ -157,6 +157,8 @@ body { counter-reset: chapter 4; }
 10
 11
 12
+13
+14
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -165,7 +167,9 @@ body { counter-reset: chapter 4; }
   <span class="kw">&lt;/head&gt;</span>
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;treemap&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/treemap-squared-0.5.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
@@ -207,8 +211,16 @@ body { counter-reset: chapter 4; }
 <table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [ <span class="ot">west</span>.<span class="fu">data</span>, <span class="ot">midwest</span>.<span class="fu">data</span>, <span class="ot">northeast</span>.<span class="fu">data</span>, <span class="ot">south</span>.<span class="fu">data</span> ];
-<span class="kw">var</span> labels = [ <span class="ot">west</span>.<span class="fu">labels</span>, <span class="ot">midwest</span>.<span class="fu">labels</span>, <span class="ot">northeast</span>.<span class="fu">labels</span>, <span class="ot">south</span>.<span class="fu">labels</span> ];
+4
+5
+6
+7
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [ 
+    <span class="ot">west</span>.<span class="fu">data</span>, <span class="ot">midwest</span>.<span class="fu">data</span>, <span class="ot">northeast</span>.<span class="fu">data</span>, <span class="ot">south</span>.<span class="fu">data</span>
+];
+<span class="kw">var</span> labels = [ 
+    <span class="ot">west</span>.<span class="fu">labels</span>, <span class="ot">midwest</span>.<span class="fu">labels</span>, <span class="ot">northeast</span>.<span class="fu">labels</span>, <span class="ot">south</span>.<span class="fu">labels</span>
+];
 <span class="ot">Treemap</span>.<span class="fu">draw</span>(<span class="st">&quot;treemap&quot;</span>, <span class="dv">600</span>, <span class="dv">450</span>, data, labels);</code></pre></td></tr></table>
 <p>The resulting chart of figure <span class="nextfigure"/> provides a simple visualization of the <span class="smcp">US</span> population. Among the four regions, it is clear where most of the population resides. The bottom right quadrant (the South) has the largest share of the population. And within the regions the relative sizes of each state’s population is also clear. Notice, for example, how California dominates the West.</p>
 <figure>
@@ -274,16 +286,28 @@ Tree maps show the relative size of data values using rectangular area.
 <p>In the same way that we created a master object for the data and the labels, we create another master object for the growth rates. Let’s also calculate the total growth rate for the country overall.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> growth = [ <span class="ot">west</span>.<span class="fu">growth</span>, <span class="ot">midwest</span>.<span class="fu">growth</span>, <span class="ot">northeast</span>.<span class="fu">growth</span>, <span class="ot">south</span>.<span class="fu">growth</span> ];
+3
+4
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> growth = [ 
+    <span class="ot">west</span>.<span class="fu">growth</span>, <span class="ot">midwest</span>.<span class="fu">growth</span>, <span class="ot">northeast</span>.<span class="fu">growth</span>, <span class="ot">south</span>.<span class="fu">growth</span>
+];
 <span class="kw">var</span> totalGrowth = (total2012 - total2010)/total2010;</code></pre></td></tr></table>
 <p>Now we need a function to calculate the color for a tree map rectangle. We start by defining two color ranges, one for growth rates higher than the national average and another for lower growth rates. We can then pick an appropriate color for each state, based on that state’s growth rate. As an example, here’s one possible set of colors.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
+5
+6
+7
+8
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> colorRanges = { 
-  <span class="dt">positive</span>: [ <span class="st">&quot;#FFFFBF&quot;</span>,<span class="st">&quot;#D9EF8B&quot;</span>,<span class="st">&quot;#A6D96A&quot;</span>,<span class="st">&quot;#66BD63&quot;</span>,<span class="st">&quot;#1A9850&quot;</span>,<span class="st">&quot;#006837&quot;</span> ],
-  <span class="dt">negative</span>: [ <span class="st">&quot;#FFFFBF&quot;</span>,<span class="st">&quot;#FEE08B&quot;</span>,<span class="st">&quot;#FDAE61&quot;</span>,<span class="st">&quot;#F46D43&quot;</span>,<span class="st">&quot;#D73027&quot;</span>,<span class="st">&quot;#A50026&quot;</span> ]
+  <span class="dt">positive</span>: [ 
+    <span class="st">&quot;#FFFFBF&quot;</span>,<span class="st">&quot;#D9EF8B&quot;</span>,<span class="st">&quot;#A6D96A&quot;</span>,<span class="st">&quot;#66BD63&quot;</span>,<span class="st">&quot;#1A9850&quot;</span>,<span class="st">&quot;#006837&quot;</span> 
+  ],
+  <span class="dt">negative</span>: [ 
+    <span class="st">&quot;#FFFFBF&quot;</span>,<span class="st">&quot;#FEE08B&quot;</span>,<span class="st">&quot;#FDAE61&quot;</span>,<span class="st">&quot;#F46D43&quot;</span>,<span class="st">&quot;#D73027&quot;</span>,<span class="st">&quot;#A50026&quot;</span> 
+  ]
 };</code></pre></td></tr></table>
 <p>Next is the <code>pickColor</code> function that uses these color ranges to select the right color for each box. The treemap-squared library will call it with two parameters—the coordinates of the rectangle it’s about to draw, and the index into the data set. We don’t need the coordinates in our example, but we will use the index to find the value to model. Once we find the state’s growth rate, we can subtract the national average. That calculation determines which color range to use. States that are growing faster than the national average get the positive color range; states growing slower than the average get the negative range.</p>
 <p>The final part of the code calculates where on the appropriate color range to select the color. It uses a linear scale based on the extreme values from among all the states. So, for example, if a state’s growth rate is halfway between the overall average and the maximum growth rate, we’ll give it a color that’s halfway in the positive color range array.</p>
@@ -304,6 +328,9 @@ Tree maps show the relative size of data values using rectangular area.
 15
 16
 17
+18
+19
+20
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="fu">pickColor</span>(coordinates, index) {
     <span class="kw">var</span> regionIdx = index[<span class="dv">0</span>];
     <span class="kw">var</span> stateIdx  = index[<span class="dv">1</span>];
@@ -315,8 +342,11 @@ Tree maps show the relative size of data values using rectangular area.
         colorRange = <span class="ot">colorRanges</span>.<span class="fu">negative</span>;
         deltaGrowth = -<span class="dv">1</span> * deltaGrowth;
     }
-    <span class="kw">var</span> colorIndex = <span class="ot">Math</span>.<span class="fu">floor</span>(<span class="ot">colorRange</span>.<span class="fu">length</span>*(deltaGrowth-minDelta)/(maxDelta-minDelta));
-    <span class="kw">if</span> (colorIndex &gt;= <span class="ot">colorRange</span>.<span class="fu">length</span>) { colorIndex = <span class="ot">colorRange</span>.<span class="fu">length</span> - <span class="dv">1</span>; }
+    <span class="kw">var</span> colorIndex = <span class="ot">Math</span>.<span class="fu">floor</span>(<span class="ot">colorRange</span>.<span class="fu">length</span> * 
+        (deltaGrowth - minDelta) / (maxDelta - minDelta));
+    <span class="kw">if</span> (colorIndex &gt;= <span class="ot">colorRange</span>.<span class="fu">length</span>) { 
+        colorIndex = <span class="ot">colorRange</span>.<span class="fu">length</span> - <span class="dv">1</span>; 
+    }
     
     color = colorRange[colorIndex];
     <span class="kw">return</span>{ <span class="st">&quot;fill&quot;</span> : color };
@@ -513,10 +543,16 @@ Heat maps traditionally show where web users focus their attention on a page.
 3
 4
 5
+6
+7
+8
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> game = [
-    { <span class="dt">team</span>: <span class="st">&quot;UNC&quot;</span>,  <span class="dt">points</span>: <span class="dv">2</span>, <span class="dt">time</span>: <span class="fl">0.85</span>, <span class="dt">unc</span>: <span class="dv">2</span>, <span class="dt">duke</span>: <span class="dv">0</span>, <span class="dt">x</span>: <span class="fl">0.506</span>, <span class="dt">y</span>: <span class="fl">5.039</span> },
-    { <span class="dt">team</span>: <span class="st">&quot;UNC&quot;</span>,  <span class="dt">points</span>: <span class="dv">3</span>, <span class="dt">time</span>: <span class="fl">1.22</span>, <span class="dt">unc</span>: <span class="dv">5</span>, <span class="dt">duke</span>: <span class="dv">0</span>, <span class="dt">x</span>: <span class="fl">1.377</span>, <span class="dt">y</span>: <span class="fl">1.184</span> },
-    { <span class="dt">team</span>: <span class="st">&quot;DUKE&quot;</span>, <span class="dt">points</span>: <span class="dv">2</span>, <span class="dt">time</span>: <span class="fl">1.65</span>  <span class="dt">unc</span>: <span class="dv">5</span>, <span class="dt">duke</span>: <span class="dv">2</span>, <span class="dt">x</span>: <span class="fl">8.804</span>, <span class="dt">y</span>: <span class="fl">7.231</span> },
+    { <span class="dt">team</span>: <span class="st">&quot;UNC&quot;</span>,  <span class="dt">points</span>: <span class="dv">2</span>, <span class="dt">time</span>: <span class="fl">0.85</span>, 
+      <span class="dt">unc</span>: <span class="dv">2</span>, <span class="dt">duke</span>: <span class="dv">0</span>, <span class="dt">x</span>: <span class="fl">0.506</span>, <span class="dt">y</span>: <span class="fl">5.039</span> },
+    { <span class="dt">team</span>: <span class="st">&quot;UNC&quot;</span>,  <span class="dt">points</span>: <span class="dv">3</span>, <span class="dt">time</span>: <span class="fl">1.22</span>, 
+      <span class="dt">unc</span>: <span class="dv">5</span>, <span class="dt">duke</span>: <span class="dv">0</span>, <span class="dt">x</span>: <span class="fl">1.377</span>, <span class="dt">y</span>: <span class="fl">1.184</span> },
+    { <span class="dt">team</span>: <span class="st">&quot;DUKE&quot;</span>, <span class="dt">points</span>: <span class="dv">2</span>, <span class="dt">time</span>: <span class="fl">1.65</span>  
+      <span class="dt">unc</span>: <span class="dv">5</span>, <span class="dt">duke</span>: <span class="dv">2</span>, <span class="dt">x</span>: <span class="fl">8.804</span>, <span class="dt">y</span>: <span class="fl">7.231</span> },
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-3-create-the-background-image">Step 3: Create the Background Image</h3>
 <p>A simple diagram of a basketball court, like that in figure <span class="nextfigure"/>, works fine for our visualization. The dimensions of our background image are 600 by 360 pixels.</p>
@@ -531,8 +567,10 @@ A background image sets the context for the visualization.
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
+4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&#39;heatmap&#39;</span> 
-<span class="ot">    style=</span><span class="st">&quot;position:relative;width:600px;height:360px;background-image:url(&#39;img/basketball.png&#39;);&quot;</span><span class="kw">&gt;</span>
+<span class="ot">    style=</span><span class="st">&quot;position:relative;width:600px;height:360px;&quot;</span><span class="er">+</span>
+          <span class="er">&quot;background-image:url(&#39;img/basketball.png&#39;);&quot;</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
 <p>Notice that we’ve given the element a unique <code>id</code>. The heatmap.js library needs that <code>id</code> to place the map on the page. Most importantly, we also set the <code>position</code> property to <code>relative</code>. The heatmap.js library positions its graphics using absolute positioning, and we want to contain those graphics within the parent element.</p>
 <h3 id="step-5-format-the-data">Step 5: Format the Data</h3>
@@ -852,13 +890,17 @@ Sigmajs draws graph nodes as small circles.
 14
 15
 16
+17
+18
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> srcIdx=<span class="dv">0</span>; srcIdx&lt;<span class="ot">albums</span>.<span class="fu">length</span>; srcIdx++) {
     <span class="kw">var</span> src = albums[srcIdx];
     <span class="kw">for</span> (<span class="kw">var</span> mscIdx=<span class="dv">0</span>; mscIdx&lt;<span class="ot">src</span>.<span class="ot">musicians</span>.<span class="fu">length</span>; mscIdx++) {
         <span class="kw">var</span> msc = <span class="ot">src</span>.<span class="fu">musicians</span>[mscIdx];
         <span class="kw">for</span> (<span class="kw">var</span> tgtIdx=srcIdx<span class="dv">+1</span>; tgtIdx&lt;<span class="ot">albums</span>.<span class="fu">length</span>; tgtIdx++) {
             <span class="kw">var</span> tgt = albums[tgtIdx];
-            <span class="kw">if</span> (<span class="ot">tgt</span>.<span class="ot">musicians</span>.<span class="fu">some</span>(<span class="kw">function</span>(tgtMsc) {<span class="kw">return</span> tgtMsc === msc;})) {
+            <span class="kw">if</span> (<span class="ot">tgt</span>.<span class="ot">musicians</span>.<span class="fu">some</span>(<span class="kw">function</span>(tgtMsc) {
+                <span class="kw">return</span> tgtMsc === msc;
+            })) {
                 <span class="ot">s</span>.<span class="ot">graph</span>.<span class="fu">addEdge</span>({
                     <span class="dt">id</span>: srcIdx + <span class="st">&quot;.&quot;</span> + mscIdx + <span class="st">&quot;-&quot;</span> + tgtIdx,
                     <span class="dt">source</span>: <span class="st">&quot;&quot;</span>+srcIdx,
@@ -877,7 +919,7 @@ Sigmajs draws graph nodes as small circles.
 Sigmajs can then connect graph nodes using lines to represent edges.
 </figcaption>
 </figure>
-<p>Again, you can pan and zoom the graph to focus on different parts.</p>
+<p>Again, you can pan the graph to focus on different parts.</p>
 <h3 id="step-5-automating-the-layout">Step 5: Automating the Layout</h3>
 <p>So far we’ve manually placed the nodes in our graph in a circle. That’s not a terrible approach, but it can make it hard to discern some of the connections. It would be better if we could let the library calculate a more optimal layout than the simple circle. That’s exactly what we’ll do now.</p>
 <p>The mathematics behind this approach go by the name of “force directed graphing.” In a nutshell, the algorithm proceeds by treating the graph’s nodes and edges as physical objects subject to real forces such as gravity and electromagnetism. It simulates the effect of those forces, pushing and prodding the nodes into new positions on the graph.</p>

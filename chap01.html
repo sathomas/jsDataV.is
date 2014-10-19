@@ -213,8 +213,16 @@ body { counter-reset: chapter 1; }
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
+4
+5
+6
+7
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;script&gt;</span>
-<span class="kw">var</span> wins = [[[<span class="dv">2006</span>,<span class="dv">13</span>],[<span class="dv">2007</span>,<span class="dv">11</span>],[<span class="dv">2008</span>,<span class="dv">15</span>],[<span class="dv">2009</span>,<span class="dv">15</span>],[<span class="dv">2010</span>,<span class="dv">18</span>],[<span class="dv">2011</span>,<span class="dv">21</span>],[<span class="dv">2012</span>,<span class="dv">28</span>]]];
+<span class="kw">var</span> wins = [
+    [ [<span class="dv">2006</span>,<span class="dv">13</span>],[<span class="dv">2007</span>,<span class="dv">11</span>],[<span class="dv">2008</span>,<span class="dv">15</span>],[<span class="dv">2009</span>,<span class="dv">15</span>],
+      [<span class="dv">2010</span>,<span class="dv">18</span>],[<span class="dv">2011</span>,<span class="dv">21</span>],[<span class="dv">2012</span>,<span class="dv">28</span>]
+    ]
+];
 &lt;<span class="ot">/script&gt;</span></code></pre></td></tr></table>
 <p>As you can see, we have three layers of arrays. Let’s start from the inside and work our way out. For flotr2 charts, each data point is entered in a two-item array with an x-value and y-value. In our case we’re using the year as the x-value and the number of wins as the y-value. We collect all these values in another array called a <em>series</em>. We place this series inside one more outer array. We could enter multiple series into this outer array, but for now we’re only showing one series. Here’s a quick summary of each layer:</p>
 <ul>
@@ -736,10 +744,12 @@ Removing grid lines and expanding the axes makes the chart easier to read.
 10
 11
 12
+13
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
     <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
     [
-        { <span class="dt">data</span>: zero, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">lineWidth</span>: <span class="dv">1</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span>, <span class="dt">shadowSize</span>: <span class="dv">0</span>, <span class="dt">color</span>: <span class="st">&quot;#545454&quot;</span> },
+        { <span class="dt">data</span>: zero, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">lineWidth</span>: <span class="dv">1</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span>, 
+          <span class="dt">shadowSize</span>: <span class="dv">0</span>, <span class="dt">color</span>: <span class="st">&quot;#545454&quot;</span> },
         { <span class="dt">data</span>: co2, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
         { <span class="dt">data</span>: temp, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span> }
     ],{
@@ -810,7 +820,7 @@ A dummy data set can emphasize a position on a chart axis.
       }
     ],
     {
-        <span class="dt">title</span>: <span class="st">&quot;Global Temperature and CO&lt;sub&gt;2&lt;/sub&gt; Concentration (NOAA Data)&quot;</span>,
+        <span class="dt">title</span>: <span class="st">&quot;Global Temperature and CO2 Concentration (NOAA Data)&quot;</span>,
         <span class="dt">grid</span>: {<span class="dt">horizontalLines</span>: <span class="kw">false</span>, <span class="dt">verticalLines</span>: <span class="kw">false</span>},
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>},
         <span class="dt">y2axis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>, 
@@ -1534,7 +1544,7 @@ Splitting the data into multiple data sets lets us assign different colors to ea
 </figcaption>
 </figure>
 <p>For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 13) and position the legend in the northeast quadrant (line 17).</p>
-<table class="sourceCode javascript numberLines line-13 line-18"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-13 line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2334,12 +2344,22 @@ A bubble chart shows a third dimension (wind speed) as well as position.
 12
 13
 14
+15
+16
+17
+18
+19
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> players = [
-    { <span class="dt">player</span>: <span class="st">&quot;Chris Bosh&quot;</span>,     <span class="dt">points</span>: <span class="fl">17.2</span>, <span class="dt">rebounds</span>: <span class="fl">7.9</span>, <span class="dt">assists</span>: <span class="fl">1.6</span>, <span class="dt">steals</span>: <span class="fl">0.8</span>, <span class="dt">blocks</span>: <span class="fl">0.8</span> },
-    { <span class="dt">player</span>: <span class="st">&quot;Shane Battier&quot;</span>,  <span class="dt">points</span>:  <span class="fl">5.4</span>, <span class="dt">rebounds</span>: <span class="fl">2.6</span>, <span class="dt">assists</span>: <span class="fl">1.2</span>, <span class="dt">steals</span>: <span class="fl">1.0</span>, <span class="dt">blocks</span>: <span class="fl">0.5</span> },
-    { <span class="dt">player</span>: <span class="st">&quot;LeBron James&quot;</span>,   <span class="dt">points</span>: <span class="fl">28.0</span>, <span class="dt">rebounds</span>: <span class="fl">8.4</span>, <span class="dt">assists</span>: <span class="fl">6.1</span>, <span class="dt">steals</span>: <span class="fl">1.9</span>, <span class="dt">blocks</span>: <span class="fl">0.8</span> },
-    { <span class="dt">player</span>: <span class="st">&quot;Dwayne Wade&quot;</span>,    <span class="dt">points</span>: <span class="fl">22.3</span>, <span class="dt">rebounds</span>: <span class="fl">5.0</span>, <span class="dt">assists</span>: <span class="fl">4.5</span>, <span class="dt">steals</span>: <span class="fl">1.7</span>, <span class="dt">blocks</span>: <span class="fl">1.3</span> },
-    { <span class="dt">player</span>: <span class="st">&quot;Mario Chalmers&quot;</span>, <span class="dt">points</span>: <span class="fl">10.2</span>, <span class="dt">rebounds</span>: <span class="fl">2.9</span>, <span class="dt">assists</span>: <span class="fl">3.6</span>, <span class="dt">steals</span>: <span class="fl">1.4</span>, <span class="dt">blocks</span>: <span class="fl">0.2</span> }
+    { <span class="dt">player</span>: <span class="st">&quot;Chris Bosh&quot;</span>,     <span class="dt">points</span>: <span class="fl">17.2</span>, <span class="dt">rebounds</span>: <span class="fl">7.9</span>, 
+      <span class="dt">assists</span>: <span class="fl">1.6</span>, <span class="dt">steals</span>: <span class="fl">0.8</span>, <span class="dt">blocks</span>: <span class="fl">0.8</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;Shane Battier&quot;</span>,  <span class="dt">points</span>:  <span class="fl">5.4</span>, <span class="dt">rebounds</span>: <span class="fl">2.6</span>, 
+      <span class="dt">assists</span>: <span class="fl">1.2</span>, <span class="dt">steals</span>: <span class="fl">1.0</span>, <span class="dt">blocks</span>: <span class="fl">0.5</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;LeBron James&quot;</span>,   <span class="dt">points</span>: <span class="fl">28.0</span>, <span class="dt">rebounds</span>: <span class="fl">8.4</span>, 
+      <span class="dt">assists</span>: <span class="fl">6.1</span>, <span class="dt">steals</span>: <span class="fl">1.9</span>, <span class="dt">blocks</span>: <span class="fl">0.8</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;Dwayne Wade&quot;</span>,    <span class="dt">points</span>: <span class="fl">22.3</span>, <span class="dt">rebounds</span>: <span class="fl">5.0</span>, 
+      <span class="dt">assists</span>: <span class="fl">4.5</span>, <span class="dt">steals</span>: <span class="fl">1.7</span>, <span class="dt">blocks</span>: <span class="fl">1.3</span> },
+    { <span class="dt">player</span>: <span class="st">&quot;Mario Chalmers&quot;</span>, <span class="dt">points</span>: <span class="fl">10.2</span>, <span class="dt">rebounds</span>: <span class="fl">2.9</span>, 
+      <span class="dt">assists</span>: <span class="fl">3.6</span>, <span class="dt">steals</span>: <span class="fl">1.4</span>, <span class="dt">blocks</span>: <span class="fl">0.2</span> }
 ];
 <span class="kw">var</span> team = {
     <span class="dt">points</span>:   <span class="fl">98.2</span>,
@@ -2443,7 +2463,7 @@ A bubble chart shows a third dimension (wind speed) as well as position.
         <span class="fu">player_data</span>(<span class="st">&quot;Dwayne Wade&quot;</span>),
         <span class="fu">player_data</span>(<span class="st">&quot;Mario Chalmers&quot;</span>)
     ],{
-        <span class="dt">title</span>:  <span class="st">&quot;2011/12 Miami Heat Starting Lineup - Contribution to Team Total&quot;</span>,
+        <span class="dt">title</span>:  <span class="st">&quot;2011/12 Miami Heat - Contribution to Team Total&quot;</span>,
         <span class="dt">radar</span>:  { <span class="dt">show</span>: <span class="kw">true</span> },
         <span class="dt">grid</span>:   { <span class="dt">circular</span>: <span class="kw">true</span> },
         <span class="dt">xaxis</span>:  { <span class="dt">ticks</span>: labels },

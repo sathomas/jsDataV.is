@@ -129,16 +129,19 @@ body { counter-reset: chapter 3; }
 </style>
 
 <h1 id="chapter-3-integrating-charts-in-a-page">Chapter 3: Integrating Charts in a Page</h1>
-You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That’s not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they “look pretty” on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn’t. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn’t take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes and labels and titles and legends and such to place. Edward Tufte considered this problem in his groundbreaking work <em>The Visual Display of Quantitative Information,</em> and he proposed a novel solution he called <em>sparklines.</em> Sparklines are charts stripped to their bare essentials, presented without labels, axes, titles or other elements we often see in a chart. Sparklines can present a lot of information in very little space, even to the point where it is possible to include a chart right in the middle of a sentence. There is no need for “See figure below” or “Click for larger view.” One of Tufte’s earliest examples presents the glucose level of a medical patient; figure <span class="nextfigure"/> shows a reproduction.
+<p>You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That’s not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they “look pretty” on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn’t. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn’t take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes and labels and titles and legends and such to place.</p>
+<p>Edward Tufte considered this problem in his groundbreaking work <em>The Visual Display of Quantitative Information,</em> and he proposed a novel solution he called <em>sparklines.</em> Sparklines are charts stripped to their bare essentials, presented without labels, axes, titles or other elements we often see in a chart. Sparklines can present a lot of information in very little space, even to the point where it is possible to include a chart right in the middle of a sentence. There is no need for “See figure below” or “Click for larger view.” One of Tufte’s earliest examples presents the glucose level of a medical patient; figure <span class="nextfigure"/> shows a reproduction.</p>
 <figure style="text-align: center">
 <p style="display: inline-block;">
-<span id="sparkline-intro">170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,184,148,145,134,145,145,145,143,148,224,181,112,111,129,151,131,131,131,114,112,112,112,124,187,202,200,203,237,263,221,197,184,185,203,290,330,330,226,113,148,169,148,78,96,96,96,77,59,22,22,70,110,128</span> <span style="color:#CA0000"> 128 </span> Glucose
+<span id="sparkline-intro" style="opacity:0;">170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,184,148,145,134,145,145,145,143,148,224,181,112,111,129,151,131,131,131,114,112,112,112,124,187,202,200,203,237,263,221,197,184,185,203,290,330,330,226,113,148,169,148,78,96,96,96,77,59,22,22,70,110,128</span> <span style="color:#CA0000"> 128 </span> Glucose
 </p>
 <figcaption>
 Tufte’s classic sparkline example shows a lot of information in a small space.
 </figcaption>
 </figure>
-<p>In a mere 154×20 pixels we’ve shown the patient’s current glucose level, its trend for more than two months, high and low values, and the range of normal values. This high information density makes sparklines effective any time space is a premium—inline in textual paragraphs, as cells in tables, or as part of information dashboards. Sparklines do have disadvantages of course. They cannot provide as much fine-grained detail as a full size chart with axes and labels. They also cannot support significant interactivity, so we can’t give users a lot of flexibility in selecting data or zooming in for detail. But for many visualizations, these aren’t major concerns. Plus, as we’ll see in this chapter’s examples, the web gives us the chance to augment sparklines in ways not possible in print. There are a few JavaScript libraries and toolkits for creating sparklines, but we’ll focus on the most popular of them: <a href="http://omnipotent.net/jquery.sparkline/">jQuery sparklines</a>. As the name implies, this open source library is an extension to jQuery. The examples that follow look closely at how to use these tools to incorporate information dense visualizations into your web page. Here’s what we’ll learn:</p>
+<p>In a mere 154×20 pixels we’ve shown the patient’s current glucose level, its trend for more than two months, high and low values, and the range of normal values. This high information density makes sparklines effective any time space is a premium—inline in textual paragraphs, as cells in tables, or as part of information dashboards.</p>
+<p>Sparklines do have disadvantages of course. They cannot provide as much fine-grained detail as a full size chart with axes and labels. They also cannot support significant interactivity, so we can’t give users a lot of flexibility in selecting data or zooming in for detail. But for many visualizations, these aren’t major concerns. Plus, as we’ll see in this chapter’s examples, the web gives us the chance to augment sparklines in ways not possible in print.</p>
+<p>There are a few JavaScript libraries and toolkits for creating sparklines, but we’ll focus on the most popular of them: <a href="http://omnipotent.net/jquery.sparkline/">jQuery sparklines</a>. As the name implies, this open source library is an extension to jQuery. The examples that follow look closely at how to use these tools to incorporate information dense visualizations into your web page. Here’s what we’ll learn:</p>
 <ul>
 <li>How to create a classic sparkline for integration directly in test</li>
 <li>How to combine multiple sparklines to show comparisons</li>
@@ -162,7 +165,7 @@ Tufte’s classic sparkline example shows a lot of information in a small space.
           maxSpotColor: chartStyles.color.primary,
           normalRangeMin: 82,
           normalRangeMax: 180,
-        });
+        }).css("opacity", "1.0");
     };
     
     if (typeof contentLoaded != "undefined") {
@@ -191,6 +194,11 @@ Tufte’s classic sparkline example shows a lot of information in a small space.
 11
 12
 13
+14
+15
+16
+17
+18
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -200,8 +208,13 @@ Tufte’s classic sparkline example shows a lot of information in a small space.
   <span class="kw">&lt;body&gt;</span>
     <span class="co">&lt;!-- Content goes here --&gt;</span>
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/jquery.sparkline.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.0.0/&quot;</span><span class="er">+</span>
+          <span class="er">&quot;jquery.sparkline.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <p>As you can see, we’re including the JavaScript libraries at the end of the document. This approach lets the browser load all of the document’s <span class="smcp">HTML</span> markup and begin laying out the page while it waits for the server to provide the JavaScript libraries.</p>
@@ -373,13 +386,13 @@ The default sparkline options differ slightly from the classic example.
         <span class="kw">&lt;tr</span><span class="ot"> class=</span><span class="st">&#39;barclays&#39;</span><span class="kw">&gt;</span>
             <span class="kw">&lt;td&gt;</span>AAPL<span class="kw">&lt;/td&gt;</span>
             <span class="kw">&lt;td&gt;</span>Apple Inc.<span class="kw">&lt;/td&gt;</span>
-            <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="kw">&gt;</span>418.68,416.11,416.6,443.34,455.63,489.08,497.7,517.81,...<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="kw">&gt;</span>418.68,416.11,416.6,443.34,...<span class="kw">&lt;/td&gt;</span>
             <span class="kw">&lt;td&gt;</span>27%<span class="kw">&lt;/td&gt;</span>
         <span class="kw">&lt;/tr&gt;</span>
         <span class="kw">&lt;tr</span><span class="ot"> class=</span><span class="st">&#39;barclays&#39;</span><span class="kw">&gt;</span>
             <span class="kw">&lt;td&gt;</span>ALTR<span class="kw">&lt;/td&gt;</span>
             <span class="kw">&lt;td&gt;</span>Altera Corporation<span class="kw">&lt;/td&gt;</span>
-            <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="kw">&gt;</span>37.1,36.92,39.93,39.81,40.43,39.76,39.73,38.55,36.89,...<span class="kw">&lt;/td&gt;</span>
+            <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="kw">&gt;</span>37.1,36.92,39.93,39.81,40.43,...<span class="kw">&lt;/td&gt;</span>
             <span class="kw">&lt;td&gt;</span>-7%<span class="kw">&lt;/td&gt;</span>
         <span class="kw">&lt;/tr&gt;</span>
         // Markup continues... 
@@ -885,11 +898,15 @@ Different visual styles distinguish different types of data.
 4
 5
 6
+7
+8
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;tr&gt;</span>
-    <span class="kw">&lt;td&gt;</span>BMY<span class="kw">&lt;/td&gt;</span>
-    <span class="kw">&lt;td&gt;</span>Bristol Meyers Squibb Co.<span class="kw">&lt;/td&gt;</span>
-    <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="ot"> data-LineColor=</span><span class="st">&#39;#679A00&#39;</span><span class="ot"> data-FillColor=</span><span class="st">&#39;#B6ED47&#39;</span><span class="kw">&gt;</span>32.86,32.46,31.36,...<span class="kw">&lt;/td&gt;</span>
-    <span class="kw">&lt;td&gt;</span>(2%)<span class="kw">&lt;/td&gt;</span>
+   <span class="kw">&lt;td&gt;</span>BMY<span class="kw">&lt;/td&gt;</span>
+   <span class="kw">&lt;td&gt;</span>Bristol Meyers Squibb Co.<span class="kw">&lt;/td&gt;</span>
+   <span class="kw">&lt;td</span><span class="ot"> class=</span><span class="st">&#39;sparkline&#39;</span><span class="ot"> data-LineColor=</span><span class="st">&#39;#679A00&#39;</span><span class="ot"> data-FillColor=</span><span class="st">&#39;#B6ED47&#39;</span><span class="kw">&gt;</span>
+      32.86,32.46,31.36,...
+   <span class="kw">&lt;/td&gt;</span>
+   <span class="kw">&lt;td&gt;</span>(2%)<span class="kw">&lt;/td&gt;</span>
 <span class="kw">&lt;/tr&gt;</span></code></pre></td></tr></table>
 <p>Now we have to add a couple of additional options in our call to <code>sparkline()</code>. First we set <code>enableTagOptions</code> to true to tell the library that we’re including options directly in the <span class="smcp">HTML</span>. Then we set <code>tagOptionsPrefix</code> to <code>&quot;data-&quot;</code> to specify the specific prefix we’re using for those attributes.</p>
 <blockquote>
@@ -1305,7 +1322,9 @@ A complete example distinguishes different individual data sets in a larger coll
 }());
 </script>
 <h2 id="annotating-sparklines">Annotating Sparklines</h2>
-<p>Because they’re designed to maximize information density, sparklines omit many traditional chart components such as axes and labels. This approach certainly focuses on the data itself, but it can sometimes leave users without enough context to understand the data. Print versions usually rely on traditional text to supply this context, but on the web we have more flexibility. We can present the data by itself in a sparkline, and we can give users the chance to explore the data’s context through interactions. Tooltips, which show additional information as users hover their mouse pointers over sections of a web page, can be an effective way to annotate a sparkline, so long as the users are accessing the page from a desktop computer. (Touch-based devices such as smartphones and tablets don’t typically support the concept of hover.) We’ll walk through a visualization that includes tooltips in this example; other examples in the chapter consider alternative approaches that may be more effective for touch devices. Let’s see how we can use a customized form of tooltips by enhancing the charts in the previous example.</p>
+<p>Because they’re designed to maximize information density, sparklines omit many traditional chart components such as axes and labels. This approach certainly focuses on the data itself, but it can sometimes leave users without enough context to understand the data. Print versions usually rely on traditional text to supply this context, but on the web we have more flexibility. We can present the data by itself in a sparkline, and we can give users the chance to explore the data’s context through interactions.</p>
+<p>Tooltips, which show additional information as users hover their mouse pointers over sections of a web page, can be an effective way to annotate a sparkline, so long as the users are accessing the page from a desktop computer. (Touch-based devices such as smartphones and tablets don’t typically support the concept of hover.) We’ll walk through a visualization that includes tooltips in this example; other examples in the chapter consider alternative approaches that may be more effective for touch devices.</p>
+<p>Let’s see how we can use a customized form of tooltips by enhancing the charts in the previous example.</p>
 <p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page.</p>
 <h3 id="step-1-prepare-the-data">Step 1: Prepare the Data</h3>
 <p>In the previous examples we’ve embedded the data directly in the <span class="smcp">HTML</span> markup. That’s convenient since it lets us separate the data from our code. In this example, however, the JavaScript code will need more detailed knowledge of the data so it can present the right tooltip information. This time we’ll use a JavaScript array to store our data, so that all the relevant information is in one place. For this example we can focus on a single stock. And even though we’re only graphing the adjusted closing price, the array will track additional data that we can include in the tooltips. Here’s an excerpt of the data for one of the stocks.</p>
@@ -1314,10 +1333,16 @@ A complete example distinguishes different individual data sets in a larger coll
 3
 4
 5
+6
+7
+8
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> stock = [
-  { <span class="dt">date</span>: <span class="st">&quot;2012-01-03&quot;</span>, <span class="dt">open</span>: <span class="fl">409.40</span>, <span class="dt">high</span>: <span class="fl">422.75</span>, <span class="dt">low</span>: <span class="fl">409.00</span>, <span class="dt">close</span>: <span class="fl">422.40</span>, <span class="dt">volume</span>: <span class="dv">10283900</span>, <span class="dt">adj_close</span>: <span class="fl">416.26</span> },
-  { <span class="dt">date</span>: <span class="st">&quot;2012-01-09&quot;</span>, <span class="dt">open</span>: <span class="fl">425.50</span>, <span class="dt">high</span>: <span class="fl">427.75</span>, <span class="dt">low</span>: <span class="fl">418.66</span>, <span class="dt">close</span>: <span class="fl">419.81</span>, <span class="dt">volume</span>:  <span class="dv">9327900</span>, <span class="dt">adj_close</span>: <span class="fl">413.70</span> },
-  { <span class="dt">date</span>: <span class="st">&quot;2012-01-17&quot;</span>, <span class="dt">open</span>: <span class="fl">424.20</span>, <span class="dt">high</span>: <span class="fl">431.37</span>, <span class="dt">low</span>: <span class="fl">419.75</span>, <span class="dt">close</span>: <span class="fl">420.30</span>, <span class="dt">volume</span>: <span class="dv">10673200</span>, <span class="dt">adj_close</span>: <span class="fl">414.19</span> },
+  { <span class="dt">date</span>: <span class="st">&quot;2012-01-03&quot;</span>, <span class="dt">open</span>: <span class="fl">409.40</span>, <span class="dt">high</span>: <span class="fl">422.75</span>, <span class="dt">low</span>: <span class="fl">409.00</span>, 
+    <span class="dt">close</span>: <span class="fl">422.40</span>, <span class="dt">volume</span>: <span class="dv">10283900</span>, <span class="dt">adj_close</span>: <span class="fl">416.26</span> },
+  { <span class="dt">date</span>: <span class="st">&quot;2012-01-09&quot;</span>, <span class="dt">open</span>: <span class="fl">425.50</span>, <span class="dt">high</span>: <span class="fl">427.75</span>, <span class="dt">low</span>: <span class="fl">418.66</span>, 
+    <span class="dt">close</span>: <span class="fl">419.81</span>, <span class="dt">volume</span>:  <span class="dv">9327900</span>, <span class="dt">adj_close</span>: <span class="fl">413.70</span> },
+  { <span class="dt">date</span>: <span class="st">&quot;2012-01-17&quot;</span>, <span class="dt">open</span>: <span class="fl">424.20</span>, <span class="dt">high</span>: <span class="fl">431.37</span>, <span class="dt">low</span>: <span class="fl">419.75</span>, 
+    <span class="dt">close</span>: <span class="fl">420.30</span>, <span class="dt">volume</span>: <span class="dv">10673200</span>, <span class="dt">adj_close</span>: <span class="fl">414.19</span> },
   <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-2-prepare-the-html-markup">Step 2: Prepare the HTML Markup</h3>
 <p>Our visualization will include three distinct areas, each in a <code>&lt;div&gt;</code> element. The primary <code>&lt;div&gt;</code> created in line 3 will hold the chart. Underneath the chart we’ll add the primary tool tip information in its own <code>&lt;div&gt;</code> (line 4), and we’ll include supplementary details to the right (line 7). The example below uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.</p>
@@ -1751,8 +1776,10 @@ Multiple charts may be combined in the same space.
 <p>We can add annotations to the chart using the same approach as in the previous example. Because our charts now include the trading volume, it’s appropriate to move that value from the details area into the primary annotation <code>&lt;div&gt;</code>. The code to do that is a simple adjustment from the prior example.</p>
 <p>In addition to moving the text from one area to the other, there are two significant changes.</p>
 <ol type="1">
-<li><p>We get the <code>idx</code> value from the second element of the event’s <code>sparklines</code> array (<code>sparklines[1]</code>) in line 2. That’s because the first element of that array is the first chart. The sparklines library doesn’t really return any useful information about bar charts in the <code>sparklineRegionChange</code> event. Fortunately, we can get all the information we need from the line chart.2. We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 7. It’s much easier for our users to quickly grasp “24.4M” than “24402100.”</p>
-<table class="sourceCode javascript numberLines line-2 line-7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<li><p>We get the <code>idx</code> value from the second element of the event’s <code>sparklines</code> array (<code>sparklines[1]</code>) in line 2. That’s because the first element of that array is the first chart. The sparklines library doesn’t really return any useful information about bar charts in the <code>sparklineRegionChange</code> event. Fortunately, we can get all the information we need from the line chart.</p></li>
+<li><p>We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 8. It’s much easier for our users to quickly grasp “24.4M” than “24402100.”</p></li>
+</ol>
+<table class="sourceCode javascript numberLines line-2 line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1766,22 +1793,23 @@ Multiple charts may be combined in the same space.
 12
 13
 14
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">.<span class="fu">on</span>(<span class="st">&#39;sparklineRegionChange&#39;</span>, <span class="kw">function</span>(ev) {
-    <span class="kw">var</span> idx = <span class="ot">ev</span>.<span class="fu">sparklines</span>[<span class="dv">1</span>].<span class="fu">getCurrentRegionFields</span>().<span class="fu">offset</span>;
-    <span class="kw">if</span> (idx) {
-        <span class="fu">$</span>(<span class="st">&quot;.info&quot;</span>).<span class="fu">html</span>(
-          <span class="st">&quot;Week of &quot;</span> + stock[idx].<span class="fu">date</span> 
-        + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; Close: $&quot;</span> + stock[idx].<span class="fu">adj_close</span>
-        + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; Volume: &quot;</span> + <span class="ot">Math</span>.<span class="fu">round</span>(stock[idx].<span class="fu">volume</span>/<span class="dv">10000</span>)/<span class="dv">100</span> + <span class="st">&quot;M&quot;</span>
-        );
-        <span class="fu">$</span>(<span class="st">&quot;.details&quot;</span>).<span class="fu">html</span>(
-            <span class="st">&quot;Open: $&quot;</span> + stock[idx].<span class="fu">open</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
-          + <span class="st">&quot;High: $&quot;</span> + stock[idx].<span class="fu">high</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
-          + <span class="st">&quot;Low: $&quot;</span>  + stock[idx].<span class="fu">low</span>
-        );
-    }</code></pre></td></tr></table>
-<p>As in the previous example, the annotations provide additional details.</p></li>
-</ol>
+15
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">    .<span class="fu">on</span>(<span class="st">&#39;sparklineRegionChange&#39;</span>, <span class="kw">function</span>(ev) {
+        <span class="kw">var</span> idx = <span class="ot">ev</span>.<span class="fu">sparklines</span>[<span class="dv">1</span>].<span class="fu">getCurrentRegionFields</span>().<span class="fu">offset</span>;
+        <span class="kw">if</span> (idx) {
+            <span class="fu">$</span>(<span class="st">&quot;.info&quot;</span>).<span class="fu">html</span>(
+              <span class="st">&quot;Week of &quot;</span> + stock[idx].<span class="fu">date</span> 
+            + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; Close: $&quot;</span> + stock[idx].<span class="fu">adj_close</span>
+            + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; Volume: &quot;</span> 
+            + <span class="ot">Math</span>.<span class="fu">round</span>(stock[idx].<span class="fu">volume</span>/<span class="dv">10000</span>)/<span class="dv">100</span> + <span class="st">&quot;M&quot;</span>
+            );
+            <span class="fu">$</span>(<span class="st">&quot;.details&quot;</span>).<span class="fu">html</span>(
+                <span class="st">&quot;Open: $&quot;</span> + stock[idx].<span class="fu">open</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
+              + <span class="st">&quot;High: $&quot;</span> + stock[idx].<span class="fu">high</span> + <span class="st">&quot;&lt;br/&gt;&quot;</span>
+              + <span class="st">&quot;Low: $&quot;</span>  + stock[idx].<span class="fu">low</span>
+            );
+        }</code></pre></td></tr></table>
+<p>As in the previous example, the annotations provide additional details.</p>
 <figure>
 <div id="composite-chart3">
 <div style="float:left">

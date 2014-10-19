@@ -249,6 +249,8 @@ body { counter-reset: chapter 7; }
 9
 10
 11
+12
+13
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -257,7 +259,9 @@ body { counter-reset: chapter 7; }
   <span class="kw">&lt;/head&gt;</span>
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-create-a-stage-for-the-visualization">Step 3: Create a Stage for the Visualization</h3>
@@ -294,8 +298,12 @@ body { counter-reset: chapter 7; }
 <p>To make sure our chart honors the defined margins, we’ll construct it entirely within a child <span class="smcp">SVG</span> group (<code>&lt;g&gt;</code>) element. The <code>&lt;g&gt;</code> element is just an arbitrary containing element in <span class="smcp">SVG</span>, much like the <code>&lt;div&gt;</code> element for <span class="smcp">HTML</span>. We can use <span class="smcp">D3</span>.js to create the element and position it appropriately within the main <code>&lt;svg&gt;</code> element.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
+3
+4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> chart = <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="st">&quot;,&quot;</span> + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="st">&quot;)&quot;</span>);</code></pre></td></tr></table>
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, 
+        <span class="st">&quot;translate(&quot;</span> + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="st">&quot;,&quot;</span> + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="st">&quot;)&quot;</span>
+    );</code></pre></td></tr></table>
 <p>Visualizations must often re-scale the source data. In our case, we’ll need to re-scale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, we want to scale galactic distance to between 0 and 920 pixels. Since this type of requirement is common for visualizations, <span class="smcp">D3</span>.js has tools to help. Not surprisingly, they’re <code>scale</code> objects. We’ll create scales for both the x- and the y-dimensions.</p>
 <p>As the code below indicates, both of our scales are linear scales. Linear transformations are pretty simple (and we really don’t need <span class="smcp">D3</span>.js to manage them); however, <span class="smcp">D3</span>.js supports other types of scales that can be quite complex. With <span class="smcp">D3</span>.js using more sophisticated scaling is just as easy as linear scales.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -325,14 +333,30 @@ body { counter-reset: chapter 7; }
 8
 9
 10
+11
+12
+13
+14
+15
+16
+17
+18
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">xScale</span>.<span class="fu">domain</span>([
-        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>; }),
-        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> + <span class="ot">nebulae</span>.<span class="fu">distance_error</span>; })
+        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { 
+            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>; 
+        }),
+        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) { 
+            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> + <span class="ot">nebulae</span>.<span class="fu">distance_error</span>; 
+        })
     ])
     .<span class="fu">nice</span>();
 <span class="ot">yScale</span>.<span class="fu">domain</span>([
-        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> - <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>; }),
-        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) { <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> + <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>; })
+        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { 
+            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> - <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>; 
+        }),
+        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) { 
+            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> + <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>; 
+        })
     ])
     .<span class="fu">nice</span>();</code></pre></td></tr></table>
 <h3 id="step-5-draw-the-chart-framework">Step 5: Draw the Chart Framework</h3>
@@ -824,6 +848,8 @@ The complete custom chart shows the data set exactly as we wish.
 9
 10
 11
+12
+13
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -832,7 +858,9 @@ The complete custom chart shows the data set exactly as we wish.
   <span class="kw">&lt;/head&gt;</span>
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;container&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-create-a-stage-for-the-visualization-1">Step 3: Create a Stage for the Visualization</h3>
@@ -1771,6 +1799,8 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 9
 10
 11
+12
+13
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;en&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;head&gt;</span>
@@ -1779,7 +1809,9 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
   <span class="kw">&lt;/head&gt;</span>
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;map&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
+    <span class="kw">&lt;script</span> 
+<span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-create-a-color-scale">Step 3: Create a Color Scale</h3>
