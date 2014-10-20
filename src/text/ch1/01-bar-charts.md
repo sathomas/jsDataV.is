@@ -129,7 +129,7 @@ The horizontal axis needs some work as well. Just like the y-axis, flotr2 assume
 As you can see, instead of using the actual years for the x-values, we're simply using 0, 1, 2, etc. We then define a second array that maps those integer values into strings. Although our strings are years (and, thus, numbers) they could be anything.
 
 ``` {.javascript .numberLines}
-var wins = [[0,13],[1,11],[2,15],[3,15],[4,18],[5,21],[6,28]];
+var wins = [[[0,13],[1,11],[2,15],[3,15],[4,18],[5,21],[6,28]]];
 var years = [
     [0, "2006"],
     [1, "2007"],
@@ -281,7 +281,7 @@ $(".flotr-dummy-div").parent().hide();
 
     draw = function() {
 
-        var wins = [[[2006,13],[2007,11],[2008,15],[2009,15],[2010,18],[2011,21]],[2012,28]];
+        var wins = [[[2006,13],[2007,11],[2008,15],[2009,15],[2010,18],[2011,21],[2012,28]]];
         Flotr.draw(document.getElementById("bar-chart1"),wins, {
             fontColor: chartStyles.color.text,
             grid: { color: chartStyles.color.text },
