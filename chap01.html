@@ -308,7 +308,7 @@ Simple options help flotr2 construct a better vertical axis.</figcation>
 8
 9
 10
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> wins = [[<span class="dv">0</span>,<span class="dv">13</span>],[<span class="dv">1</span>,<span class="dv">11</span>],[<span class="dv">2</span>,<span class="dv">15</span>],[<span class="dv">3</span>,<span class="dv">15</span>],[<span class="dv">4</span>,<span class="dv">18</span>],[<span class="dv">5</span>,<span class="dv">21</span>],[<span class="dv">6</span>,<span class="dv">28</span>]];
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> wins = [[[<span class="dv">0</span>,<span class="dv">13</span>],[<span class="dv">1</span>,<span class="dv">11</span>],[<span class="dv">2</span>,<span class="dv">15</span>],[<span class="dv">3</span>,<span class="dv">15</span>],[<span class="dv">4</span>,<span class="dv">18</span>],[<span class="dv">5</span>,<span class="dv">21</span>],[<span class="dv">6</span>,<span class="dv">28</span>]]];
 <span class="kw">var</span> years = [
     [<span class="dv">0</span>, <span class="st">&quot;2006&quot;</span>],
     [<span class="dv">1</span>, <span class="st">&quot;2007&quot;</span>],
@@ -499,7 +499,7 @@ Bar charts can compare different quantities at one point in time as well as the 
 
     draw = function() {
 
-        var wins = [[[2006,13],[2007,11],[2008,15],[2009,15],[2010,18],[2011,21]],[2012,28]];
+        var wins = [[[2006,13],[2007,11],[2008,15],[2009,15],[2010,18],[2011,21],[2012,28]]];
         Flotr.draw(document.getElementById("bar-chart1"),wins, {
             fontColor: chartStyles.color.text,
             grid: { color: chartStyles.color.text },
