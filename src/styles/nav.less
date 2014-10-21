@@ -1,7 +1,14 @@
+@nav-height:    2.5em;
+@nav-padding:   0.5em;
 
 nav {
   width: 100%;
-  padding-top: 0.5em;
+  height: @nav-height;
+  position: fixed;
+  top: 0;
+  background-color: @color-background;
+  z-index: 1;
+  padding-top: @nav-padding;
   ul {
     text-align: left;
     display: table;
@@ -14,7 +21,7 @@ nav {
       vertical-align: middle;
       position: relative;
       cursor: pointer;
-      height: 24px;
+      min-height: 24px;
       padding-right: 0.75em;
       a, a:hover {
         text-decoration: none;
@@ -22,17 +29,45 @@ nav {
         text-shadow: none;
       }
       ol {
-        padding: 1em 0 0 0;
+        margin-top: 1em;
+        padding: 0;
         position: absolute;
         top: 24px;
-        left: 0;
+        left: -0.5em;
         width: 260px;
         opacity: 0;
+        transition: opacity 250ms ease;
         font-size: 0.8em;
         li {
           display: none;
           width: 100%;
-          background-color: white;
+          padding-left: 0.5em;
+          background-color: @color-background;
+          border-left: 1px solid @color-border;
+          border-right: 1px solid @color-border;
+          ol {
+              position: static;
+              font-size: 1em;
+              margin-top: 0.6em;
+              li {
+                  padding-left: 0.8em;
+                  padding-bottom: 0.8em;
+                  border-left: none;
+                  border-right: none;
+                  line-height: 1.3em;
+                  min-height: 1em;
+                  height: auto;
+                  width: auto;
+              }
+              li:last-child {
+                  border-bottom: none;
+              }
+          }
+        }
+        li:last-child {
+            border-bottom: 1px solid @color-border;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
         }
       }
     }
@@ -45,4 +80,8 @@ nav {
       }
     }
   }
+}
+
+main {
+    margin-top: @nav-height + @nav-padding;
 }
