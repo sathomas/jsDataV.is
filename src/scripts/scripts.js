@@ -4,6 +4,7 @@
  */
 
 // Third party libraries
+//@codekit-prepend "../../bower_components/headroom.js/dist/headroom.js"
 
 // Custom code
 //@codekit-prepend "analytics.js"

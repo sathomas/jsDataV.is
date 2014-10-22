@@ -1,3 +1,5 @@
+/*global Headroom*/
+
 document.addEventListener("DOMContentLoaded", function(){
 
     // Scroll animation parameters
@@ -80,5 +82,10 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         });
     });
+    
+    // Activate automatic hiding of the navigation header
+    var nav = document.querySelector("nav");
+    var headroom  = new Headroom(nav);
+    headroom.init();
 
 }, false);
