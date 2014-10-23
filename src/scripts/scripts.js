@@ -11,3 +11,4 @@
 //@codekit-prepend "fonts.js"
 //@codekit-prepend "code.js"
 //@codekit-prepend "nav.js"
+//@codekit-prepend "transitions.js"
