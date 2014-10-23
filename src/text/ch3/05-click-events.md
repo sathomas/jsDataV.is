@@ -41,7 +41,7 @@ $('#stock')
     });
 ```
 
-Now that we're set up to receive `sparklineClick` events, we can write the code to respond to them. For our example, let's reveal a detailed financial analysis widget. Many web services, including Yahoo and Google, have similar widgets, but we'll use one from WolframAlpha. As is typical, WolframAlpha provides code for the widget as an <span class="smcp">HTML</span> `<iframe>`. We can wrap that `<iframe>` in our own `<div>` and place it immediately after the chart. We set a `display` property of `none` so that the contents are initially hidden. (The snippet below omits the details of the `<iframe>` element for clarity.)
+Now that we're set up to receive `sparklineClick` events, we can write the code to respond to them. For our example, let's reveal a detailed financial analysis widget. Many web services, including Yahoo and Google, have similar widgets, but we'll use one from [TradingView](https://www.tradingview.com/widget/). As is typical, TradingView provides code for the widget as an <span class="smcp">HTML</span> `<iframe>`. We can wrap that `<iframe>` in our own `<div>` and place it immediately after the chart. We set a `display` property of `none` so that the contents are initially hidden. (The snippet below omits the details of the `<iframe>` element for clarity.)
 
 ``` {.html .numberLines}
 <div id="stock"></div>
@@ -60,7 +60,24 @@ That works to reveal the details, but as figure NEXTFIGURENUMBER shows, the resu
 
 <figure>
 <div id="click-chart2"></div>
-<div id="popup2" style="width:600px;height:600px;display:none"><iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081"></iframe></div>
+<div id="popup2" style="width:640px;height:400px;display:none">
+<script type="text/javascript" src="https://d33t3vvu2t2yu5.cloudfront.net/tv.js"></script>
+<script type="text/javascript">
+new TradingView.widget({
+  "width": 640,
+  "height": 400,
+  "symbol": "AAPL",
+  "interval": "D",
+  "timezone": "exchange",
+  "theme": "White",
+  "style": "1",
+  "toolbar_bg": "#f1f3f6",
+  "withdateranges": true,
+  "save_image": false,
+  "hideideas": true
+});
+</script>
+</div>
 <figcaption>Mouse clicks can reveal more details for a chart.</figcaption>
 </figure>
 
@@ -129,8 +146,24 @@ a.closebtn, a.closebtn:hover, a.closebtn:focus, a.closebtn:active, a.closebtn:vi
 
 <figure>
 <div id="click-chart3"></div>
-<div id="popup3-control" style="width:600px;display:none"><a class="closebtn" href="#" title="Click to hide" style="float:right">x</a></div>
-<div id="popup3" style="width:600px;height:620px;display:none"><iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081"></iframe></div>
+<div id="popup3-control" style="width:640px;display:none"><a class="closebtn" href="#" title="Click to hide" style="float:right">x</a></div>
+<div id="popup3" style="width:640px;height:420px;display:none">
+<script type="text/javascript">
+new TradingView.widget({
+  "width": 640,
+  "height": 400,
+  "symbol": "AAPL",
+  "interval": "D",
+  "timezone": "exchange",
+  "theme": "White",
+  "style": "1",
+  "toolbar_bg": "#f1f3f6",
+  "withdateranges": true,
+  "save_image": false,
+  "hideideas": true
+});
+</script>
+</div>
 <figcaption>Mouse clicks can reveal more details for a chart.</figcaption>
 </figure>
 
@@ -156,8 +189,24 @@ At this point we can call our visualization complete with figure NEXTFIGURENUMBE
 
 <figure>
 <div id="click-chart4"></div>
-<div id="popup4-control" style="width:600px;display:none"><a class="closebtn" href="#" title="Click to hide" style="float:right;text-decoration:none;">x</a></div>
-<div id="popup4" style="width:600px;height:620px;display:none"><iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081"></iframe></div>
+<div id="popup4-control" style="width:640px;display:none"><a class="closebtn" href="#" title="Click to hide" style="float:right;text-decoration:none;">x</a></div>
+<div id="popup4" style="width:640px;height:420px;display:none">
+<script type="text/javascript">
+new TradingView.widget({
+  "width": 640,
+  "height": 400,
+  "symbol": "AAPL",
+  "interval": "D",
+  "timezone": "exchange",
+  "theme": "White",
+  "style": "1",
+  "toolbar_bg": "#f1f3f6",
+  "withdateranges": true,
+  "save_image": false,
+  "hideideas": true
+});
+</script>
+</div>
 <figcaption>Animating transitions can make the visualization less jarring to users.</figcaption>
 </figure>
 
