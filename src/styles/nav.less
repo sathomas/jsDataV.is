@@ -71,15 +71,22 @@ nav {
         }
       }
     }
-    li:hover {
-      ol {
-        opacity: 1;
-        li {
-          display: block;
-        }
-      }
-    }
   }
+}
+
+// nav > ul > li:hover ol,
+nav > ul > li.visible ol {
+    opacity: 1;
+    li {
+        display: block;
+    }
+}
+
+#nav-target {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 10px;
 }
 
 .headroom {
@@ -90,6 +97,9 @@ nav {
 }
 .headroom--unpinned {
     transform: translateY(-100%);
+}
+.headroom--unpinned.menu-visible {
+    transform: translateY(0%);
 }
 
 main {
