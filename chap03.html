@@ -85,7 +85,7 @@
 </script>
 
     </head>
-    <body>
+    <body class="fade fadeOut">
         <div id="nav-target"></div>
         <nav>
             <ul>
@@ -110,15 +110,15 @@
                 <li id="contents">Contents ▾
                     <ol>
                         <li><a href="intro.html" >Introduction</a></li>
-                        <li><a href="chap01.html">Graphing Data</a></li>
-                        <li><a href="chap02.html">Making Charts Interactive</a></li>
-                        <li><a href="chap03.html">Integrating Charts in a Page</a></li>
-                        <li><a href="chap04.html">Creating Specialized Graphs</a></li>
-                        <li><a href="chap05.html">Showing Timelines</a></li>
-                        <li><a href="chap06.html">Visualizing Geographic Data</a></li>
-                        <li><a href="chap07.html">Custom Visualizations with D3.js</a></li>
-                        <li><a href="chap08.html">Building Data-Driven Web Applications</a></li>
-                        <li><a href="apnd.html"  >Managing Data in the Browser</a></li>
+                        <li><a href="chap01.html"><span class="lgcp">1</span>: Graphing Data</a></li>
+                        <li><a href="chap02.html"><span class="lgcp">2</span>: Making Charts Interactive</a></li>
+                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts in a Page</a></li>
+                        <li><a href="chap04.html"><span class="lgcp">4</span>: Creating Specialized Graphs</a></li>
+                        <li><a href="chap05.html"><span class="lgcp">5</span>: Showing Timelines</a></li>
+                        <li><a href="chap06.html"><span class="lgcp">6</span>: Visualizing Geographic Data</a></li>
+                        <li><a href="chap07.html"><span class="lgcp">7</span>: Custom Visualizations with D3.js</a></li>
+                        <li><a href="chap08.html"><span class="lgcp">8</span>: Building Data-Driven Applications</a></li>
+                        <li><a href="apnd.html"  ><span class="lgcp">A</span>: Managing Data in the Browser</a></li>
                     </ol>
                 </li>
             </ul>
@@ -2144,7 +2144,7 @@ Starting with a static chart ensures the visualization is sound.
         region = <span class="ot">sparkline</span>.<span class="fu">getCurrentRegionFields</span>();
         <span class="co">/* region.x and region.y are the coordinates of the click */</span>
     });</code></pre></td></tr></table>
-<p>Now that we’re set up to receive <code>sparklineClick</code> events, we can write the code to respond to them. For our example, let’s reveal a detailed financial analysis widget. Many web services, including Yahoo and Google, have similar widgets, but we’ll use one from WolframAlpha. As is typical, WolframAlpha provides code for the widget as an <span class="smcp">HTML</span> <code>&lt;iframe&gt;</code>. We can wrap that <code>&lt;iframe&gt;</code> in our own <code>&lt;div&gt;</code> and place it immediately after the chart. We set a <code>display</code> property of <code>none</code> so that the contents are initially hidden. (The snippet below omits the details of the <code>&lt;iframe&gt;</code> element for clarity.)</p>
+<p>Now that we’re set up to receive <code>sparklineClick</code> events, we can write the code to respond to them. For our example, let’s reveal a detailed financial analysis widget. Many web services, including Yahoo and Google, have similar widgets, but we’ll use one from <a href="https://www.tradingview.com/widget/">TradingView</a>. As is typical, TradingView provides code for the widget as an <span class="smcp">HTML</span> <code>&lt;iframe&gt;</code>. We can wrap that <code>&lt;iframe&gt;</code> in our own <code>&lt;div&gt;</code> and place it immediately after the chart. We set a <code>display</code> property of <code>none</code> so that the contents are initially hidden. (The snippet below omits the details of the <code>&lt;iframe&gt;</code> element for clarity.)</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;stock&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
@@ -2161,9 +2161,23 @@ Starting with a static chart ensures the visualization is sound.
 <div id="click-chart2">
 
 </div>
-<div id="popup2" style="width:600px;height:600px;display:none">
-<iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081">
-</iframe>
+<div id="popup2" style="width:640px;height:400px;display:none">
+<script type="text/javascript" src="https://d33t3vvu2t2yu5.cloudfront.net/tv.js"></script>
+<script type="text/javascript">
+new TradingView.widget({
+  "width": 640,
+  "height": 400,
+  "symbol": "AAPL",
+  "interval": "D",
+  "timezone": "exchange",
+  "theme": "White",
+  "style": "1",
+  "toolbar_bg": "#f1f3f6",
+  "withdateranges": true,
+  "save_image": false,
+  "hideideas": true
+});
+</script>
 </div>
 <figcaption>
 Mouse clicks can reveal more details for a chart.
@@ -2243,12 +2257,25 @@ a.closebtn, a.closebtn:hover, a.closebtn:focus, a.closebtn:active, a.closebtn:vi
 <div id="click-chart3">
 
 </div>
-<div id="popup3-control" style="width:600px;display:none">
+<div id="popup3-control" style="width:640px;display:none">
 <a class="closebtn" href="#" title="Click to hide" style="float:right">x</a>
 </div>
-<div id="popup3" style="width:600px;height:620px;display:none">
-<iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081">
-</iframe>
+<div id="popup3" style="width:640px;height:420px;display:none">
+<script type="text/javascript">
+new TradingView.widget({
+  "width": 640,
+  "height": 400,
+  "symbol": "AAPL",
+  "interval": "D",
+  "timezone": "exchange",
+  "theme": "White",
+  "style": "1",
+  "toolbar_bg": "#f1f3f6",
+  "withdateranges": true,
+  "save_image": false,
+  "hideideas": true
+});
+</script>
 </div>
 <figcaption>
 Mouse clicks can reveal more details for a chart.
@@ -2283,12 +2310,25 @@ Mouse clicks can reveal more details for a chart.
 <div id="click-chart4">
 
 </div>
-<div id="popup4-control" style="width:600px;display:none">
+<div id="popup4-control" style="width:640px;display:none">
 <a class="closebtn" href="#" title="Click to hide" style="float:right;text-decoration:none;">x</a>
 </div>
-<div id="popup4" style="width:600px;height:620px;display:none">
-<iframe class="wolframAlphaWidgetResults" id="wolframAlphaWidgetResults44381" width="100%" frameborder="0" style="background-color: transparent; height: 600px; background-position: initial initial; background-repeat: initial initial; " src="http://www.wolframalpha.com/widget/input/?input=%5B%2F%2Fstock%3Aaapl%2F%2F%5D&amp;id=a80a2e4562755353141f214b5ad28081">
-</iframe>
+<div id="popup4" style="width:640px;height:420px;display:none">
+<script type="text/javascript">
+new TradingView.widget({
+  "width": 640,
+  "height": 400,
+  "symbol": "AAPL",
+  "interval": "D",
+  "timezone": "exchange",
+  "theme": "White",
+  "style": "1",
+  "toolbar_bg": "#f1f3f6",
+  "withdateranges": true,
+  "save_image": false,
+  "hideideas": true
+});
+</script>
 </div>
 <figcaption>
 Animating transitions can make the visualization less jarring to users.
