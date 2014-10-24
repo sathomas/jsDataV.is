@@ -1,16 +1,16 @@
 ## Displaying Multidimensional Data with a Radar Chart
 
-If you have data with many dimensions, a radar chart may be the most effective way to visualize it. Radar charts are not as common as other charts, though, and their unfamiliarity makes them a little harder on users. You don't want to increase that burden by using the chart inappropriately.
+If you have data with many dimensions, a radar chart may be the most effective way to visualize it. Radar charts are not as common as other charts, though, and their unfamiliarity makes them a little harder for users to interpret. If you design a radar chart, be careful not to increase that burden.
 
 Radar charts are most effective when your data has several characteristics
 
 * You don't have too many data points to show. Half a dozen data points is about the maximum that a radar chart can accommodate.
 * The data points have multiple dimensions. With two or even three dimensions to your data, you would probably be better off with a more traditional chart type. Radar charts come into play with data of four or more dimensions.
-* Each data dimension is a scale, e.g. from good to bad. Radar charts don't work well with data dimensions that are merely arbitrary categories (such as political party or nationality). They work best if all the dimensions can at least be ranked, if not assigned a number outright.
+* Each data dimension is a scale that can at least be ranked (from good to bad, say), if not assigned a number outright. . Radar charts don't work well with data dimensions that are merely arbitrary categories (such as political party or nationality). They work best if all the dimensions can at least be ranked, if not assigned a number outright.
 
-A classic use for radar charts is analyzing the performance of players on a sports team. Consider, for example, the starting lineup of the 2012 National Basketball Association's (<span class="smcp">NBA</span>) Miami Heat. There are only five data points (the five players). There are multiple dimensions—points, assists, rebounds, blocks, steals, etc., and each of those dimensions has a natural numeric value.
+A classic use for radar charts is analyzing the performance of players on a sports team. Consider, for example, the starting lineup of the 2012 National Basketball Association's (<span class="smcp">NBA</span>) Miami Heat. There are only five data points (the five players). There are multiple dimensions—points, assists, rebounds, blocks, steals, and so on, and each of those dimensions has a natural numeric value.
 
-Here are the players' 2011-2012 season averages per game, as well as the team totals (which include the contributions of non-starters).
+Here are the players' 2011–2012 season averages per game, as well as the team totals (which include the contributions of nonstarters).
 
 | Player         | Points | Rebounds | Assists | Steals | Blocks |
 |:---------------|-------:|---------:|--------:|-------:|-------:|
@@ -49,9 +49,9 @@ var team = {
 };
 ```
 
-For an effective radar plot, we need to normalize all the values to a common scale. In this example, let's translate raw statistics into team percentage. For example, instead of visualizing LeBron's James' scoring as 28.0, we'll show it as 29% (28.0/98.2).
+For an effective radar plot, we need to normalize all the values to a common scale. In this example, let's translate raw statistics into team percentage. For example, instead of visualizing LeBron's James' scoring as 28.0, we'll show it as 29 percent (28.0/98.2).
 
-Here are a couple of functions we can use to convert the raw statistics into an object to chart. The first function returns the `statistics` object for a single player. It simply searches through the `players` array looking for that player's name. The second function relies on the first. It steps through each statistic in the `team` object, gets the corresponding statistic for the named player, and normalizes the value. The returned object will have a `label` property equal to the player's name, and an array of normalized statistics for that player.
+There are a couple of functions we can use to convert the raw statistics into an object to chart. The first function returns the `statistics` object for a single player. It simply searches through the `players` array looking for that player's name. The second function steps through each statistic in the `team` object, gets the corresponding statistic for the named player, and normalizes the value. The returned object will have a `label` property equal to the player's name, and an array of normalized statistics for that player.
 
 ``` {.javascript .numberLines}
 var get_player = function(name) {
@@ -86,9 +86,9 @@ For example, the function call `player_data("LeBron James")` returns the followi
 }
 ```
 
-For the specific statistics, we're using counter from 0 to 4. In a minute we'll see how to map those numbers into meaningful values.
+For the specific statistics, we're using counter from 0 to 4. We'll see how to map those numbers into meaningful values shortly.
 
-Since flotr2 doesn't require jQuery, we aren't taking advantage of any jQuery convenience function in the code above. We're also not taking full advantage of the JavaScript standard (e.g. `.each()`) because Internet Explorer (<span class="smcp">IE</span>) releases prior to version 9 do not support those methods. If you have jQuery on your pages for other reasons, or if you don't need to support older <span class="smcp">IE</span> versions, you can simplify the code above quite a bit.
+Since flotr2 doesn't require jQuery, we aren't taking advantage of any jQuery convenience function in the preceding code. We're also not taking full advantage of the JavaScript standard (including methods such as `.each()`) because Internet Explorer (<span class="smcp">IE</span>) releases prior to version 9 do not support those methods. If you have jQuery on your pages for other reasons, or if you don't need to support older <span class="smcp">IE</span> versions, you can simplify this code quite a bit.
 
 The last bit of code we'll use is a simple array of labels for the statistics in our chart. The order must match the order returned in `player_data()`.
 
@@ -104,7 +104,7 @@ var labels = [
 
 ### Step 2: Create the Chart
 
-A single call to flotr2's `draw()` method is all it takes to create our chart. We need to specify the <span class="smcp">HTML</span> element in which to place the chart, as well as the chart data. For the data, we'll use the `get_player()` function above. The code below also includes a few options. The `title` option in line 9 provides an overall title for the chart, and the `radar` option in line 10 tells flotr2 the type of chart we want. With a radar chart we also have to explicitly specify a circular (as opposed to rectangular) grid, so we do that with the `grid` option in line 11. The final two options detail the x- and y-axes. For the x-axis we'll use our `labels` array to give each statistic a name, and for the y-axis we forgo labels altogether and explicitly specify the minimum and maximum values.
+A single call to flotr2's `draw()` method is all it takes to create our chart. We need to specify the <span class="smcp">HTML</span> element in which to place the chart, as well as the chart data. For the data, we'll use the `get_player()` function previously. The following code also includes a few options. The `title` option in line 9 provides an overall title for the chart, and the `radar` option in line 10 tells flotr2 the type of chart we want. With a radar chart we also have to explicitly specify a circular (as opposed to rectangular) grid, so we do that with the `grid` option in line 11. The final two options detail the x- and y-axes. For the x-axis we'll use our `labels` array to give each statistic a name, and for the y-axis we'll forgo labels altogether and explicitly specify the minimum and maximum values.
 
 ``` {.javascript .numberLines}
 Flotr.draw(document.getElementById("chart"),
@@ -124,16 +124,16 @@ Flotr.draw(document.getElementById("chart"),
 );
 ```
 
-The only real trick is making the <span class="smcp">HTML</span> container wide enough to hold both the chart proper and the legend since flotr2 doesn't do a great job of calculating the size appropriately. For a static chart such as this one, trial and error is the simplest approach and gives us the chart of figure NEXTFIGURENUMBER.
+The only real trick is making the <span class="smcp">HTML</span> container wide enough to hold both the chart proper and the legend since flotr2 doesn't do a great job of calculating the size appropriately. For a static chart such as this one, trial and error is the simplest approach and gives us the chart shown in figure NEXTFIGURENUMBER.
 
 <figure>
 <div id='radar-chart1' style="width:600px;height:400px;"></div>
 <figcaption>Radar charts let users compare multiple data variables at once.</figcaption>
 </figure>
 
-Although it's certainly not a surprise to <span class="smcp">NBA</span> fans, the chart clearly demonstrates the value of LeBron James to the team. As is evident above, he leads the team in four of the five major statistical categories.
+Although it's certainly not a surprise to <span class="smcp">NBA</span> fans, the chart clearly demonstrates the value of LeBron James to the team. He leads the team in four of the five major statistical categories.
 
-The radar chart definitely lends itself only to a few specialized applications; however, when we have only a modest number of variables, each of which is easily quantified, it can be effective. In the example above, we can also show how a particular player (LeBron James) dominates so many of the individual variables. Each player's area on the chart roughly corresponds to his total contribution across all of the variables. The relative size of the red area makes James's total contribution strikingly clear.
+The radar chart lends itself only to a few specialized applications, but it can be effective when there is only a modest number of variables, each of which is easily quantified, it can be effective. In figure LASTFIGURENUMBER, each player's area on the chart roughly corresponds to his total contribution across all of the variables. The relative size of the red area makes James's total contribution strikingly clear.
 
 <script>
 ;(function(){

@@ -1,8 +1,8 @@
 ## Adding Magnitudes to X/Y Data with a Bubble Chart
 
-Traditional scatter plots, like those described in the last example, show the relationship between two values: the x-axis and the y-axis. Sometimes, however, two values are not adequate for the data we want to visualize. If three variables need visualization, it might be effective to use a scatter plot framework for two of the variables and then vary the size of the points according to the third variable. The resulting chart is a bubble chart.
+Traditional scatter plots, like those described in the previous example, show the relationship between two values: the x-axis and the y-axis. Sometimes, however, two values are not adequate for the data we want to visualize. If we need to visualize three variables, we could use a scatter plot framework for two of the variables and then vary the size of the points according to the third variable. The resulting chart is a bubble chart.
 
-Using bubble charts effectively requires some caution, though. Humans cannot accurately judge the relative areas of non-rectangular shapes. So, just as with pie charts and their non-rectangular areas, bubble charts don't lend themselves to precise comparisons of the bubble size. But if your third variable only conveys the general sense of a quantity rather than an accurate measurement, a bubble chart may be appropriate.
+Using bubble charts effectively requires some caution, though. As we saw earlier with pie charts, humans are not very good at accurately judging the relative areas of nonrectangular shapes, so bubble charts don’t lend themselves to precise comparisons of the bubble size. But if your third variable conveys only the general sense of a quantity rather than an accurate measurement, a bubble chart may be appropriate.
 
 For this example we'll use a bubble chart to visualize the path of Hurricane Katrina in 2005. Our x- and y-values will represent position (latitude and longitude), and we'll ensure our users can interpret those values very accurately. For the third value—the bubble area—we'll use the storm's sustained wind speed. Since wind speed is only a general value anyway (as the wind gusts and subsides), a general impression is sufficient.
 
@@ -20,7 +20,7 @@ var katrina = [
     // Data set continues...
 ```
 
-For its bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, an optional parameter can specify a filter function. And while we're extracting data points, we can reverse the sign of the longitude so that west to east displays left to right.
+For the bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, we can use an optional parameter to specify a filter function. And while we're extracting data points, we can reverse the sign of the longitude so that west to east displays left to right.
 
 The code for our function starts by setting the return value (`result`) to an empty array in line 2. Then it iterates through the input `source_array` one element at a time. If the `filter_function` parameter is available, and if it is a valid function, our code calls that function with the source array element as a parameter. If the function returns `true`, or if no function was passed in the parameter, then our code extracts the data point from the source element and pushes it onto the result array.
 
@@ -46,7 +46,7 @@ As you can see, the `filter_function` parameter is optional. If the caller omits
 
 ### Step 2: Create a Background for the Chart
 
-Because the x- and y-values of our chart will represent position, a map makes the perfect chart background. To avoid any copyright concerns, we'll use map images from [Stamen Design](http://stamen.com/), which use data from [OpenStreetMap](http://openstreetmap.org/). Both are available under Creative Commons licenses, [<span class="smcp">CC</span> <span class="smcp">BY</span> 3.0](http://creativecommons.org/licenses/by/3.0) and [<span class="smcp">CC</span> <span class="smcp">BY</span> <span class="smcp">SA</span>](http://creativecommons.org/licenses/by-sa/3.0), respectively.
+Because the x- and y-values of our chart will represent position, a map makes the perfect chart background. To avoid any copyright concerns, we'll use map images from [Stamen Design](http://stamen.com/) that use data from [OpenStreetMap](http://openstreetmap.org/). Both are available under Creative Commons licenses, [<span class="smcp">CC</span> <span class="smcp">BY</span> 3.0](http://creativecommons.org/licenses/by/3.0) and [<span class="smcp">CC</span> <span class="smcp">BY</span> <span class="smcp">SA</span>](http://creativecommons.org/licenses/by-sa/3.0), respectively.
 
 Figure NEXTFIGURENUMBER shows the map image on which we'll overlay the hurricane's path.
 
@@ -55,7 +55,7 @@ Figure NEXTFIGURENUMBER shows the map image on which we'll overlay the hurricane
 <figcaption>A map image can be used as the background for a chart.</figcaption>
 </figure>
 
-Projections can be a tricky issue when working with maps, but they have less of an effect the smaller the mapped area, and they're less critical in the center of the mapped region. For this example, with its relatively small area and action focused in the center, we'll assume the map image uses a Mercator projection. That assumption lets us avoid any advanced mathematical transformations when converting from latitude and longitude to x- and y-values.
+Projections can be a tricky issue when you're working with maps, but for smaller mapped area they have less of an effect. Also, they're less critical in the center of the mapped region. For this example, with its relatively small area and action focused in the center, we'll assume the map image uses a Mercator projection. That assumption lets us avoid any advanced mathematical transformations when converting from latitude and longitude to x- and y-values.
 
 ### Step 3: Plot the Data
 
@@ -71,7 +71,7 @@ Flotr.draw(
 );
 ```
 
-For now, we haven't bothered with the background image. We'll add that to the chart once we've adjusted the data a bit. The result in figure NEXTFIGURENUMBER still needs improvement, but it's a working start:
+For now, we haven't bothered with the background image. We'll add that to the chart once we've adjusted the data a bit. The result in figure NEXTFIGURENUMBER still needs improvement, but it's a working start.
 
 <figure>
 <div id="bubble-chart1" style="width:600px;height:400px;"></div>
@@ -112,9 +112,9 @@ At this point the chart in figure NEXTFIGURENUMBER is looking pretty good. We ca
 
 ### Step 5: Color the Bubbles
 
-This example gives us a chance to provide even more information to our users without overly distracting them; we have the option to modify the bubble colors. Let's use that freedom to indicate the Saffir-Simpson classification for the storm at each measurement point.
+This example gives us a chance to provide even more information to our users without overly distracting them, we have the option to modify the bubble colors. Let's use that freedom to indicate the Saffir-Simpson classification for the storm at each measurement point.
 
-Here's where we can take advantage of the filter option we included in the data formatting function. The Saffir-Simpson classification is based on wind speed, so we'll filter based on the `wind` property. For example, here's how to extract only those values that represent a Category 1 Hurricane, with wind speeds from 74 to 95 miles/hour. The function we pass to `get_points` only returns true for appropriate wind speeds.
+Here's where we can take advantage of the filter option we included in the data formatting function. The Saffir-Simpson classification is based on wind speed, so we'll filter based on the `wind` property. For example, here's how to extract only those values that represent a Category 1 hurricane, with wind speeds from 74 to 95 miles per hour. The function we pass to `get_points` only returns `true` only for appropriate wind speeds.
 
 ``` {.javascript .numberLines}
 cat1 = get_points(katrina, function(obs) {
@@ -122,7 +122,7 @@ cat1 = get_points(katrina, function(obs) {
 });
 ```
 
-To have flotr2 assign different colors to different strengths, we divide the data into multiple series. Each series gets its own color. Here's how we can specify the different series. In addition to the five hurricane categories, we've also parsed out the points for tropical storm and tropical depression strength.
+To have flotr2 assign different colors to different strengths, we divide the data into multiple series with the following code. Each series gets its own color. In addition to the five hurricane categories, we've also parsed out the points for tropical storm and tropical depression strength.
 
 ``` {.javascript .numberLines}
 Flotr.draw(
@@ -157,7 +157,7 @@ Flotr.draw(
 );
 ```
 
-We've also added labels for the hurricane categories and placed a legend in the lower left of the chart in figure NEXTFIGURENUMBER.
+We've also added labels for the hurricane categories and placed a legend in the lower left of the chart, as you can see in figure NEXTFIGURENUMBER.
 
 <figure>
 <div id="bubble-chart3" style="width:600px;height:400px;background-image:url(img/gulf.png);background-size:cover;"></div>
@@ -166,7 +166,7 @@ We've also added labels for the hurricane categories and placed a legend in the 
 
 ### Step 6: Adjust the Legend Styles
 
-By default, flotr2 seems to prefer all elements as large as possible. The legend in the chart above is a good example: it looks cramped and unattractive. Fortunately, the fix is rather simple, We simply add some <span class="smcp">CSS</span> styles which give the legend padding. We can also set the legend's background color explicitly rather than relying on flotr2's manipulation of opacity.
+By default, flotr2 seems to prefer all elements as large as possible. The legend in figure LASTFIGURENUMBER is a good example: it looks cramped and unattractive. Fortunately, the fix is rather simple: we simply add some <span class="smcp">CSS</span> styles which give the legend padding. We can also set the legend's background color explicitly rather than relying on flotr2's manipulation of opacity.
 
 ``` {.css .numberLines}
 .flotr-legend {
@@ -196,7 +196,7 @@ With that final tweak, we have the finished product of figure NEXTFIGURENUMBER. 
 <figcaption>A bubble chart shows a third dimension (wind speed) as well as position.</figcaption>
 </figure>
 
-The bubble chart adds another dimension to the two-dimensional scatter chart. In fact, as in our example, it can add two additional dimensions. The example uses bubble size to represent wind speed and color to indicate the hurricane's classification. Both of these additional values require care, however. Humans are not good at comparing two-dimensional areas, nor can they easily compare relative shades or colors. We should never use the extra bubble chart dimensions to convey critical data or precise quantities, therefore. Rather, they work best in examples such as this example—neither the exact wind speed nor the specific classification need be as precise as the location. Few people can tell the difference between 100 and 110 mile/hour winds, but many certainly know the difference between New Orleans and Dallas.
+The bubble chart adds another dimension to the two-dimensional scatter chart. In fact, as in our example, it can add two additional dimensions. The example uses bubble size to represent wind speed and color to indicate the hurricane's classification. Both of these additional values require care, however. Humans are not good at comparing two-dimensional areas, nor can they easily compare relative shades or colors. We should never use the extra bubble chart dimensions to convey critical data or precise quantities, therefore. Rather, they work best in examples such as this example—neither the exact wind speed nor the specific classification need be as precise as the location. Few people can tell the difference between 100 and 110 mile-per-hour winds, but they certainly know the difference between New Orleans and Dallas.
 
 <script>
 ;(function(){

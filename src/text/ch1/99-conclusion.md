@@ -8,11 +8,11 @@ The examples in this chapter provide a quick tour of the many types of standard 
   <dt>Line Charts</dt>
   <dd>More effective than bar charts when there is a large number of data values to show, or for showing quantities that vary on an irregular schedule.</dd>
   <dt>Pie Charts</dt>
-  <dd>Often overused, but can be effective to highlight the percentage of a whole that a single value comprises.</dd>
+  <dd>Often overused but can be effective to highlight the proportion of a single value within a whole.</dd>
   <dt>Scatter Charts</dt>
   <dd>Effective for showing possible relationships between two values.</dd>
   <dt>Bubble Charts</dt>
   <dd>Adds a third value to scatter charts, but should be used carefully, as humans have difficulty accurately assessing the relative areas of circular regions.</dd>
   <dt>Radar Charts</dt>
-  <dd>Designed to show several aspects of the subject on one chart. Not as familiar to many users, so be aware of the extra difficulty interpretation may entail.</dd>
+  <dd>Designed to show several aspects of the subject on one chart. Not as familiar to many users, but can be effective for certain specialized cases.</dd>
 </dl>

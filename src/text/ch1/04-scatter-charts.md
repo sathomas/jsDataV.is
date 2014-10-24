@@ -1,12 +1,12 @@
 ## Plotting X/Y Data with a Scatter Chart
 
-When we want to analyze data that primarily consists of a single quantity, perhaps a quantity that changes at regular intervals (e.g. yearly) or varies among a population (e.g. sports teams), the bar chart is often the best tool for our visualization. The real world, however, sometimes makes things more complicated than a single quantity can capture. If we want to explore the relationship between two different quantities, a scatter chart can be more effective. Suppose, for example, we wish to visualize the relationship between a country's health care spending (one quantity) and its life expectancy (the second quantity). Let's step through an example to see how to create a scatter chart for that data.
+A bar chart is often most effective for visualizing data that consists primarily of a single quantity (such as the number of wins in the bar charts we created earlier). But if we want to analyze data that primarily consists of a single quantity, perhaps a quantity that changes at regular intervals (e.g. yearly) or varies among a population (e.g. sports teams), the bar chart is often the best tool for our visualization. The real world, however, sometimes makes things more complicated than a single quantity can capture. If we want to explore the relationship between two different quantities, a scatter chart can be more effective. Suppose, for example, we wish to visualize the relationship between a country's health care spending (one quantity) and its life expectancy (the second quantity). Let's step through an example to see how to create a scatter chart for that data.
 
-Just as in this chapter's first example, we need to include the flotr2 library in our web page and set aside a `<div>` element to contain the chart we'll construct. The unique aspects of this example begin below.
+Just as in this chapter's first example, we need to include the flotr2 library in our web page and set aside a `<div>` element to contain the chart we'll construct.
 
 ### Step 1: Define the Data
 
-For this example, we'll use the 2012 Report from the [Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)](http://www.oecd.org/health/healthpoliciesanddata/oecdhealthdata2012.htm). Their report includes health care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here's how we might store that data in a JavaScript array.
+For this example, we'll use the 2012 Report from the [Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)](http://www.oecd.org). This report includes health care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here you can see a short excerpt of that data stored in a JavaScript array:
 
 ``` {.javascript .numberLines}
 var health_data = [
@@ -18,7 +18,7 @@ var health_data = [
 
 ### Step 2: Format the Data
 
-As is often the case, the structure containing our data isn't in the exact format that the flotr2 library requires. We need to restructure the original data just a bit, and here's the JavaScript code to do that. We start with an empty `data` array and step through the source data. For each element in the source `health_data`, we extract the data point for our chart and push that data point into the `data` array.
+As is often the case, we’ll need to restructure the original data a bit so that it matches the format flotr2 requires. The JavaScript code for that is shown next. We start with an empty `data` array and step through the source data. For each element in the source `health_data`, we extract the data point for our chart and push that data point into the `data` array.
 
 ``` {.javascript .numberLines}
 var data = [];
@@ -30,7 +30,7 @@ for (var i = 0; i < health_data.length; i++) {
 };
 ```
 
-Since flotr2 doesn't require jQuery, we're not using any of the jQuery convenience functions in this example. But if you're using jQuery for other reasons in your page, you could, for example, use the `.map()` function to simplify the code for this restructuring. (Chapter 2 includes a detailed example of the jQuery `.map()` function, as that chapter's examples require jQuery.)
+Since flotr2 doesn't require jQuery, we're not using any of the jQuery convenience functions in this example. But if you're using jQuery for other reasons in your page, you could, for example, use the `.map()` function to simplify the code for this restructuring. (Chapter 2 includes a detailed example of the jQuery `.map()` function.)
 
 ### Step 3: Plot the Data
 
@@ -43,9 +43,9 @@ Flotr.draw(
 );
 ```
 
-As you can see, flotr2 expects at least two parameters. The first is the element in our <span class="smcp">HTML</span> document in which we want the chart placed, and the second is the data for the chart. The data takes the form of an array. In general, flotr2 can draw multiple series on the same chart, so that array might have multiple objects. In our case, however, we're only charting one series, so the array has a single object. That object identifies the data itself, and it tells flotr2 not to show lines but to show points instead.
+As you can see, flotr2 expects at least two parameters. The first is the element in our <span class="smcp">HTML</span> document in which we want the chart placed, and the second is the data for the chart. The data takes the form of an array. In general, flotr2 can draw multiple series on the same chart, so that array might have multiple objects. In our case, however, we're charting only one series, so the array has a single object. That object identifies the data itself, and it tells flotr2 to show points instead of lines.
 
-Figure NEXTFIGURENUMBER shows our result. Notice how the points are pressed right up the edges of the chart.
+Figure NEXTFIGURENUMBER shows our result. Notice how the points are pressed right up against the edges of the chart.
 
 <figure>
 <div id='scatter-chart1' style='width:600px;height:400px;'></div>
@@ -54,7 +54,7 @@ Figure NEXTFIGURENUMBER shows our result. Notice how the points are pressed righ
 
 ### Step 4: Adjust the Chart's Axes
 
-The first attempt isn't too bad, but flotr2 automatically calculates the ranges for each axis, and its default algorithm usually results in a chart that's too cramped. Flotr2 does have an `autoscale` option; if you set it then the library attempts to find "sensible" ranges for the associated axes automatically. Unfortunately, in my experience the ranges it suggests rarely improve the default option significantly. Selecting good ranges turns out to be extremely difficult; in most cases we're better off to explicitly set them. Here's how we might do for our chart.
+The first attempt isn't too bad, but flotr2 automatically calculates the ranges for each axis, and its default algorithm usually results in a chart that's too cramped. Flotr2 does have an `autoscale` option; if you set it, the library attempts to find sensible ranges for the associated axes automatically. Unfortunately, in my experience the ranges flotr2 suggests rarely improve the default option significantly, so in most cases we're better off explicitly setting them. Here's how we might do that for our chart:
 
 ``` {.javascript .numberLines}
 Flotr.draw(
@@ -70,7 +70,7 @@ Flotr.draw(
 );
 ``` 
 
-We've added a third parameter to the `draw()` method that contains our options. In this case the options are properties for the x- and y-axes. In each case we're explicitly setting a minimum and maximum value. By specifying ranges that give the data a little breathing room, we've made the chart in figure NEXTFIGURENUMBER much easier to read:
+We've added a third parameter to the `draw()` method that contains our options which in this case are properties for the x- and y-axes. In each case we're explicitly setting a minimum and maximum value. By specifying ranges that give the data a little breathing room, we've made the chart in figure NEXTFIGURENUMBER much easier to read.
 
 <figure>
 <div id='scatter-chart2' style='width:600px;height:400px;'></div>
@@ -79,7 +79,7 @@ We've added a third parameter to the `draw()` method that contains our options. 
 
 ### Step 5: Label the Data
 
-Our chart so far looks reasonably nice, but it doesn't tell the user what they're seeing. We need to add some labels to identify the data. A few more options can clarify the chart:
+Our chart so far looks reasonably nice, but it doesn't tell users what they're seeing. We need to add some labels to identify the data. A few more options can clarify the chart:
 
 ``` {.javascript .numberLines .line-9 .line-11}
 Flotr.draw(
@@ -97,16 +97,16 @@ Flotr.draw(
 );
 ```
 
-The `title` and `subtitle` options give the chart its overall title and subtitle, while the `title` properties within the `xaxis` and `yaxis` options name the labels for those axes. In addition to adding labels, we've told flotr2 to drop the unnecessary decimal point from the x- and y-axis values. We did that with the `tickDecimals` property in lines 9 and 11. The chart in figure NEXTFIGURENUMBER is now looking much better.
+The `title` and `subtitle` options give the chart its overall title and subtitle, while the `title` properties within the `xaxis` and `yaxis` options name the labels for those axes. In addition to adding labels, we've told flotr2 to drop the unnecessary decimal point from the x- and y-axis values by changing the `tickDecimals` property in lines 9 and 11. The chart in figure NEXTFIGURENUMBER looks much better.
 
 <figure>
 <div id='scatter-chart3' style='width:600px;height:400px;'></div>
 <figcaption>Labels and titles clarify the chart's content.</figcaption>
 </figure>
 
-### Step 6: Clarify the X Axis
+### Step 6: Clarify the X-Axis
 
-Although our chart has definitely improved since the first attempt, there is still one nagging problem with the data presentation. The x-axis represents a percentage, but the labels for that axis show whole numbers. That discrepancy might cause our users some initial confusion, so lets get rid of it. Flotr2 gives us the option to format the axis labels however we want. In this example, we simply wish to add a percentage symbol to the value. That's easy enough:
+Although our chart has definitely improved since our first attempt, there is still one nagging problem with the data presentation. The x-axis represents a percentage, but the labels for that axis show whole numbers. That discrepancy might cause our users some initial confusion, so lets get rid of it. Flotr2 allows us to format the axis labels however we want. In this example, we simply wish to add a percentage symbol to the value. That's easy enough:
 
 ``` {.javascript .numberLines .line-11}
 Flotr.draw(
@@ -125,9 +125,9 @@ Flotr.draw(
 );
 ```
 
-The trick is the `tickFormatter` property of the `xaxis` options. It's line 11 in the  above code. That property specifies a function. When that option is present, flotr2 doesn't draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we're simply adding a percent sign after the value.
+The trick is the `tickFormatter` property of the `xaxis` options. It's line 11 in the preceding code. That property specifies a function. When `tickFormatter` is present, flotr2 doesn't draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we're simply adding a percent sign after the value.
 
-With figure NEXTFIGURENUMBER we have a chart that clearly presents the data. The horizontal axis clearly labels the percentage values.
+In figure NEXTFIGURENUMBER, with the addition of the percentage values labeling the horizontal axis, we have a chart that presents the data clearly.
 
 <figure>
 <div id='scatter-chart4' style='width:600px;height:400px;'></div>
@@ -136,15 +136,15 @@ With figure NEXTFIGURENUMBER we have a chart that clearly presents the data. The
 
 The scatter plot excels at revealing relationships between two different variables. In this example, we can see how life expectancy relates to health care spending. In aggregate, more spending yields longer life.
 
-### Step 7: Answering Users' Questions
+### Step 7: Answer Users' Questions
 
-Now that our chart successfully presents the data, we can start to look more carefully at the visualization from our users' perspective. We especially want to anticipate any questions that users might have and try to answer those questions directly on the chart. Looking at the chart as it now stands, there are at least three questions that stand out:
+Now that our chart successfully presents the data, we can start to look more carefully at the visualization from our users' perspective. We especially want to anticipate any questions that users might have and try to answer them directly on the chart. There are at least three questions that stand out:
 
 1. What countries are shown?
 2. Are there any regional differences?
 3. What's that data point way over on the right?
 
-One way to answer those questions would be to add mouse overs (or tool tips) to each data point. But we're not going to use that approach in this example for a couple of reasons. First (and most obviously), interactive visualizations are the subject of chapter 2; this chapter considers only static charts and graphs. Secondly, mouse overs and tool tips are ineffective for users accessing our site on a touch device such as a smartphone or tablet. If we required users to have a mouse to fully understand our visualization, we might be neglecting a significant (and rapidly growing) number of users.
+One way to answer those questions would be to add mouseovers (or tool tips) to each data point. But we're not going to use that approach in this example for a couple of reasons. First (and most obviously), interactive visualizations are the subject of chapter 2; this chapter considers only static charts and graphs. Secondly, mouse overs and tool tips are ineffective for users accessing our site on a touch device such as a smartphone or tablet. If we required users to have a mouse to fully understand our visualization, we might be neglecting a significant (and rapidly growing) number of them.
 
 Our approach to this problem will be to divide our data into multiple series so that we can color and label each independently. Here's the first step in breaking the data into regions:
 
@@ -165,7 +165,7 @@ var us_data = [
 ];
 ```
 
-We don't include the United States in the Americas series. That's because the U.S. is the outlier data point on the far right of the chart. Our users probably want to know the specific country for that point and not just its region. For the other countries, a region alone is probably enough identification. As before, we need to restructure these arrays into flotr2's format. The code is the same as in step 4; we're just repeating it for each data set.
+Here, we’re giving the United States its own series, separate from the Americas series. That's because the U.S. is the outlier data point on the far right of the chart. Our users probably want to know the specific country for that point, not just its region. For the other countries, a region alone is probably enough identification. As before, we need to restructure these arrays into flotr2's format. The code is the same as step 4; we're just repeating it for each data set.
 
 ``` {.javascript .numberLines}
 var pacific=[], europe=[], americas=[], mideast=[], asia=[], us=[];
@@ -201,7 +201,7 @@ Flotr.draw(
 );
 ```
 
-With the countries in different data series based on regions, flotr2 is able to color the regions distinctly as in figure NEXTFIGURENUMBER.
+With the countries in different data series based on regions, flotr2 now colors the regions distinctly as shown in figure NEXTFIGURENUMBER.
 
 <figure>
 <div id='scatter-chart5' style='width:600px;height:400px;'></div>
@@ -232,7 +232,7 @@ Flotr.draw(
 );
 ```
 
-This addition gives us the final chart of figure NEXTFIGURENUMBER.
+This addition gives us the final chart shown in figure NEXTFIGURENUMBER.
 
 <figure>
 <div id='scatter-chart6' style='width:600px;height:400px;'></div>
