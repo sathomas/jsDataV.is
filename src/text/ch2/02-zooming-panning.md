@@ -2,7 +2,7 @@
 
 So far, we've given users some interaction with the visualization by letting them choose which data sets appear. In many cases, however, you'll want to give them even more control, especially if you're showing a lot of data and details are hard to discern. If users can't see the details they need, our visualization has failed. Fortunately we can avoid this problem by giving users a chance to inspect fine details within the data. One way to do that is to let users zoom into the chart.
 
-Although the flot library in its most basic form does not support zooming, there are at least two library extensions that add this feature. Those extensions are the _selection_ plugin and the _navigation_ plugin. The navigation plugin acts a bit like Google Maps. It adds a control that looks a bit like a compass to one corner of the plot and gives users arrows and buttons to pan or zoom the display. This interface is not especially effective for charts, however. Users cannot control exactly how much the chart pans or zooms, and that makes it difficult for them to anticipate the effect of an action.
+Although the flot library in its most basic form does not support zooming, there are at least two library extensions that add this feature: the _selection_ plugin and the _navigation_ plugin. The navigation plugin acts a bit like Google Maps. It adds a control that looks like a compass to one corner of the plot and gives users arrows and buttons to pan or zoom the display. This interface is not especially effective for charts, however. Users cannot control exactly how much the chart pans or zooms, which makes it difficult for them to anticipate the effect of an action.
 
 The selection plugin provides a much better interface. Users simply drag their mouse across the area of the chart they want to zoom to. The effect of this gesture is more intuitive, and users can be as precise as they like in those actions. The plugin does have one significant downside, however; it doesn't support touch interfaces.
 
@@ -10,7 +10,7 @@ For this example, we'll walk through the steps required to support zooming with 
 
 ### Step 1: Prepare the Page
 
-Because we're sticking with the same data, most of the preparation is identical to the last example. We do, however, have to add the selection plugin to the page. That plugin is not available on common <span class="smcp">CDN</span>s, so we host it on our own server as you can see in line 12.
+Because we're sticking with the same data, most of the preparation is identical to the last example. We do, however, have to add the selection plugin to the page. It is not available on common <span class="smcp">CDN</span>s, so we host it on our own server as you can see in line 12.
 
 ``` {.html .numberLines .line-12}
 <!DOCTYPE html>
@@ -51,7 +51,7 @@ $(function () {
 });
 ```
 
-Here, we call the jQuery extension `plot` (from the flot library) and pass it three parameters. The first parameter identifies the <span class="smcp">HTML</span> element which should contain the chart, and the second parameter provides the data as an array of data series. These series contain regions we defined earlier, plus a label to identify each series. The final parameter specifies options for the plot. We'll keep it simple for this example—the only option we're including tells flot to position the legend in the top-left (or northwest) corner of the chart.
+Here, we call the jQuery extension `plot` (from the flot library) and pass it three parameters. The first parameter identifies the <span class="smcp">HTML</span> element that should contain the chart, and the second parameter provides the data as an array of data series. These series contain regions we defined earlier, plus a label to identify each series. The final parameter specifies options for the plot. We'll keep it simple for this example—the only option we're including tells flot to position the legend in the top-left (northwest) corner of the chart.
 
 Figure NEXTFIGURENUMBER shows the resulting chart.
 
@@ -61,7 +61,7 @@ It looks like we've done a good job of capturing and presenting the data statica
 
 ### Step 3: Prepare the Data to Support Interaction
 
-Now that we have a working static chart, we can plan how to support interaction. As part of that support, it will be convenient to have all the parameters we're passing to `plot()` stored in local variables. We'll create those variables before we call `plot()`. They are `$el` (line 1), `data` (line 2), and `options` (line 10). We'll also need to save the object that's the return value from `plot()`, which we do in line 12.
+Now that we have a working static chart, we can plan how to support interaction. As part of that support, it will be convenient to have all the parameters we're passing to `plot()` stored in local variables. We'll create those variables before we call `plot()`. They are `$el` (line 1), `data` (line 2), and `options` (line 10). We'll also need to save the object that's returned from `plot()`, which we do at line 12.
 
 ``` {.javascript .numberLines}
 var $el = $("#chart"),
@@ -80,7 +80,7 @@ var plotObj = $.plot($el, data, options);
 
 ### Step 4: Prepare to Accept Interaction Events
 
-Our code also has to prepare to handle the interaction events. The selection plugin signals the users actions by triggering custom "plotselected" events on the element containing the chart. To receive these events, we need a function which expects two parameters—the standard JavaScript event object and a custom object containing details about the selection. We'll worry about how to process the event shortly. For now let's focus on preparing for it.
+Our code also has to prepare to handle the interaction events. The selection plugin signals the users actions by triggering custom "plotselected" events on the element containing the chart. To receive these events, we need a function that expects two parameters—the standard JavaScript event object and a custom object containing details about the selection. We'll worry about how to process the event shortly. For now let's focus on preparing for it.
 
 ``` {.javascript .numberLines}
 $el.on("plotselected", function(ev, ranges) {
@@ -88,11 +88,11 @@ $el.on("plotselected", function(ev, ranges) {
 });
 ```
 
-The jQuery `.on()` function assigns a function to an arbitrary event. Events can be standard JavaScript events such as "click," or they can be custom events like the one we're using. The event of interest is the first parameter to `.on()`. The second parameter is the function that will process the event. As we noted above, it also takes two parameters.
+The jQuery `.on()` function assigns a function to an arbitrary event. Events can be standard JavaScript events such as "click," or they can be custom events like the one we're using. The event of interest is the first parameter to `.on()`. The second parameter is the function that will process the event. As noted previously, it also takes two parameters.
 
 Now we can consider the action we want to take when our function receives an event. The `ranges` parameter contains both an `xaxis` and a `yaxis` object which have information about the plotselected event. In both objects the `from` and `to` properties specify the region that the user selected. To zoom to that selection, we can simply redraw the chart by using those ranges for the chart's axes.
 
-Specifying the axes for the redrawn chart requires us to pass new options to the `plot()` function, but we want to preserve whatever options are already defined. The jQuery `.extend()` function gives us the perfect tool for that task. The function merges JavaScript objects together so that the result contains all of the properties in either object. If the objects might contain other objects, then we have to tell jQuery to use "deep" mode when it performs the merge. Here's the complete call to `plot()`, which we place inside the plotselected even handler.
+Specifying the axes for the redrawn chart requires us to pass new options to the `plot()` function, but we want to preserve whatever options are already defined. The jQuery `.extend()` function gives us the perfect tool for that task. The function merges JavaScript objects so that the result contains all of the properties in each object. If the objects might contain other objects, then we have to tell jQuery to use "deep" mode when it performs the merge. Here's the complete call to `plot()`, which we place inside the `plotselected` event handler.
 
 ``` {.javascript .numberLines}
 plotObj = $.plot($el, data, 
@@ -103,7 +103,7 @@ plotObj = $.plot($el, data,
 );
 ```
 
-When we use `.extend()`, the first parameter (`true`) requests "deep" mode, the second parameter specifies the starting object, and subsequent parameters specify additional objects to merge. We're starting with an empty object (`{}`), merging the regular options, and then further merging the axes options for the zoomed chart.
+When we use `.extend()`, the first parameter (`true`) requests "deep" mode, the second parameter specifies the starting object, and subsequent parameters specify additional objects to merge. We're starting with an empty object (`{}`), merging the regular options, and then further merging the axis options for the zoomed chart.
 
 ### Step 5: Enable the Interaction
 
@@ -116,7 +116,7 @@ var options = {
 };
 ```
 
-And with that addition, our chart is now interactive. Users can zoom in to see as much detail as they want. There is a small problem, though. Our visualization doesn't give users a way to zoom back out. Obviously we can't use the selection plugin to zoom out since that would require selecting outside of the current chart area. Instead, we can add a button to the page to reset the zoom level. You can see the button in line 9 of the markup below. It's right after the `<div>` that holds the chart.
+And with that addition, our chart is now interactive. Users can zoom in to see as much detail as they want. There is a small problem, though: our visualization doesn't give users a way to zoom back out. Obviously we can't use the selection plugin to zoom out since that would require users to select outside the current chart area. Instead, we can add a button to the page to reset the zoom level. You can see the button in line 9 of the markup below. It's right after the `<div>` that holds the chart.
 
 ``` {.html .numberLines .line-9}
 <!DOCTYPE html>
@@ -159,7 +159,7 @@ That gives us a complete, interactive visualization. Users can zoom in to any le
 <figcaption>Interactive charts let users focus on data relevant to their needs.</figcaption>
 </figure>
 
-If you experiment with this example, you'll soon see that users cannot select an area of the chart that includes the legend. That may be okay for your visualization, but if it's not, the simplest solution is to create your own legend and position it off of the chart's canvas, like we did for the first example in this chapter.
+If you experiment with this example, you'll soon see that users cannot select an area of the chart that includes the legend. That may be okay for your visualization, but if it's not, the simplest solution is to create your own legend and position it off the chart's canvas, like we did for the first example in this chapter.
 
 <script>
 ;(function(){

@@ -2,31 +2,31 @@
 
 If you're presenting data to a large audience on the web, you may find that different users are especially interested in different aspects of your data. With global <span class="smcp">GDP</span> data, for example, we might expect that individual users would be most interested in the data for their own region of the world. If we can anticipate inquiries like this from the user, we can construct our visualization to answer them.
 
-In this example, we're targeting a worldwide audience, and we want to show data for all regions. To accommodate individual users, however, we can make the regions selectable. That is, users will be able to show or hide the data from each region. If a particular user doesn't care about data for particular regions, they can simply choose not to show that data.
+In this example, we're targeting a worldwide audience, and we want to show data for all regions. To accommodate individual users, however, we can make the regions selectable. That is, users will be able to show or hide the data from each region. If some users don't care about data for particular regions, they can simply choose not to show it.
 
-Interactive visualizations usually require more thought than simple static charts. Not only must the original presentation of data be effective, but the way the user controls the presentation _and_ the way the presentation responds must be effective. It usually helps to consider each of those requirements explicitly.
+Interactive visualizations usually require more thought than simple static charts. Not only must the original presentation of data be effective, but the way the user controls the presentation _and_ the way the presentation responds must be effective as well. It usually helps to consider each of those requirements explicitly.
 
 1. Make sure the initial, static presentation shows the data effectively.
 2. Add any user controls to the page and ensure they make sense for the visualization.
 3. Add the code that makes the controls work.
  
-We'll tackle each of these phases in the example below.
+We'll tackle each of these phases in the following example.
 
 ### Step 1: Include the Required JavaScript Libraries
 
 Since we're using the flot library to create the chart, we need to include that library in our web pages. And since flot requires jQuery, we'll include that in our pages as well. Fortunately, both jQuery and flot are popular libraries and they are available on public content distribution networks (<span class="smcp">CDN</span>s). That gives you the option of loading both from a <span class="smcp">CDN</span> instead of hosting them on your own site. There are several advantages to relying on a <span class="smcp">CDN</span>.
 
-* **Better Performance.** If the user has previously visited other web sites that retrieved the libraries from the same <span class="smcp">CDN</span>, then the libraries may already exist in the browser's local cache. In that case the browser simply retrieves them from the cache, avoiding the delay of additional network requests. (Note: See the second disadvantage below for a different view on performance.)  
-* **Lower Cost.** One way or another, the cost of your site is likely based on how much bandwidth you use. If your users are able to retrieve libraries from a <span class="smcp">CDN</span>, then the bandwidth required to service their requests won't count against your site.
+* **Better performance.** If the user has previously visited other web sites that retrieved the libraries from the same <span class="smcp">CDN</span>, then the libraries may already exist in the browser's local cache. In that case the browser simply retrieves them from the cache, avoiding the delay of additional network requests. (Note: see the second disadvantage below for a different view on performance.)  
+* **Lower cost.** One way or another, the cost of your site is likely based on how much bandwidth you use. If your users are able to retrieve libraries from a <span class="smcp">CDN</span>, then the bandwidth required to service their requests won't count against your site.
 
 Of course there are also disadvantages to <span class="smcp">CDN</span>s as well.
 
-* **Loss of Control.** If the content distribution network goes down, then the libraries your page needs won't be available. That puts your site's functionality at the mercy of the <span class="smcp">CDN</span>. There are approaches to mitigate against such failures. You can try to retrieve from the <span class="smcp">CDN</span> and fall back to your own hosted copy if the <span class="smcp">CDN</span> request fails. Implementing such a fallback is tricky, though, and it could introduce errors in your code.
-* **Lack of Flexibility.** With <span class="smcp">CDN</span> hosted libraries, you're generally stuck with a limited set of options. For example, in this case we need both jQuery and flot libraries. <span class="lgcp">CDN</span>s only provide those libraries as distinct files, so to get both we're going to need two network requests. If we host the libraries ourselves, on the other hand, we can combine the libraries into a single file and reduce the required number of requests in half. For high latency networks (such as mobile networks), the number of requests may be the biggest factor in determining the performance of your web page.
+* **Loss of control.** If the <span class="smcp">CDN</span> goes down, then the libraries your page needs won't be available. That puts your site's functionality at the mercy of the <span class="smcp">CDN</span>. There are approaches to mitigate against such failures. You can try to retrieve from the <span class="smcp">CDN</span> and fall back to your own hosted copy if the <span class="smcp">CDN</span> request fails. Implementing such a fallback is tricky, though, and it could introduce errors in your code.
+* **Lack of flexibility.** With <span class="smcp">CDN</span> hosted libraries, you're generally stuck with a limited set of options. For example, in this case we need both the jQuery and flot libraries. <span class="lgcp">CDN</span>s provide those libraries only as distinct files, so to get both we'll need two network requests. If we host the libraries ourselves, on the other hand, we can combine them into a single file and cut the required number of requests in half. For high-latency networks (such as mobile networks), the number of requests may be the biggest factor in determining the performance of your web page.
 
 There isn't a clear-cut answer for all cases, so you'll have to weigh the options against your own requirements. For this example (and the others in this chapter), we'll use the CloudFlare <span class="smcp">CDN</span>.
 
-In addition to the jQuery library, flot relies on the <span class="smcp">HTML</span> _canvas_ feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can add an additional library (`excanvas.min.js`) to our pages. Since other browsers don't need this library, we use some special markup (line 9) to ensure that only <span class="smcp">IE8</span> and earlier will bother to load it. Also, since excanvas isn't available on a public <span class="smcp">CDN</span>, we'll have to host it on our own server. Here's the skeleton to start with:
+In addition to the jQuery library, flot relies on the <span class="smcp">HTML</span> _canvas_ feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can include an additional library (`excanvas.min.js`) in our pages. Since other browsers don't need this library, we use some special markup (line 9) to ensure that only <span class="smcp">IE8</span> and earlier will bother to load it. Also, since excanvas isn't available on a public <span class="smcp">CDN</span>, we'll have to host it on our own server. Here's the skeleton to start with:
 
 ``` {.html .numberLines .line-9}
 <!DOCTYPE html>
@@ -52,7 +52,7 @@ As you can see, we're including the JavaScript libraries at the end of the docum
 
 ### Step 2: Set Aside a &lt;div&gt; Element to Hold the Chart
 
-Within our document, we need to create a `<div>` element to contain the chart we'll construct. You can see it below in line 8. This element must have an explicit height and width, or flot won't be able to construct the chart. We can indicate the element's size in a <span class="smcp">CSS</span> style sheet, or we can place it directly on the element itself. Here's how the document might look with the latter approach. Note that we've given it an explicit `id` so we can reference it later.
+Within our document, we need to create a `<div>` element to contain the chart we'll construct. You can see it here in line 8. This element must have an explicit height and width, or flot won't be able to construct the chart. We can indicate the element's size in a <span class="smcp">CSS</span> stylesheet, or we can place it directly on the element itself. Here's how the document might look with the latter approach. Note that we've given it an explicit `id` so we can reference it later.
 
 ``` {.html .numberLines .line-8}
 <!DOCTYPE html>
@@ -76,7 +76,7 @@ Within our document, we need to create a `<div>` element to contain the chart we
 
 ### Step 3: Prepare the Data
 
-In later examples we'll see how to get the data directly from the World Bank's web service, but for this example, let's keep things simple and assume we have the data already downloaded and formatted for JavaScript. (For brevity, only excerpts are shown below. The book's source code includes the full data set.)
+In later examples we'll see how to get the data directly from the World Bank's web service, but for this example, let's keep things simple and assume we have the data already downloaded and formatted for JavaScript. (For brevity, only excerpts are shown here. The book's source code includes the full data set.)
 
 ``` {.javascript .numberLines}
 var eas = [[1960,0.156],[1961,0.155],[1962,0.157], // Data continues...
@@ -93,7 +93,7 @@ This data includes the historical <span class="smcp">GDP</span> (in current <spa
 
 ### Step 4: Draw the Chart
 
-Before we add any interactivity, let's check out the chart itself. The flot library provides a simple function call to create a static graph. We call the jQuery extension `plot` and pass it two parameters. The first parameter identifies the <span class="smcp">HTML</span> element which should contain the chart, and the second parameter provides the data as an array of data sets. In this case, we pass in an array with the series' we defined earlier for each region.
+Before we add any interactivity, let's check out the chart itself. The flot library provides a simple function call to create a static graph. We call the jQuery extension `plot` and pass it two parameters. The first parameter identifies the <span class="smcp">HTML</span> element that should contain the chart, and the second parameter provides the data as an array of data sets. In this case, we pass in an array with the series we defined earlier for each region.
 
 
 ``` {.javascript .numberLines}
@@ -109,7 +109,7 @@ Figure NEXTFIGURENUMBER shows the resulting chart.
 <figcaption>Flot can show a static line chart well with just default options.</figcaption>
 </figure>
 
-It looks like we've done a good job of capturing and presenting the data statically, so we can move on the next phase.
+It looks like we've done a good job of capturing and presenting the data statically, so we can move on to the next phase.
 
 ### Step 5: Add the Controls
 
@@ -126,7 +126,7 @@ Now that we have a chart we're happy with, we can add the <span class="smcp">HTM
 
 You may be surprised to see that we've placed the `<input>` controls inside the `<label>` elements. Although it looks a little unusual, that's almost always the best approach. When we do that, the browser interprets clicks on the label as clicks on the control, whereas if we separate the labels from the controls, it forces the user to click on the tiny checkbox itself to have any effect.
 
-On our web page we'd like to place the controls on the right side of the chart. We can do that by creating a containing `<div>` and making the chart and the controls float (left) within it. While we're experimenting with the layout, it's easiest to simply add the styling directly in the <span class="smcp">HTML</span> markup. In a production implementation you might want to define the styles in an external style sheet.
+On our web page we'd like to place the controls on the right side of the chart. We can do that by creating a containing `<div>` and making the chart and the controls float (left) within it. While we're experimenting with the layout, it's easiest to simply add the styling directly in the <span class="smcp">HTML</span> markup. In a production implementation you might want to define the styles in an external stylesheet.
 
 
 ``` {.html .numberLines}
@@ -160,7 +160,7 @@ We should also add a title and instructions, and make all the `<input>` checkbox
 <figcaption>Standard <span class="smcp">HTML</span> can create controls for chart interation.</figcaption>
 </figure>
 
-Now we see how the controls look in relation to the chart in figure LASTFIGURENUMBER, and we can verify that they make sense, both for the data and for the interaction model. Our visualization lacks a critical piece of information, though; it doesn't identify which line corresponds to which region. For a static visualization, we could simply use the flot library to add a legend to the chart, but that approach isn't ideal here. You can see the problem in figure NEXTFIGURENUMBER as the legend looks confusingly like the interaction controls.
+Now we see how the controls look in relation to the chart in figure LASTFIGURENUMBER, and we can verify that they make sense both for the data and for the interaction model. Our visualization lacks a critical piece of information, though: it doesn't identify which line corresponds to which region. For a static visualization, we could simply use the flot library to add a legend to the chart, but that approach isn't ideal here. You can see the problem in figure NEXTFIGURENUMBER as the legend looks confusingly like the interaction controls.
 
 <figure>
 <div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
@@ -179,7 +179,7 @@ Now we see how the controls look in relation to the chart in figure LASTFIGURENU
 
 We can eliminate the visual confusion by combining the legend and the interaction controls together. The checkbox controls will serve as a legend if we add color boxes that identify the chart lines.
 
-We can add the colored boxes using an <span class="smcp">HTML</span> `<span>` tag and a bit of styling. Here is the markup for one such checkbox with the styles inline. (Full web page implementations might be better organized by defining most of the styles in an external style sheet.) 
+We can add the colored boxes using an <span class="smcp">HTML</span> `<span>` tag and a bit of styling. Here is the markup for one such checkbox with the styles inline. (Full web page implementations might be better organized by having most of the styles defined in an external stylesheet.) 
 
 ``` {.html .numberLines}
 <label class="checkbox">
@@ -226,11 +226,11 @@ var source = [
     { data: ssf, show: true, color: "#006363", name: "Sub-Saharan Africa" }
 ];
 ```
-Each object includes the data points for a region, and it also gives us a place to define additional properties, including the label for the series and other status information. One property that we want to track is whether or not the series should be included on the chart (using the key `show`). We also need to specify the color for each line. Otherwise the flot library will pick the color dynamically based on how many regions are visible at the same time, and we won't be able to match it with the control legend.
+Each object includes the data points for a region, and it also gives us a place to define additional properties, including the label for the series and other status information. One property that we want to track is whether the series should be included on the chart (using the key `show`). We also need to specify the color for each line; otherwise, the flot library will pick the color dynamically based on how many regions are visible at the same time, and we won't be able to match the color with the control legend.
 
 ### Step 7: Determine Chart Data Based on the Interaction State
 
-When we call `plot()` to draw the chart, we need to pass in an object containing the data series and the color for each region. The `source` array has the information we need, but it has other information as well, and we can't be sure that other information won't make flot behave unexpectedly. We want to pass in a simpler object to the plot function. For example, the East Asia & Pacific series would be defined as:
+When we call `plot()` to draw the chart, we need to pass in an object containing the data series and the color for each region. The `source` array has the information we need, but it contains other information as well, which could potentially make flot behave unexpectedly. We want to pass in a simpler object to the plot function. For example, the East Asia & Pacific series would be defined as:
 
 ``` {.javascript .numberLines}
 {
@@ -239,7 +239,7 @@ When we call `plot()` to draw the chart, we need to pass in an object containing
 }
 ```
 
-We also want to be sure to only show the data for regions the user has selected. That may be only a subset of the complete data set. Those two operations—transforming array elements (in this case to simpler objects) and filtering an array to a subset—are very common requirements for visualizations. Fortunately, jQuery has two utility functions that make both operations easy. Those functions are `$.map()` and `$.grep()`.
+We also want to be sure to show data only for regions the user has selected. That may be only a subset of the complete data set. Those two operations—transforming array elements (in this case to simpler objects) and filtering an array to a subset—are very common requirements for visualizations. Fortunately, jQuery has two utility functions that make both operations easy. Those functions are `$.map()` and `$.grep()`.
 
 Both `.grep()` and `.map()` accept two parameters. The first parameter is an array or, more precisely, an "array-like" object. That's either a JavaScript array or another JavaScript object that looks and acts like an array. (There is a technical distinction, but it's not something we have to worry about here.) The second parameter is a function that operates on elements of the array one at a time. For `.grep()` that function returns `true` or `false` to filter out elements accordingly. In the case of `.map()` the function returns a transformed object that replaces the original element in the array. Figure NEXTFIGURENUMBER shows how these functions convert the initial data into the final data array.
 
@@ -249,7 +249,7 @@ Both `.grep()` and `.map()` accept two parameters. The first parameter is an arr
 </figure>
 
 
-Taking these one at a time, here's how to filter out irrelevant data from the response. We use `.grep()` to check the `show` property in our source data, so that it returns an array with only the objects where `show` is set to true.
+Taking these one at a time, here's how to filter out irrelevant data from the response. We use `.grep()` to check the `show` property in our source data, so that it returns an array with only the objects where `show` is set to `true`.
 
 ``` {.javascript .numberLines}
 $.grep(
@@ -281,7 +281,7 @@ $.map(
 
 That expression in turn provides the input data to flot's `plot()` function.
 
-### Step 8: Add the Controls using JavaScript
+### Step 8: Add the Controls Using JavaScript
 
 Now that our new data structure can provide the chart input, let's use it to add the checkbox controls to the page as well. The jQuery `.each()` function is a convenient way to iterate through the array of regions. Its parameters include an array of objects and a function to execute on each object in the array. That function takes two parameters, the array index and the array object.
 
@@ -306,9 +306,9 @@ $.each(source, function(idx, region) {
 
 Within the iteration function we do four things. First, we create the checkbox `<input>` control. As you can see, we're giving each control a unique `id` attribute that combines the "chk-" prefix with the source array index. If the chart is showing that region, the control's `checked` property is set to `true`. Next we create the `<span>` for the color block. We're setting all the styles, including the region's color, using the `css()` function. The third element we create in the function is the `<label>`. To that element we append the checkbox `<input>` control, the color box `<span>`, and the region's name. Finally, we add the `<label>` to the document.
 
-Notice that we don't add the intermediate elements (such as the `<input>` or the `<span>`) directly to the document. Instead, we construct those elements using local variables. We then assemble the local variables into the final, complete `<label>` and add that to the document. This approach significantly improves the performance of web pages. Every time JavaScript code adds elements to the document, the web browser has to recalculate the appearance of the page. For complex pages, that can take time. By assembling the elements before adding them to the document, we've only forced the browser to perform that calculation once for each region. (You could further optimize performance by combining all of the regions in a local variable and only adding that single local variable to the document.)
+Notice that we don't add the intermediate elements (such as the `<input>` or the `<span>`) directly to the document. Instead, we construct those elements using local variables. We then assemble the local variables into the final, complete `<label>` and add that to the document. This approach significantly improves the performance of web pages. Every time JavaScript code adds elements to the document, the web browser has to recalculate the appearance of the page. For complex pages, that can take time. By assembling the elements before adding them to the document, we've only forced the browser to perform that calculation once for each region. (You could further optimize performance by combining all of the regions in a local variable and adding only that single local variable to the document.)
 
-If we combine the JavaScript to draw the chart along with the JavaScript to create the controls, we only need a skeletal <span class="smcp">HTML</span> structure.
+If we combine the JavaScript to draw the chart along with the JavaScript to create the controls, we need only a skeletal <span class="smcp">HTML</span> structure.
 
 ``` {.html .numberLines}
 <div id='visualization'>
@@ -319,7 +319,7 @@ If we combine the JavaScript to draw the chart along with the JavaScript to crea
 </div>
 ```
 
-Our reward is the visualization of figure NEXTFIGURENUMBER that's dynamically created using JavaScript
+Our reward is the visualization shown in figure NEXTFIGURENUMBER that's dynamically created using JavaScript
 
 <figure>
 <div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
@@ -330,7 +330,7 @@ Our reward is the visualization of figure NEXTFIGURENUMBER that's dynamically cr
 
 ### Step 9: Respond to the Interaction Controls
 
-Of course we still haven't added any interactivity, but we're almost there. Our code just needs to watch for clicks on the controls and redraw the chart appropriately. Since we've conveniently given each checkbox an `id` attribute that begins with "chk-", it's easy to watch for the right events.
+We still haven't added any interactivity, of course, but we're almost there. Our code just needs to watch for clicks on the controls and redraw the chart appropriately. Since we've conveniently given each checkbox an `id` attribute that begins with "chk-", it's easy to watch for the right events.
 
 ``` {.javascript .numberLines}
 $("input[id^='chk-']").click(function(ev) {
@@ -338,7 +338,7 @@ $("input[id^='chk-']").click(function(ev) {
 })
 ```
 
-When the code sees a click, it should determine which checkbox was clicked, toggle the `show` property of the data source, and redraw the chart. We can find the specific region by skipping past the 4-character "chk-" prefix of the event target's `id` attribute.
+When the code sees a click, it should determine which checkbox was clicked, toggle the `show` property of the data source, and redraw the chart. We can find the specific region by skipping past the four-character "chk-" prefix of the event target's `id` attribute.
 
 ``` {.javascript .numberLines}
 idx = ev.target.id.substr(4);
@@ -357,7 +357,7 @@ plotObj.setData(
 plotObj.draw();
 ```
 
-And that's it. We finally have the fully interactive visualization of regional Gross Domestic Product in figure NEXTFIGURENUMBER.
+And that's it. We finally have a fully interactive visualization of regional Gross Domestic Product, as shown in figure NEXTFIGURENUMBER.
 
 <figure>
 <div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
@@ -368,7 +368,7 @@ And that's it. We finally have the fully interactive visualization of regional G
 
 The visualization we've created engages users more effectively than a static chart. They can still see the overall picture, but the interaction controls let them focus on aspects of the data that are especially important or interesting to them.
 
-There is still a potential problem with this implementation. Two data sets (Europe and East Asia/Pacific) dominate the chart. When users deselect those regions, the remaining data is confined to the very bottom of the chart, and much of the chart's area is wasted. You could address this by rescaling the chart every time you draw it. To do this, you would just call `plotObj.setupGrid()` before calling `plotObj.draw()`. On the other hand, users may find this constant rescaling disconcerting, because it changes the whole chart, not just the region they selected. In the next example, we'll address this type of problem by giving users total control over the scale of both axes.
+There is still a potential problem with this implementation. Two data sets (Europe & East Asia/Pacific) dominate the chart. When users deselect those regions, the remaining data is confined to the very bottom of the chart, and much of the chart's area is wasted. You could address this by rescaling the chart every time you draw it. To do this, you would call `plotObj.setupGrid()` before calling `plotObj.draw()`. On the other hand, users may find this constant rescaling disconcerting, because it changes the whole chart, not just the region they selected. In the next example, we'll address this type of problem by giving users total control over the scale of both axes.
 
 <script>
 ;(function(){

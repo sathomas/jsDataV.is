@@ -1,8 +1,8 @@
 ## Tracking Data Values
 
-A big reason we make visualizations interactive is to give the user control over their view of the data. We can present a "big picture" view of the data, but we don't want to prevent users from digging into the details. Often, however, this ca force an either-or choice on the user: they can see the overall view, or they can see a detailed picture, but not both at the same time. This example looks at an alternative approach that enables users to see both overall trends and specific details at once. To do that, we take advantage of the mouse as an input device. When the user's mouse hovers over a section of the chart, our code overlays details relevant to that part of the chart.
+A big reason we make visualizations interactive is to give users control over their view of the data. We can present a "big picture" view of the data, but we don't want to prevent users from digging into the details. Often, however, this ca force an either/or choice on the user: they can see the overall view, or they can see a detailed picture, but they can't see both at the same time. This example looks at an alternative approach that enables users to see overall trends and specific details at once. To do that, we take advantage of the mouse as an input device. When the user's mouse hovers over a section of the chart, our code overlays details relevant to that part of the chart.
 
-This approach does have a significant limitation: It only works when the user has a mouse. If you're considering this technique, be aware that users on touch screen devices won't be able to take advantage of the interactive aspect, and they'll only see the static chart.
+This approach does have a significant limitation: it works only when the user has a mouse. If you're considering this technique, be aware that users on touchscreen devices won't be able to take advantage of the interactive aspect; they'll see only the static chart.
 
 Since simple <span class="smcp">GDP</span> data doesn't lend itself well to the approach in this example, we'll visualize a slightly different set of data from the World Bank. This time we'll look at exports as a percentage of <span class="smcp">GDP</span>. Let's start by considering a simple line chart, shown in figure NEXTFIGURENUMBER, with data for each world region.
 
@@ -11,13 +11,13 @@ Since simple <span class="smcp">GDP</span> data doesn't lend itself well to the 
 <figcaption>Plotting multiple data sets on a single chart can be confusing for users.</figcaption>
 </figure>
 
-There are a couple of ways this chart falls short. First, many of the series have similar values, forcing some of the chart's lines to cross back and forth over each other. That crisscrossing makes it hard for users to follow a single series closely to see detailed trends. Second, it's hard for users to compare specific values for all of the regions at a single point in time. Most chart libraries, including flot, have options to display values as users mouse over the chart, but that approach only shows one value at a time. We'd like to give our users a chance to compare the values of multiple regions.
+There are a couple of ways this chart falls short. First, many of the series have similar values, forcing some of the chart's lines to cross back and forth over each other. That crisscrossing makes it hard for users to follow a single series closely to see detailed trends. Second, it's hard for users to compare specific values for all of the regions at a single point in time. Most chart libraries, including flot, have options to display values as users mouse over the chart, but that approach shows only one value at a time. We'd like to give our users a chance to compare the values of multiple regions.
 
-In this example we'll use a two-phase approach to solve both of those problems. First, we'll change the visualization from a single chart with multiple series to multiple charts, each with a single series. That will isolate each region's data, making it easier to see a particular region's trends. Then we'll add an advanced mouse tracking feature that spans all of the charts. This feature will let users see  individual values in all the charts at once.
+In this example we'll use a two-phase approach to solve both of those problems. First, we'll change the visualization from a single chart with multiple series to multiple charts, each with a single series. That will isolate each region's data, making it easier to see a particular region's trends. Then we'll add an advanced mouse tracking feature that spans all of the charts. This feature will let users see  individual values in all of the charts at once.
 
 ### Step 1: Set Aside a &lt;div&gt; Element to Hold the Charts
 
-Within our document, we need to create a `<div>` element to contain the charts we'll construct. This element won't contain the charts directly; rather, we'll be placing other `<div>`s within it, which will each contain a chart. It's line 8 of the code below. We're also including the required JavaScript libraries here, just like the previous examples.
+Within our document, we need to create a `<div>` element to contain the charts we'll construct. This element won't contain the charts directly; rather, we'll be placing other `<div>`s within it, which will each contain a chart. It's added in line 8 of the following code. We're also including the required JavaScript libraries here, just as in the previous examples.
 
 
 ``` {.html .numberLines .line-8}
@@ -40,7 +40,7 @@ Within our document, we need to create a `<div>` element to contain the charts w
 </html>
 ```
 
-We'll use JavaScript to create the `<div>`s for the charts themselves. These elements must have an explicit height and width, or flot won't be able to construct the charts. You can indicate the element's size in a <span class="smcp">CSS</span> style sheet, or you can define it when we create the `<div>` (as in the example below). This creates a new `<div>`, sets its width and height, saves a reference to it, and then appends it to the containing `<div>` already in our document.
+We'll use JavaScript to create the `<div>`s for the charts themselves. These elements must have an explicit height and width, or flot won't be able to construct the charts. You can indicate the element's size in a <span class="smcp">CSS</span> stylesheet, or you can define it when we create the `<div>` (as in the following example). This creates a new `<div>`, sets its width and height, saves a reference to it, and then appends it to the containing `<div>` already in our document.
 
 ``` {.javascript .numberLines}
 $.each(exports, function(idx,region) {
@@ -53,11 +53,11 @@ $.each(exports, function(idx,region) {
 });
 ```
 
-To iterate through the array of regions we use the jQuery `.each()` function. That function accepts two parameters, an array of objects (`exports`) and a function. It iterates through the array one object at a time, calling the function with the individual object (`region`) and its index (`idx`) as parameters.
+To iterate through the array of regions we use the jQuery `.each()` function. That function accepts two parameters: an array of objects (`exports`) and a function. It iterates through the array one object at a time, calling the function with the individual object (`region`) and its index (`idx`) as parameters.
 
 ### Step 2: Prepare the Data
 
-We'll see how to get data directly from the World Bank's web service in the next section, but for now we'll keep things simple again and assume we have the data downloaded and formatted for JavaScript already. (Once again, only excerpts are shown below. The book's source code includes the full data set.)
+We'll see how to get data directly from the World Bank's web service in the next section, but for now we'll keep things simple again and assume we have the data downloaded and formatted for JavaScript already. (Once again, only excerpts are shown here. The book's source code includes the full data set.)
 
 ``` {.javascript .numberLines}
 var exports = [
@@ -82,7 +82,7 @@ The `exports` array contains an object for each region, and each object contains
 
 ### Step 3: Draw the Charts
 
-With the `<div>`s for each chart now in place on our page, we can draw the charts using flot's `plot()` function. That function takes three parameters: the containing element (which we just created), the data, and chart options. To start, let's look at the charts without any decoration such as labels, grids, or tick marks, just to make sure the data is generally presented the way we want.
+With the `<div>`s for each chart now in place on our page, we can draw the charts using flot's `plot()` function. That function takes three parameters: the containing element (which we just created), the data, and chart options. To start, let's look at the charts without any decoration—such as labels, grids, or tick marks—just to make sure the data is generally presented the way we want.
 
 ``` {.javascript .numberLines}
 $.each(exports, function(idx,region) {
@@ -95,18 +95,18 @@ $.each(exports, function(idx,region) {
 });
 ```
 
-The code above uses several `plot()` options to strip the chart of all the extras, and set the axes the way we want. Let's consider each option in turn.
+The preceding code uses several `plot()` options to strip the chart of all the extras, and set the axes the way we want. Let's consider each option in turn.
 
-* `series` tells flot how we want it to graph the data series. In our case we want a line chart (which is the default type) but we want to fill the area from the line down to the x-axis, so we set `fill` to `true`. This option creates an area chart instead of a line chart. Because our charts are so short, an area chart will keep the data visible. Also because of the short height of our charts, we want the line itself to be as small as possible to match, so we set `lineWidth` to `1` (pixel), and we can dispense with shadows by setting `shadowSize` to `0`.
-* `xaxis` defines the properties of the x-axis. We don't want to include one on these charts, so we set `show` to `false`. We do, however, need to explicitly set the range of the axis. If we don't, flot will create one automatically, using the range of each series. Since our data doesn't have consistent values for all years (the Middle East & North Africa data set, for example, doesn't include data before 1968) we need to make flot use the exact same x-axis range on all charts, so we specify a range from `1960` to `2011`.
+* `series` tells flot how we want it to graph the data series. In our case we want a line chart (which is the default type) but we want to fill the area from the line down to the x-axis, so we set `fill` to `true`. This option creates an area chart instead of a line chart. Because our charts are so short, an area chart will keep the data visible. For the same reason, we want the line itself to be as small as possible to match, so we set `lineWidth` to `1` (pixel), and we can dispense with shadows by setting `shadowSize` to `0`.
+* `xaxis` defines the properties of the x-axis. We don't want to include one on these charts, so we set `show` to `false`. We do, however, need to explicitly set the range of the axis. If we don't, flot will create one automatically, using the range of each series. Since our data doesn't have consistent values for all years (the Middle East & North Africa data set, for example, doesn't include data before 1968), we need to make flot use the exact same x-axis range on all charts, so we specify a range from `1960` to `2011`.
 * `yaxis` is much like the `xaxis` options. We don't want to show one, but we do need to specify an explicit range so that all of the charts are consistent.
-* `grid` tells flot how to add grid lines and tick marks to the charts. For now, we don't want anything extra, so we turn the grid completely off by setting `show` to `false`.
+* `grid` tells flot how to add grid lines and tick marks to the charts. For now, we don't want anything extra, so we turn off the grid completely by setting `show` to `false`.
 
 We can check the result in figure NEXTFIGURENUMBER to make sure the charts appear as we want.
 
 <figure><div id='track-chart2'></div><figcaption>Separating individual data sets into multiple charts can make it easier to see the details of each set.</figcaption></figure>
 
-Next we turn to the decoration for the chart. We're obviously missing labels for each region, but adding them takes some care. Our first thought might be to include a legend along with each chart in the same `<div>`. Flot's event handling, however, will work much better if we can keep all the charts—and only the charts—in their own `<div>`. That's going to require some restructuring of our markup. We'll create a wrapper `<div>` and then place separate `<div>`s for the charts and the legends within it. We can use the <span class="smcp">CSS</span> `float` property to position them side-by-side.
+Next we turn to the decoration for the chart. We're obviously missing labels for each region, but adding them takes some care. Your first thought might be to include a legend along with each chart in the same `<div>`. Flot's event handling, however, will work much better if we can keep all the charts—and only the charts—in their own `<div>`. That's going to require some restructuring of our markup. We'll create a wrapper `<div>` and then place separate `<div>`s for the charts and the legends within it. We can use the <span class="smcp">CSS</span> `float` property to position them side by side.
 
 ``` {.html .numberLines}
 <div id="charts-wrapper">
@@ -131,7 +131,7 @@ $.each(exports, function(idx,region) {
 ```
 Once again we use `.each`, this time to append a legend for each region to the `legends` element.
 
-Now we'd like to add a continuous vertical grid that spans all of the charts. Because the charts are stacked on top of each other, grid lines in the individual charts can appear as one continuous line as long as we can remove any borders or margins between charts. It takes several `plot()` options to achieve that, shown below.
+Now we'd like to add a continuous vertical grid that spans all of the charts. Because the charts are stacked , grid lines in the individual charts can appear as one continuous line as long as we can remove any borders or margins between charts. It takes several `plot()` options to achieve that, as shown here.
 
 ``` {.javascript .numberLines}
     $.plot(region.div, [region.data], {
@@ -144,9 +144,9 @@ Now we'd like to add a continuous vertical grid that spans all of the charts. Be
     });
 ```
 
-We enable the grid by setting the `grid` option's `show` property to `true`. Then we remove all the borders and padding by setting the various widths and margins to zero. To get the vertical lines, we also have to enable the x-axis, so we set its `show` property to `true` as well. But we don't want any labels on individual charts, so we specify a `labelHeight` of `0`. To be certain that no labels appear, we also define a `tickFormatter()` function that returns an empty string.
+We enable the grid by setting the `grid` option's `show` property to `true`. Then we remove all the borders and padding by setting the various widths and margins to `0`. To get the vertical lines, we also have to enable the x-axis, so we set its `show` property to `true` as well. But we don't want any labels on individual charts, so we specify a `labelHeight` of `0`. To be certain that no labels appear, we also define a `tickFormatter()` function that returns an empty string.
 
-The last bits of decoration we'd like to add are x-axis labels below the bottom chart. To do that, we can create a dummy chart with no visible data, position that dummy chart below the bottom chart, and enable labels on its x-axis. The three sections below (1) create an array of dummy data, (2) create a `<div>` to hold the dummy chart, and (3) plot the dummy chart.
+The last bits of decoration we'd like to add are x-axis labels below the bottom chart. To do that, we can create a dummy chart with no visible data, position that dummy chart below the bottom chart, and enable labels on its x-axis. The following three sections (1) create an array of dummy data, (2) create a `<div>` to hold the dummy chart, and (3) plot the dummy chart.
 
 ``` {.javascript .numberLines}
 var dummyData = [];
@@ -163,7 +163,7 @@ var dummyPlot = $.plot(dummyDiv, [dummyData], {
 });
 ```
 
-With the added decoration, the presentation of figure NEXTFIGURENUMBER looks great.
+With the added decoration, our charts in figure NEXTFIGURENUMBER look great.
 
 <figure>
 <div id='track-chart3' style="float:left;padding-bottom:1.2em;"></div>
@@ -173,7 +173,7 @@ With the added decoration, the presentation of figure NEXTFIGURENUMBER looks gre
 
 ### Step 4: Implement the Interaction
 
-For our visualization, we want to track the mouse as it hovers over any our charts. The flot library makes that relatively easy. The `plot()` function's `grid` options include the `hoverable` property, which is set to `false` by default. If you set this property to `true`, flot will trigger "plothover" events as the mouse moves over the chart area. It sends these events to the `<div>` that contains the chart. If there is code listening for those events, that code can respond to them. If you use this feature, flot will also highlight the data point nearest the mouse. That's a behavior we don't want, so we'll disable it by setting `autoHighlight` to `false`.
+For our visualization, we want to track the mouse as it hovers over any of our charts. The flot library makes that relatively easy. The `plot()` function's `grid` options include the `hoverable` property, which is set to `false` by default. If you set this property to `true`, flot will trigger "plothover" events as the mouse moves over the chart area. It sends these events to the `<div>` that contains the chart. If there is code listening for those events, that code can respond to them. If you use this feature, flot will also highlight the data point nearest the mouse. That's a behavior we don't want, so we'll disable it by setting `autoHighlight` to `false`.
 
 ``` {.javascript .numberLines}
     $.plot(region.div, [region.data], {
@@ -187,7 +187,7 @@ For our visualization, we want to track the mouse as it hovers over any our char
     });
 ```
 
-Now that we've told flot to trigger events on all of our charts, you might think we would have to set up code to listen for events on all of those charts. There's an even better approach though. We structured our markup so that all the charts—and only the charts—are inside the containing "charts" `<div>`. In JavaScript, if no code is listening for an event on a specific document element, those events automatically "bubble up" to containing elements. So if we just set up an event listener on the "charts" `<div>`, we can capture the "plothover" events on all of the individual charts. We'll also need to know when the mouse leaves the chart area. We can catch those events using the standard "mouseout" event.
+Now that we've told flot to trigger events on all of our charts, you might think we would have to set up code to listen for events on all of them. There's an even better approach though. We structured our markup so that all the charts—and only the charts—are inside the containing "charts" `<div>`. In JavaScript, if no code is listening for an event on a specific document element, those events automatically "bubble up" to the containing elements. So if we just set up an event listener on the "charts" `<div>`, we can capture the "plothover" events on all of the individual charts. We'll also need to know when the mouse leaves the chart area. We can catch those events using the standard "mouseout" event as follows:
 
 ``` {.javascript .numberLines}
 $("charts").on("plothover", function() {
@@ -209,7 +209,7 @@ To respond to the "plothover" events, we want to display a vertical line across 
 </div>
 ```
 
-When flot calls the function listening for "plothover" events, it passes that function three parameters: the JavaScript event object, the position of the mouse in terms of the chart's x- and y-coordinates, and, if a chart data point is near the mouse, information about that data point. In our example we only need the x-coordinate. We can round it to the nearest integer to get the year. We also need to know where the mouse is relative to the page. Flot will calculate that for us if we call the `pointOffset()` of any of our plot objects. Note that we can't reliably use the third parameter, which is only available if the mouse is near an actual data point, so we can ignore that parameter.
+When flot calls the function listening for "plothover" events, it passes that function three parameters: the JavaScript event object, the position of the mouse in terms of the chart's x- and y-coordinates, and, if a chart data point is near the mouse, information about that data point. In our example we need only the x-coordinate. We can round it to the nearest integer to get the year. We also need to know where the mouse is relative to the page. Flot will calculate that for us if we call the `pointOffset()` of any of our plot objects. Note that we can't reliably use the third parameter, which is available only if the mouse is near an actual data point, so we can ignore that parameter.
 
 ``` {.javascript .numberLines}
 $("charts").on("plothover", function(ev, pos) {
@@ -218,7 +218,7 @@ $("charts").on("plothover", function(ev, pos) {
 });
 ```
 
-Once we've calculated the position, it's a simple matter to move the marker to that position, make sure it's the full height of the containing `<div>`, and turn it on. In the code below, line 4 calculates the marker height; line 7 sets its position, and line 9 sets the height.
+Once we've calculated the position, it's a simple matter to move the marker to that position, make sure it's the full height of the containing `<div>`, and turn it on. In the following code line 4 calculates the marker height; line 7 sets its position, and line 9 sets the height.
 
 ``` {.javascript .numberLines}
 $("#charts").on("plothover", function(ev, pos) {
@@ -234,7 +234,7 @@ $("#charts").on("plothover", function(ev, pos) {
 });
 ```
 
-We also have to be a little careful on the "mouseout" event. If a user moves the mouse so that it is positioned directly on top of the marker, that will generate a "mouseout" event for the "charts" `<div>`. In that special case, we want to leave the marker displayed. To tell where the mouse has moved, we check the `relatedTarget` property of the event. We only hide the marker if the related target isn't the marker itself.
+We also have to be a little careful on the "mouseout" event. If a user moves the mouse so that it is positioned directly on top of the marker, that will generate a "mouseout" event for the "charts" `<div>`. In that special case, we want to leave the marker displayed. To tell where the mouse has moved, we check the `relatedTarget` property of the event. We hide the marker only if the related target isn't the marker itself.
 
 ``` {.javascript .numberLines}
 $("#charts").on("mouseout", function(ev) {
@@ -244,7 +244,7 @@ $("#charts").on("mouseout", function(ev) {
 });
 ```
 
-There's still one hole in our event processing. If the user moves the mouse directly over the marker, and then moves the mouse off of the chart area entirely (without moving it off of the marker), we won't catch the fact that the mouse is no longer hovering on the chart. To catch this event, we can listen for "mouseout" events on the marker itself. There's no need to worry about the mouse moving off of the marker and back onto the chart area. The existing "plothover" event will cover that scenario.
+There's still one hole in our event processing. If the user moves the mouse directly over the marker, and then moves the mouse off of the chart area entirely (without moving it off of the marker), we won't catch the fact that the mouse is no longer hovering on the chart. To catch this event, we can listen for "mouseout" events on the marker itself. There's no need to worry about the mouse moving off of the marker and back onto the chart area; the existing "plothover" event will cover that scenario.
 
 ``` {.javascript .numberLines}
 $("#marker").on("mouseout", function(ev) {
@@ -269,7 +269,7 @@ $.each(exports, function(idx,region) {
 });
 ```
 
-With the `<div>`s waiting for us in the document, our event handler for "plothover" sets the text for each, positions them horizontally, and shows them on the page. To set the text value, we can use the jQuery `.grep()` function to search through the data looking for a year that matches. If none is found, the text for the value `<div>` is emptied.
+With the `<div>`s waiting for us in the document, our event handler for "plothover" sets the text for each, positions them horizontally, and shows them on the page. To set the text value, we can use the jQuery `.grep()` function to search through the data for a year that matches. If none is found, the text for the value `<div>` is emptied.
 
 ``` {.javascript .numberLines}
 $("#charts").on("plothover", function(ev, pos) {
@@ -289,7 +289,7 @@ $("#charts").on("plothover", function(ev, pos) {
 });
 ```
 
-Finally, we need to hide these `<div>`s when the mouse leaves the chart area. We should also handle the case of the mouse moving directly onto the marker, just as we did above.
+Finally, we need to hide these `<div>`s when the mouse leaves the chart area. We should also handle the case of the mouse moving directly onto the marker, just as we did before.
 
 ``` {.javascript .numberLines}
 $("#charts").on("plothover", function(ev, pos) {
@@ -322,7 +322,7 @@ We can now enjoy the results of our coding in figure NEXTFIGURENUMBER. Our visua
 <div id='track-chart4' style="float:left;padding-bottom:1.2em;"></div>
 <div id='track-chart4-legend' style="float:left;"></div>
 </div>
-<figcaption>The final visualization combines multiple charts with mouse tracking to more clearly show the data.</figcaption>
+<figcaption>The final visualization combines multiple charts with mouse tracking to more clearly present the data.</figcaption>
 </figure>
 
 As users move their mouse across the charts, the vertical bar moves as well. The values corresponding to the mouse position also appear to the right of the marker for each chart. The interaction makes it easy and intuitive to compare values for any of the regions.
