@@ -45,9 +45,9 @@
     "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1",
     "underscore.string": "~2.3.3",
     "chroma-js": "~0.6.1",
-    "heatmap": "https://github.com/pa7/heatmap.js",
     "MathJax": "~2.4.0",
     "normalize-opentype.css": "~0.2.0",
-    "tile.stamen": "http://maps.stamen.com/js/tile.stamen.js"
+    "tile.stamen": "http://maps.stamen.com/js/tile.stamen.js",
+    "heatmap": "https://raw.githubusercontent.com/pa7/heatmap.js/master/src/heatmap.js"
   }
 }
