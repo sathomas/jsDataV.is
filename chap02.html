@@ -149,27 +149,27 @@ body { counter-reset: chapter 2; }
 </ul>
 <h2 id="selecting-chart-content">Selecting Chart Content</h2>
 <p>If you’re presenting data to a large audience on the web, you may find that different users are especially interested in different aspects of your data. With global <span class="smcp">GDP</span> data, for example, we might expect that individual users would be most interested in the data for their own region of the world. If we can anticipate inquiries like this from the user, we can construct our visualization to answer them.</p>
-<p>In this example, we’re targeting a worldwide audience, and we want to show data for all regions. To accommodate individual users, however, we can make the regions selectable. That is, users will be able to show or hide the data from each region. If a particular user doesn’t care about data for particular regions, they can simply choose not to show that data.</p>
-<p>Interactive visualizations usually require more thought than simple static charts. Not only must the original presentation of data be effective, but the way the user controls the presentation <em>and</em> the way the presentation responds must be effective. It usually helps to consider each of those requirements explicitly.</p>
+<p>In this example, we’re targeting a worldwide audience, and we want to show data for all regions. To accommodate individual users, however, we can make the regions selectable. That is, users will be able to show or hide the data from each region. If some users don’t care about data for particular regions, they can simply choose not to show it.</p>
+<p>Interactive visualizations usually require more thought than simple static charts. Not only must the original presentation of data be effective, but the way the user controls the presentation <em>and</em> the way the presentation responds must be effective as well. It usually helps to consider each of those requirements explicitly.</p>
 <ol type="1">
 <li>Make sure the initial, static presentation shows the data effectively.</li>
 <li>Add any user controls to the page and ensure they make sense for the visualization.</li>
 <li>Add the code that makes the controls work.</li>
 </ol>
-<p>We’ll tackle each of these phases in the example below.</p>
+<p>We’ll tackle each of these phases in the following example.</p>
 <h3 id="step-1-include-the-required-javascript-libraries">Step 1: Include the Required JavaScript Libraries</h3>
 <p>Since we’re using the flot library to create the chart, we need to include that library in our web pages. And since flot requires jQuery, we’ll include that in our pages as well. Fortunately, both jQuery and flot are popular libraries and they are available on public content distribution networks (<span class="smcp">CDN</span>s). That gives you the option of loading both from a <span class="smcp">CDN</span> instead of hosting them on your own site. There are several advantages to relying on a <span class="smcp">CDN</span>.</p>
 <ul>
-<li><strong>Better Performance.</strong> If the user has previously visited other web sites that retrieved the libraries from the same <span class="smcp">CDN</span>, then the libraries may already exist in the browser’s local cache. In that case the browser simply retrieves them from the cache, avoiding the delay of additional network requests. (Note: See the second disadvantage below for a different view on performance.)<br /></li>
-<li><strong>Lower Cost.</strong> One way or another, the cost of your site is likely based on how much bandwidth you use. If your users are able to retrieve libraries from a <span class="smcp">CDN</span>, then the bandwidth required to service their requests won’t count against your site.</li>
+<li><strong>Better performance.</strong> If the user has previously visited other web sites that retrieved the libraries from the same <span class="smcp">CDN</span>, then the libraries may already exist in the browser’s local cache. In that case the browser simply retrieves them from the cache, avoiding the delay of additional network requests. (Note: see the second disadvantage below for a different view on performance.)<br /></li>
+<li><strong>Lower cost.</strong> One way or another, the cost of your site is likely based on how much bandwidth you use. If your users are able to retrieve libraries from a <span class="smcp">CDN</span>, then the bandwidth required to service their requests won’t count against your site.</li>
 </ul>
 <p>Of course there are also disadvantages to <span class="smcp">CDN</span>s as well.</p>
 <ul>
-<li><strong>Loss of Control.</strong> If the content distribution network goes down, then the libraries your page needs won’t be available. That puts your site’s functionality at the mercy of the <span class="smcp">CDN</span>. There are approaches to mitigate against such failures. You can try to retrieve from the <span class="smcp">CDN</span> and fall back to your own hosted copy if the <span class="smcp">CDN</span> request fails. Implementing such a fallback is tricky, though, and it could introduce errors in your code.</li>
-<li><strong>Lack of Flexibility.</strong> With <span class="smcp">CDN</span> hosted libraries, you’re generally stuck with a limited set of options. For example, in this case we need both jQuery and flot libraries. <span class="lgcp">CDN</span>s only provide those libraries as distinct files, so to get both we’re going to need two network requests. If we host the libraries ourselves, on the other hand, we can combine the libraries into a single file and reduce the required number of requests in half. For high latency networks (such as mobile networks), the number of requests may be the biggest factor in determining the performance of your web page.</li>
+<li><strong>Loss of control.</strong> If the <span class="smcp">CDN</span> goes down, then the libraries your page needs won’t be available. That puts your site’s functionality at the mercy of the <span class="smcp">CDN</span>. There are approaches to mitigate against such failures. You can try to retrieve from the <span class="smcp">CDN</span> and fall back to your own hosted copy if the <span class="smcp">CDN</span> request fails. Implementing such a fallback is tricky, though, and it could introduce errors in your code.</li>
+<li><strong>Lack of flexibility.</strong> With <span class="smcp">CDN</span> hosted libraries, you’re generally stuck with a limited set of options. For example, in this case we need both the jQuery and flot libraries. <span class="lgcp">CDN</span>s provide those libraries only as distinct files, so to get both we’ll need two network requests. If we host the libraries ourselves, on the other hand, we can combine them into a single file and cut the required number of requests in half. For high-latency networks (such as mobile networks), the number of requests may be the biggest factor in determining the performance of your web page.</li>
 </ul>
 <p>There isn’t a clear-cut answer for all cases, so you’ll have to weigh the options against your own requirements. For this example (and the others in this chapter), we’ll use the CloudFlare <span class="smcp">CDN</span>.</p>
-<p>In addition to the jQuery library, flot relies on the <span class="smcp">HTML</span> <em>canvas</em> feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can add an additional library (<code>excanvas.min.js</code>) to our pages. Since other browsers don’t need this library, we use some special markup (line 9) to ensure that only <span class="smcp">IE8</span> and earlier will bother to load it. Also, since excanvas isn’t available on a public <span class="smcp">CDN</span>, we’ll have to host it on our own server. Here’s the skeleton to start with:</p>
+<p>In addition to the jQuery library, flot relies on the <span class="smcp">HTML</span> <em>canvas</em> feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can include an additional library (<code>excanvas.min.js</code>) in our pages. Since other browsers don’t need this library, we use some special markup (line 9) to ensure that only <span class="smcp">IE8</span> and earlier will bother to load it. Also, since excanvas isn’t available on a public <span class="smcp">CDN</span>, we’ll have to host it on our own server. Here’s the skeleton to start with:</p>
 <table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -206,7 +206,7 @@ body { counter-reset: chapter 2; }
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <p>As you can see, we’re including the JavaScript libraries at the end of the document. This approach lets the browser load the document’s entire <span class="smcp">HTML</span> markup and begin laying out the page while it waits for the server to provide the JavaScript libraries.</p>
 <h3 id="step-2-set-aside-a-div-element-to-hold-the-chart">Step 2: Set Aside a &lt;div&gt; Element to Hold the Chart</h3>
-<p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the chart we’ll construct. You can see it below in line 8. This element must have an explicit height and width, or flot won’t be able to construct the chart. We can indicate the element’s size in a <span class="smcp">CSS</span> style sheet, or we can place it directly on the element itself. Here’s how the document might look with the latter approach. Note that we’ve given it an explicit <code>id</code> so we can reference it later.</p>
+<p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the chart we’ll construct. You can see it here in line 8. This element must have an explicit height and width, or flot won’t be able to construct the chart. We can indicate the element’s size in a <span class="smcp">CSS</span> stylesheet, or we can place it directly on the element itself. Here’s how the document might look with the latter approach. Note that we’ve given it an explicit <code>id</code> so we can reference it later.</p>
 <table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -242,7 +242,7 @@ body { counter-reset: chapter 2; }
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-prepare-the-data">Step 3: Prepare the Data</h3>
-<p>In later examples we’ll see how to get the data directly from the World Bank’s web service, but for this example, let’s keep things simple and assume we have the data already downloaded and formatted for JavaScript. (For brevity, only excerpts are shown below. The book’s source code includes the full data set.)</p>
+<p>In later examples we’ll see how to get the data directly from the World Bank’s web service, but for this example, let’s keep things simple and assume we have the data already downloaded and formatted for JavaScript. (For brevity, only excerpts are shown here. The book’s source code includes the full data set.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -260,7 +260,7 @@ body { counter-reset: chapter 2; }
 <p>Note: At the time of this writing, World Bank data for North America was temporarily unavailable.</p>
 </blockquote>
 <h3 id="step-4-draw-the-chart">Step 4: Draw the Chart</h3>
-<p>Before we add any interactivity, let’s check out the chart itself. The flot library provides a simple function call to create a static graph. We call the jQuery extension <code>plot</code> and pass it two parameters. The first parameter identifies the <span class="smcp">HTML</span> element which should contain the chart, and the second parameter provides the data as an array of data sets. In this case, we pass in an array with the series’ we defined earlier for each region.</p>
+<p>Before we add any interactivity, let’s check out the chart itself. The flot library provides a simple function call to create a static graph. We call the jQuery extension <code>plot</code> and pass it two parameters. The first parameter identifies the <span class="smcp">HTML</span> element that should contain the chart, and the second parameter provides the data as an array of data sets. In this case, we pass in an array with the series we defined earlier for each region.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -276,7 +276,7 @@ body { counter-reset: chapter 2; }
 Flot can show a static line chart well with just default options.
 </figcaption>
 </figure>
-<p>It looks like we’ve done a good job of capturing and presenting the data statically, so we can move on the next phase.</p>
+<p>It looks like we’ve done a good job of capturing and presenting the data statically, so we can move on to the next phase.</p>
 <h3 id="step-5-add-the-controls">Step 5: Add the Controls</h3>
 <p>Now that we have a chart we’re happy with, we can add the <span class="smcp">HTML</span> controls to interact with it. For this example, our goal is fairly simple: our users should be able to pick which regions appear on the graph. We’ll give them that option with a set of checkboxes, one for each region. Here’s the markup to include the checkboxes.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -292,7 +292,7 @@ Flot can show a static line chart well with just default options.
 <span class="kw">&lt;label&gt;&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="kw">&gt;</span> South Asia<span class="kw">&lt;/label&gt;</span>
 <span class="kw">&lt;label&gt;&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="kw">&gt;</span> Sub-Saharan Africa<span class="kw">&lt;/label&gt;</span></code></pre></td></tr></table>
 <p>You may be surprised to see that we’ve placed the <code>&lt;input&gt;</code> controls inside the <code>&lt;label&gt;</code> elements. Although it looks a little unusual, that’s almost always the best approach. When we do that, the browser interprets clicks on the label as clicks on the control, whereas if we separate the labels from the controls, it forces the user to click on the tiny checkbox itself to have any effect.</p>
-<p>On our web page we’d like to place the controls on the right side of the chart. We can do that by creating a containing <code>&lt;div&gt;</code> and making the chart and the controls float (left) within it. While we’re experimenting with the layout, it’s easiest to simply add the styling directly in the <span class="smcp">HTML</span> markup. In a production implementation you might want to define the styles in an external style sheet.</p>
+<p>On our web page we’d like to place the controls on the right side of the chart. We can do that by creating a containing <code>&lt;div&gt;</code> and making the chart and the controls float (left) within it. While we’re experimenting with the layout, it’s easiest to simply add the styling directly in the <span class="smcp">HTML</span> markup. In a production implementation you might want to define the styles in an external stylesheet.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -333,7 +333,7 @@ Select Regions to Include:
 Standard <span class="smcp">HTML</span> can create controls for chart interation.
 </figcaption>
 </figure>
-<p>Now we see how the controls look in relation to the chart in figure <span class="lastfigure"/>, and we can verify that they make sense, both for the data and for the interaction model. Our visualization lacks a critical piece of information, though; it doesn’t identify which line corresponds to which region. For a static visualization, we could simply use the flot library to add a legend to the chart, but that approach isn’t ideal here. You can see the problem in figure <span class="nextfigure"/> as the legend looks confusingly like the interaction controls.</p>
+<p>Now we see how the controls look in relation to the chart in figure <span class="lastfigure"/>, and we can verify that they make sense both for the data and for the interaction model. Our visualization lacks a critical piece of information, though: it doesn’t identify which line corresponds to which region. For a static visualization, we could simply use the flot library to add a legend to the chart, but that approach isn’t ideal here. You can see the problem in figure <span class="nextfigure"/> as the legend looks confusingly like the interaction controls.</p>
 <figure>
 <div style="padding-left:1em;">
 Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)
@@ -352,7 +352,7 @@ The flot library’s standard legend doesn’t match the chart styles well.
 </figcaption>
 </figure>
 <p>We can eliminate the visual confusion by combining the legend and the interaction controls together. The checkbox controls will serve as a legend if we add color boxes that identify the chart lines.</p>
-<p>We can add the colored boxes using an <span class="smcp">HTML</span> <code>&lt;span&gt;</code> tag and a bit of styling. Here is the markup for one such checkbox with the styles inline. (Full web page implementations might be better organized by defining most of the styles in an external style sheet.)</p>
+<p>We can add the colored boxes using an <span class="smcp">HTML</span> <code>&lt;span&gt;</code> tag and a bit of styling. Here is the markup for one such checkbox with the styles inline. (Full web page implementations might be better organized by having most of the styles defined in an external stylesheet.)</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -403,9 +403,9 @@ Interaction controls can also serve as chart elements such as legends.
     { <span class="dt">data</span>: sas, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#679A00&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;South Asia&quot;</span> },
     { <span class="dt">data</span>: ssf, <span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">color</span>: <span class="st">&quot;#006363&quot;</span>, <span class="dt">name</span>: <span class="st">&quot;Sub-Saharan Africa&quot;</span> }
 ];</code></pre></td></tr></table>
-<p>Each object includes the data points for a region, and it also gives us a place to define additional properties, including the label for the series and other status information. One property that we want to track is whether or not the series should be included on the chart (using the key <code>show</code>). We also need to specify the color for each line. Otherwise the flot library will pick the color dynamically based on how many regions are visible at the same time, and we won’t be able to match it with the control legend.</p>
+<p>Each object includes the data points for a region, and it also gives us a place to define additional properties, including the label for the series and other status information. One property that we want to track is whether the series should be included on the chart (using the key <code>show</code>). We also need to specify the color for each line; otherwise, the flot library will pick the color dynamically based on how many regions are visible at the same time, and we won’t be able to match the color with the control legend.</p>
 <h3 id="step-7-determine-chart-data-based-on-the-interaction-state">Step 7: Determine Chart Data Based on the Interaction State</h3>
-<p>When we call <code>plot()</code> to draw the chart, we need to pass in an object containing the data series and the color for each region. The <code>source</code> array has the information we need, but it has other information as well, and we can’t be sure that other information won’t make flot behave unexpectedly. We want to pass in a simpler object to the plot function. For example, the East Asia &amp; Pacific series would be defined as:</p>
+<p>When we call <code>plot()</code> to draw the chart, we need to pass in an object containing the data series and the color for each region. The <code>source</code> array has the information we need, but it contains other information as well, which could potentially make flot behave unexpectedly. We want to pass in a simpler object to the plot function. For example, the East Asia &amp; Pacific series would be defined as:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -414,7 +414,7 @@ Interaction controls can also serve as chart elements such as legends.
     <span class="dt">data</span>:  eas,
     <span class="dt">color</span>: <span class="st">&quot;#E41A1C&quot;</span>
 }</code></pre></td></tr></table>
-<p>We also want to be sure to only show the data for regions the user has selected. That may be only a subset of the complete data set. Those two operations—transforming array elements (in this case to simpler objects) and filtering an array to a subset—are very common requirements for visualizations. Fortunately, jQuery has two utility functions that make both operations easy. Those functions are <code>$.map()</code> and <code>$.grep()</code>.</p>
+<p>We also want to be sure to show data only for regions the user has selected. That may be only a subset of the complete data set. Those two operations—transforming array elements (in this case to simpler objects) and filtering an array to a subset—are very common requirements for visualizations. Fortunately, jQuery has two utility functions that make both operations easy. Those functions are <code>$.map()</code> and <code>$.grep()</code>.</p>
 <p>Both <code>.grep()</code> and <code>.map()</code> accept two parameters. The first parameter is an array or, more precisely, an “array-like” object. That’s either a JavaScript array or another JavaScript object that looks and acts like an array. (There is a technical distinction, but it’s not something we have to worry about here.) The second parameter is a function that operates on elements of the array one at a time. For <code>.grep()</code> that function returns <code>true</code> or <code>false</code> to filter out elements accordingly. In the case of <code>.map()</code> the function returns a transformed object that replaces the original element in the array. Figure <span class="nextfigure"/> shows how these functions convert the initial data into the final data array.</p>
 <figure>
 <img src="img/arrays.svg"></img>
@@ -422,7 +422,7 @@ Interaction controls can also serve as chart elements such as legends.
 The jQuery library has utility functions to help transform and filter data.
 </figcaption>
 </figure>
-<p>Taking these one at a time, here’s how to filter out irrelevant data from the response. We use <code>.grep()</code> to check the <code>show</code> property in our source data, so that it returns an array with only the objects where <code>show</code> is set to true.</p>
+<p>Taking these one at a time, here’s how to filter out irrelevant data from the response. We use <code>.grep()</code> to check the <code>show</code> property in our source data, so that it returns an array with only the objects where <code>show</code> is set to <code>true</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -456,7 +456,7 @@ The jQuery library has utility functions to help transform and filter data.
     <span class="kw">function</span> (obj) { <span class="kw">return</span> { <span class="dt">data</span>: <span class="ot">obj</span>.<span class="fu">data</span>, <span class="dt">color</span>: <span class="ot">obj</span>.<span class="fu">color</span> }; }
 )</code></pre></td></tr></table>
 <p>That expression in turn provides the input data to flot’s <code>plot()</code> function.</p>
-<h3 id="step-8-add-the-controls-using-javascript">Step 8: Add the Controls using JavaScript</h3>
+<h3 id="step-8-add-the-controls-using-javascript">Step 8: Add the Controls Using JavaScript</h3>
 <p>Now that our new data structure can provide the chart input, let’s use it to add the checkbox controls to the page as well. The jQuery <code>.each()</code> function is a convenient way to iterate through the array of regions. Its parameters include an array of objects and a function to execute on each object in the array. That function takes two parameters, the array index and the array object.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -491,8 +491,8 @@ The jQuery library has utility functions to help transform and filter data.
     <span class="fu">$</span>(<span class="st">&quot;#controls&quot;</span>).<span class="fu">append</span>(label);
 });</code></pre></td></tr></table>
 <p>Within the iteration function we do four things. First, we create the checkbox <code>&lt;input&gt;</code> control. As you can see, we’re giving each control a unique <code>id</code> attribute that combines the “chk-” prefix with the source array index. If the chart is showing that region, the control’s <code>checked</code> property is set to <code>true</code>. Next we create the <code>&lt;span&gt;</code> for the color block. We’re setting all the styles, including the region’s color, using the <code>css()</code> function. The third element we create in the function is the <code>&lt;label&gt;</code>. To that element we append the checkbox <code>&lt;input&gt;</code> control, the color box <code>&lt;span&gt;</code>, and the region’s name. Finally, we add the <code>&lt;label&gt;</code> to the document.</p>
-<p>Notice that we don’t add the intermediate elements (such as the <code>&lt;input&gt;</code> or the <code>&lt;span&gt;</code>) directly to the document. Instead, we construct those elements using local variables. We then assemble the local variables into the final, complete <code>&lt;label&gt;</code> and add that to the document. This approach significantly improves the performance of web pages. Every time JavaScript code adds elements to the document, the web browser has to recalculate the appearance of the page. For complex pages, that can take time. By assembling the elements before adding them to the document, we’ve only forced the browser to perform that calculation once for each region. (You could further optimize performance by combining all of the regions in a local variable and only adding that single local variable to the document.)</p>
-<p>If we combine the JavaScript to draw the chart along with the JavaScript to create the controls, we only need a skeletal <span class="smcp">HTML</span> structure.</p>
+<p>Notice that we don’t add the intermediate elements (such as the <code>&lt;input&gt;</code> or the <code>&lt;span&gt;</code>) directly to the document. Instead, we construct those elements using local variables. We then assemble the local variables into the final, complete <code>&lt;label&gt;</code> and add that to the document. This approach significantly improves the performance of web pages. Every time JavaScript code adds elements to the document, the web browser has to recalculate the appearance of the page. For complex pages, that can take time. By assembling the elements before adding them to the document, we’ve only forced the browser to perform that calculation once for each region. (You could further optimize performance by combining all of the regions in a local variable and adding only that single local variable to the document.)</p>
+<p>If we combine the JavaScript to draw the chart along with the JavaScript to create the controls, we need only a skeletal <span class="smcp">HTML</span> structure.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -505,7 +505,7 @@ The jQuery library has utility functions to help transform and filter data.
         <span class="kw">&lt;p&gt;</span>Select Regions to Include:<span class="kw">&lt;/p&gt;</span>
     <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
-<p>Our reward is the visualization of figure <span class="nextfigure"/> that’s dynamically created using JavaScript</p>
+<p>Our reward is the visualization shown in figure <span class="nextfigure"/> that’s dynamically created using JavaScript</p>
 <figure>
 <div style="padding-left:1em;">
 Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)
@@ -523,14 +523,14 @@ Setting the chart options ensures that the data matches the legend.
 </figcaption>
 </figure>
 <h3 id="step-9-respond-to-the-interaction-controls">Step 9: Respond to the Interaction Controls</h3>
-<p>Of course we still haven’t added any interactivity, but we’re almost there. Our code just needs to watch for clicks on the controls and redraw the chart appropriately. Since we’ve conveniently given each checkbox an <code>id</code> attribute that begins with “chk-”, it’s easy to watch for the right events.</p>
+<p>We still haven’t added any interactivity, of course, but we’re almost there. Our code just needs to watch for clicks on the controls and redraw the chart appropriately. Since we’ve conveniently given each checkbox an <code>id</code> attribute that begins with “chk-”, it’s easy to watch for the right events.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;input[id^=&#39;chk-&#39;]&quot;</span>).<span class="fu">click</span>(<span class="kw">function</span>(ev) {
     <span class="co">// handle the click</span>
 })</code></pre></td></tr></table>
-<p>When the code sees a click, it should determine which checkbox was clicked, toggle the <code>show</code> property of the data source, and redraw the chart. We can find the specific region by skipping past the 4-character “chk-” prefix of the event target’s <code>id</code> attribute.</p>
+<p>When the code sees a click, it should determine which checkbox was clicked, toggle the <code>show</code> property of the data source, and redraw the chart. We can find the specific region by skipping past the four-character “chk-” prefix of the event target’s <code>id</code> attribute.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">idx = <span class="ot">ev</span>.<span class="ot">target</span>.<span class="ot">id</span>.<span class="fu">substr</span>(<span class="dv">4</span>);
@@ -550,7 +550,7 @@ source[idx].<span class="fu">show</span> = !source[idx].<span class="fu">show</s
     )
 );
 <span class="ot">plotObj</span>.<span class="fu">draw</span>();</code></pre></td></tr></table>
-<p>And that’s it. We finally have the fully interactive visualization of regional Gross Domestic Product in figure <span class="nextfigure"/>.</p>
+<p>And that’s it. We finally have a fully interactive visualization of regional Gross Domestic Product, as shown in figure <span class="nextfigure"/>.</p>
 <figure>
 <div style="padding-left:1em;">
 Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)
@@ -568,7 +568,7 @@ An interactive chart gives users control over the visualization.
 </figcaption>
 </figure>
 <p>The visualization we’ve created engages users more effectively than a static chart. They can still see the overall picture, but the interaction controls let them focus on aspects of the data that are especially important or interesting to them.</p>
-<p>There is still a potential problem with this implementation. Two data sets (Europe and East Asia/Pacific) dominate the chart. When users deselect those regions, the remaining data is confined to the very bottom of the chart, and much of the chart’s area is wasted. You could address this by rescaling the chart every time you draw it. To do this, you would just call <code>plotObj.setupGrid()</code> before calling <code>plotObj.draw()</code>. On the other hand, users may find this constant rescaling disconcerting, because it changes the whole chart, not just the region they selected. In the next example, we’ll address this type of problem by giving users total control over the scale of both axes.</p>
+<p>There is still a potential problem with this implementation. Two data sets (Europe &amp; East Asia/Pacific) dominate the chart. When users deselect those regions, the remaining data is confined to the very bottom of the chart, and much of the chart’s area is wasted. You could address this by rescaling the chart every time you draw it. To do this, you would call <code>plotObj.setupGrid()</code> before calling <code>plotObj.draw()</code>. On the other hand, users may find this constant rescaling disconcerting, because it changes the whole chart, not just the region they selected. In the next example, we’ll address this type of problem by giving users total control over the scale of both axes.</p>
 <script>
 ;(function(){
 
@@ -675,11 +675,11 @@ An interactive chart gives users control over the visualization.
 </script>
 <h2 id="zooming-into-charts">Zooming into Charts</h2>
 <p>So far, we’ve given users some interaction with the visualization by letting them choose which data sets appear. In many cases, however, you’ll want to give them even more control, especially if you’re showing a lot of data and details are hard to discern. If users can’t see the details they need, our visualization has failed. Fortunately we can avoid this problem by giving users a chance to inspect fine details within the data. One way to do that is to let users zoom into the chart.</p>
-<p>Although the flot library in its most basic form does not support zooming, there are at least two library extensions that add this feature. Those extensions are the <em>selection</em> plugin and the <em>navigation</em> plugin. The navigation plugin acts a bit like Google Maps. It adds a control that looks a bit like a compass to one corner of the plot and gives users arrows and buttons to pan or zoom the display. This interface is not especially effective for charts, however. Users cannot control exactly how much the chart pans or zooms, and that makes it difficult for them to anticipate the effect of an action.</p>
+<p>Although the flot library in its most basic form does not support zooming, there are at least two library extensions that add this feature: the <em>selection</em> plugin and the <em>navigation</em> plugin. The navigation plugin acts a bit like Google Maps. It adds a control that looks like a compass to one corner of the plot and gives users arrows and buttons to pan or zoom the display. This interface is not especially effective for charts, however. Users cannot control exactly how much the chart pans or zooms, which makes it difficult for them to anticipate the effect of an action.</p>
 <p>The selection plugin provides a much better interface. Users simply drag their mouse across the area of the chart they want to zoom to. The effect of this gesture is more intuitive, and users can be as precise as they like in those actions. The plugin does have one significant downside, however; it doesn’t support touch interfaces.</p>
 <p>For this example, we’ll walk through the steps required to support zooming with the selection plugin. Of course, the best approach for your own website and visualizations will vary from case to case.</p>
 <h3 id="step-1-prepare-the-page">Step 1: Prepare the Page</h3>
-<p>Because we’re sticking with the same data, most of the preparation is identical to the last example. We do, however, have to add the selection plugin to the page. That plugin is not available on common <span class="smcp">CDN</span>s, so we host it on our own server as you can see in line 12.</p>
+<p>Because we’re sticking with the same data, most of the preparation is identical to the last example. We do, however, have to add the selection plugin to the page. It is not available on common <span class="smcp">CDN</span>s, so we host it on our own server as you can see in line 12.</p>
 <table class="sourceCode html numberLines line-12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -738,7 +738,7 @@ An interactive chart gives users control over the visualization.
         { <span class="dt">data</span>: ssf, <span class="dt">label</span>: <span class="st">&quot;Sub-Saharan Africa&quot;</span> }
     ], {<span class="dt">legend</span>: {<span class="dt">position</span>: <span class="st">&quot;nw&quot;</span>}});
 });</code></pre></td></tr></table>
-<p>Here, we call the jQuery extension <code>plot</code> (from the flot library) and pass it three parameters. The first parameter identifies the <span class="smcp">HTML</span> element which should contain the chart, and the second parameter provides the data as an array of data series. These series contain regions we defined earlier, plus a label to identify each series. The final parameter specifies options for the plot. We’ll keep it simple for this example—the only option we’re including tells flot to position the legend in the top-left (or northwest) corner of the chart.</p>
+<p>Here, we call the jQuery extension <code>plot</code> (from the flot library) and pass it three parameters. The first parameter identifies the <span class="smcp">HTML</span> element that should contain the chart, and the second parameter provides the data as an array of data series. These series contain regions we defined earlier, plus a label to identify each series. The final parameter specifies options for the plot. We’ll keep it simple for this example—the only option we’re including tells flot to position the legend in the top-left (northwest) corner of the chart.</p>
 <p>Figure <span class="nextfigure"/> shows the resulting chart.</p>
 <figure>
 <div id="zoom-chart1" style="width:600px;height:400px;">
@@ -750,7 +750,7 @@ The starting point for most interactive charts is a good static chart.
 </figure>
 <p>It looks like we’ve done a good job of capturing and presenting the data statically, so we can move on to the next phase.</p>
 <h3 id="step-3-prepare-the-data-to-support-interaction">Step 3: Prepare the Data to Support Interaction</h3>
-<p>Now that we have a working static chart, we can plan how to support interaction. As part of that support, it will be convenient to have all the parameters we’re passing to <code>plot()</code> stored in local variables. We’ll create those variables before we call <code>plot()</code>. They are <code>$el</code> (line 1), <code>data</code> (line 2), and <code>options</code> (line 10). We’ll also need to save the object that’s the return value from <code>plot()</code>, which we do in line 12.</p>
+<p>Now that we have a working static chart, we can plan how to support interaction. As part of that support, it will be convenient to have all the parameters we’re passing to <code>plot()</code> stored in local variables. We’ll create those variables before we call <code>plot()</code>. They are <code>$el</code> (line 1), <code>data</code> (line 2), and <code>options</code> (line 10). We’ll also need to save the object that’s returned from <code>plot()</code>, which we do at line 12.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -776,16 +776,16 @@ The starting point for most interactive charts is a good static chart.
 
 <span class="kw">var</span> plotObj = <span class="ot">$</span>.<span class="fu">plot</span>($el, data, options);</code></pre></td></tr></table>
 <h3 id="step-4-prepare-to-accept-interaction-events">Step 4: Prepare to Accept Interaction Events</h3>
-<p>Our code also has to prepare to handle the interaction events. The selection plugin signals the users actions by triggering custom “plotselected” events on the element containing the chart. To receive these events, we need a function which expects two parameters—the standard JavaScript event object and a custom object containing details about the selection. We’ll worry about how to process the event shortly. For now let’s focus on preparing for it.</p>
+<p>Our code also has to prepare to handle the interaction events. The selection plugin signals the users actions by triggering custom “plotselected” events on the element containing the chart. To receive these events, we need a function that expects two parameters—the standard JavaScript event object and a custom object containing details about the selection. We’ll worry about how to process the event shortly. For now let’s focus on preparing for it.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">$el</span>.<span class="fu">on</span>(<span class="st">&quot;plotselected&quot;</span>, <span class="kw">function</span>(ev, ranges) {
     <span class="co">// handle selection events</span>
 });</code></pre></td></tr></table>
-<p>The jQuery <code>.on()</code> function assigns a function to an arbitrary event. Events can be standard JavaScript events such as “click,” or they can be custom events like the one we’re using. The event of interest is the first parameter to <code>.on()</code>. The second parameter is the function that will process the event. As we noted above, it also takes two parameters.</p>
+<p>The jQuery <code>.on()</code> function assigns a function to an arbitrary event. Events can be standard JavaScript events such as “click,” or they can be custom events like the one we’re using. The event of interest is the first parameter to <code>.on()</code>. The second parameter is the function that will process the event. As noted previously, it also takes two parameters.</p>
 <p>Now we can consider the action we want to take when our function receives an event. The <code>ranges</code> parameter contains both an <code>xaxis</code> and a <code>yaxis</code> object which have information about the plotselected event. In both objects the <code>from</code> and <code>to</code> properties specify the region that the user selected. To zoom to that selection, we can simply redraw the chart by using those ranges for the chart’s axes.</p>
-<p>Specifying the axes for the redrawn chart requires us to pass new options to the <code>plot()</code> function, but we want to preserve whatever options are already defined. The jQuery <code>.extend()</code> function gives us the perfect tool for that task. The function merges JavaScript objects together so that the result contains all of the properties in either object. If the objects might contain other objects, then we have to tell jQuery to use “deep” mode when it performs the merge. Here’s the complete call to <code>plot()</code>, which we place inside the plotselected even handler.</p>
+<p>Specifying the axes for the redrawn chart requires us to pass new options to the <code>plot()</code> function, but we want to preserve whatever options are already defined. The jQuery <code>.extend()</code> function gives us the perfect tool for that task. The function merges JavaScript objects so that the result contains all of the properties in each object. If the objects might contain other objects, then we have to tell jQuery to use “deep” mode when it performs the merge. Here’s the complete call to <code>plot()</code>, which we place inside the <code>plotselected</code> event handler.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -798,7 +798,7 @@ The starting point for most interactive charts is a good static chart.
         <span class="dt">yaxis</span>: { <span class="dt">min</span>: <span class="ot">ranges</span>.<span class="ot">yaxis</span>.<span class="fu">from</span>, <span class="dt">max</span>: <span class="ot">ranges</span>.<span class="ot">yaxis</span>.<span class="fu">to</span> }
     })
 );</code></pre></td></tr></table>
-<p>When we use <code>.extend()</code>, the first parameter (<code>true</code>) requests “deep” mode, the second parameter specifies the starting object, and subsequent parameters specify additional objects to merge. We’re starting with an empty object (<code>{}</code>), merging the regular options, and then further merging the axes options for the zoomed chart.</p>
+<p>When we use <code>.extend()</code>, the first parameter (<code>true</code>) requests “deep” mode, the second parameter specifies the starting object, and subsequent parameters specify additional objects to merge. We’re starting with an empty object (<code>{}</code>), merging the regular options, and then further merging the axis options for the zoomed chart.</p>
 <h3 id="step-5-enable-the-interaction">Step 5: Enable the Interaction</h3>
 <p>Since we’ve included the selections plugin library on our page, activating the interaction is easy. We simply include an additional <code>selection</code> option in our call to <code>plot()</code>. Its <code>mode</code> property indicates the direction of selections the chart will support. Possible values include <code>&quot;x&quot;</code> (for x-axis only), <code>&quot;y&quot;</code> (for y-axis only), or <code>&quot;xy&quot;</code> (for both axes). Here’s the complete <code>options</code> variable we want to use.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -809,7 +809,7 @@ The starting point for most interactive charts is a good static chart.
     <span class="dt">legend</span>: {<span class="dt">position</span>: <span class="st">&quot;nw&quot;</span>},
     <span class="dt">selection</span>: {<span class="dt">mode</span>: <span class="st">&quot;xy&quot;</span>}
 };</code></pre></td></tr></table>
-<p>And with that addition, our chart is now interactive. Users can zoom in to see as much detail as they want. There is a small problem, though. Our visualization doesn’t give users a way to zoom back out. Obviously we can’t use the selection plugin to zoom out since that would require selecting outside of the current chart area. Instead, we can add a button to the page to reset the zoom level. You can see the button in line 9 of the markup below. It’s right after the <code>&lt;div&gt;</code> that holds the chart.</p>
+<p>And with that addition, our chart is now interactive. Users can zoom in to see as much detail as they want. There is a small problem, though: our visualization doesn’t give users a way to zoom back out. Obviously we can’t use the selection plugin to zoom out since that would require users to select outside the current chart area. Instead, we can add a button to the page to reset the zoom level. You can see the button in line 9 of the markup below. It’s right after the <code>&lt;div&gt;</code> that holds the chart.</p>
 <table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -871,7 +871,7 @@ Reset Zoom
 Interactive charts let users focus on data relevant to their needs.
 </figcaption>
 </figure>
-<p>If you experiment with this example, you’ll soon see that users cannot select an area of the chart that includes the legend. That may be okay for your visualization, but if it’s not, the simplest solution is to create your own legend and position it off of the chart’s canvas, like we did for the first example in this chapter.</p>
+<p>If you experiment with this example, you’ll soon see that users cannot select an area of the chart that includes the legend. That may be okay for your visualization, but if it’s not, the simplest solution is to create your own legend and position it off the chart’s canvas, like we did for the first example in this chapter.</p>
 <script>
 ;(function(){
 
@@ -934,8 +934,8 @@ Interactive charts let users focus on data relevant to their needs.
 }());
 </script>
 <h2 id="tracking-data-values">Tracking Data Values</h2>
-<p>A big reason we make visualizations interactive is to give the user control over their view of the data. We can present a “big picture” view of the data, but we don’t want to prevent users from digging into the details. Often, however, this ca force an either-or choice on the user: they can see the overall view, or they can see a detailed picture, but not both at the same time. This example looks at an alternative approach that enables users to see both overall trends and specific details at once. To do that, we take advantage of the mouse as an input device. When the user’s mouse hovers over a section of the chart, our code overlays details relevant to that part of the chart.</p>
-<p>This approach does have a significant limitation: It only works when the user has a mouse. If you’re considering this technique, be aware that users on touch screen devices won’t be able to take advantage of the interactive aspect, and they’ll only see the static chart.</p>
+<p>A big reason we make visualizations interactive is to give users control over their view of the data. We can present a “big picture” view of the data, but we don’t want to prevent users from digging into the details. Often, however, this ca force an either/or choice on the user: they can see the overall view, or they can see a detailed picture, but they can’t see both at the same time. This example looks at an alternative approach that enables users to see overall trends and specific details at once. To do that, we take advantage of the mouse as an input device. When the user’s mouse hovers over a section of the chart, our code overlays details relevant to that part of the chart.</p>
+<p>This approach does have a significant limitation: it works only when the user has a mouse. If you’re considering this technique, be aware that users on touchscreen devices won’t be able to take advantage of the interactive aspect; they’ll see only the static chart.</p>
 <p>Since simple <span class="smcp">GDP</span> data doesn’t lend itself well to the approach in this example, we’ll visualize a slightly different set of data from the World Bank. This time we’ll look at exports as a percentage of <span class="smcp">GDP</span>. Let’s start by considering a simple line chart, shown in figure <span class="nextfigure"/>, with data for each world region.</p>
 <figure>
 <div id="track-chart1" style="width:600px;height:400px;">
@@ -945,10 +945,10 @@ Interactive charts let users focus on data relevant to their needs.
 Plotting multiple data sets on a single chart can be confusing for users.
 </figcaption>
 </figure>
-<p>There are a couple of ways this chart falls short. First, many of the series have similar values, forcing some of the chart’s lines to cross back and forth over each other. That crisscrossing makes it hard for users to follow a single series closely to see detailed trends. Second, it’s hard for users to compare specific values for all of the regions at a single point in time. Most chart libraries, including flot, have options to display values as users mouse over the chart, but that approach only shows one value at a time. We’d like to give our users a chance to compare the values of multiple regions.</p>
-<p>In this example we’ll use a two-phase approach to solve both of those problems. First, we’ll change the visualization from a single chart with multiple series to multiple charts, each with a single series. That will isolate each region’s data, making it easier to see a particular region’s trends. Then we’ll add an advanced mouse tracking feature that spans all of the charts. This feature will let users see individual values in all the charts at once.</p>
+<p>There are a couple of ways this chart falls short. First, many of the series have similar values, forcing some of the chart’s lines to cross back and forth over each other. That crisscrossing makes it hard for users to follow a single series closely to see detailed trends. Second, it’s hard for users to compare specific values for all of the regions at a single point in time. Most chart libraries, including flot, have options to display values as users mouse over the chart, but that approach shows only one value at a time. We’d like to give our users a chance to compare the values of multiple regions.</p>
+<p>In this example we’ll use a two-phase approach to solve both of those problems. First, we’ll change the visualization from a single chart with multiple series to multiple charts, each with a single series. That will isolate each region’s data, making it easier to see a particular region’s trends. Then we’ll add an advanced mouse tracking feature that spans all of the charts. This feature will let users see individual values in all of the charts at once.</p>
 <h3 id="step-1-set-aside-a-div-element-to-hold-the-charts">Step 1: Set Aside a &lt;div&gt; Element to Hold the Charts</h3>
-<p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the charts we’ll construct. This element won’t contain the charts directly; rather, we’ll be placing other <code>&lt;div&gt;</code>s within it, which will each contain a chart. It’s line 8 of the code below. We’re also including the required JavaScript libraries here, just like the previous examples.</p>
+<p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the charts we’ll construct. This element won’t contain the charts directly; rather, we’ll be placing other <code>&lt;div&gt;</code>s within it, which will each contain a chart. It’s added in line 8 of the following code. We’re also including the required JavaScript libraries here, just as in the previous examples.</p>
 <table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -983,7 +983,7 @@ Plotting multiple data sets on a single chart can be confusing for users.
     <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>We’ll use JavaScript to create the <code>&lt;div&gt;</code>s for the charts themselves. These elements must have an explicit height and width, or flot won’t be able to construct the charts. You can indicate the element’s size in a <span class="smcp">CSS</span> style sheet, or you can define it when we create the <code>&lt;div&gt;</code> (as in the example below). This creates a new <code>&lt;div&gt;</code>, sets its width and height, saves a reference to it, and then appends it to the containing <code>&lt;div&gt;</code> already in our document.</p>
+<p>We’ll use JavaScript to create the <code>&lt;div&gt;</code>s for the charts themselves. These elements must have an explicit height and width, or flot won’t be able to construct the charts. You can indicate the element’s size in a <span class="smcp">CSS</span> stylesheet, or you can define it when we create the <code>&lt;div&gt;</code> (as in the following example). This creates a new <code>&lt;div&gt;</code>, sets its width and height, saves a reference to it, and then appends it to the containing <code>&lt;div&gt;</code> already in our document.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1000,9 +1000,9 @@ Plotting multiple data sets on a single chart can be confusing for users.
     <span class="ot">region</span>.<span class="fu">div</span> = div;
     <span class="fu">$</span>(<span class="st">&quot;#charts&quot;</span>).<span class="fu">append</span>(div);
 });</code></pre></td></tr></table>
-<p>To iterate through the array of regions we use the jQuery <code>.each()</code> function. That function accepts two parameters, an array of objects (<code>exports</code>) and a function. It iterates through the array one object at a time, calling the function with the individual object (<code>region</code>) and its index (<code>idx</code>) as parameters.</p>
+<p>To iterate through the array of regions we use the jQuery <code>.each()</code> function. That function accepts two parameters: an array of objects (<code>exports</code>) and a function. It iterates through the array one object at a time, calling the function with the individual object (<code>region</code>) and its index (<code>idx</code>) as parameters.</p>
 <h3 id="step-2-prepare-the-data">Step 2: Prepare the Data</h3>
-<p>We’ll see how to get data directly from the World Bank’s web service in the next section, but for now we’ll keep things simple again and assume we have the data downloaded and formatted for JavaScript already. (Once again, only excerpts are shown below. The book’s source code includes the full data set.)</p>
+<p>We’ll see how to get data directly from the World Bank’s web service in the next section, but for now we’ll keep things simple again and assume we have the data downloaded and formatted for JavaScript already. (Once again, only excerpts are shown here. The book’s source code includes the full data set.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1037,7 +1037,7 @@ Plotting multiple data sets on a single chart can be confusing for users.
 ];</code></pre></td></tr></table>
 <p>The <code>exports</code> array contains an object for each region, and each object contains a label and a data series.</p>
 <h3 id="step-3-draw-the-charts">Step 3: Draw the Charts</h3>
-<p>With the <code>&lt;div&gt;</code>s for each chart now in place on our page, we can draw the charts using flot’s <code>plot()</code> function. That function takes three parameters: the containing element (which we just created), the data, and chart options. To start, let’s look at the charts without any decoration such as labels, grids, or tick marks, just to make sure the data is generally presented the way we want.</p>
+<p>With the <code>&lt;div&gt;</code>s for each chart now in place on our page, we can draw the charts using flot’s <code>plot()</code> function. That function takes three parameters: the containing element (which we just created), the data, and chart options. To start, let’s look at the charts without any decoration—such as labels, grids, or tick marks—just to make sure the data is generally presented the way we want.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1054,12 +1054,12 @@ Plotting multiple data sets on a single chart can be confusing for users.
         <span class="dt">grid</span>:   {<span class="dt">show</span>: <span class="kw">false</span>},
     });
 });</code></pre></td></tr></table>
-<p>The code above uses several <code>plot()</code> options to strip the chart of all the extras, and set the axes the way we want. Let’s consider each option in turn.</p>
+<p>The preceding code uses several <code>plot()</code> options to strip the chart of all the extras, and set the axes the way we want. Let’s consider each option in turn.</p>
 <ul>
-<li><code>series</code> tells flot how we want it to graph the data series. In our case we want a line chart (which is the default type) but we want to fill the area from the line down to the x-axis, so we set <code>fill</code> to <code>true</code>. This option creates an area chart instead of a line chart. Because our charts are so short, an area chart will keep the data visible. Also because of the short height of our charts, we want the line itself to be as small as possible to match, so we set <code>lineWidth</code> to <code>1</code> (pixel), and we can dispense with shadows by setting <code>shadowSize</code> to <code>0</code>.</li>
-<li><code>xaxis</code> defines the properties of the x-axis. We don’t want to include one on these charts, so we set <code>show</code> to <code>false</code>. We do, however, need to explicitly set the range of the axis. If we don’t, flot will create one automatically, using the range of each series. Since our data doesn’t have consistent values for all years (the Middle East &amp; North Africa data set, for example, doesn’t include data before 1968) we need to make flot use the exact same x-axis range on all charts, so we specify a range from <code>1960</code> to <code>2011</code>.</li>
+<li><code>series</code> tells flot how we want it to graph the data series. In our case we want a line chart (which is the default type) but we want to fill the area from the line down to the x-axis, so we set <code>fill</code> to <code>true</code>. This option creates an area chart instead of a line chart. Because our charts are so short, an area chart will keep the data visible. For the same reason, we want the line itself to be as small as possible to match, so we set <code>lineWidth</code> to <code>1</code> (pixel), and we can dispense with shadows by setting <code>shadowSize</code> to <code>0</code>.</li>
+<li><code>xaxis</code> defines the properties of the x-axis. We don’t want to include one on these charts, so we set <code>show</code> to <code>false</code>. We do, however, need to explicitly set the range of the axis. If we don’t, flot will create one automatically, using the range of each series. Since our data doesn’t have consistent values for all years (the Middle East &amp; North Africa data set, for example, doesn’t include data before 1968), we need to make flot use the exact same x-axis range on all charts, so we specify a range from <code>1960</code> to <code>2011</code>.</li>
 <li><code>yaxis</code> is much like the <code>xaxis</code> options. We don’t want to show one, but we do need to specify an explicit range so that all of the charts are consistent.</li>
-<li><code>grid</code> tells flot how to add grid lines and tick marks to the charts. For now, we don’t want anything extra, so we turn the grid completely off by setting <code>show</code> to <code>false</code>.</li>
+<li><code>grid</code> tells flot how to add grid lines and tick marks to the charts. For now, we don’t want anything extra, so we turn off the grid completely by setting <code>show</code> to <code>false</code>.</li>
 </ul>
 <p>We can check the result in figure <span class="nextfigure"/> to make sure the charts appear as we want.</p>
 <figure>
@@ -1070,7 +1070,7 @@ Plotting multiple data sets on a single chart can be confusing for users.
 Separating individual data sets into multiple charts can make it easier to see the details of each set.
 </figcaption>
 </figure>
-<p>Next we turn to the decoration for the chart. We’re obviously missing labels for each region, but adding them takes some care. Our first thought might be to include a legend along with each chart in the same <code>&lt;div&gt;</code>. Flot’s event handling, however, will work much better if we can keep all the charts—and only the charts—in their own <code>&lt;div&gt;</code>. That’s going to require some restructuring of our markup. We’ll create a wrapper <code>&lt;div&gt;</code> and then place separate <code>&lt;div&gt;</code>s for the charts and the legends within it. We can use the <span class="smcp">CSS</span> <code>float</code> property to position them side-by-side.</p>
+<p>Next we turn to the decoration for the chart. We’re obviously missing labels for each region, but adding them takes some care. Your first thought might be to include a legend along with each chart in the same <code>&lt;div&gt;</code>. Flot’s event handling, however, will work much better if we can keep all the charts—and only the charts—in their own <code>&lt;div&gt;</code>. That’s going to require some restructuring of our markup. We’ll create a wrapper <code>&lt;div&gt;</code> and then place separate <code>&lt;div&gt;</code>s for the charts and the legends within it. We can use the <span class="smcp">CSS</span> <code>float</code> property to position them side by side.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1101,7 +1101,7 @@ Separating individual data sets into multiple charts can make it easier to see t
     <span class="fu">$</span>(<span class="st">&quot;#legends&quot;</span>).<span class="fu">append</span>(legend);
 });</code></pre></td></tr></table>
 <p>Once again we use <code>.each</code>, this time to append a legend for each region to the <code>legends</code> element.</p>
-<p>Now we’d like to add a continuous vertical grid that spans all of the charts. Because the charts are stacked on top of each other, grid lines in the individual charts can appear as one continuous line as long as we can remove any borders or margins between charts. It takes several <code>plot()</code> options to achieve that, shown below.</p>
+<p>Now we’d like to add a continuous vertical grid that spans all of the charts. Because the charts are stacked , grid lines in the individual charts can appear as one continuous line as long as we can remove any borders or margins between charts. It takes several <code>plot()</code> options to achieve that, as shown here.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1118,8 +1118,8 @@ Separating individual data sets into multiple charts can make it easier to see t
         <span class="dt">grid</span>:   {<span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">margin</span>: <span class="dv">0</span>, <span class="dt">borderWidth</span>: <span class="dv">0</span>, <span class="dt">margin</span>: <span class="dv">0</span>, 
                  <span class="dt">labelMargin</span>: <span class="dv">0</span>, <span class="dt">axisMargin</span>: <span class="dv">0</span>, <span class="dt">minBorderMargin</span>: <span class="dv">0</span>},
     });</code></pre></td></tr></table>
-<p>We enable the grid by setting the <code>grid</code> option’s <code>show</code> property to <code>true</code>. Then we remove all the borders and padding by setting the various widths and margins to zero. To get the vertical lines, we also have to enable the x-axis, so we set its <code>show</code> property to <code>true</code> as well. But we don’t want any labels on individual charts, so we specify a <code>labelHeight</code> of <code>0</code>. To be certain that no labels appear, we also define a <code>tickFormatter()</code> function that returns an empty string.</p>
-<p>The last bits of decoration we’d like to add are x-axis labels below the bottom chart. To do that, we can create a dummy chart with no visible data, position that dummy chart below the bottom chart, and enable labels on its x-axis. The three sections below (1) create an array of dummy data, (2) create a <code>&lt;div&gt;</code> to hold the dummy chart, and (3) plot the dummy chart.</p>
+<p>We enable the grid by setting the <code>grid</code> option’s <code>show</code> property to <code>true</code>. Then we remove all the borders and padding by setting the various widths and margins to <code>0</code>. To get the vertical lines, we also have to enable the x-axis, so we set its <code>show</code> property to <code>true</code> as well. But we don’t want any labels on individual charts, so we specify a <code>labelHeight</code> of <code>0</code>. To be certain that no labels appear, we also define a <code>tickFormatter()</code> function that returns an empty string.</p>
+<p>The last bits of decoration we’d like to add are x-axis labels below the bottom chart. To do that, we can create a dummy chart with no visible data, position that dummy chart below the bottom chart, and enable labels on its x-axis. The following three sections (1) create an array of dummy data, (2) create a <code>&lt;div&gt;</code> to hold the dummy chart, and (3) plot the dummy chart.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1144,7 +1144,7 @@ Separating individual data sets into multiple charts can make it easier to see t
     <span class="dt">grid</span>:   {<span class="dt">show</span>: <span class="kw">true</span>, <span class="dt">margin</span>: <span class="dv">0</span>, <span class="dt">borderWidth</span>: <span class="dv">0</span>, <span class="dt">margin</span>: <span class="dv">0</span>,
              <span class="dt">labelMargin</span>: <span class="dv">0</span>, <span class="dt">axisMargin</span>: <span class="dv">0</span>, <span class="dt">minBorderMargin</span>: <span class="dv">0</span>},
 });</code></pre></td></tr></table>
-<p>With the added decoration, the presentation of figure <span class="nextfigure"/> looks great.</p>
+<p>With the added decoration, our charts in figure <span class="nextfigure"/> look great.</p>
 <figure>
 <div id="track-chart3" style="float:left;padding-bottom:1.2em;">
 
@@ -1157,7 +1157,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
 </figcaption>
 </figure>
 <h3 id="step-4-implement-the-interaction">Step 4: Implement the Interaction</h3>
-<p>For our visualization, we want to track the mouse as it hovers over any our charts. The flot library makes that relatively easy. The <code>plot()</code> function’s <code>grid</code> options include the <code>hoverable</code> property, which is set to <code>false</code> by default. If you set this property to <code>true</code>, flot will trigger “plothover” events as the mouse moves over the chart area. It sends these events to the <code>&lt;div&gt;</code> that contains the chart. If there is code listening for those events, that code can respond to them. If you use this feature, flot will also highlight the data point nearest the mouse. That’s a behavior we don’t want, so we’ll disable it by setting <code>autoHighlight</code> to <code>false</code>.</p>
+<p>For our visualization, we want to track the mouse as it hovers over any of our charts. The flot library makes that relatively easy. The <code>plot()</code> function’s <code>grid</code> options include the <code>hoverable</code> property, which is set to <code>false</code> by default. If you set this property to <code>true</code>, flot will trigger “plothover” events as the mouse moves over the chart area. It sends these events to the <code>&lt;div&gt;</code> that contains the chart. If there is code listening for those events, that code can respond to them. If you use this feature, flot will also highlight the data point nearest the mouse. That’s a behavior we don’t want, so we’ll disable it by setting <code>autoHighlight</code> to <code>false</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1176,7 +1176,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
                  <span class="dt">labelMargin</span>: <span class="dv">0</span>, <span class="dt">axisMargin</span>: <span class="dv">0</span>, <span class="dt">minBorderMargin</span>: <span class="dv">0</span>, 
                  <span class="dt">hoverable</span>: <span class="kw">true</span>, <span class="dt">autoHighlight</span>: <span class="kw">false</span>},
     });</code></pre></td></tr></table>
-<p>Now that we’ve told flot to trigger events on all of our charts, you might think we would have to set up code to listen for events on all of those charts. There’s an even better approach though. We structured our markup so that all the charts—and only the charts—are inside the containing “charts” <code>&lt;div&gt;</code>. In JavaScript, if no code is listening for an event on a specific document element, those events automatically “bubble up” to containing elements. So if we just set up an event listener on the “charts” <code>&lt;div&gt;</code>, we can capture the “plothover” events on all of the individual charts. We’ll also need to know when the mouse leaves the chart area. We can catch those events using the standard “mouseout” event.</p>
+<p>Now that we’ve told flot to trigger events on all of our charts, you might think we would have to set up code to listen for events on all of them. There’s an even better approach though. We structured our markup so that all the charts—and only the charts—are inside the containing “charts” <code>&lt;div&gt;</code>. In JavaScript, if no code is listening for an event on a specific document element, those events automatically “bubble up” to the containing elements. So if we just set up an event listener on the “charts” <code>&lt;div&gt;</code>, we can capture the “plothover” events on all of the individual charts. We’ll also need to know when the mouse leaves the chart area. We can catch those events using the standard “mouseout” event as follows:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1202,7 +1202,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&#39;legends&#39;</span><span class="ot"> style=</span><span class="st">&quot;float:left;&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> style=</span><span class="st">&quot;clear:both;&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
-<p>When flot calls the function listening for “plothover” events, it passes that function three parameters: the JavaScript event object, the position of the mouse in terms of the chart’s x- and y-coordinates, and, if a chart data point is near the mouse, information about that data point. In our example we only need the x-coordinate. We can round it to the nearest integer to get the year. We also need to know where the mouse is relative to the page. Flot will calculate that for us if we call the <code>pointOffset()</code> of any of our plot objects. Note that we can’t reliably use the third parameter, which is only available if the mouse is near an actual data point, so we can ignore that parameter.</p>
+<p>When flot calls the function listening for “plothover” events, it passes that function three parameters: the JavaScript event object, the position of the mouse in terms of the chart’s x- and y-coordinates, and, if a chart data point is near the mouse, information about that data point. In our example we need only the x-coordinate. We can round it to the nearest integer to get the year. We also need to know where the mouse is relative to the page. Flot will calculate that for us if we call the <code>pointOffset()</code> of any of our plot objects. Note that we can’t reliably use the third parameter, which is available only if the mouse is near an actual data point, so we can ignore that parameter.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1211,7 +1211,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
     <span class="kw">var</span> year = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="ot">pos</span>.<span class="fu">x</span>);
     <span class="kw">var</span> left = <span class="ot">dummyPlot</span>.<span class="fu">pointOffset</span>(pos).<span class="fu">left</span>;
 });</code></pre></td></tr></table>
-<p>Once we’ve calculated the position, it’s a simple matter to move the marker to that position, make sure it’s the full height of the containing <code>&lt;div&gt;</code>, and turn it on. In the code below, line 4 calculates the marker height; line 7 sets its position, and line 9 sets the height.</p>
+<p>Once we’ve calculated the position, it’s a simple matter to move the marker to that position, make sure it’s the full height of the containing <code>&lt;div&gt;</code>, and turn it on. In the following code line 4 calculates the marker height; line 7 sets its position, and line 9 sets the height.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1234,7 +1234,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
         <span class="st">&#39;height&#39;</span>: height
     }).<span class="fu">show</span>();
 });</code></pre></td></tr></table>
-<p>We also have to be a little careful on the “mouseout” event. If a user moves the mouse so that it is positioned directly on top of the marker, that will generate a “mouseout” event for the “charts” <code>&lt;div&gt;</code>. In that special case, we want to leave the marker displayed. To tell where the mouse has moved, we check the <code>relatedTarget</code> property of the event. We only hide the marker if the related target isn’t the marker itself.</p>
+<p>We also have to be a little careful on the “mouseout” event. If a user moves the mouse so that it is positioned directly on top of the marker, that will generate a “mouseout” event for the “charts” <code>&lt;div&gt;</code>. In that special case, we want to leave the marker displayed. To tell where the mouse has moved, we check the <code>relatedTarget</code> property of the event. We hide the marker only if the related target isn’t the marker itself.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1245,7 +1245,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
         <span class="fu">$</span>(<span class="st">&quot;#marker&quot;</span>).<span class="fu">hide</span>();
     }
 });</code></pre></td></tr></table>
-<p>There’s still one hole in our event processing. If the user moves the mouse directly over the marker, and then moves the mouse off of the chart area entirely (without moving it off of the marker), we won’t catch the fact that the mouse is no longer hovering on the chart. To catch this event, we can listen for “mouseout” events on the marker itself. There’s no need to worry about the mouse moving off of the marker and back onto the chart area. The existing “plothover” event will cover that scenario.</p>
+<p>There’s still one hole in our event processing. If the user moves the mouse directly over the marker, and then moves the mouse off of the chart area entirely (without moving it off of the marker), we won’t catch the fact that the mouse is no longer hovering on the chart. To catch this event, we can listen for “mouseout” events on the marker itself. There’s no need to worry about the mouse moving off of the marker and back onto the chart area; the existing “plothover” event will cover that scenario.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1277,7 +1277,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
     <span class="ot">region</span>.<span class="fu">value</span> = value;
     <span class="fu">$</span>(<span class="st">&quot;#charts-wrapper&quot;</span>).<span class="fu">append</span>(value);
 });</code></pre></td></tr></table>
-<p>With the <code>&lt;div&gt;</code>s waiting for us in the document, our event handler for “plothover” sets the text for each, positions them horizontally, and shows them on the page. To set the text value, we can use the jQuery <code>.grep()</code> function to search through the data looking for a year that matches. If none is found, the text for the value <code>&lt;div&gt;</code> is emptied.</p>
+<p>With the <code>&lt;div&gt;</code>s waiting for us in the document, our event handler for “plothover” sets the text for each, positions them horizontally, and shows them on the page. To set the text value, we can use the jQuery <code>.grep()</code> function to search through the data for a year that matches. If none is found, the text for the value <code>&lt;div&gt;</code> is emptied.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1308,7 +1308,7 @@ Carefully stacking multiple charts on top of each other creates the appearance o
         <span class="ot">region</span>.<span class="ot">value</span>.<span class="fu">css</span>(<span class="st">&quot;left&quot;</span>, (left<span class="dv">+4</span>)+<span class="st">&quot;px&quot;</span>).<span class="fu">show</span>();
     });
 });</code></pre></td></tr></table>
-<p>Finally, we need to hide these <code>&lt;div&gt;</code>s when the mouse leaves the chart area. We should also handle the case of the mouse moving directly onto the marker, just as we did above.</p>
+<p>Finally, we need to hide these <code>&lt;div&gt;</code>s when the mouse leaves the chart area. We should also handle the case of the mouse moving directly onto the marker, just as we did before.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1364,7 +1364,7 @@ Exports as Percentage of <span class="lgcp">GDP</span>
 </div>
 </div>
 <figcaption>
-The final visualization combines multiple charts with mouse tracking to more clearly show the data.
+The final visualization combines multiple charts with mouse tracking to more clearly present the data.
 </figcaption>
 </figure>
 <p>As users move their mouse across the charts, the vertical bar moves as well. The values corresponding to the mouse position also appear to the right of the marker for each chart. The interaction makes it easy and intuitive to compare values for any of the regions.</p>
@@ -1538,12 +1538,12 @@ The final visualization combines multiple charts with mouse tracking to more cle
 }());
 </script>
 <h2 id="retrieving-data-using-ajax">Retrieving Data using AJAX</h2>
-<p>Most of the examples in this book emphasize the final product of data visualization: the graphs, charts, or images that our users see. But effective visualizations often require a lot of work behind the scenes. After all, effective data visualizations need <em>data</em> just as much as they need the visualization. This example focuses on a common approach for accessing data—Asynchronous JavaScript and <span class="smcp">XML</span>, more commonly known simply as <span class="smcp">AJAX</span>. The example here details <span class="smcp">AJAX</span> interactions with the World Bank, but both the general approach and the specific techniques shown here apply equally well to many other data sources on the web.</p>
+<p>Most of the examples in this book emphasize the final product of data visualization: the graphs, charts, or images that our users see. But effective visualizations often require a lot of work behind the scenes. After all, effective data visualizations need <em>data</em> just as much as they need the visualization. This example focuses on a common approach for accessing data—Asynchronous JavaScript and <span class="smcp">XML</span>, more commonly known as <span class="smcp">AJAX</span>. The example here details <span class="smcp">AJAX</span> interactions with the World Bank, but both the general approach and the specific techniques shown here apply equally well to many other data sources on the web.</p>
 <h3 id="step-1-understand-the-source-data">Step 1: Understand the Source Data</h3>
-<p>Often, the first challenge in working with remote data is to understand its format and structure. Fortunately our data comes from the World Bank, and their web site thoroughly documents their Application Programming Interface (<span class="smcp">API</span>). We won’t spend too much time on the particulars in this example since you’ll likely be using a different data source. But a quick overview is helpful.</p>
-<p>The first item of note is that the World Bank divides the world into several regions. As with all good <span class="smcp">API</span>s, it’s possible to query the World Bank and get a list of those regions.</p>
+<p>Often, the first challenge in working with remote data is to understand its format and structure. Fortunately our data comes from the World Bank, and its web site thoroughly documents its Application Programming Interface (<span class="smcp">API</span>). We won’t spend too much time on the particulars in this example since you’ll likely be using a different data source. But a quick overview is helpful.</p>
+<p>The first item of note is that the World Bank divides the world into several regions. As with all good <span class="smcp">API</span>s, the World Bank API makes it possible to get a list of those regions.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">http</span>://api.worldbank.org/regions/?format=json</code></pre>
-<p>returns the full list as a <span class="smcp">JSON</span> array. Here’s how it starts:</p>
+<p>Our query returns the full list as a <span class="smcp">JSON</span> array which starts as follows:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1602,10 +1602,10 @@ The final visualization combines multiple charts with mouse tracking to more cle
       <span class="st">&quot;code&quot;</span>: <span class="st">&quot;ECS&quot;</span>,
       <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Europe &amp; Central Asia (all income levels)&quot;</span>
     },</code></pre></td></tr></table>
-<p>The first object in the array supports paging through a large data set, which isn’t important for us now. The second element is an array with the information we need: the list of regions. There are 22 regions in total, but many overlap with each other. We’ll want to pick from the total number of regions so that we (a) include all the world’s countries, and (b) don’t have any country in multiple regions. The regions that meet this criteria are conveniently marked with an <code>id</code> property, so we’ll select from the list only those regions whose <code>id</code> property is not null.</p>
+<p>The first object in the array supports paging through a large data set, which isn’t important for us now. The second element is an array with the information we need: the list of regions. There are 22 regions in total, but many overlap with each other. We’ll want to pick from the total number of regions so that we both (a) include all the world’s countries, and (b) don’t have any country in multiple regions. The regions that meet this criteria are conveniently marked with an <code>id</code> property, so we’ll select from the list only those regions whose <code>id</code> property is not null.</p>
 <h3 id="step-2-get-the-first-level-of-data-via-ajax">Step 2: Get the First Level of Data via AJAX</h3>
 <p>With an understanding of the data format (so far), let’s write some code to retrieve it. Since we have jQuery loaded, we’ll take advantage of many of its utilities. Let’s start at the simplest level and work up to a full implementation.</p>
-<p>As you might expect, the <code>.getJSON()</code> function will do most of the work for us. The simplest way to use that function might be something like the following. Note that we’re adding <code>format=json</code> to the query in line 3 to tell the World Bank what format we want. Without that parameter their server returns <span class="smcp">XML</span>, which isn’t at all what <code>getJSON()</code> expects.</p>
+<p>As you might expect, the <code>.getJSON()</code> function will do most of the work for us. The simplest way to use that function might be something like the following. Note that we’re adding <code>format: json</code> to the query in line 3 to tell the World Bank what format we want. Without that parameter the server returns <span class="smcp">XML</span>, which isn’t at all what <code>getJSON()</code> expects.</p>
 <table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1620,20 +1620,20 @@ The final visualization combines multiple charts with mouse tracking to more cle
         <span class="co">// do something with response</span>
     }
 );</code></pre></td></tr></table>
-<p>Unfortunately, that code won’t work with the current web servers supplying the World Bank data. In fact, the problem we would encounter with the World Bank servers is very common today. As is often the case with the web, security concerns are the source of the complication. Consider the information flow we’re establishing, shown in figure <span class="nextfigure"/>. Our server (<code>your.web.site.com</code>) sends a web page—including scripts—to the user, and those scripts, executing in the user’s browser, query the World Bank site (<code>api.worldbank.com</code>).</p>
+<p>Unfortunately, that code won’t work with the current web servers supplying the World Bank data. In fact, this problem is very common today. As is often the case with the web, security concerns are the source of the complication. Consider the information flow we’re establishing, shown in figure <span class="nextfigure"/>. Our server (<code>your.web.site.com</code>) sends a web page—including scripts—to the user, and those scripts, executing in the user’s browser, query the World Bank site (<code>api.worldbank.com</code>).</p>
 <figure>
 <img src="img/cors.png" width="599px" height="408px"></img>
 <figcaption>
 Getting data using <span class="smcp">AJAX</span> often requires the cooperation of three different systems.
 </figcaption>
 </figure>
-<p>The script’s communication with the World Bank is invisible to users, so they have no chance to approve or refuse the exchange. In the case of the World Bank, it’s hard to imagine any reason for users to reject the query, but what if our script was accessing users’ social network profile or, more seriously, their online banking site? In such cases user concerns would be justified. Because the communication is invisible to the user, and because the web browser cannot guess which communications might be sensitive and which are not, the browser simply prohibits all such communications. The technical term for this is <em>same origin policy</em>. This policy means that web pages that our server provides cannot directly access the World Bank’s <span class="smcp">JSON</span> interface.</p>
-<p>Some websites address this problem by adding an <span class="smcp">HTTP</span> header in its responses. The header</p>
+<p>The script’s communication with the World Bank is invisible to users, so they have no chance to approve or refuse the exchange. In the case of the World Bank, it’s hard to imagine any reason for users to reject the query, but what if our script were accessing users’ social network profile or, more seriously, their online banking site? In such cases user concerns would be justified. Because the communication is invisible to the user, and because the web browser cannot guess which communications might be sensitive and which are not, the browser simply prohibits all such communications. The technical term for this is <em>same origin policy</em>. This policy means that web pages that our server provides cannot directly access the World Bank’s <span class="smcp">JSON</span> interface.</p>
+<p>Some websites address this problem by adding an <span class="smcp">HTTP</span> header in their responses. The header:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Access-Control-Allow-Origin</span>: *</code></pre>
-<p>would tell the browser that it’s safe for any web page to access this data. Unfortunately, as of this writing, the World Bank has not implemented this header. The option is relatively new, so you’ll find it missing from many web servers. To work within the constraints of the same origin policy, therefore, we rely on jQuery’s help and a small bit of trickery. The trick relies on the one exception to the same origin policy that all browsers recognize: third party JavaScript files. Browsers do allow web pages to request JavaScript files from third party servers (that is, after all, how services such as Google Analytics can work). We just need to make the response data from the World Bank look like regular JavaScript instead of <span class="smcp">JSON</span>. Fortunately, the World Bank cooperates with us in this minor deception. To do that we add two query parameters to our request</p>
+<p>would tell the browser that it’s safe for any web page to access this data. Unfortunately, as of this writing, the World Bank has not implemented this header. The option is relatively new, so it’s missing from many web servers. To work within the constraints of the same origin policy, therefore, we rely on jQuery’s help and a small bit of trickery. The trick relies on the one exception to the same origin policy that all browsers recognize: third-party JavaScript files. Browsers do allow web pages to request JavaScript files from third-party servers (that is, after all, how services such as Google Analytics can work). We just need to make the response data from the World Bank look like regular JavaScript instead of <span class="smcp">JSON</span>. Fortunately, the World Bank cooperates with us in this minor deception. We simply add two query parameters to our request</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">?format</span>=jsonP<span class="kw">&amp;</span><span class="ot">prefix=</span>Getdata</code></pre>
-<p>The <code>format</code> parameter with a value of <code>jsonP</code> tells the World Bank that we want the response formatted as <em><span class="smcp">JSON</span> with Padding</em>, which is a variant of <span class="smcp">JSON</span> that is also regular JavaScript. The second parameter, <code>prefix</code>, tells the World Bank the name of our function that will accept the data. (Without that information, the JavaScript that the World Bank constructs wouldn’t know how to communicate with our code.) It’s a bit messy, but jQuery handles most of the details for us. The only trick is that we have to add <code>?something=?</code> to the <span class="smcp">URL</span> we pass to <code>.getJSON()</code>, where <code>something</code> is whatever the web service requires for its <span class="smcp">JSONP</span> response. The World Bank expects <code>prefix</code>, but a more common value is <code>callback</code>.</p>
-<p>Now we can put together some code that will work with the World Bank and many other web servers, although the specific parameter (<code>prefix</code>) is peculiar to the World Bank. We’ve added the <code>prefix</code> directly in the <span class="smcp">URL</span> in line 2, and we’ve changed the format to <code>jsonp</code> in line 3.</p>
+<p>The <code>format</code> parameter with a value of <code>jsonP</code> tells the World Bank that we want the response formatted as <em><span class="smcp">JSON</span> with Padding</em>, which is a variant of <span class="smcp">JSON</span> that is also regular JavaScript. The second parameter, <code>prefix</code>, tells the World Bank the name of the function that will accept the data. (Without that information, the JavaScript that the World Bank constructs wouldn’t know how to communicate with our code.) It’s a bit messy, but jQuery handles most of the details for us. The only catch is that we have to add <code>?something=?</code> to the <span class="smcp">URL</span> we pass to <code>.getJSON()</code>, where <code>something</code> is whatever the web service requires for its <span class="smcp">JSONP</span> response. The World Bank expects <code>prefix</code>, but a more common value is <code>callback</code>.</p>
+<p>Now we can put together some code that will work with the World Bank and many other web servers, although the specific parameter (<code>prefix</code>) is specific to the World Bank. We’ve added the <code>prefix</code> directly in the <span class="smcp">URL</span> in line 2, and we’ve changed the format to <code>jsonp</code> in line 3.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1650,10 +1650,10 @@ Getting data using <span class="smcp">AJAX</span> often requires the cooperation
 );</code></pre></td></tr></table>
 <p><span class="lgcp">JSONP</span> does suffer from one major shortcoming: there is no way for the server to indicate an error. That means we should spend extra time testing and debugging any <span class="smcp">JSONP</span> requests, and we should be vigilant about any changes in the server that might cause previously functioning code to fail. Eventually the World Bank will update the <span class="smcp">HTTP</span> headers in its responses (perhaps even by the time of this book’s publication), and we can switch to the more robust <span class="smcp">JSON</span> format.</p>
 <blockquote>
-<p>Note: Although it will probably be fixed before this book is published, at the time of this writing the World Bank has a significant bug in their <span class="smcp">API</span>. The server doesn’t preserve the case (uppercase vs. lowercase) of the callback function. The full source code for this example includes a workaround for the bug, but you’re unlikely to need this workaround for other servers. Just in case, though, you can look at the comments in the source code for a complete documentation of the fix.</p>
+<p>Note: Although it will probably be fixed before this book is published, at the time of this writing the World Bank has a significant bug in its <span class="smcp">API</span>. The server doesn’t preserve the case (uppercase vs. lowercase) of the callback function. The full source code for this example includes a workaround for the bug, but you’re unlikely to need that workaround for other servers. Just in case, though, you can look at the comments in the source code for a complete documentation of the fix.</p>
 </blockquote>
-<p>Now let’s get back to the code itself. In the snippet above, we’re defining a callback function directly in the call to <code>.getJSON()</code>. You’ll see this code structure in many implementations. This certainly works, but if we continue along these lines, things are going to get real messy real soon. We’ve already added a couple of layers of indentation before we even start processing the response. As you can guess, once we get this initial response, we’ll need to make several more requests for additional data. If we try to build our code in one monolithic block, we’ll end up with so many levels of indentation that there won’t be any room for actual code. More significantly, the result would be one massive interconnected block of code that would be challenging to even understand, much less debug or enhance.</p>
-<p>Fortunately, jQuery gives us the tool for a much better approach; that tool is the <code>$.Deferred</code> object. A <code>Deferred</code> acts as a central dispatcher and scheduler for events. Once the <code>Deferred</code> object is created, different parts of our code indicate that they want to know when the event completes, while other parts of out code signal the event’s status. The <code>Deferred</code> coordinates all those different activities, letting us separate how we trigger and manage events from dealing with their consequences.</p>
+<p>Now let’s get back to the code itself. In the snippet above, we’re defining a callback function directly in the call to <code>.getJSON()</code>. You’ll see this code structure in many implementations. This certainly works, but if we continue along these lines, things are going to get messy very soon. We’ve already added a couple of layers of indentation before we even start processing the response. As you can guess, once we get this initial response, we’ll need to make several more requests for additional data. If we try to build our code in one monolithic block, we’ll end up with so many levels of indentation that there won’t be any room for actual code. More significantly, the result would be one massive interconnected block of code that would be challenging to even understand, much less debug or enhance.</p>
+<p>Fortunately, jQuery gives us the tool for a much better approach; that tool is the <code>$.Deferred</code> object. A <code>Deferred</code> acts as a central dispatcher and scheduler for events. Once the <code>Deferred</code> object is created, different parts of our code indicate that they want to know when the event completes, while other parts of our code signal the event’s status. The <code>Deferred</code> coordinates all those different activities, letting us separate how we trigger and manage events from dealing with their consequences.</p>
 <p>Let’s see how to improve our <span class="smcp">AJAX</span> request with <code>Deferred</code> objects. Our main goal is to separate the initiation of the event (the <span class="smcp">AJAX</span> request) from dealing with its consequences (processing the response). With that separation, we won’t need a success function as a callback parameter to the request itself. Instead, we’ll rely on the fact that the <code>.getJSON()</code> call returns a <code>Deferred</code> object. (Technically, the function returns a restricted form of the <code>Deferred</code> object known as a <code>promise</code>; the differences aren’t important for us now, though.) We want to save that returned object in a variable.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1665,14 +1665,14 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
     <span class="st">&quot;http://api.worldbank.org/regions/?prefix=?&quot;</span>, 
     {<span class="dt">format</span>: <span class="st">&quot;jsonp&quot;</span>}
 );</code></pre></td></tr></table>
-<p>That’s simple and straightforward. Now, in a different part of our code, we can register our interest in knowing when the <span class="smcp">AJAX</span> request is complete.</p>
+<p>That’s simple and straightforward. Now, in a different part of our code, we can indicate our interest in knowing when the <span class="smcp">AJAX</span> request is complete.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">deferredRegionsRequest</span>.<span class="fu">done</span>(<span class="kw">function</span>(response) {
     <span class="co">// do something with response</span>
 });</code></pre></td></tr></table>
-<p>The <code>done()</code> method of the <code>Deferred</code> object is key. It specifies a new function that we want to execute whenever the event (in this case the <span class="smcp">AJAX</span> request) successfully completes. The <code>Deferred</code> object handles all the messy details. In particular, if the event is already complete by the time we get around to registering the callback via <code>done()</code>, the <code>Deferred</code> object executes that callback immediately. Otherwise it waits until the request is complete. We can also express an interest in knowing if the <span class="smcp">AJAX</span> request fails. Instead of <code>done()</code> we use the <code>fail()</code> method. (Even though <span class="smcp">JSONP</span> doesn’t give the server a way to report errors, the request itself could still fail.)</p>
+<p>The <code>done()</code> method of the <code>Deferred</code> object is key. It specifies a new function that we want to execute whenever the event (in this case the <span class="smcp">AJAX</span> request) successfully completes. The <code>Deferred</code> object handles all the messy details. In particular, if the event is already complete by the time we get around to registering the callback via <code>done()</code>, the <code>Deferred</code> object executes that callback immediately. Otherwise, it waits until the request is complete. We can also express an interest in knowing if the <span class="smcp">AJAX</span> request fails: instead of <code>done()</code> we use the <code>fail()</code> method for this. (Even though <span class="smcp">JSONP</span> doesn’t give the server a way to report errors, the request itself could still fail.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1683,11 +1683,11 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
 <h3 id="step-3-process-the-first-level-of-data">Step 3: Process the First Level of Data</h3>
 <p>Now let’s tackle processing the response. The paging information isn’t relevant, so we can skip right to the second element in the returned response. We want to process that array in two steps.</p>
 <ol type="1">
-<li>Filter out any elements in the array that aren’t relevant to us. In this case we’re only interested in regions that have an <code>id</code> property that isn’t <code>null</code>.</li>
-<li>Transform the elements in the array so that they only contain the properties we care about. For this example, we only need the <code>code</code> and <code>name</code> properties.</li>
+<li>Filter out any elements in the array that aren’t relevant to us. In this case we’re interested only in regions that have an <code>id</code> property that isn’t <code>null</code>.</li>
+<li>Transform the elements in the array so that they contain only the properties we care about. For this example, we need only the <code>code</code> and <code>name</code> properties.</li>
 </ol>
-<p>This probably sounds familiar. In fact, it’s exactly the kind of thing we needed to do in this chapter’s first example. As we saw there, jQuery’s <code>$.map()</code> and <code>$.grep()</code> functions are a big help.</p>
-<p>Taking these one at a time, here’s how to filter out irrelevant data from the response.</p>
+<p>This probably sounds familiar. In fact, it’s exactly what we needed to do in this chapter’s first example. As we saw there, jQuery’s <code>$.map()</code> and <code>$.grep()</code> functions are a big help.</p>
+<p>Taking these steps one at a time, here’s how to filter out irrelevant data from the response.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1737,22 +1737,22 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
     );
 });</code></pre></td></tr></table>
 <h3 id="step-4-get-the-real-data">Step 4: Get the Real Data</h3>
-<p>At this point, of course, all we’ve managed to retrieve are the list of regions. That’s not the data we want to visualize. Usually, getting the real data through a web-based interface requires (at least) two request stages. The first request just gives you the essential information for subsequent requests. In this case, the real data we want is the <span class="smcp">GDP</span>, so we’ll need to through our list of regions and retrieve that data for each one.</p>
-<p>Of course we can’t just blindly fire off the second set of requests, in this case for the detailed region data. First we have to wait until we have the list of regions. In step 2 we dealt with a similar situation by using <code>.getJSON()</code> with a <code>Deferred</code> object to separate event management from processing. We can use the same technique here; the only difference is that we’ll have to create our own <code>Deferred</code> object.</p>
+<p>At this point, of course, all we’ve managed to retrieve is the list of regions. That’s not the data we want to visualize. Usually, getting the real data through a web-based interface requires (at least) two request stages. The first request just gives you the essential information for subsequent requests. In this case, the real data we want is the <span class="smcp">GDP</span>, so we’ll need to go through our list of regions and retrieve that data for each one.</p>
+<p>Of course we can’t just blindly fire off the second set of requests, in this case for the detailed region data. First, we have to wait until we have the list of regions. In step 2 we dealt with a similar situation by using <code>.getJSON()</code> with a <code>Deferred</code> object to separate event management from processing. We can use the same technique here; the only difference is that we’ll have to create our own <code>Deferred</code> object.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> deferredRegionsAvailable = <span class="ot">$</span>.<span class="fu">Deferred</span>();</code></pre></td></tr></table>
 <p>Later, when the region list is available, we indicate that status by calling the object’s <code>resolve()</code> method.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">deferredRegionsAvailable</span>.<span class="fu">resolve</span>();</code></pre></td></tr></table>
-<p>The actual processing takes place via the <code>done()</code> method.</p>
+<p>The actual processing is handled by the <code>done()</code> method.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">deferredRegionsAvailable</span>.<span class="fu">done</span>(<span class="kw">function</span>() {
     <span class="co">// get the region data</span>
 });</code></pre></td></tr></table>
-<p>The code that gets the actual region data needs the list of regions, of course. We could pass that list around as a global variable, but that would be polluting the global namespace. (And even if you’ve properly namespaced your application, why pollute your own namespace?) The problem is an easy one to solve. Any arguments we provide to the <code>resolve()</code> method are passed straight to the <code>done()</code> function.</p>
-<p>Let’s take a look at the big picture so we can see how all the pieces fit together. First, in lines 2-5, we request the list of regions. Then in line 8, we create a second deferred object to track our processing of the response. In the block of lines 11 through 26 we handle the response from our initial request. Most importantly, we resolve the second deferred object (line 13) to single that our processing is complete. Finally, starting with line 29, we can begin processing the response.</p>
+<p>The code that gets the actual region data needs the list of regions, of course. We could pass that list around as a global variable, but that would be polluting the global namespace. (And even if you’ve properly namespaced your application, why pollute your own namespace?) This problem is easy to solve. Any arguments we provide to the <code>resolve()</code> method are passed straight to the <code>done()</code> function.</p>
+<p>Let’s take a look at the big picture so we can see how all the pieces fit together. First, in lines 2-5, we request the list of regions. Then in line 8, we create a second <code>Deferred</code> object to track our processing of the response. In the block of lines 11 through 26 we handle the response from our initial request. Most importantly, we resolve the second <code>Deferred</code> object (line 13) to signal that our processing is complete. Finally, starting with line 29, we can begin processing the response.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1836,7 +1836,7 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
         );
     });
 });</code></pre></td></tr></table>
-<p>As long as we’re iterating through the regions, we can include the code to handle the processing of the <span class="smcp">GDP</span> data. By now it won’t surprise you that we’ll create a <code>Deferred</code> object to track when that processing is complete. The processing itself will simply store the returned response (after skipping past the paging information) in the region object.</p>
+<p>As long as we’re iterating through the regions, we can include the code to process the <span class="smcp">GDP</span> data. By now it won’t surprise you that we’ll create a <code>Deferred</code> object to track when that processing is complete. The processing itself will simply store the returned response (after skipping past the paging information) in the region object.</p>
 <table class="sourceCode javascript numberLines line-12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1872,8 +1872,8 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
 <p>Note that we’ve also added a check at line 12 to make sure the World Bank actually returns data in its response. Possibly due to internal errors, it may return a <code>null</code> object instead of the array of data. When that happens, we’ll set the <code>rawData</code> to an empty array instead of <code>null</code>.</p>
 <h3 id="step-5-process-the-data">Step 5: Process the Data</h3>
 <p>Now that we’ve requested the real data, it’s almost time to process it. There is a final hurdle to overcome, and it’s a familiar one. We can’t start processing the data until it’s available, which calls for defining one more deferred object and resolving that object when the data is complete. (By now it’s probably sinking in just how handy <code>Deferred</code> objects can be.)</p>
-<p>There is one little twist, however. We’ve now got multiple requests in progress, one for each region. How can we tell when all of those requests are complete? Fortunately, jQuery provides a convenient solution with the <code>.when()</code> function. That function accepts a list of deferred objects and only indicates success when all of the objects have succeeded. We just need to pass that list of deferred objects to the <code>.when()</code> function.</p>
-<p>We could assemble an array of deferred objects using the <code>.map()</code> function, but <code>.when()</code> expects a parameter list, not an array. Buried deep in the JavaScript standard is a technique for converting an array to a list of function parameters. Instead of calling the function directly, we execute the <code>.when()</code> function’s <code>apply()</code> method. That method takes, as its parameters, the context (<code>this</code>) and an array.</p>
+<p>There is one little twist, however. We’ve now got multiple requests in progress, one for each region. How can we tell when all of those requests are complete? Fortunately, jQuery provides a convenient solution with the <code>.when()</code> function. That function accepts a list of <code>Deferred</code> objects and only indicates success when all of the objects have succeeded. We just need to pass that list of <code>Deferred</code> objects to the <code>.when()</code> function.</p>
+<p>We could assemble an array of <code>Deferred</code> objects using the <code>.map()</code> function, but <code>.when()</code> expects a parameter list, not an array. Buried deep in the JavaScript standard is a technique for converting an array to a list of function parameters. Instead of calling the function directly, we execute the <code>.when()</code> function’s <code>apply()</code> method. That method takes, as its parameters, the context (<code>this</code>) and an array.</p>
 <p>Here’s the <code>.map()</code> function that creates the array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1888,7 +1888,7 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">$</span>.<span class="ot">when</span>.<span class="fu">apply</span>(<span class="kw">this</span>,<span class="ot">$</span>.<span class="fu">map</span>(regions, <span class="kw">function</span>(regionObj) {
     <span class="kw">return</span> <span class="ot">regionObj</span>.<span class="fu">deferredDataAvailable</span>
 }));</code></pre></td></tr></table>
-<p>The <code>when()</code> function returns its own <code>Deferred</code> object, so we can use the same methods we already know to process its completion. Now we finally have a complete solution to retrieving the World Bank data.</p>
+<p>The <code>when()</code> function returns its own <code>Deferred</code> object, so we can use the methods we already know to process its completion. Now we finally have a complete solution for retrieving the World Bank data.</p>
 <p>With our data safely in hand, we can now coerce it into a format that flot accepts. We extract the <code>date</code> and <code>value</code> properties from the raw data. We also have to account for gaps in the data. The World Bank doesn’t have <span class="smcp">GDP</span> data for every region for every year. When it’s missing data for a particular year, it returns a null value for <code>value</code>. The same combination of <code>.grep()</code> and <code>.map()</code> that we used before will serve us once again.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1920,9 +1920,9 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
         )
     })
 });</code></pre></td></tr></table>
-<p>As you can see, we’re iterating through the list of regions with the <code>.each()</code> function of line 2. For each region, we create an object of data for the flot library. (No points for originality in naming that object <code>flotData</code> in line 3.) Then we filter the data in lines 4-6 to eliminate any data points with <code>null</code> values. The function that creates our flot data array is in lines 7-12. It takes, as input, a single data object from the World Bank, and returns the data as a two-dimensional data point. The first value is the date, which we extract as an integer in line 9, and the second value is the <span class="smcp">GDP</span> data, which we extract as a floating point number in line 10. Dividing by <code>1e12</code> converts the <span class="smcp">GDP</span> data to trillions.</p>
+<p>As you can see, we’re iterating through the list of regions with the <code>.each()</code> function of line 2. For each region, we create an object of data for the flot library. (No points for originality in naming that object <code>flotData</code> in line 3.) Then we filter the data in lines 4-6 to eliminate any data points with <code>null</code> values. The function that creates our flot data array is in lines 7-12. It takes, as input, a single data object from the World Bank, and returns the data as a two-dimensional data point. The first value is the date, which we extract as an integer in line 9, and the second value is the <span class="smcp">GDP</span> data, which we extract as a floating-point number in line 10. Dividing by <code>1e12</code> converts the <span class="smcp">GDP</span> data to trillions.</p>
 <h3 id="step-6-create-the-chart">Step 6: Create the Chart</h3>
-<p>Since we’ve made it this far with a clear separation between code that handles events and code that processes the results, there’s no reason not to continue the approach when we actually create the chart. Yet another <code>Deferred</code> object creates that separation. We’ve taken the code fragments from above and wrapped them in deferred object handling. Once all the data has been processed, we resolve that deferred object (line 17).</p>
+<p>Since we’ve made it this far with a clear separation between code that handles events and code that processes the results, there’s no reason not to continue the approach when we actually create the chart. Yet another <code>Deferred</code> object creates that separation. We’ve taken the preceding code fragments and wrapped them in <code>Deferred</code> object handling. Once all of the data has been processed, we resolve that <code>Deferred</code> object (line 17).</p>
 <table class="sourceCode javascript numberLines line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1973,7 +1973,7 @@ deferredRegionsRequest = <span class="ot">$</span>.<span class="fu">getJSON</spa
 <figcaption>
 Deferred objects help keep each bit of code isolated to its own pad.</figcation>
 </figure>
-<p>The real benefit to this approach is its separation of concerns. Each processing step remains independent of the others. Should any require changes, there would be no need to look at the other steps in the process. Each lily pad, in effect, remains its own island without concern for the rest of the pond.</p>
+<p>The real benefit to this approach is its separation of concerns. Each processing step remains independent of the others. Should any step require changes, there’ would be’s no need to look at the others in the process. Each lily pad, in effect, remains its own island without concern for the rest of the pond.</p>
 <p>Once we’re at the final step, we can use any or all of the techniques from this chapter’s other examples to draw the chart. Once again, the <code>.map()</code> function can easily extract relevant information from the region data. Here is a basic example:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1997,7 +1997,7 @@ Deferred objects help keep each bit of code isolated to its own pad.</figcation>
         ,{ <span class="dt">legend</span>: { <span class="dt">position</span>: <span class="st">&quot;nw&quot;</span>} }
     );
 });</code></pre></td></tr></table>
-<p>Our basic chart now gets its data directly from the World Bank. We no longer have to manually process their data, and our charts are updated automatically whenever the World Bank updates its data.</p>
+<p>Our basic chart now gets its data directly from the World Bank. We no longer have to manually process the data, and our charts are updated automatically whenever the World Bank updates its data.</p>
 <figure>
 <div style="padding-left:2em;">
 Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)
@@ -2009,7 +2009,7 @@ Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)
 With <span class="smcp">AJAX</span> we can graph live data from another site in the user’s browser.
 </figcaption>
 </figure>
-<p>In this example we’ve seen how to access the World Bank’s application programming interface. The same approach works for many other organizations providing data on the Internet. In fact, there are so many data sources available today it can be difficult to keep track of them all. Here are two helpful websites, which each serve as a central repository for both public and private <span class="smcp">API</span>s accessible on the Internet.</p>
+<p>In this example you’ve seen how to access the World Bank’s application programming interface. The same approach works for many other organizations that provide data on the Internet. In fact, there are so many data sources available today that it can be difficult to keep track of them all. Here are two helpful website that each serve as a central repository for both public and private <span class="smcp">API</span>s accessible on the Internet.</p>
 <ul>
 <li><a href="http://www.apihub.com">APIhub</a></li>
 <li><a href="http://www.programmableweb.com">ProgrammableWeb</a></li>
@@ -2137,7 +2137,7 @@ With <span class="smcp">AJAX</span> we can graph live data from another site in 
 }());
 </script>
 <h2 id="summing-up">Summing Up</h2>
-<p>As the examples in this chapter show, we don’t have to be satisfied with static charts on our web pages. A little JavaScript can bring charts to life by letting users interact with them. These interactions give the user a chance to see a “big picture” view of the data and, on the same page, look into the specific aspects that are most interesting and relevant to them. We’ve considered techniques that let users select which data series appear on our charts, zoom in on specific chart areas, and use their mouse to explore details of the data without losing sight of the overall view. We’ve also looked at how to get interactive data directly from its source using <span class="smcp">AJAX</span> and asynchronous programming.</p>
+<p>As the examples in this chapter show, we don’t have to be satisfied with static charts on our web pages. A little JavaScript can bring charts to life by letting users interact with them. These interactions give users a chance to see a “big picture” view of the data and, on the same page, look into the specific aspects that are most interesting and relevant to them. We’ve considered techniques that let users select which data series appear on our charts, zoom in on specific chart areas, and use their mouse to explore details of the data without losing sight of the overall view. We’ve also looked at how to get interactive data directly from its source using <span class="smcp">AJAX</span> and asynchronous programming.</p>
 <p>Continue reading: <a href="chap03.html">Chapter 3: Integrating Charts in a Page</a>.</p>
 <script src="js/scripts.02.min.js"></script>
         </main>
