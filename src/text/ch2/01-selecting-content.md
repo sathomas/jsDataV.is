@@ -244,7 +244,140 @@ We also want to be sure to show data only for regions the user has selected. Tha
 Both `.grep()` and `.map()` accept two parameters. The first parameter is an array or, more precisely, an "array-like" object. That's either a JavaScript array or another JavaScript object that looks and acts like an array. (There is a technical distinction, but it's not something we have to worry about here.) The second parameter is a function that operates on elements of the array one at a time. For `.grep()` that function returns `true` or `false` to filter out elements accordingly. In the case of `.map()` the function returns a transformed object that replaces the original element in the array. Figure NEXTFIGURENUMBER shows how these functions convert the initial data into the final data array.
 
 <figure>
-<img src="img/arrays.svg"></img>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="332"  xml:space="preserve">
+<defs>
+<filter id="shadow-outer" filterUnits="userSpaceOnUse">
+<feGaussianBlur stdDeviation="2.5" />
+<feOffset dx="0.1" dy="3.1" result="blur" />
+<feFlood flood-color="rgb(0, 0, 0)" flood-opacity="0.5" />
+<feComposite in2="blur" operator="in" result="colorShadow" />
+<feComposite in="SourceGraphic" in2="colorShadow" operator="over" />
+</filter>
+<linearGradient id="gradient-bezier30" x1="371.33" y1="200" x2="469.11" y2="200" gradientUnits="userSpaceOnUse" >
+<stop offset="0" stop-color="rgb(255, 255, 255)" stop-opacity="1" />
+<stop offset="1" stop-color="rgb(193, 193, 193)" stop-opacity="1" />
+</linearGradient>
+</defs>
+<path id="bezier" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 196.67,186.95 L 131.78,175.22 131.78,222.78 196.67,211.05 196.67,226.56 229.56,199 196.67,171.44 196.67,186.95 Z M 196.67,186.95" />
+<rect id="rectangle32" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="12" y="79" width="105" height="41" />
+<rect id="rectangle" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="12.5" y="79.5" width="105" height="40" />
+<rect id="rectangle34" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="12" y="119" width="105" height="41" />
+<rect id="rectangle35" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="12.5" y="119.5" width="105" height="40" />
+<rect id="rectangle37" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="12" y="159" width="105" height="41" />
+<rect id="rectangle38" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="12.5" y="159.5" width="105" height="40" />
+<rect id="rectangle40" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="12" y="199" width="105" height="41" />
+<rect id="rectangle41" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="12.5" y="199.5" width="105" height="40" />
+<rect id="rectangle43" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="12" y="239" width="105" height="41" />
+<rect id="rectangle44" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="12.5" y="239.5" width="105" height="40" />
+<rect id="rectangle46" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="12" y="279" width="105" height="41" />
+<rect id="rectangle47" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="12.5" y="279.5" width="105" height="40" />
+<rect id="rectangle3" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="250" y="79" width="105" height="41" />
+<rect id="rectangle4" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="250.5" y="79.5" width="105" height="40" />
+<rect id="rectangle6" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="250" y="159" width="105" height="41" />
+<rect id="rectangle7" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="250.5" y="159.5" width="105" height="40" />
+<rect id="rectangle18" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="250" y="199" width="105" height="41" />
+<rect id="rectangle19" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="250.5" y="199.5" width="105" height="40" />
+<rect id="rectangle21" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" x="250" y="279" width="105" height="41" />
+<rect id="rectangle51" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="250.5" y="279.5" width="105" height="40" />
+<rect id="rectangle14" stroke="none" fill="rgb(193, 193, 193)" filter="url(#shadow-outer)" x="486" y="118" width="105" height="41" />
+<rect id="rectangle15" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="486.5" y="118.5" width="105" height="40" />
+<rect id="rectangle23" stroke="none" fill="rgb(193, 193, 193)" filter="url(#shadow-outer)" x="486" y="158" width="105" height="41" />
+<rect id="rectangle24" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="486.5" y="158.5" width="105" height="40" />
+<rect id="rectangle53" stroke="none" fill="rgb(193, 193, 193)" filter="url(#shadow-outer)" x="486" y="198" width="105" height="41" />
+<rect id="rectangle54" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="486.5" y="198.5" width="105" height="40" />
+<rect id="rectangle56" stroke="none" fill="rgb(193, 193, 193)" filter="url(#shadow-outer)" x="486" y="238" width="105" height="41" />
+<rect id="rectangle57" stroke="rgb(68, 68, 68)" stroke-width="1.33" fill="none" x="486.5" y="238.5" width="105" height="40" />
+<path id="bezier30" stroke="none" fill="url(#gradient-bezier30)" d="M 371.33,213.78 L 371.33,186.22 435.78,186.22 435.78,172.44 469.11,200 435.78,227.56 435.78,213.78 371.33,213.78 Z M 371.33,213.78" />
+<path id="bezier31" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 371.33,213.78 L 371.33,186.22 435.78,186.22 435.78,172.44 469.11,200 435.78,227.56 435.78,213.78 371.33,213.78 Z M 371.33,213.78" />
+<rect id="rectangle33" stroke="none" fill="none" x="12" y="87" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="31.96" y="87">
+<tspan x="31.96" y="103">Object 1</tspan>
+</text>
+<rect id="rectangle36" stroke="none" fill="none" x="12" y="127" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="31.96" y="127">
+<tspan x="31.96" y="143">Object 2</tspan>
+</text>
+<rect id="rectangle39" stroke="none" fill="none" x="12" y="167" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="31.96" y="167">
+<tspan x="31.96" y="183">Object 3</tspan>
+</text>
+<rect id="rectangle42" stroke="none" fill="none" x="12" y="207" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="31.96" y="207">
+<tspan x="31.96" y="223">Object 4</tspan>
+</text>
+<rect id="rectangle45" stroke="none" fill="none" x="12" y="247" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="31.96" y="247">
+<tspan x="31.96" y="263">Object 5</tspan>
+</text>
+<rect id="rectangle48" stroke="none" fill="none" x="12" y="287" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="31.96" y="287">
+<tspan x="31.96" y="303">Object 6</tspan>
+</text>
+<rect id="rectangle49" stroke="none" fill="none" x="13" y="4" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="35.4" y="4">
+<tspan x="35.4" y="20">Original</tspan>
+</text>
+<rect id="rectangle50" stroke="none" fill="none" x="13" y="24" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="45.38" y="24">
+<tspan x="45.38" y="40">Array</tspan>
+</text>
+<rect id="rectangle2" stroke="none" fill="none" x="132" y="234" width="93" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="148.91" y="234">
+<tspan x="148.91" y="250">&#36;.grep()</tspan>
+</text>
+<rect id="rectangle5" stroke="none" fill="none" x="250" y="87" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="269.96" y="87">
+<tspan x="269.96" y="103">Object 1</tspan>
+</text>
+<rect id="rectangle16" stroke="none" fill="none" x="250" y="167" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="269.96" y="167">
+<tspan x="269.96" y="183">Object 3</tspan>
+</text>
+<rect id="rectangle20" stroke="none" fill="none" x="250" y="207" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="269.96" y="207">
+<tspan x="269.96" y="223">Object 4</tspan>
+</text>
+<rect id="rectangle52" stroke="none" fill="none" x="250" y="287" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="269.96" y="287">
+<tspan x="269.96" y="303">Object 6</tspan>
+</text>
+<rect id="rectangle12" stroke="none" fill="none" x="250" y="4" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="273.32" y="4">
+<tspan x="273.32" y="20">Filtered</tspan>
+</text>
+<rect id="rectangle13" stroke="none" fill="none" x="250" y="24" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="282.38" y="24">
+<tspan x="282.38" y="40">Array</tspan>
+</text>
+<rect id="rectangle22" stroke="none" fill="none" x="486" y="126" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="505.4" y="126">
+<tspan x="505.4" y="142">Object A</tspan>
+</text>
+<rect id="rectangle25" stroke="none" fill="none" x="486" y="166" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="505.44" y="166">
+<tspan x="505.44" y="182">Object B</tspan>
+</text>
+<rect id="rectangle55" stroke="none" fill="none" x="486" y="206" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="505.4" y="206">
+<tspan x="505.4" y="222">Object C</tspan>
+</text>
+<rect id="rectangle58" stroke="none" fill="none" x="486" y="246" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="504.98" y="246">
+<tspan x="504.98" y="262">Object D</tspan>
+</text>
+<rect id="rectangle8" stroke="none" fill="none" x="486" y="4" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="490.26" y="4">
+<tspan x="490.26" y="20">Transformed</tspan>
+</text>
+<rect id="rectangle9" stroke="none" fill="none" x="486" y="24" width="105" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="518.38" y="24">
+<tspan x="518.38" y="40">Array</tspan>
+</text>
+<rect id="rectangle10" stroke="none" fill="none" x="371" y="237" width="93" height="33" />
+<text fill="rgb(68, 68, 68)" font-size="16" x="388.69" y="237">
+<tspan x="388.69" y="253">&#36;.map()</tspan>
+</text>
+</svg>
 <figcaption>The jQuery library has utility functions to help transform and filter data.</figcaption>
 </figure>
 
