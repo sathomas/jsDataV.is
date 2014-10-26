@@ -24,13 +24,13 @@
     "tests"
   ],
   "dependencies": {
-    "backbone": "~1.1.2",
-    "d3": "~3.4.9",
+    "backbone": "~1",
+    "d3": "~3",
     "eventie": ">=1.0.4 <2",
     "eventEmitter": "4.x",
     "flot": "~0.8.3",
     "flotr2": "*",
-    "headroom.js": "~0.6.0",
+    "headroom.js": ">=0.6.0",
     "imagesloaded": ">=3.0.0",
     "jquery.sparkline": "~2.1.2",
     "jquery-chronoline": "~0.2.6",
@@ -45,7 +45,6 @@
     "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1",
     "underscore.string": "~2.3.3",
     "chroma-js": "~0.6.1",
-    "MathJax": "~2.4.0",
     "normalize-opentype.css": "~0.2.0",
     "tile.stamen": "http://maps.stamen.com/js/tile.stamen.js",
     "heatmap": "https://raw.githubusercontent.com/pa7/heatmap.js/master/src/heatmap.js"
