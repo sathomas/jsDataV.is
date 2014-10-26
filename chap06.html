@@ -692,17 +692,19 @@ body { counter-reset: chapter 6; }
 </style>
 
 <h1 id="chapter-6-visualizing-geographic-data">Chapter 6: Visualizing Geographic Data</h1>
-<p>Humans crave context when evaluating data, so it’s important to provide that context when it’s available. In the previous chapter we saw how timelines can provide one frame of reference; now we’ll examine another equally important context: place. If a data set includes geographic coordinates or it has values that correspond to different geographic regions, you’ll want to provide geographic context using a map-based visualization. The examples in this chapter consider two types of map-based visualizations. The first two examples show different techniques for using geographic regions as categorical data. The final two illustrate the use of maps as context for other data. In particular, we’ll see</p>
+<p>Humans crave context when evaluating data, so it’s important to provide that context when it’s available. In the previous chapter, we saw how timelines can provide one frame of reference; now we’ll examine another equally important context: place. If a data set includes geographic coordinates or has values that correspond to different geographic regions, you can provide geographic context using a map-based visualization. The examples in this chapter consider two types of map-based visualizations.</p>
+<p>In the first two examples, we want to show how data varies by region. The resulting visualizations, known as <em>choropleth</em> maps, use color to highlight different characteristics of the different regions. For the next two examples the visualization data doesn’t itself vary by region directly, but the data does have a geographic component. By showing the data on a map, we can help our users understand it.</p>
+<p>More specifically, we’ll see</p>
 <ul>
 <li>How to use special map fonts to create maps with minimal JavaScript.</li>
 <li>How to manipulate Scalable Vector Graphic (<span class="smcp">SVG</span>) image maps with JavaScript.</li>
 <li>How to use a simple mapping library to add maps to web pages.</li>
 <li>How to integrate a full-featured map library into a visualization.</li>
 </ul>
-<h2 id="map-fonts">Map Fonts</h2>
-<p>One technique for adding maps to web pages is surprisingly simple but often overlooked—map fonts. Two examples of these fonts are <a href="http://intridea.github.io/stately/">Stately</a> for the United States and <a href="http://contfont.net">Continental</a> for Europe. Map fonts are special purpose web fonts whose character sets contain map symbols instead of letters and numbers. In just a few easy steps we’ll create a visualization of Europe using the symbols from Continental.</p>
+<h2 id="using-map-fonts">Using Map Fonts</h2>
+<p>One technique for adding maps to web pages is surprisingly simple but often overlooked—map fonts. Two examples of these fonts are <a href="http://intridea.github.io/stately/">Stately</a> for the United States and <a href="http://contfont.net">Continental</a> for Europe. Map fonts are special-purpose web fonts whose character sets contain map symbols instead of letters and numbers. In just a few easy steps we’ll create a visualization of Europe using the symbols from Continental.</p>
 <h3 id="step-1-include-the-fonts-in-the-page">Step 1: Include the Fonts in the Page</h3>
-<p>The main web sites for both Stately and Continental include more detailed instructions for installing the fonts, but all that’s really necessary is including a single <span class="smcp">CSS</span> style sheet. In the case of Continental, that style sheet is called, naturally, <code>continental.css</code>. No JavaScript libraries are required.</p>
+<p>The main web sites for both Stately and Continental include more detailed instructions for installing the fonts, but all that’s really necessary is including a single <span class="smcp">CSS</span> stylesheet. In the case of Continental, that stylesheet is called, naturally, <code>continental.css</code>. No JavaScript libraries are required.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -726,7 +728,7 @@ body { counter-reset: chapter 6; }
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <blockquote>
-<p>For a production web site, you might want to combine <code>continental.css</code> with your site’s other style sheets to minimize the number of network requests the browser has to make.</p>
+<p>For a production web site, you might want to combine <code>continental.css</code> with your site’s other stylesheets to minimize the number of network requests the browser has to make.</p>
 </blockquote>
 <h3 id="step-2-display-one-country">Step 2: Display One Country</h3>
 <p>To show a single country, all we have to do is include an <span class="smcp">HTML</span> <code>&lt;span&gt;</code> element with the appropriate attributes. We can do this right in the markup, adding a class attribute set to <code>map-</code> followed by a two-letter country abbreviation. ( “fr” is the international two-letter abbreviation for France.)</p>
@@ -736,7 +738,7 @@ body { counter-reset: chapter 6; }
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;map&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;map-fr&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
-<p>For our example, we’ll use JavaScript to generate the markup. Here we’re creating a new <code>&lt;span&gt;</code> element, giving it a class name of <code>&quot;map-fr&quot;</code>, and appending it to the map <code>&lt;div&gt;</code>.</p>
+<p>For this example, we’ll use JavaScript to generate the markup. Here we’re creating a new <code>&lt;span&gt;</code> element, giving it a class name of <code>&quot;map-fr&quot;</code>, and appending it to the map <code>&lt;div&gt;</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -750,7 +752,7 @@ body { counter-reset: chapter 6; }
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">#map</span> <span class="kw">{</span>
     <span class="kw">font-size:</span> <span class="dt">200px</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>That’s all it takes to add France to a web page, as we can see from figure <span class="nextfigure"/>.</p>
+<p>That’s all it takes to add France to a web page, as you can see in figure <span class="nextfigure"/>.</p>
 <figure>
 <div id="map-font-1" style="font-size:500px; width: 100%; position:relative; left: -50px; top: -310px; margin-bottom: -500px; line-height:640px;">
 
@@ -761,7 +763,7 @@ Map fonts make it very easy to add a map to a web page.
 </figure>
 <h3 id="step-3-combine-multiple-countries-into-a-single-map">Step 3: Combine Multiple Countries into a Single Map</h3>
 <p>For this example we want to show more than a single country. We’d like to visualize the median age for all of Europe’s countries, based on <a href="http://www.un.org/en/development/desa/population/">United Nations population data</a> from 2010. To do that, we’ll create a map that includes all European countries, and we’ll style each country according to the data.</p>
-<p>The first step in this visualization is putting all of the countries into a single map. Since each country is a separate character in the Continental font, we want to overlay those characters on top of one another rather than spread them across the page. That requires setting a couple of <span class="smcp">CSS</span> rules. First we set the position of the outer container to <code>relative</code>. This rule doesn’t change the styling of the outer container at all, but it does establish a <em>positioning context</em> for anything within the container. Those elements will be our individual country symbols, and we’ll set their position to be <code>absolute</code>. We’ll then place each one at the top and left of the map so they’ll overlay each other. Because we’ve positioned the container <code>relative</code>, the country symbols will be positioned relative to that container rather than relative to the page as a whole.</p>
+<p>The first step in this visualization is putting all of the countries into a single map. Since each country is a separate character in the Continental font, we want to overlay those characters on top of one another rather than spread them across the page. That requires setting a couple of <span class="smcp">CSS</span> rules. First we set the position of the outer container to <code>relative</code>. This rule doesn’t change the styling of the outer container at all, but it does establish a <em>positioning context</em> for anything within the container. Those elements will be our individual country symbols, and we’ll set their position to be <code>absolute</code>. We’ll then place each one at the top and left of the map so they’ll overlay one another. Because we’ve positioned the container <code>relative</code>, the country symbols will be positioned relative to that container rather than to the page as a whole.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -778,7 +780,7 @@ Map fonts make it very easy to add a map to a web page.
     <span class="kw">top:</span> <span class="dt">0</span><span class="kw">;</span>
     <span class="kw">left:</span> <span class="dt">0</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>Here we’re using a couple of <span class="smcp">CSS</span> tricks to apply this positioning to all of the individual symbols within this element. We start by selecting the element with an <code>id</code> of <code>map</code>. Nothing fancy there. The direct descendent selector (<code>&gt;</code>), however, says that what follows should only match elements that are immediate children of that element, not arbitrary descendants. Finally the attribute selector <code>[class*=&quot;map‑&quot;]</code>specifies only children that have a class that contains the characters <code>map-</code>. Since all the county symbols will be <code>&lt;span&gt;</code> elements with a class of <code>map‑XX</code> (where <code>XX</code> is the two-letter country abbreviation), this will match all of our countries.</p>
+<p>Here we’re using a couple of <span class="smcp">CSS</span> tricks to apply this positioning to all of the individual symbols within this element. We start by selecting the element with an <code>id</code> of <code>map</code>. Nothing fancy there. The direct descendent selector (<code>&gt;</code>), however, says that what follows match only elements that are immediate children of that element, not arbitrary descendants. Finally, the attribute selector <code>[class*=&quot;map‑&quot;]</code>specifies only children that have a class containing the characters <code>map-</code>. Since all the country symbols will be <code>&lt;span&gt;</code> elements with a class of <code>map‑xx</code> (where <code>xx</code> is the two-letter country abbreviation), this will match all of our countries.</p>
 <p>In our JavaScript we can start with an array listing all of the countries and iterate through it. For each country we create a <code>&lt;span&gt;</code> element with the appropriate class and insert it in the map <code>&lt;div&gt;</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -810,7 +812,7 @@ Map fonts make it very easy to add a map to a web page.
     <span class="ot">span</span>.<span class="fu">className</span> = <span class="st">&quot;map-&quot;</span> + cc;
     <span class="ot">map</span>.<span class="fu">appendChild</span>(span);
 });</code></pre></td></tr></table>
-<p>With the defined style rules, inserting multiple <code>&lt;span&gt;</code> elements within our map <code>&lt;div&gt;</code> creates the complete, if somewhat uninteresting, map of Europe in figure <span class="nextfigure"/>.</p>
+<p>With these style rules defined, inserting multiple <code>&lt;span&gt;</code> elements within our map <code>&lt;div&gt;</code> creates the complete, if somewhat uninteresting, map of Europe shown in figure <span class="nextfigure"/>.</p>
 <style>
 #map-font-2 {
     position: relative;
@@ -830,7 +832,7 @@ Map fonts make it very easy to add a map to a web page.
 
 </div>
 <figcaption>
-Overlaying map characters on top of each other creates a complete map.
+Overlaying map characters on top of one another creates a complete map.
 </figcaption>
 </figure>
 <h3 id="step-4-vary-the-countries-based-on-the-data">Step 4: Vary the Countries Based on the Data</h3>
@@ -849,8 +851,8 @@ Overlaying map characters on top of each other creates a complete map.
     { <span class="st">&quot;country&quot;</span>: <span class="st">&quot;be&quot;</span>, <span class="st">&quot;age&quot;</span>: <span class="fl">41.301</span> },
     { <span class="st">&quot;country&quot;</span>: <span class="st">&quot;bg&quot;</span>, <span class="st">&quot;age&quot;</span>: <span class="fl">41.731</span> },
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
-<p>There are several ways we could use this data to modify the map. One approach would have JavaScript code set the visualization properties directly by, for example, changing the <code>color</code> style for each country symbol. That would work, but it forgoes one of the big advantages of map fonts. With map fonts our visualization is standard <span class="smcp">HTML</span>, so we can use standard <span class="smcp">CSS</span> to style it. If, in the future, we want to change the styles on the page, they’ll all be contained within the style sheets, and we won’t have to hunt through our JavaScript code just to adjust colors.</p>
-<p>To indicate which styles are appropriate for an individual country symbol, we can attach a <code>data-</code> attribute to each. In the code below, we set the <code>data-age</code> attribute to the mean age, rounded to the nearest whole number. To find the age for a given country, we need that country’s index in the <code>ages</code> array. The <code>findCountryIndex()</code> function does that in a straightforward way.</p>
+<p>There are several ways we could use this data to modify the map. We could use JavaScript code to set the visualization properties directly by, for example, changing the <code>color</code> style for each country symbol. That would work, but it forgoes one of the big advantages of map fonts. With map fonts our visualization is standard <span class="smcp">HTML</span>, so we can use standard <span class="smcp">CSS</span> to style it. If, in the future, we want to change the styles on the page, they’ll all be contained within the stylesheets, and we won’t have to hunt through our JavaScript code just to adjust colors.</p>
+<p>To indicate which styles are appropriate for an individual country symbol, we can attach a <code>data-</code> attribute to each. In the following code, we set the <code>data-age</code> attribute to the mean age, rounded to the nearest whole number. To find the age for a given country, we need that country’s index in the <code>ages</code> array. The <code>findCountryIndex()</code> function does that in a straightforward way.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -899,7 +901,7 @@ Overlaying map characters on top of each other creates a complete map.
 <blockquote>
 <p>Note: Although they’re beyond the scope of this book, <span class="smcp">CSS</span> preprocessors such as <a href="http://lesscss.org"><span class="smcp">LESS</span></a> and <a href="http://sass-lang.com"><span class="smcp">SASS</span></a> make it easy to create these kinds of rules.</p>
 </blockquote>
-<p>Now we have the nice visualization of the age trends in figure <span class="nextfigure"/>.</p>
+<p>Now we have the nice visualization of the age trends shown in figure <span class="nextfigure"/>.</p>
 <style>
 #map-font-3 {
     display: inline-block;
@@ -943,7 +945,7 @@ Overlaying map characters on top of each other creates a complete map.
 With <span class="smcp">CSS</span> rules we can change the styles of individual map symbols.</figcation>
 </figure>
 <h3 id="step-5-add-a-legend">Step 5: Add a Legend</h3>
-<p>To finish off the visualization, we can add a legend to the map. Because the map itself is nothing more than standard <span class="smcp">HTML</span> elements with <span class="smcp">CSS</span> styling, it’s easy to create a matching legend. This example covers a fairly broad range (28 to 44), a linear gradient works well as a key. Your own implementation will depend on the specific browser versions that you wish to support, but a generic style rule would be:</p>
+<p>To finish off the visualization, we can add a legend to the map. Because the map itself is nothing more than standard <span class="smcp">HTML</span> elements with <span class="smcp">CSS</span> styling, it’s easy to create a matching legend. This example covers a fairly broad range (ages 28 to 44), so a linear gradient works well as a key. Your own implementation will depend on the specific browser versions that you wish to support, but a generic style rule would be:</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1149,11 +1151,11 @@ Standard <span class="smcp">HTML</span> can also provide a legend for the visual
 
 }());
 </script>
-<h2 id="scalable-vector-graphics">Scalable Vector Graphics</h2>
+<h2 id="working-with-scalable-vector-graphics">Working with Scalable Vector Graphics</h2>
 <p>Map fonts like those in the previous example are easy to use and visually effective, but only a few map fonts exist, and they definitely don’t cover all the conceivable geographic regions. For visualizations of other regions, we’ll have to find a different technique. Maps, of course, are ultimately images, and web browsers can display many different image formats. One format in particular, called <em>Scalable Vector Graphics,</em> or <span class="smcp">SVG</span>, is especially well suited for interactive visualizations. That’s because, as we’ll see in this example, JavaScript code (as well as <span class="smcp">CSS</span> styles) can easily and naturally interact with <span class="smcp">SVG</span> images.</p>
 <p>Although our example for this section deals with a map, the techniques here are by no means limited to maps. Whenever you have a diagram or illustration in <span class="smcp">SVG</span> format, you can manipulate it directly on a web page.</p>
 <blockquote>
-<p>There is one important consideration for using <span class="smcp">SVG</span>: only modern web browsers support it. More specifically, Internet Explorer version 8 (and earlier) cannot display <span class="smcp">SVG</span> images. If a significant number of your users are still using such older browsers, you might want to consider other alternatives.</p>
+<p>There is one important consideration for using <span class="smcp">SVG</span>: only modern web browsers support it. More specifically, Internet Explorer version 8 (and earlier) cannot display <span class="smcp">SVG</span> images. If a significant number of your users are using older browsers, you might want to consider other alternatives.</p>
 </blockquote>
 <p>For web developers <span class="smcp">SVG</span> is especially convenient because its syntax uses the same structure as <span class="smcp">HTML</span>. You can use many of the same tools and techniques for working with <span class="smcp">HTML</span> on <span class="smcp">SVG</span> as well. Consider, for example, a skeletal <span class="smcp">HTML</span> document.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -1178,7 +1180,7 @@ Standard <span class="smcp">HTML</span> can also provide a legend for the visual
     <span class="kw">&lt;nav&gt;</span><span class="co">&lt;!-- --&gt;</span><span class="kw">&lt;/nav&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>Compare that to the example below, the universal symbol for first aid represented in an <span class="smcp">SVG</span> document.</p>
+<p>Compare that to the next example, the universal symbol for first aid represented in an <span class="smcp">SVG</span> document.</p>
 <blockquote>
 <p>If you have worked with <span class="smcp">HTML</span> before <span class="smcp">HTML5</span>, the similarities might be especially striking, as the <span class="smcp">SVG</span> header text follows the same format as <span class="smcp">HTML4</span>.</p>
 </blockquote>
@@ -1200,7 +1202,7 @@ Standard <span class="smcp">HTML</span> can also provide a legend for the visual
     <span class="kw">&lt;rect</span><span class="ot"> id=</span><span class="st">&quot;vertical&quot;</span><span class="ot">   x=</span><span class="st">&quot;39&quot;</span><span class="ot"> y=</span><span class="st">&quot;19&quot;</span><span class="ot"> width=</span><span class="st">&quot;22&quot;</span><span class="ot"> height=</span><span class="st">&quot;62&quot;</span> <span class="kw">/&gt;</span>
     <span class="kw">&lt;rect</span><span class="ot"> id=</span><span class="st">&quot;horizontal&quot;</span><span class="ot"> x=</span><span class="st">&quot;19&quot;</span><span class="ot"> y=</span><span class="st">&quot;39&quot;</span><span class="ot"> width=</span><span class="st">&quot;62&quot;</span><span class="ot"> height=</span><span class="st">&quot;22&quot;</span> <span class="kw">/&gt;</span>
 <span class="kw">&lt;/svg&gt;</span></code></pre></td></tr></table>
-<p>You can even style the <span class="smcp">SVG</span> elements using <span class="smcp">CSS</span>. Here’s how we could color the above image:</p>
+<p>You can even style the <span class="smcp">SVG</span> elements using <span class="smcp">CSS</span>. Here’s how we could color the preceding image:</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1233,7 +1235,7 @@ svg#firstaid #horizontal {
     fill: #EFEFEF;
 }
 </style>
-<p>If you’re curious, figure <span class="nextfigure"/> shows how that <span class="smcp">SVG</span> renders:</p>
+<p>If you’re curious, figure <span class="nextfigure"/> shows how that <span class="smcp">SVG</span> renders.</p>
 <figure>
 <svg id="firstaid" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
 <rect id="background" x="0" y="0" width="100" height="100" rx="20" /> <rect id="vertical" x="39" y="19" width="22" height="62" /> <rect id="horizontal" x="19" y="39" width="62" height="22" />
@@ -1244,9 +1246,9 @@ SVG images may be embedded directly within web pages.
 </figure>
 <p>The affinity between <span class="smcp">HTML</span> and <span class="smcp">SVG</span> is, in fact, far stronger than the similar syntax. With modern browsers you can mix <span class="smcp">SVG</span> and <span class="smcp">HTML</span> in the same web page. To see how that works, let’s visualize health data for the 159 counties in the <span class="smcp">US</span> state of Georgia. The data comes from <a href="http://www.countyhealthrankings.org">County Health Rankings</a>.</p>
 <h3 id="step-1-create-the-svg-map">Step 1: Create the SVG Map</h3>
-<p>Our visualization starts with a map, so we’ll need an illustration of Georgia’s counties in <span class="smcp">SVG</span> format. Although that might seem like a challenge, in fact there are many sources for <span class="smcp">SVG</span> maps that are free to use, as well as special purpose applications that can generate <span class="smcp">SVG</span> maps for almost any region. The <a href="http://commons.wikimedia.org/wiki/Main_Page">Wikimedia Commons</a>, for example, contains a large number of open source maps, including many of Georgia. We’ll use <a href="http://commons.wikimedia.org/wiki/File:NRHP_Georgia_Map.svg#file">one</a> showing data from the National Register of Historic Places.</p>
-<p>After downloading the map file, we can adjust it to more exactly fit our needs, removing the legend, colors, and other elements that we don’t need. Although you can do this in a text editor (just as you can edit <span class="smcp">HTML</span>), you may find it easier to use a graphics program such as Adobe Illustrator or a more web-focused app like <a href="http://www.bohemiancoding.com/sketch/">Sketch</a>. You might want to take advantage of an <span class="smcp">SVG</span> optimization <a href="http://petercollingridge.appspot.com/svg-optimiser">web site</a> or <a href="https://github.com/svg">application</a>. Those tools can compress an <span class="smcp">SVG</span> by removing extraneous tags and reducing the sometimes excessive precision of graphics programs.</p>
-<p>Our result will be a series of <code>&lt;path&gt;</code> elements, one for each county. We’ll also want to assign a <code>class</code> or <code>id</code> to each path to indicate the county. The resulting <span class="smcp">SVG</span> file might begin as in the following.</p>
+<p>Our visualization starts with a map, so we’ll need an illustration of Georgia’s counties in <span class="smcp">SVG</span> format. Although that might seem like a challenge, there are actually many sources for <span class="smcp">SVG</span> maps that are free to use, as well as special-purpose applications that can generate <span class="smcp">SVG</span> maps for almost any region. The <a href="http://commons.wikimedia.org/wiki/Main_Page">Wikimedia Commons</a>, for example, contains a large number of open source maps, including many of Georgia. We’ll use <a href="http://commons.wikimedia.org/wiki/File:NRHP_Georgia_Map.svg#file">one</a> showing data from the National Register of Historic Places.</p>
+<p>After downloading the map file, we can adjust it to better fit our needs, removing the legend, colors, and other elements that we don’t need. Although you can do this in a text editor (just as you can edit <span class="smcp">HTML</span>), you may find it easier to use a graphics program such as Adobe Illustrator or a more web-focused app like <a href="http://www.bohemiancoding.com/sketch/">Sketch</a>. You might also want to take advantage of an <span class="smcp">SVG</span> optimization <a href="http://petercollingridge.appspot.com/svg-optimiser">web site</a> or <a href="https://github.com/svg">application</a>, which can compress an <span class="smcp">SVG</span> by removing extraneous tags and reducing the sometimes-excessive precision of graphics programs.</p>
+<p>Our result will be a series of <code>&lt;path&gt;</code> elements, one for each county. We’ll also want to assign a <code>class</code> or <code>id</code> to each path to indicate the county. The resulting <span class="smcp">SVG</span> file might begin like the following.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1259,12 +1261,12 @@ SVG images may be embedded directly within web pages.
     <span class="kw">&lt;path</span><span class="ot"> id=</span><span class="st">&quot;me&quot;</span><span class="ot"> d=</span><span class="st">&quot;M 74.32,234.01 L 74.32,232.09 74.32,231.61...&quot;</span> <span class="kw">/&gt;</span>
     <span class="kw">&lt;path</span><span class="ot"> id=</span><span class="st">&quot;ms&quot;</span><span class="ot"> d=</span><span class="st">&quot;M 64.96,319.22 L 64.72,319.22 64.48,318.98...&quot;</span> <span class="kw">/&gt;</span>
     <span class="co">&lt;!-- Markup continues... --&gt;</span></code></pre></td></tr></table>
-<p>To summarize, here are the steps I normally take to create the <span class="smcp">SVG</span> map.</p>
+<p>To summarize, here are the steps to create the <span class="smcp">SVG</span> map.</p>
 <ol type="1">
 <li>Locate a suitably licensed <span class="smcp">SVG</span>-format map file or create one using a special-purpose map application.</li>
 <li>Edit the <span class="smcp">SVG</span> file in a graphics application to remove extraneous components and simplify the illustration.</li>
-<li>Optimize the <span class="smcp">SVG</span> file using an optimization application.</li>
-<li>Make final adjustments (such as adding <code>id</code> attributes) in my regular <span class="smcp">HTML</span> editor.</li>
+<li>Optimize the <span class="smcp">SVG</span> file using an optimization site or application.</li>
+<li>Make final adjustments (such as adding <code>id</code> attributes) in your regular <span class="smcp">HTML</span> editor.</li>
 </ol>
 <h3 id="step-2-embed-the-map-in-the-page">Step 2: Embed the Map in the Page</h3>
 <p>The simplest way to include an <span class="smcp">SVG</span> map in a web page is to embed the <span class="smcp">SVG</span> markup directly within the <span class="smcp">HTML</span> markup. To include the first aid symbol, for example, just include the <span class="smcp">SVG</span> tags within the page itself, as in lines 9 through 18. As the example below shows, you don’t have to include the header tags that are normally present in a standalone <span class="smcp">SVG</span> file.</p>
@@ -1310,7 +1312,7 @@ SVG images may be embedded directly within web pages.
    <span class="kw">&lt;/div&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>If your map is relatively simple, direct embedding is the easiest way to include it in the page. Our map of Georgia, however, is about 1 Mbyte in size even after optimization. That’s not unusual for maps with reasonable resolution, as describing complex borders such as coastlines or rivers can make for large <code>&lt;path&gt;</code> elements. Especially if the map isn’t the sole focus of the page, you can provide a better user experience by loading the rest of the page first. That will give your users something to read while the map loads in the background. You can even add a simple animated progress loader if that’s appropriate for your site.</p>
+<p>If your map is relatively simple, direct embedding is the easiest way to include it in the page. Our map of Georgia, however, is about 1 <class="smcp">MB</span> in size even after optimization. That’s not unusual for maps with reasonable resolution, as describing complex borders such as coastlines or rivers can make for large <code>&lt;path&gt;</code> elements. Especially if the map isn’t the sole focus of the page, you can provide a better user experience by loading the rest of the page first. That will give your users something to read while the map loads in the background. You can even add a simple animated progress loader if that’s appropriate for your site.</p>
 <p>If you’re using jQuery, loading the map is a single instruction. You do want to make sure, though, that your code doesn’t start manipulating the map until the load is complete. Here’s how that would look in the source code.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1319,7 +1321,7 @@ SVG images may be embedded directly within web pages.
     <span class="co">// Only manipulate the map inside this block</span>
 })</code></pre></td></tr></table>
 <h3 id="step-3-collect-the-data">Step 3: Collect the Data</h3>
-<p>The data for our visualization is available as an Excel spreadsheet directly from <a href="http://www.countyhealthrankings.org">www.countyhealthrankings.org</a>. We’ll convert that to a JavaScript object in advance, and we’ll add a two-letter code corresponding to each county. Here’s how that array might begin.</p>
+<p>The data for our visualization is available as an Excel spreadsheet directly from <a href="http://www.countyhealthrankings.org">County Health Rankings</a>. We’ll convert that to a JavaScript object in advance, and we’ll add a two-letter code corresponding to each county. Here’s how that array might begin.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1350,16 +1352,16 @@ SVG images may be embedded directly within web pages.
       <span class="st">&quot;outcomes_rank&quot;</span>:<span class="dv">118</span>,
     <span class="co">// Data set continues...</span>
 ];</code></pre></td></tr></table>
-<p>For this visualization we’d like to show the variation in health outcomes among counties. The data set provides two variables for that value, a ranking and a Z score (a measure of how far a sample is from the mean in terms of standard deviations). The county health rankings provide Z scores slightly modified from the traditional statistical definition. Normal Z scores are always positive; in this data set, however, measurements that are subjectively better than average are multiplied by -1 so that they are negative. A county whose health outcome is two standard deviations “better” than the mean, for example, is given a Z score of -2 instead of 2. This adjustment makes it easier to use these Z scores in our visualization.</p>
-<p>Our first step in working with these Z scores is to find the maximum and minimum values. We can do that by extracting the outcomes as a separate array and then using the JavaScript built-in <code>Math.max</code> and <code>Math.min</code> functions. Note that the code below uses the <code>map()</code> method to extract the array, and that method is only available in modern browsers. Since we’ve chosen to use <span class="smcp">SVG</span> images, however, we’ve already restricted our users to modern browsers, so we might as well take advantage of that when we can.</p>
+<p>For this visualization we’d like to show the variation in health outcomes among counties. The data set provides two variables for that value, a ranking and a z-score (a measure of how far a sample is from the mean in terms of standard deviations). The County Health Rankings provide z-scores slightly modified from the traditional statistical definition. Normal z-scores are always positive; in this data set, however, measurements that are subjectively better than average are multiplied by –1 so that they are negative. A county whose health outcome is two standard deviations “better” than the mean, for example, is given a z-score of –2 instead of 2. This adjustment makes it easier to use these z-scores in our visualization.</p>
+<p>Our first step in working with these z scores is to find the maximum and minimum values. We can do that by extracting the outcomes as a separate array and then using the JavaScript built-in <code>Math.max</code> and <code>Math.min</code> functions. Note that the following code uses the <code>map()</code> method to extract the array, and that method is available only in modern browsers. Since we’ve chosen to use <span class="smcp">SVG</span> images, however, we’ve already restricted our users to modern browsers, so we might as well take advantage of that when we can.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> outcomes = <span class="ot">counties</span>.<span class="fu">map</span>(<span class="kw">function</span>(county) {<span class="kw">return</span> <span class="ot">county</span>.<span class="fu">outcomes_z</span>;});
 <span class="kw">var</span> maxZ = <span class="ot">Math</span>.<span class="ot">max</span>.<span class="fu">apply</span>(<span class="kw">null</span>, outcomes);
 <span class="kw">var</span> minZ = <span class="ot">Math</span>.<span class="ot">min</span>.<span class="fu">apply</span>(<span class="kw">null</span>, outcomes);</code></pre></td></tr></table>
-<p>Notice how we’ve used the <code>.apply</code> method here. Normally the <code>Math.max()</code> and <code>Math.min()</code> functions accept a comma-separated list of arguments. We, of course, have an array instead. The <code>apply</code> method, which works with any JavaScript function, turns an array into a comma-separated list. The first parameter is the context to use which, in our case, doesn’t matter, so we set it to <code>null</code>.</p>
-<p>To complete the data preparation, let’s make sure the minimum and maximum ranges are symmetric about the mean. If, for example, the Z scores ranged from <code>-2</code> to <code>1.5</code>, we’ll extend the range to <code>[-2, 2]</code>. This adjustment will make the color scales symmetric as well, thus making it easier for users to interpret.</p>
+<p>Notice how we’ve used the <code>.apply()</code> method here. Normally the <code>Math.max()</code> and <code>Math.min()</code> functions accept a comma-separated list of arguments. We, of course, have an array instead. The <code>apply()</code> method, which works with any JavaScript function, turns an array into a comma-separated list. The first parameter is the context to use, which in our case doesn’t matter, so we set it to <code>null</code>.</p>
+<p>To complete the data preparation, let’s make sure the minimum and maximum ranges are symmetric about the mean. If, for example, the z-scores ranged from <code>-2</code> to <code>1.5</code>, we’ll extend the range to <code>[-2, 2]</code>. This adjustment will make the color scales symmetric as well, thus making our visualization easier for users to interpret.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1371,8 +1373,8 @@ SVG images may be embedded directly within web pages.
     minZ = -maxZ;
 }</code></pre></td></tr></table>
 <h3 id="step-4-define-the-color-scheme">Step 4: Define the Color Scheme</h3>
-<p>Defining an effective color scheme for a map can be quite tricky, but we are fortunate to have some excellent resources to help. For this visualization we’ll rely on the <a href="http://driven-by-data.net/about/chromajs/">Chroma.js</a> library. That library includes many tools for working with and manipulating colors and color scales, and it can satisfy the most advanced color theorist. For our example, however, we can take advantage of the predefined color scales, specifically those defined originally by <a href="http://colorbrewer2.org/">Cynthia Brewer</a>.</p>
-<p>The Chroma.js library is available on popular Content Distribution Networks, so we can rely on a network such as CloudFlare’s <a href="http://cdnjs.com">cdnjs</a> to host it.</p>
+<p>Defining an effective color scheme for a map can be quite tricky, but fortunately there are some excellent resources available. For this visualization we’ll rely on the <a href="http://driven-by-data.net/about/chromajs/">Chroma.js</a> library. That library includes many tools for working with and manipulating colors and color scales, and it can satisfy the most advanced color theorist. For our example, however, we can take advantage of the predefined color scales, specifically those defined originally by <a href="http://colorbrewer2.org/">Cynthia Brewer</a>.</p>
+<p>The Chroma.js library is available on popular content distribution networks, so we can rely on a network such as CloudFlare’s <a href="http://cdnjs.com">cdnjs</a> to host it.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1399,7 +1401,7 @@ SVG images may be embedded directly within web pages.
     <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>To use a predefined scale we pass the scale’s name (<code>&quot;BrBG&quot;</code> for the Brewer’s Brown to Blue/Green scale) to the <code>chroma.scale()</code> function. At the same time we indicate the domain for our scale (<code>minZ</code> to <code>maxZ</code>, although we’re reversing the order because of the data set’s Z score adjustment) and our desired output. The <code>&quot;hex&quot;</code> output is the common <code>&quot;#012345&quot;</code> format compatible with <span class="smcp">CSS</span> and <span class="smcp">HTML</span> markup.</p>
+<p>To use a predefined scale we pass the scale’s name (<code>&quot;BrBG&quot;</code> for the Brewer’s brown to blue/green scale) to the <code>chroma.scale()</code> function. At the same time we indicate the domain for our scale (<code>minZ</code> to <code>maxZ</code>, although we’re reversing the order because of the data set’s z-score adjustment) and our desired output. The <code>&quot;hex&quot;</code> output is the common <code>&quot;#012345&quot;</code> format compatible with <span class="smcp">CSS</span> and <span class="smcp">HTML</span> markup.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> scale = <span class="ot">chroma</span>.<span class="fu">scale</span>(<span class="st">&quot;BrBG&quot;</span>).<span class="fu">domain</span>([maxZ, minZ]).<span class="fu">out</span>(<span class="st">&quot;hex&quot;</span>);</code></pre></td></tr></table>
 <h3 id="step-5-color-the-map">Step 5: Color the Map</h3>
@@ -1412,7 +1414,7 @@ SVG images may be embedded directly within web pages.
     <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="ot">county</span>.<span class="fu">code</span>)
       .<span class="fu">setAttribute</span>(<span class="st">&quot;fill&quot;</span>, <span class="fu">scale</span>(<span class="ot">county</span>.<span class="fu">outcomes_z</span>));
 })</code></pre></td></tr></table>
-<p>The resulting map in figure <span class="nextfigure"/> shows which counties are above average and which are below average for health outcomes in 2014.</p>
+<p>The resulting map, shown in figure <span class="nextfigure"/>, illustrates which counties are above average and which are below average for health outcomes in 2014.</p>
 <figure>
 <div id="map-svg-1">
 
@@ -1422,7 +1424,7 @@ SVG images may be embedded directly within web pages.
 </figcaption>
 </figure>
 <h3 id="step-6-add-a-legend">Step 6: Add a Legend</h3>
-<p>To help our users interpret the map we can add a legend to the visualization. We can take advantage of the Chroma.js scale to easily create a table that explains the variation. For the table we’ll use four increments for the colors on each side of the mean value. That gives us a total of 9 colors for the legend.</p>
+<p>To help users interpret the map we can add a legend to the visualization. We can take advantage of the Chroma.js scale to easily create a table that explains the variation. For the table we’ll use four increments for the colors on each side of the mean value. That gives us a total of nine colors for the legend.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1445,7 +1447,7 @@ SVG images may be embedded directly within web pages.
         <span class="kw">&lt;td</span><span class="ot"> colspan=</span><span class="st">&quot;4&quot;</span><span class="kw">&gt;</span>Better than Average<span class="kw">&lt;/td&gt;</span>
     <span class="kw">&lt;/tr&gt;</span>
 <span class="kw">&lt;/table&gt;</span></code></pre></td></tr></table>
-<p>Some straightforward <span class="smcp">CSS</span> will style the table appropriately. Because we have 9 colors, we set the width of each table cell to 11.1111% (1/9 is 0.111111).</p>
+<p>Some straightforward <span class="smcp">CSS</span> will style the table appropriately. Because we have nine colors, we set the width of each table cell to 11.1111% (1/9 is 0.111111).</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1472,7 +1474,7 @@ table<span class="fl">#legend</span> tr<span class="fl">.text</span> td<span cla
 table<span class="fl">#legend</span> tr<span class="fl">.text</span> td<span class="dv">:last-child</span> <span class="kw">{</span>
     <span class="kw">text-align:</span> <span class="dt">right</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>Finally, we use the Chroma scale created above to set the background color for the legend’s table cells. Because the legend is a <code>&lt;table&gt;</code> element, we can directly access the rows and the cells within the rows. Although these elements look like arrays in the code below, they’re not true JavaScript arrays, so they don’t support array methods such as <code>forEach()</code>. For now, we’ll iterate through them with a <code>for</code> loop, but if you’d rather use the array methods stay tuned for a simple trick. Note that once again we’re working backwards because of the data set’s Z score adjustments.</p>
+<p>Finally, we use the Chroma scale created earlier to set the background color for the legend’s table cells. Because the legend is a <code>&lt;table&gt;</code> element, we can directly access the rows and the cells within the rows. Although these elements look like arrays in the following code, they’re not true JavaScript arrays, so they don’t support array methods such as <code>forEach()</code>. For now, we’ll iterate through them with a <code>for</code> loop, but if you’d rather use the array methods stay tuned for a simple trick. Note that once again we’re working backward because of the data set’s z-score adjustments.</p>
 <table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1487,7 +1489,7 @@ table<span class="fl">#legend</span> tr<span class="fl">.text</span> td<span cla
     <span class="ot">td</span>.<span class="ot">style</span>.<span class="fu">backgroundColor</span> = <span class="fu">scale</span>(maxZ - 
         ((idx + <span class="fl">0.5</span>) / <span class="ot">cells</span>.<span class="fu">length</span>) * (maxZ - minZ));
 };</code></pre></td></tr></table>
-<p>In line 5 we calculate the fraction of the current index from the total number of legend colors <code>((idx + 0.5) / cells.length)</code>, multiple that by the total range of the scale <code>(maxZ - minZ)</code>, and subtract the result from the maximum value.</p>
+<p>In line 5 we calculate the fraction of the current index from the total number of legend colors <code>((idx + 0.5) / cells.length)</code>, multiply that by the total range of the scale <code>(maxZ - minZ)</code>, and subtract the result from the maximum value.</p>
 <p>The result is the legend for the map in figure <span class="nextfigure"/>.</p>
 <style>
 table#legend-svg-1, table#legend-svg-2 {
@@ -1566,7 +1568,7 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
 </figcaption>
 </figure>
 <h3 id="step-7-add-interactions">Step 7: Add Interactions</h3>
-<p>To complete the visualization, let’s give users the ability to hover their mouse over a county on the map to see more details. Of course, mouse interactions are not available for tablet or smartphone users. To support those users you could add a similar interaction for tap or click events. That code would be almost identical to the example below.</p>
+<p>To complete the visualization, let’s enable users to hover their mouse over a county on the map to see more details. Of course, mouse interactions are not available for tablet or smartphone users. To support those users you could add a similar interaction for tap or click events. That code would be almost identical to the next example.</p>
 <p>We’ll start by defining a table to show county details.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1591,7 +1593,7 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css">table<span class="fl">#details</span> <span class="kw">{</span>
     <span class="kw">display:</span> <span class="dt">none</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>To show the table we use event handler functions that tracks when the mouse enters or leaves an <span class="smcp">SVG</span> path for a county. To find these <code>&lt;path&gt;</code> elements we can use the <code>querySelectorAll()</code> function that modern browsers support. Unfortunately that function doesn’t return a true array of elements, so we can’t use array methods such as <code>forEach</code> to iterate through those elements. There’s a trick, however, that will let us convert the returned list into a true array. The following code shows the trick; it calls the <code>[].slice.call()</code> function with the “not quite array” object as its parameter. The result is a true array with all of its useful methods.</p>
+<p>To show the table we use event handler functions that track when the mouse enters or leaves an <span class="smcp">SVG</span> path for a county. To find these <code>&lt;path&gt;</code> elements, we can use the <code>querySelectorAll()</code> function that modern browsers support. Unfortunately, that function doesn’t return a true array of elements, so we can’t use array methods such as <code>forEach()</code> to iterate through those elements. There’s a trick, however, that will let us convert the returned list into a true array. The following code shows this trick; it calls the <code>[].slice.call()</code> function with the “not quite array” object as its parameter. The result is a true array with all of its useful methods.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1612,7 +1614,7 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
         });
     }
 );</code></pre></td></tr></table>
-<p>In addition to making the details table visible, we’ll also want to update it with the appropriate information. To help with this display, we can write a function that converts a Z score into a more user-friendly explanation. The specific values in the example below are arbitrary since we’re not trying for statistical precision in this visualization.</p>
+<p>In addition to making the details table visible, we’ll also want to update it with the appropriate information. To help with this display, we can write a function that converts a Z score into a more user-friendly explanation. The specific values in the following example are arbitrary since we’re not trying for statistical precision in this visualization.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1629,7 +1631,7 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
     <span class="kw">if</span> (z &gt; -<span class="fl">0.25</span>) { <span class="kw">return</span> <span class="st">&quot;Above average&quot;</span>; }
     <span class="kw">return</span> <span class="st">&quot;Far above average&quot;</span>;
 }</code></pre></td></tr></table>
-<p>There are couple of noteworthy items in this function. First, the statement, <code>z = +z</code> converts the Z score from a string to a numeric value for the tests that follow. Second, remember that because of the Z score adjustments the negative Z scores are actually better than average, while the positive values are below average.</p>
+<p>There are a couple of noteworthy items in this function. First, the statement, <code>z = +z</code> converts the z-score from a string to a numeric value for the tests that follow. Second, remember that because of the z-score adjustments the negative z-scores are actually better than average, while the positive values are below average.</p>
 <p>We can use this function to provide the data for our details table. The first step is finding the full data set for the associated <code>&lt;path&gt;</code> element. To do that we search through the <code>counties</code> array looking for a <code>code</code> property that matches the <code>id</code> attribute of the path. Because <code>indexOf()</code> doesn’t allow us to find objects by key, we’ll borrow the <code>some()</code> method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1647,7 +1649,7 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
     }
     <span class="kw">return</span> <span class="kw">false</span>;
 });</code></pre></td></tr></table>
-<p>Once we’ve found the county data, it’s a straightforward process to update the table. The code below directly updates the relevant table cell’s text content. For a more robust implementation you could provide class names for the cells and update based on those class names.</p>
+<p>Once we’ve found the county data, it’s a straightforward process to update the table. The following code directly updates the relevant table cell’s text content. For a more robust implementation, you could provide class names for the cells and update based on those class names.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1706,7 +1708,7 @@ table#details-svg-2 tr td:first-child {
     font-weight: bold;
 }
 </style>
-<p>At this point our visualization example is complete. Figure <span class="nextfigure"/> has the result.</p>
+<p>At this point our visualization example is complete. Figure <span class="nextfigure"/> shows the result.</p>
 <h3 id="health-outcomes-in-georgia-counties">2014 Health Outcomes in Georgia Counties</h3>
 <figure id="svg-2">
 <table id="details-svg-2">
@@ -5072,8 +5074,8 @@ Browsers (and a bit of code) can turn <span class="smcp">SVG</span> illustration
 }());
 </script>
 <h2 id="including-maps-for-context">Including Maps for Context</h2>
-<p>So far in this chapter we’ve looked at map visualizations where the main subjects are geographic regions—countries in Europe or counties in Georgia. In those cases choropleth maps were effective in showing the differences between regions. Not all map visualizations have the same focus, however. In some cases we want to include a map more as context or background for the visualization data.</p>
-<p>When we want to include a map as a visualization background, we’re likely to find that traditional mapping libraries will serve us better than custom choropleth maps. The most well known mapping library is probably <a href="http://maps.google.com">Google Maps</a>, and you’ve almost certainly seen many examples of embedded Google maps on web pages. There are, however, several free and open source alternatives to Google Maps. For this example we’ll use the <a href="https://github.com/modestmaps/modestmaps-js">Modest Maps</a> library from Stamen Design. To show off this library, we’ll visualize the major <a href="http://en.wikipedia.org/wiki/UFO_sightings_in_the_United_States"><span class="smcp">UFO</span> sightings in the United States</a>, or at least those important enough to merit a Wikipedia entry.</p>
+<p>So far in this chapter we’ve looked at map visualizations where the main subjects are geographic regions—countries in Europe or counties in Georgia. In those cases, choropleth maps were effective in showing the differences between regions. Not all map visualizations have the same focus, however. In some cases we want to include a map more as context or background for the visualization data.</p>
+<p>When we want to include a map as a visualization background, we’re likely to find that traditional mapping libraries will serve us better than custom choropleth maps. The most well-known mapping library is probably <a href="http://maps.google.com">Google Maps</a>, and you’ve almost certainly seen many examples of embedded Google maps on web pages. There are, however, several free and open source alternatives to Google Maps. For this example we’ll use the <a href="https://github.com/modestmaps/modestmaps-js/">Modest Maps</a> library from Stamen Design. To show off this library, we’ll visualize the major <a href="http://en.wikipedia.org/wiki/UFO_sightings_in_the_United_States"><span class="smcp">UFO</span> sightings in the United States</a>, or at least those important enough to merit a Wikipedia entry.</p>
 <h3 id="step-1-set-up-the-web-page">Step 1: Set Up the Web Page</h3>
 <p>For our visualization we’ll rely on a couple of components from the Modest Maps library: the core library itself and the spotlight extension that can be found in the library’s examples folder. In production you would likely combine these and minify the result to optimize performance, but for our example we’ll include them separately.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -5135,9 +5137,9 @@ Browsers (and a bit of code) can turn <span class="smcp">SVG</span> illustration
 <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <p>The <code>location</code> property holds the latitude and longitude (where negative values indicate west) as a two-element array.</p>
 <h3 id="step-3-choose-a-map-style">Step 3: Choose a Map Style</h3>
-<p>As with most mapping libraries, Modest Maps builds its maps using layers. The layering process works much like it does in a graphics application such as Photoshop or Sketch. Subsequent layers add additional visual information to the map. In most cases the base layer for a map consists of image tiles. Additional layers such as markers or routes can be added on top of the image tiles.</p>
+<p>As with most mapping libraries, Modest Maps builds its maps using layers. The layering process works much like it does in a graphics application such as Photoshop or Sketch. Subsequent layers add further visual information to the map. In most cases the base layer for a map consists of image tiles. Additional layers such as markers or routes can be included on top of the image tiles.</p>
 <p>When we tell Modest Maps to create a map, it calculates which tiles (both size and location) are needed and then it requests those tiles asynchronously over the internet. The tiles define the visual style of the map. Stamen Design has published several tile sets itself; you can see them on the <a href="http://maps.stamen.com">maps.stamen.com</a> web site.</p>
-<p>To use the Stamen tiles we’ll add an additional, small JavaScript library to our page. That library is available at directly from <a href="http://maps.stamen.com/js/tile.stamen.js">Stamen Design</a>. It should be included <em>after</em> the Modest Maps library.</p>
+<p>To use the Stamen tiles we’ll add none more, small JavaScript library to our page. That library is available directly from <a href="http://maps.stamen.com/js/tile.stamen.js">Stamen Design</a>. It should be included <em>after</em> the Modest Maps library.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5164,19 +5166,19 @@ Browsers (and a bit of code) can turn <span class="smcp">SVG</span> illustration
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;http://maps.stamen.com/js/tile.stamen.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>For our example the “toner” style is a good match, so we’ll use those tiles. To use those tiles we create a <em>tile layer</em> for the map.</p>
+<p>For our example the “toner” style is a good match, so we’ll use those tiles. To use those tiles, we create a <em>tile layer</em> for the map.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> tiles = <span class="kw">new</span> <span class="ot">MM</span>.<span class="fu">StamenTileLayer</span>(<span class="st">&quot;toner&quot;</span>);</code></pre></td></tr></table>
 <blockquote>
-<p>When you consider a source for image tiles, be aware of any copyright restrictions. Some image tiles must be licensed, and even those that are freely available often require that any use identify the provider as the source.</p>
+<p>When you consider a source for image tiles, be aware of any copyright restrictions. Some image tiles must be licensed, and even those that are freely available often require that any user identify the provider as the source.</p>
 </blockquote>
 <h3 id="step-4-draw-the-map">Step 4: Draw the Map</h3>
-<p>Now we’re ready to draw the map itself. That takes two JavaScript statements. First we create a new <code>MM.Map</code> object, giving it the <code>id</code> of the element containing the map and the tiles we initialized above. Then we provide the latitude and longitude for the map’s center as well an initial zoom level. For your own maps you may need to experiment a bit to get the right values, but for this example we’ll center and zoom the map so that it comfortably shows the continental United States.</p>
+<p>Now we’re ready to draw the map itself. That takes two JavaScript statements. First we create a new <code>MM.Map</code> object, giving it the <code>id</code> of the element containing the map and the tiles we just initialized. Then we provide the latitude and longitude for the map’s center as well as an initial zoom level. For your own maps you may need to experiment a bit to get the right values, but for this example we’ll center and zoom the map so that it comfortably shows the continental United States.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> map = <span class="kw">new</span> <span class="ot">MM</span>.<span class="fu">Map</span>(<span class="st">&quot;map&quot;</span>, tiles);
 <span class="ot">map</span>.<span class="fu">setCenterZoom</span>(<span class="kw">new</span> <span class="ot">MM</span>.<span class="fu">Location</span>(<span class="fl">38.840278</span>, -<span class="fl">96.611389</span>), <span class="dv">4</span>);</code></pre></td></tr></table>
-<p>The resulting map in figure <span class="nextfigure"/> forms a base for showing the sightings.</p>
+<p>The resulting map, shown in figure <span class="nextfigure"/>, forms a base for showing the sightings.</p>
 <figure>
 <div id="map-context-1" style="width:640px;height:370px;">
 
@@ -5188,7 +5190,7 @@ Map tiles by <a href="http://stamen.com">Stamen Design</a></a>, under <a href="h
 Map libraries can show maps based on geographic coordinates.
 </figcaption>
 </figure>
-<p>Notice that we’ve credited both Stamen Design and OpenStreetMap. That attribution is required by the terms of the Stamen Design license.</p>
+<p>Notice both Stamen Design and OpenStreetMap are credited. That attribution is required by the terms of the Stamen Design license.</p>
 <h3 id="step-5-add-the-sightings">Step 5: Add the Sightings</h3>
 <p>With our map in place it’s time to add the individual <span class="smcp">UFO</span> sightings. We’re using the spotlight extension to highlight these locations, so we first create a spotlight layer for the map. We’ll also want to set the radius of the spotlight effect. As with the center and zoom parameters, a bit of trial and error helps here.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -5204,7 +5206,7 @@ Map libraries can show maps based on geographic coordinates.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">ufos</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(ufo) {
     <span class="ot">layer</span>.<span class="fu">addLocation</span>(<span class="kw">new</span> <span class="ot">MM</span>.<span class="fu">Location</span>(<span class="ot">ufo</span>.<span class="fu">location</span>[<span class="dv">0</span>], <span class="ot">ufo</span>.<span class="fu">location</span>[<span class="dv">1</span>]));
 });</code></pre></td></tr></table>
-<p>At this point our visualization is complete. Figure <span class="nextfigure"/> see where <span class="smcp">UFO</span>s have allegedly appeared over the United States in a suitably mysterious context.</p>
+<p>At this point our visualization is complete. Figure <span class="nextfigure"/> shows where <span class="smcp">UFO</span>s have allegedly appeared over the United States in a suitably mysterious context.</p>
 <figure>
 <div style="font-weight: bold; font-size: 1.1em; padding-bottom: 0.2em;">
 Major <span class="lgcp">UFO</span> Sightings in the Continental United States
@@ -5215,7 +5217,7 @@ Major <span class="lgcp">UFO</span> Sightings in the Continental United States
 <div style="font-size:0.8em">
 Map tiles by <a href="http://stamen.com">Stamen Design</a></a>, under <a href="http://creativecommons.org/licenses/by/3.0"><span class="smcp">CC</span> <span class="smcp">BY</span> 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0"><span class="smcp">CC</span> <span class="smcp">BY</span> <span class="smcp">SA</span></a>.</span>
 <figcaption>
-Adding layers in a map library can add emphasis to regions of a map.
+Adding layers in a map library can emphasize regions of a map.
 </figcaption>
 </figure>
 <script>
@@ -5495,9 +5497,9 @@ Adding layers in a map library can add emphasis to regions of a map.
 </script>
 <h2 id="integrating-a-full-featured-mapping-library">Integrating a Full-Featured Mapping Library</h2>
 <p>The Modest Maps library of the previous example is a fine library for simple map visualizations, but it doesn’t have all of the features and support of a full-featured service such as Google Maps. There is, however, an open source library that does provide those features: <a href="http://leafletjs.com">Leaflet</a>. In this example we’ll build a more complex visualization that features a Leaflet-based map.</p>
-<p>In the 1940s, two private railroads were in competition for passenger traffic in the southeastern United States. Two routes that competed most directly with each other were the <em>Silver Comet</em> run by Seaboard Air Lines, and the <em>Southerner</em> operated by Southern Railways. Both served passengers traveling between New York and Birmingham, Alabama. One factor cited in the Southerner’s ultimate success was the shorter distance of its route. Trips on the Southerner were quicker, giving Southern Railways a competitive advantage. Let’s create a visualization to demonstrate that advantage.</p>
+<p>In the 1940s, two private railroads were in competition for passenger traffic in the southeastern United States. Two routes that competed most directly were the <em>Silver Comet</em> ()run by Seaboard Air Lines, and the <em>Southerner</em> ()operated by Southern Railways. Both served passengers traveling between New York and Birmingham, Alabama. One factor cited in the Southerner’s ultimate success was the shorter distance of its route. Trips on the Southerner were quicker, giving Southern Railways a competitive advantage. Let’s create a visualization to demonstrate that advantage.</p>
 <h3 id="step-1-prepare-the-data">Step 1: Prepare the Data</h3>
-<p>The data for our visualization is readily available as timetables for the two routes. A more precise comparison might consider timetables from the same year, but for this example we’ll use the <a href="http://www.streamlinerschedules.com/concourse/track1/southerner194112.html">Southerner’s timetable from 1941</a> and the <a href="http://www.streamlinerschedules.com/concourse/track1/silvercomet194706.html">Silver Comet’s timetable from 1947</a> as those timetables are readily available on the internet. The timetables only include station names, so we will have to look up latitude and longitude values (using, for example, Google Maps) for all of the stations in order to place them on a map. We can also calculate the time difference between stops, in minutes. Those calculations result in two arrays, one for each train.</p>
+<p>The data for our visualization is readily available as timetables for the two routes. A more precise comparison might consider timetables from the same year, but for this example we’ll use the <a href="http://www.streamlinerschedules.com/concourse/track1/southerner194112.html">Southerner’s timetable from 1941</a> and the <a href="http://www.streamlinerschedules.com/concourse/track1/silvercomet194706.html">Silver Comet’s timetable from 1947</a> as they are readily available on the internet. The timetables only include station names, so we will have to look up latitude and longitude values (using, for example, Google Maps) for all of the stations in order to place them on a map. We can also calculate the time difference between stops, in minutes. Those calculations result in two arrays, one for each train.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5546,8 +5548,8 @@ Adding layers in a map library can add emphasis to regions of a map.
       <span class="st">&quot;duration&quot;</span>: <span class="dv">77</span> },
     <span class="co">// Data set continues...</span>
 ];</code></pre></td></tr></table>
-<h3 id="step-2-set-up-the-web-page-and-libraries">Step 2: Set up the Web Page and Libraries</h3>
-<p>To add Leaflet maps to our web page we’ll need to include the library and its companion style sheet. Both are available from a content distribution network, so there’s no need to host them on our own servers. When we create our page we also define a <code>&lt;div&gt;</code> container for the map in line 10.</p>
+<h3 id="step-2-set-up-the-web-page-and-libraries">Step 2: Set Up the Web Page and Libraries</h3>
+<p>To add Leaflet maps to our web page we’ll need to include the library and its companion stylesheet. Both are available from a content distribution network, so there’s no need to host them on our own servers. When we create our page we also define a <code>&lt;div&gt;</code> container for the map in line 10.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5579,7 +5581,7 @@ Adding layers in a map library can add emphasis to regions of a map.
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-draw-the-base-map">Step 3: Draw the Base Map</h3>
-<p>The <em>Silver Comet</em> and <em>The Southerner</em> traveled between New York and Birmingham (and, in the case of The Southerner, all the way to New Orleans). But the region that’s relevant for our visualization lies between Washington, <span class="smcp">DC</span> and Atlanta, <span class="smcp">GA</span>, because that’s the only region where the train routes differed–for the rest of their journeys the routes were essentially the same. Our map, therefore, will extend from Atlanta in the south west to Washington in the north east. Using a bit of trial and error we can determine the best center point and zoom level for the map. The center point defines the latitude and longitude for the map’s center, and the zoom level determines the area covered by the map on its initial display. When we create the map object, we give it the <code>id</code> of the containing element as well as those parameters.</p>
+<p>The <em>Silver Comet</em> and <em>The Southerner</em> traveled between New York and Birmingham (and, in the case of The Southerner, all the way to New Orleans). But the region that’s relevant for our visualization lies between Washington, <span class="smcp">DC</span> and Atlanta, Georgia, because that’s the only region where the train routes differed: for the rest of their journeys, the routes were essentially the same. Our map, therefore, will extend from Atlanta in the southwest to Washington, <span class="smcp">DC</span> in the northeast. Using a bit of trial and error, we can determine the best center point and zoom level for the map. The center point defines the latitude and longitude for the map’s center, and the zoom level determines the area covered by the map on its initial display. When we create the map object, we give it the <code>id</code> of the containing element as well as those parameters.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5619,14 +5621,14 @@ Adding layers in a map library can add emphasis to regions of a map.
     <span class="dt">boxZoom</span>: <span class="kw">false</span>,
     <span class="dt">keyboard</span>: <span class="kw">false</span>
 });</code></pre></td></tr></table>
-<p>Because we’ve disabled the ability of the user to pan or zoom the map, we should also make sure the mouse cursor doesn’t mislead the user when hovering over the map. The <code>leaflet.css</code> style sheet expects zooming and panning to be enabled, so it sets the cursor to a “grabbing” hand icon. We can override that value with a style rule of our own. We have to define this rule <strong>after</strong> the <code>leaflet.css</code> file is included.</p>
+<p>Because we’ve disabled the user’s ability to pan or zoom the map, we should also make sure the mouse cursor doesn’t mislead the user when it’s hovering over the map. The <code>leaflet.css</code> style sheet expects zooming and panning to be enabled, so it sets the cursor to a “grabbing” hand icon. We can override that value with a style rule of our own. We have to define this rule <strong>after</strong> including the <code>leaflet.css</code>.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.leaflet-container</span> <span class="kw">{</span>
     <span class="kw">cursor:</span> <span class="dt">default</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>As with the Modest Maps example, we base our map on a set of tiles. There are many tile providers that support Leaflet; some are open source while others are commercial. Leaflet has a <a href="http://leaflet-extras.github.io/leaflet-providers/preview/">demo page</a> you can use to compare some of the open source tile providers. For our example we want to avoid tiles with roads, as the highway network looked very different in the 1940s. Esri has a neutral <em>WorldGrayCanvas</em> set that works well for our visualization. It does include current county boundaries, and some counties may have changed their borders since the 1940s. For our example we won’t worry about that detail, though you might consider it in any production visualization. Leaflet’s <span class="smcp">API</span> let’s us create the tile layer and add it to the map in a single statement. Note that Leaflet includes a built-in option to handle attribution so we can be sure to credit the tile source appropriately.</p>
+<p>As with the Modest Maps example, we base our map on a set of tiles. There are many tile providers that support Leaflet; some are open source, while others are commercial. Leaflet has a <a href="http://leaflet-extras.github.io/leaflet-providers/preview/">demo page</a> you can use to compare some of the open source tile providers. For our example we want to avoid tiles with roads, as the highway network looked very different in the 1940s. Esri has a neutral <em>WorldGrayCanvas</em> set that works well for our visualization. It does include current county boundaries, and some counties may have changed their borders since the 1940s. For our example we won’t worry about that detail, though you might consider it in any production visualization. Leaflet’s <span class="smcp">API</span> lets us create the tile layer and add it to the map in a single statement. Note that Leaflet includes a built-in option to handle attribution so we can be sure to credit the tile source appropriately.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5674,7 +5676,7 @@ A base layer map provides the canvas for a visualization.
   [<span class="fl">37.21295</span>,-<span class="fl">77.400417</span>],
   <span class="co">/* Data set continues... */</span>
 ]</code></pre></td></tr></table>
-<p>That result is the perfect input to the <code>polyline</code> function. We’ll use it for each of the routes. The options let us specify a color for the lines which we’ll match with the associated railroad’s official color from the era. We also indicate that the lines have no function when clicked by setting the <code>clickable</code> option to <code>false</code>.</p>
+<p>That result is the perfect input to the <code>polyline()</code> function. We’ll use it for each of the routes. The options let us specify a color for the lines which we’ll match with the associated railroad’s official color from the era. We also indicate that the lines have no function when clicked by setting the <code>clickable</code> option to <code>false</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5693,7 +5695,7 @@ A base layer map provides the canvas for a visualization.
     <span class="ot">southern</span>.<span class="fu">map</span>(<span class="kw">function</span>(stop) {<span class="kw">return</span> [<span class="ot">stop</span>.<span class="fu">latitude</span>, <span class="ot">stop</span>.<span class="fu">longitude</span>]}),
     {<span class="dt">color</span>: <span class="st">&quot;#106634&quot;</span>, <span class="dt">weight</span>: <span class="dv">1</span>, <span class="dt">clickable</span>: <span class="kw">false</span>}
 ).<span class="fu">addTo</span>(map);</code></pre></td></tr></table>
-<p>With this addition the visualization of figure <span class="nextfigure"/> is starting to convey the relative distances of the two routes.</p>
+<p>With this addition the visualization shown in figure <span class="nextfigure"/> is starting to convey the relative distances of the two routes.</p>
 <figure style="margin-left:0;margin-right:0;">
 <div id="map-library-2" style="width:640px;height:500px;">
 
@@ -5710,7 +5712,7 @@ Additional map layers add data to the canvas.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">L</span>.<span class="ot">Control</span>.<span class="fu">Animate</span> = <span class="ot">L</span>.<span class="ot">Control</span>.<span class="fu">extend</span>({
     <span class="co">// custom code goes here</span>
 });</code></pre></td></tr></table>
-<p>Next we define the options for our custom control. Those options include its position on the map, the text and tooltip (title) for its states, and functions to call when the animation starts or stops. Below, we define these within an <code>options</code> object, which lets Leaflet integrate them within its normal functionality.</p>
+<p>Next we define the options for our custom control. Those options include its position on the map, the text and tooltip (title) for its states, and functions to call when the animation starts or stops. We define these within an <code>options</code> object as follows, which lets Leaflet integrate them within its normal functionality.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5735,7 +5737,7 @@ Additional map layers add data to the canvas.
         <span class="dt">animateStartFn</span>: <span class="kw">null</span>,
         <span class="dt">animateStopFn</span>: <span class="kw">null</span>
     },</code></pre></td></tr></table>
-<p>For our example we’re using <span class="smcp">UTF</span>-8 characters for the play and pause control. In a production visualization you might consider using icon fonts or images to have maximum control over the appearance.</p>
+<p>For our example we’re using <span class="smcp">UTF</span>-8 characters for the play and pause control. In a production visualization, you might consider using icon fonts or images to have maximum control over the appearance.</p>
 <p>Our animation control also needs an <code>onAdd()</code> method for Leaflet to call when it adds a control to a map. This method constructs the <span class="smcp">HTML</span> markup for the control and returns that to the caller.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -5767,7 +5769,7 @@ Additional map layers add data to the canvas.
 
         <span class="kw">return</span> container;
     },</code></pre></td></tr></table>
-<p>Our implementation of <code>onAdd()</code> constructs the markup in two stages. First, starting at line 3, it creates a <code>&lt;div&gt;</code> element and gives that element two classes: <code>leaflet-control-animate</code> and <code>leaflet-bar</code>. The first class is unique to our animation control, and we can use it to apply <span class="smcp">CSS</span> rules uniquely to our control. The second class is a general Leaflet class for all toolbars. By adding it to the animation control we’re making that control consistent with other Leaflet controls. Note that Leaflet includes the <code>L.DomUtil.create()</code> method in line 3 to handle the details of creating the element.</p>
+<p>Our implementation of <code>onAdd()</code> constructs the markup in two stages. First, starting at line 3, it creates a <code>&lt;div&gt;</code> element and gives that element two classes: <code>leaflet-control-animate</code> and <code>leaflet-bar</code>. The first class is unique to our animation control, and we can use it to apply <span class="smcp">CSS</span> rules uniquely to our control. The second class is a general Leaflet class for all toolbars. By adding it to the animation control, we’re making that control consistent with other Leaflet controls. Note that Leaflet includes the <code>L.DomUtil.create()</code> method in line 3 to handle the details of creating the element.</p>
 <p>The second part of <code>onAdd()</code> creates a button element within this <code>&lt;div&gt;</code> container. Most of the work takes place in the <code>_createButton()</code> function at line 6 which we’ll examine shortly. The parameters to the function include:</p>
 <ul>
 <li>the text for the button,</li>
@@ -5776,7 +5778,7 @@ Additional map layers add data to the canvas.
 <li>the container in which to insert the button, and</li>
 <li>a function to call when the button is clicked.</li>
 </ul>
-<p>If you’re wondering why the name of this function begins with an underscore (_), that’s the convention that Leaflet uses for private methods (and attributes). It’s only a convention so there’s no requirement to follow it, but doing so will make it easier for someone familiar with Leaflet to understand our code.</p>
+<p>If you’re wondering why the name of this function begins with an underscore (_), that’s the convention that Leaflet uses for private methods (and attributes). There’s no requirement to follow it, but doing so will make it easier for someone familiar with Leaflet to understand our code.</p>
 <p>The <code>_createButton()</code> method itself relies on Leaflet utility functions. It creates the button as an <code>&lt;a&gt;</code> element with the specified text, title, and class, and it creates that element within the appropriate container (lines 2-5). It then binds several events to this <code>&lt;a&gt;</code> element. First it ignores initial <code>mousedown</code> and double-click events (line 8). It also prevents single-click events from propagating up the document tree and from implementing their default behavior (line 9). Finally, it executes the callback function on <code>click</code> events (line 10).</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -5804,7 +5806,7 @@ Additional map layers add data to the canvas.
 
         <span class="kw">return</span> link;
     },</code></pre></td></tr></table>
-<p>The callback function itself is our next task. Before we get into the function, we add a single state variable (<code>_running</code>) to keep track of whether or not the animation is currently running. It starts out stopped (line 1). Then our callback function starts by checking this variable in line 4. If _running is true, that means the animation was running and has just been paused by the current click, so it changes the control to indicate that clicking will now resume the animation. If the animation isn’t running, the callback function does the opposite. It changes the control to indicate that a subsequent click will pause it. In both cases the callback function executes the appropriate control function if one exists. Finally, it sets the state of the <code>_running</code> state variable to its complement.</p>
+<p>The callback function itself is our next task. Before we get into the function, we add a single state variable (<code>_running</code>) to keep track of whether the animation is currently running. It starts out stopped (line 1). Then our callback function starts by checking this variable in line 4. If _running is true, that means the animation was running and has just been paused by the current click, so it changes the control to indicate that clicking will now resume the animation. If the animation isn’t running, the callback function does the opposite: it changes the control to indicate that a subsequent click will pause it. In both cases, the callback function executes the appropriate control function if one exists. Finally, it sets the state of the <code>_running</code> state variable to its complement.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5861,12 +5863,12 @@ Additional map layers add data to the canvas.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">L</span>.<span class="ot">control</span>.<span class="fu">animate</span> = <span class="kw">function</span> (options) {
     <span class="kw">return</span> <span class="kw">new</span> <span class="ot">L</span>.<span class="ot">Control</span>.<span class="fu">Animate</span>(options);
 };</code></pre></td></tr></table>
-<p>Defining this last function let’s us create the control using a common Leaflet syntax, in particular:</p>
+<p>Defining this last function lets us create the control using a common Leaflet syntax, in particular:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">L</span>.<span class="ot">control</span>.<span class="fu">animate</span>().<span class="fu">addTo</span>(map);</code></pre></td></tr></table>
-<p>That’s the same syntax we’ve seen before with layers and polylines.</p>
+<p>This is the same syntax we’ve seen before with layers and polylines.</p>
 <h3 id="step-6-prepare-the-animation">Step 6: Prepare the Animation</h3>
-<p>With a convenient user control in place we can now begin work on the animation itself. Although this particular animation isn’t especially taxing, we can still follow best practices and compute as much as possible in advance. Since we’re animating two routes, we’ll define a function that will build an animation for any input route. A second parameter will specify polyline options. This function will return an array of polyline paths, indexed by minutes. You can see the basic structure of this function below. The first element in the array will be the polyline for the first minute of the route. We’ll build the entire array in the <code>animation</code> variable.</p>
+<p>With a convenient user control in place, we can now begin work on the animation itself. Although this particular animation isn’t especially taxing, we can still follow best practices and compute as much as possible in advance. Since we’re animating two routes, we’ll define a function that will build an animation for any input route. A second parameter will specify polyline options. This function will return an array of polyline paths, indexed by minutes. You can see the basic structure of this function next. The first element in the array will be the polyline for the first minute of the route. We’ll build the entire array in the <code>animation</code> variable.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5890,14 +5892,14 @@ Additional map layers add data to the canvas.
              stopIdx &lt; <span class="ot">route</span>.<span class="fu">length</span><span class="dv">-1</span>; stopIdx++) {
         <span class="co">// Code to calculate steps between current stop and next stop</span>
     }</code></pre></td></tr></table>
-<p>As we start to calculate the paths beginning at the current stop, we’ll store that stop and the next stop in local variables, and we add the current stop to the <code>prevStops</code> array that’s keeping track of previous stops.</p>
+<p>As we start to calculate the paths beginning at the current stop, we’ll store that stop and the next one in local variables, and we add the current stop to the <code>prevStops</code> array that’s keeping track of previous stops.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">        <span class="kw">var</span> stop = route[stopIdx];
         <span class="kw">var</span> nextStop = route[stopIdx<span class="dv">+1</span>]
         <span class="ot">prevStops</span>.<span class="fu">push</span>([<span class="ot">stop</span>.<span class="fu">latitude</span>, <span class="ot">stop</span>.<span class="fu">longitude</span>]);</code></pre></td></tr></table>
-<p>For each stop in our data sets, the <code>duration</code> property stores the number of minutes until the next stop. We’ll use an inner loop, shown below, to count from <code>1</code> up to that value. Within the loop we use a simple linear interpolation to calculate the position at the corresponding time. That position, when appended to the previous stops array, is the polyline path for that time. The code below creates a polyline based on the path and adds it to the animation array.</p>
+<p>For each stop in our data sets, the <code>duration</code> property stores the number of minutes until the next stop. We’ll use an inner loop, shown next, to count from <code>1</code> up to that value. Within the loop we use a simple linear interpolation to calculate the position at the corresponding time. That position, when appended to the <code>prevStops</code> array, is the polyline path for that time. The following code creates a polyline based on the path and adds it to the animation array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -5958,11 +5960,11 @@ Additional map layers add data to the canvas.
         <span class="kw">return</span> <span class="ot">animation</span>.<span class="fu">length</span>
     })
 );</code></pre></td></tr></table>
-<p>That statement might seem overly complex for finding the minimum length, but it works with an arbitrary number of routes. If, in the future, we decided to animate a third route on our map, we wouldn’t have to change the code. The best way to understand the statement is to start in the middle and work out. The fragment</p>
+<p>That statement might seem overly complex for finding the minimum length, but it works with an arbitrary number of routes. If, in the future, we decided to animate a third route on our map, we wouldn’t have to change the code. The best way to understand the statement is to start in the middle and work outward. The fragment:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">routeAnimations</span>.<span class="fu">map</span>(<span class="kw">function</span>(animation) {<span class="kw">return</span> <span class="ot">animation</span>.<span class="fu">length</span>})</code></pre></td></tr></table>
 <p>converts the array of route animations into an array of lengths, specifically <code>[870,775]</code>.</p>
-<p>To find the minimum value in an array we can use the <code>Math.min</code> function, except that function expects its parameters as a comma-separated list of arguments rather than an array. The <code>apply()</code> method (which is available for any JavaScript function) converts an array into a comma-separated list. Its first parameter is a context for the function which, in our case is irrelevant, so we pass <code>null</code> for that parameter.</p>
+<p>To find the minimum value in an array we can use the <code>Math.min()</code> function, except that function expects its parameters as a comma-separated list of arguments rather than an array. The <code>apply()</code> method (which is available for any JavaScript function) converts an array into a comma-separated list. Its first parameter is a context for the function which in our case is irrelevant, so we pass <code>null</code> for that parameter.</p>
 <p>The animation keeps track of its current state with the <code>step</code> variable, which we initialize to <code>0</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> step = <span class="dv">0</span>;</code></pre></td></tr></table>
@@ -5973,7 +5975,7 @@ Additional map layers add data to the canvas.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> animateStep = <span class="kw">function</span>() {
     <span class="co">// Draw the next step in the animation</span>
 }</code></pre></td></tr></table>
-<p>First we check to see whether or not this is the very first step in the animation. If it isn’t, <code>step</code> will be greater than 0 and we can remove the previous step’s polylines from the map in line 3.</p>
+<p>First we check to see whether this is the very first step in the animation. If it isn’t, <code>step</code> will be greater than 0 and we can remove the previous step’s polylines from the map in line 3.</p>
 <table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6038,7 +6040,7 @@ Additional map layers add data to the canvas.
 });
 <span class="ot">control</span>.<span class="fu">addTo</span>(map);</code></pre></td></tr></table>
 <h3 id="step-8-create-labels-for-the-stops">Step 8: Create Labels for the Stops</h3>
-<p>Before we wrap up the animation we’ll add some labels for each train stop. To emphasize the passage of time, we’ll reveal each label as the animation reaches the corresponding stop. To do that we’ll create the labels using a special object; then we’ll create a method to add labels to the map, and, to finish the label object, we’ll create methods that the animation control can call to get or set a label’s status.</p>
+<p>Before we wrap up the animation we’ll add some labels for each train stop. To emphasize the passage of time, we’ll reveal each label as the animation reaches the corresponding stop. To do that, we’ll create the labels using a special object; then we’ll create a method to add labels to the map; and, to finish the label object, we’ll create methods that the animation control can call to get or set a label’s status.</p>
 <p>Since Leaflet doesn’t have a predefined object for labels, we can once again create our own custom object. We start with the basic Leaflet <code>Class</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -6046,7 +6048,7 @@ Additional map layers add data to the canvas.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">L</span>.<span class="fu">Label</span> = <span class="ot">L</span>.<span class="ot">Class</span>.<span class="fu">extend</span>({
     <span class="co">// Implement the Label object</span>
 });</code></pre></td></tr></table>
-<p>Our <code>Label</code> object accepts parameters for its position on the map, its label text, and any options. Below, we extend the <code>initialize()</code> method of the Leaflet <code>Class</code> to handle those parameters. For position and text we simply save their values for later use. For the options we use a Leaflet utility in line 4 to easily support default values. The object includes one variable to keep track of its status. Initially all labels are hidden, so <code>this._status</code> is initialized appropriately in line 5.</p>
+<p>Our <code>Label</code> object accepts parameters for its position on the map, its label text, and any options. Next, we extend the <code>initialize()</code> method of the Leaflet <code>Class</code> to handle those parameters. For position and text we simply save their values for later use. For the options we use a Leaflet utility in line 4 to easily support default values. The object includes one variable to keep track of its status. Initially all labels are hidden, so <code>this._status</code> is initialized appropriately in line 5.</p>
 <table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6076,7 +6078,7 @@ Additional map layers add data to the canvas.
 <li>sets the <code>opacity</code> of the element to <code>0</code> to match its initial <code>hidden</code> status (line 4),</li>
 <li>adds the new element to the <code>markerPane</code> layer in the map (line 5),</li>
 <li>sets the contents of the element to the label text (line 6),</li>
-<li>calculates a position for the label using its defined latitude/longitude (line 7) and then adjusting for any offset (lines 8-11), and</li>
+<li>calculates a position for the label using its defined latitude/longitude (line 7) and then adjusts for any offset (lines 8-11), and</li>
 <li>positions the element on the map (line 12).</li>
 </ol>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -6106,9 +6108,9 @@ Additional map layers add data to the canvas.
         <span class="ot">L</span>.<span class="ot">DomUtil</span>.<span class="fu">setPosition</span>(<span class="kw">this</span>.<span class="fu">_container</span>, position);
     },</code></pre></td></tr></table>
 <blockquote>
-<p>Step 2 above, setting the <code>line-height</code> to <code>0</code>, addresses a problem in the method Leaflet uses to position elements on the map. In particular, Leaflet does not account for other elements in the same parent container. By setting all elements to have no line height, we nullify this effect so that the calculated position is correct.</p>
+<p>Step 2 above—setting the <code>line-height</code> to <code>0</code>—addresses a problem in the method Leaflet uses to position elements on the map. In particular, Leaflet does not account for other elements in the same parent container. By setting all elements to have no line height, we nullify this effect so that the calculated position is correct.</p>
 </blockquote>
-<p>Finally we add methods to get and set the label’s status. As the code below indicates, our labels can have three different status values, and those values determine the opacity of the label.</p>
+<p>Finally we add methods to get and set the label’s status. As the following code indicates, our labels can have three different status values, and those values determine the opacity of the label.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6147,7 +6149,7 @@ Additional map layers add data to the canvas.
                 <span class="kw">break</span>;
         }
     }</code></pre></td></tr></table>
-<p>We included the option to adjust the label’s position because not all labels will look good positioned exactly on the latitude and longitude of the station. Most will benefit from slight shifts to avoid interference with the route polylines, text on the base map tiles, or other labels. For a custom visualization such as this example, there’s no substitute for trial and error adjustments. We’ll capture those adjustments for each label by adding an additional <code>offset</code> field to our data set. The augmented data set might begin like this:</p>
+<p>We included the option to adjust the label’s position because not all labels will look good positioned exactly on the latitude and longitude of the station. Most will benefit from slight shifts to avoid interference with the route polylines, text on the base map tiles, or other labels. For a custom visualization such as this example, there’s no substitute for trial-and-error adjustments. We’ll capture those adjustments for each label by adding another <code>offset</code> field to our data set. The augmented data set might begin like this:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6159,8 +6161,8 @@ Additional map layers add data to the canvas.
 { <span class="st">&quot;stop&quot;</span>: <span class="st">&quot;Richmond&quot;</span>,       <span class="st">&quot;offset&quot;</span>: [  <span class="dv">6</span>,  <span class="dv">4</span>], <span class="co">/* Data continues... */</span> },
 <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-9-build-the-label-animation">Step 9: Build the Label Animation</h3>
-<p>To create the label animation we can once again iterate through the trains’ routes. Because we have more than one route, a general purpose function will let us avoid duplicating code. As you can see from the code below we’re not using a fixed number of arguments to our function. Instead we let the caller pass in as many individual routes as desired. All of those input parameters will be stored in the <code>arguments</code> object.</p>
-<p>The <code>arguments</code> object looks a lot like a JavaScript array. It has a <code>length</code> property, and individual elements are accessible using, for example, <code>arguments[0]</code>. Unfortunately, the object isn’t a true array, so we can’t use the convenient array methods (such as <code>forEach</code>) on it. As a workaround, the very first statement in our <code>builLabelAnimation</code> function shown below relies on a simple trick to convert the <code>arguments</code> object into the true <code>args</code> array. It’s a bit long-winded, but the statement in line 2 effectively executes the <code>slice</code> method on <code>arguments</code>. That operation clones <code>arguments</code> into a true array.</p>
+<p>To create the label animation we can once again iterate through the trains’ routes. Because we have more than one route, a general-purpose function will let us avoid duplicating code. As you can see from the following code, we’re not using a fixed number of arguments to our function. Instead we let the caller pass in as many individual routes as desired. All of those input parameters will be stored in the <code>arguments</code> object.</p>
+<p>The <code>arguments</code> object looks a lot like a JavaScript array. It has a <code>length</code> property, and we can access individual elements using, for example, <code>arguments[0]</code>. Unfortunately, the object isn’t a true array, so we can’t use the convenient array methods (such as <code>forEach</code>) on it. As a workaround, the very first statement in our <code>buildLabelAnimation</code> function shown next relies on a simple trick to convert the <code>arguments</code> object into the true <code>args</code> array. It’s a bit long-winded, but the statement in line 2 effectively executes the <code>slice</code> method on <code>arguments</code>. That operation clones <code>arguments</code> into a true array.</p>
 <blockquote>
 <p>This same trick works for nearly all of JavaScript’s “array-like” objects. You can often use it to convert them into true arrays.</p>
 </blockquote>
@@ -6180,7 +6182,7 @@ Additional map layers add data to the canvas.
 
     <span class="kw">return</span> labels;
 }</code></pre></td></tr></table>
-<p>With the routes converted into an array, we can use <code>forEach</code> to iterate through all of them, regardless of their number. As we begin processing each route we set the <code>minutes</code> value to zero. Then we can use <code>forEach</code> again iterate through all the stops on the route.</p>
+<p>With the routes converted into an array, we can use <code>forEach</code> to iterate through all of them, regardless of their number. As we begin processing each route we set the <code>minutes</code> value to <code>0</code>. Then we can use <code>forEach</code> again to iterate through all the stops on the route.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6193,7 +6195,7 @@ Additional map layers add data to the canvas.
             <span class="co">// process each stop on the route</span>
         });
     });</code></pre></td></tr></table>
-<p>For each stop in the route we first check to see whether that stop is the first or last one. If so, we don’t want to animate a label for that stop. Otherwise we create a new <code>Label</code> object in line 3 below, and add it to the map. Then we append that Label object to the <code>labels</code> array that’s accumulating the label animation data. Notice that we add each label to this array twice. The first time we add it in line 9 is at the time the animation reaches the stop; in this case we add it with a status of <code>shown</code>. We also add the label to the array 50 minutes later in line 12, this time with a status of <code>dimmed</code>. When we execute the animation, it will show the label when the route first reaches the station and then dim it a bit later.</p>
+<p>For each stop in the route, we first check to see whether that stop is the first or last one. If so, we don’t want to animate a label for that stop. Otherwise we create a new <code>Label</code> object in line 3 below, and add it to the map. Then we append that Label object to the <code>labels</code> array that’s accumulating the label animation data. Notice that we add each label to this array twice. The first time we add it in line 9 is at the time the animation reaches the stop; in this case we add it with a status of <code>shown</code>. We also add the label to the array 50 minutes later in line 12, this time with a status of <code>dimmed</code>. When we execute the animation, it will show the label when the route first reaches the station and then dim it a bit later.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6234,7 +6236,7 @@ Additional map layers add data to the canvas.
 <p>To use our new function, we call and pass in all the routes to animate.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> labels = <span class="fu">buildLabelAnimation</span>(seaboard, southern);</code></pre></td></tr></table>
-<p>Because we’re not animating the start (Washington, <span class="smcp">DC</span>) or end (Atlanta, <span class="smcp">GA</span>) of any routes, we can go ahead and display those on the map from the start. We can get the coordinates from any route; the example below uses the <code>seaboard</code> data set.</p>
+<p>Because we’re not animating the start (Washington, <span class="smcp">DC</span>) or end (Atlanta) of any routes, we can go ahead and display those on the map from the start. We can get the coordinates from any route; the following example uses the <code>seaboard</code> data set.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6291,7 +6293,7 @@ label = <span class="kw">new</span> <span class="ot">L</span>.<span class="fu">L
 </blockquote>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> labelAnimation = <span class="ot">labels</span>.<span class="fu">slice</span>(<span class="dv">0</span>);</code></pre></td></tr></table>
-<p>The animation step function itself needs some additional code to handle labels. It will now have five major parts; we’ll walk through each of them in the code that follows. Our first adjustment is to make sure the code only removes previous polyline paths as long as we’re still adding paths to the map. That’s only true when <code>step</code> is less than <code>maxPathSteps</code>.</p>
+<p>The animation step function itself needs some additional code to handle labels. It will now have five major parts; we’ll walk through each of them in the code that follows. Our first adjustment is to make sure the code removes previous polyline paths only as long as we’re still adding paths to the map. That’s true only when <code>step</code> is less than <code>maxPathSteps</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6323,7 +6325,7 @@ label = <span class="kw">new</span> <span class="ot">L</span>.<span class="fu">L
         });
         step = <span class="dv">0</span>;
     }</code></pre></td></tr></table>
-<p>The third block is a completely new block that animates the labels. It looks at the first element in the <code>labelAnimation</code> array, if one exists. If the time value for that element (its <code>minutes</code> property) is the same as the animation step, then we check to see if we need to process it. We always process label animations when we’re still adding the paths. If the paths are complete, though, we only process animations for labels that are already shown. Once we’re finished with the first element in <code>labelAnimation</code> we remove it from the array (using the <code>shift()</code> method) and check again. We must keep checking in case multiple label animation actions are scheduled at the same time.</p>
+<p>The third block is a completely new block that animates the labels. It looks at the first element in the <code>labelAnimation</code> array, if one exists. If the time value for that element (its <code>minutes</code> property) is the same as the animation step, then we check to see if we need to process it. We always process label animations when we’re still adding the paths. If the paths are complete, though, we process animations only for labels that are already shown. Once we’re finished with the first element in <code>labelAnimation</code>, we remove it from the array (using the <code>shift()</code> method) and check again. We must keep checking in case multiple label animation actions are scheduled at the same time.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6338,7 +6340,7 @@ label = <span class="kw">new</span> <span class="ot">L</span>.<span class="fu">L
         }
         <span class="ot">labelAnimation</span>.<span class="fu">shift</span>();       
     }</code></pre></td></tr></table>
-<p>The code above explains a couple of things about our label animation preparation. First, because we sorted the label animation we only need to look at the first element in that array. That’s much more efficient than searching through the entire array. Secondly, because we’re working with a copy of the label animation array instead of the original, it’s safe to remove elements once we finish processing them.</p>
+<p>The preceding code explains a couple of things about our label animation preparation. First, because we sorted the label animation, we only need to look at the first element in that array. That’s much more efficient than searching through the entire array. Secondly, because we’re working with a copy of the label animation array instead of the original, it’s safe to remove elements once we finish processing them.</p>
 <p>Now that we’ve handled all the label animations we can return to the polyline paths. As long as there are still paths to animate, we add them to the map as before.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -6350,10 +6352,10 @@ label = <span class="kw">new</span> <span class="ot">L</span>.<span class="fu">L
             <span class="ot">map</span>.<span class="fu">addLayer</span>(animation[step]);
         });
     }</code></pre></td></tr></table>
-<p>The final code block in our animation step function is the same as before. We return an indication of whether or not the animation is complete.</p>
+<p>The final code block in our animation step function is the same as before. We return an indication of whether the animation is complete.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">    <span class="kw">return</span> ++step === maxSteps;</code></pre></td></tr></table>
-<p>There’s one more improvement we can make the animation, in this case with a judicious bit of <span class="smcp">CSS</span>. Because we use the <code>opacity</code> property to change the status of the labels, we can define a <span class="smcp">CSS</span> transition for that property that will make any changes less abrupt. To accommodate all popular browsers we use appropriate vendor prefixes, but the effect of the rule is consistent. Whenever the browser changes the opacity of elements within a <code>leaflet-label</code> class, it will ease the transition in and out over a 500 millisecond period. This transition prevents the label animations from distracting users too much from the path animation that is the visualization’s main effect.</p>
+<p>There’s one more improvement we can make to the animation, in this case with a judicious bit of <span class="smcp">CSS</span>. Because we use the <code>opacity</code> property to change the status of the labels, we can define a <span class="smcp">CSS</span> transition for that property that will make any changes less abrupt. To accommodate all popular browsers we use appropriate vendor prefixes, but the effect of the rule is consistent. Whenever the browser changes the opacity of elements within a <code>leaflet-label</code> class, it will ease the transition in and out over a 500-millisecond period. This transition prevents the label animations from distracting users too much from the path animation that is the visualization’s main effect.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6369,7 +6371,7 @@ label = <span class="kw">new</span> <span class="ot">L</span>.<span class="fu">L
            <span class="kw">transition:</span> opacity <span class="dt">.5s</span> ease-in-out<span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
 <h3 id="step-11-add-a-title">Step 11: Add a Title</h3>
-<p>To complete the visualization all we need is a title and a bit of explanation. We can build the title as a Leaflet Control, much as we did for the animation control. The code to do this is quite straightforward. We provide a default position in the top left of the map in line 3 and accept a title string as an initialization parameter in line 6. In line 13, we make it so that title string becomes the <code>innerHTML</code> of the control when we add it to the map.</p>
+<p>To complete the visualization, all we need is a title and a bit of explanation. We can build the title as a Leaflet Control, much as we did for the animation control. The code to do this is quite straightforward. We provide a default position in the top left of the map in line 3 and accept a title string as an initialization parameter in line 6. In line 13, we make it so that title string becomes the <code>innerHTML</code> of the control when we add it to the map.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -6410,7 +6412,7 @@ label = <span class="kw">new</span> <span class="ot">L</span>.<span class="fu">L
 <span class="ot">L</span>.<span class="ot">control</span>.<span class="fu">title</span> = <span class="kw">function</span>(title, options) {
     <span class="kw">return</span> <span class="kw">new</span> <span class="ot">L</span>.<span class="ot">Control</span>.<span class="fu">Title</span>(title, options);
 };</code></pre></td></tr></table>
-<p>Now we can use the following code to create a Title object with our desired content and immediately add it to the map. Here’s a simple implementation; you can see a more elaborate title in the example of figure <span class="nextfigure"/>.</p>
+<p>Now we can use the following code to create a title object with our desired content and immediately add it to the map. Here’s a simple implementation; figure <span class="nextfigure"/> includes some extra information.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">L</span>.<span class="ot">control</span>.<span class="fu">title</span>(<span class="st">&quot;Geography as a Competitive Advantage&quot;</span>).<span class="fu">addTo</span>(map);</code></pre></td></tr></table>
 <p>To set the title’s appearance, we can define <span class="smcp">CSS</span> rules for children of the <code>leaflet-control-title</code> class.</p>
@@ -6870,7 +6872,7 @@ Maps built in the browser with a map library can use interactivity to build inte
 }());
 </script>
 <h2 id="summing-up">Summing Up</h2>
-<p>In this chapter we’ve looked at several visualizations based on maps. In the first two examples, geographic regions were the main subjects of the visualization, and we built choropleth maps to compare and contrast those regions. Map fonts are quick and convenient, but only if they’re available for the regions the visualization needs. Although it usually takes more effort, we have far more control over the map regions if we use Scalable Vector Graphics to create our own custom maps. Unlike other image formats, <span class="smcp">SVG</span> can be easily manipulated in a web page with just <span class="smcp">CSS</span> and JavaScript. This chapter also looked at examples based on traditional mapping libraries. Mapping libraries are especially convenient when your data sets include latitude and longitude values, as the libraries take care of the complicated mathematics required to position those points on a two-dimensional projection. As we saw, some libraries are relatively simple yet are perfectly capable of mapping a data set. Full featured libraries such as Leaflet offer much more power and customization, and we relied on that extensibility for a custom, animated map.</p>
+<p>In this chapter, we’ve looked at several visualizations based on maps. In the first two examples, geographic regions were the main subjects of the visualization, and we built choropleth maps to compare and contrast those regions. Map fonts are quick and convenient, but only if they’re available for the regions the visualization needs. Although it usually takes more effort, we have far more control over the map regions if we use Scalable Vector Graphics to create our own custom maps. Unlike other image formats, <span class="smcp">SVG</span> can be easily manipulated in a web page with just <span class="smcp">CSS</span> and JavaScript. This chapter also looked at examples based on traditional mapping libraries. Mapping libraries are especially convenient when your data sets include latitude and longitude values, as the libraries take care of the complicated mathematics required to position those points on a two-dimensional projection. As we saw, some libraries are relatively simple, yet perfectly capable of mapping a data set. Full-featured libraries such as Leaflet offer much more power and customization, and we relied on that extensibility for a custom, animated map.</p>
 <p>Continue reading: <a href="chap07.html">Chapter 7: Custom Visualizations with D3.js</a>.</p>
 <script src="js/scripts.06.min.js"></script>
         </main>

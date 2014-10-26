@@ -586,15 +586,15 @@
 body { counter-reset: chapter 5; }
 </style>
 
-<h1 id="chapter-5-showing-time-lines">Chapter 5: Showing Time Lines</h1>
-<p>The most compelling visualizations often succeed because they tell a story; they extract a narrative from data and reveal that narrative to their users. And as with any narrative, <em>time</em> is a critical component. If our data consists solely of numbers, a standard bar or line chart can easily show its evolution over time. If our data is not numerical, however, standard charts probably won’t work. This chapter considers several alternatives for time-based visualizations. All are based on some variation of a time line; one linear dimension represents time, and events are places along that dimension based on when they occurred. In all of the examples we’ll consider the same underlying data, a <a href="http://en.wikipedia.org/wiki/Chronology_of_Shakespeare%27s_plays">possible chronology of the plays of William Shakespeare</a>.</p>
-<p>We’ll look at three very different approaches for adding time lines to web pages. One option relies on a JavaScript library, and it follows a process similar to many other visualizations in the book. The other two techniques, however, offer a different perspective. In one, we won’t use a visualization library at all. Instead we’ll build a time line with basic JavaScript, <span class="smcp">HTML</span>, and <span class="smcp">CSS</span>, and we’ll see how to do that both with and without jQuery. The final example shows the other extreme. It relies on a full featured web component available from an external web site. In short, we’ll look at:</p>
+<h1 id="chapter-5-showing-timelines">Chapter 5: Showing Timelines</h1>
+<p>The most compelling visualizations often succeed because they tell a story; they extract a narrative from data and reveal that narrative to their users. And as with any narrative, <em>time</em> is a critical component. If the data consists solely of numbers, a standard bar or line chart can easily show its evolution over time. If the data is not numerical, however, standard charts probably won’t work. This chapter considers several alternatives for time-based visualizations. All are based on some variation of a timeline; one linear dimension represents time, and events are places along that dimension based on when they occurred. In all of the examples, we’ll consider the same underlying data: a <a href="http://en.wikipedia.org/wiki/Chronology_of_Shakespeare%27s_plays">possible chronology of the plays of William Shakespeare</a>.</p>
+<p>We’ll look at three very different approaches for adding timelines to web pages. One option relies on a JavaScript library, and it follows a process similar to many other visualizations in the book. The other two techniques, however, offer a different perspective. In one, we won’t use a visualization library at all. Instead, we’ll build a timeline with basic JavaScript, <span class="smcp">HTML</span>, and <span class="smcp">CSS</span>, and we’ll see how to do that both with and without jQuery. The final example shows the other extreme. It relies on a full-featured web component available from an external web site. In short, we’ll look at:</p>
 <ul>
-<li>How to use a library to create time lines.</li>
+<li>How to use a library to create timelines.</li>
 <li>How to create timelines without a library using only JavaScript, <span class="smcp">HTML</span>, and <span class="smcp">CSS</span>.</li>
-<li>How to integrate a time line component in a web page.</li>
+<li>How to integrate a timeline component in a web page.</li>
 </ul>
-<h2 id="building-time-lines-with-a-library">Building Time Lines with a Library</h2>
+<h2 id="building-timelines-with-a-library">Building Timelines with a Library</h2>
 <p>First, we’ll build the timeline using the <a href="http://stoicloofah.github.io/chronoline.js/">Chronoline.js</a> library, which works a lot like most of the other JavaScript libraries we’ve used in the book. You include the library in your page, define your data, and let the library create the visualization.</p>
 <h3 id="step-1-include-the-required-libraries">Step 1: Include the Required Libraries</h3>
 <p>The Chronoline.js library itself depends on a few other libraries, and we’ll need to include all of them in our pages.</p>
@@ -603,9 +603,9 @@ body { counter-reset: chapter 5; }
 <li><a href="http://qtip2.com">qTip2</a> (including its style sheet)</li>
 <li><a href="http://raphaeljs.com">Raphaël</a></li>
 </ul>
-<p>All of these libraries are popular enough for public content distribution networks to support, so we’ll use CloudFlare’s <span class="smcp">CDN</span> in the markup below. We’ll have to use our own resources, however, to host the Chronoline.js itself. That library also defines its own style sheet.</p>
+<p>All of these libraries are popular enough for public content distribution networks to support, so we’ll use CloudFlare’s <span class="smcp">CDN</span> in the following markup. We’ll have to use our own resources, however, to host Chronoline.js itself. That library also defines its own style sheet.</p>
 <blockquote>
-<p>Note: Chapter 2 includes a more extensive discussion of content distributions networks and the trade-offs involved in using them.</p>
+<p>Note: Chapter 2 includes a more extensive discussion of content distribution networks and the trade-offs involved in using them.</p>
 </blockquote>
 <table class="sourceCode html numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -653,9 +653,9 @@ body { counter-reset: chapter 5; }
    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/chronoline.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>As you can see, we’ve set aside a <code>&lt;div&gt;</code> in line 10 to hold our time line. We’ve also included the JavaScript libraries as the last part of the <code>&lt;body&gt;</code> element, as that provides the best browser performance.</p>
+<p>As you can see, we’ve set aside a <code>&lt;div&gt;</code> in line 10 to hold our timeline. We’ve also included the JavaScript libraries as the last part of the <code>&lt;body&gt;</code> element, as that provides the best browser performance.</p>
 <h3 id="step-2-prepare-the-data">Step 2: Prepare the Data</h3>
-<p>The data for our time line comes from <a href="http://en.wikipedia.org/wiki/Chronology_of_Shakespeare%27s_plays">Wikipedia</a>. As a JavaScript object, we might structure that data like the following excerpt:</p>
+<p>The data for our time line comes from <a href="http://en.wikipedia.org/wiki/Chronology_of_Shakespeare%27s_plays">Wikipedia</a>. As a JavaScript object, that data might be structured like the following excerpt:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -744,8 +744,8 @@ body { counter-reset: chapter 5; }
     }
     <span class="kw">return</span> event;
 });</code></pre></td></tr></table>
-<h3 id="step-3-draw-the-time-line">Step 3: Draw the Time Line</h3>
-<p>To draw the time line, we create a new <code>Chronoline</code> object, passing it the <span class="smcp">HTML</span> container element, our event data, and any options. The <span class="smcp">HTML</span> container element should be a native element and not a jQuery selection. To convert from a selection to a native element, we use the <code>get()</code> method. In this case we want the first element, we use the parameter <code>0</code>.</p>
+<h3 id="step-3-draw-the-timeline">Step 3: Draw the Timeline</h3>
+<p>To draw the timeline, we create a new <code>Chronoline</code> object, passing it the <span class="smcp">HTML</span> container element, our event data, and any options. The <span class="smcp">HTML</span> container element should be a native element, not a jQuery selection. To convert from a selection to a native element, we use the <code>get()</code> method. In this case, we want the first element, so we use the parameter <code>0</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -754,15 +754,15 @@ body { counter-reset: chapter 5; }
 }</code></pre></td></tr></table>
 <p>If we try to use the default options of Chronoline.js with our data, however, the result is quite disappointing. (In fact, it’s illegible and not worth reproducing at this point.) We can fix that in the next step with some additional options.</p>
 <h3 id="step-4-set-chronoline.js-options-for-the-data">Step 4: Set Chronoline.js Options for the Data</h3>
-<p>The Chronoline.js library has default options that are well-suited for its original application, but they don’t work so well for Shakespeare’s plays. Fortunately, we can change the options from the default values. As of this writing, Chronoline.js doesn’t have much documentation on its options; to see the full set you would normally have to examine the source code. We’ll cover the most important options below, though.</p>
-<p>One of the most obvious problems with Chonoline.js’ defaults is the date shown in the initial view. Chronoline.js starts by displaying the current date by default. Since our time line ends in 1613, the user would have to scroll backwards for a long time to see anything meaningful. We can change this view by giving Chronoline.js a different start date for the initial view:</p>
+<p>The Chronoline.js library has default options that are well suited for its original application, but they don’t work so well for Shakespeare’s plays. Fortunately, we can change the options from the default values. As of this writing, Chronoline.js doesn’t have much documentation on its options; to see the full set you would normally have to examine the source code. We’ll cover the most important options here, though.</p>
+<p>One of the most obvious problems with the Chonoline.js defaults is the date shown in the initial view. Chronoline.js starts by displaying the current date by default. Since our timeline ends in 1613, the user would have to scroll backward for a long time to see anything meaningful. We can change this view by giving Chronoline.js a different start date for the initial view:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">defaultStartDate: <span class="kw">new</span> <span class="fu">Date</span>(<span class="dv">1589</span>, <span class="dv">0</span>, <span class="dv">1</span>),</code></pre></td></tr></table>
-<p>As long as we’re setting the time line to start somewhere close to Shakespeare’s lifetime, there’s no need for Chronoline.js to add a special mark for the current date. Tell it not to bother with a simple option:</p>
+<p>As long as we’re setting the timeline to start somewhere close to Shakespeare’s lifetime, there’s no need for Chronoline.js to add a special mark for the current date, so we use this simple option to tell it not to bother:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">markToday: <span class="kw">false</span>,</code></pre></td></tr></table>
-<p>The next major problem we’ll want to address is the labeling. By default, Chronoline.js tries to label every day on the time line. As our events span 24 years, we don’t need that granularity. Instead, we can tell Chronoline just to label the years. For the same reason we also need to change the tick marks. Instead of every day, we only need tick marks for every month.</p>
-<p>To change both of these options, we supply Chronoline.js with a pair of functions to call. Chronoline.js passes each of these functions a date object, and the functions return <code>true</code> or <code>false</code> depending on whether or not the date merits a tick mark or label. For tick marks we return <code>true</code> only on the first day of the month. We return <code>true</code> for labels only on January 1. (Remember that JavaScript numbers months beginning with <code>0</code>.)</p>
+<p>The next major problem to address is the labeling. By default, Chronoline.js tries to label every day on the timeline. As our events span 24 years, we don’t need that granularity. Instead, we can tell Chronoline.js just to label the years. For the same reason we also need to change the tick marks. Instead of every day, we need tick marks only for every month.</p>
+<p>To change both of these options, we supply Chronoline.js with a pair of functions to call. Chronoline.js passes each of these functions a date object, and the functions return <code>true</code> or <code>false</code> depending on whether the date merits a tick mark or label. For tick marks we return <code>true</code> only on the first day of the month. We return <code>true</code> for labels only on January 1. (Remember that JavaScript numbers months beginning with <code>0</code>.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -775,7 +775,7 @@ body { counter-reset: chapter 5; }
 labelInterval: <span class="kw">function</span>(date) {
     <span class="kw">return</span> <span class="ot">date</span>.<span class="fu">getMonth</span>() === <span class="dv">0</span> &amp;&amp; <span class="ot">date</span>.<span class="fu">getDate</span>() === <span class="dv">1</span>;
 },</code></pre></td></tr></table>
-<p>By default Chronoline.js will try to show a full date for each label. Since we only want to label each year, we’ll change the label format to just show the year. The details for the format specification are based on a standard <a href="http://www.cplusplus.com/reference/ctime/strftime/">C++ library</a>.</p>
+<p>By default, Chronoline.js will try to show a full date for each label. Since we only want to label each year, we’ll change the label format to just show the year. The details for the format specification are based on a standard <a href="http://www.cplusplus.com/reference/ctime/strftime/">C++ library</a>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">labelFormat: <span class="st">&quot;%Y&quot;</span>,</code></pre></td></tr></table>
 <p>For our last adjustments to the labeling, we remove the “sub-labels” and “sub-sub-labels” that Chronoline.js adds by default. Those labels don’t provide any value in our case.</p>
@@ -783,11 +783,11 @@ labelInterval: <span class="kw">function</span>(date) {
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">subLabel: <span class="kw">null</span>,
 subSubLabel: <span class="kw">null</span>,</code></pre></td></tr></table>
-<p>We also want to change the span of time that Chronoline.js displays in the time line. For our data, showing a span of 5 years at a time seems good.</p>
+<p>We also want to change the span of time that Chronoline.js displays in the timeline. For our data, showing a span of five years at a time seems good.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">visibleSpan: DAY_IN_MILLISECONDS * <span class="dv">366</span> * <span class="dv">5</span>,</code></pre></td></tr></table>
 <p>Note that the variable <code>DAY_IN_MILLISECONDS</code> is defined by Chronoline.js itself. We’re free to use it in this or in any other option setting.</p>
-<p>Now we can address the time line scrolling. Chronoline.js normally advances the time line by a single day with each click. That would result in some rather tedious scrolling for our users. Instead of the default behavior, we’ll have Chronoline.js advance by a full year. As with the labels, we change this behavior by supplying Chronoline.js with a function. That function is passed a date object and it should return a new date object to which Chronoline.js should scroll. In our case we simply add or subtract one from the year value.</p>
+<p>Now we can address the timeline scrolling. Chronoline.js normally advances the timeline by a single day with each click. That would result in some rather tedious scrolling for our users. Instead of the default behavior, we’ll have Chronoline.js advance by a full year. As with the labels, we change this behavior by supplying Chronoline.js with a function. That function is passed a date object, and it should return a new date object to which Chronoline.js should scroll. In our case, we simply add or subtract one from the year value.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -800,7 +800,7 @@ subSubLabel: <span class="kw">null</span>,</code></pre></td></tr></table>
 scrollRight: <span class="kw">function</span>(date) {
     <span class="kw">return</span> <span class="kw">new</span> <span class="fu">Date</span>(<span class="ot">date</span>.<span class="fu">getFullYear</span>()+<span class="dv">1</span>, <span class="ot">date</span>.<span class="fu">getMonth</span>(), <span class="ot">date</span>.<span class="fu">getDate</span>());
 },</code></pre></td></tr></table>
-<p>The last few adjustments clean up the appearance and behavior of Chronoline.js. Adding a bit of extra space (in our case 3 months) before the start and after the end of the timeline give the data a bit of room.</p>
+<p>The last few adjustments clean up the appearance and behavior of Chronoline.js. Adding some extra space (in our case three months) before the start and after the end of the timeline gives the data a bit of room.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">timelinePadding: DAY_IN_MILLISECONDS * <span class="dv">366</span> / <span class="dv">4</span>,</code></pre></td></tr></table>
 <p>We can also make the scrolling animate smoothly instead of jumping, give users the ability to drag the timeline right or left, and improve the default browser tool tips.</p>
@@ -851,7 +851,7 @@ eventHeight: <span class="dv">10</span>,</code></pre></td></tr></table>
 The Chronoline.js library creates a simple, interactive time line.
 </figcaption>
 </figure>
-<p>The resulting timeline looks pretty good, but the limitations of the library make it difficult to customize and enhance the timeline further. Next, we’ll build a new time line from scratch without the library, so we have complete control.</p>
+<p>The resulting timeline looks pretty good, but the limitations of the library make it difficult to customize and enhance the timeline further. Next, we’ll build a new timeline from scratch without the library, so we have complete control.</p>
 <script>
 ;(function(){
 
@@ -955,9 +955,9 @@ The Chronoline.js library creates a simple, interactive time line.
 }());
 </script>
 <h2 id="building-time-lines-with-javascript">Building Time Lines with JavaScript</h2>
-<p>If you followed the example in the previous section, you might not be completely satisfied with the results. We did end up with an accurate time line of Shakespeare’s plays, but the resulting visualization may not be communicating what you want. For example, the time line doesn’t show the names of the plays unless the user hovers a mouse over that section of the graph. Perhaps we’d rather have the plays’ titles always visible. That kind of problem is a limitation of third-party libraries. The author of Chronoline.js didn’t see the need for displaying titles, so he didn’t offer the option. And unless we’re willing to take on the potentially daunting task of modifying the library’s source code, we can’t make the library do exactly what we want.</p>
-<p>Fortunately, particularly in the case of time lines, we can take a completely different approach. We can create visualizations without using any third party library at all. With this approach we’ll have total control over the result. Time lines are especially amenable to this technique because they can be created with nothing more than text and styling. All it takes is a basic understanding of <span class="smcp">HTML</span> and <span class="smcp">CSS</span>, plus enough JavaScript to set things up and perhaps provide simple interactions.</p>
-<p>That’s exactly what we’ll do in this example. We’ll start with the same data set as before. Instead of feeding that data into a third-party library, however, we’ll use plain old JavaScript (with an optional dose of jQuery) to construct a pure <span class="smcp">HTML</span> representation of the data. Then we’ll use <span class="smcp">CSS</span> to set the appearance of the time line.</p>
+<p>If you followed the example in the previous section, you might not be completely satisfied with the results. We did end up with an accurate timeline of Shakespeare’s plays, but the resulting visualization may not be communicating what you want. For example, the timeline doesn’t show the names of the plays unless the user hovers a mouse over that section of the graph. Perhaps we’d rather have the plays’ titles always visible. That kind of problem is a limitation of third-party libraries. The author of Chronoline.js didn’t see the need for displaying titles, so he didn’t offer the option. And unless we’re willing to take on the potentially daunting task of modifying the library’s source code, we can’t make the library do exactly what we want.</p>
+<p>Fortunately, particularly in the case of timelines, we can take a completely different approach. We can create visualizations without using any third-party library at all, which will give us total control over the result. Timelines are especially amenable to this technique because they can be created with nothing more than text and styling. All it takes is a basic understanding of <span class="smcp">HTML</span> and <span class="smcp">CSS</span>, plus enough JavaScript to set things up and perhaps provide simple interactions.</p>
+<p>That’s exactly what we’ll do in this example. We’ll start with the same data set as before. Instead of feeding that data into a third-party library, however, we’ll use plain old JavaScript (with an optional dose of jQuery) to construct a pure <span class="smcp">HTML</span> representation of the data. Then we’ll use <span class="smcp">CSS</span> to set the appearance of the timeline.</p>
 <h3 id="step-1-prepare-the-html-skeleton">Step 1: Prepare the HTML Skeleton</h3>
 <p>Without any required libraries, the <span class="smcp">HTML</span> page for our timeline is pretty simple. All we need is a containing <code>&lt;div&gt;</code> with a unique <code>id</code> attribute in line 8.</p>
 <table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -1034,8 +1034,8 @@ The Chronoline.js library creates a simple, interactive time line.
     },
     <span class="co">// Data set continues...</span>
 }</code></pre></td></tr></table>
-<h3 id="step-3-create-the-time-line-in-semantic-html">Step 3: Create the Time Line in Semantic HTML</h3>
-<p>To create the timeline in <span class="smcp">HTML</span>, we first need to decide how to represent it. If you’re used to working with arbitrary <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> elements, you might think that’s the best approach here as well. Instead of jumping right to these generic elements, however, it’s worth considering other <span class="smcp">HTML</span> structures that more accurately convey the content. <span class="lgcp">HTML</span> that more closely reflects the meaning of the underlying content is known as <em>semantic markup</em>, and it’s usually preferred over generic <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> tags. Semantic markup exposes the meaning of your content to computers such as search engines and screen readers for users with visual impairments, and it can improve your site’s search rank and its accessibility. If we think about a time line in the context of semantic markup, it’s easy to see that the time line is really just a list. In fact, it’s a list with a specific order. We should build our <span class="smcp">HTML</span> time line, therefore, as an ordered list (<code>&lt;ol&gt;</code>) element. While we’re creating the <code>&lt;ol&gt;</code> we can also give it a class name for <span class="smcp">CSS</span> style rules we’ll be adding later.</p>
+<h3 id="step-3-create-the-timeline-in-semantic-html">Step 3: Create the Timeline in Semantic HTML</h3>
+<p>To create the timeline in <span class="smcp">HTML</span>, we first need to decide how to represent it. If you’re used to working with arbitrary <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> elements, you might think that’s the best approach here as well. Instead of jumping right to these generic elements, however, we should consider other <span class="smcp">HTML</span> structures that more accurately convey the content. <span class="lgcp">HTML</span> that more closely reflects the meaning of the underlying content is known as <em>semantic markup</em>, and it’s usually preferred over generic <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> tags. Semantic markup exposes the meaning of your content to computers such as search engines and screen readers for users with visual impairments, and it can improve your site’s search rank and its accessibility. If we think about a timeline in the context of semantic markup, it’s easy to see that the timeline is really just a list. In fact, it’s a list with a specific order. We should build our <span class="smcp">HTML</span> timeline, therefore, as an ordered list (<code>&lt;ol&gt;</code>) element. While we’re creating the <code>&lt;ol&gt;</code> we can also give it a class name for <span class="smcp">CSS</span> style rules we’ll be adding later.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1079,7 +1079,7 @@ A pure <span class="smcp">HTML</span> timeline can start out as a simple ordered
     <span class="kw">&lt;li&gt;</span>1591: Henry VI, Part 3<span class="kw">&lt;/li&gt;</span>
     <span class="kw">&lt;li&gt;</span>1591: Henry VI, Part 1<span class="kw">&lt;/li&gt;</span>
 <span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table>
-<p>In the spirit of semantic <span class="smcp">HTML</span>, we should stop and consider if that markup can be improved. Since it appears first in our list items, let’s consider the date or date range for a play. Although there has been some controversy around the decision, <span class="smcp">HTML5</span> has defined support for a <code>&lt;time&gt;</code> element to contain dates and times. Using that element as a wrapper will make our dates more semantic. The second part of each list item is the title of the play. As it happens, <span class="smcp">HTML5</span>’s <code>&lt;cite&gt;</code> element is perfect for that content. To quote the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-cite-element">current standard</a>:</p>
+<p>In the spirit of semantic <span class="smcp">HTML</span>, we should stop and consider whether that markup can be improved. Since it appears first in our list items, let’s consider the date or date range for a play. Although there has been some controversy around the decision, <span class="smcp">HTML5</span> has defined support for a <code>&lt;time&gt;</code> element to contain dates and times. Using that element as a wrapper will make our dates more semantic. The second part of each list item is the title of the play. As it happens, <span class="smcp">HTML5</span>’s <code>&lt;cite&gt;</code> element is perfect for that content. To quote the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-cite-element">current standard</a>:</p>
 <blockquote>
 <p>The cite element represents the title of a work (e.g. a book, […] <strong>a play,</strong> […] etc). This can be a work that is being quoted or referenced in detail (i.e. a citation), or it can just be a work that is mentioned in passing. [Emphasis added.]</p>
 </blockquote>
@@ -1133,7 +1133,7 @@ A pure <span class="smcp">HTML</span> timeline can start out as a simple ordered
 Semantic markup simplifies the required <span class="smcp">HTML</span>, but it may require special styling.
 </figcaption>
 </figure>
-<p>What is much improved is the underlying <span class="smcp">HTML</span>. The markup clearly identifies the type of content it contains, an ordered list of dates and citations.</p>
+<p>What <em>is</em> much improved is the underlying <span class="smcp">HTML</span>. The markup clearly identifies the type of content it contains: an ordered list of dates and citations.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1149,7 +1149,7 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
     <span class="kw">&lt;li&gt;&lt;time&gt;</span>1591<span class="kw">&lt;/time&gt;&lt;cite&gt;</span>Henry VI, Part 1<span class="kw">&lt;/cite&gt;&lt;/li&gt;</span>
 <span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table>
 <h3 id="step-4-include-the-supporting-content">Step 4: Include the Supporting Content</h3>
-<p>When we created a time line using the Chronoline.js library, we weren’t able to include the supporting content from Wikipedia because the library did not offer that option. In this example, though, we have complete control over the content, so let’s include that information in our time line. For most plays our data includes its first official record, its first publication, its first performance, and a discussion of the evidence. This type of content is perfectly matched to the <span class="smcp">HTML</span> <em>description list</em> <code>&lt;dl&gt;</code> so that’s how we’ll add it to our page. It can follow the <code>&lt;cite&gt;</code> of the play’s title.</p>
+<p>When we created a timeline using the Chronoline.js library, we weren’t able to include the supporting content from Wikipedia because the library did not offer that option. In this example, though, we have complete control over the content, so let’s include that information in our timeline. For most plays our data includes its first official record, its first publication, its first performance, and a discussion of the evidence. This type of content is perfectly matched to the <span class="smcp">HTML</span> <em>description list</em> <code>&lt;dl&gt;</code> so that’s how we’ll add it to our page. It can follow the <code>&lt;cite&gt;</code> of the play’s title.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1275,9 +1275,9 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
 <span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table>
 <h3 id="step-5-optionally-take-advantage-of-jquery">Step 5: Optionally Take Advantage of jQuery</h3>
 <p>Our code so far has used nothing but plain JavaScript. If you’re using jQuery on your web pages, you can shorten the code a bit by taking advantage of some jQuery features. If your web pages aren’t using jQuery already, the minor enhancements in this step don’t justify adding it, but if you’d like to see a more concise version, check out the book’s source code for an alternative.</p>
-<h3 id="step-6-fix-time-line-problems-with-css">Step 6: Fix Time Line Problems with CSS</h3>
-<p>Now that we’ve built our time line’s content in <span class="smcp">HTML</span>, it’s time to define the styles that determine its appearance. Throughout this example we’ll focus on the functional aspects of styling rather than pure visual elements such as fonts and colors, since you’ll probably want those visual styles to be specific to your own web site.</p>
-<p>The first step is a simple one. We want to get rid of the numbering (1, 2, 3, …) that browsers normally add to ordered list items. A single rule banishes them from our time line. By setting the <code>list-style-type</code> to <code>none</code> we tell the browser not to add any special characters to our list items.</p>
+<h3 id="step-6-fix-timeline-problems-with-css">Step 6: Fix Timeline Problems with CSS</h3>
+<p>Now that we’ve built our timeline’s content in <span class="smcp">HTML</span>, it’s time to define the styles that determine its appearance. Throughout this example we’ll focus on the functional aspects of styling rather than pure visual elements such as fonts and colors, since you’ll probably want those visual styles to be specific to your own web site.</p>
+<p>The first step is a simple one. We want to get rid of the numbering (1, 2, 3, …) that browsers normally add to ordered list items. A single rule banishes them from our timeline: by setting the <code>list-style-type</code> to <code>none</code> we tell the browser not to add any special characters to our list items.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1299,7 +1299,7 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li &gt; time<span class="dv">:last-of-type:after</span> <span class="kw">{</span>
     <span class="kw">content:</span> <span class="st">&quot;: &quot;</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>With these changes we’ve cleaned up all of the obvious problems with our time line.</p>
+<p>With these changes we’ve cleaned up all of the obvious problems with our timeline.</p>
 <style>
 .timeline1 {
     padding-top: 1em;
@@ -1383,8 +1383,8 @@ Kier Elam posits…
 </figcaption>
 </figure>
 <p>Now we can add a little flair to the visualization.</p>
-<h3 id="step-7-add-styles-to-visually-structure-the-time-line">Step 7: Add Styles to Visually Structure the Time Line</h3>
-<p>The next set of CSS styles will improve the visual structure of the time line. First among those improvements will be making the time line look more like, well, a <em>line.</em> To do that we can add a border to the left side of the <code>&lt;li&gt;</code> elements. When we do that, we’ll also want to make sure that those <code>&lt;li&gt;</code> elements don’t have any margins, as margins would introduce gaps in the border and break the continuity of the line.</p>
+<h3 id="step-7-add-styles-to-visually-structure-the-timeline">Step 7: Add Styles to Visually Structure the Timeline</h3>
+<p>The next set of CSS styles will improve the visual structure of the timeline. First among those improvements will be making the timeline look more like, well, a <em>line.</em> To do that, we can add a border to the left side of the <code>&lt;li&gt;</code> elements. At the same time, we’ll also want to make sure that those <code>&lt;li&gt;</code> elements don’t have any margins, as margins would introduce gaps in the border and break the continuity of the line.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1399,14 +1399,14 @@ Kier Elam posits…
 <span class="fl">.timeline</span> li <span class="kw">{</span>
     <span class="kw">margin:</span> <span class="dt">0</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>These styles add a nice vertical line on the left side of our entire time line. Now that we have that line, we can shift the dates over to the left side of it. The shift requires rules for the parent <code>&lt;li&gt;</code> as well as the <code>&lt;time&gt;</code> elements. For the parent <code>&lt;li&gt;</code> elements we want their <code>position</code> specified as <code>relative</code>.</p>
+<p>These styles add a nice vertical line on the left side of our entire timeline. Now that we have that line, we can shift the dates over to the left side of it. The shift requires rules for the parent <code>&lt;li&gt;</code> as well as the <code>&lt;time&gt;</code> elements. For the parent <code>&lt;li&gt;</code> elements, we want their <code>position</code> specified as <code>relative</code>.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li <span class="kw">{</span>
     <span class="kw">position:</span> <span class="dt">relative</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>By itself, this rule doesn’t actually change our time line. It does, however, establish a <em>positioning context</em> for any elements that are children of the <code>&lt;li&gt;</code>. Those children include the <code>&lt;time&gt;</code> elements that we want to move. With the <code>&lt;li&gt;</code> set to <code>position: relative</code> we can now set the <code>&lt;time&gt;</code> children to <code>position: absolute</code>. This rule lets us specify exactly where the browser should place the time elements, <em>relative</em> to the parent <code>&lt;li&gt;</code>. We want to move all <code>&lt;time&gt;</code> elements to the left, and we want to move the second <code>&lt;time&gt;</code> element down. The first selector below will target both of our <code>&lt;time&gt;</code> tags while the second selector, using the same <code>time + time</code> trick described above, targets only the second of two <code>&lt;time&gt;</code> tags.</p>
+<p>By itself, this rule doesn’t actually change our timeline. It does, however, establish a <em>positioning context</em> for any elements that are children of the <code>&lt;li&gt;</code>. Those children include the <code>&lt;time&gt;</code> elements that we want to move. With the <code>&lt;li&gt;</code> set to <code>position: relative</code>, we can now set the <code>&lt;time&gt;</code> children to <code>position: absolute</code>. This rule lets us specify exactly where the browser should place the time elements, <em>relative</em> to the parent <code>&lt;li&gt;</code>. We want to move all <code>&lt;time&gt;</code> elements to the left, and we want to move the second <code>&lt;time&gt;</code> element down. In the following code the first selector targets both of our <code>&lt;time&gt;</code> tags while the second selector, using the same <code>time + time</code> trick described earlier, targets only the second of two <code>&lt;time&gt;</code> tags.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1423,8 +1423,8 @@ Kier Elam posits…
     <span class="kw">top:</span> <span class="dt">1em</span><span class="kw">;</span>
     <span class="kw">left:</span> <span class="dt">-3.85em</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>Notice that we’re using <code>em</code> units rather than pixel <code>px</code> units for this shift. By using <code>em</code> units we define our shift to be relative to the current font size, regardless of what it is. That gives us the freedom to change the font size without having to go back and tweak any pixel positioning.</p>
-<p>The specific values for the position shift may need adjustment depending on the specific font face, but, in general, we use a negative <code>left</code> position to shift content further to the left than it would normal appear, and a positive <code>top</code> position to move the content down the page.</p>
+<p>By using <code>em</code> units rather than pixel <code>px</code> units for this shift, we define our shift to be relative to the current font size, regardless of what it is. That gives us the freedom to change the font size without having to go back and tweak any pixel positioning.</p>
+<p>The specific values for the position shift may need adjustment depending on the specific font face, but, in general, we use a negative <code>left</code> position to shift content farther to the left than it would normally appear, and a positive <code>top</code> position to move the content down the page.</p>
 <p>After moving the dates to the left of the vertical line, we’ll also want to shift the main content a bit to the right so it doesn’t crowd up against the line. The <code>padding-left</code> property takes care of that. And while we’re adjusting the left padding we can also add a bit of padding on the bottom to separate each play from the other.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1434,7 +1434,7 @@ Kier Elam posits…
     <span class="kw">padding-left:</span> <span class="dt">1em</span><span class="kw">;</span>
     <span class="kw">padding-bottom:</span> <span class="dt">1em</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>With the dates and the main content on opposite sides of our vertical line, there’s no longer any need for any punctuation after the date. We can, therefore, remove the style that adds a colon after the last <code>&lt;time&gt;</code> element.</p>
+<p>With the dates and the main content on opposite sides of our vertical line, we no longer need any punctuation after the date, so we’ll remove the style that adds a colon after the last <code>&lt;time&gt;</code> element.</p>
 <style>
 .strikeThrough td.sourceCode { text-decoration: line-through; }
 </style>
@@ -1444,8 +1444,8 @@ Kier Elam posits…
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li &gt; time<span class="dv">:last-of-type:after</span> <span class="kw">{</span>
     <span class="kw">content:</span> <span class="st">&quot;: &quot;</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>The fact that we’re able to make this change highlights one of the reasons for using CSS to add the colon in the first place. If we had included the punctuation explicitly in the markup (by, for example, generating it in the JavaScript code), then our markup would be more tightly coupled to our styles. If a style modification changed whether or not the colon was appropriate, we would have to go back and change the JavaScript as well. With the approach that we’re using here, however, styles and markup are much more independent. Any style changes are isolated to our CSS rules; no modifications to the JavaScript are required.</p>
-<p>As part of the improved visual styling we can make a few other changes to our time line. We can increase the font size for each play’s title to make that information more prominent. At the same time we can add some extra spacing below the title, and we can indent the description list a bit.</p>
+<p>The fact that we’re able to make this change highlights one of the reasons for using CSS to add the colon in the first place. If we had included the punctuation explicitly in the markup (by, for example, generating it in the JavaScript code), then our markup would be more tightly coupled to our styles. If a style modification changed whether the colon was appropriate, we would have to go back and change the JavaScript as well. With the approach that we’re using here, however, styles and markup are much more independent. Any style changes are isolated to our CSS rules; no modifications to the JavaScript are required.</p>
+<p>To further improve its visual styling, we can make a few other changes to our timeline. We can increase the font size for each play’s title to make that information more prominent. At the same time, we can add some extra spacing below the title and indent the description list a bit.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1462,7 +1462,7 @@ Kier Elam posits…
 <span class="fl">.timeline</span> dl <span class="kw">{</span>
     <span class="kw">padding-left:</span> <span class="dt">1.5em</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>For a last bit of polish let’s add a bullet right on the vertical line to mark each plan and tie the title more closely to the dates. We use a large bullet (several times the normal size) and position it right over the line. As you can see from the rules below, the unicode character for a bullet can be represented as <code>&quot;\2022&quot;</code>. The exact position values will depend on the specific font, but a bit of trial and error can perfect the adjustments.</p>
+<p>For a last bit of polish, let’s add a bullet right on the vertical line to mark each play and tie the title more closely to the dates. We use a large bullet (several times the normal size) and position it right over the line. As you can see from the following rules, the Unicode character for a bullet can be represented as <code>&quot;\2022&quot;</code>. The exact position values will depend on the specific font, but a bit of trial and error can perfect the adjustments.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1479,7 +1479,7 @@ Kier Elam posits…
     <span class="kw">right:</span> <span class="dt">-0.65em</span><span class="kw">;</span>
     <span class="kw">top:</span> <span class="dt">0.1em</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>Now our time line is starting to look like an actual time <em>line.</em> In your own pages you could include additional styles to define fonts, colors, and so on, but even without those decorations the visualization is effective.</p>
+<p>Now our timeline is starting to look like an actual time <em>line.</em> In your own pages you could include additional styles to define fonts, colors, and so on, but even without those decorations the visualization is effective.</p>
 <style>
 .timeline2 { font-size: 0.8em; }
 .timeline2 li { list-style-type: none; }
@@ -1563,8 +1563,8 @@ Additional styles clarify the structure of the timeline elements.
 </figcaption>
 </figure>
 <h3 id="step-8-add-interactivity">Step 8: Add Interactivity</h3>
-<p>The full details on all 40 of Shakespeare’s plays might be a little overwhelming for a first view of our time line. The visualization would be more effective if it showed only the play titles at first, but let users reveal more details through interactions. Because we’re building this visualization ourselves, we have all the control necessary to make that happen.</p>
-<p>First we’ll set up a few additional styles. There are several ways to hide the play details with CSS, the most obvious being the <code>display:none</code> property. As we’ll see a little later though, a better choice for our timeline is setting the <code>max-height</code> to 0. If the maximum height of an element is 0, then, in theory, it should be invisible. In practice we also have to set the <code>overflow</code> property to <code>hidden</code>. Otherwise, even though the <code>&lt;dl&gt;</code> element itself has no height, the browser will display the content that overflows from it. Since we want our description lists to start out hidden, we can set that property as the default.</p>
+<p>The full details on all 40 of Shakespeare’s plays might be a little overwhelming for a first view of our timeline. The visualization would be more effective if it showed only the play titles at first, but let users reveal more details through interactions. Because we’re building this visualization ourselves, we have all the control necessary to make that happen.</p>
+<p>First we’ll set up a few additional styles. There are several ways to hide the play details with CSS, the most obvious being the <code>display:none</code> property. As we’ll see a little later though, a better choice for our timeline is setting the <code>max-height</code> to 0. If the maximum height of an element is 0, then, in theory, it should be invisible. In practice, we also have to set the <code>overflow</code> property to <code>hidden</code>. Otherwise, even though the <code>&lt;dl&gt;</code> element itself has no height, the browser will display the content that overflows from it. Since we want our description lists to start out hidden, we can set that property as the default.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1573,7 +1573,7 @@ Additional styles clarify the structure of the timeline elements.
     <span class="kw">max-height:</span> <span class="dt">0</span><span class="kw">;</span>
     <span class="kw">overflow:</span> <span class="dt">hidden</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>To reveal a play’s details, users click on the play’s title in the <code>&lt;cite&gt;</code> element. So that users know that they can click on the title, we’ll change the mouse cursor from the normal arrow to the “clickable” hand. We can also change the <code>display</code> property from the default <code>inline</code> to <code>block</code>. That change gives users a larger and more consistent area to click.</p>
+<p>To reveal a play’s details, users click on the play’s title in the <code>&lt;cite&gt;</code> element. To indicate to users that they can click on the title, we’ll change the mouse cursor from the normal arrow to the “clickable” hand. We can also change the <code>display</code> property from the default <code>inline</code> to <code>block</code>. That change gives users a larger and more consistent area to click.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1590,7 +1590,7 @@ Additional styles clarify the structure of the timeline elements.
     <span class="kw">max-height:</span> <span class="dt">40em</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
 <p>The exact value for the expanded <code>max-height</code> will depend on the content. In general, though, it should be large enough to reveal the full details for the item. It’s okay to make it a little larger than necessary “just in case.” Don’t go overboard, however, and make it unreasonably large. (We’ll see why at the end of this step.)</p>
-<p>With these styles in place we can add a bit of JavaScript to control them. It won’t take much. The first step is writing an event handler that will be called when users click. That function will take a single parameter, specifically an <code>Event</code> object, with details about the click. One of those details is the <code>.target</code> property which will contain a reference to the specific element of the page on which the user clicked. We only care about clicks on the <code>&lt;cite&gt;</code> elements.</p>
+<p>With these styles in place, we can add a bit of JavaScript to control them. It won’t take much. The first step is writing an event handler that will be called when users click. That function will take a single parameter, specifically an <code>Event</code> object, with details about the click. One of those details is the <code>.target</code> property, which will contain a reference to the specific element of the page on which the user clicked. We care only about clicks on the <code>&lt;cite&gt;</code> elements.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1601,7 +1601,7 @@ Additional styles clarify the structure of the timeline elements.
         <span class="co">// Code continues...</span>
     }
 };</code></pre></td></tr></table>
-<p>Once we know that a <code>&lt;cite&gt;</code> was clicked, we find the <code>&lt;li&gt;</code> element that is its parent. We can then check to see if the <code>&lt;li&gt;</code> has the <code>&quot;expanded&quot;</code> class. If not, we add it. If the class is already present, we remove it. Our approach is a bit primitive because it only allows one class to be defined for the <code>&lt;li&gt;</code>. That’s all we need for this example, though, so we’ll stick with it.</p>
+<p>Once we know that a <code>&lt;cite&gt;</code> was clicked, we find its parent <code>&lt;li&gt;</code> element. We can then check to see if the <code>&lt;li&gt;</code> has the <code>&quot;expanded&quot;</code> class. If it doesn’t, we add it. If the class is already present, we remove it. Our approach is a bit primitive because it allows only one class to be defined for the <code>&lt;li&gt;</code>. That’s all we need for this example, though, so we’ll stick with it.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1623,13 +1623,13 @@ Additional styles clarify the structure of the timeline elements.
     }
 };</code></pre></td></tr></table>
 <blockquote>
-<p>Note: modern browsers have a more sophisticated interface for controlling the class attributes of elements. That interface is the <code>classList</code>, and it easily supports multiple classes per element, as well as toggling the class on and off with a single function. Older browsers (namely Internet Explorer version 9 and earlier) don’t support that interface, however. Since we don’t need the extra functionality, the older <code>className</code> is sufficient for this example.</p>
+<p>Note: Modern browsers have a more sophisticated interface for controlling the class attributes of elements. That interface is the <code>classList</code>, and it easily supports multiple classes per element, as well as toggling the class on and off with a single function. Older browsers (namely Internet Explorer version 9 and earlier) don’t support that interface, however. Since we don’t need the extra functionality, the older <code>className</code> is sufficient for this example.</p>
 </blockquote>
 <p>With our event handling function defined, we can associate it with clicks anywhere on the timeline. The standard <code>addEventListener</code> method creates the association for any element.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;timeline&quot;</span>).<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, clicked);</code></pre></td></tr></table>
 <blockquote>
-<p>Note: You might be curious as to why we’re associating an event listener with the entire time line visualization instead of, for example, adding individual event listeners to each <code>&lt;cite&gt;</code>. That alternative would eliminate the need to check the event target in the handler; however, it turns out that it’s much less efficient than the approach we’re taking. Event listeners can consume a fair bit of JavaScript resources, and our page will perform better if we keep them to a minimum.</p>
+<p>Note: You might be curious as to why we’re associating an event listener with the entire timeline visualization instead of, for example, adding individual event listeners to each <code>&lt;cite&gt;</code>. That alternative would eliminate the need to check the event target in the handler; however, it turns out that it’s much less efficient than the approach we’re taking. Event listeners can consume a fair bit of JavaScript resources, and our page will perform better if we keep them to a minimum.</p>
 </blockquote>
 <p>If you’re using jQuery, the required code is even simpler:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -1638,8 +1638,8 @@ Additional styles clarify the structure of the timeline elements.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;#timeline&quot;</span>).<span class="fu">on</span>(<span class="st">&quot;click&quot;</span>, <span class="st">&quot;cite&quot;</span>, <span class="kw">function</span>() {
     <span class="fu">$</span>(<span class="kw">this</span>).<span class="fu">parent</span>(<span class="st">&quot;li&quot;</span>).<span class="fu">toggleClass</span>(<span class="st">&quot;expanded&quot;</span>);
 })</code></pre></td></tr></table>
-<p>We’re almost ready to show our new and improved time line to the world, but there’s one final refinement we can make. Our current version shows or hides a play’s details all at once. This transition can be abrupt to users as content appears or disappears instantly. We can provide a better experience by gracefully transitioning between the two states, and a natural transition for this time line is animating the height of the content. When the details are hidden, they have a height of 0. And when we want to show them, we will gradually animate the height to its natural value.</p>
-<p>It’s possible to add these animations using JavaScript. The jQuery library, in fact, has a fairly extensive set of animation functions. In modern browsers, however, it is much better to animate content using CSS transitions. Web browsers are optimized for CSS, often offloading the computations to special high performance graphics co-processors. In those cases CSS-based animations can perform several orders of magnitude better than JavaScript. The only disadvantage to using CSS for animations is a lack of support in older browsers. But animation isn’t usually <em>critical</em> to most web pages. Sure it’s nice, but if a user with an older browser misses out on the graceful transitions, it isn’t the end of the world. The web page will still <em>function</em> just fine.</p>
+<p>We’re almost ready to show our new and improved timeline to the world, but there’s one final refinement we can make. Our current version shows or hides a play’s details all at once. This transition can be abrupt to users, as content appears or disappears instantly. We can provide a better experience by gracefully transitioning between the two states, and a natural transition for this timeline is animating the height of the content. When the details are hidden, they have a height of 0. And when we want to show them, we will gradually animate the height to its natural value.</p>
+<p>It’s possible to add these animations using JavaScript. The jQuery library, in fact, has a fairly extensive set of animation functions. In modern browsers, however, it is much better to animate content using CSS transitions. Web browsers are optimized for CSS, often offloading the computations to special high-performance graphics co-processors. In those cases CSS-based animations can perform several orders of magnitude better than JavaScript. The only disadvantage to using CSS for animations is a lack of support in older browsers. But animation isn’t usually <em>critical</em> to most web pages. Sure, it’s nice, but if a user with an older browser misses out on the graceful transitions, it isn’t the end of the world. The web page will still <em>function</em> just fine.</p>
 <p>The CSS <code>transition</code> property is the simplest way to define a CSS animation. It specifies the actual property to animate, the duration of the animation, and the <em>easing function</em> to follow. Here’s a rule we could use in our example:</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1647,9 +1647,9 @@ Additional styles clarify the structure of the timeline elements.
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li dl <span class="kw">{</span>
     <span class="kw">transition:</span> max-height <span class="dt">500ms</span> ease-in-out<span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>This rule defines a transition for the time line’s <code>&lt;dl&gt;</code> elements. It specifies that the property to animate is <code>max-height</code>, so the transition will take effect whenever an element’s <code>max-height</code> property changes (and that’s precisely the property we modify when the <code>&quot;expanded&quot;</code> class is added or removed). The transition rule also specifies that the animation should take 500 ms, and that it should “ease in” and “ease out.” This last property indicates that the animation should start slowly; speed up, and then slow down again before finishing. That behavior usually looks more natural than animating at a constant speed.</p>
-<p>CSS transitions can animate many CSS properties, but there is one important constraint. Both the starting and ending values must be explicit. That constraint explains why we’re animating <code>max-height</code> instead of <code>height</code>, even though it’s really just <code>height</code> that we want to change. Unfortunately, we can’t animate <code>height</code> because its has no explicit value when the description list is expanded. Every <code>&lt;dl&gt;</code> will have its own height based on its content, and there’s no way we can predict those values in our CSS. The <code>max-height</code> property, on the other hand, gives us explicit values for both states—<code>0</code> and <code>40em</code> in this example—so CSS can animate its transitions. We just have to be sure that no <code>&lt;dl&gt;</code> has content more than <code>40em</code> high. Otherwise the extra content will be cut off. This doesn’t mean, however, that we should set the <code>max-height</code> for expanded <code>&lt;dl&gt;</code> elements to an astronomical value. To see why, consider what would happen if we transitioned <code>max-height</code> to <code>1000em</code> for a <code>&lt;dl&gt;</code> that only needed <code>10em</code> of height. Ignoring (for simplicity) the complications of easing, it would only take 1/100<sup>th</sup> of the full transition time before the full content of the element was visible. The animation that we had planned to take 500 ms is over in 5 ms instead.</p>
-<p>There is one final complication with CSS transitions. Most browsers implemented the functionality before the official standard was finalized. To make sure their implementations wouldn’t conflict with potential changes in the official standards, browser vendors initially implemented transitions using a proprietary syntax. That syntax adds a prefix (<code>-webkit-</code> for Safari and Chrome, <code>-moz-</code> for FireFox, and <code>-o-</code> for Opera) to the property name. To cover all the major browsers, we must include a rule with each prefix.</p>
+<p>This rule defines a transition for the timeline’s <code>&lt;dl&gt;</code> elements. It specifies that the property to animate is <code>max-height</code>, so the transition will take effect whenever an element’s <code>max-height</code> property changes (and that’s precisely the property we modify when the <code>&quot;expanded&quot;</code> class is added or removed). The transition rule also specifies that the animation should take 500 milliseconds, and that it should “ease in” and “ease out.” This last property indicates that the animation should start slowly; speed up, and then slow down again before finishing. That behavior usually looks more natural than animating at a constant speed.</p>
+<p>CSS transitions can animate many CSS properties, but there is one important constraint. Both the starting and ending values must be explicit. That constraint explains why we’re animating <code>max-height</code> instead of <code>height</code>, even though it’s really just <code>height</code> that we want to change. Unfortunately, we can’t animate <code>height</code> because it has no explicit value when the description list is expanded. Every <code>&lt;dl&gt;</code> will have its own height based on its content, and there’s no way we can predict those values in our CSS. The <code>max-height</code> property, on the other hand, gives us explicit values for both states—<code>0</code> and <code>40em</code> in this example—so CSS can animate its transitions. We just have to be sure that no <code>&lt;dl&gt;</code> has content more than <code>40em</code> high. Otherwise, the extra content will be cut off. This doesn’t mean, however, that we should set the <code>max-height</code> for expanded <code>&lt;dl&gt;</code> elements to an astronomical value. To see why, consider what would happen if we transitioned <code>max-height</code> to <code>1000em</code> for a <code>&lt;dl&gt;</code> that needed only <code>10em</code> of height. Ignoring (for simplicity) the complications of easing, it would only take 1/100<sup>th</sup> of the full transition time before the full content of the element was visible. The animation that we had planned to take 500 milliseconds is over in 5 milliseconds instead.</p>
+<p>There is one final complication with CSS transitions. Most browsers implemented the functionality before the official standard was finalized. To make sure their implementations wouldn’t conflict with potential changes in the official standards, browser vendors initially implemented transitions using a proprietary syntax. That syntax adds a prefix (<code>-webkit-</code> for Safari and Chrome, <code>-moz-</code> for Firefox, and <code>-o-</code> for Opera) to the property name. To cover all the major browsers, we must include a rule with each prefix.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1665,7 +1665,7 @@ Additional styles clarify the structure of the timeline elements.
 <blockquote>
 <p>Note: Internet Explorer doesn’t need a prefix because Microsoft didn’t implement transitions until the standard was stable. Also, there’s no harm in specifying multiple prefixes since browsers simply ignore properties they don’t understand.</p>
 </blockquote>
-<p>Now our hand-crafted time line responds perfectly to user interactions. Here’s the complete visualization.</p>
+<p>Now our hand-crafted timeline responds perfectly to user interactions. Here’s the complete visualization.</p>
 <style>
 .timeline3 { font-size: 0.8em; }
 .timeline3 li { list-style-type: none; }
@@ -1880,23 +1880,23 @@ A fully interactive timeline requires only <span class="smcp">HTML</span>, <span
 }());
 </script>
 <h2 id="using-a-web-component">Using a Web Component</h2>
-<p>In this example, we’re going to look at another alternative approach; instead of building a time line from scratch using low level JavaScript, we’ll integrate a full-featured time line component: <a href="http://timeline.knightlab.com">Timeline <span class="smcp">JS</span></a>. In many ways this approach is the exact opposite of low level JavaScript. At its most basic, it requires no coding at all, as it can be as easy as embedding a YouTube video in a blog post. That method sacrifices a lot of control over the resulting visualization, however, so we’ll also look at ways to regain some of that control.</p>
+<p>In this example, we’ll look at another alternative approach; instead of building a timeline from scratch using low level JavaScript, we’ll integrate a full-featured timeline component: <a href="http://timeline.knightlab.com">Timeline <span class="smcp">JS</span></a>. In many ways this approach is the exact opposite of low-level JavaScript. At its most basic, it requires no coding at all, as it can be as easy as embedding a YouTube video in a blog post. That method sacrifices a lot of control over the resulting visualization, however, so we’ll also look at ways to regain some of that control.</p>
 <h3 id="step-1-preview-the-standard-component">Step 1: Preview the Standard Component</h3>
-<p>Before spending too much time customizing the visualization, it’s worthwhile to check out the component in its most basic form. Fortunately Timeline <span class="smcp">JS</span> makes this process very simple. The <a href="http://timeline.knightlab.com">web site</a> will walk you through the steps in detail, but in a nutshell, they are:</p>
+<p>Before we spend too much time customizing the visualization, it’s worthwhile to check out the component in its most basic form. Fortunately, Timeline <span class="smcp">JS</span> makes this process very simple. The <a href="http://timeline.knightlab.com">web site</a> will walk you through the steps in detail, but in a nutshell, they are:</p>
 <ol type="1">
 <li>Create a <a href="http://docs.google.com">Google Docs</a> spreadsheet with data for the timeline.</li>
-<li>Publish that spreadsheet for web access which creates a <span class="smcp">URL</span> for it.</li>
-<li>Enter that <span class="smcp">URL</span> into a form on the Timeline <span class="smcp">JS</span> web site and it will generate an <span class="smcp">HTML</span> snippet.</li>
+<li>Publish that spreadsheet for web access, which will create a <span class="smcp">URL</span> for it.</li>
+<li>Enter that <span class="smcp">URL</span> into a form on the Timeline <span class="smcp">JS</span> web site, which will generate an <span class="smcp">HTML</span> snippet.</li>
 <li>Copy and paste the snippet into your web page.</li>
 </ol>
-<p>Figure <span class="nextfigure"/> shows what the <a href="https://docs.google.com/spreadsheet/ccc?key=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E#gid=0">spreadsheet</a> looks like for Shakespeare’s plays:</p>
+<p>Figure <span class="nextfigure"/> shows what the <a href="https://docs.google.com/spreadsheet/ccc?key=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E#gid=0">spreadsheet</a> looks like for Shakespeare’s plays.</p>
 <figure>
 <img src="img/plays.png" width="640">
 <figcaption>
 The Timeline <span class="smcp">JS</span> component can get its data from a Google Docs spreadsheet.
 </figcaption>
 </figure>
-<p>The <span class="smcp">HTML</span> snippet that Timeline <span class="smcp">JS</span> creates for this time line is</p>
+<p>The <span class="smcp">HTML</span> snippet that Timeline <span class="smcp">JS</span> creates for this timeline is as follows:</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1909,26 +1909,26 @@ The Timeline <span class="smcp">JS</span> component can get its data from a Goog
 <span class="st">    font=Bevan-PotanoSans</span><span class="er">&amp;</span><span class="st">maptype=toner</span><span class="er">&amp;</span><span class="st">lang=en</span><span class="er">&amp;</span><span class="st">height=650&#39;</span>
 <span class="ot">    width=</span><span class="st">&#39;100%&#39;</span><span class="ot"> height=</span><span class="st">&#39;650&#39;</span><span class="ot"> frameborder=</span><span class="st">&#39;0&#39;</span><span class="kw">&gt;</span>
 <span class="kw">&lt;/iframe&gt;</span></code></pre></td></tr></table>
-<p>When included in a page, that snippet results in fully interactive time line for the chronology like that in figure <span class="nextfigure"/>.</p>
+<p>When included in a page, that snippet results in fully interactive timeline for the chronology as shown in figure <span class="nextfigure"/>.</p>
 <figure>
 <iframe src="http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?source=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E&amp;font=Bevan-PotanoSans&amp;maptype=toner⟨=en&amp;start_at_slide=2&amp;height=450" width="100%" height="450" frameborder="0" style="border: 1px solid #444; margin-top:20px;">
 </iframe>
 <figcaption>
-Timeline <span class="smcp">JS</span> builds a complete time line component within an &lt;iframe&gt;.
+Timeline <span class="smcp">JS</span> builds a complete timeline component within an &lt;iframe&gt;.
 </pre>
 </figcaption>
 </figure>
 <p>If the result meets the needs of your visualization, you may not have to go any further. Many web pages that use Timeline <span class="smcp">JS</span> do so in exactly this manner. There are some potential problems with the simplest approach, however:</p>
 <ul>
 <li>The data for the visualization must be available in a public Google Docs spreadsheet, so the approach may not be appropriate for confidential data.</li>
-<li>The data source is a spreadsheet, so it may be difficult to update it often or show more real-time events. This problem doesn’t really affect our Shakespeare chronology, but if the time line you’re creating shows real time data such as trending topics on a social network, a static spreadsheet won’t be practical.</li>
+<li>The data source is a spreadsheet, so it may be difficult to update it often or show more real-time events. This problem doesn’t really affect our Shakespeare chronology, but if the timeline you’re creating shows real-time data such as trending topics on a social network, a static spreadsheet won’t be practical.</li>
 <li>The embedded component has few styling options. Although the default styles and options that Timeline <span class="smcp">JS</span> offers are quite attractive, they are very limited and may not be appropriate for your web page.</li>
-<li>The timeline is embedded as an <code>&lt;iframe&gt;</code>, which gives Timeline <span class="smcp">JS</span> complete control over what is displayed in that section of your page. There is <strong>absolutely no indication</strong> that the organizations supporting Timeline <span class="smcp">JS</span> would do so, but, <em>in theory</em>, they could alter the content (for example by including ads) in ways that your site might not find appropriate.</li>
+<li>The timeline is embedded as an <code>&lt;iframe&gt;</code>, which gives Timeline <span class="smcp">JS</span> complete control over what is displayed in that section of your page. While there is <strong>absolutely no indication</strong> that the organizations supporting Timeline <span class="smcp">JS</span> would do so, <em>in theory</em> they could alter the content (for example by including ads) in ways that your site might not find appropriate.</li>
 </ul>
-<p>Fortunately, none of these possible concerns need prevent us from adding beautiful Timeline <span class="smcp">JS</span> visualizations to our web pages. The folks behind Timeline <span class="smcp">JS</span> make all of the software available as open source, giving us the flexibility to address all of the issues listed above. We’ll see how in the rest of this example.</p>
+<p>Fortunately, none of these possible concerns need prevent us from adding beautiful Timeline <span class="smcp">JS</span> visualizations to our web pages. The folks behind Timeline <span class="smcp">JS</span> make all of the software available as open source, giving us the flexibility to address all of the aforementioned issues. We’ll see how in the rest of this example.</p>
 <h3 id="step-2-include-the-required-components">Step 2: Include the Required Components</h3>
-<p>To use Timeline <span class="smcp">JS</span>, our web pages must include <span class="smcp">CSS</span> style sheets and JavaScript code. For now we’ll stick with the default styles, so we only need a single additional style sheet. The main JavaScript is contained in <code>timeline.js</code>.</p>
-<p>It’s not obvious, but Timeline <span class="smcp">JS</span> also requires jQuery. When you embed a Timeline <span class="smcp">JS</span> <code>&lt;iframe&gt;</code> your main web page doesn’t have to include jQuery because the <code>&lt;iframe&gt;</code> will include it. To integrate the time line directly in our page, though, we have to include jQuery explicitly. We can, however, use a content distribution network instead of hosting it ourselves.</p>
+<p>To use Timeline <span class="smcp">JS</span>, our web pages must include <span class="smcp">CSS</span> stylesheets and JavaScript code. For now we’ll stick with the default styles, so we need only a single additional style sheet. The main JavaScript is contained in <code>timeline.js</code>.</p>
+<p>It’s not obvious, but Timeline <span class="smcp">JS</span> also requires jQuery. When you embed a Timeline <span class="smcp">JS</span> <code>&lt;iframe&gt;</code> your main web page doesn’t have to include jQuery because the <code>&lt;iframe&gt;</code> will include it. To integrate the timeline directly in our page, though, we have to include jQuery explicitly. We can, however, use a content distribution network instead of hosting it ourselves.</p>
 <blockquote>
 <p>See chapter 2 for more details on the advantages and disadvantages of content distribution networks.</p>
 </blockquote>
@@ -1960,7 +1960,7 @@ Timeline <span class="smcp">JS</span> builds a complete time line component with
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/timeline-min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>The <span class="smcp">HTML</span> at this point doesn’t include the element in which we’ll place the time line. There are some special constraints on that element, which we’ll consider when we add the element to the page.</p>
+<p>The <span class="smcp">HTML</span> at this point doesn’t include the element in which we’ll place the timeline. There are some special constraints on that element, which we’ll consider when we add it to the page.</p>
 <h3 id="step-3-prepare-the-data">Step 3: Prepare the Data</h3>
 <p>Because Timeline <span class="smcp">JS</span> supports several features that we haven’t used in the earlier examples, we’ll add a few additional properties to our data set. The overall format, though, looks the same as before:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -2023,7 +2023,7 @@ Timeline <span class="smcp">JS</span> builds a complete time line component with
     <span class="st">&quot;caption&quot;</span>: <span class="st">&quot;Photo of the first page...&quot;</span>
   <span class="co">// Data set continues...</span>
 },</code></pre></td></tr></table>
-<p>As you can see, we’ve added genre information to the plays, as well as optional multimedia links, and text for credits and captions. With that starting point, we can rearrange the data to match what Timeline <span class="smcp">JS</span> expects. The basic structure of that object, shown below, includes some overall properties (such as the headline), and an array of events. We can initialize it to an empty array.</p>
+<p>As you can see, we’ve added genre information to the plays, as well as optional multimedia links, and text for credits and captions. With that starting point, we can rearrange the data to match what Timeline <span class="smcp">JS</span> expects. The basic structure of that object, shown next, includes some overall properties (such as the headline), and an array of events. We can initialize it to an empty array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2035,7 +2035,7 @@ Timeline <span class="smcp">JS</span> builds a complete time line component with
     <span class="dt">date</span>: []
 };</code></pre></td></tr></table>
 <p>Note that the <code>type</code> property is required and should be set to <code>&quot;default&quot;</code>.</p>
-<p>Now we iterate through the data set adding events to <code>timelineData</code>. For the code below we’ll use <code>forEach</code> for this iteration, but there are plenty of alternatives we could use here (including <code>for</code> loops, array <code>.map()</code> methods, or jQuery’s <code>$.each()</code> and <code>$.map()</code> functions). The first step in each iteration is parsing the date information. It can take one of two forms, either a single year (<code>&quot;1591&quot;</code>) or a range of years (<code>&quot;1589-1591&quot;</code>). Our code assumes a single date and makes adjustments if it finds two.</p>
+<p>Now we iterate through the data set adding events to <code>timelineData</code>. For the following code we’ll use <code>forEach</code> for this iteration, but there are plenty of alternatives we could use here (including <code>for</code> loops, array <code>.map()</code> methods, or jQuery’s <code>$.each()</code> and <code>$.map()</code> functions). The first step in each iteration is parsing the date information. It can take one of two forms: either a single year (<code>&quot;1591&quot;</code>) or a range of years (<code>&quot;1589-1591&quot;</code>). Our code assumes a single date and makes adjustments if it finds two.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2079,15 +2079,15 @@ Timeline <span class="smcp">JS</span> builds a complete time line component with
        <span class="dt">caption</span>: <span class="ot">play</span>.<span class="fu">caption</span>
    }
 });</code></pre></td></tr></table>
-<h3 id="step-4-create-a-default-time-line">Step 4: Create a Default Time Line</h3>
-<p>With our <span class="smcp">HTML</span> set up and our data set prepared, we can now call Timeline <span class="smcp">JS</span> to create its default visualization. Figuring out exactly how to do that, however, isn’t quite as simple as looking in the documentation. That’s because Timeline <span class="smcp">JS</span> assumes that it will be used primarily as an embedded and isolated component rather than an integrated part of a page. The documentation, therefore, describes how to use Timeline <span class="smcp">JS</span> using the <code>storyjs_embed.js</code> wrapper for embedded content. That wrapper loads all the Timeline <span class="smcp">JS</span> resources (style sheets, JavaScript, fonts, and so on) and if we use it as intended, we’ll end up with most of the same problems as simply embedding an <code>&lt;iframe&gt;</code>.</p>
-<p>Fortunately, it’s not too difficult to skip all the embedding and simply access the JavaScript code directly. It only requires three steps:</p>
+<h3 id="step-4-create-a-default-timeline">Step 4: Create a Default Timeline</h3>
+<p>With our <span class="smcp">HTML</span> set up and our data set prepared, we can now call Timeline <span class="smcp">JS</span> to create its default visualization. Figuring out exactly how to do that, however, isn’t quite as simple as looking in the documentation. That’s because Timeline <span class="smcp">JS</span> assumes that it will be used primarily as an embedded and isolated component rather than an integrated part of a page. The documentation, therefore, describes how to use Timeline <span class="smcp">JS</span> using the <code>storyjs_embed.js</code> wrapper for embedded content. That wrapper loads all the Timeline <span class="smcp">JS</span> resources (style sheets, JavaScript, fonts, and so on), and if we use it as intended, we’ll end up with most of the same problems as if we had simply embedded an <code>&lt;iframe&gt;</code>.</p>
+<p>Fortunately, it’s not too difficult to skip all the embedding and simply access the JavaScript code directly. It requires only three steps:</p>
 <ol type="1">
 <li>Set up the configuration object.</li>
 <li>Create a Timeline <span class="smcp">JS</span> object.</li>
 <li>Initialize the object using the configuration object.</li>
 </ol>
-<p>Here what these steps will look like in our JavaScript, with the details left out for now:</p>
+<p>Here’s what these steps will look like in our JavaScript, with the details omitted for now:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2112,14 +2112,14 @@ Timeline <span class="smcp">JS</span> builds a complete time line component with
 <p>We have to pass many of those same parameters to the constructor. In particular, we provide the container’s <code>id</code> and the dimensions.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> timelinejs = <span class="kw">new</span> <span class="ot">VMM</span>.<span class="fu">Timeline</span>(<span class="st">&#39;timeline&#39;</span>,<span class="st">&#39;100%&#39;</span>,<span class="st">&#39;600px&#39;</span>);</code></pre></td></tr></table>
-<p>Finally we have to build our <span class="smcp">HTML</span> markup with care. Timeline <span class="smcp">JS</span> styles its <span class="smcp">HTML</span> appropriately for an embedded <code>&lt;iframe&gt;</code>, but those styles aren’t as compatible with a time line that’s integrated in the page. In particular, it positions the time line absolutely and sets its <code>z-index</code>. If we don’t compensate, the time line will float out of the flow of the page content, which is almost certainly not desirable. There are several ways to adjust for this issue, and we’ll use a simple one in this example. Instead of a single <code>&lt;div&gt;</code>, we use two nested <code>&lt;div&gt;</code> elements. The inner <code>&lt;div&gt;</code> will contain the time line, and the outer <code>&lt;div&gt;</code> establishes both a positioning context and size for the time line.</p>
+<p>Finally we have to build our <span class="smcp">HTML</span> markup with care. Timeline <span class="smcp">JS</span> styles its <span class="smcp">HTML</span> appropriately for an embedded <code>&lt;iframe&gt;</code>, but those styles aren’t as compatible with a timeline that’s integrated in the page. In particular, it positions the timeline absolutely and sets its <code>z-index</code>. If we don’t compensate, the timeline will float out of the flow of the page content, which is almost certainly not desirable. There are several ways to adjust for this issue, and we’ll use a simple one in this example. Instead of a single <code>&lt;div&gt;</code>, we use two nested <code>&lt;div&gt;</code> elements. The inner <code>&lt;div&gt;</code> will contain the timeline, and the outer <code>&lt;div&gt;</code> establishes both a positioning context and size for the timeline.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> style=</span><span class="st">&quot;position:relative;height:600px;&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;timeline&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
-<p>Now when our JavaScript executes, it produces the integrated time line shown in figure <span class="nextfigure"/> with the default Timeline <span class="smcp">JS</span> styling.</p>
+<p>Now when our JavaScript executes, it produces the integrated timeline shown in figure <span class="nextfigure"/> with the default Timeline <span class="smcp">JS</span> styling.</p>
 <figure>
 <div style="position:relative;height:600px;margin-top:20px;">
 <div id="timelinejs-1">
@@ -2130,16 +2130,16 @@ Timeline <span class="smcp">JS</span> builds a complete time line component with
 With a little extra work, we can embed a Timeline <span class="smcp">JS</span> timeline directly in the page without an &lt;iframe&gt;.
 </figcaption>
 </figure>
-<p>Before leaving this step it’s worth considering how we’ve reached this point. We’ve taken a complete web component with explicit instructions for its use, and we’ve ignored those instructions. Instead, we’ve only included part of the component (albeit a major part). Figuring out how to use an isolated part of a web component (in a way that it isn’t necessarily intended for) can involve some guessing and trial and error, and there is clearly some risk in this approach. Even if you manage to get it working okay now, a future update might invalidate your implementation. If you adopt this approach with your web site, it’s a good idea to test the implementation thoroughly and to take extra care with any updates.</p>
-<h3 id="step-5-adjust-the-time-line-styles">Step 5: Adjust the Time Line Styles</h3>
-<p>Now that we’ve addressed the issues that an <code>&lt;iframe&gt;</code> can cause, we can turn our attention to the time line’s appearance. The <code>timeline.css</code> stylesheet determines that appearance, and we have several alternatives for adjusting it.</p>
+<p>Before we leave this step it’s worth considering how we’ve reached this point. We’ve taken a complete web component with explicit instructions for its use, and we’ve ignored those instructions. Instead, we’ve included only part of the component (albeit a major part). Figuring out how to use an isolated part of a web component (in a way that it isn’t necessarily intended for) can involve some guesswork and trial and error, and there is clearly some risk in this approach. Even if you manage to get it working now, a future update might invalidate your implementation. If you adopt this approach with your web site, it’s a good idea to test the implementation thoroughly and to take extra care with any updates.</p>
+<h3 id="step-5-adjust-the-timeline-styles">Step 5: Adjust the Timeline Styles</h3>
+<p>Now that we’ve addressed the issues that an <code>&lt;iframe&gt;</code> can cause, we can turn our attention to the timeline’s appearance. The <code>timeline.css</code> stylesheet determines that appearance, and there are several alternatives for adjusting it.</p>
 <ol type="1">
-<li><strong>Modify <code>timeline.css</code> directly.</strong> Although this approach might seem the most obvious, it’s probably not what we should do. If you look at the file, you’ll notice that it’s compressed <span class="smcp">CSS</span> that’s difficult to read and understand. Making the appropriate modifications will be challenging. Furthermore, if we later update to a new version of Timeline <span class="smcp">JS</span>, that new version may well have a new <code>timeline.css</code>, and we’d have to start all over again.</li>
-<li><strong>Work with the source code.</strong> Timeline <span class="smcp">JS</span> authors its styles using the <a href="http://lesscss.org"><span class="smcp">LESS</span></a> <span class="smcp">CSS</span> preprocessor. If you’re comfortable using a <span class="smcp">CSS</span> preprocessor, you could modify the source and build your own custom version of <code>timeline.css</code>. <span class="lgcp">LESS</span> has support for variables and mixins that make it easier to accommodate updates in the future. There are many applications that compile <span class="smcp">LESS</span> into <span class="smcp">CSS</span>; Timeline <span class="smcp">JS</span> uses <a href="https://incident57.com/codekit/">CodeKit</a> (which is only available for Apple’s Mac <span class="smcp">OS</span> <span class="smcp">X</span>) and the source code includes all of the appropriate application settings.</li>
-<li><strong>Supersede <code>timeline.css</code> styles.</strong> Instead of changing the Timeline <span class="smcp">JS</span> stylesheet, leave it <em>as is</em> and add custom styles with a higher priority than the default styles. This approach takes advantage of the <em>cascade</em> of Cascading Style Sheets.</li>
+<li><strong>Modify <code>timeline.css</code> directly.</strong> Although this approach might seem the most obvious, it’s probably not what we should do. If you look at the file, you’ll notice that it’s compressed <span class="smcp">CSS</span> that’s difficult to read and understand. Making the appropriate modifications will be challenging. Furthermore, if we later update to a new version of Timeline <span class="smcp">JS</span>, that new version may well have a new <code>timeline.css</code> file, and we’d have to start all over again.</li>
+<li><strong>Work with the source code.</strong> Timeline <span class="smcp">JS</span> authors its styles using the <a href="http://lesscss.org"><span class="smcp">LESS</span></a> <span class="smcp">CSS</span> preprocessor. If you’re comfortable using a <span class="smcp">CSS</span> preprocessor, you could modify the source and build your own custom version of <code>timeline.css</code>. <span class="lgcp">LESS</span> has support for variables and mixins that make it easier to accommodate updates in the future. There are many applications that compile <span class="smcp">LESS</span> into <span class="smcp">CSS</span>; Timeline <span class="smcp">JS</span> uses <a href="https://incident57.com/codekit/">CodeKit</a>, which is available only for Apple’s Mac <span class="smcp">OS</span> <span class="smcp">X</span>, and the source code includes all of the appropriate application settings.</li>
+<li><strong>Supersede <code>timeline.css</code> styles.</strong> Instead of changing the Timeline <span class="smcp">JS</span> stylesheet, leave it <em>as is</em> and add custom styles with a higher priority than the default styles. This approach takes advantage of the <em>cascade</em> in Cascading Style Sheets.</li>
 </ol>
-<p>For this example we’ll use the third approach. We’ll identify the <code>timeline.css</code> styles that we want to change and add new rules to our stylesheet to take precedence over those styles. When <span class="smcp">CSS</span> finds that multiple, conflicting rules apply to an element, it resolves the conflict by considering the specificity of the rules and their order in the document. We can give our rules priority by making them more specific than the <code>timeline.css</code> rules or by making them equally specific but including them after <code>timeline.css</code>.</p>
-<p>First we’ll tackle the fonts that Timeline <span class="smcp">JS</span> uses. There’s nothing wrong with the default or optional fonts, but they may not match the style of our web page. In addition, downloading extra fonts will slow the performance of the page. The quickest way to find the styles that affect fonts is to look at one of the optional font selections that Timeline <span class="smcp">JS</span> offers on its web site. For example, if you select the “Merriweather &amp; News Cycle” option, you’ll see that Timeline <span class="smcp">JS</span> adds an additional style sheet to the visualization. That file is <code>NewsCycle-Merriweather.css</code> and it defines all the font rules for the option:</p>
+<p>For this example we’ll use the third approach. We’ll identify the <code>timeline.css</code> styles that we want to change and add new rules to our stylesheet to take precedence over those styles. When <span class="smcp">CSS</span> finds that multiple, conflicting rules apply to an element, it resolves the conflict by considering the specificity of the rules and their order in the document. We can give our rules priority by making them more specific than the <code>timeline.css</code> rules, or by making them equally specific but including them after <code>timeline.css</code>.</p>
+<p>First we’ll tackle the fonts that Timeline <span class="smcp">JS</span> uses. There’s nothing wrong with the default or optional fonts, but they may not match the style of our web page. In addition, downloading extra fonts will slow the performance of the page. The quickest way to find the styles that affect fonts is to look at one of the optional font selections that Timeline <span class="smcp">JS</span> offers on its web site. For example, if you select the “Merriweather &amp; News Cycle” option, you’ll see that Timeline <span class="smcp">JS</span> adds an additional stylesheet to the visualization. That file is <code>NewsCycle-Merriweather.css</code>, which defines all the font rules for the option:</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2158,7 +2158,7 @@ With a little extra work, we can embed a Timeline <span class="smcp">JS</span> t
 <span class="fl">.timeline-tooltip</span> <span class="kw">{</span>
     <span class="kw">font-family:</span> <span class="st">&#39;News Cycle&#39;</span>, <span class="dt">sans-serif</span>
 <span class="kw">}</span></code></pre></td></tr></table>
-<p>To use our own fonts, all we need to do is copy that file and replace <code>'News Cycle'</code> and <code>'Merriweather'</code> with our own choices. Perhaps we’d prefer Avenir.</p>
+<p>To use our own fonts, all we need to do is copy that file and replace <code>'News Cycle'</code> and <code>'Merriweather'</code> with our own choices—in this case, Avenir.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2180,7 +2180,7 @@ With a little extra work, we can embed a Timeline <span class="smcp">JS</span> t
     <span class="kw">font-family:</span> <span class="st">&#39;Avenir&#39;</span>, <span class="dt">sans-serif</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
 <p>Customizing other aspects of the Timeline <span class="smcp">JS</span> visualization are more challenging but not impossible. These customizations are rather fragile, however, as even the slightest change in the Timeline <span class="smcp">JS</span> implementation could render them ineffective. If it’s important for your page, though, it can be done.</p>
-<p>For our example we’ll change the blue color that Timeline <span class="smcp">JS</span> uses in the bottom section of the visualization. It uses that color to highlight the active item, show the time line marker, and for the event line. Finding the specific rules to override takes a bit of detective work with your browser’s developer tools, but here is how we can change the color from blue to green.</p>
+<p>For our example we’ll change the blue color that Timeline <span class="smcp">JS</span> uses in the bottom section of the visualization. It uses that color to highlight the active item, show the timeline marker, and for the event line. Finding the specific rules to override takes a bit of detective work with your browser’s developer tools, but here’s how to change the color from blue to green:</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2318,7 +2318,7 @@ With a little extra work, we can embed a Timeline <span class="smcp">JS</span> t
     background: #007979;
 }
 </style>
-<p>Combining font changes with the alternative color scheme helps the visualization integrate more seamlessly in an overall web page, as we can see in figure <span class="nextfigure"/>.</p>
+<p>Combining font changes with the alternative color scheme helps the visualization integrate more seamlessly in an overall web page, as figure <span class="nextfigure"/> shows.</p>
 <figure>
 <div class="timelinejs-2" style="position:relative;height:600px;margin-top:20px;">
 <div id="timelinejs-2">
@@ -2394,7 +2394,7 @@ Adjusting the <span class="smcp">CSS</span> for Timeline <span class="smcp">JS</
 }());
 </script>
 <h2 id="summing-up">Summing Up</h2>
-<p>In this chapter we’ve looked at a wide range of approaches for creating time line visualizations. The most familiar approach relies on an open source library, but we also considered two other options. In one, we developed the code for a time line from scratch, giving us complete control over its appearance and behavior. For the other extreme, we examined a popular open source web component. Pages normally use that component by embedding <code>&lt;iframe&gt;</code> elements in the page, but we also saw that it’s possible to take the open source code and integrate it more seamlessly in our pages, even altering the visual styles if necessary.</p>
+<p>In this chapter we’ve looked at a wide range of approaches for creating timeline visualizations. The most familiar approach relies on an open source library, but we also considered two other options. In one, we developed the code for a timeline from scratch, which gave us complete control over its appearance and behavior. For the other extreme, we examined a popular open source web component. Pages normally use that component by embedding <code>&lt;iframe&gt;</code> elements in the page, but we also saw that it’s possible to take the open source code and integrate it more seamlessly in our pages, even altering the visual styles if necessary.</p>
 <p>Continue reading: <a href="chap06.html">Chapter 6: Visualizing Geographic Data</a>.</p>
 <script src="js/scripts.05.min.js"></script>
         </main>

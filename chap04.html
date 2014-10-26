@@ -131,7 +131,7 @@ body { counter-reset: chapter 4; }
 
 <h1 id="chapter-4-creating-specialized-graphs">Chapter 4: Creating Specialized Graphs</h1>
 <p>The first three chapters looked at different ways to create many common types of charts with JavaScript. But if your data has unique properties, or if you want to show it in an unusual way, a more specialized chart might be more appropriate than a typical bar, line or scatter plot.</p>
-<p>Fortunately, there are many JavaScript techniques and plugins to expand our visualization vocabulary beyond the standard charts. In this chapter we’ll look at approaches for several specialized chart type, including</p>
+<p>Fortunately, there are many JavaScript techniques and plugins to expand our visualization vocabulary beyond the standard charts. In this chapter, we’ll look at approaches for several specialized chart types, including:</p>
 <ul>
 <li>How to combine hierarchy and dimension with tree maps</li>
 <li>How to highlight regions with heat maps</li>
@@ -176,7 +176,7 @@ body { counter-reset: chapter 4; }
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <p>As you can see, we’ve set aside a <code>&lt;div&gt;</code> to hold our tree map. We’ve also included the JavaScript libraries as the last part of the <code>&lt;body&gt;</code> element, as that provides the best browser performance.</p>
 <h3 id="step-2-prepare-the-data">Step 2: Prepare the Data</h3>
-<p>For our example we’ll show the population of the United States divided by region and then, within each region, by state. The data is available from the <a href="http://www.census.gov/popest/data/state/totals/2012/index.html"><span class="smcp">US</span> Census Bureau</a>. We’ll follow their convention and divide the country into four regions. The resulting JavaScript array could look like the snippet below.</p>
+<p>For our example we’ll show the population of the United States divided by region and then, within each region, by state. The data is available from the <a href="http://www.census.gov/popest/data/state/totals/2012/index.html"><span class="smcp">US</span> Census Bureau</a>. We’ll follow its convention and divide the country into four regions. The resulting JavaScript array could look like the following snippet.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -188,7 +188,7 @@ body { counter-reset: chapter 4; }
   { <span class="dt">region</span>: <span class="st">&quot;West&quot;</span>,  <span class="dt">state</span>: <span class="st">&quot;AZ&quot;</span>, <span class="dt">pop2010</span>: <span class="dv">6410810</span>, <span class="dt">pop2012</span>: <span class="dv">6553255</span> },
   <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <p>We’ve retained both the 2010 and the 2012 data</p>
-<p>To structure the data for the treemap-squared library, we need to create separate data arrays for each region. In parallel we can also create arrays to label the data values using the two-letter state abbreviations. The following code steps through the <code>census</code> array to build data and label arrays for the <code>&quot;South&quot;</code> region. The same approach works for the other three regions as well.</p>
+<p>To structure the data for the treemap-squared library, we need to create separate data arrays for each region. At the same time, we can also create arrays to label the data values using the two-letter state abbreviations. The following code steps through the <code>census</code> array to build data and label arrays for the <code>&quot;South&quot;</code> region. The same approach works for the other three regions as well.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -223,7 +223,7 @@ body { counter-reset: chapter 4; }
     <span class="ot">west</span>.<span class="fu">labels</span>, <span class="ot">midwest</span>.<span class="fu">labels</span>, <span class="ot">northeast</span>.<span class="fu">labels</span>, <span class="ot">south</span>.<span class="fu">labels</span>
 ];
 <span class="ot">Treemap</span>.<span class="fu">draw</span>(<span class="st">&quot;treemap&quot;</span>, <span class="dv">600</span>, <span class="dv">450</span>, data, labels);</code></pre></td></tr></table>
-<p>The resulting chart of figure <span class="nextfigure"/> provides a simple visualization of the <span class="smcp">US</span> population. Among the four regions, it is clear where most of the population resides. The bottom right quadrant (the South) has the largest share of the population. And within the regions the relative sizes of each state’s population is also clear. Notice, for example, how California dominates the West.</p>
+<p>The resulting chart, shown in figure <span class="nextfigure"/>, provides a simple visualization of the <span class="smcp">US</span> population. Among the four regions, it is clear where most of the population resides. The bottom right quadrant (the South) has the largest share of the population. And within the regions the relative size of each state’s population is also clear. Notice, for example, how California dominates the West.</p>
 <figure>
 <div id="treemap-1">
 
@@ -233,9 +233,9 @@ Tree maps show the relative size of data values using rectangular area.
 </figcaption>
 </figure>
 <h3 id="step-4-varying-the-shading-to-show-additional-data">Step 4: Varying the Shading to Show Additional Data</h3>
-<p>The tree map above does a nice job of showing the <span class="smcp">US</span> population distribution in 2012. The population isn’t static, however, and we can enhance our visualization to indicate trends by taking advantage of the 2010 population data that’s still lurking in our data set. When we iterate through the <code>census</code> array to extract individual regions, we can also calculate a few additional values:</p>
+<p>The tree map in figure <span class="lastfigure"/> does a nice job of showing the <span class="smcp">US</span> population distribution in 2012. The population isn’t static, however, and we can enhance our visualization to indicate trends by taking advantage of the 2010 population data that’s still lurking in our data set. When we iterate through the <code>census</code> array to extract individual regions, we can also calculate a few additional values:</p>
 <ul>
-<li>We accumulate the total population for all states, both in 2010 and in 2012, in lines 11 and 12. These values let us calculate the average growth rate for the entire country.</li>
+<li>We accumulate the total population for all states, both in 2010 and in 2012, in lines 11 and 12, respectively. These values let us calculate the average growth rate for the entire country.</li>
 <li>For each state we can calculate its own growth rate in line 13.</li>
 <li>For each region, we save both the minimum and maximum growth rates in lines 18 and 19.</li>
 </ul>
@@ -499,14 +499,14 @@ Tree maps can use color as well as area to show data values.
 }());
 </script>
 <h2 id="highlighting-regions-with-a-heat-map">Highlighting Regions with a Heat Map</h2>
-<p>If you work in the web industry, heat maps may already be a part of your job. Usability researchers often use heat maps to evaluate site designs, especially when they want to analyze which parts of a web page get the most attention from users. Heat maps work by overlaying values, represented as semi-transparent colors, over a two-dimensional area. As the example in figure <span class="nextfigure"/> shows, different colors represent different levels of attention. Users focus most on areas colored red, and the focus less on yellow, green, and blue areas.</p>
+<p>If you work in the web industry, heat maps may already be a part of your job. Usability researchers often use heat maps to evaluate site designs, especially when they want to analyze which parts of a web page get the most attention from users. Heat maps work by overlaying values, represented as semi-transparent colors, over a two-dimensional area. As the example in figure <span class="nextfigure"/> shows, different colors represent different levels of attention. Users focus most on areas colored red, and less on yellow, green, and blue areas.</p>
 <figure>
 <img src="img/heatmap.png" width="640">
 <figcaption>
 Heat maps traditionally show where web users focus their attention on a page.
 </figcaption>
 </figure>
-<p>For this example we’ll use a heat map to visualize an important aspect of a basketball game: where on the court are the teams scoring most of their points. The software we’ll use the <a href="http://www.patrick-wied.at/static/heatmapjs/">heatmap.js</a> library from Patrick Wied. If you need to create traditional web site heat maps, that library includes built-in support for capturing mouse movements and mouse clicks on a web page. Although we won’t use those features for our example, the general approach is much the same.</p>
+<p>For this example we’ll use a heat map to visualize an important aspect of a basketball game: where on the court the teams are scoring most of their points. The software we’ll use is the <a href="http://www.patrick-wied.at/static/heatmapjs/">heatmap.js</a> library from Patrick Wied. If you need to create traditional web site heat maps, that library includes built-in support for capturing mouse movements and mouse clicks on a web page. Although we won’t use those features for our example, the general approach is much the same.</p>
 <h3 id="step-1-include-the-required-javascript">Step 1: Include the Required JavaScript</h3>
 <p>For modern browsers, the heatmap.js library has no additional requirements. The library includes optional additions for real-time heat maps and for geographic integration, but we won’t need these in our example. Older browsers (principally Internet Explorer version 8 and older) can use heatmap.js with the <em>explorer canvas</em> library. Since we don’t need to burden all users with this library, we’ll use conditional comments to include it only when it’s needed. Following current best practices, we include all script files at the end of our <code>&lt;body&gt;</code>.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -532,11 +532,11 @@ Heat maps traditionally show where web users focus their attention on a page.
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-2-define-the-visualization-data">Step 2: Define the Visualization Data</h3>
-<p>For our example, we’ll visualize the <span class="smcp">NCAA</span> Mens’ Basketball game on 13 February 2013 between Duke University and the University of North Carolina. Our <a href="http://www.cbssports.com/collegebasketball/gametracker/live/NCAAB_20130213_UNC@DUKE">dataset</a> contains details about every point scored in the game. To clean the data, we convert the time of each score to minutes from the game start, and we define the position of the scorer in x and y coordinates. We’ve defined these coordinates using several important conventions:</p>
+<p>For our example, we’ll visualize the <span class="smcp">NCAA</span> Mens’ Basketball game on 13 February 2013 between Duke University and the University of North Carolina. Our <a href="http://www.cbssports.com/collegebasketball/gametracker/live/NCAAB_20130213_UNC@DUKE">dataset</a> contains details about every point scored in the game. To clean the data, we convert the time of each score to minutes from the game start, and we define the position of the scorer in x- and y-coordinates. We’ve defined these coordinates using several important conventions:</p>
 <ul>
 <li>We’ll show North Carolina’s points on the left side of the court and Duke’s points on the right side.</li>
-<li>The bottom left corner of the court corresponds to position (0,0), and the top right corner corresponds to (10,10).</li>
-<li>To avoid confusing free throws with field goals, we’ve given all free throws a position of (-1,-1).</li>
+<li>The bottom-left corner of the court corresponds to position (0,0), and the top-right corner corresponds to (10,10).</li>
+<li>To avoid confusing free throws with field goals, we’ve given all free throws a position of (–1,–1).</li>
 </ul>
 <p>Here’s the beginning of the data; the full data is available with the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -564,7 +564,7 @@ A background image sets the context for the visualization.
 </figcaption>
 </figure>
 <h3 id="step-4-set-aside-an-html-element-to-contain-the-visualization">Step 4: Set Aside an HTML Element to Contain the Visualization</h3>
-<p>In our web page, we need to define the element (generally a <code>&lt;div&gt;</code>) that will hold the heat map. When we create the element, we specify its dimensions, and we define the background. The fragment below does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> style sheet in an actual implementation</p>
+<p>In our web page, we need to define the element (generally a <code>&lt;div&gt;</code>) that will hold the heat map. When we create the element, we specify its dimensions, and we define the background. The following fragment does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> stylesheet in an actual implementation</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -581,7 +581,7 @@ A background image sets the context for the visualization.
 <li>the <code>y</code> coordinate, measured in pixels from the top of the containing element</li>
 <li>the magnitude of the data point (specified by the <code>count</code> property)</li>
 </ol>
-<p>The library also requires the maximum magnitude for the entire map, and here things get a little tricky. With standard heat maps, the magnitudes of all the data points for any particular position sum together. In our case that means that all the baskets scored from layups and slam dunks—which are effectively from the same position on the court—are added together by the heat map algorithm. That one position, right underneath the basket, dominates the rest of the court. To counteract that effect, we specify a maximum value far less than what the heat map would expect. In our case, we’ll set the maximum value at <code>3</code>, which means that any location where at least three points were scored will be colored red. That ensures that any location where a three-pointer was scored will be red and we’ll easily be able to see all the baskets.</p>
+<p>The library also requires the maximum magnitude for the entire map, and here things get a little tricky. With standard heat maps, the magnitudes of all the data points for any particular position sum together. In our case that means that all the baskets scored from layups and slam dunks—which are effectively from the same position on the court—are added together by the heat map algorithm. That one position, right underneath the basket, dominates the rest of the court. To counteract that effect, we specify a maximum value far less than what the heat map would expect. In our case, we’ll set the maximum value to <code>3</code>, which means that any location where at least three points were scored will be colored red, and we’ll easily be able to see all the baskets.</p>
 <p>We can use JavaScript to transform the <code>game</code> array into the appropriate format. We start by fetching the height and width of the containing element in lines 1-3. If those dimensions change, our code will still work fine. Then we initialize the <code>dataset</code> object with a <code>max</code> property and an empty <code>data</code> array in lines 4-6. Finally, we iterate through the game data and add relevant data points to this array. Notice that we’re filtering out free throws in line 9.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -634,8 +634,8 @@ A background image sets the context for the visualization.
 The heat map shows successful shots in the game.
 </figcaption>
 </figure>
-<h3 id="step-7-adjust-the-heat-map-z-index">Step 7: Adjust the Heat Map Z-Index</h3>
-<p>The heatmap.js library is especially aggressive in its manipulation of the <code>z-index</code> property. To ensure that the heat map appears above all other elements on the page, the library explicitly sets this property to a value of <code>10000000000</code>. If your web page has elements that you don’t want the heat map to obscure (such as fixed position navigation menus), that value is probably too aggressive. You can fix it by modifying the source code directly. Or, as an alternative, you can simply reset the value after the library finishes drawing the map.</p>
+<h3 id="step-7-adjust-the-heat-map-z-index">Step 7: Adjust the Heat Map z-index</h3>
+<p>The heatmap.js library is especially aggressive in its manipulation of the <code>z-index</code> property. To ensure that the heat map appears above all other elements on the page, the library explicitly sets this property to a value of <code>10000000000</code>. If your web page has elements that you don’t want the heat map to obscure (such as fixed-position navigation menus), that value is probably too aggressive. You can fix it by modifying the source code directly. Or, as an alternative, you can simply reset the value after the library finishes drawing the map.</p>
 <p>If you’re using jQuery, the following code will reduce the z-index to a more reasonable value.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;#heatmap canvas&quot;</span>).<span class="fu">css</span>(<span class="st">&quot;z-index&quot;</span>, <span class="st">&quot;1&quot;</span>);</code></pre></td></tr></table>
@@ -756,9 +756,9 @@ The heat map shows successful shots in the game.
 </script>
 <h2 id="showing-relationships-with-network-graphs">Showing Relationships with Network Graphs</h2>
 <p>Visualizations don’t always focus on the actual data values; sometimes the most interesting aspects of a data set are the relationships among its members. The relationships between members of a social network, for example, might be the most important feature of that network. To visualize these types of relationships, we can use a <em>network graph.</em> Network graphs represent objects, generally known as <em>nodes,</em> as points or circles. Lines or arcs (technically called <em>edges</em>) connect these nodes to indicate relationships.</p>
-<p>Constructing network graphs can be a bit tricky, as the underlying mathematics are not always trivial. Fortunately the <a href="http://sigmajs.org">sigmajs</a> library takes care of most of the complicated calculations. By using that library, we can create full-featured network graphs with just a little bit of JavaScript. For our example, we’ll consider one critic’s list of the <a href="http://www.thejazzresource.com/top_25_jazz_albums.html">Top 25 Jazz Albums of All Time</a>. Several musicians performed on more than one of these albums, and a network graph let’s us explore those connections.</p>
+<p>Constructing network graphs can be a bit tricky, as the underlying mathematics is not always trivial. Fortunately, the <a href="http://sigmajs.org">sigmajs</a> library takes care of most of the complicated calculations. By using that library, we can create full-featured network graphs with just a little bit of JavaScript. For our example, we’ll consider one critic’s list of the <a href="http://www.thejazzresource.com/top_25_jazz_albums.html">top 25 jazz albums of all time</a>. Several musicians performed on more than one of these albums, and a network graph lets us explore those connections.</p>
 <h3 id="step-1-include-the-required-libraries-1">Step 1: Include the Required Libraries</h3>
-<p>The sigmajs library does not depend on any other JavaScript libraries, so we don’t need any other included scripts. It is not, however, available on common Content Distribution Networks. Consequently, we’ll have to serve it from our own web host.</p>
+<p>The sigmajs library does not depend on any other JavaScript libraries, so we don’t need any other included scripts. It is not, however, available on common content distribution networks. Consequently, we’ll have to serve it from our own web host.</p>
 <table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -783,10 +783,10 @@ The heat map shows successful shots in the game.
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <p>As you can see, we’ve set aside a <code>&lt;div&gt;</code> in line 8 to hold our graph. We’ve also included the JavaScript library as the last part of the <code>&lt;body&gt;</code> element, as that provides the best browser performance.</p>
 <blockquote>
-<p>Note: In most of the examples in this book, we included steps you can take to make your visualizations compatible with older web browsers such as Internet Explorer 8. In this case, however, those approaches degrade performance so severely that they are rarely workable. To view the network graph visualization, your users will need a modern browser.</p>
+<p>Note: In most of the examples in this book, I’ve included steps you can take to make your visualizations compatible with older web browsers such as Internet Explorer 8. In this case, however, those approaches degrade performance so severely that they are rarely workable. To view the network graph visualization, your users will need a modern browser.</p>
 </blockquote>
 <h3 id="step-2-prepare-the-data-1">Step 2: Prepare the Data</h3>
-<p>Our data on the top 25 jazz albums looks like the following snippet. We’re only showing the first couple of albums below, but you can see the full list in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>. For clarity, we’ll only use the top 15 albums in this example.</p>
+<p>Our data on the top 25 jazz albums looks like the following snippet. I’m showing only the first couple of albums below, but you can see the full list in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -832,7 +832,7 @@ The heat map shows successful shots in the game.
 <p>Now we’re ready to use the library to construct our graph. We start by initializing the library and indicating where it should construct the graph. That parameter is the <code>id</code> of the <code>&lt;div&gt;</code> element set aside to hold the visualization.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> s = <span class="kw">new</span> <span class="fu">sigma</span>(<span class="st">&quot;graph&quot;</span>);</code></pre></td></tr></table>
-<p>Now we can continue by adding the nodes to the graph. In our case each album is a node. As we add a node to the graph, we give it a unique identifier (which must be a string), a label, and a position. Figuring out an initial position can be a bit tricky for arbitrary data. In a few steps we’ll look at an approach that makes the initial position less critical. For now, though, we’ll simply spread our albums in a circle using basic trigonometry. The <code>radius</code> value is roughly half of the width of the container. We can also give each node a different size, but for our purposes it’s fine to set every album’s size to <code>1</code>.</p>
+<p>Now we can continue by adding the nodes to the graph. In our case, each album is a node. As we add a node to the graph, we give it a unique identifier (which must be a string), a label, and a position. Figuring out an initial position can be a bit tricky for arbitrary data. In a few steps we’ll look at an approach that makes the initial position less critical. For now, though, we’ll simply spread our albums in a circle using basic trigonometry. The <code>radius</code> value is roughly half of the width of the container. We can also give each node a different size, but for our purposes it’s fine to set every album’s size to <code>1</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -856,7 +856,7 @@ The heat map shows successful shots in the game.
 <p>Finally, after defining the graph, we tell the library to draw it.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="fu">refresh</span>();</code></pre></td></tr></table>
-<p>With figure <span class="nextfigure"/> now have a nicely drawn circle of the top 15 jazz albums of all time. In our initial attempt some of the labels may get in each other’s way, but we’ll address that shortly.</p>
+<p>With figure <span class="nextfigure"/> we now have a nicely drawn circle of the top jazz albums of all time. In this initial attempt some of the labels may get in one another’s way, but we’ll address that shortly.</p>
 <figure>
 <div id="graph-1" style="width:1000px;height:450px;position:relative;left:-300px;">
 
@@ -867,7 +867,7 @@ Sigmajs draws graph nodes as small circles.
 </figure>
 <p>If you try out this visualization in the browser, you’ll notice that the sigmajs library automatically supports panning the graph, and users can mover their mouse pointer over individual nodes to highlight the node labels.</p>
 <h3 id="step-4-connect-the-nodes-with-edges">Step 4: Connect the Nodes with Edges</h3>
-<p>Now that we have the nodes drawn in a circle, it’s time to connect them with edges. In our case an edge, or connection between two albums, represents a musician that performed on both of the albums. To find those edges, we iterate through the albums in four stages.</p>
+<p>Now that we have the nodes drawn in a circle, it’s time to connect them with edges. In our case, an edge—or connection between two albums—represents a musician who performed on both of the albums. To find those edges, we iterate through the albums in four stages.</p>
 <ol type="1">
 <li>Loop through each album as a potential source of a connection (line 1).</li>
 <li>For the source album, loop through all musicians (line 3).</li>
@@ -911,7 +911,7 @@ Sigmajs draws graph nodes as small circles.
         }
     }
 }</code></pre></td></tr></table>
-<p>We’ll want to insert this code before we <code>refresh</code> the graph. When we’ve done that, we’ll have a connected circle of albums as in figure <span class="nextfigure"/>.</p>
+<p>We’ll want to insert this code before we <code>refresh</code> the graph. When we’ve done that, we’ll have a connected circle of albums, as shown in figure <span class="nextfigure"/>.</p>
 <figure>
 <div id="graph-2" style="width:1000px;height:450px;position:relative;left:-300px;">
 
@@ -921,9 +921,9 @@ Sigmajs can then connect graph nodes using lines to represent edges.
 </figcaption>
 </figure>
 <p>Again, you can pan the graph to focus on different parts.</p>
-<h3 id="step-5-automating-the-layout">Step 5: Automating the Layout</h3>
+<h3 id="step-5-automate-the-layout">Step 5: Automate the Layout</h3>
 <p>So far we’ve manually placed the nodes in our graph in a circle. That’s not a terrible approach, but it can make it hard to discern some of the connections. It would be better if we could let the library calculate a more optimal layout than the simple circle. That’s exactly what we’ll do now.</p>
-<p>The mathematics behind this approach go by the name of “force directed graphing.” In a nutshell, the algorithm proceeds by treating the graph’s nodes and edges as physical objects subject to real forces such as gravity and electromagnetism. It simulates the effect of those forces, pushing and prodding the nodes into new positions on the graph.</p>
+<p>The mathematics behind this approach is known as <em>force directed graphing.</em> In a nutshell, the algorithm proceeds by treating the graph’s nodes and edges as physical objects subject to real forces such as gravity and electromagnetism. It simulates the effect of those forces, pushing and prodding the nodes into new positions on the graph.</p>
 <p>The underlying algorithm may be complicated, but sigmajs makes it easy to employ. First we have to add an optional plugin to the sigmajs library. That’s the <code>forceAtlas2</code> plugin in line 10 below.</p>
 <table class="sourceCode html numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -949,11 +949,11 @@ Sigmajs can then connect graph nodes using lines to represent edges.
         <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/sigma.layout.forceAtlas2.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
     <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
-<p>Mathieu Jacomy and Tommaso Venturini developed the specific force direction algorithm employed by this plugin; they document the algorithm, known as <em>Force Atlas 2</em>, in the 2011 paper <a href="http://webatlas.fr/tempshare/ForceAtlas2_Paper.pdf"><em>ForceAtlas2, A Graph Layout Algorithm for Handy Network Visualization</em></a><em>.</em> Although we don’t have to understand the mathematical details of the algorithm, knowing how to use it’s parameters does come in handy. There are three parameters that are important for most visualizations using the plugin:</p>
+<p>Mathieu Jacomy and Tommaso Venturini developed the specific force-direction algorithm employed by this plugin; they document the algorithm, known as <em>Force Atlas 2</em>, in the 2011 paper <a href="http://webatlas.fr/tempshare/ForceAtlas2_Paper.pdf"><em>ForceAtlas2, A Graph Layout Algorithm for Handy Network Visualization</em></a><em>.</em> Although we don’t have to understand the mathematical details of the algorithm, knowing how to use its parameters does come in handy. There are three parameters that are important for most visualizations that use the plugin:</p>
 <ul>
 <li><strong>gravity.</strong> This parameter determines how strongly the algorithm tries to keep isolated nodes from drifting off the edges of the screen. Without any gravity, then the only force acting on isolated nodes will one that repels them from other nodes; undeterred, that force will push the nodes off the screen entirely. Since our data includes several isolated nodes, we’ll want to set this value relatively high to keep those nodes on the screen</li>
-<li><strong>scalingRatio.</strong> This parameter determines how strongly nodes repel each other. A small value draws connected nodes closer together while a large value forces all nodes further apart.</li>
-<li><strong>slowDown.</strong> This parameter decreases the sensitivity of the nodes to the repulsive forces from their neighbors. Reducing the sensitivity (by increasing this value) can help reduce the instability that may result when nodes face competing forces from multiple neighbors. In our data there are many connections that will tend to draw the nodes together and that will compete with the force repelling them apart. To dampen the wild oscillations that might otherwise ensue, we’ll set this value relatively high as well.</li>
+<li><strong>scalingRatio.</strong> This parameter determines how strongly nodes repel each other. A small value draws connected nodes closer together while a large value forces all nodes farther apart.</li>
+<li><strong>slowDown.</strong> This parameter decreases the sensitivity of the nodes to the repulsive forces from their neighbors. Reducing the sensitivity (by increasing this value) can help reduce the instability that may result when nodes face competing forces from multiple neighbors. In our data there are many connections that will tend to draw the nodes together and compete with the force pulling them apart. To dampen the wild oscillations that might otherwise ensue, we’ll set this value relatively high as well.</li>
 </ul>
 <p>The best way to settle on values for these parameters is to experiment with the actual data. For this data set, we’ve settled on the values in line 1 below.</p>
 <p>Now, instead of simply refreshing the graph when we’re ready to display it, we start the force directed algorithm, which periodically refreshes the display while it performs its simulation. We also need to stop the algorithm after it’s had a chance to run for awhile. In our case 10 seconds (<code>10000 ms</code>) is plenty of time.</p>
@@ -961,7 +961,7 @@ Sigmajs can then connect graph nodes using lines to represent edges.
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="fu">startForceAtlas2</span>({<span class="dt">gravity</span>:<span class="dv">100</span>,<span class="dt">scalingRatio</span>:<span class="dv">70</span>,<span class="dt">slowDown</span>:<span class="dv">100</span>});
 <span class="fu">setTimeout</span>(<span class="kw">function</span>() { <span class="ot">s</span>.<span class="fu">stopForceAtlas2</span>(); }, <span class="dv">10000</span>);</code></pre></td></tr></table>
-<p>As a result, our albums start out in their original circle, but quickly migrate to a position that makes it much easier to identify the connections. Some of the top albums are tightly connected, indicating that have many musicians in common. A few, however, remain isolated. Their musicians only make the list once.</p>
+<p>As a result, our albums start out in their original circle, but quickly migrate to a position that makes it much easier to identify the connections. Some of the top albums are tightly connected, indicating that they have many musicians in common. A few, however, remain isolated. Their musicians make the list only once.</p>
 <figure>
 <div id="graph-3" style="width:650px;height:600px;position:relative;left:-50px">
 
@@ -972,7 +972,7 @@ Force direction positions the graph nodes automatically.
 </figure>
 <p>As you can see, the labels for the nodes still get in the way of each other; we’ll fix that in the next step. What’s important here, however, is that it’s much easier to identify the albums with lots of connections. The nodes representing those albums have migrated to the center of the graph, and they have many links to other nodes.</p>
 <h3 id="step-6-adding-interactivity">Step 6: Adding Interactivity</h3>
-<p>To keep the labels from interfering with each other, we can add some interactivity to the graph. By default, we’ll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We’ll then allow them to click on individual nodes to reveal the album title and it’s connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We’ll save a reference to the album title though in line 6.</p>
+<p>To keep the labels from interfering with one another, we can add some interactivity to the graph. By default, we’ll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We’ll then allow them to click on individual nodes to reveal the album title and it’s connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We’ll save a reference to the album title though in line 6.</p>
 <table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1027,11 +1027,11 @@ Force direction positions the graph nodes automatically.
         }
     });
 });</code></pre></td></tr></table>
-<p>Now that users have a way to show the title of an album, they’ll probably also want a way to hide it. We can support that interaction by toggling the album display with subsequent clicks on the same node. A small addition to line 5 in the above code is all it takes to enable that behavior.</p>
+<p>Now that users have a way to show the title of an album, let’s give them a way to hide it. A small addition in the preceding code is all it takes to let users toggle the album display with subsequent clicks.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">        <span class="kw">if</span> (nodes[nodeIdx] === node &amp;&amp; <span class="ot">node</span>.<span class="fu">label</span> !== <span class="ot">node</span>.<span class="fu">album</span>) {</code></pre></td></tr></table>
 <p>As long as we’re making the graph respond to clicks, we can also take the opportunity to highlight the clicked node’s connections. We do that by changing their color. Just as <code>s.graph.nodes()</code> returns an array of the graph nodes, <code>s.graph.edges()</code> returns an array of edges. Each edge object includes <code>target</code> and <code>source</code> properties that hold the index of the relevant node.</p>
-<p>We can then scan through all the graph’s edges to see if they connect to the clicked node. If the edge does connect to the node, we can change it’s color to something other than the default (line 4). Otherwise, we change the color back to the default (line 6). You can see in line 3 that we’re using the same approach as we did with the nodes to toggle the edge colors on successive clicks.</p>
+<p>We can then scan through all the graph’s edges to see if they connect to the clicked node. If the edge does connect to the node, we can change its color to something other than the default (line 4). Otherwise, we change the color back to the default (line 6). You can see in line 3 that we’re using the same approach as we did with the nodes to toggle the edge colors on successive clicks.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1513,13 +1513,13 @@ An interactive graph gives users the chance to highlight specific nodes.
 }());
 </script>
 <h2 id="revealing-language-patterns-with-word-clouds">Revealing Language Patterns with Word Clouds</h2>
-<p>Data visualizations don’t always focus on numbers. Sometimes the data for a visualization centers around words instead, and a <em>word cloud</em> is often an effective way to present this kind of data. Word clouds can associate any quantity with a list of words; most often that quantity is a relative frequency. This type of word cloud, which we’ll create for our next exmaple, reveals which words are common and which words are rare.</p>
+<p>Data visualizations don’t always focus on numbers. Sometimes the data for a visualization centers on words instead, and a <em>word cloud</em> is often an effective way to present this kind of data. Word clouds can associate any quantity with a list of words; most often that quantity is a relative frequency. This type of word cloud, which we’ll create for our next example, reveals which words are common and which words are rare.</p>
 <p>To create this visualization we’ll rely on the <a href="http://timdream.org/wordcloud2.js">wordcloud2</a> library, a spin-off from author Tim Dream’s <a href="http://timc.idv.tw/wordcloud/"><span class="smcp">HTML5</span> Word Cloud</a> project.</p>
 <blockquote>
 <p>Note: As is the case with a few of the more advanced libraries we’ve examined, wordcloud2 doesn’t function very well in older web browsers such as Internet Explorer version 8 and earlier. Since wordcloud2 itself requires a modern browser, for this example we won’t worry about compatibility with older browsers. This will free us to use some other modern JavaScript features, too.</p>
 </blockquote>
 <h3 id="step-1-include-the-required-libraries-2">Step 1: Include the Required Libraries</h3>
-<p>The wordcloud2 library does not depend on any other JavaScript libraries, so we don’t need any other included scripts. It is not, however, available on common Content Distribution Networks, so we’ll have to serve it from our own web host.</p>
+<p>The wordcloud2 library does not depend on any other JavaScript libraries, so we don’t need any other included scripts. It is not, however, available on common content distribution networks, so we’ll have to serve it from our own web host.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1541,10 +1541,10 @@ An interactive graph gives users the chance to highlight specific nodes.
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <blockquote>
-<p>Note: To keep our example focused on the visualization, we’ll use a word list that doesn’t need any special preparation. If you’re working with natural language as spoken or written, however, you might wish to process the text to identify alternate forms of the same word. For example, you might want to count “hold holds held” as three instances of “hold” rather than three separate words. This type of processing obviously depends greatly on the particular language. If you’re working in English and Chinese, though, the same developer that created wordcloud2 has also released the <a href="http://timdream.org/wordfreq/">WordFreq</a> JavaScript library that performs exactly this type of analysis.</p>
+<p>Note: To keep our example focused on the visualization, we’ll use a word list that doesn’t need any special preparation. If you’re working with natural language as spoken or written, however, you might wish to process the text to identify alternate forms of the same word. For example, you might want to count “hold,” “holds,” and “held” as three instances of “hold” rather than three separate words. This type of processing obviously depends greatly on the particular language. If you’re working in English and Chinese, though, the same developer that created wordcloud2 has also released the <a href="http://timdream.org/wordfreq/">WordFreq</a> JavaScript library that performs exactly this type of analysis.</p>
 </blockquote>
 <h3 id="step-2-prepare-the-data-2">Step 2: Prepare the Data</h3>
-<p>For this example we’ll look at the different tags users associate with their questions on the popular <a href="http://stackoverflow.com">Stack Overflow</a>. That site lets users pose programming questions that the community tries to answer. Tags provide a convenient way to categorize the questions so that users can browse other posts related to the same topic. By constructing a word cloud (perhaps better named a “tag cloud”) we can quickly show the relative popularity of different programming topics.</p>
+<p>For this example we’ll look at the different tags users associate with their questions on the popular <a href="http://stackoverflow.com">Stack Overflow</a>. That site lets users pose programming questions that the community tries to answer. Tags provide a convenient way to categorize the questions so that users can browse other posts related to the same topic. By constructing a word cloud (perhaps better named a <em>tag cloud</em>) we can quickly show the relative popularity of different programming topics.</p>
 <p>If you wanted to develop this example into a real application, you could access the Stack Overflow data in real time using the site’s <span class="smcp">API</span>. For our example, though, we’ll use a static snapshot. Here’s how it starts:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1569,14 +1569,14 @@ An interactive graph gives users the chance to highlight specific nodes.
     [<span class="st">&quot;html&quot;</span>, <span class="dv">259946</span>],
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <p>In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
-<p>The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element <code>[&quot;javascript&quot;, 56]</code> would tell wordcloud2 to draw “javascript” with a height of 56 pixels. Our data, of course, isn’t set up with pixel sizes. The data value for “javascript” is 557407, and a word 557407 pixels high wouldn’t even fit on a billboard. As a result, we must convert counts to drawing sizes. The specific algorithm for this conversion will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000 and round to the nearest integer. In chapter 2, we saw how jQuery’s <code>.map()</code> function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of <code>.map()</code> even without jQuery. (This native version won’t work on older browsers like jQuery will, but we’re not worrying about that for this example).</p>
+<p>The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element <code>[&quot;javascript&quot;, 56]</code> would tell wordcloud2 to draw “javascript” with a height of 56 pixels. Our data, of course, isn’t set up with pixel sizes. The data value for “javascript” is 557407, and a word 557407 pixels high wouldn’t even fit on a billboard. As a result, we must convert counts to drawing sizes. The specific algorithm for this conversion will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000 and round to the nearest integer. In chapter 2, we saw how jQuery’s <code>.map()</code> function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of <code>.map()</code> even without jQuery. (This native version won’t work on older browsers like jQuery will, but we’re not worrying about that for this example.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> list = <span class="ot">tags</span>.<span class="fu">map</span>(<span class="kw">function</span>(word) { 
     <span class="kw">return</span> [word[<span class="dv">0</span>], <span class="ot">Math</span>.<span class="fu">round</span>(word[<span class="dv">1</span>]/<span class="dv">10000</span>)]; 
 });</code></pre></td></tr></table>
-<p>After executing this code, our <code>list</code> variable will contain the following:</p>
+<p>After this code executes, our <code>list</code> variable will contain the following:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1600,7 +1600,7 @@ An interactive graph gives users the chance to highlight specific nodes.
     [<span class="st">&quot;html&quot;</span>, <span class="dv">26</span>],
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-3-add-the-required-markup">Step 3: Add the Required Markup</h3>
-<p>The wordcloud2 library can build its graphics either using the <span class="smcp">HTML</span> <code>&lt;canvas&gt;</code> interface or in pure <span class="smcp">HTML</span>. As we’ve seen with many graphing libraries, <code>&lt;canvas&gt;</code> is a convenient interface for creating graphic elements. For word clouds, however, there aren’t many benefits to using <code>&lt;canvas&gt;</code>. Native <span class="smcp">HTML</span>, on the other hand, let’s use all the standard <span class="smcp">HTML</span> tools (such as <span class="smcp">CSS</span> style sheets or JavaScript event handling). That’s the approach we’ll take in this example. When using native <span class="smcp">HTML</span>, we do have to make sure that the containing element has a <code>position: relative</code> style, because wordcloud2 relies on that when placing the words in their proper location in the cloud. You can see in line 8 below that we’ve set that style inline.</p>
+<p>The wordcloud2 library can build its graphics either using the <span class="smcp">HTML</span> <code>&lt;canvas&gt;</code> interface or in pure <span class="smcp">HTML</span>. As we’ve seen with many graphing libraries, <code>&lt;canvas&gt;</code> is a convenient interface for creating graphic elements. For word clouds, however, there aren’t many benefits to using <code>&lt;canvas&gt;</code>. Native <span class="smcp">HTML</span>, on the other hand, lets us use all the standard <span class="smcp">HTML</span> tools (such as <span class="smcp">CSS</span> stylesheets or JavaScript event handling). That’s the approach we’ll take in this example. When using native <span class="smcp">HTML</span>, we do have to make sure that the containing element has a <code>position: relative</code> style, because wordcloud2 relies on that when placing the words in their proper location in the cloud. You can see in line 8 below that we’ve set that style inline.</p>
 <table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1627,7 +1627,7 @@ An interactive graph gives users the chance to highlight specific nodes.
 <p>With these preparations in place, creating a simple word cloud is about as easy as it can get. We call the wordcloud2 library and tell it the <span class="smcp">HTML</span> element in which to draw the cloud, and the list of words for the cloud’s data.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">WordCloud</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;cloud&quot;</span>), {<span class="dt">list</span>: list});</code></pre></td></tr></table>
-<p>Even with nothing other than default values, wordcloud2 creates the attractive visualization of figure <span class="nextfigure"/>.</p>
+<p>Even with nothing other than default values, wordcloud2 creates the attractive visualization shown in figure <span class="nextfigure"/>.</p>
 <style>
 #cloud-1, #cloud-2 { border-radius:3px;border:1px solid #d0d0d0;}
 .localfile #cloud-1, .localfile #cloud-2 { border-radius:none;border:none;}
@@ -1640,10 +1640,10 @@ An interactive graph gives users the chance to highlight specific nodes.
 A word cloud can show a list of words with their relative frequency.
 </figcaption>
 </figure>
-<p>The wordcloud2 interface also provides many options for customizing the visualization. As expected, you can set colors and fonts, but you can also change the shape of the cloud (even providing a custom polar equation), rotation limits, internal grid sizing, and many others.</p>
+<p>The wordcloud2 interface also provides many options for customizing the visualization. As expected, you can set colors and fonts, but you can also change the shape of the cloud (even providing a custom polar equation), rotation limits, internal grid sizing, and many other features.</p>
 <h3 id="step-5-add-interactivity">Step 5: Add Interactivity</h3>
-<p>If you ask wordcloud2 to use the <code>&lt;canvas&gt;</code> interface, it gives you a couple of callback hooks that your code can use to respond to user interactions. With native <span class="smcp">HTML</span>, however, we aren’t limited to just the callbacks that wordcloud2 provides. To demonstrate we can add a simple interaction to respond to mouse clicks on words in the cloud.</p>
-<p>First we’ll want to let users know that interactions are supported by changing the mouse cursor to a pointer when they hover over a cloud word.</p>
+<p>If you ask wordcloud2 to use the <code>&lt;canvas&gt;</code> interface, it gives you a couple of callback hooks that your code can use to respond to user interactions. With native <span class="smcp">HTML</span>, however, we aren’t limited to just the callbacks that wordcloud2 provides. To demonstrate, we can add a simple interaction to respond to mouse clicks on words in the cloud.</p>
+<p>First we’ll let users know that interactions are supported by changing the cursor to a pointer when they hover the mouse over a cloud word.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1686,7 +1686,7 @@ A word cloud can show a list of words with their relative frequency.
         <span class="co">// A &lt;span&gt; element was the target of the click</span>
     }
 }</code></pre></td></tr></table>
-<p>If the user did click on a word, we can find out which word by looking at the <code>textContent</code> property of the event target. After line 3 below, the variable <code>tag</code> will hold the word on which the user clicked. So, for example, if a user clicks on “javascript,” then the tag variable will have the value <code>&quot;javascript&quot;</code>.</p>
+<p>If the user did click on a word, we can find out which word by looking at the <code>textContent</code> property of the event target. After line 3 below, the variable <code>tag</code> will hold the word on which the user clicked. So, for example, if a user clicks on the word “javascript,” then the tag variable will have the value <code>&quot;javascript&quot;</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1697,7 +1697,7 @@ A word cloud can show a list of words with their relative frequency.
         <span class="kw">var</span> tag = <span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">textContent</span>;
     }
 }</code></pre></td></tr></table>
-<p>Since we’d like to show users the total count when they click on a word, we’re going to need to find the word in our original data set. We have the word’s value, so that’s simply a matter of searching through the data set to find a match. If we were using jQuery, the <code>.grep()</code> function would do just that. In this example we’re sticking with native JavaScript, so we can look for an equivalent method in pure JavaScript. Unfortunately, although there is such a native method defined (<code>.find()</code>) very few browsers (even modern browsers) currently support it. We could resort to a standard <code>for</code> or <code>forEach</code> loop, but there is an alternative that many consider an improvement over that approach. It relies on the <code>.some()</code> method, an array method that modern browsers do support today. The <code>.some()</code> method passes every element of an array to an arbitrary function and stops when that function returns true. Here’s how we can use it to find the clicked tag in our <code>tags</code> array.</p>
+<p>Since we’d like to show users the total count when they click on a word, we’re going to need to find the word in our original data set. We have the word’s value, so that’s simply a matter of searching through the data set to find a match. If we were using jQuery, the <code>.grep()</code> function would do just that. In this example we’re sticking with native JavaScript, so we can look for an equivalent method in pure JavaScript. Unfortunately, although there is such a native method defined (<code>.find()</code>) very few browsers (even modern browsers) currently support it. We could resort to a standard <code>for</code> or <code>forEach</code> loop, but there is an alternative that many consider an improvement over that approach. It relies on the <code>.some()</code> method, an array method that modern browsers do support. The <code>.some()</code> method passes every element of an array to an arbitrary function and stops when that function returns true. Here’s how we can use it to find the clicked tag in our <code>tags</code> array.</p>
 <p>The function that’s the argument to <code>.some()</code> is defined in lines 5 through 11. It is called with the parameter <code>el</code>, short for an <em>element</em> in the <code>tags</code> array. The conditional statement in line 6 checks to see if that element’s word matches the clicked node’s text content. If so, the function sets the <code>clickedTag</code> variable and returns <code>true</code> to terminate the <code>.some()</code> loop.</p>
 <p>If the clicked word doesn’t match the element we’re checking in the <code>tags</code> array, then the function supplied to <code>some()</code> returns <code>false</code> (line 10). When <code>some()</code> sees a <code>false</code> return value, it continues iterating through the array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -1958,7 +1958,7 @@ Because our word cloud consists of standard <span class="smcp">HTML</span> eleme
 }());
 </script>
 <h2 id="summing-up">Summing Up</h2>
-<p>In this chapter we’ve looked at several different special-purpose visualizations and some JavaScript libraries that can help us create them. Tree maps are handy for showing both hierarchy and dimension in a single visualization. Heat maps can highlight varying intensities throughout a region. Network graphs reveal the connections between objects. And word clouds show relative relationships between language properties in an attractive and concise visualization.</p>
+<p>In this chapter, we’ve looked at several different special-purpose visualizations and some JavaScript libraries that can help us create them. Tree maps are handy for showing both hierarchy and dimension in a single visualization. Heat maps can highlight varying intensities throughout a region. Network graphs reveal the connections between objects. And word clouds show relative relationships between language properties in an attractive and concise visualization.</p>
 <p>Continue reading: <a href="chap05.html">Chapter 5: Showing Time Lines</a>.</p>
 <script src="js/scripts.04.min.js"></script>
         </main>

@@ -130,8 +130,8 @@ body { counter-reset: chapter 3; }
 </style>
 
 <h1 id="chapter-3-integrating-charts-in-a-page">Chapter 3: Integrating Charts in a Page</h1>
-<p>You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That’s not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they “look pretty” on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn’t. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn’t take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes and labels and titles and legends and such to place.</p>
-<p>Edward Tufte considered this problem in his groundbreaking work <em>The Visual Display of Quantitative Information,</em> and he proposed a novel solution he called <em>sparklines.</em> Sparklines are charts stripped to their bare essentials, presented without labels, axes, titles or other elements we often see in a chart. Sparklines can present a lot of information in very little space, even to the point where it is possible to include a chart right in the middle of a sentence. There is no need for “See figure below” or “Click for larger view.” One of Tufte’s earliest examples presents the glucose level of a medical patient; figure <span class="nextfigure"/> shows a reproduction.</p>
+<p>You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That’s not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they “look pretty” on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn’t. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn’t take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes, labels, titles, legends, and more to place.</p>
+<p>Edward Tufte considered this problem in his groundbreaking work <a href="http://www.edwardtufte.com/tufte/books_vdqi"><em>The Visual Display of Quantitative Information</em></a>, and he proposed a novel solution he called <em>sparklines.</em> Sparklines are charts stripped to their bare essentials, presented without the aforementioned elements we often see in a chart. Sparklines can present a lot of information in very little space, even to the point where it is possible to include a chart right in the middle of a sentence. There is no need for “See figure below” or “Click for larger view.” One of Tufte’s earliest examples presents the glucose level of a medical patient; figure <span class="nextfigure"/> shows a reproduction.</p>
 <figure style="text-align: center">
 <p style="display: inline-block;">
 <span id="sparkline-intro" style="opacity:0;">170,134,115,128,168,166,122,81,56,39,97,114,114,130,151,184,148,145,134,145,145,145,143,148,224,181,112,111,129,151,131,131,131,114,112,112,112,124,187,202,200,203,237,263,221,197,184,185,203,290,330,330,226,113,148,169,148,78,96,96,96,77,59,22,22,70,110,128</span> <span style="color:#CA0000"> 128 </span> Glucose
@@ -141,10 +141,10 @@ Tufte’s classic sparkline example shows a lot of information in a small space.
 </figcaption>
 </figure>
 <p>In a mere 154×20 pixels we’ve shown the patient’s current glucose level, its trend for more than two months, high and low values, and the range of normal values. This high information density makes sparklines effective any time space is a premium—inline in textual paragraphs, as cells in tables, or as part of information dashboards.</p>
-<p>Sparklines do have disadvantages of course. They cannot provide as much fine-grained detail as a full size chart with axes and labels. They also cannot support significant interactivity, so we can’t give users a lot of flexibility in selecting data or zooming in for detail. But for many visualizations, these aren’t major concerns. Plus, as we’ll see in this chapter’s examples, the web gives us the chance to augment sparklines in ways not possible in print.</p>
-<p>There are a few JavaScript libraries and toolkits for creating sparklines, but we’ll focus on the most popular of them: <a href="http://omnipotent.net/jquery.sparkline/">jQuery sparklines</a>. As the name implies, this open source library is an extension to jQuery. The examples that follow look closely at how to use these tools to incorporate information dense visualizations into your web page. Here’s what we’ll learn:</p>
+<p>Sparklines do have disadvantages of course. They cannot provide as much fine-grained detail as a full-size chart with axes and labels. They also cannot support significant interactivity, so we can’t give users a lot of flexibility in selecting data or zooming in for detail. But for many visualizations, these aren’t major concerns. Plus, as we’ll see in this chapter’s examples, the web gives us the chance to augment sparklines in ways that aren’t possible in print.</p>
+<p>There are a few JavaScript libraries and toolkits for creating sparklines, but we’ll focus on the most popular of them: <a href="http://omnipotent.net/jquery.sparkline/">jQuery sparklines</a>. As the name implies, this open source library is an extension to jQuery. The examples in this chapter look closely at how to use these tools to incorporate information dense visualizations into your web page. Here’s what you’ll learn:</p>
 <ul>
-<li>How to create a classic sparkline for integration directly in test</li>
+<li>How to create a classic sparkline for integration directly in text</li>
 <li>How to combine multiple sparklines to show comparisons</li>
 <li>How to annotate sparklines with additional details</li>
 <li>How to create composite charts</li>
@@ -181,7 +181,7 @@ Tufte’s classic sparkline example shows a lot of information in a small space.
 <p>As later examples will demonstrate, the sparklines library is both flexible and powerful, and we can use it in many different contexts. As a start, though, it seems appropriate to use the library to create a sparkline exactly as Edward Tufte first defined it. The process is quite straightforward and only takes four simple steps.</p>
 <h3 id="step-1-include-the-required-javascript-libraries">Step 1: Include the Required JavaScript Libraries</h3>
 <p>Since we’re using the jQuery sparklines library to create the chart, we need to include that library in our web pages, along with jQuery. Both jQuery and sparklines are available on public content distribution networks (<span class="smcp">CDN</span>s). For this example (and the others in this chapter), we’ll use the CloudFlare <span class="smcp">CDN</span>, but for some notes on the advantages and disadvantages of using <span class="smcp">CDN</span>s, see Chapter 2.</p>
-<p>In addition to the jQuery library, sparklines relies on the <span class="smcp">HTML</span> <em>canvas</em> feature. Since Internet Explorer didn’t support canvas until version 9, we’ll use some special markup in line 9 to ensure that <span class="smcp">IE</span> 8 and earlier will load an additional library (<code>excanvas.min.js</code>), just like we did in Chapter 2. Here’s the skeleton with which we start:</p>
+<p>In addition to the jQuery library, sparklines rely on the <span class="smcp">HTML</span> <em>canvas</em> feature. Since Internet Explorer didn’t support canvas until version 9, we’ll use some special markup in line 9 to ensure that <span class="smcp">IE</span> 8 and earlier will load an additional library (<code>excanvas.min.js</code>), just like we did in Chapter 2. Here’s the skeleton with which we start:</p>
 <table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -246,7 +246,7 @@ Tufte’s classic sparkline example shows a lot of information in a small space.
 <li>We include the data right in the <span class="smcp">HTML</span> itself, not in the JavaScript that creates the chart.</li>
 <li>The <code>&lt;span&gt;</code> for the chart does not have a unique <code>id</code> attribute.</li>
 </ul>
-<p>Both of these differences are optional; we could construct the chart as in other visualizations by passing data to a JavaScript function and identifying its container with a unique <code>id</code>. For sparklines, however, the approach we’re using here often makes more sense. By including the chart data directly in the <span class="smcp">HTML</span>, we can easily see the data’s relation to other content on the page. It’s clear, for example, that the final value of our chart (128) is the same as the value we’re using for the label. If we had made a mistake and used a different value for the label, the error would be much easier to spot and correct. Using a common <code>class</code> for all sparklines instead of unique <code>id</code>s simplifies how we might use the library to create multiple charts on one page. With unique <code>id</code>s we would have to call a library function for every chart. With a common <code>class</code>, on the other hand, we only need call a single library function to create multiple charts. That’s especially helpful when a web page contains a lot of sparklines.</p>
+<p>Both of these differences are optional; we could construct the chart as in other visualizations by passing data to a JavaScript function and identifying its container with a unique <code>id</code>. For sparklines, however, the approach we’re using here often makes more sense. By including the chart data directly in the <span class="smcp">HTML</span>, we can easily see the data’s relation to other content on the page. It’s clear, for example, that the final value of our chart (128) is the same as the value we’re using for the label. If we had made a mistake and used a different value for the label, the error would be much easier to spot and correct. Using a common <code>class</code> for all sparklines instead of unique <code>id</code>s simplifies how we might use the library to create multiple charts on one page. With unique <code>id</code>s we would have to call a library function for every chart. With a common <code>class</code>, on the other hand, we need only call a single library function to create multiple charts. That’s especially helpful when a web page contains a lot of sparklines.</p>
 <h3 id="step-3-draw-the-sparkline">Step 3: Draw the Sparkline</h3>
 <p>Now that we’ve included the necessary libraries and set up our <span class="smcp">HTML</span>, it’s remarkably easy to draw the charts. In fact, a single line of JavaScript is sufficient. We simply select the containing element(s) using jQuery (<code>$('.sparkline')</code>) and call the sparklines plugin.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -264,7 +264,7 @@ The default sparkline options differ slightly from the classic example.
 </figure>
 <p>The library’s default options don’t quite match Tufte’s classic sparkline definition. The differences include colors, chart type, and density. We’ll tweak those next.</p>
 <h3 id="step-4-adjust-the-chart-style">Step 4: Adjust the Chart Style</h3>
-<p>To make our sparkline exactly match Tufte’s definition, we can specify new values for some of the default options. Let’s collect the changes first, and then see how to pass them to the library.</p>
+<p>To make our sparkline match Tufte’s definition exactly, we can specify new values for some of the default options. Let’s collect the changes first, and then see how to pass them to the library.</p>
 <ul>
 <li>Tufte’s classic sparklines are black and white except for key data points (minimum, maximum, and final values). His color scheme adds extra emphasis to those points. To change the library’s default (blue), we can set a <code>lineColor</code>. For screen displays we might chose a dark gray rather than pure black. That’s what we’re using in line 2 below.</li>
 <li>Tufte doesn’t fill the area below the line so he can use shading to indicate a normal range. To eliminate the library’s light blue shading, we set <code>fillColor</code> to <code>false</code>. (Line 3.)</li>
@@ -344,11 +344,11 @@ The default sparkline options differ slightly from the classic example.
 }());
 </script>
 <h2 id="charting-many-variables">Charting Many Variables</h2>
-<p>By design, sparklines take up very little space on a page, and that makes them ideal for another visualization challenge: showing many variables at once. Of course regular line charts and bar charts can plot multiple data sets simultaneously; however, these multiple series charts rapidly grow unwieldy if the number of data sets exceeds four or five. Some visualization projects show dozens of different variables, far beyond what a multiple series chart can accommodate. A <em>small multiples</em> approach turns the standard chart approach completely around. Instead of showing one chart with multiple data sets, show multiple charts each with a single data set. Placing lots of charts on a page means that each individual chart cannot take up much space. That is the exactly the problem that sparklines solve.</p>
-<p>We won’t go too crazy with this example to keep the code examples manageable, but it’s easy to extend this approach to many more variables. In our case we’ll construct a visualization for analyzing stock market performance. The companies in our analysis will include the <a href="http://money.cnn.com/magazines/fortune/fortune500/2012/full_list/">10 largest American companies in 2012</a>, (the “Fortune 10”), Barclay’s <a href="http://www.marketwatch.com/story/barclays-best-tech-stocks-for-2012-2011-12-20">best technology stocks for 2012</a> (as identified in December 2011), and Bristol-Myers Squibb, which <span class="smcp">CR</span> Magazine named the <a href="http://www.thecro.com/files/100Best2012_List_3.8.pdf">top company in America for corporate responsibility</a>. Those selections are completely arbitrary, but the example is designed to include three different cases which we will style differently in our visualization. We’ll treat one as a general case (The Fortune 10 list), one as a special class (the Barclay’s list), and one as a unique variable (Bristol-Myers Squibb).</p>
+<p>By design, sparklines take up very little space on a page, and that makes them ideal for another visualization challenge: showing many variables at once. Of course regular line charts and bar charts can plot multiple data sets simultaneously; however, these multiple series charts rapidly grow unwieldy if the number of data sets exceeds four or five. Some visualization projects show dozens of different variables, far beyond what a multiple series chart can accommodate. A <em>small multiples</em> approach turns the standard chart approach completely around. Instead of showing one chart with multiple data sets, we can show multiple charts, each with a single data set. Placing lots of charts on a page means that each individual chart cannot take up much space. That is the exactly the problem that sparklines solve.</p>
+<p>We won’t go too crazy here to keep the code examples manageable, but it’s easy to extend this approach to many more variables. In our case we’ll construct a visualization for analyzing stock market performance. The companies in our analysis will include the <a href="http://money.cnn.com/magazines/fortune/fortune500/2012/full_list/">10 largest American companies in 2012</a>, (the “Fortune 10”), Barclay’s <a href="http://www.marketwatch.com/story/barclays-best-tech-stocks-for-2012-2011-12-20">best technology stocks for 2012</a> (as identified in December 2011), and Bristol-Myers Squibb, which <span class="smcp">CR</span> Magazine named the <a href="http://www.thecro.com/files/100Best2012_List_3.8.pdf">top company in America for corporate responsibility</a>. Those selections are completely arbitrary, but the example is designed to include three different cases that we will style differently in our visualization. We’ll treat one as a general case (the Fortune 10 list), one as a special class (the Barclay’s list), and one as a unique variable (Bristol-Myers Squibb).</p>
 <p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page.</p>
 <h3 id="step-1-prepare-the-html-markup">Step 1: Prepare the HTML Markup</h3>
-<p>The sparklines library makes is easy to embed the data directly inside the <span class="smcp">HTML</span> markup. For this example, an <span class="smcp">HTML</span> table is the most appropriate structure for the data. Here’s how such a table could begin. (For brevity the excerpt below doesn’t include the full <span class="smcp">HTML</span>, but the complete example is available in the book’s source code.)</p>
+<p>The sparklines library makes it easy to embed the data directly inside the <span class="smcp">HTML</span> markup. For this example, an <span class="smcp">HTML</span> table is the most appropriate structure for the data. Here’s how such a table could begin. (For brevity’s sake, the following excerpt doesn’t include the full <span class="smcp">HTML</span>, but the complete example is available in the book’s source code.)</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -406,14 +406,14 @@ The default sparkline options differ slightly from the classic example.
 <li>The top Corporate Responsibility stock has no special attributes or characteristics (yet).</li>
 </ul>
 <h3 id="step-2-draw-the-charts">Step 2: Draw the Charts</h3>
-<p>Just as in this chapter’s first example, creating the sparklines using default options is amazingly simple. It only takes a single line of JavaScript. We use jQuery to select all the elements which contain sparkline data, and we call the <code>sparkline()</code> function to generate the charts. Notice that we only have to make one call to <code>sparkline()</code>, even though each chart has unique data. That’s a major benefit of placing the data within the <span class="smcp">HTML</span> itself.</p>
+<p>Just as in this chapter’s first example, creating the sparklines using default options is amazingly simple: it only takes a single line of JavaScript. We use jQuery to select all the elements that contain sparkline data, and we call the <code>sparkline()</code> function to generate the charts. Notice that we only have to make one call to <code>sparkline()</code>, even though each chart has unique data. That’s a major benefit of placing the data within the <span class="smcp">HTML</span> itself.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="kw">function</span>() {
     <span class="fu">$</span>(<span class="st">&#39;.sparkline&#39;</span>).<span class="fu">sparkline</span>();
 }</code></pre></td></tr></table>
-<p>The resulting charts in figure <span class="nextfigure"/> all have identical styles, but we’ll fix that in the next few steps.</p>
+<p>The resulting charts, shown in figure <span class="nextfigure"/>, all have identical styles, but we’ll fix that in the next few steps.</p>
 <figure>
 <table class="table table-bordered table-condensed" id="multiples-chart1" class="figure">
 <thead>
@@ -692,7 +692,7 @@ Sparklines can be a good visualization to include within page elements such as t
 </figcaption>
 </figure>
 <h3 id="step-4-establish-a-default-style-for-the-charts">Step 4: Establish a Default Style for the Charts</h3>
-<p>If we don’t like the sparklines library’s default style, it’s easy to change it using an options object like below. The object is the second parameter to the <code>sparkline()</code> function, and here it changes the color for the charts and disables the highlights on the minimum, maximum, and final values. The first parameter, the string <code>'html'</code>, indicates to the library that the data is already present in our <span class="smcp">HTML</span>.</p>
+<p>If we don’t like the sparklines library’s default style, it’s easy to change it using an options object, as shown next. The object is the second parameter to the <code>sparkline()</code> function, and here it changes the color for the charts and disables the highlights on the minimum, maximum, and final values. The first parameter, the string <code>'html'</code>, indicates to the library that the data is already present in our <span class="smcp">HTML</span>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -748,7 +748,7 @@ The sparkline options let us adjust the chart styles.
 </figcaption>
 </figure>
 <h3 id="step-5-modify-the-default-style-for-special-classes">Step 5: Modify the Default Style for Special Classes</h3>
-<p>With a default style in place, we can turn our attention to the special class of charts for stocks in Barclay’s technology list. For our example, let’s change the color of the chart <em>without any other changes to our default style.</em> That final clause is important. We could just copy-and-paste the options, but that would be setting ourselves up for problems in the future. You can see why in the example code such an approach would produce.</p>
+<p>With a default style in place, we can turn our attention to the special class of charts for stocks in Barclay’s technology list. For our example, let’s change the color of the chart <em>without any other changes to our default style.</em> That final clause is important. We could just copy-and-paste the options, but that would be setting ourselves up for problems in the future. You can see why in the following example code.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -793,7 +793,7 @@ The sparkline options let us adjust the chart styles.
     <span class="dt">minSpotColor</span>: <span class="kw">false</span>,
     <span class="dt">maxSpotColor</span>: <span class="kw">false</span>
 };</code></pre></td></tr></table>
-<p>Next we create a new variable for the Barclay’s styles. To create this new variable, we can use the jQuery <code>.extend()</code> function to avoid duplication. In the code below, we pass three parameters to <code>.extend()</code>. The first parameter is the target. It’s an object that the function will modify, and we start with an empty object (<code>{}</code>). The next parameters are objects that <code>.extend()</code> will merge into the target. The merge process adds new properties to the target and updates any properties in the target object with new values. Since we’re passing two additional parameters, we’re asking for two merges.</p>
+<p>Next we create a new variable for the Barclay’s styles. To create this new variable, we can use the jQuery <code>.extend()</code> function to avoid duplication. In the following code, we pass three parameters to <code>.extend()</code>. The first parameter is the target. It’s an object that the function will modify, and we start with an empty object (<code>{}</code>). The next parameters are objects that <code>.extend()</code> will merge into the target. The merge process adds new properties to the target and updates any properties in the target object with new values. Since we’re passing two additional parameters, we’re asking for two merges.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -890,9 +890,9 @@ Different visual styles distinguish different types of data.
 </figcaption>
 </figure>
 <h3 id="step-6-create-a-unique-style-for-a-specific-chart">Step 6: Create a Unique Style for a Specific Chart</h3>
-<p>For the final step in this example, let’s consider the single stock at the top of <span class="smcp">CR</span> Magazine’s list. Suppose we want to add distinct styles to its chart, and we only know those styles when we’re generating the <span class="smcp">HTML</span>, not when we’re writing the JavaScript. How can we adjust the chart style if we can’t modify any JavaScript?</p>
-<p>Sparklines lets you add special attributes directly to the <span class="smcp">HTML</span> element containing a chart. To set the line color, for example, you need to specify the attribute <code>sparkLineColor</code>. The problem is, if we were to enter this attribute directly in the <span class="smcp">HTML</span>, the result would’t be valid <span class="smcp">HTML</span>, because the <span class="smcp">HTML</span> specification doesn’t recognize the <code>sparkLineColor</code> attribute. To conform to the <span class="smcp">HTML</span> standard, custom attributes need to have names that begin with the prefix <code>data-</code>.</p>
-<p>In order to use <span class="smcp">HTML</span>-compliant attribute names to refer to sparklines’ custom attributes, we just need to tell the sparklines library how to find those attribute names. For our <span class="smcp">HTML</span>, we use the standard <code>data-</code> prefix instead of <code>spark</code> in line 4.</p>
+<p>For the final step in this example, let’s consider the single stock at the top of <span class="smcp">CR</span> Magazine’s list. Suppose we want to add distinct styles to its chart, and we know those styles only when we’re generating the <span class="smcp">HTML</span>, not when we’re writing the JavaScript. How can we adjust the chart style if we can’t modify any JavaScript?</p>
+<p>Sparklines let you add special attributes directly to the <span class="smcp">HTML</span> element containing a chart. To set the line color, for example, you need to specify the attribute <code>sparkLineColor</code>. The problem is that if we were to enter this attribute directly in the <span class="smcp">HTML</span>, the result would’t be valid <span class="smcp">HTML</span>, because the <span class="smcp">HTML</span> specification doesn’t recognize the <code>sparkLineColor</code> attribute. To conform to the <span class="smcp">HTML</span> standard, custom attributes must have names that begin with the prefix <code>data-</code>.</p>
+<p>To use <span class="smcp">HTML</span>-compliant names to refer to sparklines’ custom attributes, we just need to tell the sparklines library how to find those names. For our <span class="smcp">HTML</span>, we use the standard <code>data-</code> prefix instead of <code>spark</code> in line 4.</p>
 <table class="sourceCode html numberLines line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -909,7 +909,7 @@ Different visual styles distinguish different types of data.
    <span class="kw">&lt;/td&gt;</span>
    <span class="kw">&lt;td&gt;</span>(2%)<span class="kw">&lt;/td&gt;</span>
 <span class="kw">&lt;/tr&gt;</span></code></pre></td></tr></table>
-<p>Now we have to add a couple of additional options in our call to <code>sparkline()</code>. First we set <code>enableTagOptions</code> to true to tell the library that we’re including options directly in the <span class="smcp">HTML</span>. Then we set <code>tagOptionsPrefix</code> to <code>&quot;data-&quot;</code> to specify the specific prefix we’re using for those attributes.</p>
+<p>Now we have to add a couple more options in our call to <code>sparkline()</code>. First we set <code>enableTagOptions</code> to true to tell the library that we’re including options directly in the <span class="smcp">HTML</span>. Then we set <code>tagOptionsPrefix</code> to <code>&quot;data-&quot;</code> to specify the specific prefix we’re using for those attributes.</p>
 <blockquote>
 <p>Note: As of this writing, the jQuery sparklines documentation for <code>tagOptionsPrefix</code> is <em>not</em> correct. The documentation lists the option as <code>tagOptionPrefix</code>, where “option” is singular instead of plural. The library’s code, however, expects the plural form.</p>
 </blockquote>
@@ -937,7 +937,7 @@ Bristol Meyers Squibb Co.
 The sparklines library supports unique styling options for individual charts.
 </figcaption>
 </figure>
-<p>To pass the appropriate options to <code>sparkline()</code> we can take advantage of the work we did in step five. Since we created a special object for default options, that’s the only object we have to change.</p>
+<p>To pass the appropriate options to <code>sparkline()</code> we can take advantage of the work we did in step 5. Since we created a special object for default options, that’s the only object we have to change.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1328,7 +1328,7 @@ A complete example distinguishes different individual data sets in a larger coll
 <p>Let’s see how we can use a customized form of tooltips by enhancing the charts in the previous example.</p>
 <p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page.</p>
 <h3 id="step-1-prepare-the-data">Step 1: Prepare the Data</h3>
-<p>In the previous examples we’ve embedded the data directly in the <span class="smcp">HTML</span> markup. That’s convenient since it lets us separate the data from our code. In this example, however, the JavaScript code will need more detailed knowledge of the data so it can present the right tooltip information. This time we’ll use a JavaScript array to store our data, so that all the relevant information is in one place. For this example we can focus on a single stock. And even though we’re only graphing the adjusted closing price, the array will track additional data that we can include in the tooltips. Here’s an excerpt of the data for one of the stocks.</p>
+<p>In the previous examples we’ve embedded the data directly in the <span class="smcp">HTML</span> markup. That’s convenient since it lets us separate the data from our code. In this example, however, the JavaScript code will need more detailed knowledge of the data so it can present the right tooltip information. This time we’ll use a JavaScript array to store our data, so that all the relevant information is in one place. For this example we can focus on a single stock. And even though we’re graphing only the adjusted closing price, the array will track additional data that we can include in the tooltips. Here’s an excerpt of the data for one of the stocks.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1346,7 +1346,7 @@ A complete example distinguishes different individual data sets in a larger coll
     <span class="dt">close</span>: <span class="fl">420.30</span>, <span class="dt">volume</span>: <span class="dv">10673200</span>, <span class="dt">adj_close</span>: <span class="fl">414.19</span> },
   <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-2-prepare-the-html-markup">Step 2: Prepare the HTML Markup</h3>
-<p>Our visualization will include three distinct areas, each in a <code>&lt;div&gt;</code> element. The primary <code>&lt;div&gt;</code> created in line 3 will hold the chart. Underneath the chart we’ll add the primary tool tip information in its own <code>&lt;div&gt;</code> (line 4), and we’ll include supplementary details to the right (line 7). The example below uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.</p>
+<p>Our visualization will include three distinct areas, each in a <code>&lt;div&gt;</code> element. The primary <code>&lt;div&gt;</code> created in line 3 will hold the chart. Underneath the chart we’ll add the primary tool tip information in its own <code>&lt;div&gt;</code> (line 4), and we’ll include supplementary details to the right (line 7). The following example uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1409,7 +1409,7 @@ A static sparkline shows the change in the data set over time.
 </figcaption>
 </figure>
 <h3 id="step-4-add-the-primary-annotation">Step 4: Add the Primary Annotation</h3>
-<p>The sparklines library adds a simple tooltip to all of its charts by default. Although that tooltip does show the value over which the user’s mouse is hovering, the presentation isn’t particularly elegant, and, more importantly, it doesn’t provide as much information as we would like. Let’s build on the default behavior but enhance it to meet our needs.</p>
+<p>The sparklines library adds a simple tooltip to all of its charts by default. Although that tooltip shows the value over which the user’s mouse is hovering, the presentation isn’t particularly elegant, and, more importantly, it doesn’t provide as much information as we would like. Let’s enhance the default behavior to meet our needs.</p>
 <p>Looking at the library’s defaults, we can retain the vertical marker, but we don’t want the default tooltip. Adding the option <code>disableTooltips</code> with a value of <code>true</code> will turn off the undesired tooltip.</p>
 <p>For our own custom tooltip, we can rely on a handy feature of the sparklines library. The library generates a custom event whenever the user’s mouse moves over a chart region. That event is the <code>&quot;sparklineRegionChange&quot;</code> event. The library attaches a custom property, <code>sparklines</code>, to those events. By analyzing that property we can determine the mouse’s location relative to the data.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -1438,7 +1438,7 @@ A static sparkline shows the change in the data set over time.
               + <span class="st">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp; &quot;</span>
               + <span class="st">&quot;Close: $&quot;</span> + stock[idx].<span class="fu">adj_close</span>);
         }</code></pre></td></tr></table>
-<p>The sparklines library isn’t completely reliable in generating events when the mouse leaves the chart area. Instead of using the custom event, therefore, we can use the standard JavaScript <code>mouseout</code> event. When the user does move the mouse off of the chart, we’ll turn off the custom tooltip by setting it’s content to a blank space. We use the <span class="smcp">HTML</span> non-breaking space (<code>&amp;nbsp;</code>) so the browser doesn’t think the <code>&lt;div&gt;</code> is completely empty. If we used a standard space character, the browser would treat the <code>&lt;div&gt;</code> as empty and recalculate the height of the page, causing an annoying jump in the page contents. (For the same reason we should initialize that <code>&lt;div&gt;</code> with <code>&amp;nbsp;</code> instead of leaving it blank.)</p>
+<p>The sparklines library isn’t completely reliable in generating events when the mouse leaves the chart area. Instead of using the custom event, therefore, we can use the standard JavaScript <code>mouseout</code> event. When the user moves the mouse off the chart, we’ll turn off the custom tooltip by setting it’s content to a blank space. We use the <span class="smcp">HTML</span> non-breaking space (<code>&amp;nbsp;</code>) so the browser doesn’t think the <code>&lt;div&gt;</code> is completely empty. If we used a standard space character, the browser would treat the <code>&lt;div&gt;</code> as empty and recalculate the height of the page, causing an annoying jump in the page contents. (For the same reason we should initialize that <code>&lt;div&gt;</code> with <code>&amp;nbsp;</code> instead of leaving it blank.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1536,7 +1536,7 @@ An interactive sparkline tracks the user’s mouse and provides information rele
 Interactive sparklines can show additional information in many ways.
 </figcaption>
 </figure>
-<p>With figure <span class="lastfigure"/> we have the visualization we want. The chart clearly shows the overall trend for the stock during the year, but it takes up only a small amount of space on the web page. At first glance the chart is also free of distracting elements such as labels and axes. For users that just want a general sense of the stock’s performance, those elements are superfluous. Users who want the full details need only hover their mouse over the chart and it reveals the complete market information.</p>
+<p>With figure <span class="lastfigure"/> we have the visualization we want. The chart clearly shows the overall trend for the stock during the year, but it takes up only a small amount of space on the web page. At first glance the chart is also free of distracting elements such as labels and axes. For users who just want a general sense of the stock’s performance, those elements are superfluous. Users who want the full details need only hover their mouse over the chart and it reveals the complete market information.</p>
 <p>Because we’ve managed to display the information while retaining the compact nature of sparklines, the technique in this example works well when combined with the small multiples approach of this chapter’s second example.</p>
 <p>The next example includes an alternate method for showing the extra details.</p>
 <script>
@@ -1683,10 +1683,10 @@ Interactive sparklines can show additional information in many ways.
 
 }());
 </script>
-<h2 id="composite-charts">Composite Charts</h2>
+<h2 id="drawing-composite-charts">Drawing Composite Charts</h2>
 <p>So far in this chapter we’ve seen how sparklines can provide a lot of visual information in a very small space. That characteristic makes them perfect for integrating charts in a complete web page that includes text, tables, and other elements. We haven’t yet exhausted the capabilities of sparklines, however. We can increase the information density of our visualizations still further by creating composite charts—in effect, drawing multiple charts in the same space.</p>
 <p>To see an example of this technique, we can build on the previous example. In that example we used a sparkline to show the closing price of a stock over an entire year. Price is indeed the most relevant data about a stock, but there’s another quantity that many investors like to see: the stock’s trading volume. And just as with price, it can be important to understand the trend for trading volume at a glance. That makes the value an excellent candidate for a chart.</p>
-<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web. Because we’re visualizing the same data as in the previous example, we’ll also want to set up the data array and the <span class="smcp">HTML</span> markup exactly as in that example.</p>
+<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page. Because we’re visualizing the same data as in the previous example, we’ll also want to set up the data array and the <span class="smcp">HTML</span> markup exactly as in that example.</p>
 <h3 id="step-1-draw-the-trading-volume-chart">Step 1: Draw the Trading Volume Chart</h3>
 <p>Even though we’re including a chart of trading volume, the most important quantity is the stock price. To keep the emphasis on stock price, we want to draw that chart <em>on top of</em> the chart for trading volume. That means we need to draw the trading volume chart first.</p>
 <p>The code for trading volume is very similar to the stock price from the previous example. Instead of an area chart, however, we’ll use a bar chart. We use the jQuery <code>.map()</code> function to extract the <code>volume</code> property from our data array. Setting the <code>type</code> option to <code>&quot;bar&quot;</code> in line 3 is all it takes to tell the sparklines library to create a bar chart.</p>
@@ -1775,10 +1775,10 @@ Multiple charts may be combined in the same space.
 </figure>
 <h3 id="step-3-add-the-annotations">Step 3: Add the Annotations</h3>
 <p>We can add annotations to the chart using the same approach as in the previous example. Because our charts now include the trading volume, it’s appropriate to move that value from the details area into the primary annotation <code>&lt;div&gt;</code>. The code to do that is a simple adjustment from the prior example.</p>
-<p>In addition to moving the text from one area to the other, there are two significant changes.</p>
+<p>In addition to moving the text from one area to the other, we make two significant changes.</p>
 <ol type="1">
 <li><p>We get the <code>idx</code> value from the second element of the event’s <code>sparklines</code> array (<code>sparklines[1]</code>) in line 2. That’s because the first element of that array is the first chart. The sparklines library doesn’t really return any useful information about bar charts in the <code>sparklineRegionChange</code> event. Fortunately, we can get all the information we need from the line chart.</p></li>
-<li><p>We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 8. It’s much easier for our users to quickly grasp “24.4M” than “24402100.”</p></li>
+<li><p>We show the trading volume in millions, rounded to two decimal places. The calculation is in line 8. It’s much easier for our users to quickly grasp “24.4M” than “24402100.”</p></li>
 </ol>
 <table class="sourceCode javascript numberLines line-2 line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1810,7 +1810,7 @@ Multiple charts may be combined in the same space.
               + <span class="st">&quot;Low: $&quot;</span>  + stock[idx].<span class="fu">low</span>
             );
         }</code></pre></td></tr></table>
-<p>As in the previous example, the annotations provide additional details.</p>
+<p>As in the previous example, the annotations in our chart (shown in figure <span class="nextfigure"/>) provide additional details.</p>
 <figure>
 <div id="composite-chart3">
 <div style="float:left">
@@ -1833,7 +1833,7 @@ Tracking the mouse position makes it possible to interactively annotate the char
 </figure>
 <h3 id="step-4-show-details-as-a-chart">Step 4: Show Details as a Chart</h3>
 <p>So far we’ve shown the additional details for the stock (open, close, high, and low) as text values. As long as we’re drawing multiple charts, we can show those values graphically as well. The statistical box plot serves as a useful model for us. Traditionally, that plot type shows the range of a distribution, including deviations, quartiles, and medians. Visually, however, it provides a perfect model of a stock’s trading performance. We can use it to show the opening and closing prices, as well as the high and low values during the period.</p>
-<p>The sparklines library can draw a box plot for us, but normally it calculates the values to display given the distribution as input data. In our case we don’t want to use the standard statistical calculations. Instead, we can use an option that tells the library to use pre-computed values. The library expects at least 5 values:</p>
+<p>The sparklines library can draw a box plot for us, but normally it calculates the values to display given the distribution as input data. In our case we don’t want to use the standard statistical calculations. Instead, we can use an option that tells the library to use pre-computed values. The library expects at least five values:</p>
 <ul>
 <li>The lowest sample value</li>
 <li>The first quartile</li>
@@ -2110,7 +2110,7 @@ Interactive annotations can be charts themselves in addition to text.
 </script>
 <h2 id="responding-to-click-events">Responding to Click Events</h2>
 <p>Throughout this chapter we’ve looked at how to include a lot of visual information in a small space, making it easier to integrate a visualization within a web page. The basic sparkline by itself is very efficient, and previous examples have added annotations and composites to increase the information density further. Sometimes, however, there’s just no way to fit all the possible data in a small enough space. Even in these cases, though, the interactive nature of the web can help us out. Our web page can start with a compact visualization but expand to a different view—one with richer details—with a simple click or tap.</p>
-<p>Indeed the compact quality of sparklines seems to invite interaction. In every usability test I’ve performed that included sparklines on a web page, the participants invariably clicked on the chart. That was true even when there were no other details that the page could provide and the participants had no idea what to expect in response to their clicks. Users would inevitably click on sparklines just to see what happens.</p>
+<p>Indeed, the compact quality of sparklines seems to invite interaction. In every usability test I’ve performed that included sparklines on a web page, the participants invariably clicked on the chart. That was true even when there were no other details that the page could provide and the participants had no idea what to expect in response to their clicks. They clicked just to see what happens.</p>
 <p>This example continues our stock market example. We’ll begin with the same basic stock price chart we’ve seen before, but enhance it to provide details when users click on the chart region.</p>
 <p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page. Because we’re visualizing the same data as in the previous example, we’ll also want to set up the data array exactly as in that example. The <span class="smcp">HTML</span> markup, however, can be much simpler. All we need is a simple <code>&lt;div&gt;</code> to hold the chart.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -2119,7 +2119,7 @@ Interactive annotations can be charts themselves in addition to text.
 <p>Adding the chart to our markup is easy with the sparklines library. We can use the jQuery <code>.map()</code> function to extract the adjusted close value from our <code>stock</code> array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#stock&#39;</span>).<span class="fu">sparkline</span>(<span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }));</code></pre></td></tr></table>
-<p>The static chart of figure <span class="nextfigure"/>, which shows the stock performance, is probably looking familiar by now.</p>
+<p>The static chart of figure <span class="nextfigure"/>, which shows the stock performance probably looks familiar by now.</p>
 <figure>
 <div id="click-chart1">
 
@@ -2129,7 +2129,7 @@ Starting with a static chart ensures the visualization is sound.
 </figcaption>
 </figure>
 <h3 id="step-2-handle-click-events">Step 2: Handle Click Events</h3>
-<p>The sparklines library makes it easy for us to handle click events. When users click on a chart region, the library generates a custom <code>sparklineClick</code> event. The event data includes all the normal click properties, plus information about where on the chart the user clicked. To be notified of clicks, we define a handler for that custom event.</p>
+<p>The sparklines library makes it easy for us to handle click events. When users click on a chart region, the library generates a custom <code>sparklineClick</code> event. The event data includes all of the normal click properties, plus information about where on the chart the user clicked. To be notified of clicks, we define a handler for that custom event.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2144,7 +2144,7 @@ Starting with a static chart ensures the visualization is sound.
         region = <span class="ot">sparkline</span>.<span class="fu">getCurrentRegionFields</span>();
         <span class="co">/* region.x and region.y are the coordinates of the click */</span>
     });</code></pre></td></tr></table>
-<p>Now that we’re set up to receive <code>sparklineClick</code> events, we can write the code to respond to them. For our example, let’s reveal a detailed financial analysis widget. Many web services, including Yahoo and Google, have similar widgets, but we’ll use one from <a href="https://www.tradingview.com/widget/">TradingView</a>. As is typical, TradingView provides code for the widget as an <span class="smcp">HTML</span> <code>&lt;iframe&gt;</code>. We can wrap that <code>&lt;iframe&gt;</code> in our own <code>&lt;div&gt;</code> and place it immediately after the chart. We set a <code>display</code> property of <code>none</code> so that the contents are initially hidden. (The snippet below omits the details of the <code>&lt;iframe&gt;</code> element for clarity.)</p>
+<p>Now that we’re set up to receive <code>sparklineClick</code> events, we can write the code to respond to them. For our example, let’s reveal a detailed financial analysis widget. Many web services, including Yahoo! and Google, have similar widgets, but we’ll use one from <a href="https://www.tradingview.com/widget/">TradingView</a>. As is typical, TradingView provides code for the widget as an <span class="smcp">HTML</span> <code>&lt;iframe&gt;</code>. We can wrap that <code>&lt;iframe&gt;</code> in our own <code>&lt;div&gt;</code> and place it immediately after the chart. We set a <code>display</code> property of <code>none</code> so that the contents are initially hidden. (The following snippet omits the details of the <code>&lt;iframe&gt;</code> element for clarity.)</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;stock&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
@@ -2184,7 +2184,7 @@ Mouse clicks can reveal more details for a chart.
 </figcaption>
 </figure>
 <h3 id="step-3-improve-the-transitions">Step 3: Improve the Transitions</h3>
-<p>Instead of simply revealing the widget beneath the chart, it would be better to have the widget replace the chart. And if we’re going to do that, we’ll also want to give the users a chance to restore the chart and hide the widget. For that last function, we include a <code>&quot;widget-control&quot;</code> <code>&lt;div&gt;</code> in the code below (lines 2-4) for controlling the widget’s visibility. The only content we need for this controller is a close symbol floated right. Just like the widget itself, the controller is initially hidden.</p>
+<p>Instead of simply revealing the widget beneath the chart, it would be better to have the widget replace the chart. And if we’re going to do that, we’ll also want to give the users a chance to restore the chart and hide the widget. For that last function, we include a <code>&quot;widget-control&quot;</code> <code>&lt;div&gt;</code> in the following code (lines 2-4) for controlling the widget’s visibility. The only content we need for this controller is a close symbol floated right. Just like the widget itself, the controller is initially hidden.</p>
 <table class="sourceCode html numberLines line-2 line-3 line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2210,7 +2210,7 @@ Mouse clicks can reveal more details for a chart.
     <span class="fu">$</span>(<span class="st">&quot;#widget-control&quot;</span>).<span class="fu">show</span>();
     <span class="fu">$</span>(<span class="st">&quot;#stock&quot;</span>).<span class="fu">hide</span>();
 });</code></pre></td></tr></table>
-<p>Next we intercept clicks on the close symbol in the widget controller. We first prevent default event handling; otherwise the browser will disconcertingly jump to the top of the page. Then we hide the widget and its controller while revealing the chart again.</p>
+<p>Next we intercept clicks on the close symbol in the widget controller. We first prevent default event handling; otherwise, the browser will jump disconcertingly to the top of the page. Then we hide the widget and its controller while revealing the chart again.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2234,7 +2234,7 @@ Mouse clicks can reveal more details for a chart.
         <span class="ot">$</span>.<span class="fu">map</span>(stock, <span class="kw">function</span>(wk) { <span class="kw">return</span> <span class="ot">wk</span>.<span class="fu">adj_close</span>; }),
         { <span class="dt">tooltipFormatter</span>: <span class="kw">function</span>() {<span class="kw">return</span> <span class="st">&quot;Click for details&quot;</span>; } }
     );</code></pre></td></tr></table>
-<p>And for the widget controller, we simple add a <code>title</code> attribute in line 3 to tell users how to hide the widget.</p>
+<p>And for the widget controller, we simply add a <code>title</code> attribute in line 3 to tell users how to hide the widget.</p>
 <table class="sourceCode html numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2249,7 +2249,7 @@ Mouse clicks can reveal more details for a chart.
 <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;widget&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:600px;display:none&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;iframe&gt;&lt;/iframe&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
-<p>These additions give us the simple sparkline chart of figure <span class="nextfigure"/> that expands to a wealth of details with a single click. The close symbol in the upper right lets users return to the more compact sparkline.</p>
+<p>These additions give us the simple sparkline chart in figure <span class="nextfigure"/>, which expands to a wealth of details with a single click. The close symbol in the upper right lets users return to the more compact sparkline.</p>
 <style>
 a.closebtn, a.closebtn:hover, a.closebtn:focus, a.closebtn:active, a.closebtn:visited {text-decoration: none; color: #444; background-image:none; text-shadow:none;}
 </style>
@@ -2282,7 +2282,7 @@ Mouse clicks can reveal more details for a chart.
 </figcaption>
 </figure>
 <h3 id="step-4-animation">Step 4: Animation</h3>
-<p>For a final touch to our visualization, let’s do something about the abrupt hiding and revealing of the visualization components. A smoother animation will help our users follow the transition, and jQuery makes it easy enough to implement. There are lots of animation effects available in the jQuery <span class="smcp">UI</span> library, but the basic functionality of jQuery’s core is fine for this example. We simply replace the <code>show()</code> and <code>hide()</code> functions with <code>slideDown()</code> and <code>slideUp()</code> respectively.</p>
+<p>For the final touch to our visualization, let’s do something about the abrupt hiding and revealing of the visualization components. A smoother animation will help our users follow the transition, and jQuery makes it easy enough to implement. There are lots of animation effects available in the jQuery <span class="smcp">UI</span> library, but the basic functionality of jQuery’s core is fine for this example. We simply replace the <code>show()</code> and <code>hide()</code> functions with <code>slideDown()</code> and <code>slideUp()</code> respectively.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2305,7 +2305,7 @@ Mouse clicks can reveal more details for a chart.
     <span class="fu">$</span>(<span class="st">&quot;#widget-control&quot;</span>).<span class="fu">slideUp</span>();
     <span class="fu">$</span>(<span class="st">&quot;#stock&quot;</span>).<span class="fu">slideDown</span>();
 })</code></pre></td></tr></table>
-<p>At this point we can call our visualization complete with figure <span class="nextfigure"/>. The compact sparkline smoothly transitions to detailed information on a click, and those details transition back to the sparkline when they’re closed.</p>
+<p>At this point we can call our visualization complete; the final product is shown in figure <span class="nextfigure"/>. The compact sparkline smoothly transitions to reveal detailed information when the user clicks, and those details transition back to the sparkline when the user closes them.</p>
 <figure>
 <div id="click-chart4">
 
@@ -2492,8 +2492,8 @@ Animating transitions can make the visualization less jarring to users.
 </script>
 <h2 id="updating-charts-in-real-time">Updating Charts in Real Time</h2>
 <p>As we’ve seen in this chapter’s other examples, sparklines are great for integrating visualizations in a complete web page. They can be embedded in text content or used as table elements. Another application that suits sparklines well is an information dashboard. Effective dashboards summarize the health of the underlying system <em>at a glance</em>. When users don’t have the time to read through pages of texts or detailed graphics, the information density of sparklines makes them an ideal tool.</p>
-<p>In addition to high information density, most dashboards have another requirement: they must be up-to-date. For web-based dashboards, that means the contents should be continuously updated, even while users are viewing the page. There is no excuse for requiring them to “refresh their browsers.” Fortunately, the sparklines library makes it easy to accommodate this requirement as well.</p>
-<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web. For this visualization we’ll show both a chart and the most recent value of the data. We define <code>&lt;div&gt;</code> elements for each and place both in a containing <code>&lt;div&gt;</code>. The code below includes some styles inline, but you could place them in an external style sheet. Here the styles are just meant to position the value immediately to the right of the chart rather than on a separate line.</p>
+<p>In addition to high information density, most dashboards have another requirement: they must be up-to-date. For web-based dashboards, that means the contents should be continuously updated, even while users are viewing the page. There is no excuse for requiring users to refresh their browsers. Fortunately, the sparklines library makes it easy to accommodate this requirement as well.</p>
+<p>Just as in this chapter’s first example, we need to include the sparklines and jQuery libraries in our web page. For this visualization we’ll show both a chart and the most recent value of the data. We define <code>&lt;div&gt;</code> elements for each and place both in a containing <code>&lt;div&gt;</code>. The following code includes some styles inline, but you could place them in an external stylesheet. Here the styles are just meant to position the value immediately to the right of the chart rather than on a separate line.</p>
 <table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2503,8 +2503,8 @@ Animating transitions can make the visualization less jarring to users.
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;value&quot;</span><span class="ot"> style=</span><span class="st">&quot;float:left&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
 <h3 id="step-1-retrieve-the-data">Step 1: Retrieve the Data</h3>
-<p>In a real dashboard example, the server would provide the data to display and updates to that data. As long as the frequency of the updates was modest (not faster than once every five seconds or so), we could simply poll the server for updates on a regular interval. It’s probably not a good idea, however, to use the JavaScript <code>setInterval()</code> function to control the polling interval. That may seem strange at first because <code>setInterval()</code> executes a function periodically, which would seem to meet the requirements exactly. The situation is not quite that simple, however. If the server or network encounters a problem, then requests triggered by <code>setInterval()</code>will continue unabated, stacking up in a queue. Then, when communications with the server is restored, all of the pending requests will immediately finish, and we’d have a flood of data to handle.</p>
-<p>To avoid this problem, we can use the <code>setTimeout()</code> function instead. That function only executes once, so we’ll have to keep calling it explicitly. By doing that, though, we can make sure that we only send a request to the server after the current one finishes. This approach avoids stacking up a queue of requests.</p>
+<p>In a real dashboard example, the server would provide the data to display and updates to that data. As long as the frequency of the updates was modest (not faster than once every five seconds or so), we could simply poll the server for updates on a regular interval. It’s probably not a good idea, however, to use the JavaScript <code>setInterval()</code> function to control the polling interval. That may seem strange at first because <code>setInterval()</code> executes a function periodically, which would seem to meet the requirements exactly. The situation is not quite that simple, however. If the server or network encounters a problem, then requests triggered by <code>setInterval()</code>will continue unabated, stacking up in a queue. Then, when communication with the server is restored, all of the pending requests will immediately finish, and we’d have a flood of data to handle.</p>
+<p>To avoid this problem, we can use the <code>setTimeout()</code> function instead. That function executes only once, so we’ll have to keep calling it explicitly. By doing that, though, we can make sure that we send a request to the server only after the current one finishes. This approach avoids stacking up a queue of requests.</p>
 <table class="sourceCode javascript numberLines line-9 line-12"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2529,10 +2529,10 @@ Animating transitions can make the visualization less jarring to users.
         }, <span class="dt">dataType</span>: <span class="st">&quot;json&quot;</span>});
     }, <span class="dv">30000</span>);  <span class="co">// 30000: wait 30 seconds to make the request</span>
 })();</code></pre></td></tr></table>
-<p>Notice that the structure of the code defines the <code>getData()</code> function and immediately executes it. The closing pair of parenthesis at the end of line 12 triggers the immediate execution.</p>
+<p>Notice that the structure of the code defines the <code>getData()</code> function and immediately executes it. The closing pair of parentheses at the end of line 12 triggers the immediate execution.</p>
 <p>Within the <code>success</code> callback we set up a recursive call to <code>getData()</code> in line 9 so the function executes again whenever the server responds with data.</p>
 <h3 id="step-2-update-the-visualization">Step 2: Update the Visualization</h3>
-<p>Whenever we receive updated information from the server, we can simply update the chart and value. The code needs only a straightforward call to the sparklines library and a jQuery function to update the value. We’ve added that to the code in lines 6 and 7 below.</p>
+<p>Whenever we receive updated information from the server, we can simply update the chart and value. The code needs only a straightforward call to the sparklines library and a jQuery function to update the value. We’ve added that to the code here in lines 6 and 7 below.</p>
 <table class="sourceCode javascript numberLines line-6 line-7"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2568,7 +2568,7 @@ Animating transitions can make the visualization less jarring to users.
 </div>
 </div>
 <figcaption>
-A live updating chart can show real time data.
+A live updating chart can show real time-data.
 </figcaption>
 </figure>
 <script>
@@ -2634,7 +2634,7 @@ A live updating chart can show real time data.
 }());
 </script>
 <h2 id="summing-up">Summing Up</h2>
-<p>In this chapter we’ve considered various techniques for integrating visualizations within a web page. We’ve seen that sparklines are an excellent tool. Because they provide a lot of visual information in a small space, they leave room for other elements of the page, including text blocks, tables, and dashboards. We’ve considered several ways to increase the information density even further with annotations, composite charts, and click events. Finally we looked at how to create charts that update in real time, accurately visualizing the up-to-the-minute status of an underlying system.</p>
+<p>In this chapter, we’ve considered various techniques for integrating visualizations within a web page. We’ve seen that sparklines are an excellent tool. Because they provide a lot of visual information in a small space, they leave room for other elements of the page, including text blocks, tables, and dashboards. We’ve considered several ways to increase the information density even further with annotations, composite charts, and click events. Finally, we looked at how to create charts that update in real time, accurately visualizing the up-to-the-minute status of an underlying system.</p>
 <p>Continue reading: <a href="chap04.html">Chapter 4: Creating Specialized Graphs</a>.</p>
 <script src="js/scripts.03.min.js"></script>
         </main>
