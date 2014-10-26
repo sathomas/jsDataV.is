@@ -1,13 +1,13 @@
 ## Highlighting Regions with a Heat Map
 
-If you work in the web industry, heat maps may already be a part of your job. Usability researchers often use heat maps to evaluate site designs, especially when they want to analyze which parts of a web page get the most attention from users. Heat maps work by overlaying values, represented as semi-transparent colors, over a two-dimensional area. As the example in figure NEXTFIGURENUMBER shows, different colors represent different levels of attention. Users focus most on areas colored red, and the focus less on yellow, green, and blue areas.
+If you work in the web industry, heat maps may already be a part of your job. Usability researchers often use heat maps to evaluate site designs, especially when they want to analyze which parts of a web page get the most attention from users. Heat maps work by overlaying values, represented as semi-transparent colors, over a two-dimensional area. As the example in figure NEXTFIGURENUMBER shows, different colors represent different levels of attention. Users focus most on areas colored red, and less on yellow, green, and blue areas.
 
 <figure>
 <img src="img/heatmap.png" width="640">
 <figcaption>Heat maps traditionally show where web users focus their attention on a page.</figcaption>
 </figure>
 
-For this example we'll use a heat map to visualize an important aspect of a basketball game: where on the court are the teams scoring most of their points. The software we'll use the [heatmap.js](http://www.patrick-wied.at/static/heatmapjs/) library from Patrick Wied. If you need to create traditional web site heat maps, that library includes built-in support for capturing mouse movements and mouse clicks on a web page. Although we won't use those features for our example, the general approach is much the same.
+For this example we'll use a heat map to visualize an important aspect of a basketball game: where on the court the teams are scoring most of their points. The software we'll use is the [heatmap.js](http://www.patrick-wied.at/static/heatmapjs/) library from Patrick Wied. If you need to create traditional web site heat maps, that library includes built-in support for capturing mouse movements and mouse clicks on a web page. Although we won't use those features for our example, the general approach is much the same.
 
 ### Step 1: Include the Required JavaScript
 
@@ -29,11 +29,11 @@ For modern browsers, the heatmap.js library has no additional requirements. The 
 
 ### Step 2: Define the Visualization Data
 
-For our example, we'll visualize the <span class="smcp">NCAA</span> Mens' Basketball game on 13 February 2013 between Duke University and the University of North Carolina. Our [dataset](http://www.cbssports.com/collegebasketball/gametracker/live/NCAAB_20130213_UNC@DUKE) contains details about every point scored in the game. To clean the data, we convert the time of each score to minutes from the game start, and we define the position of the scorer in x and y coordinates. We've defined these coordinates using several important conventions:
+For our example, we'll visualize the <span class="smcp">NCAA</span> Mens' Basketball game on 13 February 2013 between Duke University and the University of North Carolina. Our [dataset](http://www.cbssports.com/collegebasketball/gametracker/live/NCAAB_20130213_UNC@DUKE) contains details about every point scored in the game. To clean the data, we convert the time of each score to minutes from the game start, and we define the position of the scorer in x- and y-coordinates. We've defined these coordinates using several important conventions:
 
 * We'll show North Carolina's points on the left side of the court and Duke's points on the right side.
-* The bottom left corner of the court corresponds to position (0,0), and the top right corner corresponds to (10,10).
-* To avoid confusing free throws with field goals, we've given all free throws a position of (-1,-1).
+* The bottom-left corner of the court corresponds to position (0,0), and the top-right corner corresponds to (10,10).
+* To avoid confusing free throws with field goals, we've given all free throws a position of (–1,–1).
 
 Here's the beginning of the data; the full data is available with the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
@@ -60,7 +60,7 @@ A simple diagram of a basketball court, like that in figure NEXTFIGURENUMBER, wo
 
 ### Step 4: Set Aside an HTML Element to Contain the Visualization
 
-In our web page, we need to define the element (generally a `<div>`) that will hold the heat map. When we create the element, we specify its dimensions, and we define the background. The fragment below does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> style sheet in an actual implementation
+In our web page, we need to define the element (generally a `<div>`) that will hold the heat map. When we create the element, we specify its dimensions, and we define the background. The following fragment does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> stylesheet in an actual implementation
 
 ``` {.html .numberLines}
 <div id='heatmap' 
@@ -79,7 +79,7 @@ For our next step, we must convert the game data into the proper format for the 
 2. the `y` coordinate, measured in pixels from the top of the containing element
 3. the magnitude of the data point (specified by the `count` property)
 
-The library also requires the maximum magnitude for the entire map, and here things get a little tricky. With standard heat maps, the magnitudes of all the data points for any particular position sum together. In our case that means that all the baskets scored from layups and slam dunks—which are effectively from the same position on the court—are added together by the heat map algorithm. That one position, right underneath the basket, dominates the rest of the court. To counteract that effect, we specify a maximum value far less than what the heat map would expect. In our case, we'll set the maximum value at `3`, which means that any location where at least three points were scored will be colored red. That ensures that any location where a three-pointer was scored will be red and we'll easily be able to see all the baskets.
+The library also requires the maximum magnitude for the entire map, and here things get a little tricky. With standard heat maps, the magnitudes of all the data points for any particular position sum together. In our case that means that all the baskets scored from layups and slam dunks—which are effectively from the same position on the court—are added together by the heat map algorithm. That one position, right underneath the basket, dominates the rest of the court. To counteract that effect, we specify a maximum value far less than what the heat map would expect. In our case, we'll set the maximum value to `3`, which means that any location where at least three points were scored will be colored red, and we'll easily be able to see all the baskets.
 
 We can use JavaScript to transform the `game` array into the appropriate format. We start by fetching the height and width of the containing element in lines 1-3. If those dimensions change, our code will still work fine. Then we initialize the `dataset` object with a `max` property and an empty `data` array in lines 4-6. Finally, we iterate through the game data and add relevant data points to this array. Notice that we're filtering out free throws in line 9.
 
@@ -120,9 +120,9 @@ The resulting visualization in figure NEXTFIGURENUMBER shows where each team sco
 <figcaption>The heat map shows successful shots in the game.</figcaption>
 </figure>
 
-### Step 7: Adjust the Heat Map Z-Index
+### Step 7: Adjust the Heat Map z-index
 
-The heatmap.js library is especially aggressive in its manipulation of the `z-index` property. To ensure that the heat map appears above all other elements on the page, the library explicitly sets this property to a value of `10000000000`. If your web page has elements that you don't want the heat map to obscure (such as fixed position navigation menus), that value is probably too aggressive. You can fix it by modifying the source code directly. Or, as an alternative, you can simply reset the value after the library finishes drawing the map.
+The heatmap.js library is especially aggressive in its manipulation of the `z-index` property. To ensure that the heat map appears above all other elements on the page, the library explicitly sets this property to a value of `10000000000`. If your web page has elements that you don't want the heat map to obscure (such as fixed-position navigation menus), that value is probably too aggressive. You can fix it by modifying the source code directly. Or, as an alternative, you can simply reset the value after the library finishes drawing the map.
 
 If you're using jQuery, the following code will reduce the z-index to a more reasonable value.
 

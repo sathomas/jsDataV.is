@@ -1,6 +1,6 @@
 ## Revealing Language Patterns with Word Clouds
 
-Data visualizations don't always focus on numbers. Sometimes the data for a visualization centers around words instead, and a _word cloud_ is often an effective way to present this kind of data. Word clouds can associate any quantity with a list of words; most often that quantity is a relative frequency. This type of word cloud, which we'll create for our next exmaple, reveals which words are common and which words are rare.
+Data visualizations don't always focus on numbers. Sometimes the data for a visualization centers on words instead, and a _word cloud_ is often an effective way to present this kind of data. Word clouds can associate any quantity with a list of words; most often that quantity is a relative frequency. This type of word cloud, which we'll create for our next example, reveals which words are common and which words are rare.
 
 To create this visualization we'll rely on the [wordcloud2](http://timdream.org/wordcloud2.js) library, a spin-off from author Tim Dream's [<span class="smcp">HTML5</span> Word Cloud](http://timc.idv.tw/wordcloud/) project.
 
@@ -9,7 +9,7 @@ To create this visualization we'll rely on the [wordcloud2](http://timdream.org/
 
 ### Step 1: Include the Required Libraries
 
-The wordcloud2 library does not depend on any other JavaScript libraries, so we don't need any other included scripts. It is not, however, available on common Content Distribution Networks, so we'll have to serve it from our own web host.
+The wordcloud2 library does not depend on any other JavaScript libraries, so we don't need any other included scripts. It is not, however, available on common content distribution networks, so we'll have to serve it from our own web host.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -24,11 +24,11 @@ The wordcloud2 library does not depend on any other JavaScript libraries, so we 
 </html>
 ```
 
-> Note: To keep our example focused on the visualization, we'll use a word list that doesn't need any special preparation. If you're working with natural language as spoken or written, however, you might wish to process the text to identify alternate forms of the same word. For example, you might want to count "hold holds held" as three instances of "hold" rather than three separate words. This type of processing obviously depends greatly on the particular language. If you're working in English and Chinese, though, the same developer that created wordcloud2 has also released the [WordFreq](http://timdream.org/wordfreq/) JavaScript library that performs exactly this type of analysis.
+> Note: To keep our example focused on the visualization, we'll use a word list that doesn't need any special preparation. If you're working with natural language as spoken or written, however, you might wish to process the text to identify alternate forms of the same word. For example, you might want to count "hold," "holds," and "held" as three instances of "hold" rather than three separate words. This type of processing obviously depends greatly on the particular language. If you're working in English and Chinese, though, the same developer that created wordcloud2 has also released the [WordFreq](http://timdream.org/wordfreq/) JavaScript library that performs exactly this type of analysis.
 
 ### Step 2: Prepare the Data
 
-For this example we'll look at the different tags users associate with their questions on the popular [Stack Overflow](http://stackoverflow.com). That site lets users pose programming questions that the community tries to answer. Tags provide a convenient way to categorize the questions so that users can browse other posts related to the same topic. By constructing a word cloud (perhaps better named a “tag cloud”) we can quickly show the relative popularity of different programming topics.
+For this example we'll look at the different tags users associate with their questions on the popular [Stack Overflow](http://stackoverflow.com). That site lets users pose programming questions that the community tries to answer. Tags provide a convenient way to categorize the questions so that users can browse other posts related to the same topic. By constructing a word cloud (perhaps better named a _tag cloud_) we can quickly show the relative popularity of different programming topics.
 
 If you wanted to develop this example into a real application, you could access the Stack Overflow data in real time using the site's <span class="smcp">API</span>. For our example, though, we'll use a static snapshot. Here's how it starts:
 
@@ -48,7 +48,7 @@ var tags = [
 
 In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
-The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element `["javascript", 56]` would tell wordcloud2 to draw “javascript” with a height of 56 pixels. Our data, of course, isn't set up with pixel sizes. The data value for "javascript" is 557407, and a word 557407 pixels high wouldn't even fit on a billboard. As a result, we must convert counts to drawing sizes. The specific algorithm for this conversion will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000 and round to the nearest integer. In chapter 2, we saw how jQuery's `.map()` function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of `.map()` even without jQuery. (This native version won't work on older browsers like jQuery will, but we're not worrying about that for this example).
+The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element `["javascript", 56]` would tell wordcloud2 to draw “javascript” with a height of 56 pixels. Our data, of course, isn't set up with pixel sizes. The data value for "javascript" is 557407, and a word 557407 pixels high wouldn't even fit on a billboard. As a result, we must convert counts to drawing sizes. The specific algorithm for this conversion will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000 and round to the nearest integer. In chapter 2, we saw how jQuery's `.map()` function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of `.map()` even without jQuery. (This native version won't work on older browsers like jQuery will, but we're not worrying about that for this example.)
 
 ``` {.javascript .numberLines}
 var list = tags.map(function(word) { 
@@ -56,7 +56,7 @@ var list = tags.map(function(word) {
 });
 ```
 
-After executing this code, our `list` variable will contain the following:
+After this code executes, our `list` variable will contain the following:
 
 ``` {.javascript .numberLines}
 [
@@ -74,7 +74,7 @@ After executing this code, our `list` variable will contain the following:
 
 ### Step 3: Add the Required Markup
 
-The wordcloud2 library can build its graphics either using the <span class="smcp">HTML</span> `<canvas>` interface or in pure <span class="smcp">HTML</span>. As we've seen with many graphing libraries, `<canvas>` is a convenient interface for creating graphic elements. For word clouds, however, there aren't many benefits to using `<canvas>`. Native <span class="smcp">HTML</span>, on the other hand, let's use all the standard <span class="smcp">HTML</span> tools (such as <span class="smcp">CSS</span> style sheets or JavaScript event handling). That's the approach we'll take in this example. When using native <span class="smcp">HTML</span>, we do have to make sure that the containing element has a `position: relative` style, because wordcloud2 relies on that when placing the words in their proper location in the cloud. You can see in line 8 below that we've set that style inline.
+The wordcloud2 library can build its graphics either using the <span class="smcp">HTML</span> `<canvas>` interface or in pure <span class="smcp">HTML</span>. As we've seen with many graphing libraries, `<canvas>` is a convenient interface for creating graphic elements. For word clouds, however, there aren't many benefits to using `<canvas>`. Native <span class="smcp">HTML</span>, on the other hand, lets us use all the standard <span class="smcp">HTML</span> tools (such as <span class="smcp">CSS</span> stylesheets or JavaScript event handling). That's the approach we'll take in this example. When using native <span class="smcp">HTML</span>, we do have to make sure that the containing element has a `position: relative` style, because wordcloud2 relies on that when placing the words in their proper location in the cloud. You can see in line 8 below that we've set that style inline.
 
 ``` {.html .numberLines .line-8}
 <!DOCTYPE html>
@@ -98,7 +98,7 @@ With these preparations in place, creating a simple word cloud is about as easy 
 WordCloud(document.getElementById("cloud"), {list: list});
 ```
 
-Even with nothing other than default values, wordcloud2 creates the attractive visualization of figure NEXTFIGURENUMBER.
+Even with nothing other than default values, wordcloud2 creates the attractive visualization shown in figure NEXTFIGURENUMBER.
 
 <style>
 #cloud-1, #cloud-2 { border-radius:3px;border:1px solid #d0d0d0;}
@@ -110,13 +110,13 @@ Even with nothing other than default values, wordcloud2 creates the attractive v
 <figcaption>A word cloud can show a list of words with their relative frequency.</figcaption>
 </figure>
 
-The wordcloud2 interface also provides many options for customizing the visualization. As expected, you can set colors and fonts, but you can also change the shape of the cloud (even providing a custom polar equation), rotation limits, internal grid sizing, and many others.
+The wordcloud2 interface also provides many options for customizing the visualization. As expected, you can set colors and fonts, but you can also change the shape of the cloud (even providing a custom polar equation), rotation limits, internal grid sizing, and many other features.
 
 ### Step 5: Add Interactivity
 
-If you ask wordcloud2 to use the `<canvas>` interface, it gives you a couple of callback hooks that your code can use to respond to user interactions. With  native <span class="smcp">HTML</span>, however, we aren't limited to just the callbacks that wordcloud2 provides. To demonstrate we can add a simple interaction to respond to mouse clicks on words in the cloud.
+If you ask wordcloud2 to use the `<canvas>` interface, it gives you a couple of callback hooks that your code can use to respond to user interactions. With  native <span class="smcp">HTML</span>, however, we aren't limited to just the callbacks that wordcloud2 provides. To demonstrate, we can add a simple interaction to respond to mouse clicks on words in the cloud.
 
-First we'll want to let users know that interactions are supported by changing the mouse cursor to a pointer when they hover over a cloud word.
+First we'll let users know that interactions are supported by changing the cursor to a pointer when they hover the mouse over a cloud word.
 
 ``` {.css .numberLines}
 #cloud span {
@@ -151,7 +151,7 @@ var clicked = function(ev) {
 }
 ```
 
-If the user did click on a word, we can find out which word by looking at the `textContent` property of the event target. After line 3 below, the variable `tag` will hold the word on which the user clicked. So, for example, if a user clicks on "javascript," then the tag variable will have the value `"javascript"`.
+If the user did click on a word, we can find out which word by looking at the `textContent` property of the event target. After line 3 below, the variable `tag` will hold the word on which the user clicked. So, for example, if a user clicks on the word "javascript," then the tag variable will have the value `"javascript"`.
 
 ``` {.javascript .numberLines}
 var clicked = function(ev) {
@@ -161,7 +161,7 @@ var clicked = function(ev) {
 }
 ```
 
-Since we'd like to show users the total count when they click on a word, we're going to need to find the word in our original data set. We have the word's value, so that's simply a matter of searching through the data set to find a match. If we were using jQuery, the `.grep()` function would do just that. In this example we're sticking with native JavaScript, so we can look for an equivalent method in pure JavaScript. Unfortunately, although there is such a native method defined (`.find()`) very few browsers (even modern browsers) currently support it. We could resort to a standard `for` or `forEach` loop, but there is an alternative that many consider an improvement over that approach. It relies on the `.some()` method, an array method that modern browsers do support today. The `.some()` method passes every element of an array to an arbitrary function and stops when that function returns true. Here's how we can use it to find the clicked tag in our `tags` array.
+Since we'd like to show users the total count when they click on a word, we're going to need to find the word in our original data set. We have the word's value, so that's simply a matter of searching through the data set to find a match. If we were using jQuery, the `.grep()` function would do just that. In this example we're sticking with native JavaScript, so we can look for an equivalent method in pure JavaScript. Unfortunately, although there is such a native method defined (`.find()`) very few browsers (even modern browsers) currently support it. We could resort to a standard `for` or `forEach` loop, but there is an alternative that many consider an improvement over that approach. It relies on the `.some()` method, an array method that modern browsers do support. The `.some()` method passes every element of an array to an arbitrary function and stops when that function returns true. Here's how we can use it to find the clicked tag in our `tags` array.
 
 The function that's the argument to `.some()` is defined in lines 5 through 11. It is called with the parameter `el`, short for an _element_ in the `tags` array. The conditional statement in line 6 checks to see if that element's word matches the clicked node's text content. If so, the function sets the `clickedTag` variable and returns `true` to terminate the `.some()` loop.
 

@@ -31,7 +31,7 @@ As you can see, we've set aside a `<div>` to hold our tree map. We've also inclu
 
 ### Step 2: Prepare the Data
 
-For our example we'll show the population of the United States divided by region and then, within each region, by state. The data is available from the [<span class="smcp">US</span> Census Bureau](http://www.census.gov/popest/data/state/totals/2012/index.html). We'll follow their convention and divide the country into four regions. The resulting JavaScript array could look like the snippet below.
+For our example we'll show the population of the United States divided by region and then, within each region, by state. The data is available from the [<span class="smcp">US</span> Census Bureau](http://www.census.gov/popest/data/state/totals/2012/index.html). We'll follow its convention and divide the country into four regions. The resulting JavaScript array could look like the following snippet.
 
 ``` {.javascript .numberLines}
 census = [
@@ -43,7 +43,7 @@ census = [
 
 We've retained both the 2010 and the 2012 data
 
-To structure the data for the treemap-squared library, we need to create separate data arrays for each region. In parallel we can also create arrays to label the data values using the two-letter state abbreviations. The following code steps through the `census` array to build data and label arrays for the `"South"` region. The same approach works for the other three regions as well.
+To structure the data for the treemap-squared library, we need to create separate data arrays for each region. At the same time, we can also create arrays to label the data values using the two-letter state abbreviations. The following code steps through the `census` array to build data and label arrays for the `"South"` region. The same approach works for the other three regions as well.
 
 ``` {.javascript .numberLines}
 var south = {};
@@ -71,7 +71,7 @@ var labels = [
 Treemap.draw("treemap", 600, 450, data, labels);
 ```
 
-The resulting chart of figure NEXTFIGURENUMBER provides a simple visualization of the <span class="smcp">US</span> population. Among the four regions, it is clear where most of the population resides. The bottom right quadrant (the South) has the largest share of the population. And within the regions the relative sizes of each state's population is also clear. Notice, for example, how California dominates the West.
+The resulting chart, shown in figure NEXTFIGURENUMBER, provides a simple visualization of the <span class="smcp">US</span> population. Among the four regions, it is clear where most of the population resides. The bottom right quadrant (the South) has the largest share of the population. And within the regions the relative size of each state's population is also clear. Notice, for example, how California dominates the West.
 
 <figure>
 <div id="treemap-1"></div>
@@ -80,9 +80,9 @@ The resulting chart of figure NEXTFIGURENUMBER provides a simple visualization o
 
 ### Step 4: Varying the Shading to Show Additional Data
 
-The tree map above does a nice job of showing the <span class="smcp">US</span> population distribution in 2012. The population isn't static, however, and we can enhance our visualization to indicate trends by taking advantage of the 2010 population data that's still lurking in our data set. When we iterate through the `census` array to extract individual regions, we can also calculate a few additional values:
+The tree map in figure LASTFIGURENUMBER does a nice job of showing the <span class="smcp">US</span> population distribution in 2012. The population isn't static, however, and we can enhance our visualization to indicate trends by taking advantage of the 2010 population data that's still lurking in our data set. When we iterate through the `census` array to extract individual regions, we can also calculate a few additional values:
 
-* We accumulate the total population for all states, both in 2010 and in 2012, in lines 11 and 12. These values let us calculate the average growth rate for the entire country.
+* We accumulate the total population for all states, both in 2010 and in 2012, in lines 11 and 12, respectively. These values let us calculate the average growth rate for the entire country.
 * For each state we can calculate its own growth rate in line 13.
 * For each region, we save both the minimum and maximum growth rates in lines 18 and 19.
 

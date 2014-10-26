@@ -2,11 +2,11 @@
 
 Visualizations don't always focus on the actual data values; sometimes the most interesting aspects of a data set are the relationships among its members. The relationships between members of a social network, for example, might be the most important feature of that network. To visualize these types of relationships, we can use a _network graph._ Network graphs represent objects, generally known as _nodes,_ as points or circles. Lines or arcs (technically called _edges_) connect these nodes to indicate relationships.
 
-Constructing network graphs can be a bit tricky, as the underlying mathematics are not always trivial. Fortunately the [sigmajs](http://sigmajs.org) library takes care of most of the complicated calculations. By using that library, we can create full-featured network graphs with just a little bit of JavaScript. For our example, we'll consider one critic's list of the [Top 25 Jazz Albums of All Time](http://www.thejazzresource.com/top_25_jazz_albums.html). Several musicians performed on more than one of these albums, and a network graph let's us explore those connections.
+Constructing network graphs can be a bit tricky, as the underlying mathematics is not always trivial. Fortunately, the [sigmajs](http://sigmajs.org) library takes care of most of the complicated calculations. By using that library, we can create full-featured network graphs with just a little bit of JavaScript. For our example, we'll consider one critic's list of the [top 25 jazz albums of all time](http://www.thejazzresource.com/top_25_jazz_albums.html). Several musicians performed on more than one of these albums, and a network graph lets us explore those connections.
 
 ### Step 1: Include the Required Libraries
 
-The sigmajs library does not depend on any other JavaScript libraries, so we don't need any other included scripts. It is not, however, available on common Content Distribution Networks. Consequently, we'll have to serve it from our own web host.
+The sigmajs library does not depend on any other JavaScript libraries, so we don't need any other included scripts. It is not, however, available on common content distribution networks. Consequently, we'll have to serve it from our own web host.
 
 ``` {.html .numberLines .line-8}
 <!DOCTYPE html>
@@ -24,11 +24,11 @@ The sigmajs library does not depend on any other JavaScript libraries, so we don
 
 As you can see, we've set aside a `<div>` in line 8 to hold our graph. We've also included the JavaScript library as the last part of the `<body>` element, as that provides the best browser performance.
 
-> Note: In most of the examples in this book, we included steps you can take to make your visualizations compatible with older web browsers such as Internet Explorer 8. In this case, however, those approaches degrade performance so severely that they are rarely workable. To view the network graph visualization, your users will need a modern browser.
+> Note: In most of the examples in this book, I've included steps you can take to make your visualizations compatible with older web browsers such as Internet Explorer 8. In this case, however, those approaches degrade performance so severely that they are rarely workable. To view the network graph visualization, your users will need a modern browser.
 
 ### Step 2: Prepare the Data
 
-Our data on the top 25 jazz albums looks like the following snippet. We're only showing the first couple of albums below, but you can see the full list in the book's [source code](https://github.com/sathomas/jsDataV.is-source). For clarity, we'll only use the top 15 albums in this example.
+Our data on the top 25 jazz albums looks like the following snippet. I'm showing only the first couple of albums below, but you can see the full list in the book's [source code](https://github.com/sathomas/jsDataV.is-source).
 
 ``` {.javascript .numberLines}
 var albums = [
@@ -63,7 +63,7 @@ Now we're ready to use the library to construct our graph. We start by initializ
 var s = new sigma("graph");
 ```
 
-Now we can continue by adding the nodes to the graph. In our case each album is a node. As we add a node to the graph, we give it a unique identifier (which must be a string), a label, and a position. Figuring out an initial position can be a bit tricky for arbitrary data. In a few steps we'll look at an approach that makes the initial position less critical. For now, though, we'll simply spread our albums in a circle using basic trigonometry. The `radius` value is roughly half of the width of the container. We can also give each node a different size, but for our purposes it's fine to set every album's size to `1`.
+Now we can continue by adding the nodes to the graph. In our case, each album is a node. As we add a node to the graph, we give it a unique identifier (which must be a string), a label, and a position. Figuring out an initial position can be a bit tricky for arbitrary data. In a few steps we'll look at an approach that makes the initial position less critical. For now, though, we'll simply spread our albums in a circle using basic trigonometry. The `radius` value is roughly half of the width of the container. We can also give each node a different size, but for our purposes it's fine to set every album's size to `1`.
 
 ``` {.javascript .numberLines}
 for (var idx=0; idx<albums.length; idx++) {
@@ -84,7 +84,7 @@ Finally, after defining the graph, we tell the library to draw it.
 s.refresh();
 ```
 
-With figure NEXTFIGURENUMBER now have a nicely drawn circle of the top 15 jazz albums of all time. In our initial attempt some of the labels may get in each other's way, but we'll address that shortly.
+With figure NEXTFIGURENUMBER we now have a nicely drawn circle of the top jazz albums of all time. In this initial attempt some of the labels may get in one another's way, but we'll address that shortly.
 
 <figure>
 <div id="graph-1" style="width:1000px;height:450px;position:relative;left:-300px;"></div>
@@ -95,7 +95,7 @@ If you try out this visualization in the browser, you'll notice that the sigmajs
 
 ### Step 4: Connect the Nodes with Edges
 
-Now that we have the nodes drawn in a circle, it's time to connect them with edges. In our case an edge, or connection between two albums, represents a musician that performed on both of the albums. To find those edges, we iterate through the albums in four stages.
+Now that we have the nodes drawn in a circle, it's time to connect them with edges. In our case, an edge—or connection between two albums—represents a musician who performed on both of the albums. To find those edges, we iterate through the albums in four stages.
 
 1. Loop through each album as a potential source of a connection (line 1).
 2. For the source album, loop through all musicians (line 3).
@@ -125,7 +125,7 @@ for (var srcIdx=0; srcIdx<albums.length; srcIdx++) {
 }
 ```
 
-We'll want to insert this code before we `refresh` the graph. When we've done that, we'll have a connected circle of albums as in figure NEXTFIGURENUMBER.
+We'll want to insert this code before we `refresh` the graph. When we've done that, we'll have a connected circle of albums, as shown in figure NEXTFIGURENUMBER.
 
 <figure>
 <div id="graph-2" style="width:1000px;height:450px;position:relative;left:-300px;"></div>
@@ -134,11 +134,11 @@ We'll want to insert this code before we `refresh` the graph. When we've done th
 
 Again, you can pan the graph to focus on different parts.
 
-### Step 5: Automating the Layout
+### Step 5: Automate the Layout
 
 So far we've manually placed the nodes in our graph in a circle. That's not a terrible approach, but it can make it hard to discern some of the connections. It would be better if we could let the library calculate a more optimal layout than the simple circle. That's exactly what we'll do now.
 
-The mathematics behind this approach go by the name of "force directed graphing." In a nutshell, the algorithm proceeds by treating the graph's nodes and edges as physical objects subject to real forces such as gravity and electromagnetism. It simulates the effect of those forces, pushing and prodding the nodes into new positions on the graph.
+The mathematics behind this approach is known as _force directed graphing._ In a nutshell, the algorithm proceeds by treating the graph's nodes and edges as physical objects subject to real forces such as gravity and electromagnetism. It simulates the effect of those forces, pushing and prodding the nodes into new positions on the graph.
 
 The underlying algorithm may be complicated, but sigmajs makes it easy to employ. First we have to add an optional plugin to the sigmajs library. That's the `forceAtlas2` plugin in line 10 below.
 
@@ -157,11 +157,11 @@ The underlying algorithm may be complicated, but sigmajs makes it easy to employ
 </html>
 ```
 
-Mathieu Jacomy and Tommaso Venturini developed the specific force direction algorithm employed by this plugin; they document the algorithm, known as _Force Atlas 2_, in the 2011 paper [_ForceAtlas2, A Graph Layout Algorithm for Handy Network Visualization_](http://webatlas.fr/tempshare/ForceAtlas2_Paper.pdf)_._ Although we don't have to understand the mathematical details of the algorithm, knowing how to use it's parameters does come in handy. There are three parameters that are important for most visualizations using the plugin:
+Mathieu Jacomy and Tommaso Venturini developed the specific force-direction algorithm employed by this plugin; they document the algorithm, known as _Force Atlas 2_, in the 2011 paper [_ForceAtlas2, A Graph Layout Algorithm for Handy Network Visualization_](http://webatlas.fr/tempshare/ForceAtlas2_Paper.pdf)_._ Although we don't have to understand the mathematical details of the algorithm, knowing how to use its parameters does come in handy. There are three parameters that are important for most visualizations that use the plugin:
 
 * **gravity.** This parameter determines how strongly the algorithm tries to keep isolated nodes from drifting off the edges of the screen. Without any gravity, then the only force acting on isolated nodes will one that repels them from other nodes; undeterred, that force will push the nodes off the screen entirely. Since our data includes several isolated nodes, we'll want to set this value relatively high to keep those nodes on the screen
-* **scalingRatio.** This parameter determines how strongly nodes repel each other. A small value draws connected nodes closer together while a large value forces all nodes further apart.
-* **slowDown.** This parameter decreases the sensitivity of the nodes to the repulsive forces from their neighbors. Reducing the sensitivity (by increasing this value) can help reduce the instability that may result when nodes face competing forces from multiple neighbors. In our data there are many connections that will tend to draw the nodes together and that will compete with the force repelling them apart. To dampen the wild oscillations that might otherwise ensue, we'll set this value relatively high as well.
+* **scalingRatio.** This parameter determines how strongly nodes repel each other. A small value draws connected nodes closer together while a large value forces all nodes farther apart.
+* **slowDown.** This parameter decreases the sensitivity of the nodes to the repulsive forces from their neighbors. Reducing the sensitivity (by increasing this value) can help reduce the instability that may result when nodes face competing forces from multiple neighbors. In our data there are many connections that will tend to draw the nodes together and compete with the force pulling them apart. To dampen the wild oscillations that might otherwise ensue, we'll set this value relatively high as well.
 
 The best way to settle on values for these parameters is to experiment with the actual data. For this data set, we've settled on the values in line 1 below.
 
@@ -172,7 +172,7 @@ s.startForceAtlas2({gravity:100,scalingRatio:70,slowDown:100});
 setTimeout(function() { s.stopForceAtlas2(); }, 10000);
 ```
 
-As a result, our albums start out in their original circle, but quickly migrate to a position that makes it much easier to identify the connections. Some of the top albums are tightly connected, indicating that have many musicians in common. A few, however, remain isolated. Their musicians only make the list once.
+As a result, our albums start out in their original circle, but quickly migrate to a position that makes it much easier to identify the connections. Some of the top albums are tightly connected, indicating that they have many musicians in common. A few, however, remain isolated. Their musicians make the list only once.
 
 <figure>
 <div id="graph-3" style="width:650px;height:600px;position:relative;left:-50px"></div>
@@ -183,7 +183,7 @@ As you can see, the labels for the nodes still get in the way of each other; we'
 
 ### Step 6: Adding Interactivity
 
-To keep the labels from interfering with each other, we can add some interactivity to the graph. By default, we'll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We'll then allow them to click on individual nodes to reveal the album title and it's connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We'll save a reference to the album title though in line 6.
+To keep the labels from interfering with one another, we can add some interactivity to the graph. By default, we'll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We'll then allow them to click on individual nodes to reveal the album title and it's connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We'll save a reference to the album title though in line 6.
 
 ``` {.javascript .numberLines .line-5}
 for (var idx=0; idx<albums.length; idx++) {
@@ -224,7 +224,7 @@ s.bind('clickNode', function(ev) {
 });
 ```
 
-Now that users have a way to show the title of an album, they'll probably also want a way to hide it. We can support that interaction by toggling the album display with subsequent clicks on the same node. A small addition to line 5 in the above code is all it takes to enable that behavior.
+Now that users have a way to show the title of an album, let's give them a way to hide it. A small addition in the preceding code is all it takes to let users toggle the album display with subsequent clicks.
 
 ``` {.javascript .numberLines}
         if (nodes[nodeIdx] === node && node.label !== node.album) {
@@ -232,7 +232,7 @@ Now that users have a way to show the title of an album, they'll probably also w
 
 As long as we're making the graph respond to clicks, we can also take the opportunity to highlight the clicked node's connections. We do that by changing their color. Just as `s.graph.nodes()` returns an array of the graph nodes, `s.graph.edges()` returns an array of edges. Each edge object includes `target` and `source` properties that hold the index of the relevant node.
 
-We can then scan through all the graph's edges to see if they connect to the clicked node. If the edge does connect to the node, we can change it's color to something other than the default (line 4). Otherwise, we change the color back to the default (line 6). You can see in line 3 that we're using the same approach as we did with the nodes to toggle the edge colors on successive clicks.
+We can then scan through all the graph's edges to see if they connect to the clicked node. If the edge does connect to the node, we can change its color to something other than the default (line 4). Otherwise, we change the color back to the default (line 6). You can see in line 3 that we're using the same approach as we did with the nodes to toggle the edge colors on successive clicks.
 
 ``` {.javascript .numberLines}
 s.graph.edges().forEach(function(edge) {
