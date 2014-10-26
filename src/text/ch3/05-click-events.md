@@ -2,7 +2,7 @@
 
 Throughout this chapter we've looked at how to include a lot of visual information in a small space, making it easier to integrate a visualization within a web page. The basic sparkline by itself is very efficient, and previous examples have added annotations and composites to increase the information density further. Sometimes, however, there's just no way to fit all the possible data in a small enough space. Even in these cases, though, the interactive nature of the web can help us out. Our web page can start with a compact visualization but expand to a different view—one with richer details—with a simple click or tap.
 
-Indeed the compact quality of sparklines seems to invite interaction. In every usability test I've performed that included sparklines on a web page, the participants invariably clicked on the chart. That was true even when there were no other details that the page could provide and the participants had no idea what to expect in response to their clicks. Users would inevitably click on sparklines just to see what happens.
+Indeed, the compact quality of sparklines seems to invite interaction. In every usability test I've performed that included sparklines on a web page, the participants invariably clicked on the chart. That was true even when there were no other details that the page could provide and the participants had no idea what to expect in response to their clicks. They clicked just to see what happens.
 
 This example continues our stock market example. We'll begin with the same basic stock price chart we've seen before, but enhance it to provide details when users click on the chart region.
 
@@ -20,7 +20,7 @@ Adding the chart to our markup is easy with the sparklines library. We can use t
 $('#stock').sparkline($.map(stock, function(wk) { return wk.adj_close; }));
 ```
 
-The static chart of figure NEXTFIGURENUMBER, which shows the stock performance, is probably looking familiar by now.
+The static chart of figure NEXTFIGURENUMBER, which shows the stock performance probably looks familiar by now.
 
 <figure>
 <div id='click-chart1'></div>
@@ -29,7 +29,7 @@ The static chart of figure NEXTFIGURENUMBER, which shows the stock performance, 
 
 ### Step 2: Handle Click Events
 
-The sparklines library makes it easy for us to handle click events. When users click on a chart region, the library generates a custom `sparklineClick` event. The event data includes all the normal click properties, plus information about where on the chart the user clicked. To be notified of clicks, we define a handler for that custom event.
+The sparklines library makes it easy for us to handle click events. When users click on a chart region, the library generates a custom `sparklineClick` event. The event data includes all of the normal click properties, plus information about where on the chart the user clicked. To be notified of clicks, we define a handler for that custom event.
 
 ``` {.javascript .numberLines}
 $('#stock')
@@ -41,7 +41,7 @@ $('#stock')
     });
 ```
 
-Now that we're set up to receive `sparklineClick` events, we can write the code to respond to them. For our example, let's reveal a detailed financial analysis widget. Many web services, including Yahoo and Google, have similar widgets, but we'll use one from [TradingView](https://www.tradingview.com/widget/). As is typical, TradingView provides code for the widget as an <span class="smcp">HTML</span> `<iframe>`. We can wrap that `<iframe>` in our own `<div>` and place it immediately after the chart. We set a `display` property of `none` so that the contents are initially hidden. (The snippet below omits the details of the `<iframe>` element for clarity.)
+Now that we're set up to receive `sparklineClick` events, we can write the code to respond to them. For our example, let's reveal a detailed financial analysis widget. Many web services, including Yahoo! and Google, have similar widgets, but we'll use one from [TradingView](https://www.tradingview.com/widget/). As is typical, TradingView provides code for the widget as an <span class="smcp">HTML</span> `<iframe>`. We can wrap that `<iframe>` in our own `<div>` and place it immediately after the chart. We set a `display` property of `none` so that the contents are initially hidden. (The following snippet omits the details of the `<iframe>` element for clarity.)
 
 ``` {.html .numberLines}
 <div id="stock"></div>
@@ -83,7 +83,7 @@ new TradingView.widget({
 
 ### Step 3: Improve the Transitions
 
-Instead of simply revealing the widget beneath the chart, it would be better to have the widget replace the chart. And if we're going to do that, we'll also want to give the users a chance to restore the chart and hide the widget. For that last function, we include a `"widget-control"` `<div>` in the code below (lines 2-4) for controlling the widget's visibility. The only content we need for this controller is a close symbol floated right. Just like the widget itself, the controller is initially hidden.
+Instead of simply revealing the widget beneath the chart, it would be better to have the widget replace the chart. And if we're going to do that, we'll also want to give the users a chance to restore the chart and hide the widget. For that last function, we include a `"widget-control"` `<div>` in the following code (lines 2-4) for controlling the widget's visibility. The only content we need for this controller is a close symbol floated right. Just like the widget itself, the controller is initially hidden.
 
 ``` {.html .numberLines .line-2 .line-3 .line-4}
 <div id="stock"></div>
@@ -105,7 +105,7 @@ Now when the user clicks on the chart, we reveal the widget, reveal the controll
 });
 ```
 
-Next we intercept clicks on the close symbol in the widget controller. We first prevent default event handling; otherwise the browser will disconcertingly jump to the top of the page. Then we hide the widget and its controller while revealing the chart again.
+Next we intercept clicks on the close symbol in the widget controller. We first prevent default event handling; otherwise, the browser will jump disconcertingly to the top of the page. Then we hide the widget and its controller while revealing the chart again.
 
 ``` {.javascript .numberLines}
 $("#widget-control a").click(function(ev) {
@@ -126,7 +126,7 @@ $('#stock')
     );
 ```
 
-And for the widget controller, we simple add a `title` attribute in line 3 to tell users how to hide the widget.
+And for the widget controller, we simply add a `title` attribute in line 3 to tell users how to hide the widget.
 
 ``` {.html .numberLines .line-3}
 <div id="stock"></div>
@@ -138,7 +138,7 @@ And for the widget controller, we simple add a `title` attribute in line 3 to te
 </div>
 ```
 
-These additions give us the simple sparkline chart of figure NEXTFIGURENUMBER that expands to a wealth of details with a single click. The close symbol in the upper right lets users return to the more compact sparkline.
+These additions give us the simple sparkline chart in figure NEXTFIGURENUMBER, which expands to a wealth of details with a single click. The close symbol in the upper right lets users return to the more compact sparkline.
 
 <style>
 a.closebtn, a.closebtn:hover, a.closebtn:focus, a.closebtn:active, a.closebtn:visited {text-decoration: none; color: #444; background-image:none; text-shadow:none;}
@@ -169,7 +169,7 @@ new TradingView.widget({
 
 ### Step 4: Animation
 
-For a final touch to our visualization, let's do something about the abrupt hiding and revealing of the visualization components. A smoother animation will help our users follow the transition, and jQuery makes it easy enough to implement. There are lots of animation effects available in the jQuery <span class="smcp">UI</span> library, but the basic functionality of jQuery's core is fine for this example. We simply replace the `show()` and `hide()` functions with `slideDown()` and `slideUp()` respectively.
+For the final touch to our visualization, let's do something about the abrupt hiding and revealing of the visualization components. A smoother animation will help our users follow the transition, and jQuery makes it easy enough to implement. There are lots of animation effects available in the jQuery <span class="smcp">UI</span> library, but the basic functionality of jQuery's core is fine for this example. We simply replace the `show()` and `hide()` functions with `slideDown()` and `slideUp()` respectively.
 
 ``` {.javascript .numberLines}
 .on('sparklineClick', function(ev) {
@@ -185,7 +185,7 @@ $("#widget-control a").click(function(ev) {
 })
 ```
 
-At this point we can call our visualization complete with figure NEXTFIGURENUMBER. The compact sparkline smoothly transitions to detailed information on a click, and those details transition back to the sparkline when they're closed.
+At this point we can call our visualization complete; the final product is shown in figure NEXTFIGURENUMBER. The compact sparkline smoothly transitions to reveal detailed information when the user clicks, and those details transition back to the sparkline when the user closes them.
 
 <figure>
 <div id="click-chart4"></div>

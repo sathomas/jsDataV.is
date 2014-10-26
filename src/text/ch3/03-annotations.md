@@ -10,7 +10,7 @@ Just as in this chapter's first example, we need to include the sparklines and j
 
 ### Step 1: Prepare the Data
 
-In the previous examples we've embedded the data directly in the <span class="smcp">HTML</span> markup. That's convenient since it lets us separate the data from our code. In this example, however, the JavaScript code will need more detailed knowledge of the data so it can present the right tooltip information. This time we'll use a JavaScript array to store our data, so that all the relevant information is in one place. For this example we can focus on a single stock. And even though we're only graphing the adjusted closing price, the array will track additional data that we can include in the tooltips. Here's an excerpt of the data for one of the stocks.
+In the previous examples we've embedded the data directly in the <span class="smcp">HTML</span> markup. That's convenient since it lets us separate the data from our code. In this example, however, the JavaScript code will need more detailed knowledge of the data so it can present the right tooltip information. This time we'll use a JavaScript array to store our data, so that all the relevant information is in one place. For this example we can focus on a single stock. And even though we're graphing only the adjusted closing price, the array will track additional data that we can include in the tooltips. Here's an excerpt of the data for one of the stocks.
 
 ``` {.javascript .numberLines}
 var stock = [
@@ -25,7 +25,7 @@ var stock = [
 
 ### Step 2: Prepare the HTML Markup
 
-Our visualization will include three distinct areas, each in a `<div>` element. The primary `<div>` created in line 3 will hold the chart. Underneath the chart we'll add the primary tool tip information in its own `<div>` (line 4), and we'll include supplementary details to the right (line 7). The example below uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.
+Our visualization will include three distinct areas, each in a `<div>` element. The primary `<div>` created in line 3 will hold the chart. Underneath the chart we'll add the primary tool tip information in its own `<div>` (line 4), and we'll include supplementary details to the right (line 7). The following example uses inline styles for clarity; a production site might prefer to use <span class="smcp">CSS</span> style sheets.
 
 ``` {.html .numberLines}
 <div id="stock">
@@ -73,7 +73,7 @@ The static chart of figure NEXTFIGURENUMBER shows the stock performance nicely.
 
 ### Step 4: Add the Primary Annotation
 
-The sparklines library adds a simple tooltip to all of its charts by default. Although that tooltip does show the value over which the user's mouse is hovering, the presentation isn't particularly elegant, and, more importantly, it doesn't provide as much information as we would like. Let's build on the default behavior but enhance it to meet our needs.
+The sparklines library adds a simple tooltip to all of its charts by default. Although that tooltip shows the value over which the user's mouse is hovering, the presentation isn't particularly elegant, and, more importantly, it doesn't provide as much information as we would like. Let's enhance the default behavior to meet our needs.
 
 Looking at the library's defaults, we can retain the vertical marker, but we don't want the default tooltip. Adding the option `disableTooltips` with a value of `true` will turn off the undesired tooltip.
 
@@ -101,7 +101,7 @@ Once we have the mouse position, we can place our tooltip information in the `<d
         }
 ```
 
-The sparklines library isn't completely reliable in generating events when the mouse leaves the chart area. Instead of using the custom event, therefore, we can use the standard JavaScript `mouseout` event. When the user does move the mouse off of the chart, we'll turn off the custom tooltip by setting it's content to a blank space. We use the <span class="smcp">HTML</span> non-breaking space (`&nbsp;`) so the browser doesn't think the `<div>` is completely empty. If we used a standard space character, the browser would treat the `<div>` as empty and recalculate the height of the page, causing an annoying jump in the page contents. (For the same reason we should initialize that `<div>` with `&nbsp;` instead of leaving it blank.)
+The sparklines library isn't completely reliable in generating events when the mouse leaves the chart area. Instead of using the custom event, therefore, we can use the standard JavaScript `mouseout` event. When the user moves the mouse off the chart, we'll turn off the custom tooltip by setting it's content to a blank space. We use the <span class="smcp">HTML</span> non-breaking space (`&nbsp;`) so the browser doesn't think the `<div>` is completely empty. If we used a standard space character, the browser would treat the `<div>` as empty and recalculate the height of the page, causing an annoying jump in the page contents. (For the same reason we should initialize that `<div>` with `&nbsp;` instead of leaving it blank.)
 
 ``` {.javascript .numberLines}
     .on('mouseout', function() {
@@ -181,7 +181,7 @@ Because it won't affect the vertical size of the page, we don't need to fill thi
 <figcaption>Interactive sparklines can show additional information in many ways.</figcaption>
 </figure>
 
-With figure LASTFIGURENUMBER we have the visualization we want. The chart clearly shows the overall trend for the stock during the year, but it takes up only a small amount of space on the web page. At first glance the chart is also free of distracting elements such as labels and axes. For users that just want a general sense of the stock's performance, those elements are superfluous. Users who want the full details need only hover their mouse over the chart and it reveals the complete market information.
+With figure LASTFIGURENUMBER we have the visualization we want. The chart clearly shows the overall trend for the stock during the year, but it takes up only a small amount of space on the web page. At first glance the chart is also free of distracting elements such as labels and axes. For users who just want a general sense of the stock's performance, those elements are superfluous. Users who want the full details need only hover their mouse over the chart and it reveals the complete market information.
 
 Because we've managed to display the information while retaining the compact nature of sparklines, the technique in this example works well when combined with the small multiples approach of this chapter's second example.
 

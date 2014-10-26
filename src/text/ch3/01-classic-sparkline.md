@@ -6,7 +6,7 @@ As later examples will demonstrate, the sparklines library is both flexible and 
 
 Since we're using the jQuery sparklines library to create the chart, we need to include that library in our web pages, along with jQuery. Both jQuery and sparklines are available on public content distribution networks (<span class="smcp">CDN</span>s). For this example (and the others in this chapter), we'll use the CloudFlare <span class="smcp">CDN</span>, but for some notes on the advantages and disadvantages of using <span class="smcp">CDN</span>s, see Chapter 2.
 
-In addition to the jQuery library, sparklines relies on the <span class="smcp">HTML</span> _canvas_ feature. Since Internet Explorer didn't support canvas until version 9, we'll use some special markup in line 9 to ensure that <span class="smcp">IE</span> 8 and earlier will load an additional library (`excanvas.min.js`), just like we did in Chapter 2. Here's the skeleton with which we start:
+In addition to the jQuery library, sparklines rely on the <span class="smcp">HTML</span> _canvas_ feature. Since Internet Explorer didn't support canvas until version 9, we'll use some special markup in line 9 to ensure that <span class="smcp">IE</span> 8 and earlier will load an additional library (`excanvas.min.js`), just like we did in Chapter 2. Here's the skeleton with which we start:
 
 ``` {.html .numberLines .line-9}
 <!DOCTYPE html>
@@ -53,7 +53,7 @@ Compared to other visualizations, two characteristics of our sparkline chart are
 * We include the data right in the <span class="smcp">HTML</span> itself, not in the JavaScript that creates the chart.
 * The `<span>` for the chart does not have a unique `id` attribute.
 
-Both of these differences are optional; we could construct the chart as in other visualizations by passing data to a JavaScript function and identifying its container with a unique `id`. For sparklines, however, the approach we're using here often makes more sense. By including the chart data directly in the <span class="smcp">HTML</span>, we can easily see the data's relation to other content on the page. It's clear, for example, that the final value of our chart (128) is the same as the value we're using for the label. If we had made a mistake and used a different value for the label, the error would be much easier to spot and correct. Using a common `class` for all sparklines instead of unique `id`s simplifies how we might use the library to create multiple charts on one page. With unique `id`s we would have to call a library function for every chart. With a common `class`, on the other hand, we only need call a single library function to create multiple charts. That's especially helpful when a web page contains a lot of sparklines.
+Both of these differences are optional; we could construct the chart as in other visualizations by passing data to a JavaScript function and identifying its container with a unique `id`. For sparklines, however, the approach we're using here often makes more sense. By including the chart data directly in the <span class="smcp">HTML</span>, we can easily see the data's relation to other content on the page. It's clear, for example, that the final value of our chart (128) is the same as the value we're using for the label. If we had made a mistake and used a different value for the label, the error would be much easier to spot and correct. Using a common `class` for all sparklines instead of unique `id`s simplifies how we might use the library to create multiple charts on one page. With unique `id`s we would have to call a library function for every chart. With a common `class`, on the other hand, we need only call a single library function to create multiple charts. That's especially helpful when a web page contains a lot of sparklines.
 
 ### Step 3: Draw the Sparkline
 
@@ -83,7 +83,7 @@ The library's default options don't quite match Tufte's classic sparkline defini
 
 ### Step 4: Adjust the Chart Style
 
-To make our sparkline exactly match Tufte's definition, we can specify new values for some of the default options. Let's collect the changes first, and then see how to pass them to the library.
+To make our sparkline match Tufte's definition exactly, we can specify new values for some of the default options. Let's collect the changes first, and then see how to pass them to the library.
 
 * Tufte's classic sparklines are black and white except for key data points (minimum, maximum, and final values). His color scheme adds extra emphasis to those points. To change the library's default (blue), we can set a `lineColor`. For screen displays we might chose a dark gray rather than pure black. That's what we're using in line 2 below.
 * Tufte doesn't fill the area below the line so he can use shading to indicate a normal range. To eliminate the library's light blue shading, we set `fillColor` to `false`. (Line 3.)

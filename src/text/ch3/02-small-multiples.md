@@ -1,14 +1,14 @@
 ## Charting Many Variables
 
-By design, sparklines take up very little space on a page, and that makes them ideal for another visualization challenge: showing many variables at once. Of course regular line charts and bar charts can plot multiple data sets simultaneously; however, these multiple series charts rapidly grow unwieldy if the number of data sets exceeds four or five. Some visualization projects show dozens of different variables, far beyond what a multiple series chart can accommodate. A _small multiples_ approach turns the standard chart approach completely around. Instead of showing one chart with multiple data sets, show multiple charts each with a single data set. Placing lots of charts on a page means that each individual chart cannot take up much space. That is the exactly the problem that sparklines solve.
+By design, sparklines take up very little space on a page, and that makes them ideal for another visualization challenge: showing many variables at once. Of course regular line charts and bar charts can plot multiple data sets simultaneously; however, these multiple series charts rapidly grow unwieldy if the number of data sets exceeds four or five. Some visualization projects show dozens of different variables, far beyond what a multiple series chart can accommodate. A _small multiples_ approach turns the standard chart approach completely around. Instead of showing one chart with multiple data sets, we can show multiple charts, each with a single data set. Placing lots of charts on a page means that each individual chart cannot take up much space. That is the exactly the problem that sparklines solve.
 
-We won't go too crazy with this example to keep the code examples manageable, but it's easy to extend this approach to many more variables. In our case we'll construct a visualization for analyzing stock market performance. The companies in our analysis will include the [10 largest American companies in 2012](http://money.cnn.com/magazines/fortune/fortune500/2012/full_list/), (the "Fortune 10"), Barclay's [best technology stocks for 2012](http://www.marketwatch.com/story/barclays-best-tech-stocks-for-2012-2011-12-20) (as identified in December 2011), and Bristol-Myers Squibb, which <span class="smcp">CR</span> Magazine named the [top company in America for corporate responsibility](http://www.thecro.com/files/100Best2012_List_3.8.pdf). Those selections are completely arbitrary, but the example is designed to include three different cases which we will style differently in our visualization. We'll treat one as a general case (The Fortune 10 list), one as a special class (the Barclay's list), and one as a unique variable (Bristol-Myers Squibb).
+We won't go too crazy here to keep the code examples manageable, but it's easy to extend this approach to many more variables. In our case we'll construct a visualization for analyzing stock market performance. The companies in our analysis will include the [10 largest American companies in 2012](http://money.cnn.com/magazines/fortune/fortune500/2012/full_list/), (the "Fortune 10"), Barclay's [best technology stocks for 2012](http://www.marketwatch.com/story/barclays-best-tech-stocks-for-2012-2011-12-20) (as identified in December 2011), and Bristol-Myers Squibb, which <span class="smcp">CR</span> Magazine named the [top company in America for corporate responsibility](http://www.thecro.com/files/100Best2012_List_3.8.pdf). Those selections are completely arbitrary, but the example is designed to include three different cases that we will style differently in our visualization. We'll treat one as a general case (the Fortune 10 list), one as a special class (the Barclay's list), and one as a unique variable (Bristol-Myers Squibb).
 
 Just as in this chapter's first example, we need to include the sparklines and jQuery libraries in our web page.
 
 ### Step 1: Prepare the HTML Markup
 
-The sparklines library makes is easy to embed the data directly inside the <span class="smcp">HTML</span> markup. For this example, an <span class="smcp">HTML</span> table is the most appropriate structure for the data. Here's how such a table could begin. (For brevity the excerpt below doesn't include the full <span class="smcp">HTML</span>, but the complete example is available in the book's source code.)
+The sparklines library makes it easy to embed the data directly inside the <span class="smcp">HTML</span> markup. For this example, an <span class="smcp">HTML</span> table is the most appropriate structure for the data. Here's how such a table could begin. (For brevity's sake, the following excerpt doesn't include the full <span class="smcp">HTML</span>, but the complete example is available in the book's source code.)
 
 ``` {.html .numberLines}
 <table>
@@ -46,7 +46,7 @@ The table has three important characteristics relevant to our visualization.
 
 ### Step 2: Draw the Charts
 
-Just as in this chapter's first example, creating the sparklines using default options is amazingly simple. It only takes a single line of JavaScript. We use jQuery to select all the elements which contain sparkline data, and we call the `sparkline()` function to generate the charts. Notice that we only have to make one call to `sparkline()`, even though each chart has unique data. That's a major benefit of placing the data within the <span class="smcp">HTML</span> itself.
+Just as in this chapter's first example, creating the sparklines using default options is amazingly simple: it only takes a single line of JavaScript. We use jQuery to select all the elements that contain sparkline data, and we call the `sparkline()` function to generate the charts. Notice that we only have to make one call to `sparkline()`, even though each chart has unique data. That's a major benefit of placing the data within the <span class="smcp">HTML</span> itself.
 
 ``` {.javascript .numberLines}
 $(function() {
@@ -54,7 +54,7 @@ $(function() {
 }
 ```
 
-The resulting charts in figure NEXTFIGURENUMBER all have identical styles, but we'll fix that in the next few steps.
+The resulting charts, shown in figure NEXTFIGURENUMBER, all have identical styles, but we'll fix that in the next few steps.
 
 <figure>
 <table class="table table-bordered table-condensed" id="multiples-chart1" class="figure">
@@ -182,7 +182,7 @@ The resulting charts in figure NEXTFIGURENUMBER all have identical styles, but w
 
 ### Step 4: Establish a Default Style for the Charts
 
-If we don't like the sparklines library's default style, it's easy to change it using an options object like below. The object is the second parameter to the `sparkline()` function, and here it changes the color for the charts and disables the highlights on the minimum, maximum, and final values. The first parameter, the string `'html'`, indicates to the library that the data is already present in our <span class="smcp">HTML</span>. 
+If we don't like the sparklines library's default style, it's easy to change it using an options object, as shown next. The object is the second parameter to the `sparkline()` function, and here it changes the color for the charts and disables the highlights on the minimum, maximum, and final values. The first parameter, the string `'html'`, indicates to the library that the data is already present in our <span class="smcp">HTML</span>. 
 
 ``` {.javascript .numberLines}
 $('.sparkline').sparkline('html',{
@@ -220,7 +220,7 @@ Figure NEXTFIGURENUMBER shows the result for one row. We'll use this style as th
 
 ### Step 5: Modify the Default Style for Special Classes
 
-With a default style in place, we can turn our attention to the special class of charts for stocks in Barclay's technology list. For our example, let's change the color of the chart _without any other changes to our default style._ That final clause is important. We could just copy-and-paste the options, but that would be setting ourselves up for problems in the future. You can see why in the example code such an approach would produce.
+With a default style in place, we can turn our attention to the special class of charts for stocks in Barclay's technology list. For our example, let's change the color of the chart _without any other changes to our default style._ That final clause is important. We could just copy-and-paste the options, but that would be setting ourselves up for problems in the future. You can see why in the following example code.
 
 ``` {.javascript .numberLines}
 $('tr:not(.barclays) .sparkline').sparkline('html',{
@@ -253,7 +253,7 @@ var sparkline_default = {
 };
 ```
 
-Next we create a new variable for the Barclay's styles. To create this new variable, we can use the jQuery `.extend()` function to avoid duplication. In the code below, we pass three parameters to `.extend()`. The first parameter is the target. It's an object that the function will modify, and we start with an empty object (`{}`). The next parameters are objects that `.extend()` will merge into the target. The merge process adds new properties to the target and updates any properties in the target object with new values. Since we're passing two additional parameters, we're asking for two merges.
+Next we create a new variable for the Barclay's styles. To create this new variable, we can use the jQuery `.extend()` function to avoid duplication. In the following code, we pass three parameters to `.extend()`. The first parameter is the target. It's an object that the function will modify, and we start with an empty object (`{}`). The next parameters are objects that `.extend()` will merge into the target. The merge process adds new properties to the target and updates any properties in the target object with new values. Since we're passing two additional parameters, we're asking for two merges.
 
 ``` {.javascript .numberLines}
 var sparkline_barclays = $.extend( {}, sparkline_default, {
@@ -319,11 +319,11 @@ Notice in line 12 that we create the non-technology sparklines by selecting tabl
 
 ### Step 6: Create a Unique Style for a Specific Chart
 
-For the final step in this example, let's consider the single stock at the top of <span class="smcp">CR</span> Magazine's list. Suppose we want to add distinct styles to its chart, and we only know those styles when we're generating the <span class="smcp">HTML</span>, not when we're writing the JavaScript. How can we adjust the chart style if we can't modify any JavaScript?
+For the final step in this example, let's consider the single stock at the top of <span class="smcp">CR</span> Magazine's list. Suppose we want to add distinct styles to its chart, and we know those styles only when we're generating the <span class="smcp">HTML</span>, not when we're writing the JavaScript. How can we adjust the chart style if we can't modify any JavaScript?
 
-Sparklines lets you add special attributes directly to the <span class="smcp">HTML</span> element containing a chart. To set the line color, for example, you need to specify the attribute `sparkLineColor`. The problem is, if we were to enter this attribute directly in the <span class="smcp">HTML</span>, the result would't be valid <span class="smcp">HTML</span>, because the <span class="smcp">HTML</span> specification doesn't recognize the `sparkLineColor` attribute. To conform to the <span class="smcp">HTML</span> standard, custom attributes need to have names that begin with the prefix `data-`.
+Sparklines let you add special attributes directly to the <span class="smcp">HTML</span> element containing a chart. To set the line color, for example, you need to specify the attribute `sparkLineColor`. The problem is that if we were to enter this attribute directly in the <span class="smcp">HTML</span>, the result would't be valid <span class="smcp">HTML</span>, because the <span class="smcp">HTML</span> specification doesn't recognize the `sparkLineColor` attribute. To conform to the <span class="smcp">HTML</span> standard, custom attributes must have names that begin with the prefix `data-`.
 
-In order to use <span class="smcp">HTML</span>-compliant attribute names to refer to sparklines' custom attributes, we just need to tell the sparklines library how to find those attribute names. For our <span class="smcp">HTML</span>, we use the standard `data-` prefix instead of `spark` in line 4.
+To use <span class="smcp">HTML</span>-compliant names to refer to sparklines' custom attributes, we just need to tell the sparklines library how to find those names. For our <span class="smcp">HTML</span>, we use the standard `data-` prefix instead of `spark` in line 4.
 
 ``` {.html .numberLines .line-4}
 <tr>
@@ -336,7 +336,7 @@ In order to use <span class="smcp">HTML</span>-compliant attribute names to refe
 </tr>
 ```
 
-Now we have to add a couple of additional options in our call to `sparkline()`. First we set `enableTagOptions` to true to tell the library that we're including options directly in the <span class="smcp">HTML</span>. Then we set `tagOptionsPrefix` to `"data-"` to specify the specific prefix we're using for those attributes.
+Now we have to add a couple more options in our call to `sparkline()`. First we set `enableTagOptions` to true to tell the library that we're including options directly in the <span class="smcp">HTML</span>. Then we set `tagOptionsPrefix` to `"data-"` to specify the specific prefix we're using for those attributes.
 
 > Note: As of this writing, the jQuery sparklines documentation for `tagOptionsPrefix` is _not_ correct. The documentation lists the option as `tagOptionPrefix`, where "option" is singular instead of plural. The library's code, however, expects the plural form.
 
@@ -356,7 +356,7 @@ If we use these options correctly, one of our charts will have the distinct colo
 <figcaption>The sparklines library supports unique styling options for individual charts.</figcaption>
 </figure>
 
-To pass the appropriate options to `sparkline()` we can take advantage of the work we did in step five. Since we created a special object for default options, that's the only object we have to change.
+To pass the appropriate options to `sparkline()` we can take advantage of the work we did in step 5. Since we created a special object for default options, that's the only object we have to change.
 
 ``` {.javascript .numberLines}
 var sparkline_default = {

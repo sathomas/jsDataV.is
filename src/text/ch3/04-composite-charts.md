@@ -1,10 +1,10 @@
-## Composite Charts
+## Drawing Composite Charts
 
 So far in this chapter we've seen how sparklines can provide a lot of visual information in a very small space. That characteristic makes them perfect for integrating charts in a complete web page that includes text, tables, and other elements. We haven't yet exhausted the capabilities of sparklines, however. We can increase the information density of our visualizations still further by creating composite charts—in effect, drawing multiple charts in the same space.
 
 To see an example of this technique, we can build on the previous example. In that example we used a sparkline to show the closing price of a stock over an entire year. Price is indeed the most relevant data about a stock, but there's another quantity that many investors like to see: the stock's trading volume. And just as with price, it can be important to understand the trend for trading volume at a glance. That makes the value an excellent candidate for a chart.
 
-Just as in this chapter's first example, we need to include the sparklines and jQuery libraries in our web. Because we're visualizing the same data as in the previous example, we'll also want to set up the data array and the <span class="smcp">HTML</span> markup exactly as in that example.
+Just as in this chapter's first example, we need to include the sparklines and jQuery libraries in our web page. Because we're visualizing the same data as in the previous example, we'll also want to set up the data array and the <span class="smcp">HTML</span> markup exactly as in that example.
 
 ### Step 1: Draw the Trading Volume Chart
 
@@ -77,11 +77,11 @@ As figure NEXTFIGURENUMBER shows, the result combines both charts in the same sp
 
 We can add annotations to the chart using the same approach as in the previous example. Because our charts now include the trading volume, it's appropriate to move that value from the details area into the primary annotation `<div>`. The code to do that is a simple adjustment from the prior example.
 
-In addition to moving the text from one area to the other, there are two significant changes.
+In addition to moving the text from one area to the other, we make two significant changes.
 
 1. We get the ``idx`` value from the second element of the event's `sparklines` array (`sparklines[1]`) in line 2. That's because the first element of that array is the first chart. The sparklines library doesn't really return any useful information about bar charts in the `sparklineRegionChange` event. Fortunately, we can get all the information we need from the line chart.
 
-2. We show the trading volume in millions, rounded to 2 decimal places. The calculation is in line 8. It's much easier for our users to quickly grasp "24.4M" than "24402100."
+2. We show the trading volume in millions, rounded to two decimal places. The calculation is in line 8. It's much easier for our users to quickly grasp "24.4M" than "24402100."
 
 
 ``` {.javascript .numberLines .line-2 .line-8}
@@ -101,7 +101,7 @@ In addition to moving the text from one area to the other, there are two signifi
             );
         }
 ```
-As in the previous example, the annotations provide additional details.
+As in the previous example, the annotations in our chart (shown in figure NEXTFIGURENUMBER) provide additional details.
 
 <figure>
 <div id="composite-chart3">
@@ -120,7 +120,7 @@ As in the previous example, the annotations provide additional details.
 
 So far we've shown the additional details for the stock (open, close, high, and low) as text values. As long as we're drawing multiple charts, we can show those values graphically as well. The statistical box plot serves as a useful model for us. Traditionally, that plot type shows the range of a distribution, including deviations, quartiles, and medians. Visually, however, it provides a perfect model of a stock's trading performance. We can use it to show the opening and closing prices, as well as the high and low values during the period.
 
-The sparklines library can draw a box plot for us, but normally it calculates the values to display given the distribution as input data. In our case we don't want to use the standard statistical calculations. Instead, we can use an option that tells the library to use pre-computed values. The library expects at least 5 values:
+The sparklines library can draw a box plot for us, but normally it calculates the values to display given the distribution as input data. In our case we don't want to use the standard statistical calculations. Instead, we can use an option that tells the library to use pre-computed values. The library expects at least five values:
 
 * The lowest sample value
 * The first quartile
