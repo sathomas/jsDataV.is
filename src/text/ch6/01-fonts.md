@@ -1,10 +1,10 @@
-## Map Fonts
+## Using Map Fonts
 
-One technique for adding maps to web pages is surprisingly simple but often overlooked—map fonts. Two examples of these fonts are [Stately](http://intridea.github.io/stately/) for the United States and [Continental](http://contfont.net) for Europe. Map fonts are special purpose web fonts whose character sets contain map symbols instead of letters and numbers. In just a few easy steps we'll create a visualization of Europe using the symbols from Continental.
+One technique for adding maps to web pages is surprisingly simple but often overlooked—map fonts. Two examples of these fonts are [Stately](http://intridea.github.io/stately/) for the United States and [Continental](http://contfont.net) for Europe. Map fonts are special-purpose web fonts whose character sets contain map symbols instead of letters and numbers. In just a few easy steps we'll create a visualization of Europe using the symbols from Continental.
 
 ### Step 1: Include the Fonts in the Page
 
-The main web sites for both Stately and Continental include more detailed instructions for installing the fonts, but all that's really necessary is including a single <span class="smcp">CSS</span> style sheet. In the case of Continental, that style sheet is called, naturally, `continental.css`. No JavaScript libraries are required.
+The main web sites for both Stately and Continental include more detailed instructions for installing the fonts, but all that's really necessary is including a single <span class="smcp">CSS</span> stylesheet. In the case of Continental, that stylesheet is called, naturally, `continental.css`. No JavaScript libraries are required.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -20,7 +20,7 @@ The main web sites for both Stately and Continental include more detailed instru
 </html>
 ```
 
-> For a production web site, you might want to combine `continental.css` with your site's other style sheets to minimize the number of network requests the browser has to make.
+> For a production web site, you might want to combine `continental.css` with your site's other stylesheets to minimize the number of network requests the browser has to make.
 
 ### Step 2: Display One Country
 
@@ -32,7 +32,7 @@ To show a single country, all we have to do is include an <span class="smcp">HTM
 </div>
 ```
 
-For our example, we'll use JavaScript to generate the markup. Here we're creating a new `<span>` element, giving it a class name of `"map-fr"`, and appending it to the map `<div>`.
+For this example, we'll use JavaScript to generate the markup. Here we're creating a new `<span>` element, giving it a class name of `"map-fr"`, and appending it to the map `<div>`.
 
 ``` {.javascript .numberLines}
 var fr = document.createElement("span");
@@ -48,7 +48,7 @@ One last bit of housekeeping is setting the size of the font. By default, any ma
 }
 ```
 
-That's all it takes to add France to a web page, as we can see from figure NEXTFIGURENUMBER.
+That's all it takes to add France to a web page, as you can see in figure NEXTFIGURENUMBER.
 
 <figure>
 <div id="map-font-1" style="font-size:500px; width: 100%; position:relative; left: -50px; top: -310px; margin-bottom: -500px; line-height:640px;"></div>
@@ -59,7 +59,7 @@ That's all it takes to add France to a web page, as we can see from figure NEXTF
 
 For this example we want to show more than a single country. We'd like to visualize the median age for all of Europe's countries, based on [United Nations population data](http://www.un.org/en/development/desa/population/) from 2010. To do that, we'll create a map that includes all European countries, and we'll style each country according to the data.
 
-The first step in this visualization is putting all of the countries into a single map. Since each country is a separate character in the Continental font, we want to overlay those characters on top of one another rather than spread them across the page. That requires setting a couple of <span class="smcp">CSS</span> rules. First we set the position of the outer container to `relative`. This rule doesn't change the styling of the outer container at all, but it does establish a _positioning context_ for anything within the container. Those elements will be our individual country symbols, and we'll set their position to be `absolute`. We'll then place each one at the top and left of the map so they'll overlay each other.  Because we've positioned the container `relative`, the country symbols will be positioned relative to that container rather than relative to the page as a whole.
+The first step in this visualization is putting all of the countries into a single map. Since each country is a separate character in the Continental font, we want to overlay those characters on top of one another rather than spread them across the page. That requires setting a couple of <span class="smcp">CSS</span> rules. First we set the position of the outer container to `relative`. This rule doesn't change the styling of the outer container at all, but it does establish a _positioning context_ for anything within the container. Those elements will be our individual country symbols, and we'll set their position to be `absolute`. We'll then place each one at the top and left of the map so they'll overlay one another.  Because we've positioned the container `relative`, the country symbols will be positioned relative to that container rather than to the page as a whole.
 
 ``` {.css .numberLines}
 #map {
@@ -72,7 +72,7 @@ The first step in this visualization is putting all of the countries into a sing
 }
 ```
 
-Here we're using a couple of <span class="smcp">CSS</span> tricks to apply this positioning to all of the individual symbols within this element. We start by selecting the element with an `id` of `map`. Nothing fancy there. The direct descendent selector (`>`), however, says that what follows should only match elements that are immediate children of that element, not arbitrary descendants. Finally the attribute selector `[class*="map‑"]`specifies only children that have a class that contains the characters `map-`. Since all the county symbols will be `<span>` elements with a class of `map‑XX` (where `XX` is the two-letter country abbreviation), this will match all of our countries.
+Here we're using a couple of <span class="smcp">CSS</span> tricks to apply this positioning to all of the individual symbols within this element. We start by selecting the element with an `id` of `map`. Nothing fancy there. The direct descendent selector (`>`), however, says that what follows  match only elements that are immediate children of that element, not arbitrary descendants. Finally, the attribute selector `[class*="map‑"]`specifies only children that have a class containing the characters `map-`. Since all the country symbols will be `<span>` elements with a class of `map‑xx` (where `xx` is the two-letter country abbreviation), this will match all of our countries.
 
 In our JavaScript we can start with an array listing all of the countries and iterate through it. For each country we create a `<span>` element with the appropriate class and insert it in the map `<div>`.
 
@@ -94,7 +94,7 @@ countries.forEach(function(cc) {
 });
 ```
 
-With the defined style rules, inserting multiple `<span>` elements within our map `<div>` creates the complete, if somewhat uninteresting, map of Europe in figure NEXTFIGURENUMBER.
+With these style rules defined, inserting multiple `<span>` elements within our map `<div>` creates the complete, if somewhat uninteresting, map of Europe shown in figure NEXTFIGURENUMBER.
 
 <style>
 #map-font-2 {
@@ -113,7 +113,7 @@ With the defined style rules, inserting multiple `<span>` elements within our ma
 
 <figure>
 <div id="map-font-2"></div>
-<figcaption>Overlaying map characters on top of each other creates a complete map.</figcaption>
+<figcaption>Overlaying map characters on top of one another creates a complete map.</figcaption>
 </figure>
 
 ### Step 4: Vary the Countries Based on the Data
@@ -130,9 +130,9 @@ var ages = [
     // Data set continues...
 ```
 
-There are several ways we could use this data to modify the map. One approach would have JavaScript code set the visualization properties directly by, for example, changing the `color` style for each country symbol. That would work, but it forgoes one of the big advantages of map fonts. With map fonts our visualization is standard <span class="smcp">HTML</span>, so we can use standard <span class="smcp">CSS</span> to style it. If, in the future, we want to change the styles on the page, they'll all be contained within the style sheets, and we won't have to hunt through our JavaScript code just to adjust colors.
+There are several ways we could use this data to modify the map. We could use JavaScript code to set the visualization properties directly by, for example, changing the `color` style for each country symbol. That would work, but it forgoes one of the big advantages of map fonts. With map fonts our visualization is standard <span class="smcp">HTML</span>, so we can use standard <span class="smcp">CSS</span> to style it. If, in the future, we want to change the styles on the page, they'll all be contained within the stylesheets, and we won't have to hunt through our JavaScript code just to adjust colors.
 
-To indicate which styles are appropriate for an individual country symbol, we can attach a `data-` attribute to each. In the code below, we set the `data-age` attribute to the mean age, rounded to the nearest whole number. To find the age for a given country, we need that country's index in the `ages` array. The `findCountryIndex()` function does that in a straightforward way.
+To indicate which styles are appropriate for an individual country symbol, we can attach a `data-` attribute to each. In the following code, we set the `data-age` attribute to the mean age, rounded to the nearest whole number. To find the age for a given country, we need that country's index in the `ages` array. The `findCountryIndex()` function does that in a straightforward way.
 
 ``` {.javascript .numberLines}
 var findCountryIndex = function(cc) {
@@ -166,7 +166,7 @@ Now we can assign <span class="smcp">CSS</span> style rules based on that `data-
 
 > Note: Although they're beyond the scope of this book, <span class="smcp">CSS</span> preprocessors such as [<span class="smcp">LESS</span>](http://lesscss.org) and [<span class="smcp">SASS</span>](http://sass-lang.com) make it easy to create these kinds of rules.
 
-Now we have the nice visualization of the age trends in figure NEXTFIGURENUMBER.
+Now we have the nice visualization of the age trends shown in figure NEXTFIGURENUMBER.
 
 <style>
 #map-font-3 {
@@ -211,7 +211,7 @@ Now we have the nice visualization of the age trends in figure NEXTFIGURENUMBER.
 
 ### Step 5: Add a Legend
 
-To finish off the visualization, we can add a legend to the map. Because the map itself is nothing more than standard <span class="smcp">HTML</span> elements with <span class="smcp">CSS</span> styling, it's easy to create a matching legend. This example covers a fairly broad range (28 to 44), a linear gradient works well as a key. Your own implementation will depend on the specific browser versions that you wish to support, but a generic style rule would be:
+To finish off the visualization, we can add a legend to the map. Because the map itself is nothing more than standard <span class="smcp">HTML</span> elements with <span class="smcp">CSS</span> styling, it's easy to create a matching legend. This example covers a fairly broad range (ages 28 to 44), so a linear gradient works well as a key. Your own implementation will depend on the specific browser versions that you wish to support, but a generic style rule would be:
 
 ``` {.css .numberLines}
 #map-legend .key {

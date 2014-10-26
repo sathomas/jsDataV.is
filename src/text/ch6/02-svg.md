@@ -1,10 +1,10 @@
-## Scalable Vector Graphics
+## Working with Scalable Vector Graphics
 
 Map fonts like those in the previous example are easy to use and visually effective, but only a few map fonts exist, and they definitely don't cover all the conceivable geographic regions. For visualizations of other regions, we'll have to find a different technique. Maps, of course, are ultimately images, and web browsers can display many different image formats. One format in particular, called _Scalable Vector Graphics,_ or <span class="smcp">SVG</span>, is especially well suited for interactive visualizations. That's because, as we'll see in this example, JavaScript code (as well as <span class="smcp">CSS</span> styles) can easily and naturally interact with <span class="smcp">SVG</span> images.
 
 Although our example for this section deals with a map, the techniques here are by no means limited to maps. Whenever you have a diagram or illustration in <span class="smcp">SVG</span> format, you can manipulate it directly on a web page.
 
-> There is one important consideration for using <span class="smcp">SVG</span>: only modern web browsers support it. More specifically, Internet Explorer version 8 (and earlier) cannot display <span class="smcp">SVG</span> images. If a significant number of your users are still using such older browsers, you might want to consider other alternatives.
+> There is one important consideration for using <span class="smcp">SVG</span>: only modern web browsers support it. More specifically, Internet Explorer version 8 (and earlier) cannot display <span class="smcp">SVG</span> images. If a significant number of your users are using older browsers, you might want to consider other alternatives.
 
 For web developers <span class="smcp">SVG</span> is especially convenient because its syntax uses the same structure as <span class="smcp">HTML</span>. You can use many of the same tools and techniques for working with <span class="smcp">HTML</span> on <span class="smcp">SVG</span> as well. Consider, for example, a skeletal <span class="smcp">HTML</span> document.
 
@@ -22,7 +22,7 @@ For web developers <span class="smcp">SVG</span> is especially convenient becaus
 </html>
 ```
 
-Compare that to the example below, the universal symbol for first aid represented in an <span class="smcp">SVG</span> document.
+Compare that to the next example, the universal symbol for first aid represented in an <span class="smcp">SVG</span> document.
 
 > If you have worked with <span class="smcp">HTML</span> before <span class="smcp">HTML5</span>, the similarities might be especially striking, as the <span class="smcp">SVG</span> header text follows the same format as <span class="smcp">HTML4</span>.
 
@@ -38,7 +38,7 @@ Compare that to the example below, the universal symbol for first aid represente
 </svg>
 ```
 
-You can even style the <span class="smcp">SVG</span> elements using <span class="smcp">CSS</span>. Here's how we could color the above image:
+You can even style the <span class="smcp">SVG</span> elements using <span class="smcp">CSS</span>. Here's how we could color the preceding image:
 
 ``` {.css .numberLines}
 svg#firstaid {
@@ -66,7 +66,7 @@ svg#firstaid #horizontal {
 }
 </style>
 
-If you're curious, figure NEXTFIGURENUMBER shows how that <span class="smcp">SVG</span> renders:
+If you're curious, figure NEXTFIGURENUMBER shows how that <span class="smcp">SVG</span> renders.
 
 <figure>
 <svg id="firstaid" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100" height="100">
@@ -81,11 +81,11 @@ The affinity between <span class="smcp">HTML</span> and <span class="smcp">SVG</
 
 ### Step 1: Create the SVG Map
 
-Our visualization starts with a map, so we'll need an illustration of Georgia's counties in <span class="smcp">SVG</span> format. Although that might seem like a challenge, in fact there are many sources for <span class="smcp">SVG</span> maps that are free to use, as well as special purpose applications that can generate <span class="smcp">SVG</span> maps for almost any region. The [Wikimedia Commons](http://commons.wikimedia.org/wiki/Main_Page), for example, contains a large number of open source maps, including many of Georgia. We'll use [one](http://commons.wikimedia.org/wiki/File:NRHP_Georgia_Map.svg#file) showing data from the National Register of Historic Places.
+Our visualization starts with a map, so we'll need an illustration of Georgia's counties in <span class="smcp">SVG</span> format. Although that might seem like a challenge, there are actually many sources for <span class="smcp">SVG</span> maps that are free to use, as well as special-purpose applications that can generate <span class="smcp">SVG</span> maps for almost any region. The [Wikimedia Commons](http://commons.wikimedia.org/wiki/Main_Page), for example, contains a large number of open source maps, including many of Georgia. We'll use [one](http://commons.wikimedia.org/wiki/File:NRHP_Georgia_Map.svg#file) showing data from the National Register of Historic Places.
 
-After downloading the map file, we can adjust it to more exactly fit our needs, removing the legend, colors, and other elements that we don't need. Although you can do this in a text editor (just as you can edit <span class="smcp">HTML</span>), you may find it easier to use a graphics program such as Adobe Illustrator or a more web-focused app like [Sketch](http://www.bohemiancoding.com/sketch/). You might want to take advantage of an <span class="smcp">SVG</span> optimization [web site](http://petercollingridge.appspot.com/svg-optimiser) or [application](https://github.com/svg). Those tools can compress an <span class="smcp">SVG</span> by removing extraneous tags and reducing the sometimes excessive precision of graphics programs.
+After downloading the map file, we can adjust it to better fit our needs, removing the legend, colors, and other elements that we don't need. Although you can do this in a text editor (just as you can edit <span class="smcp">HTML</span>), you may find it easier to use a graphics program such as Adobe Illustrator or a more web-focused app like [Sketch](http://www.bohemiancoding.com/sketch/). You might also want to take advantage of an <span class="smcp">SVG</span> optimization [web site](http://petercollingridge.appspot.com/svg-optimiser) or [application](https://github.com/svg), which can compress an <span class="smcp">SVG</span> by removing extraneous tags and reducing the sometimes-excessive precision of graphics programs.
 
-Our result will be a series of `<path>` elements, one for each county. We'll also want to assign a `class` or `id` to each path to indicate the county. The resulting <span class="smcp">SVG</span> file might begin as in the following.
+Our result will be a series of `<path>` elements, one for each county. We'll also want to assign a `class` or `id` to each path to indicate the county. The resulting <span class="smcp">SVG</span> file might begin like the following.
 
 ``` {.html .numberLines}
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" 
@@ -96,12 +96,12 @@ Our result will be a series of `<path>` elements, one for each county. We'll als
     <!-- Markup continues... -->
 ```
 
-To summarize, here are the steps I normally take to create the <span class="smcp">SVG</span> map.
+To summarize, here are the steps to create the <span class="smcp">SVG</span> map.
 
 1. Locate a suitably licensed <span class="smcp">SVG</span>-format map file or create one using a special-purpose map application.
 2. Edit the <span class="smcp">SVG</span> file in a graphics application to remove extraneous components and simplify the illustration.
-3. Optimize the <span class="smcp">SVG</span> file using an optimization application.
-4. Make final adjustments (such as adding `id` attributes) in my regular <span class="smcp">HTML</span> editor.
+3. Optimize the <span class="smcp">SVG</span> file using an optimization site or application.
+4. Make final adjustments (such as adding `id` attributes) in your regular <span class="smcp">HTML</span> editor.
 
 ### Step 2: Embed the Map in the Page
 
@@ -131,7 +131,7 @@ The simplest way to include an <span class="smcp">SVG</span> map in a web page i
 </html>
 ```
 
-If your map is relatively simple, direct embedding is the easiest way to include it in the page. Our map of Georgia, however, is about 1 Mbyte in size even after optimization. That's not unusual for maps with reasonable resolution, as describing complex borders such as coastlines or rivers can make for large `<path>` elements. Especially if the map isn't the sole focus of the page, you can provide a better user experience by loading the rest of the page first. That will give your users something to read while the map loads in the background. You can even add a simple animated progress loader if that's appropriate for your site.
+If your map is relatively simple, direct embedding is the easiest way to include it in the page. Our map of Georgia, however, is about 1 <class="smcp">MB</span> in size even after optimization. That's not unusual for maps with reasonable resolution, as describing complex borders such as coastlines or rivers can make for large `<path>` elements. Especially if the map isn't the sole focus of the page, you can provide a better user experience by loading the rest of the page first. That will give your users something to read while the map loads in the background. You can even add a simple animated progress loader if that's appropriate for your site.
 
 If you're using jQuery, loading the map is a single instruction. You do want to make sure, though, that your code doesn't start manipulating the map until the load is complete. Here's how that would look in the source code.
 
@@ -143,7 +143,7 @@ $("#map").load("img/ga.svg", function() {
 
 ### Step 3: Collect the Data
 
-The data for our visualization is available as an Excel spreadsheet directly from [www.countyhealthrankings.org](http://www.countyhealthrankings.org). We'll convert that to a JavaScript object in advance, and we'll add a two-letter code corresponding to each county. Here's how that array might begin.
+The data for our visualization is available as an Excel spreadsheet directly from [County Health Rankings](http://www.countyhealthrankings.org). We'll convert that to a JavaScript object in advance, and we'll add a two-letter code corresponding to each county. Here's how that array might begin.
 
 ``` {.javascript .numberLines}
 var counties = [
@@ -163,9 +163,9 @@ var counties = [
 ];
 ```
 
-For this visualization we'd like to show the variation in health outcomes among counties. The data set provides two variables for that value, a ranking and a Z score (a measure of how far a sample is from the mean in terms of standard deviations). The county health rankings provide Z scores slightly modified from the traditional statistical definition. Normal Z scores are always positive; in this data set, however, measurements that are subjectively better than average are multiplied by -1 so that they are negative. A county whose health outcome is two standard deviations "better" than the mean, for example, is given a Z score of -2 instead of 2. This adjustment makes it easier to use these Z scores in our visualization.
+For this visualization we'd like to show the variation in health outcomes among counties. The data set provides two variables for that value, a ranking and a z-score (a measure of how far a sample is from the mean in terms of standard deviations). The County Health Rankings provide z-scores slightly modified from the traditional statistical definition. Normal z-scores are always positive; in this data set, however, measurements that are subjectively better than average are multiplied by –1 so that they are negative. A county whose health outcome is two standard deviations "better" than the mean, for example, is given a z-score of –2 instead of 2. This adjustment makes it easier to use these z-scores in our visualization.
 
-Our first step in working with these Z scores is to find the maximum and minimum values. We can do that by extracting the outcomes as a separate array and then using the JavaScript built-in `Math.max` and `Math.min` functions. Note that the code below uses the `map()` method to extract the array, and that method is only available in modern browsers. Since we've chosen to use <span class="smcp">SVG</span> images, however, we've already restricted our users to modern browsers, so we might as well take advantage of that when we can.
+Our first step in working with these z scores is to find the maximum and minimum values. We can do that by extracting the outcomes as a separate array and then using the JavaScript built-in `Math.max` and `Math.min` functions. Note that the following code uses the `map()` method to extract the array, and that method is available only in modern browsers. Since we've chosen to use <span class="smcp">SVG</span> images, however, we've already restricted our users to modern browsers, so we might as well take advantage of that when we can.
 
 
 ``` {.javascript .numberLines}
@@ -174,9 +174,9 @@ var maxZ = Math.max.apply(null, outcomes);
 var minZ = Math.min.apply(null, outcomes);
 ```
 
-Notice how we've used the `.apply` method here. Normally the `Math.max()` and `Math.min()` functions accept a comma-separated list of arguments. We, of course, have an array instead. The `apply` method, which works with any JavaScript function, turns an array into a comma-separated list. The first parameter is the context to use which, in our case, doesn't matter, so we set it to `null`.
+Notice how we've used the `.apply()` method here. Normally the `Math.max()` and `Math.min()` functions accept a comma-separated list of arguments. We, of course, have an array instead. The `apply()` method, which works with any JavaScript function, turns an array into a comma-separated list. The first parameter is the context to use, which in our case doesn't matter, so we set it to `null`.
 
-To complete the data preparation, let's make sure the minimum and maximum ranges are symmetric about the mean. If, for example, the Z scores ranged from `-2` to `1.5`, we'll extend the range to `[-2, 2]`. This adjustment will make the color scales symmetric as well, thus making it easier for users to interpret.
+To complete the data preparation, let's make sure the minimum and maximum ranges are symmetric about the mean. If, for example, the z-scores ranged from `-2` to `1.5`, we'll extend the range to `[-2, 2]`. This adjustment will make the color scales symmetric as well, thus making our visualization easier for users to interpret.
 
 ``` {.javascript .numberLines}
 if (Math.abs(minZ) > Math.abs(maxZ)) {
@@ -188,9 +188,9 @@ if (Math.abs(minZ) > Math.abs(maxZ)) {
 
 ### Step 4: Define the Color Scheme
 
-Defining an effective color scheme for a map can be quite tricky, but we are fortunate to have some excellent resources to help. For this visualization we'll rely on the [Chroma.js](http://driven-by-data.net/about/chromajs/) library. That library includes many tools for working with and manipulating colors and color scales, and it can satisfy the most advanced color theorist. For our example, however, we can take advantage of the predefined color scales, specifically those defined originally by [Cynthia Brewer](http://colorbrewer2.org/).
+Defining an effective color scheme for a map can be quite tricky, but fortunately there are some excellent resources available. For this visualization we'll rely on the [Chroma.js](http://driven-by-data.net/about/chromajs/) library. That library includes many tools for working with and manipulating colors and color scales, and it can satisfy the most advanced color theorist. For our example, however, we can take advantage of the predefined color scales, specifically those defined originally by [Cynthia Brewer](http://colorbrewer2.org/).
 
-The Chroma.js library is available on popular Content Distribution Networks, so we can rely on a network such as CloudFlare's [cdnjs](http://cdnjs.com) to host it.
+The Chroma.js library is available on popular content distribution networks, so we can rely on a network such as CloudFlare's [cdnjs](http://cdnjs.com) to host it.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -208,7 +208,7 @@ The Chroma.js library is available on popular Content Distribution Networks, so 
 </html>
 ```
 
-To use a predefined scale we pass the scale's name (`"BrBG"` for the Brewer's Brown to Blue/Green scale) to the `chroma.scale()` function. At the same time we indicate the domain for our scale (`minZ` to `maxZ`, although we're reversing the order because of the data set's Z score adjustment) and our desired output. The `"hex"` output is the common `"#012345"` format compatible with <span class="smcp">CSS</span> and <span class="smcp">HTML</span> markup.
+To use a predefined scale we pass the scale's name (`"BrBG"` for the Brewer's brown to blue/green scale) to the `chroma.scale()` function. At the same time we indicate the domain for our scale (`minZ` to `maxZ`, although we're reversing the order because of the data set's z-score adjustment) and our desired output. The `"hex"` output is the common `"#012345"` format compatible with <span class="smcp">CSS</span> and <span class="smcp">HTML</span> markup.
 
 ``` {.javascript .numberLines}
 var scale = chroma.scale("BrBG").domain([maxZ, minZ]).out("hex");
@@ -225,7 +225,7 @@ counties.forEach(function(county) {
 })
 ```
 
-The resulting map in figure NEXTFIGURENUMBER shows which counties are above average and which are below average for health outcomes in 2014.
+The resulting map, shown in figure NEXTFIGURENUMBER, illustrates which counties are above average and which are below average for health outcomes in 2014.
 
 <figure>
 <div id='map-svg-1'></div>
@@ -234,7 +234,7 @@ The resulting map in figure NEXTFIGURENUMBER shows which counties are above aver
 
 ### Step 6: Add a Legend
 
-To help our users interpret the map we can add a legend to the visualization. We can take advantage of the Chroma.js scale to easily create a table that explains the variation. For the table we'll use four increments for the colors on each side of the mean value. That gives us a total of 9 colors for the legend.
+To help users interpret the map we can add a legend to the visualization. We can take advantage of the Chroma.js scale to easily create a table that explains the variation. For the table we'll use four increments for the colors on each side of the mean value. That gives us a total of nine colors for the legend.
 
 ``` {.html .numberLines}
 <table id="legend">
@@ -250,7 +250,7 @@ To help our users interpret the map we can add a legend to the visualization. We
 </table>
 ```
 
-Some straightforward <span class="smcp">CSS</span> will style the table appropriately. Because we have 9 colors, we set the width of each table cell to 11.1111% (1/9 is 0.111111).
+Some straightforward <span class="smcp">CSS</span> will style the table appropriately. Because we have nine colors, we set the width of each table cell to 11.1111% (1/9 is 0.111111).
 
 ``` {.css .numberLines}
 table#legend tr.scale td {
@@ -268,7 +268,7 @@ table#legend tr.text td:last-child {
 }
 ```
 
-Finally, we use the Chroma scale created above to set the background color for the legend's table cells. Because the legend is a `<table>` element, we can directly access the rows and the cells within the rows. Although these elements look like arrays in the code below, they're not true JavaScript arrays, so they don't support array methods such as `forEach()`. For now, we'll iterate through them with a `for` loop, but if you'd rather use the array methods stay tuned for a simple trick. Note that once again we're working backwards because of the data set's Z score adjustments.
+Finally, we use the Chroma scale created earlier to set the background color for the legend's table cells. Because the legend is a `<table>` element, we can directly access the rows and the cells within the rows. Although these elements look like arrays in the following code, they're not true JavaScript arrays, so they don't support array methods such as `forEach()`. For now, we'll iterate through them with a `for` loop, but if you'd rather use the array methods stay tuned for a simple trick. Note that once again we're working backward because of the data set's z-score adjustments.
 
 ``` {.javascript .numberLines .line-5}
 var legend = document.getElementById("legend");
@@ -280,7 +280,7 @@ for (var idx=0; idx<cells.length; idx++) {
 };
 ```
 
-In line 5 we calculate the fraction of the current index from the total number of legend colors `((idx + 0.5) / cells.length)`, multiple that by the total range of the scale `(maxZ - minZ)`, and subtract the result from the maximum value.
+In line 5 we calculate the fraction of the current index from the total number of legend colors `((idx + 0.5) / cells.length)`, multiply that by the total range of the scale `(maxZ - minZ)`, and subtract the result from the maximum value.
 
 The result is the legend for the map in figure NEXTFIGURENUMBER.
 
@@ -334,7 +334,7 @@ table#legend-svg-1 tr.text td:last-child, table#legend-svg-2 tr.text td:last-chi
 
 ### Step 7: Add Interactions
 
-To complete the visualization, let's give users the ability to hover their mouse over a county on the map to see more details. Of course, mouse interactions are not available for tablet or smartphone users. To support those users you could add a similar interaction for tap or click events. That code would be almost identical to the example below.
+To complete the visualization, let's enable users to hover their mouse over a county on the map to see more details. Of course, mouse interactions are not available for tablet or smartphone users. To support those users you could add a similar interaction for tap or click events. That code would be almost identical to the next example.
 
 We'll start by defining a table to show county details.
 
@@ -357,7 +357,7 @@ table#details {
 }
 ```
 
-To show the table we use event handler functions that tracks when the mouse enters or leaves an <span class="smcp">SVG</span> path for a county. To find these `<path>` elements we can use the `querySelectorAll()` function that modern browsers support. Unfortunately that function doesn't return a true array of elements, so we can't use array methods such as `forEach` to iterate through those elements. There's a trick, however, that will let us convert the returned list into a true array. The following code shows the trick; it calls the `[].slice.call()` function with the "not quite array" object as its parameter. The result is a true array with all of its useful methods.
+To show the table we use event handler functions that track when the mouse enters or leaves an <span class="smcp">SVG</span> path for a county. To find these `<path>` elements, we can use the `querySelectorAll()` function that modern browsers support. Unfortunately, that function doesn't return a true array of elements, so we can't use array methods such as `forEach()` to iterate through those elements. There's a trick, however, that will let us convert the returned list into a true array. The following code shows this trick; it calls the `[].slice.call()` function with the "not quite array" object as its parameter. The result is a true array with all of its useful methods.
 
 ``` {.javascript .numberLines}
 [].slice.call(document.querySelectorAll('#map path'))
@@ -372,7 +372,7 @@ To show the table we use event handler functions that tracks when the mouse ente
 );
 ```
 
-In addition to making the details table visible, we'll also want to update it with the appropriate information. To help with this display, we can write a function that converts a Z score into a more user-friendly explanation. The specific values in the example below are arbitrary since we're not trying for statistical precision in this visualization.
+In addition to making the details table visible, we'll also want to update it with the appropriate information. To help with this display, we can write a function that converts a Z score into a more user-friendly explanation. The specific values in the following example are arbitrary since we're not trying for statistical precision in this visualization.
 
 ``` {.javascript .numberLines}
 var zToText = function(z) {
@@ -385,7 +385,7 @@ var zToText = function(z) {
 }
 ```
 
-There are couple of noteworthy items in this function. First, the statement, `z = +z` converts the Z score from a string to a numeric value for the tests that follow. Second, remember that because of the Z score adjustments the negative Z scores are actually better than average, while the positive values are below average.
+There are a couple of noteworthy items in this function. First, the statement, `z = +z` converts the z-score from a string to a numeric value for the tests that follow. Second, remember that because of the z-score adjustments the negative z-scores are actually better than average, while the positive values are below average.
 
 We can use this function to provide the data for our details table. The first step is finding the full data set for the associated `<path>` element. To do that we search through the `counties` array looking for a `code` property that matches the `id` attribute of the path. Because `indexOf()` doesn't allow us to find objects by key, we'll borrow the `some()` method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.
 
@@ -400,7 +400,7 @@ counties.some(function(c) {
 });
 ```
 
-Once we've found the county data, it's a straightforward process to update the table. The code below directly updates the relevant table cell's text content. For a more robust implementation you could provide class names for the cells and update based on those class names.
+Once we've found the county data, it's a straightforward process to update the table. The following code directly updates the relevant table cell's text content. For a more robust implementation, you could provide class names for the cells and update based on those class names.
 
 ``` {.javascript .numberLines}
 var table = document.getElementById("details");
@@ -447,7 +447,7 @@ table#details-svg-2 tr td:first-child {
 }
 </style>
 
-At this point our visualization example is complete. Figure NEXTFIGURENUMBER has the result.
+At this point our visualization example is complete. Figure NEXTFIGURENUMBER shows the result.
 
 ### 2014 Health Outcomes in Georgia Counties
 <figure id="svg-2">

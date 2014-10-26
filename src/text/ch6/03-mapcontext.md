@@ -1,8 +1,8 @@
 ## Including Maps for Context
 
-So far in this chapter we've looked at map visualizations where the main subjects are geographic regions—countries in Europe or counties in Georgia. In those cases choropleth maps were effective in showing the differences between regions. Not all map visualizations have the same focus, however. In some cases we want to include a map more as context or background for the visualization data.
+So far in this chapter we've looked at map visualizations where the main subjects are geographic regions—countries in Europe or counties in Georgia. In those cases, choropleth maps were effective in showing the differences between regions. Not all map visualizations have the same focus, however. In some cases we want to include a map more as context or background for the visualization data.
 
-When we want to include a map as a visualization background, we're likely to find that traditional mapping libraries will serve us better than custom choropleth maps. The most well known mapping library is probably [Google Maps](http://maps.google.com), and you've almost certainly seen many examples of embedded Google maps on web pages. There are, however, several free and open source alternatives to Google Maps. For this example we'll use the [Modest Maps](https://github.com/modestmaps/modestmaps-js) library from Stamen Design. To show off this library, we'll visualize the major [<span class="smcp">UFO</span> sightings in the United States](http://en.wikipedia.org/wiki/UFO_sightings_in_the_United_States), or at least those important enough to merit a Wikipedia entry.
+When we want to include a map as a visualization background, we're likely to find that traditional mapping libraries will serve us better than custom choropleth maps. The most well-known mapping library is probably [Google Maps](http://maps.google.com), and you've almost certainly seen many examples of embedded Google maps on web pages. There are, however, several free and open source alternatives to Google Maps. For this example we'll use the [Modest Maps](https://github.com/modestmaps/modestmaps-js/) library from Stamen Design. To show off this library, we'll visualize the major [<span class="smcp">UFO</span> sightings in the United States](http://en.wikipedia.org/wiki/UFO_sightings_in_the_United_States), or at least those important enough to merit a Wikipedia entry.
 
 ### Step 1: Set Up the Web Page
 
@@ -51,11 +51,11 @@ The `location` property holds the latitude and longitude (where negative values 
 
 ### Step 3: Choose a Map Style
 
-As with most mapping libraries, Modest Maps builds its maps using layers. The layering process works much like it does in a graphics application such as Photoshop or Sketch. Subsequent layers add additional visual information to the map. In most cases the base layer for a map consists of image tiles. Additional layers such as markers or routes can be added on top of the image tiles.
+As with most mapping libraries, Modest Maps builds its maps using layers. The layering process works much like it does in a graphics application such as Photoshop or Sketch. Subsequent layers add further visual information to the map. In most cases the base layer for a map consists of image tiles. Additional layers such as markers or routes can be included on top of the image tiles.
 
 When we tell Modest Maps to create a map, it calculates which tiles (both size and location) are needed and then it requests those tiles asynchronously over the internet. The tiles define the visual style of the map. Stamen Design has published several tile sets itself; you can see them on the [maps.stamen.com](http://maps.stamen.com) web site.
 
-To use the Stamen tiles we'll add an additional, small JavaScript library to our page. That library is available at directly from [Stamen Design](http://maps.stamen.com/js/tile.stamen.js). It should be included _after_ the Modest Maps library.
+To use the Stamen tiles we'll add none more, small JavaScript library to our page. That library is available directly from [Stamen Design](http://maps.stamen.com/js/tile.stamen.js). It should be included _after_ the Modest Maps library.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -73,24 +73,24 @@ To use the Stamen tiles we'll add an additional, small JavaScript library to our
 </html>
 ```
 
-For our example the "toner" style is a good match, so we'll use those tiles. To use those tiles we create a _tile layer_ for the map.
+For our example the "toner" style is a good match, so we'll use those tiles. To use those tiles, we create a _tile layer_ for the map.
 
 ``` {.javascript .numberLines}
 var tiles = new MM.StamenTileLayer("toner");
 ```
 
-> When you consider a source for image tiles, be aware of any copyright restrictions. Some image tiles must be licensed, and even those that are freely available often require that any use identify the provider as the source.
+> When you consider a source for image tiles, be aware of any copyright restrictions. Some image tiles must be licensed, and even those that are freely available often require that any user identify the provider as the source.
 
 ### Step 4: Draw the Map
 
-Now we're ready to draw the map itself. That takes two JavaScript statements. First we create a new `MM.Map` object, giving it the `id` of the element containing the map and the tiles we initialized above. Then we provide the latitude and longitude for the map's center as well an initial zoom level. For your own maps you may need to experiment a bit to get the right values, but for this example we'll center and zoom the map so that it comfortably shows the continental United States.
+Now we're ready to draw the map itself. That takes two JavaScript statements. First we create a new `MM.Map` object, giving it the `id` of the element containing the map and the tiles we just initialized. Then we provide the latitude and longitude for the map's center as well as an initial zoom level. For your own maps you may need to experiment a bit to get the right values, but for this example we'll center and zoom the map so that it comfortably shows the continental United States.
 
 ``` {.javascript .numberLines}
 var map = new MM.Map("map", tiles);
 map.setCenterZoom(new MM.Location(38.840278, -96.611389), 4);
 ```
 
-The resulting map in figure NEXTFIGURENUMBER forms a base for showing the sightings.
+The resulting map, shown in figure NEXTFIGURENUMBER, forms a base for showing the sightings.
 
 <figure>
 <div id="map-context-1" style="width:640px;height:370px;"></div>
@@ -98,7 +98,7 @@ The resulting map in figure NEXTFIGURENUMBER forms a base for showing the sighti
 <figcaption>Map libraries can show maps based on geographic coordinates.</figcaption>
 </figure>
 
-Notice that we've credited both Stamen Design and OpenStreetMap. That attribution is required by the terms of the Stamen Design license.
+Notice both Stamen Design and OpenStreetMap are credited. That attribution is required by the terms of the Stamen Design license.
 
 ### Step 5: Add the Sightings
 
@@ -118,13 +118,13 @@ ufos.forEach(function(ufo) {
 });
 ```
 
-At this point our visualization is complete. Figure NEXTFIGURENUMBER see where <span class="smcp">UFO</span>s have allegedly appeared over the United States in a suitably mysterious context.
+At this point our visualization is complete. Figure NEXTFIGURENUMBER shows where <span class="smcp">UFO</span>s have allegedly appeared over the United States in a suitably mysterious context.
 
 <figure>
 <div style="font-weight: bold; font-size: 1.1em; padding-bottom: 0.2em;">Major <span class="lgcp">UFO</span> Sightings in the Continental United States</div>
 <div id="map-context-2" style="width:640px;height:370px"></div>
 <div style="font-size:0.8em">Map tiles by [Stamen Design](http://stamen.com)</a>, under [<span class="smcp">CC</span> <span class="smcp">BY</span> 3.0](http://creativecommons.org/licenses/by/3.0). Data by [OpenStreetMap](http://openstreetmap.org), under [<span class="smcp">CC</span> <span class="smcp">BY</span> <span class="smcp">SA</span>](http://creativecommons.org/licenses/by-sa/3.0).</span>
-<figcaption>Adding layers in a map library can add emphasis to regions of a map.</figcaption>
+<figcaption>Adding layers in a map library can emphasize regions of a map.</figcaption>
 </figure>
 
 <script>

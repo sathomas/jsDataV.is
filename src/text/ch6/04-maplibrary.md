@@ -2,11 +2,11 @@
 
 The Modest Maps library of the previous example is a fine library for simple map visualizations, but it doesn't have all of the features and support of a full-featured service such as Google Maps. There is, however, an open source library that does provide those features: [Leaflet](http://leafletjs.com). In this example we'll build a more complex visualization that features a Leaflet-based map.
 
-In the 1940s, two private railroads were in competition for passenger traffic in the southeastern United States. Two routes that competed most directly with each other were the _Silver Comet_ run by Seaboard Air Lines, and the _Southerner_ operated by Southern Railways. Both served passengers traveling between New York and Birmingham, Alabama. One factor cited in the Southerner's ultimate success was the shorter distance of its route. Trips on the Southerner were quicker, giving Southern Railways a competitive advantage. Let's create a visualization to demonstrate that advantage.
+In the 1940s, two private railroads were in competition for passenger traffic in the southeastern United States. Two routes that competed most directly were the _Silver Comet_ ()run by Seaboard Air Lines, and the _Southerner_ ()operated by Southern Railways. Both served passengers traveling between New York and Birmingham, Alabama. One factor cited in the Southerner's ultimate success was the shorter distance of its route. Trips on the Southerner were quicker, giving Southern Railways a competitive advantage. Let's create a visualization to demonstrate that advantage.
 
 ### Step 1: Prepare the Data
 
-The data for our visualization is readily available as timetables for the two routes. A more precise comparison might consider timetables from the same year, but for this example we'll use the [Southerner's timetable from 1941](http://www.streamlinerschedules.com/concourse/track1/southerner194112.html) and the [Silver Comet's timetable from 1947](http://www.streamlinerschedules.com/concourse/track1/silvercomet194706.html) as those timetables are readily available on the internet. The timetables only include station names, so we will have to look up latitude and longitude values (using, for example, Google Maps) for all of the stations in order to place them on a map. We can also calculate the time difference between stops, in minutes. Those calculations result in two arrays, one for each train.
+The data for our visualization is readily available as timetables for the two routes. A more precise comparison might consider timetables from the same year, but for this example we'll use the [Southerner's timetable from 1941](http://www.streamlinerschedules.com/concourse/track1/southerner194112.html) and the [Silver Comet's timetable from 1947](http://www.streamlinerschedules.com/concourse/track1/silvercomet194706.html) as they are readily available on the internet. The timetables only include station names, so we will have to look up latitude and longitude values (using, for example, Google Maps) for all of the stations in order to place them on a map. We can also calculate the time difference between stops, in minutes. Those calculations result in two arrays, one for each train.
 
 ``` {.javascript .numberLines}
 var seaboard = [
@@ -35,9 +35,9 @@ var southern = [
 ];
 ```
 
-### Step 2: Set up the Web Page and Libraries
+### Step 2: Set Up the Web Page and Libraries
 
-To add Leaflet maps to our web page we'll need to include the library and its companion style sheet. Both are available from a content distribution network, so there's no need to host them on our own servers. When we create our page we also define a `<div>` container for the map in line 10.
+To add Leaflet maps to our web page we'll need to include the library and its companion stylesheet. Both are available from a content distribution network, so there's no need to host them on our own servers. When we create our page we also define a `<div>` container for the map in line 10.
 
 ``` {.html .numberLines}
 <!DOCTYPE html>
@@ -59,7 +59,7 @@ To add Leaflet maps to our web page we'll need to include the library and its co
 
 ### Step 3: Draw the Base Map
 
-The _Silver Comet_ and _The Southerner_ traveled between New York and Birmingham (and, in the case of The Southerner, all the way to New Orleans). But the region that's relevant for our visualization lies between Washington, <span class="smcp">DC</span> and Atlanta, <span class="smcp">GA</span>, because that's the only region where the train routes differed--for the rest of their journeys the routes were essentially the same. Our map, therefore, will extend from Atlanta in the south west to Washington in the north east. Using a bit of trial and error we can determine the best center point and zoom level for the map. The center point defines the latitude and longitude for the map's center, and the zoom level determines the area covered by the map on its initial display. When we create the map object, we give it the `id` of the containing element as well as those parameters.
+The _Silver Comet_ and _The Southerner_ traveled between New York and Birmingham (and, in the case of The Southerner, all the way to New Orleans). But the region that's relevant for our visualization lies between Washington, <span class="smcp">DC</span> and Atlanta, Georgia, because that's the only region where the train routes differed: for the rest of their journeys, the routes were essentially the same. Our map, therefore, will extend from Atlanta in the southwest to Washington, <span class="smcp">DC</span> in the northeast. Using a bit of trial and error, we can determine the best center point and zoom level for the map. The center point defines the latitude and longitude for the map's center, and the zoom level determines the area covered by the map on its initial display. When we create the map object, we give it the `id` of the containing element as well as those parameters.
 
 ``` {.javascript .numberLines}
 var map = L.map('map',{
@@ -88,7 +88,7 @@ var map = L.map('map',{
 });
 ```
 
-Because we've disabled the ability of the user to pan or zoom the map, we should also make sure the mouse cursor doesn't mislead the user when hovering over the map. The `leaflet.css` style sheet expects zooming and panning to be enabled, so it sets the cursor to a "grabbing" hand icon. We can override that value with a style rule of our own. We have to define this rule **after** the `leaflet.css` file is included.
+Because we've disabled the user's ability to pan or zoom the map, we should also make sure the mouse cursor doesn't mislead the user when it's hovering over the map. The `leaflet.css` style sheet expects zooming and panning to be enabled, so it sets the cursor to a "grabbing" hand icon. We can override that value with a style rule of our own. We have to define this rule **after** including the `leaflet.css`.
 
 ``` {.css .numberLines}
 .leaflet-container {
@@ -96,7 +96,7 @@ Because we've disabled the ability of the user to pan or zoom the map, we should
 }
 ```
 
-As with the Modest Maps example, we base our map on a set of tiles. There are many tile providers that support Leaflet; some are open source while others are commercial. Leaflet has a [demo page](http://leaflet-extras.github.io/leaflet-providers/preview/) you can use to compare some of the open source tile providers. For our example we want to avoid tiles with roads, as the highway network looked very different in the 1940s. Esri has a neutral _WorldGrayCanvas_ set that works well for our visualization. It does include current county boundaries, and some counties may have changed their borders since the 1940s. For our example we won't worry about that detail, though you might consider it in any production visualization. Leaflet's <span class="smcp">API</span> let's us create the tile layer and add it to the map in a single statement. Note that Leaflet includes a built-in option to handle attribution so we can be sure to credit the tile source appropriately.
+As with the Modest Maps example, we base our map on a set of tiles. There are many tile providers that support Leaflet; some are open source, while others are commercial. Leaflet has a [demo page](http://leaflet-extras.github.io/leaflet-providers/preview/) you can use to compare some of the open source tile providers. For our example we want to avoid tiles with roads, as the highway network looked very different in the 1940s. Esri has a neutral _WorldGrayCanvas_ set that works well for our visualization. It does include current county boundaries, and some counties may have changed their borders since the 1940s. For our example we won't worry about that detail, though you might consider it in any production visualization. Leaflet's <span class="smcp">API</span> lets us create the tile layer and add it to the map in a single statement. Note that Leaflet includes a built-in option to handle attribution so we can be sure to credit the tile source appropriately.
 
 ``` {.javascript .numberLines}
 L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/'+
@@ -142,7 +142,7 @@ This statement returns an array of latitude/longitude pairs:
 ]
 ```
 
-That result is the perfect input to the `polyline` function. We'll use it for each of the routes. The options let us specify a color for the lines which we'll match with the associated railroad's official color from the era. We also indicate that the lines have no function when clicked by setting the `clickable` option to `false`.
+That result is the perfect input to the `polyline()` function. We'll use it for each of the routes. The options let us specify a color for the lines which we'll match with the associated railroad's official color from the era. We also indicate that the lines have no function when clicked by setting the `clickable` option to `false`.
 
 ``` {.javascript .numberLines}
 L.polyline(
@@ -156,7 +156,7 @@ L.polyline(
 ).addTo(map);
 ```
 
-With this addition the visualization of figure NEXTFIGURENUMBER is starting to convey the relative distances of the two routes.
+With this addition the visualization shown in figure NEXTFIGURENUMBER is starting to convey the relative distances of the two routes.
 
 <figure style="margin-left:0;margin-right:0;">
 <div id="map-library-2" style="width:640px;height:500px;"></div>
@@ -173,7 +173,7 @@ L.Control.Animate = L.Control.extend({
 });
 ```
 
-Next we define the options for our custom control. Those options include its position on the map, the text and tooltip (title) for its states, and functions to call when the animation starts or stops. Below, we define these within an `options` object, which lets Leaflet integrate them within its normal functionality.
+Next we define the options for our custom control. Those options include its position on the map, the text and tooltip (title) for its states, and functions to call when the animation starts or stops. We define these within an `options` object as follows, which lets Leaflet integrate them within its normal functionality.
 
 ``` {.javascript .numberLines}
 L.Control.Animate = L.Control.extend({
@@ -190,7 +190,7 @@ L.Control.Animate = L.Control.extend({
     },
 ```
 
-For our example we're using <span class="smcp">UTF</span>-8 characters for the play and pause control. In a production visualization you might consider using icon fonts or images to have maximum control over the appearance.
+For our example we're using <span class="smcp">UTF</span>-8 characters for the play and pause control. In a production visualization, you might consider using icon fonts or images to have maximum control over the appearance.
 
 Our animation control also needs an `onAdd()` method for Leaflet to call when it adds a control to a map. This method constructs the <span class="smcp">HTML</span> markup for the control and returns that to the caller.
 
@@ -212,7 +212,7 @@ Our animation control also needs an `onAdd()` method for Leaflet to call when it
     },
 ```
 
-Our implementation of `onAdd()` constructs the markup in two stages. First, starting at line 3, it creates a `<div>` element and gives that element two classes: `leaflet-control-animate` and `leaflet-bar`. The first class is unique to our animation control, and we can use it to apply <span class="smcp">CSS</span> rules uniquely to our control. The second class is a general Leaflet class for all toolbars. By adding it to the animation control we're making that control consistent with other Leaflet controls. Note that Leaflet includes the `L.DomUtil.create()` method in line 3 to handle the details of creating the element.
+Our implementation of `onAdd()` constructs the markup in two stages. First, starting at line 3, it creates a `<div>` element and gives that element two classes: `leaflet-control-animate` and `leaflet-bar`. The first class is unique to our animation control, and we can use it to apply <span class="smcp">CSS</span> rules uniquely to our control. The second class is a general Leaflet class for all toolbars. By adding it to the animation control, we're making that control consistent with other Leaflet controls. Note that Leaflet includes the `L.DomUtil.create()` method in line 3 to handle the details of creating the element.
 
 The second part of `onAdd()` creates a button element within this `<div>` container. Most of the work takes place in the `_createButton()` function at line 6 which we'll examine shortly. The parameters to the function include:
 
@@ -222,7 +222,7 @@ The second part of `onAdd()` creates a button element within this `<div>` contai
 * the container in which to insert the button, and
 * a function to call when the button is clicked.
 
-If you're wondering why the name of this function begins with an underscore (_), that's the convention that Leaflet uses for private methods (and attributes). It's only a convention so there's no requirement to follow it, but doing so will make it easier for someone familiar with Leaflet to understand our code.
+If you're wondering why the name of this function begins with an underscore (_), that's the convention that Leaflet uses for private methods (and attributes). There's no requirement to follow it, but doing so will make it easier for someone familiar with Leaflet to understand our code.
 
 The `_createButton()` method itself relies on Leaflet utility functions. It creates the button as an `<a>` element with the specified text, title, and class, and it creates that element within the appropriate container (lines 2-5). It then binds several events to this `<a>` element. First it ignores initial `mousedown` and double-click events (line 8). It also prevents single-click events from propagating up the document tree and from implementing their default behavior (line 9). Finally, it executes the callback function on `click` events (line 10).
 
@@ -243,7 +243,7 @@ The `_createButton()` method itself relies on Leaflet utility functions. It crea
     },
 ```
 
-The callback function itself is our next task. Before we get into the function, we add a single state variable (`_running`) to keep track of whether or not the animation is currently running. It starts out stopped (line 1). Then our callback function starts by checking this variable in line 4. If _running is true, that means the animation was running and has just been paused by the current click, so it changes the control to indicate that clicking will now resume the animation. If the animation isn't running, the callback function does the opposite. It changes the control to indicate that a subsequent click will pause it. In both cases the callback function executes the appropriate control function if one exists. Finally, it sets the state of the `_running` state variable to its complement.
+The callback function itself is our next task. Before we get into the function, we add a single state variable (`_running`) to keep track of whether the animation is currently running. It starts out stopped (line 1). Then our callback function starts by checking this variable in line 4. If _running is true, that means the animation was running and has just been paused by the current click, so it changes the control to indicate that clicking will now resume the animation. If the animation isn't running, the callback function does the opposite: it changes the control to indicate that a subsequent click will pause it. In both cases, the callback function executes the appropriate control function if one exists. Finally, it sets the state of the `_running` state variable to its complement.
 
 ``` {.javascript .numberLines}
     _running: false,
@@ -285,17 +285,17 @@ L.control.animate = function (options) {
 };
 ```
 
-Defining this last function let's us create the control using a common Leaflet syntax, in particular:
+Defining this last function lets us create the control using a common Leaflet syntax, in particular:
 
 ``` {.javascript .numberLines}
 L.control.animate().addTo(map);
 ```
 
-That's the same syntax we've seen before with layers and polylines.
+This is the same syntax we've seen before with layers and polylines.
 
 ### Step 6: Prepare the Animation
 
-With a convenient user control in place we can now begin work on the animation itself. Although this particular animation isn't especially taxing, we can still follow best practices and compute as much as possible in advance. Since we're animating two routes, we'll define a function that will build an animation for any input route. A second parameter will specify polyline options. This function will return an array of polyline paths, indexed by minutes. You can see the basic structure of this function below. The first element in the array will be the polyline for the first minute of the route. We'll build the entire array in the `animation` variable.
+With a convenient user control in place, we can now begin work on the animation itself. Although this particular animation isn't especially taxing, we can still follow best practices and compute as much as possible in advance. Since we're animating two routes, we'll define a function that will build an animation for any input route. A second parameter will specify polyline options. This function will return an array of polyline paths, indexed by minutes. You can see the basic structure of this function next. The first element in the array will be the polyline for the first minute of the route. We'll build the entire array in the `animation` variable.
 
 ``` {.javascript .numberLines}
 var buildAnimation = function(route, options) {
@@ -317,7 +317,7 @@ To build the paths we iterate through the stops on the route. We want to keep tr
     }
 ```
 
-As we start to calculate the paths beginning at the current stop, we'll store that stop and the next stop in local variables, and we add the current stop to the `prevStops` array that's keeping track of previous stops.
+As we start to calculate the paths beginning at the current stop, we'll store that stop and the next one in local variables, and we add the current stop to the `prevStops` array that's keeping track of previous stops.
 
 ``` {.javascript .numberLines}
         var stop = route[stopIdx];
@@ -325,7 +325,7 @@ As we start to calculate the paths beginning at the current stop, we'll store th
         prevStops.push([stop.latitude, stop.longitude]);
 ```
 
-For each stop in our data sets, the `duration` property stores the number of minutes until the next stop. We'll use an inner loop, shown below, to count from `1` up to that value. Within the loop we use a simple linear interpolation to calculate the position at the corresponding time. That position, when appended to the previous stops array, is the polyline path for that time. The code below creates a polyline based on the path and adds it to the animation array.
+For each stop in our data sets, the `duration` property stores the number of minutes until the next stop. We'll use an inner loop, shown next, to count from `1` up to that value. Within the loop we use a simple linear interpolation to calculate the position at the corresponding time. That position, when appended to the `prevStops` array, is the polyline path for that time. The following code creates a polyline based on the path and adds it to the animation array.
 
 ``` {.javascript .numberLines}
         for (var minutes = 1; minutes <= stop.duration; minutes++) {
@@ -375,7 +375,7 @@ var maxSteps = Math.min.apply(null,
 );
 ```
 
-That statement might seem overly complex for finding the minimum length, but it works with an arbitrary number of routes. If, in the future, we decided to animate a third route on our map, we wouldn't have to change the code. The best way to understand the statement is to start in the middle and work out. The fragment
+That statement might seem overly complex for finding the minimum length, but it works with an arbitrary number of routes. If, in the future, we decided to animate a third route on our map, we wouldn't have to change the code. The best way to understand the statement is to start in the middle and work outward. The fragment:
 
 ``` {.javascript .numberLines}
 routeAnimations.map(function(animation) {return animation.length})
@@ -383,7 +383,7 @@ routeAnimations.map(function(animation) {return animation.length})
 
 converts the array of route animations into an array of lengths, specifically `[870,775]`.
 
-To find the minimum value in an array we can use the `Math.min` function, except that function expects its parameters as a comma-separated list of arguments rather than an array. The `apply()` method (which is available for any JavaScript function) converts an array into a comma-separated list. Its first parameter is a context for the function which, in our case is irrelevant, so we pass `null` for that parameter.
+To find the minimum value in an array we can use the `Math.min()` function, except that function expects its parameters as a comma-separated list of arguments rather than an array. The `apply()` method (which is available for any JavaScript function) converts an array into a comma-separated list. Its first parameter is a context for the function which in our case is irrelevant, so we pass `null` for that parameter.
 
 The animation keeps track of its current state with the `step` variable, which we initialize to `0`.
 
@@ -399,7 +399,7 @@ var animateStep = function() {
 }
 ```
 
-First we check to see whether or not this is the very first step in the animation. If it isn't, `step` will be greater than 0 and we can remove the previous step's polylines from the map in line 3.
+First we check to see whether this is the very first step in the animation. If it isn't, `step` will be greater than 0 and we can remove the previous step's polylines from the map in line 3.
 
 ``` {.javascript .numberLines .line-3}
     if (step > 0) {
@@ -460,7 +460,7 @@ control.addTo(map);
 
 ### Step 8: Create Labels for the Stops
 
-Before we wrap up the animation we'll add some labels for each train stop. To emphasize the passage of time, we'll reveal each label as the animation reaches the corresponding stop. To do that we'll create the labels using a special object; then we'll create a method to add labels to the map, and, to finish the label object, we'll create methods that the animation control can call to get or set a label's status.
+Before we wrap up the animation we'll add some labels for each train stop. To emphasize the passage of time, we'll reveal each label as the animation reaches the corresponding stop. To do that, we'll create the labels using a special object; then we'll create a method to add labels to the map; and, to finish the label object, we'll create methods that the animation control can call to get or set a label's status.
 
 Since Leaflet doesn't have a predefined object for labels, we can once again create our own custom object. We start with the basic Leaflet `Class`.
 
@@ -470,7 +470,7 @@ L.Label = L.Class.extend({
 });
 ```
 
-Our `Label` object accepts parameters for its position on the map, its label text, and any options. Below, we extend the `initialize()` method of the Leaflet `Class` to handle those parameters. For position and text we simply save their values for later use. For the options we use a Leaflet utility in line 4 to easily support default values. The object includes one variable to keep track of its status. Initially all labels are hidden, so `this._status` is initialized appropriately in line 5.
+Our `Label` object accepts parameters for its position on the map, its label text, and any options. Next, we extend the `initialize()` method of the Leaflet `Class` to handle those parameters. For position and text we simply save their values for later use. For the options we use a Leaflet utility in line 4 to easily support default values. The object includes one variable to keep track of its status. Initially all labels are hidden, so `this._status` is initialized appropriately in line 5.
 
 ``` {.javascript .numberLines .line-5}
     initialize: function(latLng, label, options) {
@@ -499,7 +499,7 @@ Next we write the method that adds a label to a map. This method
 3. sets the `opacity` of the element to `0` to match its initial `hidden` status (line 4),
 4. adds the new element to the `markerPane` layer in the map (line 5),
 5. sets the contents of the element to the label text (line 6),
-6. calculates a position for the label using its defined latitude/longitude (line 7) and then adjusting for any offset (lines 8-11), and
+6. calculates a position for the label using its defined latitude/longitude (line 7) and then adjusts for any offset (lines 8-11), and
 7. positions the element on the map (line 12).
 
 ``` {.javascript .numberLines}
@@ -518,9 +518,9 @@ Next we write the method that adds a label to a map. This method
     },
 ```
 
-> Step 2 above, setting the `line-height` to `0`, addresses a problem in the method Leaflet uses to position elements on the map. In particular, Leaflet does not account for other elements in the same parent container. By setting all elements to have no line height, we nullify this effect so that the calculated position is correct.
+> Step 2 above—setting the `line-height` to `0`—addresses a problem in the method Leaflet uses to position elements on the map. In particular, Leaflet does not account for other elements in the same parent container. By setting all elements to have no line height, we nullify this effect so that the calculated position is correct.
 
-Finally we add methods to get and set the label's status. As the code below indicates, our labels can have three different status values, and those values determine the opacity of the label.
+Finally we add methods to get and set the label's status. As the following code indicates, our labels can have three different status values, and those values determine the opacity of the label.
 
 ``` {.javascript .numberLines}
     getStatus: function() {
@@ -544,7 +544,7 @@ Finally we add methods to get and set the label's status. As the code below indi
     }
 ```
 
-We included the option to adjust the label's position because not all labels will look good positioned exactly on the latitude and longitude of the station. Most will benefit from slight shifts to avoid interference with the route polylines, text on the base map tiles, or other labels. For a custom visualization such as this example, there's no substitute for trial and error adjustments. We'll capture those adjustments for each label by adding an additional `offset` field to our data set. The augmented data set might begin like this:
+We included the option to adjust the label's position because not all labels will look good positioned exactly on the latitude and longitude of the station. Most will benefit from slight shifts to avoid interference with the route polylines, text on the base map tiles, or other labels. For a custom visualization such as this example, there's no substitute for trial-and-error adjustments. We'll capture those adjustments for each label by adding another `offset` field to our data set. The augmented data set might begin like this:
 
 ``` {.javascript .numberLines}
 var seaboard = [
@@ -556,9 +556,9 @@ var seaboard = [
 
 ### Step 9: Build the Label Animation
 
-To create the label animation we can once again iterate through the trains' routes. Because we have more than one route, a general purpose function will let us avoid duplicating code. As you can see from the code below we're not using a fixed number of arguments to our function. Instead we let the caller pass in as many individual routes as desired. All of those input parameters will be stored in the `arguments` object.
+To create the label animation we can once again iterate through the trains' routes. Because we have more than one route, a general-purpose function will let us avoid duplicating code. As you can see from the following code, we're not using a fixed number of arguments to our function. Instead we let the caller pass in as many individual routes as desired. All of those input parameters will be stored in the `arguments` object.
 
-The `arguments` object looks a lot like a JavaScript array. It has a `length` property, and individual elements are accessible using, for example, `arguments[0]`. Unfortunately, the object isn't a true array, so we can't use the convenient array methods (such as `forEach`) on it. As a workaround, the very first statement in our `builLabelAnimation` function shown below relies on a simple trick to convert the `arguments` object into the true `args` array.  It's a bit long-winded, but the statement in line 2 effectively executes the `slice` method on `arguments`. That operation clones `arguments` into a true array.
+The `arguments` object looks a lot like a JavaScript array. It has a `length` property, and we can access individual elements using, for example, `arguments[0]`. Unfortunately, the object isn't a true array, so we can't use the convenient array methods (such as `forEach`) on it. As a workaround, the very first statement in our `buildLabelAnimation` function shown next relies on a simple trick to convert the `arguments` object into the true `args` array.  It's a bit long-winded, but the statement in line 2 effectively executes the `slice` method on `arguments`. That operation clones `arguments` into a true array.
 
 > This same trick works for nearly all of JavaScript's "array-like" objects. You can often use it to convert them into true arrays.
 
@@ -573,7 +573,7 @@ var buildLabelAnimation = function() {
 }
 ```
 
-With the routes converted into an array, we can use `forEach` to iterate through all of them, regardless of their number. As we begin processing each route we set the `minutes` value to zero. Then we can use `forEach` again iterate through all the stops on the route.
+With the routes converted into an array, we can use `forEach` to iterate through all of them, regardless of their number. As we begin processing each route we set the `minutes` value to `0`. Then we can use `forEach` again to iterate through all the stops on the route.
 
 ``` {.javascript .numberLines}
     args.forEach(function(route) {
@@ -584,7 +584,7 @@ With the routes converted into an array, we can use `forEach` to iterate through
     });
 ```
 
-For each stop in the route we first check to see whether that stop is the first or last one. If so, we don't want to animate a label for that stop. Otherwise we create a new `Label` object in line 3 below, and add it to the map. Then we append that Label object to the `labels` array that's accumulating the label animation data. Notice that we add each label to this array twice. The first time we add it in line 9 is at the time the animation reaches the stop; in this case we add it with a status of `shown`. We also add the label to the array 50 minutes later in line 12, this time with a status of `dimmed`. When we execute the animation, it will show the label when the route first reaches the station and then dim it a bit later.
+For each stop in the route, we first check to see whether that stop is the first or last one. If so, we don't want to animate a label for that stop. Otherwise we create a new `Label` object in line 3 below, and add it to the map. Then we append that Label object to the `labels` array that's accumulating the label animation data. Notice that we add each label to this array twice. The first time we add it in line 9 is at the time the animation reaches the stop; in this case we add it with a status of `shown`. We also add the label to the array 50 minutes later in line 12, this time with a status of `dimmed`. When we execute the animation, it will show the label when the route first reaches the station and then dim it a bit later.
 
 ``` {.javascript .numberLines}
         route.forEach(function(stop,idx) {
@@ -618,7 +618,7 @@ To use our new function, we call and pass in all the routes to animate.
 var labels = buildLabelAnimation(seaboard, southern);
 ```
 
-Because we're not animating the start (Washington, <span class="smcp">DC</span>) or end (Atlanta, <span class="smcp">GA</span>) of any routes, we can go ahead and display those on the map from the start. We can get the coordinates from any route; the example below uses the `seaboard` data set.
+Because we're not animating the start (Washington, <span class="smcp">DC</span>) or end (Atlanta) of any routes, we can go ahead and display those on the map from the start. We can get the coordinates from any route; the following example uses the `seaboard` data set.
 
 ``` {.javascript .numberLines}
 var start = seaboard[0];
@@ -662,7 +662,7 @@ We also need a copy of the label animation data that we can destroy during the a
 var labelAnimation = labels.slice(0);
 ```
 
-The animation step function itself needs some additional code to handle labels. It will now have five major parts; we'll walk through each of them in the code that follows. Our first adjustment is to make sure the code only removes previous polyline paths as long as we're still adding paths to the map. That's only true when `step` is less than `maxPathSteps`.
+The animation step function itself needs some additional code to handle labels. It will now have five major parts; we'll walk through each of them in the code that follows. Our first adjustment is to make sure the code removes previous polyline paths only as long as we're still adding paths to the map. That's true only when `step` is less than `maxPathSteps`.
 
 ``` {.javascript .numberLines}
     if (step > 0 && step < maxPathSteps) {
@@ -687,7 +687,7 @@ The next block handles the case in which the user replays the animation. When th
     }
 ```
 
-The third block is a completely new block that animates the labels. It looks at the first element in the `labelAnimation` array, if one exists. If the time value for that element (its `minutes` property) is the same as the animation step, then we check to see if we need to process it. We always process label animations when we're still adding the paths. If the paths are complete, though, we only process animations for labels that are already shown. Once we're finished with the first element in `labelAnimation` we remove it from the array (using the `shift()` method) and check again. We must keep checking in case multiple label animation actions are scheduled at the same time.
+The third block is a completely new block that animates the labels. It looks at the first element in the `labelAnimation` array, if one exists. If the time value for that element (its `minutes` property) is the same as the animation step, then we check to see if we need to process it. We always process label animations when we're still adding the paths. If the paths are complete, though, we process animations only for labels that are already shown. Once we're finished with the first element in `labelAnimation`, we remove it from the array (using the `shift()` method) and check again. We must keep checking in case multiple label animation actions are scheduled at the same time.
 
 ``` {.javascript .numberLines}
     while (labelAnimation.length && step === labelAnimation[0].minutes) {
@@ -699,7 +699,7 @@ The third block is a completely new block that animates the labels. It looks at 
     }
 ```
 
-The code above explains a couple of things about our label animation preparation. First, because we sorted the label animation we only need to look at the first element in that array. That's much more efficient than searching through the entire array. Secondly, because we're working with a copy of the label animation array instead of the original, it's safe to remove elements once we finish processing them.
+The preceding code explains a couple of things about our label animation preparation. First, because we sorted the label animation, we only need to look at the first element in that array. That's much more efficient than searching through the entire array. Secondly, because we're working with a copy of the label animation array instead of the original, it's safe to remove elements once we finish processing them.
 
 Now that we've handled all the label animations we can return to the polyline paths. As long as there are still paths to animate, we add them to the map as before.
 
@@ -711,13 +711,13 @@ Now that we've handled all the label animations we can return to the polyline pa
     }
 ```
 
-The final code block in our animation step function is the same as before. We return an indication of whether or not the animation is complete.
+The final code block in our animation step function is the same as before. We return an indication of whether the animation is complete.
 
 ``` {.javascript .numberLines}
     return ++step === maxSteps;
 ```
 
-There's one more improvement we can make the animation, in this case with a judicious bit of <span class="smcp">CSS</span>. Because we use the `opacity` property to change the status of the labels, we can define a <span class="smcp">CSS</span> transition for that property that will make any changes less abrupt. To accommodate all popular browsers we use appropriate vendor prefixes, but the effect of the rule is consistent. Whenever the browser changes the opacity of elements within a `leaflet-label` class, it will ease the transition in and out over a 500 millisecond period. This transition prevents the label animations from distracting users too much from the path animation that is the visualization's main effect.
+There's one more improvement we can make to the animation, in this case with a judicious bit of <span class="smcp">CSS</span>. Because we use the `opacity` property to change the status of the labels, we can define a <span class="smcp">CSS</span> transition for that property that will make any changes less abrupt. To accommodate all popular browsers we use appropriate vendor prefixes, but the effect of the rule is consistent. Whenever the browser changes the opacity of elements within a `leaflet-label` class, it will ease the transition in and out over a 500-millisecond period. This transition prevents the label animations from distracting users too much from the path animation that is the visualization's main effect.
 
 ``` {.css .numberLines}
 .leaflet-label {
@@ -731,7 +731,7 @@ There's one more improvement we can make the animation, in this case with a judi
 
 ### Step 11: Add a Title
 
-To complete the visualization all we need is a title and a bit of explanation. We can build the title as a Leaflet Control, much as we did for the animation control. The code to do this is quite straightforward. We provide a default position in the top left of the map in line 3 and accept a title string as an initialization parameter in line 6. In line 13, we make it so that title string becomes the `innerHTML` of the control when we add it to the map.
+To complete the visualization, all we need is a title and a bit of explanation. We can build the title as a Leaflet Control, much as we did for the animation control. The code to do this is quite straightforward. We provide a default position in the top left of the map in line 3 and accept a title string as an initialization parameter in line 6. In line 13, we make it so that title string becomes the `innerHTML` of the control when we add it to the map.
 
 ``` {.javascript .numberLines}
 L.Control.Title = L.Control.extend({
@@ -756,7 +756,7 @@ L.control.title = function(title, options) {
 };
 ```
 
-Now we can use the following code to create a Title object with our desired content and immediately add it to the map. Here's a simple implementation; you can see a more elaborate title in the example of figure NEXTFIGURENUMBER.
+Now we can use the following code to create a title object with our desired content and immediately add it to the map. Here's a simple implementation; figure NEXTFIGURENUMBER includes some extra information.
 
 ``` {.javascript .numberLines}
 L.control.title("Geography as a Competitive Advantage").addTo(map);
