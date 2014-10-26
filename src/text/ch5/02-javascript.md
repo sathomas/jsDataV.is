@@ -1,10 +1,10 @@
 ## Building Time Lines with JavaScript
 
-If you followed the example in the previous section, you might not be completely satisfied with the results. We did end up with an accurate time line of Shakespeare's plays, but the resulting visualization may not be communicating what you want. For example, the time line doesn't show the names of the plays unless the user hovers a mouse over that section of the graph. Perhaps we'd rather have the plays' titles always visible. That kind of problem is a limitation of third-party libraries. The author of Chronoline.js didn't see the need for displaying titles, so he didn't offer the option. And unless we're willing to take on the potentially daunting task of modifying the library's source code, we can't make the library do exactly what we want.
+If you followed the example in the previous section, you might not be completely satisfied with the results. We did end up with an accurate timeline of Shakespeare's plays, but the resulting visualization may not be communicating what you want. For example, the timeline doesn't show the names of the plays unless the user hovers a mouse over that section of the graph. Perhaps we'd rather have the plays' titles always visible. That kind of problem is a limitation of third-party libraries. The author of Chronoline.js didn't see the need for displaying titles, so he didn't offer the option. And unless we're willing to take on the potentially daunting task of modifying the library's source code, we can't make the library do exactly what we want.
 
-Fortunately, particularly in the case of time lines, we can take a completely different approach. We can create visualizations without using any third party library at all. With this approach we'll have total control over the result. Time lines are especially amenable to this technique because they can be created with nothing more than text and styling. All it takes is a basic understanding of <span class="smcp">HTML</span> and <span class="smcp">CSS</span>, plus enough JavaScript to set things up and perhaps provide simple interactions.
+Fortunately, particularly in the case of timelines, we can take a completely different approach. We can create visualizations without using any third-party library at all, which will give us total control over the result. Timelines are especially amenable to this technique because they can be created with nothing more than text and styling. All it takes is a basic understanding of <span class="smcp">HTML</span> and <span class="smcp">CSS</span>, plus enough JavaScript to set things up and perhaps provide simple interactions.
 
-That's exactly what we'll do in this example. We'll start with the same data set as before. Instead of feeding that data into a third-party library, however, we'll use plain old JavaScript (with an optional dose of jQuery) to construct a pure <span class="smcp">HTML</span> representation of the data. Then we'll use <span class="smcp">CSS</span> to set the appearance of the time line.
+That's exactly what we'll do in this example. We'll start with the same data set as before. Instead of feeding that data into a third-party library, however, we'll use plain old JavaScript (with an optional dose of jQuery) to construct a pure <span class="smcp">HTML</span> representation of the data. Then we'll use <span class="smcp">CSS</span> to set the appearance of the timeline.
 
 ### Step 1: Prepare the HTML Skeleton
 
@@ -56,9 +56,9 @@ window.onload = function () {
 }
 ```
 
-### Step 3: Create the Time Line in Semantic HTML
+### Step 3: Create the Timeline in Semantic HTML
 
-To create the timeline in <span class="smcp">HTML</span>, we first need to decide how to represent it. If you're used to working with arbitrary `<div>` and `<span>` elements, you might think that's the best approach here as well. Instead of jumping right to these generic elements, however, it's worth considering other <span class="smcp">HTML</span> structures that more accurately convey the content. <span class="lgcp">HTML</span> that more closely reflects the meaning of the underlying content is known as _semantic markup_, and it's usually preferred over generic `<div>` and `<span>` tags. Semantic markup exposes the meaning of your content to computers such as search engines and screen readers for users with visual impairments, and it can improve your site's search rank and its accessibility. If we think about a time line in the context of semantic markup, it's easy to see that the time line is really just a list. In fact, it's a list with a specific order. We should build our <span class="smcp">HTML</span> time line, therefore, as an ordered list (`<ol>`) element. While we're creating the `<ol>` we can also give it a class name for <span class="smcp">CSS</span> style rules we'll be adding later.
+To create the timeline in <span class="smcp">HTML</span>, we first need to decide how to represent it. If you're used to working with arbitrary `<div>` and `<span>` elements, you might think that's the best approach here as well. Instead of jumping right to these generic elements, however, we should consider other <span class="smcp">HTML</span> structures that more accurately convey the content. <span class="lgcp">HTML</span> that more closely reflects the meaning of the underlying content is known as _semantic markup_, and it's usually preferred over generic `<div>` and `<span>` tags. Semantic markup exposes the meaning of your content to computers such as search engines and screen readers for users with visual impairments, and it can improve your site's search rank and its accessibility. If we think about a timeline in the context of semantic markup, it's easy to see that the timeline is really just a list. In fact, it's a list with a specific order. We should build our <span class="smcp">HTML</span> timeline, therefore, as an ordered list (`<ol>`) element. While we're creating the `<ol>` we can also give it a class name for <span class="smcp">CSS</span> style rules we'll be adding later.
 
 ``` {.javascript .numberLines}
 var container = document.getElementById("timeline");
@@ -96,7 +96,7 @@ If you look at the resulting <span class="smcp">HTML</span> that underlies that 
 </ol>
 ```
 
-In the spirit of semantic <span class="smcp">HTML</span>, we should stop and consider if that markup can be improved. Since it appears first in our list items, let's consider the date or date range for a play. Although there has been some controversy around the decision, <span class="smcp">HTML5</span> has defined support for a `<time>` element to contain dates and times. Using that element as a wrapper will make our dates more semantic. The second part of each list item is the title of the play. As it happens, <span class="smcp">HTML5</span>'s `<cite>` element is perfect for that content. To quote the [current standard](http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-cite-element):
+In the spirit of semantic <span class="smcp">HTML</span>, we should stop and consider whether that markup can be improved. Since it appears first in our list items, let's consider the date or date range for a play. Although there has been some controversy around the decision, <span class="smcp">HTML5</span> has defined support for a `<time>` element to contain dates and times. Using that element as a wrapper will make our dates more semantic. The second part of each list item is the title of the play. As it happens, <span class="smcp">HTML5</span>'s `<cite>` element is perfect for that content. To quote the [current standard](http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-cite-element):
 
 > The cite element represents the title of a work (e.g. a book, [...] **a play,** [...] etc). This can be a work that is being quoted or referenced in detail (i.e. a citation), or it can just be a work that is mentioned in passing. [Emphasis added.]
 
@@ -132,7 +132,7 @@ Because we're no longer including the punctuation, the resulting output might lo
 <figcaption>Semantic markup simplifies the required <span class="smcp">HTML</span>, but it may require special styling.</figcaption>
 </figure>
 
-What is much improved is the underlying <span class="smcp">HTML</span>. The markup clearly identifies the type of content it contains, an ordered list of dates and citations.
+What _is_ much improved is the underlying <span class="smcp">HTML</span>. The markup clearly identifies the type of content it contains: an ordered list of dates and citations.
 
 ``` {.html .numberLines}
 <ol class="timeline">
@@ -146,7 +146,7 @@ What is much improved is the underlying <span class="smcp">HTML</span>. The mark
 
 ### Step 4: Include the Supporting Content
 
-When we created a time line using the Chronoline.js library, we weren't able to include the supporting content from Wikipedia because the library did not offer that option. In this example, though, we have complete control over the content, so let's include that information in our time line. For most plays our data includes its first official record, its first publication, its first performance, and a discussion of the evidence. This type of content is perfectly matched to the <span class="smcp">HTML</span> _description list_ `<dl>` so that's how we'll add it to our page. It can follow the `<cite>` of the play's title.
+When we created a timeline using the Chronoline.js library, we weren't able to include the supporting content from Wikipedia because the library did not offer that option. In this example, though, we have complete control over the content, so let's include that information in our timeline. For most plays our data includes its first official record, its first publication, its first performance, and a discussion of the evidence. This type of content is perfectly matched to the <span class="smcp">HTML</span> _description list_ `<dl>` so that's how we'll add it to our page. It can follow the `<cite>` of the play's title.
 
 ``` {.javascript .numberLines}
 plays.forEach(function(play) {
@@ -236,11 +236,11 @@ Here's the resulting markup (truncated for brevity):
 
 Our code so far has used nothing but plain JavaScript. If you're using jQuery on your web pages, you can shorten the code a bit by taking advantage of some jQuery features. If your web pages aren't using jQuery already, the minor enhancements in this step don't justify adding it, but if you’d like to see a more concise version, check out the book’s source code for an alternative.
 
-### Step 6: Fix Time Line Problems with CSS
+### Step 6: Fix Timeline Problems with CSS
 
-Now that we've built our time line's content in <span class="smcp">HTML</span>, it's time to define the styles that determine its appearance. Throughout this example we'll focus on the functional aspects of styling rather than pure visual elements such as fonts and colors, since you'll probably want those visual styles to be specific to your own web site.
+Now that we've built our timeline's content in <span class="smcp">HTML</span>, it's time to define the styles that determine its appearance. Throughout this example we'll focus on the functional aspects of styling rather than pure visual elements such as fonts and colors, since you'll probably want those visual styles to be specific to your own web site.
 
-The first step is a simple one. We want to get rid of the numbering (1, 2, 3, ...) that browsers normally add to ordered list items. A single rule banishes them from our time line. By setting the `list-style-type` to `none` we tell the browser not to add any special characters to our list items.
+The first step is a simple one. We want to get rid of the numbering (1, 2, 3, …) that browsers normally add to ordered list items. A single rule banishes them from our timeline: by setting the `list-style-type` to `none` we tell the browser not to add any special characters to our list items.
 
 ``` {.css .numberLines}
 .timeline li {
@@ -266,7 +266,7 @@ To finish up the punctuation, let's add a colon and space after the last of the 
 }
 ```
 
-With these changes we've cleaned up all of the obvious problems with our time line.
+With these changes we've cleaned up all of the obvious problems with our timeline.
 
 <style>
 .timeline1 {
@@ -312,9 +312,9 @@ With these changes we've cleaned up all of the obvious problems with our time li
 
 Now we can add a little flair to the visualization.
 
-### Step 7: Add Styles to Visually Structure the Time Line
+### Step 7: Add Styles to Visually Structure the Timeline
 
-The next set of CSS styles will improve the visual structure of the time line. First among those improvements will be making the time line look more like, well, a _line._ To do that we can add a border to the left side of the `<li>` elements. When we do that, we'll also want to make sure that those `<li>` elements don't have any margins, as margins would introduce gaps in the border and break the continuity of the line.
+The next set of CSS styles will improve the visual structure of the timeline. First among those improvements will be making the timeline look more like, well, a _line._ To do that, we can add a border to the left side of the `<li>` elements. At the same time, we'll also want to make sure that those `<li>` elements don't have any margins, as margins would introduce gaps in the border and break the continuity of the line.
 
 ``` {.css .numberLines}
 .timeline li {
@@ -326,7 +326,7 @@ The next set of CSS styles will improve the visual structure of the time line. F
 }
 ```
 
-These styles add a nice vertical line on the left side of our entire time line. Now that we have that line, we can shift the dates over to the left side of it. The shift requires rules for the parent `<li>` as well as the `<time>` elements. For the parent `<li>` elements we want their `position` specified as `relative`.
+These styles add a nice vertical line on the left side of our entire timeline. Now that we have that line, we can shift the dates over to the left side of it. The shift requires rules for the parent `<li>` as well as the `<time>` elements. For the parent `<li>` elements, we want their `position` specified as `relative`.
 
 ``` {.css .numberLines}
 .timeline li {
@@ -334,7 +334,7 @@ These styles add a nice vertical line on the left side of our entire time line. 
 }
 ```
 
-By itself, this rule doesn't actually change our time line. It does, however, establish a _positioning context_ for any elements that are children of the `<li>`. Those children include the `<time>` elements that we want to move. With the `<li>` set to `position: relative` we can now set the `<time>` children to `position: absolute`. This rule lets us specify exactly where the browser should place the time elements, _relative_ to the parent `<li>`. We want to move all `<time>` elements to the left, and we want to move the second `<time>` element down. The first selector below will target both of our `<time>` tags while the second selector, using the same `time + time` trick described above, targets only the second of two `<time>` tags.
+By itself, this rule doesn't actually change our timeline. It does, however, establish a _positioning context_ for any elements that are children of the `<li>`. Those children include the `<time>` elements that we want to move. With the `<li>` set to `position: relative`, we can now set the `<time>` children to `position: absolute`. This rule lets us specify exactly where the browser should place the time elements, _relative_ to the parent `<li>`. We want to move all `<time>` elements to the left, and we want to move the second `<time>` element down. In the following code the first selector targets both of our `<time>` tags while the second selector, using the same `time + time` trick described earlier, targets only the second of two `<time>` tags.
 
 ``` {.css .numberLines}
 .timeline li > time {
@@ -347,9 +347,9 @@ By itself, this rule doesn't actually change our time line. It does, however, es
 }
 ```
 
-Notice that we're using `em` units rather than pixel `px` units for this shift. By using `em` units we define our shift to be relative to the current font size, regardless of what it is. That gives us the freedom to change the font size without having to go back and tweak any pixel positioning.
+By using `em` units rather than pixel `px` units for this shift, we define our shift to be relative to the current font size, regardless of what it is. That gives us the freedom to change the font size without having to go back and tweak any pixel positioning.
 
-The specific values for the position shift may need adjustment depending on the specific font face, but, in general, we use a negative `left` position to shift content further to the left than it would normal appear, and a positive `top` position to move the content down the page.
+The specific values for the position shift may need adjustment depending on the specific font face, but, in general, we use a negative `left` position to shift content farther to the left than it would normally appear, and a positive `top` position to move the content down the page.
 
 After moving the dates to the left of the vertical line, we'll also want to shift the main content a bit to the right so it doesn't crowd up against the line. The `padding-left` property takes care of that. And while we're adjusting the left padding we can also add a bit of padding on the bottom to separate each play from the other.
 
@@ -360,7 +360,7 @@ After moving the dates to the left of the vertical line, we'll also want to shif
 }
 ```
 
-With the dates and the main content on opposite sides of our vertical line, there's no longer any need for any punctuation after the date. We can, therefore, remove the style that adds a colon after the last `<time>` element.
+With the dates and the main content on opposite sides of our vertical line, we no longer need any punctuation after the date, so we'll remove the style that adds a colon after the last `<time>` element.
 
 <style>
 .strikeThrough td.sourceCode { text-decoration: line-through; }
@@ -372,9 +372,9 @@ With the dates and the main content on opposite sides of our vertical line, ther
 }
 ```
 
-The fact that we're able to make this change highlights one of the reasons for using CSS to add the colon in the first place. If we had included the punctuation explicitly in the markup (by, for example, generating it in the JavaScript code), then our markup would be more tightly coupled to our styles. If a style modification changed whether or not the colon was appropriate, we would have to go back and change the JavaScript as well. With the approach that we're using here, however, styles and markup are much more independent. Any style changes are isolated to our CSS rules; no modifications to the JavaScript are required.
+The fact that we're able to make this change highlights one of the reasons for using CSS to add the colon in the first place. If we had included the punctuation explicitly in the markup (by, for example, generating it in the JavaScript code), then our markup would be more tightly coupled to our styles. If a style modification changed whether the colon was appropriate, we would have to go back and change the JavaScript as well. With the approach that we're using here, however, styles and markup are much more independent. Any style changes are isolated to our CSS rules; no modifications to the JavaScript are required.
 
-As part of the improved visual styling we can make a few other changes to our time line. We can increase the font size for each play's title to make that information more prominent. At the same time we can add some extra spacing below the title, and we can indent the description list a bit.
+To further improve its visual styling, we can make a few other changes to our timeline. We can increase the font size for each play's title to make that information more prominent. At the same time, we can add some extra spacing below the title and indent the description list a bit.
 
 ``` {.css .numberLines}
 .timeline li > cite {
@@ -387,7 +387,7 @@ As part of the improved visual styling we can make a few other changes to our ti
 }
 ```
 
-For a last bit of polish let's add a bullet right on the vertical line to mark each plan and tie the title more closely to the dates. We use a large bullet (several times the normal size) and position it right over the line. As you can see from the rules below, the unicode character for a bullet can be represented as `"\2022"`. The exact position values will depend on the specific font, but a bit of trial and error can perfect the adjustments.
+For a last bit of polish, let's add a bullet right on the vertical line to mark each play and tie the title more closely to the dates. We use a large bullet (several times the normal size) and position it right over the line. As you can see from the following rules, the Unicode character for a bullet can be represented as `"\2022"`. The exact position values will depend on the specific font, but a bit of trial and error can perfect the adjustments.
 
 ``` {.css .numberLines}
 .timeline li > time:first-of-type:after {
@@ -400,7 +400,7 @@ For a last bit of polish let's add a bullet right on the vertical line to mark e
 }
 ```
 
-Now our time line is starting to look like an actual time _line._ In your own pages you could include additional styles to define fonts, colors, and so on, but even without those decorations the visualization is effective.
+Now our timeline is starting to look like an actual time _line._ In your own pages you could include additional styles to define fonts, colors, and so on, but even without those decorations the visualization is effective.
 
 <style>
 .timeline2 { font-size: 0.8em; }
@@ -446,9 +446,9 @@ Now our time line is starting to look like an actual time _line._ In your own pa
 
 ### Step 8: Add Interactivity
 
-The full details on all 40 of Shakespeare's plays might be a little overwhelming for a first view of our time line. The visualization would be more effective if it showed only the play titles at first, but let users reveal more details through interactions. Because we're building this visualization ourselves, we have all the control necessary to make that happen.
+The full details on all 40 of Shakespeare's plays might be a little overwhelming for a first view of our timeline. The visualization would be more effective if it showed only the play titles at first, but let users reveal more details through interactions. Because we're building this visualization ourselves, we have all the control necessary to make that happen.
 
-First we'll set up a few additional styles. There are several ways to hide the play details with CSS, the most obvious being the `display:none` property. As we'll see a little later though, a better choice for our timeline is setting the 	`max-height` to 0. If the maximum height of an element is 0, then, in theory, it should be invisible. In practice we also have to set the `overflow` property to `hidden`. Otherwise, even though the `<dl>` element itself has no height, the browser will display the content that overflows from it. Since we want our description lists to start out hidden, we can set that property as the default. 
+First we'll set up a few additional styles. There are several ways to hide the play details with CSS, the most obvious being the `display:none` property. As we'll see a little later though, a better choice for our timeline is setting the `max-height` to 0. If the maximum height of an element is 0, then, in theory, it should be invisible. In practice, we also have to set the `overflow` property to `hidden`. Otherwise, even though the `<dl>` element itself has no height, the browser will display the content that overflows from it. Since we want our description lists to start out hidden, we can set that property as the default. 
 
 ``` {.css .numberLines}
 .timeline li dl {
@@ -457,7 +457,7 @@ First we'll set up a few additional styles. There are several ways to hide the p
 }
 ```
 
-To reveal a play's details, users click on the play's title in the `<cite>` element. So that users know that they can click on the title, we'll change the mouse cursor from the normal arrow to the "clickable" hand. We can also change the `display` property from the default `inline` to `block`. That change gives users a larger and more consistent area to click.
+To reveal a play's details, users click on the play's title in the `<cite>` element. To indicate to users that they can click on the title, we'll change the mouse cursor from the normal arrow to the "clickable" hand. We can also change the `display` property from the default `inline` to `block`. That change gives users a larger and more consistent area to click.
 
 ``` {.css .numberLines}
 .timeline li > cite {
@@ -476,7 +476,7 @@ Finally, we need a way to reveal a play's details. We'll do that by adding a cla
 
 The exact value for the expanded `max-height` will depend on the content. In general, though, it should be large enough to reveal the full details for the item. It's okay to make it a little larger than necessary "just in case." Don't go overboard, however, and make it unreasonably large. (We'll see why at the end of this step.)
 
-With these styles in place we can add a bit of JavaScript to control them. It won't take much. The first step is writing an event handler that will be called when users click. That function will take a single parameter, specifically an `Event` object, with details about the click. One of those details is the `.target` property which will contain a reference to the specific element of the page on which the user clicked. We only care about clicks on the `<cite>` elements.
+With these styles in place, we can add a bit of JavaScript to control them. It won't take much. The first step is writing an event handler that will be called when users click. That function will take a single parameter, specifically an `Event` object, with details about the click. One of those details is the `.target` property, which will contain a reference to the specific element of the page on which the user clicked. We care only about clicks on the `<cite>` elements.
 
 ``` {.javascript .numberLines}
 var clicked = function(ev) {
@@ -486,7 +486,7 @@ var clicked = function(ev) {
 };
 ```
 
-Once we know that a `<cite>` was clicked, we find the `<li>` element that is its parent. We can then check to see if the `<li>` has the `"expanded"` class. If not, we add it. If the class is already present, we remove it. Our approach is a bit primitive because it only allows one class to be defined for the `<li>`. That's all we need for this example, though, so we'll stick with it.
+Once we know that a `<cite>` was clicked, we find its parent `<li>` element. We can then check to see if the `<li>` has the `"expanded"` class. If it doesn't, we add it. If the class is already present, we remove it. Our approach is a bit primitive because it allows only one class to be defined for the `<li>`. That's all we need for this example, though, so we'll stick with it.
 
 ``` {.javascript .numberLines}
 var clicked = function(ev) {
@@ -502,7 +502,7 @@ var clicked = function(ev) {
 ```
 
 
-> Note: modern browsers have a more sophisticated interface for controlling the class attributes of elements. That interface is the `classList`, and it easily supports multiple classes per element, as well as toggling the class on and off with a single function. Older browsers (namely Internet Explorer version 9 and earlier) don't support that interface, however. Since we don't need the extra functionality, the older `className` is sufficient for this example.
+> Note: Modern browsers have a more sophisticated interface for controlling the class attributes of elements. That interface is the `classList`, and it easily supports multiple classes per element, as well as toggling the class on and off with a single function. Older browsers (namely Internet Explorer version 9 and earlier) don't support that interface, however. Since we don't need the extra functionality, the older `className` is sufficient for this example.
 
 With our event handling function defined, we can associate it with clicks anywhere on the timeline. The standard `addEventListener` method creates the association for any element.
 
@@ -510,7 +510,7 @@ With our event handling function defined, we can associate it with clicks anywhe
 document.getElementById("timeline").addEventListener("click", clicked);
 ```
 
-> Note: You might be curious as to why we're associating an event listener with the entire time line visualization instead of, for example, adding individual event listeners to each `<cite>`. That alternative would eliminate the need to check the event target in the handler; however, it turns out that it's much less efficient than the approach we're taking. Event listeners can consume a fair bit of JavaScript resources, and our page will perform better if we keep them to a minimum.
+> Note: You might be curious as to why we're associating an event listener with the entire timeline visualization instead of, for example, adding individual event listeners to each `<cite>`. That alternative would eliminate the need to check the event target in the handler; however, it turns out that it's much less efficient than the approach we're taking. Event listeners can consume a fair bit of JavaScript resources, and our page will perform better if we keep them to a minimum.
 
 If you're using jQuery, the required code is even simpler:
 
@@ -520,9 +520,9 @@ $("#timeline").on("click", "cite", function() {
 })
 ```
 
-We're almost ready to show our new and improved time line to the world, but there's one final refinement we can make. Our current version shows or hides a play's details all at once. This transition can be abrupt to users as content appears or disappears instantly. We can provide a better experience by gracefully transitioning between the two states, and a natural transition for this time line is animating the height of the content. When the details are hidden, they have a height of 0. And when we want to show them, we will gradually animate the height to its natural value.
+We're almost ready to show our new and improved timeline to the world, but there's one final refinement we can make. Our current version shows or hides a play's details all at once. This transition can be abrupt to users, as content appears or disappears instantly. We can provide a better experience by gracefully transitioning between the two states, and a natural transition for this timeline is animating the height of the content. When the details are hidden, they have a height of 0. And when we want to show them, we will gradually animate the height to its natural value.
 
-It's possible to add these animations using JavaScript. The jQuery library, in fact, has a fairly extensive set of animation functions. In modern browsers, however, it is much better to animate content using CSS transitions. Web browsers are optimized for CSS, often offloading the computations to special high performance graphics co-processors. In those cases CSS-based animations can perform several orders of magnitude better than JavaScript. The only disadvantage to using CSS for animations is a lack of support in older browsers. But animation isn't usually _critical_ to most web pages. Sure it's nice, but if a user with an older browser misses out on the graceful transitions, it isn't the end of the world. The web page will still _function_ just fine.
+It's possible to add these animations using JavaScript. The jQuery library, in fact, has a fairly extensive set of animation functions. In modern browsers, however, it is much better to animate content using CSS transitions. Web browsers are optimized for CSS, often offloading the computations to special high-performance graphics co-processors. In those cases CSS-based animations can perform several orders of magnitude better than JavaScript. The only disadvantage to using CSS for animations is a lack of support in older browsers. But animation isn't usually _critical_ to most web pages. Sure, it's nice, but if a user with an older browser misses out on the graceful transitions, it isn't the end of the world. The web page will still _function_ just fine.
 
 The CSS `transition` property is the simplest way to define a CSS animation. It specifies the actual property to animate, the duration of the animation, and the _easing function_ to follow. Here's a rule we could use in our example:
 
@@ -532,11 +532,11 @@ The CSS `transition` property is the simplest way to define a CSS animation. It 
 }
 ```
 
-This rule defines a transition for the time line's `<dl>` elements. It specifies that the property to animate is `max-height`, so the transition will take effect whenever an element's `max-height` property changes (and that's precisely the property we modify when the `"expanded"` class is added or removed). The transition rule also specifies that the animation should take 500 ms, and that it should "ease in" and "ease out." This last property indicates that the animation should start slowly; speed up, and then slow down again before finishing. That behavior usually looks more natural than animating at a constant speed.
+This rule defines a transition for the timeline's `<dl>` elements. It specifies that the property to animate is `max-height`, so the transition will take effect whenever an element's `max-height` property changes (and that's precisely the property we modify when the `"expanded"` class is added or removed). The transition rule also specifies that the animation should take 500 milliseconds, and that it should "ease in" and "ease out." This last property indicates that the animation should start slowly; speed up, and then slow down again before finishing. That behavior usually looks more natural than animating at a constant speed.
 
-CSS transitions can animate many CSS properties, but there is one important constraint. Both the starting and ending values must be explicit. That constraint explains why we're animating `max-height` instead of `height`, even though it's really just `height` that we want to change. Unfortunately, we can't animate `height` because its has no explicit value when the description list is expanded. Every `<dl>` will have its own height based on its content, and there's no way we can predict those values in our CSS. The `max-height` property, on the other hand, gives us explicit values for both states—`0` and `40em` in this example—so CSS can animate its transitions. We just have to be sure that no `<dl>` has content more than `40em` high. Otherwise the extra content will be cut off. This doesn't mean, however, that we should set the `max-height` for expanded `<dl>` elements to an astronomical value. To see why, consider what would happen if we transitioned `max-height` to `1000em` for a `<dl>` that only needed `10em` of height. Ignoring (for simplicity) the complications of easing, it would only take 1/100<sup>th</sup> of the full transition time before the full content of the element was visible. The animation that we had planned to take 500 ms is over in 5 ms instead.
+CSS transitions can animate many CSS properties, but there is one important constraint. Both the starting and ending values must be explicit. That constraint explains why we're animating `max-height` instead of `height`, even though it's really just `height` that we want to change. Unfortunately, we can't animate `height` because it has no explicit value when the description list is expanded. Every `<dl>` will have its own height based on its content, and there's no way we can predict those values in our CSS. The `max-height` property, on the other hand, gives us explicit values for both states—`0` and `40em` in this example—so CSS can animate its transitions. We just have to be sure that no `<dl>` has content more than `40em` high. Otherwise, the extra content will be cut off. This doesn't mean, however, that we should set the `max-height` for expanded `<dl>` elements to an astronomical value. To see why, consider what would happen if we transitioned `max-height` to `1000em` for a `<dl>` that needed only `10em` of height. Ignoring (for simplicity) the complications of easing, it would only take 1/100<sup>th</sup> of the full transition time before the full content of the element was visible. The animation that we had planned to take 500 milliseconds is over in 5 milliseconds instead.
 
-There is one final complication with CSS transitions. Most browsers implemented the functionality before the official standard was finalized. To make sure their implementations wouldn't conflict with potential changes in the official standards, browser vendors initially implemented transitions using a proprietary syntax. That syntax adds a prefix (`-webkit-` for Safari and Chrome, `-moz-` for FireFox, and `-o-` for Opera) to the property name. To cover all the major browsers, we must include a rule with each prefix.
+There is one final complication with CSS transitions. Most browsers implemented the functionality before the official standard was finalized. To make sure their implementations wouldn't conflict with potential changes in the official standards, browser vendors initially implemented transitions using a proprietary syntax. That syntax adds a prefix (`-webkit-` for Safari and Chrome, `-moz-` for Firefox, and `-o-` for Opera) to the property name. To cover all the major browsers, we must include a rule with each prefix.
 
 ``` {.css .numberLines}
 .timeline li dl {
@@ -549,7 +549,7 @@ There is one final complication with CSS transitions. Most browsers implemented 
 
 > Note: Internet Explorer doesn't need a prefix because Microsoft didn't implement transitions until the standard was stable. Also, there's no harm in specifying multiple prefixes since browsers simply ignore properties they don't understand.
 
-Now our hand-crafted time line responds perfectly to user interactions. Here's the complete visualization.
+Now our hand-crafted timeline responds perfectly to user interactions. Here's the complete visualization.
 
 <style>
 .timeline3 { font-size: 0.8em; }

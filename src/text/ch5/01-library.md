@@ -1,4 +1,4 @@
-## Building Time Lines with a Library
+## Building Timelines with a Library
 
 First, we'll build the timeline using the [Chronoline.js](http://stoicloofah.github.io/chronoline.js/) library, which works a lot like most of the other JavaScript libraries we've used in the book. You include the library in your page, define your data, and let the library create the visualization.
 
@@ -10,9 +10,9 @@ The Chronoline.js library itself depends on a few other libraries, and we'll nee
 * [qTip2](http://qtip2.com) (including its style sheet)
 * [Raphaël](http://raphaeljs.com)
 
-All of these libraries are popular enough for public content distribution networks to support, so we'll use CloudFlare's <span class="smcp">CDN</span> in the markup below. We'll have to use our own resources, however, to host the Chronoline.js itself. That library also defines its own style sheet.
+All of these libraries are popular enough for public content distribution networks to support, so we'll use CloudFlare's <span class="smcp">CDN</span> in the following markup. We'll have to use our own resources, however, to host Chronoline.js itself. That library also defines its own style sheet.
 
-> Note: Chapter 2 includes a more extensive discussion of content distributions networks and the trade-offs involved in using them.
+> Note: Chapter 2 includes a more extensive discussion of content distribution networks and the trade-offs involved in using them.
 
 ``` {.html .numberLines .line-10}
 <!DOCTYPE html>
@@ -40,11 +40,11 @@ All of these libraries are popular enough for public content distribution networ
 </html>
 ```
 
-As you can see, we've set aside a `<div>` in line 10 to hold our time line. We've also included the JavaScript libraries as the last part of the `<body>` element, as that provides the best browser performance.
+As you can see, we've set aside a `<div>` in line 10 to hold our timeline. We've also included the JavaScript libraries as the last part of the `<body>` element, as that provides the best browser performance.
 
 ### Step 2: Prepare the Data
 
-The data for our time line comes from [Wikipedia](http://en.wikipedia.org/wiki/Chronology_of_Shakespeare%27s_plays). As a JavaScript object, we might structure that data like the following excerpt:
+The data for our time line comes from [Wikipedia](http://en.wikipedia.org/wiki/Chronology_of_Shakespeare%27s_plays). As a JavaScript object, that data might be structured like the following excerpt:
 
 ``` {.javascript .numberLines}
 [
@@ -104,9 +104,9 @@ var events = $.map(plays, function(play) {
 });
 ```
 
-### Step 3: Draw the Time Line
+### Step 3: Draw the Timeline
 
-To draw the time line, we create a new `Chronoline` object, passing it the <span class="smcp">HTML</span> container element, our event data, and any options. The <span class="smcp">HTML</span> container element should be a native element and not a jQuery selection. To convert from a selection to a native element, we use the `get()` method. In this case we want the first element, we use the parameter `0`.
+To draw the timeline, we create a new `Chronoline` object, passing it the <span class="smcp">HTML</span> container element, our event data, and any options. The <span class="smcp">HTML</span> container element should be a native element, not a jQuery selection. To convert from a selection to a native element, we use the `get()` method. In this case, we want the first element, so we use the parameter `0`.
 
 ``` {.javascript .numberLines}
 $(function() {
@@ -118,23 +118,23 @@ If we try to use the default options of Chronoline.js with our data, however, th
 
 ### Step 4: Set Chronoline.js Options for the Data
 
-The Chronoline.js library has default options that are well-suited for its original application, but they don't work so well for Shakespeare's plays. Fortunately, we can change the options from the default values. As of this writing, Chronoline.js doesn't have much documentation on its options; to see the full set you would normally have to examine the source code. We'll cover the most important options below, though.
+The Chronoline.js library has default options that are well suited for its original application, but they don't work so well for Shakespeare's plays. Fortunately, we can change the options from the default values. As of this writing, Chronoline.js doesn't have much documentation on its options; to see the full set you would normally have to examine the source code. We'll cover the most important options here, though.
 
-One of the most obvious problems with Chonoline.js' defaults is the date shown in the initial view. Chronoline.js starts by displaying the current date by default. Since our time line ends in 1613, the user would have to scroll backwards for a long time to see anything meaningful. We can change this view by giving Chronoline.js a different start date for the initial view:
+One of the most obvious problems with the Chonoline.js defaults is the date shown in the initial view. Chronoline.js starts by displaying the current date by default. Since our timeline ends in 1613, the user would have to scroll backward for a long time to see anything meaningful. We can change this view by giving Chronoline.js a different start date for the initial view:
 
 ``` {.javascript .numberLines}
 defaultStartDate: new Date(1589, 0, 1),
 ```
 
-As long as we're setting the time line to start somewhere close to Shakespeare's lifetime, there's no need for Chronoline.js to add a special mark for the current date. Tell it not to bother with a simple option:
+As long as we're setting the timeline to start somewhere close to Shakespeare's lifetime, there's no need for Chronoline.js to add a special mark for the current date, so we use this simple option to tell it not to bother:
 
 ``` {.javascript .numberLines}
 markToday: false,
 ```
 
-The next major problem we'll want to address is the labeling. By default, Chronoline.js tries to label every day on the time line. As our events span 24 years, we don't need that granularity. Instead, we can tell Chronoline just to label the years. For the same reason we also need to change the tick marks. Instead of every day, we only need tick marks for every month.
+The next major problem to address is the labeling. By default, Chronoline.js tries to label every day on the timeline. As our events span 24 years, we don't need that granularity. Instead, we can tell Chronoline.js just to label the years. For the same reason we also need to change the tick marks. Instead of every day, we need tick marks only for every month.
 
-To change both of these options, we supply Chronoline.js with a pair of functions to call. Chronoline.js passes each of these functions a date object, and the functions return `true` or `false` depending on whether or not the date merits a tick mark or label. For tick marks we return `true` only on the first day of the month. We return `true` for labels only on January 1. (Remember that JavaScript numbers months beginning with `0`.)
+To change both of these options, we supply Chronoline.js with a pair of functions to call. Chronoline.js passes each of these functions a date object, and the functions return `true` or `false` depending on whether the date merits a tick mark or label. For tick marks we return `true` only on the first day of the month. We return `true` for labels only on January 1. (Remember that JavaScript numbers months beginning with `0`.)
 
 ``` {.javascript .numberLines}
 hashInterval: function(date) {
@@ -145,7 +145,7 @@ labelInterval: function(date) {
 },
 ```
 
-By default Chronoline.js will try to show a full date for each label. Since we only want to label each year, we'll change the label format to just show the year. The details for the format specification are based on a standard [C++ library](http://www.cplusplus.com/reference/ctime/strftime/).
+By default, Chronoline.js will try to show a full date for each label. Since we only want to label each year, we'll change the label format to just show the year. The details for the format specification are based on a standard [C++ library](http://www.cplusplus.com/reference/ctime/strftime/).
 
 ``` {.javascript .numberLines}
 labelFormat: "%Y",
@@ -158,7 +158,7 @@ subLabel: null,
 subSubLabel: null,
 ```
 
-We also want to change the span of time that Chronoline.js displays in the time line. For our data, showing a span of 5 years at a time seems good.
+We also want to change the span of time that Chronoline.js displays in the timeline. For our data, showing a span of five years at a time seems good.
 
 ``` {.javascript .numberLines}
 visibleSpan: DAY_IN_MILLISECONDS * 366 * 5,
@@ -166,7 +166,7 @@ visibleSpan: DAY_IN_MILLISECONDS * 366 * 5,
 
 Note that the variable `DAY_IN_MILLISECONDS` is defined by Chronoline.js itself. We're free to use it in this or in any other option setting.
 
-Now we can address the time line scrolling. Chronoline.js normally advances the time line by a single day with each click. That would result in some rather tedious scrolling for our users. Instead of the default behavior, we'll have Chronoline.js advance by a full year. As with the labels, we change this behavior by supplying Chronoline.js with a function. That function is passed a date object and it should return a new date object to which Chronoline.js should scroll. In our case we simply add or subtract one from the year value.
+Now we can address the timeline scrolling. Chronoline.js normally advances the timeline by a single day with each click. That would result in some rather tedious scrolling for our users. Instead of the default behavior, we'll have Chronoline.js advance by a full year. As with the labels, we change this behavior by supplying Chronoline.js with a function. That function is passed a date object, and it should return a new date object to which Chronoline.js should scroll. In our case, we simply add or subtract one from the year value.
 
 ``` {.javascript .numberLines}
 scrollLeft: function(date) {
@@ -177,7 +177,7 @@ scrollRight: function(date) {
 },
 ```
 
-The last few adjustments clean up the appearance and behavior of Chronoline.js. Adding a bit of extra space (in our case 3 months) before the start and after the end of the timeline give the data a bit of room.
+The last few adjustments clean up the appearance and behavior of Chronoline.js. Adding some extra space (in our case three months) before the start and after the end of the timeline gives the data a bit of room.
 
 ``` {.javascript .numberLines}
 timelinePadding: DAY_IN_MILLISECONDS * 366 / 4,
@@ -227,7 +227,7 @@ With those changes, we finally have a timeline of Shakespeare's plays.
 <figcaption>The Chronoline.js library creates a simple, interactive time line.</figcaption>
 </figure>
 
-The resulting timeline looks pretty good, but the limitations of the library make it difficult to customize and enhance the timeline further. Next, we'll build a new time line from scratch without the library, so we have complete control.
+The resulting timeline looks pretty good, but the limitations of the library make it difficult to customize and enhance the timeline further. Next, we'll build a new timeline from scratch without the library, so we have complete control.
 
 
 <script>

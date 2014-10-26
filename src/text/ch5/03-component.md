@@ -1,24 +1,24 @@
 ## Using a Web Component
 
-In this example, we're going to look at another alternative approach; instead of building a time line from scratch using low level JavaScript, we'll integrate a full-featured time line component: [Timeline <span class="smcp">JS</span>](http://timeline.knightlab.com). In many ways this approach is the exact opposite of low level JavaScript. At its most basic, it requires no coding at all, as it can be as easy as embedding a YouTube video in a blog post. That method sacrifices a lot of control over the resulting visualization, however, so we'll also look at ways to regain some of that control.
+In this example, we'll look at another alternative approach; instead of building a timeline from scratch using low level JavaScript, we'll integrate a full-featured timeline component: [Timeline <span class="smcp">JS</span>](http://timeline.knightlab.com). In many ways this approach is the exact opposite of low-level JavaScript. At its most basic, it requires no coding at all, as it can be as easy as embedding a YouTube video in a blog post. That method sacrifices a lot of control over the resulting visualization, however, so we'll also look at ways to regain some of that control.
 
 ### Step 1: Preview the Standard Component
 
-Before spending too much time customizing the visualization, it's worthwhile to check out the component in its most basic form. Fortunately Timeline <span class="smcp">JS</span> makes this process very simple. The [web site](http://timeline.knightlab.com) will walk you through the steps in detail, but in a nutshell, they are:
+Before we spend too much time customizing the visualization, it's worthwhile to check out the component in its most basic form. Fortunately, Timeline <span class="smcp">JS</span> makes this process very simple. The [web site](http://timeline.knightlab.com) will walk you through the steps in detail, but in a nutshell, they are:
 
 1. Create a [Google Docs](http://docs.google.com) spreadsheet with data for the timeline.
-2. Publish that spreadsheet for web access which creates a <span class="smcp">URL</span> for it.
-3. Enter that <span class="smcp">URL</span> into a form on the Timeline <span class="smcp">JS</span> web site and it will generate an <span class="smcp">HTML</span> snippet.
+2. Publish that spreadsheet for web access, which will create a <span class="smcp">URL</span> for it.
+3. Enter that <span class="smcp">URL</span> into a form on the Timeline <span class="smcp">JS</span> web site, which will generate an <span class="smcp">HTML</span> snippet.
 4. Copy and paste the snippet into your web page.
 
-Figure NEXTFIGURENUMBER shows what the [spreadsheet](https://docs.google.com/spreadsheet/ccc?key=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E#gid=0) looks like for Shakespeare's plays:
+Figure NEXTFIGURENUMBER shows what the [spreadsheet](https://docs.google.com/spreadsheet/ccc?key=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E#gid=0) looks like for Shakespeare's plays.
 
 <figure>
 <img src="img/plays.png" width="640">
 <figcaption>The Timeline <span class="smcp">JS</span> component can get its data from a Google Docs spreadsheet.</figcaption>
 </figure>
 
-The <span class="smcp">HTML</span> snippet that Timeline <span class="smcp">JS</span> creates for this time line is
+The <span class="smcp">HTML</span> snippet that Timeline <span class="smcp">JS</span> creates for this timeline is as follows:
 
 ``` {.html .numberLines}
 <iframe 
@@ -29,27 +29,27 @@ The <span class="smcp">HTML</span> snippet that Timeline <span class="smcp">JS</
 </iframe>
 ```
 
-When included in a page, that snippet results in fully interactive time line for the chronology like that in figure NEXTFIGURENUMBER.
+When included in a page, that snippet results in fully interactive timeline for the chronology as shown in figure NEXTFIGURENUMBER.
 
 <figure>
 <iframe src='http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?source=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E&font=Bevan-PotanoSans&maptype=toner&lang=en&start_at_slide=2&height=450' width='100%' height='450' frameborder='0' style='border: 1px solid #444; margin-top:20px;'></iframe>
-<figcaption>Timeline <span class="smcp">JS</span> builds a complete time line component within an &lt;iframe&gt;.</pre></figcaption>
+<figcaption>Timeline <span class="smcp">JS</span> builds a complete timeline component within an &lt;iframe&gt;.</pre></figcaption>
 </figure>
 
 If the result meets the needs of your visualization, you may not have to go any further. Many web pages that use Timeline <span class="smcp">JS</span> do so in exactly this manner. There are some potential problems with the simplest approach, however:
 
 * The data for the visualization must be available in a public Google Docs spreadsheet, so the approach may not be appropriate for confidential data.
-* The data source is a spreadsheet, so it may be difficult to update it often or show more real-time events. This problem doesn't really affect our Shakespeare chronology, but if the time line you're creating shows real time data such as trending topics on a social network, a static spreadsheet won't be practical.
+* The data source is a spreadsheet, so it may be difficult to update it often or show more real-time events. This problem doesn't really affect our Shakespeare chronology, but if the timeline you're creating shows real-time data such as trending topics on a social network, a static spreadsheet won't be practical.
 * The embedded component has few styling options. Although the default styles and options that Timeline <span class="smcp">JS</span> offers are quite attractive, they are very limited and may not be appropriate for your web page.
-* The timeline is embedded as an `<iframe>`, which gives Timeline <span class="smcp">JS</span> complete control over what is displayed in that section of your page. There is **absolutely no indication** that the organizations supporting Timeline <span class="smcp">JS</span> would do so, but, _in theory_, they could alter the content (for example by including ads) in ways that your site might not find appropriate.
+* The timeline is embedded as an `<iframe>`, which gives Timeline <span class="smcp">JS</span> complete control over what is displayed in that section of your page. While there is **absolutely no indication** that the organizations supporting Timeline <span class="smcp">JS</span> would do so, _in theory_ they could alter the content (for example by including ads) in ways that your site might not find appropriate.
 
-Fortunately, none of these possible concerns need prevent us from adding beautiful Timeline <span class="smcp">JS</span> visualizations to our web pages. The folks behind Timeline <span class="smcp">JS</span> make all of the software available as open source, giving us the flexibility to address all of the issues listed above. We'll see how in the rest of this example.
+Fortunately, none of these possible concerns need prevent us from adding beautiful Timeline <span class="smcp">JS</span> visualizations to our web pages. The folks behind Timeline <span class="smcp">JS</span> make all of the software available as open source, giving us the flexibility to address all of the aforementioned issues. We'll see how in the rest of this example.
 
 ### Step 2: Include the Required Components
 
-To use Timeline <span class="smcp">JS</span>, our web pages must include <span class="smcp">CSS</span> style sheets and JavaScript code. For now we'll stick with the default styles, so we only need a single additional style sheet. The main JavaScript is contained in `timeline.js`.
+To use Timeline <span class="smcp">JS</span>, our web pages must include <span class="smcp">CSS</span> stylesheets and JavaScript code. For now we'll stick with the default styles, so we need only a single additional style sheet. The main JavaScript is contained in `timeline.js`.
 
-It's not obvious, but Timeline <span class="smcp">JS</span> also requires jQuery. When you embed a Timeline <span class="smcp">JS</span> `<iframe>` your main web page doesn't have to include jQuery because the `<iframe>` will include it. To integrate the time line directly in our page, though, we have to include jQuery explicitly. We can, however, use a content distribution network instead of hosting it ourselves.
+It's not obvious, but Timeline <span class="smcp">JS</span> also requires jQuery. When you embed a Timeline <span class="smcp">JS</span> `<iframe>` your main web page doesn't have to include jQuery because the `<iframe>` will include it. To integrate the timeline directly in our page, though, we have to include jQuery explicitly. We can, however, use a content distribution network instead of hosting it ourselves.
 
 > See chapter 2 for more details on the advantages and disadvantages of content distribution networks.
 
@@ -70,7 +70,7 @@ It's not obvious, but Timeline <span class="smcp">JS</span> also requires jQuery
 </html>
 ```
 
-The <span class="smcp">HTML</span> at this point doesn't include the element in which we'll place the time line. There are some special constraints on that element, which we’ll consider when we add the element to the page.
+The <span class="smcp">HTML</span> at this point doesn't include the element in which we'll place the timeline. There are some special constraints on that element, which we’ll consider when we add it to the page.
 
 ### Step 3: Prepare the Data
 
@@ -109,7 +109,7 @@ var plays = [
 },
 ```
 
-As you can see, we've added genre information to the plays, as well as optional multimedia links, and text for credits and captions. With that starting point, we can rearrange the data to match what Timeline <span class="smcp">JS</span> expects. The basic structure of that object, shown below, includes some overall properties (such as the headline), and an array of events. We can initialize it to an empty array.
+As you can see, we've added genre information to the plays, as well as optional multimedia links, and text for credits and captions. With that starting point, we can rearrange the data to match what Timeline <span class="smcp">JS</span> expects. The basic structure of that object, shown next, includes some overall properties (such as the headline), and an array of events. We can initialize it to an empty array.
 
 ``` {.javascript .numberLines}
 var timelineData = {
@@ -121,7 +121,7 @@ var timelineData = {
 
 Note that the `type` property is required and should be set to `"default"`.
 
-Now we iterate through the data set adding events to `timelineData`. For the code below we'll use `forEach` for this iteration, but there are plenty of alternatives we could use here (including `for` loops, array `.map()` methods, or jQuery's `$.each()` and `$.map()` functions). The first step in each iteration is parsing the date information. It can take one of two forms, either a single year (`"1591"`) or a range of years (`"1589-1591"`). Our code assumes a single date and makes adjustments if it finds two.
+Now we iterate through the data set adding events to `timelineData`. For the following code we'll use `forEach` for this iteration, but there are plenty of alternatives we could use here (including `for` loops, array `.map()` methods, or jQuery's `$.each()` and `$.map()` functions). The first step in each iteration is parsing the date information. It can take one of two forms: either a single year (`"1591"`) or a range of years (`"1589-1591"`). Our code assumes a single date and makes adjustments if it finds two.
 
 ``` {.javascript .numberLines}
 plays.forEach(function(play) {
@@ -152,17 +152,17 @@ timelineData.date.push({
 });
 ```
 
-### Step 4: Create a Default Time Line
+### Step 4: Create a Default Timeline
 
-With our <span class="smcp">HTML</span> set up and our data set prepared, we can now call Timeline <span class="smcp">JS</span> to create its default visualization. Figuring out exactly how to do that, however, isn't quite as simple as looking in the documentation. That's because Timeline <span class="smcp">JS</span> assumes that it will be used primarily as an embedded and isolated component rather than an integrated part of a page. The documentation, therefore, describes how to use Timeline <span class="smcp">JS</span> using the `storyjs_embed.js` wrapper for embedded content. That wrapper loads all the Timeline <span class="smcp">JS</span> resources (style sheets, JavaScript, fonts, and so on) and if we use it as intended, we'll end up with most of the same problems as simply embedding an `<iframe>`.
+With our <span class="smcp">HTML</span> set up and our data set prepared, we can now call Timeline <span class="smcp">JS</span> to create its default visualization. Figuring out exactly how to do that, however, isn't quite as simple as looking in the documentation. That's because Timeline <span class="smcp">JS</span> assumes that it will be used primarily as an embedded and isolated component rather than an integrated part of a page. The documentation, therefore, describes how to use Timeline <span class="smcp">JS</span> using the `storyjs_embed.js` wrapper for embedded content. That wrapper loads all the Timeline <span class="smcp">JS</span> resources (style sheets, JavaScript, fonts, and so on), and if we use it as intended, we'll end up with most of the same problems as if we had simply embedded an `<iframe>`.
 
-Fortunately, it's not too difficult to skip all the embedding and simply access the JavaScript code directly. It only requires three steps:
+Fortunately, it's not too difficult to skip all the embedding and simply access the JavaScript code directly. It requires only three steps:
 
 1. Set up the configuration object.
 2. Create a Timeline <span class="smcp">JS</span> object.
 3. Initialize the object using the configuration object.
 
-Here what these steps will look like in our JavaScript, with the details left out for now:
+Here's what these steps will look like in our JavaScript, with the details omitted for now:
 
 ``` {.javascript .numberLines}
 var timelineConfig = {/* needs properties */};
@@ -188,7 +188,7 @@ We have to pass many of those same parameters to the constructor. In particular,
 var timelinejs = new VMM.Timeline('timeline','100%','600px');
 ```
 
-Finally we have to build our <span class="smcp">HTML</span> markup with care. Timeline <span class="smcp">JS</span> styles its <span class="smcp">HTML</span> appropriately for an embedded `<iframe>`, but those styles aren't as compatible with a time line that's integrated in the page. In particular, it positions the time line absolutely and sets its `z-index`. If we don't compensate, the time line will float out of the flow of the page content, which is almost certainly not desirable. There are several ways to adjust for this issue, and we'll use a simple one in this example. Instead of a single `<div>`, we use two nested `<div>` elements. The inner `<div>` will contain the time line, and the outer `<div>` establishes both a positioning context and size for the time line.
+Finally we have to build our <span class="smcp">HTML</span> markup with care. Timeline <span class="smcp">JS</span> styles its <span class="smcp">HTML</span> appropriately for an embedded `<iframe>`, but those styles aren't as compatible with a timeline that's integrated in the page. In particular, it positions the timeline absolutely and sets its `z-index`. If we don't compensate, the timeline will float out of the flow of the page content, which is almost certainly not desirable. There are several ways to adjust for this issue, and we'll use a simple one in this example. Instead of a single `<div>`, we use two nested `<div>` elements. The inner `<div>` will contain the timeline, and the outer `<div>` establishes both a positioning context and size for the timeline.
 
 ``` {.html .numberLines}
 <div style="position:relative;height:600px;">
@@ -196,26 +196,26 @@ Finally we have to build our <span class="smcp">HTML</span> markup with care. Ti
 </div>
 ```
 
-Now when our JavaScript executes, it produces the integrated time line shown in figure NEXTFIGURENUMBER with the default Timeline <span class="smcp">JS</span> styling.
+Now when our JavaScript executes, it produces the integrated timeline shown in figure NEXTFIGURENUMBER with the default Timeline <span class="smcp">JS</span> styling.
 
 <figure>
 <div style='position:relative;height:600px;margin-top:20px;'><div id='timelinejs-1'></div></div>
 <figcaption>With a little extra work, we can embed a Timeline <span class="smcp">JS</span> timeline directly in the page without an &lt;iframe&gt;.</figcaption>
 </figure>
 
-Before leaving this step it's worth considering how we've reached this point. We've taken a complete web component with explicit instructions for its use, and we've ignored those instructions. Instead, we've only included part of the component (albeit a major part). Figuring out how to use an isolated part of a web component (in a way that it isn't necessarily intended for) can involve some guessing and trial and error, and there is clearly some risk in this approach. Even if you manage to get it working okay now, a future update might invalidate your implementation. If you adopt this approach with your web site, it's a good idea to test the implementation thoroughly and to take extra care with any updates.
+Before we leave this step it's worth considering how we've reached this point. We've taken a complete web component with explicit instructions for its use, and we've ignored those instructions. Instead, we've included only part of the component (albeit a major part). Figuring out how to use an isolated part of a web component (in a way that it isn't necessarily intended for) can involve some guesswork and trial and error, and there is clearly some risk in this approach. Even if you manage to get it working now, a future update might invalidate your implementation. If you adopt this approach with your web site, it's a good idea to test the implementation thoroughly and to take extra care with any updates.
 
-### Step 5: Adjust the Time Line Styles
+### Step 5: Adjust the Timeline Styles
 
-Now that we've addressed the issues that an `<iframe>` can cause, we can turn our attention to the time line's appearance. The `timeline.css` stylesheet determines that appearance, and we have several alternatives for adjusting it.
+Now that we've addressed the issues that an `<iframe>` can cause, we can turn our attention to the timeline's appearance. The `timeline.css` stylesheet determines that appearance, and there are several alternatives for adjusting it.
 
-1. **Modify `timeline.css` directly.** Although this approach might seem the most obvious, it's probably not what we should do. If you look at the file, you'll notice that it's compressed <span class="smcp">CSS</span> that's difficult to read and understand. Making the appropriate modifications will be challenging. Furthermore, if we later update to a new version of Timeline <span class="smcp">JS</span>, that new version may well have a new `timeline.css`, and we'd have to start all over again.
-2. **Work with the source code.** Timeline <span class="smcp">JS</span> authors its styles using the [<span class="smcp">LESS</span>](http://lesscss.org) <span class="smcp">CSS</span> preprocessor. If you're comfortable using a <span class="smcp">CSS</span> preprocessor, you could modify the source and build your own custom version of `timeline.css`. <span class="lgcp">LESS</span> has support for variables and mixins that make it easier to accommodate updates in the future. There are many applications that compile <span class="smcp">LESS</span> into <span class="smcp">CSS</span>; Timeline <span class="smcp">JS</span> uses [CodeKit](https://incident57.com/codekit/) (which is only available for Apple's Mac <span class="smcp">OS</span> <span class="smcp">X</span>) and the source code includes all of the appropriate application settings.
-3. **Supersede `timeline.css` styles.** Instead of changing the Timeline <span class="smcp">JS</span> stylesheet, leave it _as is_  and add custom styles with a higher priority than the default styles. This approach takes advantage of the _cascade_ of Cascading Style Sheets.
+1. **Modify `timeline.css` directly.** Although this approach might seem the most obvious, it's probably not what we should do. If you look at the file, you'll notice that it's compressed <span class="smcp">CSS</span> that's difficult to read and understand. Making the appropriate modifications will be challenging. Furthermore, if we later update to a new version of Timeline <span class="smcp">JS</span>, that new version may well have a new `timeline.css` file, and we'd have to start all over again.
+2. **Work with the source code.** Timeline <span class="smcp">JS</span> authors its styles using the [<span class="smcp">LESS</span>](http://lesscss.org) <span class="smcp">CSS</span> preprocessor. If you're comfortable using a <span class="smcp">CSS</span> preprocessor, you could modify the source and build your own custom version of `timeline.css`. <span class="lgcp">LESS</span> has support for variables and mixins that make it easier to accommodate updates in the future. There are many applications that compile <span class="smcp">LESS</span> into <span class="smcp">CSS</span>; Timeline <span class="smcp">JS</span> uses [CodeKit](https://incident57.com/codekit/), which is available only for Apple's Mac <span class="smcp">OS</span> <span class="smcp">X</span>, and the source code includes all of the appropriate application settings.
+3. **Supersede `timeline.css` styles.** Instead of changing the Timeline <span class="smcp">JS</span> stylesheet, leave it _as is_  and add custom styles with a higher priority than the default styles. This approach takes advantage of the _cascade_ in Cascading Style Sheets.
 
-For this example we'll use the third approach. We'll identify the `timeline.css` styles that we want to change and add new rules to our stylesheet to take precedence over those styles. When <span class="smcp">CSS</span> finds that multiple, conflicting rules apply to an element, it resolves the conflict by considering the specificity of the rules and their order in the document. We can give our rules priority by making them more specific than the `timeline.css` rules or by making them equally specific but including them after `timeline.css`.
+For this example we'll use the third approach. We'll identify the `timeline.css` styles that we want to change and add new rules to our stylesheet to take precedence over those styles. When <span class="smcp">CSS</span> finds that multiple, conflicting rules apply to an element, it resolves the conflict by considering the specificity of the rules and their order in the document. We can give our rules priority by making them more specific than the `timeline.css` rules, or by making them equally specific but including them after `timeline.css`.
 
-First we'll tackle the fonts that Timeline <span class="smcp">JS</span> uses. There's nothing wrong with the default or optional fonts, but they may not match the style of our web page. In addition, downloading extra fonts will slow the performance of the page. The quickest way to find the styles that affect fonts is to look at one of the optional font selections that Timeline <span class="smcp">JS</span> offers on its web site. For example, if you select the "Merriweather & News Cycle" option, you'll see that Timeline <span class="smcp">JS</span> adds an additional style sheet to the visualization. That file is `NewsCycle-Merriweather.css` and it defines all the font rules for the option:
+First we'll tackle the fonts that Timeline <span class="smcp">JS</span> uses. There's nothing wrong with the default or optional fonts, but they may not match the style of our web page. In addition, downloading extra fonts will slow the performance of the page. The quickest way to find the styles that affect fonts is to look at one of the optional font selections that Timeline <span class="smcp">JS</span> offers on its web site. For example, if you select the "Merriweather & News Cycle" option, you'll see that Timeline <span class="smcp">JS</span> adds an additional stylesheet to the visualization. That file is `NewsCycle-Merriweather.css`, which defines all the font rules for the option:
 
 ``` {.css .numberLines}
 .vco-storyjs {
@@ -229,7 +229,7 @@ First we'll tackle the fonts that Timeline <span class="smcp">JS</span> uses. Th
 }
 ```
 
-To use our own fonts, all we need to do is copy that file and replace `'News Cycle'` and `'Merriweather'` with our own choices. Perhaps we'd prefer Avenir.
+To use our own fonts, all we need to do is copy that file and replace `'News Cycle'` and `'Merriweather'` with our own choices—in this case, Avenir.
 
 ``` {.css .numberLines}
 .vco-storyjs {
@@ -246,7 +246,7 @@ To use our own fonts, all we need to do is copy that file and replace `'News Cyc
 
 Customizing other aspects of the Timeline <span class="smcp">JS</span> visualization are more challenging but not impossible. These customizations are rather fragile, however, as even the slightest change in the Timeline <span class="smcp">JS</span> implementation could render them ineffective. If it's important for your page, though, it can be done.
 
-For our example we'll change the blue color that Timeline <span class="smcp">JS</span> uses in the bottom section of the visualization. It uses that color to highlight the active item, show the time line marker, and for the event line. Finding the specific rules to override takes a bit of detective work with your browser's developer tools, but here is how we can change the color from blue to green.
+For our example we'll change the blue color that Timeline <span class="smcp">JS</span> uses in the bottom section of the visualization. It uses that color to highlight the active item, show the timeline marker, and for the event line. Finding the specific rules to override takes a bit of detective work with your browser's developer tools, but here's how to change the color from blue to green:
 
 ``` {.css .numberLines}
 .vco-timeline .vco-navigation .timenav .content 
@@ -373,7 +373,7 @@ For our example we'll change the blue color that Timeline <span class="smcp">JS<
 }
 </style>
 
-Combining font changes with the alternative color scheme helps the visualization integrate more seamlessly in an overall web page, as we can see in figure NEXTFIGURENUMBER.
+Combining font changes with the alternative color scheme helps the visualization integrate more seamlessly in an overall web page, as figure NEXTFIGURENUMBER shows.
 
 <figure>
 <div class='timelinejs-2' style='position:relative;height:600px;margin-top:20px;'><div id='timelinejs-2'></div></div>
