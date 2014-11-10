@@ -128,7 +128,7 @@ The `union()` method is a straightforward combination of multiple arrays. It ret
 
 Notice that `union()` removes duplicates whether they appear in separate inputs (`0`, `2`, and `4`) or in the same array (`1`).
 
-> Although this chapter considers combinations of just two arrays, most Underscore.js methods can accept an unlimited number of parameters. For example, `_.union(a,b,c,d,e)` returns the union of five different arrays. You can even find the union of an array of arrays with the JavaScript `apply` function with something like  `_.union.prototype.apply(this, arrOfArrs)`.
+> Although this appendix considers combinations of just two arrays, most Underscore.js methods can accept an unlimited number of parameters. For example, `_.union(a,b,c,d,e)` returns the union of five different arrays. You can even find the union of an array of arrays with the JavaScript `apply` function with something like  `_.union.prototype.apply(this, arrOfArrs)`.
 
 The `intersection()` method acts just as you would expect, returning only those elements that appear in all of the input arrays.
 

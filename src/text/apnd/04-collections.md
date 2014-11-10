@@ -27,7 +27,7 @@ var national_league = [
 
 ### Iteration
 
-In this chapter's first section we saw some of the pitfalls of traditional JavaScript iteration loops as well as the improvements that functional programming can provide. Our Fibonacci example eliminated iteration by using recursion, but many algorithms don't lend themselves to a recursive implementation. In those cases we can still use a functional programming style, however, by taking advantage of the iteration utilities in Underscore.js
+In the first section we saw some of the pitfalls of traditional JavaScript iteration loops as well as the improvements that functional programming can provide. Our Fibonacci example eliminated iteration by using recursion, but many algorithms don't lend themselves to a recursive implementation. In those cases we can still use a functional programming style, however, by taking advantage of the iteration utilities in Underscore.js
 
 The most basic Underscore utility is `each()`. It executes an arbitrary function on every element in a collection and often serves as a direct functional replacement for the traditional `for (i=0; i<len; i++)` loop.
 

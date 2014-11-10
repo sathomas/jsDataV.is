@@ -160,5 +160,5 @@ As you can see, we haven't really lost any of the readability or conciseness of 
 
 Just by including the Underscore library and using one of its methods, our functional implementation has nearly the same performance as the imperative version.
 
-For the rest of this chapter, we'll look at many of the other improvements and utilities that Underscore provides. With its support for functional programming, Underscore makes it significantly easier to work with data in the browser.
+For the rest of this appendix, we'll look at many of the other improvements and utilities that Underscore provides. With its support for functional programming, Underscore makes it significantly easier to work with data in the browser.
 
