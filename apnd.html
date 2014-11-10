@@ -130,7 +130,7 @@ body { counter-reset: appendix 1; }
 </style>
 
 <div class="appendix">
-<h1 id="appendix-managing-data-in-the-browser">Appendix: Managing Data in the Browser</h1>
+<h1 id="appendix-a-managing-data-in-the-browser">Appendix A: Managing Data in the Browser</h1>
 <p>So far in the book we’ve looked at a lot of visualization tools and techniques, but we haven’t spent much time considering the <em>data</em> part of data visualization. The emphasis on visualization is appropriate in many cases. Especially if the data is static, we can take all the time we need to clean and groom it before it’s even represented in JavaScript. But what if the data is dynamic, and we have no choice but to retrieve the raw source directly into our JavaScript application? We have much less control over data from third party <span class="smcp">REST</span> <span class="smcp">API</span>s, Google Docs spreadsheets, or automatically generated <span class="smcp">CSV</span> files. With those types of data sources, we often need to validate, reformat, recalculate, or otherwise manipulate the data in the browser.</p>
 <p>This appendix considers a JavaScript library that is particularly helpful for managing large data sets in the web browser–<a href="http://underscorejs.org">Underscore.js</a>. We’ll cover several aspects of Underscore in the following sections:</p>
 <ul>
@@ -324,7 +324,7 @@ body { counter-reset: appendix 1; }
 </tbody>
 </table>
 <p>Just by including the Underscore library and using one of its methods, our functional implementation has nearly the same performance as the imperative version.</p>
-<p>For the rest of this chapter, we’ll look at many of the other improvements and utilities that Underscore provides. With its support for functional programming, Underscore makes it significantly easier to work with data in the browser.</p>
+<p>For the rest of this appendix, we’ll look at many of the other improvements and utilities that Underscore provides. With its support for functional programming, Underscore makes it significantly easier to work with data in the browser.</p>
 <h2 id="working-with-arrays">Working with Arrays</h2>
 <p>If your visualization relies on a significant amount of data, that data is most likely contained in arrays. Unfortunately, it’s very tempting to resort to imperative programming when working with arrays. Arrays suggest the use of programming loops, and, as we saw above, programming loops are an imperative construct that often causes errors. If we can avoid loops and rely on functional programming instead, we can improve the quality of our JavaScript. The core JavaScript language includes a few utilities and methods to help applications cope with arrays in a functional style, but Underscore.js adds many others. This section describes many of Underscore’s array utilities most helpful for data visualizations.</p>
 <h3 id="extracting-elements-by-position">Extracting Elements by Position</h3>
@@ -429,7 +429,7 @@ The union() function creates the union of multiple arrays, removing any duplicat
 </figure>
 <p>Notice that <code>union()</code> removes duplicates whether they appear in separate inputs (<code>0</code>, <code>2</code>, and <code>4</code>) or in the same array (<code>1</code>).</p>
 <blockquote>
-<p>Although this chapter considers combinations of just two arrays, most Underscore.js methods can accept an unlimited number of parameters. For example, <code>_.union(a,b,c,d,e)</code> returns the union of five different arrays. You can even find the union of an array of arrays with the JavaScript <code>apply</code> function with something like <code>_.union.prototype.apply(this, arrOfArrs)</code>.</p>
+<p>Although this appendix considers combinations of just two arrays, most Underscore.js methods can accept an unlimited number of parameters. For example, <code>_.union(a,b,c,d,e)</code> returns the union of five different arrays. You can even find the union of an array of arrays with the JavaScript <code>apply</code> function with something like <code>_.union.prototype.apply(this, arrOfArrs)</code>.</p>
 </blockquote>
 <p>The <code>intersection()</code> method acts just as you would expect, returning only those elements that appear in all of the input arrays.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(fibs).<span class="fu">intersection</span>(even)
@@ -670,7 +670,7 @@ The defaults() function adds missing properties to an object.
     { <span class="dt">name</span>: <span class="st">&quot;Washington Nationals&quot;</span>,  <span class="dt">wins</span>: <span class="dv">98</span>, <span class="dt">losses</span>:  <span class="dv">64</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span>    }
 ];</code></pre>
 <h3 id="iteration">Iteration</h3>
-<p>In this chapter’s first section we saw some of the pitfalls of traditional JavaScript iteration loops as well as the improvements that functional programming can provide. Our Fibonacci example eliminated iteration by using recursion, but many algorithms don’t lend themselves to a recursive implementation. In those cases we can still use a functional programming style, however, by taking advantage of the iteration utilities in Underscore.js</p>
+<p>In the first section we saw some of the pitfalls of traditional JavaScript iteration loops as well as the improvements that functional programming can provide. Our Fibonacci example eliminated iteration by using recursion, but many algorithms don’t lend themselves to a recursive implementation. In those cases we can still use a functional programming style, however, by taking advantage of the iteration utilities in Underscore.js</p>
 <p>The most basic Underscore utility is <code>each()</code>. It executes an arbitrary function on every element in a collection and often serves as a direct functional replacement for the traditional <code>for (i=0; i&lt;len; i++)</code> loop.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(national_league).<span class="fu">each</span>(<span class="kw">function</span>(team) { <span class="ot">console</span>.<span class="fu">log</span>(<span class="ot">team</span>.<span class="fu">name</span>); })
   Arizona Diamondbacks
@@ -790,7 +790,7 @@ The defaults() function adds missing properties to an object.
 <p>As a final trick, Underscore.js let’s us randomly reorder a collection using the <code>shuffle()</code> function.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="fu">_</span>(national_league).<span class="fu">shuffle</span>()</code></pre>
 <h2 id="summing-up">Summing Up</h2>
-<p>Although this chapter takes a different approach than the rest of the book, its ultimate focus is still on data visualizations. As we’ve seen in earlier chapters (and as you’ll certainly encounter in your own projects), the raw data for our visualizations isn’t always perfect as delivered. Sometimes we need to clean the data by removing invalid values, and other times we need to rearrange or transform it so that it’s appropriate for our visualization libraries.</p>
+<p>Although this appendix takes a different approach than the rest of the book, its ultimate focus is still on data visualizations. As we’ve seen in earlier chapters (and as you’ll certainly encounter in your own projects), the raw data for our visualizations isn’t always perfect as delivered. Sometimes we need to clean the data by removing invalid values, and other times we need to rearrange or transform it so that it’s appropriate for our visualization libraries.</p>
 <p>The Underscore.js library contains a wealth of tools and utilities to help with those tasks. It let’s us easily manage arrays, modify objects, and transform collections. Furthermore, Underscore.js supports an underlying philosophy based on functional programming, so our code that uses Underscore.js remains highly readable and resistant to bugs and defects.</p>
 </div>
 
