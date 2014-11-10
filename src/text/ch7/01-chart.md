@@ -87,9 +87,9 @@ With <span class="smcp">D3</span>.js, on the other hand, `append()` returns a di
 So far we haven't specified the actual values for the chart's height and width; we've only used `height` and `width` variables. Having the dimensions in variables will come in handy, and it will make it easy to incorporate margins in the visualization. The code below sets up those dimensions; its form is a common convention in <span class="smcp">D3</span>.js visualizations.
 
 ``` {.javascript .numberLines}
-var margin = {top: 20, right: 20, bottom: 20, left: 20},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 640 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 ```
 
 We'll have to adjust the code that creates the main `<svg>` container to account for these margins.
@@ -244,7 +244,7 @@ chart.append("g")
 The result of figure NEXTFIGURENUMBER isn't very exciting without any data, but it does give us a framework for the chart.
 
 <style>
-svg { font: 10px sans-serif; }
+svg { font: 16px; }
 
 .axis path, .axis line {
   fill: none;
