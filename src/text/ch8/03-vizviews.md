@@ -1,13 +1,13 @@
 
 ## Views for Visualizations
 
-Now that we've seen how to use Backbone.js views to separate data from its presentation, we can consider how to use the same approach for data visualizations. When the presentation is simple <span class="smcp">HTML</span> markup—as in the previous section's table—it's easy to use templates to view a model. Templates, however, aren't sophisticated enough to handle data visualizations. For those we'll need to modify our approach.
+Now that we've seen how to use Backbone.js views to separate data from its presentation, we can consider how to use the same approach for data visualizations. When the presentation is simple <span class="smcp">HTML</span> markup—as in the previous section's table—it's easy to use templates to view a model. But templates aren't sophisticated enough to handle data visualizations, so we'll need to modify our approach for those.
 
-The data from the Nike+ service offers lots of opportunity for visualizations. Each run, for example, may include a record of the user's heart rate, instantaneous pace, and cumulative distance, recorded every 10 seconds. Runs may also include the user's <span class="smcp">GPS</span> coordinates captured every second. That type of data suggests both charts and maps, and in this section we'll add both to our application.
+The data from the Nike+ service offers lots of opportunity for visualizations. Each run, for example, may include a record of the user's heart rate, instantaneous pace, and cumulative distance, recorded every 10 seconds. Runs may also include the user's <span class="smcp">GPS</span> coordinates captured every second. That type of data lends itself to both charts and maps, and in this section we'll add both to our application.
 
 ### Step 1: Define the Additional Views
 
-As we did in the previous section, we'll rely on Yeoman to create the scaffolding for our additional views. One view, we'll call it _Details,_ will act as the overall view for the details of an individual run. Within that view we'll create three additional views each showing a different aspect of the run. We can think of these views in a hierarchy.
+As we did in the previous section, we'll rely on Yeoman to create the scaffolding for our additional views. One view, which we'll call _Details,_ will act as the overall view for the details of an individual run. Within that view we'll create three additional views each showing a different aspect of the run. We can think of these views in a hierarchy.
 
 * Details: a detailed view of a single run
  * Properties: the full set of properties associated with the run
@@ -45,7 +45,7 @@ Running.Views.Details = Backbone.View.extend({
 });
 ```
 
-The structure looks a little different from the previous views we've created because the Details view itself doesn't actually depend on any of the properties of the Run model. (The child views, of course, depend greatly on those properties.) The Details view, therefore, doesn't have to listen for changes to the model, so there's nothing to do during initialization.
+Unlike the previous views we've created, this view doesn't have an `initialize` method. That's because the Details view doesn't have to listen for changes to the model, so there's nothing to do during initialization. In other words, the Details view itself doesn't actually depend on any of the properties of the Run model. (The child views, on the other hand, depend greatly on those properties.)
 
 The `render` method itself first clears out any existing content from its element. This line makes it safe to call the `render` method multiple times. The next three statements create each of the child views. Notice that all of the child views have the same model, which is the model for the Details view as well. This capability is the power of the Model/View architecture; one data object—in our case a run—can be presented in many different ways. While the `render` method creates each of these child views, it also calls their `render` methods, and it appends the resulting content (their `el` properties) into its own `el`.
 
@@ -133,7 +133,7 @@ And here's the simple template that the view will use.
 <dd><%= value %></dd>
 ```
 
-A quick glance at the Nike+ data shows that it contains nested objects. The `metricSummary` property of the main object is itself an object. That suggests that recursion might be a good strategy for processing the model. To implement recursion we'll need a function (so it can call itself), so let's add an `obj2Html` method to our view. That function should iterate through all the properties in the input object building the <span class="smcp">HTML</span> markup as it does. The Underscore.js `reduce` function supports exactly that operation, so we'll use that as the core of our method.
+A quick glance at the Nike+ data shows that it contains nested objects. The `metricSummary` property of the main object is itself an object. We need a function that will iterate through all the properties in the input object building the <span class="smcp">HTML</span> markup as it does. A recursive function can be particularly effective here, since it can call itself whenever it reaches another nested object. Below, we add an `obj2Html` method to our view. At it's core, this method will use the Underscore.js `reduce` function, which is well-suited to the task at hand.
 
 ``` {.javascript .numberLines}
 obj2Html: function(obj) {
@@ -256,9 +256,9 @@ var map = L.map(this.id);
 
 We might be tempted to do that directly in the view's `render` method, but there's a problem with that approach. Adding (and removing) elements in a web page requires a lot of computation by the browser. When JavaScript code does that frequently, the performance of the page can suffer significantly. To reduce this problem, Backbone.js tries to minimize the number of times it adds (or removes) elements, and one way to do that is to add many elements at once, rather than adding each element independently. It employs that approach when it implements a view's `render` method. Before adding any elements to the page, it lets the view finish constructing its entire markup. Only then does it add that markup to the page.
 
-Perhaps you've detected the problem. When `render` is called the first time, there won't (yet) be a `<div id='map'></div>` anywhere in the page. If we call Leaflet, it won't be able to find the container for its map, and it will generate an error. What we need to do is defer the part of `render` that draws the map until after Backbone.js has added the map container to the page.
+The problem here is that when `render` is called the first time, there won't (yet) be a `<div id='map'></div>` anywhere in the page. If we call Leaflet, it won't be able to find the container for its map, and it will generate an error. What we need to do is defer the part of `render` that draws the map until after Backbone.js has added the map container to the page.
 
-Fortunately, Underscore.js has a utility function to do just that. It even has the name `defer`. Instead of drawing the map directly in the `render` method, we'll create a separate method. Then, in the `render` method, we'll defer execution of that new method. Here's what the code to do that looks like.
+Fortunately, Underscore.js has a utility function called `defer` to do just that. Instead of drawing the map directly in the `render` method, we'll create a separate method. Then, in the `render` method, we'll defer execution of that new method. Here's what the code to do that looks like.
 
 ``` {.javascript .numberLines}
 render: function () {
@@ -270,7 +270,7 @@ drawMap: function () {
 }
 ```
 
-As you can see, we're actually using a couple of Underscore.js function in our `render` method. In addition to `defer`, we also take advantage of `bind`. That latter function ensures that the `this` value when `drawMap` is eventually called is the same as the `this` value within the view.
+As you can see, we're actually using a couple of Underscore.js functions in our `render` method. In addition to `defer`, we also take advantage of `bind`. The latter function ensures that the `this` value when `drawMap` is eventually called is the same as the `this` value within the view.
 
 There's one change we can make to further improve this implementation. Although there won't be a `<div id='map'></div>` in the page when `render` is first called, that element will exist in subsequent calls to `render`. In those cases we don't need to defer the execution of `drawMap`. That leads to the following code for our `render` method.
 
@@ -356,10 +356,10 @@ The result is a nice map of the run's route in figure NEXTFIGURENUMBER.
 
 ### Step 5: Implement the Charts View
 
-The last remaining view that we need to implement is the Charts view. This view is the most complex of any, but nearly all of the code identical to the _Tracking Values_ example in chapter 2. There's no need to repeat that material here, but the source code for the book includes the complete implementation. If you're looking in detail at that implementation, here a few points to note.
+The last remaining view that we need to implement is the Charts view where we want to show pace, heart rate, and elevation during the run. This view is the most complex, but nearly all of the code is identical to the _Tracking Values_ example in chapter 2, so there's no need to repeat that material here. The source code for the book includes the complete implementation. If you're looking in detail at that implementation, here a few points to note.
 
 * Just as Leaflet and the map container, Flot expects a container for its chart to be present in the web page. We can use the same `defer` trick to prevent Flot errors.
-* Nike+ returns at least four types of charts as metrics: distance, heart rate, speed, and <span class="smcp">GPS</span> signal strength. We really only care about the first two. Speed isn't present in all activities, but distance is. Because we want to graph pace, we can only count on distance to derive it. And as long as we're getting pace from the distance graph, the speed metrics are redundant. <span class="lgcp">GPS</span> signal strength doesn't seem useful enough to bother.
+* Nike+ returns at least four types of charts as metrics: distance, heart rate, speed, and <span class="smcp">GPS</span> signal strength. We really only care about the first two. At first, it might seem easiest to calculate pace from speed, but speed isn't present in all activities. Distance, however, is present, and we can derive pace from distance and time.
 * If <span class="smcp">GPS</span> waypoint data is available, we can also graph elevation, but that data is in a separate attribute of the model (not the metrics attribute).
 * At least as of this writing, there's a bit of a bug in Nike's response for <span class="smcp">GPS</span> data. It claims that the measurements are on the same time scale as the other metrics (every 10 seconds), but, in fact, the <span class="smcp">GPS</span> measurements are reported on different intervals. To work around this bug, we ignore the reported interval, and calculate one ourselves. Also, we want to normalize the elevation graph to the same time scale as all the others. Doing that will give us the additional benefit of averaging the <span class="smcp">GPS</span> elevation data; averaging is useful here because <span class="smcp">GPS</span> elevation measurements aren't generally very accurate.
 

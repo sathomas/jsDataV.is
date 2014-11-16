@@ -1,6 +1,6 @@
 ## Frameworks and Libraries
 
-If we're using JavaScript to add data visualizations to traditional web pages, we don't have to worry too much about organizing and structuring our JavaScript. After all, it's often a relatively small amount of code, especially compared to the <span class="smcp">HTML</span> markup and <span class="smcp">CSS</span> styles that are also part of the page. With web applications, however, the code can grow to be more extensive and more complex. To help keep our code organized and manageable, we'll take advantage of a JavaScript application library, sometimes also known as a framework.
+If we're using JavaScript to add data visualizations to traditional web pages, we don't have to worry too much about organizing and structuring our JavaScript. After all, it's often a relatively small amount of code, especially compared to the <span class="smcp">HTML</span> markup and <span class="smcp">CSS</span> styles that are also part of the page. With web applications, however, the code can grow to be more extensive and more complex. To help keep our code organized and manageable, we'll take advantage of a JavaScript application library, also called a framework.
 
 ### Step 1: Select an Application Library
 
@@ -10,7 +10,7 @@ There is an important difference between these application libraries that can he
 
 The main advantage of a pure library is flexibility. Our code is in control of the application, and we have full latitude to structure the application to our own requirements. That's not always a good thing, however. The constraints of a framework can protect us from making poor design decisions. Some of the world's best JavaScript developers are responsible for the popular frameworks, and they've put a lot of thought into what makes a good web application. There's another benefit to frameworks: Because the framework assumes more responsibility for the application, there's generally less code we're required to write.
 
-Having made the distinction between frameworks and pure libraries, it's worth noting that almost any web application can be built effectively with either. Both approaches provide the organization and structure necessary for a high quality application. For our example we'll use the [Backbone.js](http://backbonejs.org) library. It is by far the most popular of the pure (i.e. non-framework) libraries, and it's used by dozens of the largest sites on the web. The general approach that we'll follow, however, (including tools such as Yeoman) work well with almost any popular application library.
+It's worth noting this distinction between frameworks and pure libraries, but almost any web application can be built effectively with either. Both approaches provide the organization and structure necessary for a high quality application. For our example we'll use the [Backbone.js](http://backbonejs.org) library. It is by far the most popular of the pure (non-framework) libraries, and it's used by dozens of the largest sites on the web. The general approach that we'll follow, however, (including tools such as Yeoman) work well with almost any popular application library.
 
 ### Step 2: Install Development Tools
 
@@ -26,7 +26,7 @@ $ npm install -g generator-backbone
 
 ### Step 3: Define a New Project
 
-The development tools we just installed will make it easy to create a new web app project. We'll create a new folder (named `running`) for our application and then change directory into that folder.
+The development tools we just installed will make it easy to create a new web app project. First, with the commands below, we create a new folder (named `running`) for our application and then `cd` (change directory) into that folder.
 
 ``` {.bash}
 $ mkdir running
@@ -49,7 +49,7 @@ Out of the box I include HTML5 Boilerplate, jQuery, Backbone.js and Modernizr.
  ⬡ Use RequireJs
 ```
 
-Yeoman will then do it's magic, creating several sub-folders, installing extra tools and applications, and setting up reasonable defaults. As we watch all the pages and pages of installation information scroll by in our window, we can be glad that Yeoman is doing all this work for us. When Yeoman finishes, we'll have a project structure like the one in figure NEXTFIGURENUMBER's screenshot. It may not look exactly like the following since web applications may have changed since this text was written. Rest assured, though, that it will follow the best practices and conventions.
+Yeoman will then do it's magic, creating several sub-folders, installing extra tools and applications, and setting up reasonable defaults. As you watch all the pages and pages of installation information scroll by in your window, you can be glad that Yeoman is doing all this work for you. When Yeoman finishes, you'll have a project structure like the one in figure NEXTFIGURENUMBER's screenshot. It may not look exactly like the following since web applications may have changed since this text was written. Rest assured, though, that it will follow the best practices and conventions.
 
 <figure>
 <img width="640" src="img/yoskeleton.png" />

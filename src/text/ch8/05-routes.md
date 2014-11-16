@@ -76,9 +76,9 @@ For our simple app, that's all we have to do to handle browsing histories. Backb
 
 ### Step 2: Support Run Models Outside of Any Collection
 
-Unfortunately, if we try to use the code above with our existing Run model, we'll run into some problems. First among them is the fact that our Run model relies on its parent collection. It finds the authorization token, for example, using `this.collection.settings.authorization_token`. When the browser goes directly to the <span class="smcp">URL</span> for a specific run, however, there won't be a collection. We can fix by providing the token to the Run model when we create it. We can also make its value an option passed to the router on creation. Here's the code that results.
+Unfortunately, if we try to use the code above with our existing Run model, we'll run into some problems. First among them is the fact that our Run model relies on its parent collection. It finds the authorization token, for example, using `this.collection.settings.authorization_token`. When the browser goes directly to the <span class="smcp">URL</span> for a specific run, however, there won't be a collection. We can fix that by providing the token to the Run model when we create it at line 20. We can also make its value an option passed to the collection on creation in line 12. Here's the code that results.
 
-``` {.javascript .numberLines}
+``` {.javascript .numberLines .line-20 .line-12}
 Running.Routers.App = Backbone.Router.extend({
     routes: {
         '':         'summary',
@@ -154,7 +154,7 @@ fetchGps: function() {
 }
 ```
 
-To trigger this method, we can add one more statement to the model's initialization. We'll tell Backbone.js that whenever the model changes, call the `fetchGps` method. Backbone.js will detect just such a change when the `fetch` response arrives and populates the model, at which time our code can safely check `isGpsActivity` and make the additional request.
+To trigger this method, we'll tell Backbone.js that whenever the model changes, it should call the `fetchGps` method. Backbone.js will detect just such a change when the `fetch` response arrives and populates the model, at which time our code can safely check `isGpsActivity` and make the additional request.
 
 ``` {.javascript .numberLines}
 initialize: function(attrs, options) {
@@ -274,7 +274,7 @@ Running.Routers.App = Backbone.Router.extend({
 
 As you can see, the event handler code is quite simple. It constructs a <span class="smcp">URL</span> that corresponds to the Details view (`'runs/' + id`) and passes that <span class="smcp">URL</span> to the router's own `navigate` method. That method updates the browser's navigation history. The second parameter (`{ trigger: true }`) tells Backbone.js to also act as if the user had actually navigated to the <span class="smcp">URL</span>. Because we've set up the `details` method to respond to <span class="smcp">URL</span>s of the form `runs/:id`, Backbone.js will call `details` and our router will show the details for the selected run.
 
-When users are looking at a Detailed view, we'd also like to let them easily navigate to the Summary view. A button in details template will serve for this demonstration. As with the Summary view, we can add an event handler for the button and trigger a custom event when a user clicks it.
+When users are looking at a Detailed view, we'd also like to provide a button to let them easily navigate to the Summary view. As with the Summary view, we can add an event handler for the button and trigger a custom event when a user clicks it.
 
 ``` {.javascript .numberLines}
 Running.Views.Details = Backbone.View.extend({
@@ -375,7 +375,7 @@ details: function(id) {
 },
 ```
 
-In the `summary` method we don't want to simply set aside the details view as we did for the summary view. That's because there may be hundreds of detail views hanging around if a user starts looking at all of runs available. Instead, we want to cleanly delete the details view. That lets the browser know that it can release any memory that the view is consuming. As you can see from the code below, we'll do that in three steps.
+In the `summary` method we don't want to simply set aside the details view as we did for the summary view. That's because there may be hundreds of detail views hanging around if a user starts looking at all of the runs available. Instead, we want to cleanly delete the details view. That lets the browser know that it can release any memory that the view is consuming. As you can see from the code below, we'll do that in three steps.
 
 1. Remove the event handler we added to the details view to catch `summarize` events.
 2. Call the view's `remove` method so it releases any memory it's holding internally.

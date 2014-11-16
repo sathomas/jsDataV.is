@@ -6,7 +6,7 @@ The sections that follow will walk through the development of an example applica
 
 > Note 1: The examples in this chapter are based on the version of the interface at the time of this writing. There have very likely been changes to the interface since then.
 
-Unlike most other chapters, we won't be considering multiple independent examples in the following sections. Instead we'll walkthrough the main stages in the development and testing of a data-driven application.
+Unlike most other chapters, we won't be considering multiple independent examples. Instead we'll walkthrough the main stages in the development and testing of a single data-driven application. This includes:
 
 * How to structure a web application using a framework or library.
 * How to organize an application into models and views.

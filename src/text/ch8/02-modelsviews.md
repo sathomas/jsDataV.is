@@ -1,11 +1,11 @@
 
 ## Models and Views
 
-There are many application libraries available for web apps, and that number may lead you to assume that there are lots of opinions on how web apps should be built. In fact, though, most of the libraries agree on the key principles that should guide an app's architecture. Perhaps the most fundamental of those principles is separating _models_ from _views._ The code that keeps track of the core data for the app—the models—should be separate from the code that presents that data to the user—the views. Enforcing this separation makes it easier to update and modify either. If you want to present your data in a table instead of a chart, you can do that without any changes to the models. And if you need to change your data source from a local file to a <span class="smcp">REST</span> <span class="smcp">API</span>, you can do that without any changes to the views. We've been employing this principle in an informal way throughout the book. In all of the examples we've isolated the steps required to obtain and format our data from the steps we used to visualize it. Using an application library like Backbone.js gives us the tools to manage models and views more explicitly.
+There are many application libraries available for web apps, and they each have their quirks, but most of the libraries agree on the key principles that should guide an app's architecture. Perhaps the most fundamental of those principles is separating _models_ from _views._ The code that keeps track of the core data for the app—the models—should be separate from the code that presents that data to the user—the views. Enforcing this separation makes it easier to update and modify either. If you want to present your data in a table instead of a chart, you can do that without any changes to the models. And if you need to change your data source from a local file to a <span class="smcp">REST</span> <span class="smcp">API</span>, you can do that without any changes to the views. We've been employing this principle in an informal way throughout the book. In all of the examples we've isolated the steps required to obtain and format our data from the steps we used to visualize it. Using an application library like Backbone.js gives us the tools to manage models and views more explicitly.
 
 ### Step 1: Define the Application's Models
 
-In the case of our running application, it's pretty easy to identify the models. Nike+ provides details about runs—training runs, interval workouts, trail runs, races, etc. The data set we want consists of nothing but runs, so our app's core model is, naturally, a run.
+Our running app is designed to work with Nike+, which provides details about runs—training runs, interval workouts, trail runs, races, and so on. The data set we want consists of nothing but runs, so our app's core model is, naturally, a run.
 
 The Yeoman tool makes it very easy to define a model for our app. A simple command defines a new model and creates the JavaScript files and scaffolding for that model.
 
@@ -40,13 +40,9 @@ Running.Models = Running.Models || {};
 })();
 ```
 
-The first line is a comment that lists the global variables our model requires. In this case there are only two: `Running` (that's our app), and `Backbone`. The next line creates a `.Models` property of the `Running` object unless that property already exists. 
+The first line is a comment that lists the global variables our model requires. In this case there are only two: `Running` (that's our app), and `Backbone`. Next, in line 3, this file creates a `.Models` property of the `Running` object unless that property already exists. 
 
-``` {.javascript .numberLines}
-Running.Models = Running.Models || {};
-```
-
-When the browser encounters this line it will check to see if `Running.Models` exists. If it does, then `Running.Models` won't be `false`, and the browser never has to consider the second clause of the logical _or_ (`||`). The statement simply assigns `Running.Models` to itself, so it has no practical effect. If `Running.Models` does not exist, however, then `Running.Models` evaluates to `false`, and the browser will continue to the second clause. There it finds an empty object (`{}`) and assigns that to `Running.Models`. Ultimately, this statement makes sure that the object `Running.Models` exists.
+When the browser encounters this line it will check to see if `Running.Models` exists. If it does, then `Running.Models` won't be `false`, and the browser never has to consider the second clause of the logical _or_ (`||`). The statement simply assigns `Running.Models` to itself, so it has no practical effect. If `Running.Models` does not exist, however, then `Running.Models` evaluates to `false`, and the browser will continue to the second clause, where it assigs an empty object (`{}`) to `Running.Models`. Ultimately, this statement makes sure that the object `Running.Models` exists.
 
 The rest of the code in the file is enclosed within an _Immediately-Invoked Function Expression._ If you haven't seen this pattern before, it may look a little strange.
 
@@ -68,9 +64,11 @@ When you define a variable in JavaScript, that variable is a _global_ variable, 
 
 ### Step 2: Implement the Model
 
-Our application really only needs one model, so now we can finally start implementing. The lengthy explanation in the previous step might make you a little wary. If simply defining the model requires that much work (although, to be fair, it was only a single command), the prospect of actual coding might be even more intimidating. Fortunately there is no need to fear. This step is surely the easiest in the entire book. It's already complete! That's right, the scaffolding that Yeoman has set up for us is a complete and functioning model for a Run. In fact, if it weren't for some quirks in Nike's <span class="smcp">REST</span> <span class="smcp">API</span>, we wouldn't have to touch the model code at all. We'll address those quirks in a later section.
+Our application really only needs this one model, and it's already complete! That's right, the scaffolding that Yeoman has set up for us is a complete and functioning model for a Run. In fact, if it weren't for some quirks in Nike's <span class="smcp">REST</span> <span class="smcp">API</span>, we wouldn't have to touch the model code at all. We'll address those quirks in a later section.
 
-Rather than simply moving on to the next step, though, let's spend a little time looking at what we can do with our newly created model. To do that we can make one temporary addition to the model code. This change is temporary because we won't need it in the final app. From the Nike+ documentation we find that the <span class="smcp">URL</span> to retrieve details about a run (Nike+ uses the more general term "activity") is `https://api.nike.com/v1/me/sport/activities/{activityId}`. The final part depends on the specific activity, so we'll add only the general part of the <span class="smcp">URL</span> to our model.
+Before we move on to the next step, though, let's spend a little time looking at what we can do with our newly created model. To do that we'll make a temporary addition to the model code. We won't use the following code in the final app; it's only meant to show off what our model can already do.
+
+From the Nike+ documentation we find that the <span class="smcp">URL</span> to retrieve details about a run (Nike+ uses the more general term "activity") is `https://api.nike.com/v1/me/sport/activities/{activityId}`. The final part depends on the specific activity, so we'll add only the general part of the <span class="smcp">URL</span> to our model, in Line 2 below.
 
 ``` {.javascript .numberLines}
 Running.Models.Run = Backbone.Model.extend({
@@ -87,14 +85,14 @@ Running.Models.Run = Backbone.Model.extend({
 });
 ```
 
-Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of `2126456911`. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, _and get all it's data,_ with two statements.
+Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of `2126456911`. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, _and get all it's data,_ with the hypothetical two statements below. (We’ll consider the quirks of the actual Nike+ interface in a later section.)
 
 ``` {.javascript .numberLines}
 var run = new Running.Models.Run({id: 2126456911});
 run.fetch();
 ```
 
-The first statement creates a new instance of the Run model and specifies it's identifier. The second statement tells Backbone to retrieve the model's data from the server. Backbone takes care of all the communication with Nike+, including error handling, timeouts, parsing the response, and so on. Once the fetch completes, detailed information from that run will be available from the model. If we provide a callback function, we can output some of the details. For example:
+Since many APIs do follow typical conventions, it’s worth spending a little bit of time understanding how that code works. The first statement creates a new instance of the Run model and specifies its identifier. The second statement tells Backbone to retrieve the model's data from the server. Backbone would take care of all the communication with Nike+, including error handling, timeouts, parsing the response, and so on. Once the fetch completes, detailed information from that run will be available from the model. If we provide a callback function, we could output some of the details. For example:
 
 ``` {.javascript .numberLines}
 var run = new Running.Models.Run({id: 2126456911});
@@ -119,7 +117,7 @@ Not bad for a few simple lines of code. The code in this step, though, is really
 
 ### Step 3: Define the Application's Collections
 
-If our application only needed a single object for its data, then we could easily capture that data in a model. Our users, however, aren't interested in just a single run. They'd like to see all of their runs, dozens, hundreds, possibly thousands of them. Fortunately, Backbone.js can help. One of the core concepts of Backbone.js is a _collection,_ or group of models. Let's define a collection for all of the user's runs.
+The model we created is designed to capture the data for a single run. Our users, however, aren't interested in just a single run. They'd like to see all of their runs, dozens, hundreds, possibly thousands of them. We can handle all of these runs with a _collection,_ or group of models. The collection is one of the core concepts of Backbone.js, and it will be a big help for our app. Let's define a collection for all of the user's runs.
 
 Yeoman makes it easy to define and set up scaffolding for our collection. We execute the single command `yo backbone:collection runs` from the command line. (Yes, we're being very original and calling our collection of runs, well, _runs._)
 
@@ -145,7 +143,7 @@ Running.Collections = Running.Collections || {};
 })();
 ```
 
-This file is even simpler than our model; the default collection only has a single property to indicate what type of model the collection contains. Unfortunately, Yeoman isn't smart enough to handle plurals, so it assumes the name of the model is the same as the name of the collection. That's not true for our app, as our model is a _Run_ (singular) and the collection is _Runs_ (plural). We'll need to change that by removing the `s`. While we're making this change, we can also add a property to specify the <span class="smcp">REST</span> <span class="smcp">API</span> for the collection. That's a <span class="smcp">URL</span> from the Nike+ service.
+This file is even simpler than our model; the default collection only has a single property to indicate what type of model the collection contains. Unfortunately, Yeoman isn't smart enough to handle plurals, so it assumes the name of the model is the same as the name of the collection. That's not true for our app, as our model is a _Run_ (singular) and the collection is _Runs_ (plural). While we're removing that `s`, we can also add a property to specify the <span class="smcp">REST</span> <span class="smcp">API</span> for the collection. That's a <span class="smcp">URL</span> from the Nike+ service.
 
 ``` {.javascript .numberLines}
 Running.Collections.Runs = Backbone.Collection.extend({
@@ -154,14 +152,14 @@ Running.Collections.Runs = Backbone.Collection.extend({
 });
 ```
 
-With those two small changes, we're ready to take advantage of our new collection. (Well, we would be if the Nike+ <span class="smcp">API</span> didn't have a few quirks that we'll address later; we'll ignore that complication for now.) All we need to do is create a new instance of the Runs collection and then fetch its data.
+With those two small changes, we're ready to take advantage of our new collection. (Aside from handling a few quirks with the Nike+ <span class="smcp">API</span>; we'll ignore that complication for now and address it later.) All we need to do is create a new instance of the Runs collection and then fetch its data.
 
 ``` {.javascript .numberLines}
 var runs = new Running.Collections.Runs();
 runs.fetch();
 ```
 
-That's all it takes to build a collection containing the user's runs. Backbone.js creates a model for each and retrieves the model's data from the server. Even better, those run models are stored in a true Underscore.js collection. (If you skipped the previous chapter on Underscore.js, you might want to pause now and take a look.) All of the powerful Underscore.js features are available. Suppose, for example, we want to find the total distance for all of a user's runs. That's a tailor-made for the Underscore.js `reduce` function.
+That's all it takes to build a collection containing the user's runs. Backbone.js creates a model for each and retrieves the model's data from the server. Even better, those run models are stored in a true Underscore.js collection, which gives us access to many powerful methods to manipulate and search through the collection. Suppose, for example, we want to find the total distance for all of a user's runs. That's a tailor-made for the Underscore.js `reduce` function.
 
 ``` {.javascript .numberLines}
 var totalDistance = runs.reduce( function(sum, run) {
@@ -171,13 +169,15 @@ var totalDistance = runs.reduce( function(sum, run) {
 
 That code could tell us, for example, that the user has logged a total of 3358 km with Nike+.
 
-> In case you're wondering, the relationship between Backbone.js and Underscore.js is not a coincidence. Jeremy Ashkenas is the lead developer for both projects.
+> As you may have noticed, we’re taking advantage of many utilities from Underscore.js in our Backbone.js application. That is not a coincidence. Jeremy Ashkenas is the lead developer for both projects.
 
 ### Step 4: Define the Application's Main View
 
-Now that we have all the running data for a user, it's time to present that data. We'll do that with Backbone.js _views._  To keep our example simple, we'll only consider two ways to show the running data. First we'll display a table listing summary information about each run. Then, if the user clicks on a table row, we'll show details about that specific run. The main view of our application will be the summary table, so let's focus on that first.
+Now that we have all the running data for a user, it's time to present that data. We'll do that with Backbone.js _views._  To keep our example simple, we'll only consider two ways to show the running data. First we'll display a table listing summary information about each run. Then, if the user clicks on a table row, we'll show details about that specific run including any visualizations. The main view of our application will be the summary table, so let's focus on that first.
 
-A Backbone.js view is responsible for the presenting data to the user, and that data may be maintained in a collection or a model. For the main page of our app, we want to show summary information for all of a user's runs. That view, therefore, is a view of the entire collection. We'll call the view _Summary._ Before we stop thinking about views, though, consider what's going to make up that summary table. The bulk of the table will be a series of table rows, and each row will present summary data about an individual run. That suggests an additional view for our app, the view of a single Run model presented as a table row. Let's use that view as well, so that our main Summary view is made up (mostly) of many _SummaryRow_ views. We can once again rely on Yeoman to set up the scaffolding for both of those types of views.
+A Backbone.js view is responsible for the presenting data to the user, and that data may be maintained in a collection or a model. For the main page of our app, we want to show summary information for all of a user's runs. That view, therefore, is a view of the entire collection. We'll call the view _Summary._ 
+
+The bulk of the table for this Summary view will be a series of table rows, where each row presents summary data about an individual run. That means we can simply create a view of a single Run model presented as a table row, and design our main Summary view to be made up (mostly) of many _SummaryRow_ views. We can once again rely on Yeoman to set up the scaffolding for both of those types of views.
 
 ``` {.bash}
 $ yo backbone:view summary
@@ -219,15 +219,32 @@ Running.Views = Running.Views || {};
 
 The overall structure of the file is the same as our model and our collection, but there's a bit more going on in the view itself. Let's step through view's properties one at a time. The first property is `template`. That's where we define the exact <span class="smcp">HTML</span> markup for the view, and we'll look at this in more detail in the next step.
 
-The `tagName` property defines the <span class="smcp">HTML</span> tag that our view will use as it's parent. Yeoman defaults it to a generic `<div>`, but we know that in our case it will be a `<table>`. It's easy enough to change it, and we'll do so in a moment.
+The `tagName` property defines the <span class="smcp">HTML</span> tag that our view will use as it's parent. Yeoman defaults it to a generic `<div>`, but we know that in our case it will be a `<table>`. We'll change that in a moment.
 
 The `id` and `className` properties specify <span class="smcp">HTML</span> `id` attributes or `class` values to add to the main container (in our case the `<table>`). We could, for example, base some <span class="smcp">CSS</span> styles on these values. For our example we're not considering styles, so we can leave both properties blank or delete them entirely.
 
 Next is the `events` property. This object identifies user events (such as mouse clicks) that are relevant for the view. In the case of the Summary view, there are no events, so we can leave the object empty or simply delete it.
 
-The last two properties, `initialize` and `render`, are both methods. Backbone.js will call `initialize` when it first creates a view, and it will call `render` when the view should build or update the <span class="smcp">HTML</span> markup. In the default Yeoman scaffolding, neither method has a return value. It's quite handy, however, if a view's methods return the view itself. That return value makes it easy to chain methods together in a single JavaScript statement. We can add the return statement to both methods. We'll also make a small change to the `initialize` method. The first statement within it refers to `this.model` because Yeoman assumes that views are model views. The Summary view is for a collection rather than a model, so we should change the code accordingly. The `render` function also refers to a model; it has the fragment `this.model.toJSON()`. Rather than change this code to `collection`, we'll simply delete it entirely. We'll see why in the next section on templates.
+The last two properties, `initialize` and `render`, are both methods. Before we consider those, let's see the Summary view after the tweaks mentioned above. Now that we've omitted the properties we won't be using, we're down to just the `template` and `tagName` properties, plus the `initialize` and `render` methods:
 
-Before we consider the implementation of the last two methods, let's take a look at the resulting Summary view so far.
+``` {.javascript .numberLines}
+Running.Views.Summary = Backbone.View.extend({
+    template: JST['app/scripts/templates/summary.ejs'],
+    tagName: 'table',
+    initialize: function () {
+            this.listenTo(this.model, 'change', this.render);
+    },
+    render: function () {
+            this.$el.html(this.template(this.model.toJSON()));
+    }
+});
+```
+
+Now let's look inside the last two methods, starting with `initialize`. That method has a single statement (other than the `return` statement that we just added). By calling `listenTo`, it tells Backbone.js that the view wants to listen for events. The first parameter, `this.collection`, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view's `render` method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.
+
+Most of the real work of a view takes place in its `render` method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that's not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn't handle the models that are part of the collection. For the individual runs, we can use the `each` function from Underscore.js to iterate through the collection and render each run.
+
+As you can see from the code below, we’ve also added a `return this;` statement to each method. In a bit we’ll take advantage of this addition to _chain_ together calls to multiple methods in a single, concise statement.
 
 ``` {.javascript .numberLines}
 Running.Views.Summary = Backbone.View.extend({
@@ -237,23 +254,12 @@ Running.Views.Summary = Backbone.View.extend({
         this.listenTo(this.collection, 'change', this.render);
         return this;
     },
-    render: function () {
-        this.$el.html(this.template());
-        return this;
-    }
-});
-```
-
-Now let's look inside the last two methods, starting with `initialize`. That method has a single statement (other than the `return` statement that we just added). By calling `listenTo`, it tells Backbone.js that the view wants to listen for events. The first parameter, `this.collection`, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view's `render` method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.
-
-Most of the real work of a view takes place in its `render` method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that's not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn't handle the models that are part of the collection. For the individual runs, we can use Underscore.js to iterate through the collection and render each run.
-
-``` {.javascript .numberLines}
-    render: function () {
+     render: function () {
         this.$el.html(this.template());
         this.collection.each(this.renderRun, this);
         return this;
-    },
+    }
+});
 ```
 
 Now we have to write the `renderRun` method that handles each individual run. Here's what we want that function to do:
@@ -351,7 +357,7 @@ As placeholders for the cells' content, we can use model attributes enclosed in 
 <td><%= metricSummary.calories %></td>
 ```
 
-The other template we need to supply is the Summary template. Since we've already set the view's main tag to be a `<table>`, that template should specify the content within that `<table>`, absent the individual rows for the Run models. That suggests the template should include the table header row plus a `<tbody>` element.
+The other template we need to supply is the Summary template. Since we've already set the view's main tag to be a `<table>`, this template should specify the content within that `<table>`: a table header row plus an empty `<tbody>` element (whose individual rows will come from the Run models).
 
 ``` {.html .numberLines}
 <thead>
@@ -365,7 +371,7 @@ The other template we need to supply is the Summary template. Since we've alread
 <tbody></tbody>
 ```
 
-Now we're finally ready to construct the main view for our runs. The steps are quite straigtforward.
+Now we're finally ready to construct the main view for our runs. The steps are quite straightforward.
 
 1. Create a new Runs collection.
 2. Fetch the data for that collection from the server.
@@ -447,7 +453,7 @@ render: function () {
 }
 ```
 
-The template values come from a JavaScript object that we're creating directly from the model. Backbone.js provided the `toJSON` method that returns a JavaScript object corresponding to the model's attributes. We can actually pass any JavaScript object to the template, even one we create ourselves within the `render` method. Let's rewrite the that method to provide a more user-friendly summary view. We'll take the model's attributes one at a time.
+The template values come from a JavaScript object that we're creating directly from the model. Backbone.js provided the `toJSON` method that returns a JavaScript object corresponding to the model's attributes. We can actually pass any JavaScript object to the template, even one we create ourselves within the `render` method. Let's rewrite that method to provide a more user-friendly summary view. We'll take the model's attributes one at a time.
 
 First up is the date of the run. A date of "2013-04-09T10:54:33Z" isn't very readable for average users, and it's probably not even in their time zone. Working with dates and times is actually quite tricky, but the excellent [Moment.js library](http://momentjs.com) can handle all of the complexity. Since we added that library to our app in an earlier section, we can take advantage of it now.
 
@@ -479,7 +485,7 @@ The calories attribute is one value that's fine as it is, so we'll just copy it 
 run.calories = this.model.get("metricSummary").calories;
 ```
 
-Finally, if you're an avid runner you might have noticed that there's an important value missing from the Nike+ attributes, the average pace for the run. We have the data to calculate it, so let's go ahead and add that as well.
+Finally, if you're an avid runner you might have noticed that there's an important value missing from the Nike+ attributes, the average pace for the run in minutes per mile. We have the data to calculate it, so let's go ahead and add that as well.
 
 ``` {.javascript .numberLines}
 var secs = _(run.duration.split(":")).reduce(function(sum, num) {
