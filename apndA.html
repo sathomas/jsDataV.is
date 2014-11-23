@@ -336,7 +336,7 @@ body { counter-reset: appendix 1; }
 Underscore has many utilities to make it easy to work with arrays.
 </figcaption>
 </figure>
-<p>Underscore’s provides <code>first()</code> method a simple way to extract the first element of an array, or the first <em>n</em> elements.</p>
+<p>Underscore’s <code>first()</code> method provides a simple way to extract the first element of an array, or the first <em>n</em> elements.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(arr).<span class="fu">first</span>()
   <span class="dv">1</span>
 &gt; <span class="fu">_</span>(arr).<span class="fu">first</span>(<span class="dv">3</span>)
@@ -459,7 +459,7 @@ The uniq() function removes duplicate elements from an array.
 </figcaption>
 </figure>
 <p>Finally, Underscore.js has a <code>zip()</code> method. It’s name doesn’t come from the popular compression algorithm but, rather, because it acts a bit like a zipper. It takes multiple input arrays and combines them, element by element, into an output array. That output is an array of arrays, where the inner arrays are the combined elements.</p>
-<p>The operations is perhaps most clearly understood through a picture.</p>
+<p>The operation is perhaps most clearly understood through a picture.</p>
 <figure style="margin-left:0;margin-right:0;">
 <img src="img/underscore.arrs.zip.svg" />
 <figcaption>
@@ -474,8 +474,8 @@ The zip() function pairs elements from multiple arrays together into a single ar
 <h3 id="removing-invalid-data-values">Removing Invalid Data Values</h3>
 <p>One of the banes of visualization applications is invalid data values. Although we’d like to think that our data sources meticulously ensure that all the data they provide is scrupulously correct, that is, unfortunately, rarely the case. More seriously, if JavaScript encounters an invalid value, the most common result is an <em>unhandled exception</em>, which halts all further JavaScript execution on the page.</p>
 <p>To avoid such an unpleasant error, we should validate all data sets and remove invalid values before we pass the data to graphing or charting libraries. Underscore.js has several utilities to help.</p>
-<p>The simplest of these Underscore.js methods is <code>compact()</code>. This function removes any data values that JavaScript treats as <code>false</code> from the input arrays. Eliminated values include the boolean value <code>false</code>, the numeric value <code>0</code>, an empty string, and the special values <code>NaN</code> (not a number, for example <code>1/0</code>) and <code>undefined</code>.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="kw">var</span> raw = [<span class="dv">0</span>, <span class="dv">1</span>, <span class="kw">false</span>, <span class="dv">2</span>, <span class="st">&quot;&quot;</span>, <span class="dv">3</span>, <span class="kw">NaN</span>, <span class="dv">4</span>, , <span class="dv">5</span>];
+<p>The simplest of these Underscore.js methods is <code>compact()</code>. This function removes any data values that JavaScript treats as <code>false</code> from the input arrays. Eliminated values include the boolean value <code>false</code>, the numeric value <code>0</code>, an empty string, and the special values <code>NaN</code> (not a number, for example <code>1/0</code>), <code>undefined</code>, and <code>null</code>.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="kw">var</span> raw = [<span class="dv">0</span>, <span class="dv">1</span>, <span class="kw">false</span>, <span class="dv">2</span>, <span class="st">&quot;&quot;</span>, <span class="dv">3</span>, <span class="kw">NaN</span>, <span class="dv">4</span>, , <span class="dv">5</span>, <span class="kw">null</span>];
 &gt; <span class="fu">_</span>(raw).<span class="fu">compact</span>()
   [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</code></pre>
 <p>It is worth emphasizing that <code>compact()</code> removes elements with a value of <code>0</code>. If you use <code>compact()</code> to clean a data array, be sure that <code>0</code> isn’t a valid data value in your data set.</p>

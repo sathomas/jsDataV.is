@@ -799,7 +799,7 @@ A dummy data set can emphasize a position on a chart axis.
 28
 29
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
-    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;line-chart5&quot;</span>),
+    <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
     [ {
         <span class="dt">data</span>: zero,
         <span class="dt">label</span>: <span class="st">&quot;20&lt;sup&gt;th&lt;/sup&gt; Century Baseline Temperature&quot;</span>,
@@ -822,9 +822,9 @@ A dummy data set can emphasize a position on a chart axis.
     {
         <span class="dt">title</span>: <span class="st">&quot;Global Temperature and CO2 Concentration (NOAA Data)&quot;</span>,
         <span class="dt">grid</span>: {<span class="dt">horizontalLines</span>: <span class="kw">false</span>, <span class="dt">verticalLines</span>: <span class="kw">false</span>},
-        <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>},
-        <span class="dt">y2axis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>, 
-                <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot; °C&quot;</span>;}}
+        <span class="dt">yaxis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>, 
+                <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot; °C&quot;</span>;}},
+        <span class="dt">y2axis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>}
     }
 );</code></pre></td></tr></table>
 <p>Notice that we’ve also swapped the position of the <span class="smcp">CO</span><sub>2</sub> and temperature graphs. We’re now passing the temperature data series ahead of the <span class="smcp">CO</span><sub>2</sub> series. We did that so that the two temperature quantities (baseline and difference) appear next to each other in the legend, making their connection a little more clear to the user. And because the temperature now appears first in the legend, we’ve also swapped the axes, so the temperature axis is on the left. Finally, we’ve adjusted the title of the chart for the same reason. Figure <span class="nextfigure"/> shows the result.</p>

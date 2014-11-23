@@ -130,18 +130,18 @@ body { counter-reset: chapter 7; }
 </style>
 
 <h1 id="chapter-7-custom-visualizations-with-d3.js">Chapter 7: Custom Visualizations with D3.js</h1>
-<p>In this book we’ve looked at many different JavaScript libraries that were designed for specific types of visualizations. If you need a visualization for your web page and there’s a library that can create that type of visualization, that library often provides the quickest and easiest way to create your visualization. There are drawbacks to such libraries, however. They all make assumptions about how the visualization should look and act, and despite the configuration options they provide, you don’t have complete control over the results. Sometimes that’s not an acceptable trade-off.</p>
-<p>In this chapter we’ll look at an entirely different approach to JavaScript visualizations, one where we retain complete control and creativity over the results. As you might expect, that approach isn’t always as easy as, for example, adding a charting library and feeding it data. Fortunately, there is a very powerful JavaScript library that can help: <a href="http://d3js.org"><span class="smcp">D3</span>.js</a>. <span class="lgcp">D3</span>.js doesn’t provide pre-defined visualizations such as charts, graphs, or maps. Instead, it’s a toolbox for data visualization, and it gives you the tools to create <em>your own</em> charts, graphs, maps, and more.</p>
-<p>To see some of the powerful features of <span class="smcp">D3</span>.js, we’ll take a whirlwind tour. Its examples include:</p>
+<p>In this book we’ve looked at many different JavaScript libraries that were designed for specific types of visualizations. If you need a certain type visualization for your web page and there’s a library that can create it, using that library is often the quickest and easiest way to create your visualization. There are drawbacks to such libraries, however. They all make assumptions about how the visualization should look and act, and despite the configuration options they provide, you don’t have complete control over the results. Sometimes that’s not an acceptable trade-off.</p>
+<p>In this chapter we’ll look at an entirely different approach to JavaScript visualizations, one that allows us to be creative and to retain complete control over the results. As you might expect, that approach isn’t always as easy as, for example, adding a charting library and feeding it data. Fortunately, there is a very powerful JavaScript library that can help: <a href="http://d3js.org"><span class="smcp">D3</span>.js</a>. <span class="lgcp">D3</span>.js doesn’t provide predefined visualizations such as charts, graphs, or maps. Instead, it’s a toolbox for data visualization, and it gives you the tools to create <em>your own</em> charts, graphs, maps, and more.</p>
+<p>To see some of the powerful features of <span class="smcp">D3</span>.js, we’ll take a whirlwind tour. This chapter’s examples include:</p>
 <ul>
 <li>Creating a custom chart not available in an off-the-shelf library.</li>
 <li>Building a force-directed graph that responds to user interactions.</li>
-<li>Displaying map-based data using high quality, scalable vector graphics.</li>
+<li>Displaying map-based data using high-quality Scalable Vector Graphics.</li>
 </ul>
 <h2 id="creating-a-custom-chart">Creating a Custom Chart</h2>
-<p>The most significant difference between <span class="smcp">D3</span>.js and other JavaScript libraries is its philosophy. <span class="lgcp">D3</span>.js is not a tool for creating pre-defined types of charts and visualizations. It is, instead, a library to help with the creation of any visualization, including custom and unique presentations. It takes more effort to create a standard chart with <span class="smcp">D3</span>.js, but by using <span class="smcp">D3</span>.js we’re not limited to standard charts. To get a sense of how <span class="smcp">D3</span>.js works, we can create a custom chart that wouldn’t be possible with a typical charting library.</p>
-<p>For this example, we’ll visualize one of the most important findings in modern physics—Hubble’s Law. According to that law, the universe is expanding. As a result, the speed at which we perceive distant galaxies to be moving varies according to their distance from us. More precisely, Hubble’s Law proposes that the variation, or shift, in this speed is a linear function of distance. To visualize the law, we can chart the speed variation (known as <em>red shift velocity</em>) vs. distance for several galaxies. If Hubble is right the chart should look like a line. For our data, we’ll use galaxies and clusters from Hubble’s original <a href="http://www.pnas.org/content/15/3/168.full">1929 paper</a>, but updated with current values for distance and red shift velocities.</p>
-<p>So far this task seems like a good match for a scatter plot. Distance could serve as the x-axis and velocity the y-axis. There’s a twist, though; physicists don’t actually know the distances or velocities that we want to chart, at least not exactly. The best they can do is estimate those values, and there is potential for error in both. But that’s no reason to abandon the effort. In fact, potential errors in the values might be an important aspect for the visualization to highlight. To do that, we won’t draw each value as a point. Rather, we’ll show it as a box, and the box dimensions will correspond to the potential errors in the value.</p>
+<p>The most significant difference between <span class="smcp">D3</span>.js and other JavaScript libraries is its philosophy. <span class="lgcp">D3</span>.js is not a tool for creating predefined types of charts and visualizations. Instead, it’s a library to help your create any visualization, including custom and unique presentations. It takes more effort to create a standard chart with <span class="smcp">D3</span>.js, but by using it we’re not limited to standard charts. To get a sense of how <span class="smcp">D3</span>.js works, we can create a custom chart that wouldn’t be possible with a typical charting library.</p>
+<p>For this example, we’ll visualize one of the most important findings in modern physics—Hubble’s Law. According to that law, the universe is expanding, and as a result, the speed at which we perceive distant galaxies to be moving varies according to their distance from us. More precisely, Hubble’s Law proposes that the variation, or shift, in this speed is a linear function of distance. To visualize the law, we can chart the speed variation (known as <em>red shift velocity</em>) versus distance for several galaxies. If Hubble is right the chart should look like a line. For our data, we’ll use galaxies and clusters from Hubble’s original <a href="http://www.pnas.org/content/15/3/168.full">1929 paper</a> but updated with current values for distance and red shift velocities.</p>
+<p>So far this task seems like a good match for a scatter plot. Distance could serve as the x-axis and velocity the y-axis. There’s a twist, though: physicists don’t actually know the distances or velocities that we want to chart, at least not exactly. The best they can do is estimate those values, and there is potential for error in both. But that’s no reason to abandon the effort. In fact, potential errors in the values might be an important aspect for us to highlight in our visualization. To do that, we won’t draw each value as a point. Rather, we’ll show it as a box, and the box dimensions will correspond to the potential errors in the value.</p>
 <h3 id="step-1-prepare-the-data">Step 1: Prepare the Data</h3>
 <p>Here is the data for our chart according to recent estimates.</p>
 <table>
@@ -238,7 +238,7 @@ body { counter-reset: chapter 7; }
       <span class="dt">velocity</span>:  <span class="dv">179</span>, <span class="dt">velocity_error</span>: <span class="dv">3</span>, },
     <span class="co">// Data set continues...</span></code></pre></td></tr></table>
 <h3 id="step-2-set-up-the-web-page">Step 2: Set Up the Web Page</h3>
-<p><span class="lgcp">D3</span>.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need do is include it in the page (line 9). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
+<p><span class="lgcp">D3</span>.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need to do is include it in the page (line 9). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
 <table class="sourceCode html numberLines line-8 line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -266,21 +266,21 @@ body { counter-reset: chapter 7; }
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-create-a-stage-for-the-visualization">Step 3: Create a Stage for the Visualization</h3>
-<p>Unlike higher level libraries, <span class="smcp">D3</span>.js doesn’t draw the visualization on the page. We’ll have to do that ourselves. In exchange for the additional effort, though, we do get the freedom to pick our own drawing technology. We could follow the same approach as most libraries in this book and use <span class="smcp">HTML5</span>’s <code>&lt;canvas&gt;</code> element, or we could simply use native <span class="smcp">HTML</span>. After seeing it in action in chapter 6, however, it seems Scalable Vector Graphics (<span class="smcp">SVG</span>) is the best approach for our chart. The root of our graph, therefore, will be an <code>&lt;svg&gt;</code> element, and we need to add that to the page. We can define its dimensions at the same time using attributes.</p>
-<p>If we were using jQuery, we might do something like the following.</p>
+<p>Unlike higher-level libraries, <span class="smcp">D3</span>.js doesn’t draw the visualization on the page. We’ll have to do that ourselves. In exchange for the additional effort, though, we get the freedom to pick our own drawing technology. We could follow the same approach as most libraries in this book and use <span class="smcp">HTML5</span>’s <code>&lt;canvas&gt;</code> element, or we could simply use native <span class="smcp">HTML</span>. Now that we’ve seen it in action in chapter 6, however, it seems Scalable Vector Graphics (<span class="smcp">SVG</span>) is the best approach for our chart. The root of our graph, therefore, will be an <code>&lt;svg&gt;</code> element, and we need to add that to the page. We can define its dimensions at the same time using attributes.</p>
+<p>If we were using jQuery, we might do something like the following:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="fu">$</span>(<span class="st">&quot;&lt;svg&gt;&quot;</span>).<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height).<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width);
 <span class="fu">$</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(svg);</code></pre></td></tr></table>
-<p>With <span class="smcp">D3</span>.js our code is very similar.</p>
+<p>With <span class="smcp">D3</span>.js our code is very similar:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
     .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height)
     .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width);</code></pre></td></tr></table>
-<p>With that statement we’re selecting the container, appending an <code>&lt;svg&gt;</code> element to it, and setting the attributes of that <code>&lt;svg&gt;</code> element. This statement does highlight one important difference between <span class="smcp">D3</span>.js and jQuery that often trips up developers starting out with <span class="smcp">D3</span>.js. In jQuery the <code>append()</code> method returns the original selection so that you can continue operating on that selection. More specifically, <code>$(&quot;#container&quot;).append(svg)</code> returns <code>$(&quot;#container&quot;)</code>.</p>
-<p>With <span class="smcp">D3</span>.js, on the other hand, <code>append()</code> returns a different selection, the newly appended element(s). So <code>d3.select(&quot;#container&quot;).append(&quot;svg&quot;)</code> doesn’t return the container selection but, rather, a selection of the new <code>&lt;svg&gt;</code> element. The <code>attr()</code> calls that follow, therefore, apply to the <code>&lt;svg&gt;</code> element and not the <code>&quot;#container&quot;</code>.</p>
+<p>With this statement we’re selecting the container, appending an <code>&lt;svg&gt;</code> element to it, and setting the attributes of that <code>&lt;svg&gt;</code> element. This statement highlights one important difference between <span class="smcp">D3</span>.js and jQuery that often trips up developers starting out with <span class="smcp">D3</span>.js. In jQuery the <code>append()</code> method returns the original selection so that you can continue operating on that selection. More specifically, <code>$(&quot;#container&quot;).append(svg)</code> returns <code>$(&quot;#container&quot;)</code>.</p>
+<p>With <span class="smcp">D3</span>.js, on the other hand, <code>append()</code> returns a different selection, the newly appended element(s). So <code>d3.select(&quot;#container&quot;).append(&quot;svg&quot;)</code> doesn’t return the container selection but rather a selection of the new <code>&lt;svg&gt;</code> element. The <code>attr()</code> calls that follow, therefore, apply to the <code>&lt;svg&gt;</code> element and not the <code>&quot;#container&quot;</code>.</p>
 <h3 id="step-4-control-the-charts-dimensions">Step 4: Control the Chart’s Dimensions</h3>
 <p>So far we haven’t specified the actual values for the chart’s height and width; we’ve only used <code>height</code> and <code>width</code> variables. Having the dimensions in variables will come in handy, and it will make it easy to incorporate margins in the visualization. The code below sets up those dimensions; its form is a common convention in <span class="smcp">D3</span>.js visualizations.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -305,8 +305,8 @@ body { counter-reset: chapter 7; }
     .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, 
         <span class="st">&quot;translate(&quot;</span> + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="st">&quot;,&quot;</span> + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="st">&quot;)&quot;</span>
     );</code></pre></td></tr></table>
-<p>Visualizations must often re-scale the source data. In our case, we’ll need to re-scale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, we want to scale galactic distance to between 0 and 920 pixels. Since this type of requirement is common for visualizations, <span class="smcp">D3</span>.js has tools to help. Not surprisingly, they’re <code>scale</code> objects. We’ll create scales for both the x- and the y-dimensions.</p>
-<p>As the code below indicates, both of our scales are linear scales. Linear transformations are pretty simple (and we really don’t need <span class="smcp">D3</span>.js to manage them); however, <span class="smcp">D3</span>.js supports other types of scales that can be quite complex. With <span class="smcp">D3</span>.js using more sophisticated scaling is just as easy as linear scales.</p>
+<p>Visualizations must often rescale the source data. In our case, we’ll need to rescale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, galactic distance should be scaled between 0 and 920 pixels. Since this type of requirement is common for visualizations, <span class="smcp">D3</span>.js has tools to help. Not surprisingly, they’re <code>scale</code> objects. We’ll create scales for both the x- and the y-dimensions.</p>
+<p>As the code below indicates, both of our scales are linear. Linear transformations are pretty simple (and we really don’t need <span class="smcp">D3</span>.js to manage them); however, <span class="smcp">D3</span>.js supports other types of scales that can be quite complex. With <span class="smcp">D3</span>.js using more sophisticated scaling is just as easy as using linear scales.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -315,15 +315,15 @@ body { counter-reset: chapter 7; }
     .<span class="fu">range</span>([<span class="dv">0</span>,width]);
 <span class="kw">var</span> yScale = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
     .<span class="fu">range</span>([height,<span class="dv">0</span>]);</code></pre></td></tr></table>
-<p>For both scales we define their range as the desired limits for the scales. The x scale ranges from 0 to the chart’s width, and the y scale ranges from 0 to the chart’s height. Note, though, that we’ve reversed the normal order for the y scale. That’s because <span class="smcp">SVG</span> dimensions (just like <span class="smcp">HTML</span> dimensions) place 0 at the top of the area. That convention is opposite of the normal chart convention which places 0 at the bottom. To account for the reversal, we swap the values when defining the range.</p>
-<p>At this point we’ve set the ranges for each scale, and those ranges define the desired output. We also have to specify the possible inputs to each scale, which <span class="smcp">D3</span>.js calls the <em>domain.</em> Those inputs are the minimum and maximum values for the distance and velocity. We can use <span class="smcp">D3</span>.js to extract the values directly from the data. Here’s how to get the minimum distance.</p>
+<p>We define both ranges as the desired limits for each scale. The x-scale ranges from 0 to the chart’s width, and the y-scale ranges from 0 to the chart’s height. Note, though, that we’ve reversed the normal order for the y-scale. That’s because <span class="smcp">SVG</span> dimensions (just like <span class="smcp">HTML</span> dimensions) place 0 at the top of the area. That convention is the opposite of the normal chart convention which places 0 at the bottom. To account for the reversal, we swap the values when defining the range.</p>
+<p>At this point we’ve set the ranges for each scale, and those ranges define the desired output. We also have to specify the possible inputs to each scale, which <span class="smcp">D3</span>.js calls the <em>domain.</em> Those inputs are the minimum and maximum values for the distance and velocity. We can use <span class="smcp">D3</span>.js to extract the values directly from the data. Here’s how to get the minimum distance:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> minDist = <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) { 
     <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>;
 });</code></pre></td></tr></table>
-<p>We can’t simply find the minimum value in the data because we have to account for the distance error. As we can see above, <span class="smcp">D3</span>.js accepts a function as a parameter to <code>d3.min()</code>, and that function can make the necessary adjustment. We can use the same approach for maximum values as well. Here’s the complete code for defining the domains of both scales.</p>
+<p>We can’t simply find the minimum value in the data because we have to account for the distance error. As we can see above, <span class="smcp">D3</span>.js accepts a function as a parameter to <code>d3.min()</code>, and that function can make the necessary adjustment. We can use the same approach for maximum values as well. Here’s the complete code for defining the domains of both scales:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -389,7 +389,7 @@ body { counter-reset: chapter 7; }
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
     .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
     .<span class="fu">call</span>(xAxis);</code></pre></td></tr></table>
-<p>And as long as we’re preserving method chaining, we can take advantage of it to add yet another element to our chart, this time it’s the label for the axis.</p>
+<p>And as long as we’re preserving method chaining, we can take advantage of it to add yet another element to our chart: this time, it’s the label for the axis.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -486,9 +486,9 @@ svg { font: 16px; }
 <span class="lgcp">D3</span>.js provides tools to create the framework for a chart.
 </figcaption>
 </figure>
-<p>As you can tell, we’ve had to write quite a bit of code just to get a couple of axes on the page. That’s the nature of <span class="smcp">D3</span>.js. It’s not a library to which you can simply pass a data set and get a chart as an output. Instead, it’s better thought of as a collection of very useful utilities that you can use to help create your own charts.</p>
+<p>As you can tell, we’ve had to write quite a bit of code just to get a couple of axes on the page. That’s the nature of <span class="smcp">D3</span>.js. It’s not a library to which you can simply pass a data set and get a chart as an output. Instead, think of it as a collection of very useful utilities that you can use to help create your own charts.</p>
 <h3 id="step-6-add-the-data-to-the-chart">Step 6: Add the Data to the Chart</h3>
-<p>Now that our chart’s framework is ready, we can add the actual data. Because we want to show both the distance and velocity errors in the data, we can draw each point as a rectangle. For a simple, static chart, we can add <span class="smcp">SVG</span> <code>&lt;rect&gt;</code> elements just as we’ve created the rest of the chart. We can take advantage of our x and y scales to calculate the dimensions of the rectangles.</p>
+<p>Now that our chart’s framework is ready, we can add the actual data. Because we want to show both the distance and velocity errors in the data, we can draw each point as a rectangle. For a simple, static chart, we can add <span class="smcp">SVG</span> <code>&lt;rect&gt;</code> elements just as we’ve created the rest of the chart. We can take advantage of our x- and y-scales to calculate the dimensions of the rectangles.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -513,8 +513,8 @@ svg { font: 16px; }
 </figcaption>
 </figure>
 <h3 id="step-7-answer-users-questions">Step 7: Answer Users’ Questions</h3>
-<p>Whenever we create a visualization, it’s a good idea to anticipate questions that users might ask when they view it. In our example so far, we’ve presented a data set that leads to Hubble’s Law. But we haven’t (yet) shown how well the data fits that law. Since that is such an obvious question, let’s answer it right on the chart itself.</p>
-<p>The current estimate for Hubble’s Constant (<span class="smcp">H0</span>) is about 70 km/s/Mpc. To show how that matches the data on our chart, we can create a line graph with that slope beginning at the point (0,0). A single <span class="smcp">SVG</span> <code>&lt;line&gt;</code> is all that’s required. Once again we rely on the <span class="smcp">D3</span>.js scales to define the line’s coordinates.</p>
+<p>Whenever you create a visualization, it’s a good idea to anticipate questions that users might ask when they view it. In our example so far, we’ve presented a data set that leads to Hubble’s Law. But we haven’t (yet) shown how well the data fits that law. Since that is such an obvious question, let’s answer it right on the chart itself.</p>
+<p>The current estimate for the Hubble Constant (<span class="smcp">H0</span>) is about 70 km/s/Mpc. To show how that matches the data on our chart, we can create a line graph with that slope beginning at the point (0,0). A single <span class="smcp">SVG</span> <code>&lt;line&gt;</code> is all that’s required. Once again we rely on the <span class="smcp">D3</span>.js scales to define the line’s coordinates.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -697,7 +697,7 @@ The complete custom chart shows the data set exactly as we wish.
 
 }());
 </script>
-<h2 id="creating-a-force-directed-network-graph">Creating a Force Directed Network Graph</h2>
+<h2 id="creating-a-force-directed-network-graph">Creating a Force-Directed Network Graph</h2>
 <p>Unlike the JavaScript plotting libraries we considered in the early chapters, <span class="smcp">D3</span>.js is not limited to standard charts. In fact, it excels at specialized and custom graph types. To see its power we’ll create another version of the network graph from Chapter 4. In the earlier implementation we used the sigmajs library, and most of our work was structuring the data into the format that library requires. We didn’t have to decide how to draw the nodes and edges, how to connect them, or, once we enabled layouts, how to position them on the page. As we’ll see below, <span class="smcp">D3</span>.js doesn’t make those decisions for us. For this example, we’ll have to draw the nodes and edges, connect them to each other appropriately, and position them on the page. That may sound like a lot of work, but, as we’ll also see, <span class="smcp">D3</span>.js gives us a lot of tools to help.</p>
 <h3 id="step-1-prepare-the-data-1">Step 1: Prepare the Data</h3>
 <p>Since we’re replicating the network graph from chapter 4, we start with the same data set.</p>
@@ -741,7 +741,7 @@ The complete custom chart shows the data set exactly as we wish.
       <span class="st">&quot;McCoy Tyner&quot;</span>
     ]
   <span class="co">// Data set continues...</span></code></pre></td></tr></table>
-<p>For the visualization it will be helpful to have two separate arrays, one for the graph’s nodes and a second for the graph’s edges. Extracting those arrays from the original data is straightforward, so we won’t bother looking at it in this chapter. You can, however, see the full implementation in the book’s source code. The result looks like the following.</p>
+<p>For the visualization it will be helpful to have two separate arrays, one for the graph’s nodes and a one for the graph’s edges. Extracting those arrays from the original data is straightforward, so we won’t bother looking at it in this chapter. You can, however, see the full implementation in the book’s source code. The result looks like the following:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -837,7 +837,7 @@ The complete custom chart shows the data set exactly as we wish.
 ];</code></pre></td></tr></table>
 <p>The edges indicate the two nodes that they connect as indices in the <code>nodes</code> array and they include an array of the individual musicians that are common between the albums.</p>
 <h3 id="step-2-set-up-the-page">Step 2: Set Up the Page</h3>
-<p>As we noted in the previous example, <span class="smcp">D3</span>.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need do is include it in the page (line 9). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
+<p>As we noted in the previous example, <span class="smcp">D3</span>.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need to do is include it in the page (line 9). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
 <table class="sourceCode html numberLines line-8 line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -865,7 +865,7 @@ The complete custom chart shows the data set exactly as we wish.
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-create-a-stage-for-the-visualization-1">Step 3: Create a Stage for the Visualization</h3>
-<p>This step is also the same as the previous example. We ask <span class="smcp">D3</span>.js to select the container element and then insert an <code>&lt;svg&gt;</code> element within it. In addition to appending the <code>&lt;svg&gt;</code> element, we can define its size by setting the <code>height</code> and <code>width</code> attributes.</p>
+<p>This step is also the same as in the previous example. We ask <span class="smcp">D3</span>.js to select the container element and then insert an <code>&lt;svg&gt;</code> element within it. In addition to appending the <code>&lt;svg&gt;</code> element, we can define its size by setting the <code>height</code> and <code>width</code> attributes.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -873,7 +873,7 @@ The complete custom chart shows the data set exactly as we wish.
     .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, <span class="dv">500</span>)
     .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, <span class="dv">960</span>);</code></pre></td></tr></table>
 <h3 id="step-4-draw-the-graphs-nodes">Step 4: Draw the Graph’s Nodes</h3>
-<p>We’re going to draw each node as a circle, and that’s as simple as appending <code>&lt;circle&gt;</code> elements inside the <code>&lt;svg&gt;</code> stage. Based on the previous step, you might think that would be as simple as executing <code>svg.append(&quot;circle&quot;)</code> for each element in the <code>nodes</code> array.</p>
+<p>We’ll draw each node as a circle by appending <code>&lt;circle&gt;</code> elements inside the <code>&lt;svg&gt;</code> stage. Based on the previous step, you might think that would be as simple as executing <code>svg.append(&quot;circle&quot;)</code> for each element in the <code>nodes</code> array.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -882,7 +882,7 @@ The complete custom chart shows the data set exactly as we wish.
 });</code></pre></td></tr></table>
 <p>That code will indeed add 25 circles to the visualization. What it won’t do, though, is create any links between the data (nodes in the array) and the document (circle elements on the page). <span class="lgcp">D3</span>.js has another way to add the circles to the page that does create that linkage. In fact, not only will <span class="smcp">D3</span>.js create the links, it will even manage them for us. This support becomes especially valuable as visualizations grow more complex.</p>
 <blockquote>
-<p>This feature is really the <em>core</em> of <span class="smcp">D3</span>.js, and it is, in fact, the source for the name “<span class="smcp">D3</span>” which is shorthand for “Data Driven Documents.”</p>
+<p>Note: This feature is really the <em>core</em> of <span class="smcp">D3</span>.js, and is, in fact, the source for the name “<span class="smcp">D3</span>” which is shorthand for “Data Driven Documents.”</p>
 </blockquote>
 <p>Here’s how we can use <span class="smcp">D3</span>.js more effectively to add the <code>&lt;circle&gt;</code> elements to the graph.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -893,7 +893,7 @@ The complete custom chart shows the data set exactly as we wish.
     .<span class="fu">data</span>(nodes);
     
 <span class="ot">selection</span>.<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>);</code></pre></td></tr></table>
-<p>For those of you that haven’t seen <span class="smcp">D3</span>.js code before, that fragment surely looks very strange. What are we trying to do by selecting <code>&lt;circle&gt;</code> elements before we’ve even created any? Won’t the result just be empty? And if so, what’s the point of the <code>data()</code> function that follows? To answer those questions, we have to understand how <span class="smcp">D3</span>.js differs from traditional JavaScript libraries like jQuery. In those libraries a selection represents elements of <span class="smcp">HTML</span> markup. With jQuery, <code>$(&quot;circle&quot;)</code> is nothing more than the <code>&lt;circle&gt;</code> elements in the page. With <span class="smcp">D3</span>.js, however, selections are more than just markup elements. <span class="lgcp">D3</span>.js selections can contain both markup <em>and</em> data.</p>
+<p>If you haven’t seen <span class="smcp">D3</span>.js code before, that fragment surely looks very strange. What are we trying to do by selecting <code>&lt;circle&gt;</code> elements before we’ve even created any? Won’t the result just be empty? And if so, what’s the point of the <code>data()</code> function that follows? To answer those questions, we have to understand how <span class="smcp">D3</span>.js differs from traditional JavaScript libraries like jQuery. In those libraries a selection represents elements of <span class="smcp">HTML</span> markup. With jQuery, <code>$(&quot;circle&quot;)</code> is nothing more than the <code>&lt;circle&gt;</code> elements in the page. With <span class="smcp">D3</span>.js, however, selections are more than just markup elements. <span class="lgcp">D3</span>.js selections can contain both markup <em>and</em> data.</p>
 <p><span class="lgcp">D3</span>.js puts markup elements and data objects together with the <code>data()</code> function. The object on which it operates (<code>svg.selectAll(&quot;circle&quot;)</code> above) supplies the elements, and its parameter (<code>nodes</code> above) provides the data. The first statement in the fragment, therefore, tells <span class="smcp">D3</span>.js that we want to match <code>&lt;circle&gt;</code> elements with nodes in our graph. We are, in effect, saying that we want one <code>&lt;circle&gt;</code> to represent each value in the <code>nodes</code> array.</p>
 <p>The result is easiest to understand when there are exactly as many elements as there are data values. Figure <span class="nextfigure"/> shows four <code>&lt;circle&gt;</code> elements and four albums. <span class="lgcp">D3</span>.js dutifully combines the two sets, giving us a selection of four objects. Each object has both a <code>&lt;circle&gt;</code> and an album.</p>
 <figure>
@@ -915,7 +915,7 @@ The complete custom chart shows the data set exactly as we wish.
 </figure>
 <p>Our code fragment is an even more extreme example. When it executes, there are absolutely no circles on the page. There are, however, values in the <code>nodes</code> array that we’re telling <span class="smcp">D3</span>.js to use as data. <span class="lgcp">D3</span>.js, therefore, creates an object for each of those data values. It just won’t have a <code>&lt;circle&gt;</code> element to go with them.</p>
 <p>(Take a breath because magic is about to happen.)</p>
-<p>Now we can look at the second statement in our code fragment. It starts out <code>selection.enter()</code>. The <code>enter()</code> function is a special <span class="smcp">D3</span>.js function. It tells <span class="smcp">D3</span>.js to search through the selection and find all of the objects that have a data value <em>but no markup element.</em> We then complete the statement by taking that subset of the selection and calling <code>append(&quot;circle&quot;)</code>. And with that function call <span class="smcp">D3</span>.js will take any object in the selection without a markup element and create a circle for it. That’s how we add <code>&lt;circle&gt;</code> elements to the graph.</p>
+<p>Now we can look at the second statement in our code fragment. It starts with <code>selection.enter()</code>. The <code>enter()</code> function is a special <span class="smcp">D3</span>.js function. It tells <span class="smcp">D3</span>.js to search through the selection and find all of the objects that have a data value <em>but no markup element.</em> We then complete the statement by taking that subset of the selection and calling <code>append(&quot;circle&quot;)</code>. And with that function call, <span class="smcp">D3</span>.js will take any object in the selection without a markup element and create a circle for it. That’s how we add <code>&lt;circle&gt;</code> elements to the graph.</p>
 <p>To be a little more concise, we can combine our two statements into a single one. The effect, for our visualization is to create a <code>&lt;circle&gt;</code> within the <code>&lt;svg&gt;</code> container for every node in the graph.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -932,7 +932,7 @@ The complete custom chart shows the data set exactly as we wish.
     .<span class="fu">data</span>(edges)
     .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;line&quot;</span>);</code></pre></td></tr></table>
 <blockquote>
-<p>Even though we won’t need to use them for this example, <span class="smcp">D3</span>.js has other functions that complement the <code>enter()</code> function. To find objects that have a markup element but no data value, you can use the function <code>exit()</code>. And to find objects that have a markup element with a data value that has changed, you can use the function <code>update()</code>. The names <em>enter</em> and <em>exit</em> derive from a theater metaphor that <span class="smcp">D3</span>.js associates with a visualization. The <code>enter()</code> subset represents those elements that are <em>entering</em> the stage, while the <code>exit()</code> subset represents elements leaving, or <em>exiting,</em> the stage.</p>
+<p>Note: Even though we won’t need to use them for this example, <span class="smcp">D3</span>.js has other functions that complement the <code>enter()</code> function. To find objects that have a markup element but no data value, you can use the function <code>exit()</code>. And to find objects that have a markup element with a data value that has changed, you can use the function <code>update()</code>. The names <em>enter</em> and <em>exit</em> derive from a theater metaphor that <span class="smcp">D3</span>.js associates with a visualization. The <code>enter()</code> subset represents those elements that are <em>entering</em> the stage, while the <code>exit()</code> subset represents elements leaving, or <em>exiting,</em> the stage.</p>
 </blockquote>
 <p>Because we’re using <span class="smcp">SVG</span> elements for both the nodes and the edges, we can use <span class="smcp">CSS</span> rules to style them. That’s especially important for the edges because, by default, <span class="smcp">SVG</span> lines have a stroke width of 0.</p>
 <table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -956,8 +956,8 @@ line <span class="kw">{</span>
     <span class="kw">stroke-width:</span> <span class="dt">1px</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre></td></tr></table>
 <h3 id="step-6-position-the-elements">Step 6: Position the Elements</h3>
-<p>At this point we’ve added the necessary markup elements to our visualization, but we haven’t given them any dimensions or positions. As we’ve noted before, <span class="smcp">D3</span>.js doesn’t do any drawing, so we’ll have to write the code to do it. As noted in step 2, we did assign somewhat arbitrary positions to the nodes by arranging them in a circle. For now, we can use that to position them.</p>
-<p>To position an <span class="smcp">SVG</span> circle we set its <code>cx</code> and <code>cy</code> attributes to correspond to the circle’s center. We also specify the circle’s radius with the <code>r</code> attribute. Let’s start with the radius; we’ll set it to a fixed value for all nodes. We’ve already created a <span class="smcp">D3</span>.js selection for all of those nodes. Setting their <code>r</code> attributes is a simple statement.</p>
+<p>At this point we’ve added the necessary markup elements to our visualization, but we haven’t given them any dimensions or positions. As noted before, <span class="smcp">D3</span>.js doesn’t do any drawing, so we’ll have to write the code to do it. And as noted in step 2, we did assign somewhat arbitrary positions to the nodes by arranging them in a circle. For now, we can use that to position them.</p>
+<p>To position an <span class="smcp">SVG</span> circle we set its <code>cx</code> and <code>cy</code> attributes to correspond to the circle’s center. We also specify the circle’s radius with the <code>r</code> attribute. Let’s start with the radius; we’ll set it to a fixed value for all nodes. We’ve already created a <span class="smcp">D3</span>.js selection for all of those nodes. Setting their <code>r</code> attributes is a simple statement:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodeSelection</span>.<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">10</span>);</code></pre></td></tr></table>
 <p>The <code>cx</code> and <code>cy</code> values are a little trickier because they’re not the same for all of the nodes. Those values depend on properties of the data associated with the nodes. More specifically, each element in the <code>nodes</code> array has <code>x</code> and <code>y</code> properties. <span class="lgcp">D3</span>.js, however, makes it very easy to access those properties. Instead of providing constant values for the attributes, we provide functions. <span class="lgcp">D3</span>.js will then call those functions and pass the data values as parameters. Our functions can return the appropriate value for the attribute.</p>
@@ -1001,9 +1001,9 @@ line {
 <span class="lgcp">D3</span>.js provides tools to help draw the circles and lines for a network graph.
 </figcaption>
 </figure>
-<h3 id="step-7-add-force-direction-to-the-graph">Step 7: Add Force-Direction to the Graph</h3>
-<p>The graph has all the essential components, but its layout doesn’t make identifying the connections as easy as we’d like. In chapter 4’s example the sigmajs library could automate the layout with only took a couple of lines of JavaScript. To perform that automation, sigmajs uses a force-direction algorithm. Force-direction treats nodes as physical object and simulates the effect of forces such as gravity and electromagnetism.</p>
-<p>With <span class="smcp">D3</span>.js we cannot rely on the library to fully automate the layout. As we’ve seen, <span class="smcp">D3</span>.js does not draw any of the graph elements, so it cannot, by itself, set positions and dimensions. <span class="lgcp">D3</span>.js does, however, provide a lot of tools to help us create our own graph layouts. One of those tools is the <em>force layout.</em> As you might expect, the force layout tool helps us draw our own force-directed graph. It handles all of the messy and complex calculations that underly force-direction and gives us results we can use directly in code that draws the graph.</p>
+<h3 id="step-7-add-force-direction-to-the-graph">Step 7: Add Force Direction to the Graph</h3>
+<p>The graph has all the essential components, but its layout doesn’t make identifying the connections as easy as we’d like. In chapter 4’s example the sigmajs library could automate the layout with only a couple of lines of JavaScript. To perform that automation, sigmajs uses a force-direction algorithm. Force direction treats nodes as physical objects and simulates the effect of forces such as gravity and electromagnetism.</p>
+<p>With <span class="smcp">D3</span>.js we cannot rely on the library to fully automate the layout. As we’ve seen, <span class="smcp">D3</span>.js does not draw any of the graph elements, so it cannot, by itself, set positions and dimensions. <span class="lgcp">D3</span>.js does, however, provide a lot of tools to help us create our own graph layouts. One of those tools is the <em>force layout.</em> As you might expect, the force layout tool helps us draw our own force-directed graph. It handles all of the messy and complex calculations that underlie force direction and gives us results we can use directly in code that draws the graph.</p>
 <p>To get started with the layout, we define a new <code>force</code> object. That object accepts many configuration parameters, but only five are essential for our visualization.</p>
 <ul>
 <li>the dimensions of the graph</li>
@@ -1024,15 +1024,15 @@ line {
     .<span class="fu">nodes</span>(nodes)
     .<span class="fu">links</span>(edges)
     .<span class="fu">linkDistance</span>(<span class="dv">40</span>)
-    .<span class="fu">force</span>(-<span class="dv">500</span>);</code></pre></td></tr></table>
-<p>When we tell <span class="smcp">D3</span>.js to start its force-direction calculations, it will generate events at intermediate steps and when the calculations complete. Force-direction often takes several seconds to execute fully, and if we wait until the calculations are complete before we draw the graph, our users may think the browser has frozen. It’s usually better to update the graph at each iteration so users see some indication of progress. To do that, we can add a function to respond to the intermediate force layout calculations. That happens on a <span class="smcp">D3</span>.js <code>tick</code> event.</p>
+    .<span class="fu">charge</span>(-<span class="dv">500</span>);</code></pre></td></tr></table>
+<p>When we tell <span class="smcp">D3</span>.js to start its force direction calculations, it will generate events at intermediate steps and when the calculations complete. Force direction often takes several seconds to execute fully, and if we wait until the calculations are complete before we draw the graph, users may think the browser has frozen. It’s usually better to update the graph at each iteration so users see some indication of progress. To do that, we can add a function to respond to the intermediate force layout calculations. That happens on a <span class="smcp">D3</span>.js <code>tick</code> event.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">force</span>.<span class="fu">on</span>(<span class="st">&#39;tick&#39;</span>, <span class="kw">function</span>() {
     <span class="co">// Update graph with intermediate results</span>
 });</code></pre></td></tr></table>
-<p>Each time <span class="smcp">D3</span>.js calls our event handler function, it will have updated the <code>x</code> and <code>y</code> properties of the <code>nodes</code> array. The new values will reflect how the force-direction has nudged the nodes on the graph’s stage. We can update our graph accordingly by changing the <span class="smcp">SVG</span> attributes of the circles and lines. Before we do that, however, we can take advantage of the fact that <span class="smcp">D3</span>.js is giving us an opportunity to tweak the force-layout algorithm as it executes. One problem that we may encounter, especially with the large charge force we defined, is that nodes may repel each other so strongly that some tend to drift off the stage entirely. We can prevent that by ensuring that the node positions remain within the dimensions of the graph.</p>
+<p>Each time <span class="smcp">D3</span>.js calls our event handler function, it will have updated the <code>x</code> and <code>y</code> properties of the <code>nodes</code> array. The new values will reflect how the force direction has nudged the nodes on the graph’s stage. We can update our graph accordingly by changing the <span class="smcp">SVG</span> attributes of the circles and lines. Before we do that, however, we can take advantage of the fact that <span class="smcp">D3</span>.js is giving us an opportunity to tweak the force layout algorithm as it executes. One problem that we may encounter, especially with the large charge force we defined, is that nodes may repel each other so strongly that some tend to drift off the stage entirely. We can prevent that by ensuring that the node positions remain within the dimensions of the graph.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1059,7 +1059,7 @@ line {
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">nodeSelection
     .<span class="fu">attr</span>(<span class="st">&#39;cx&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">x</span>; })
     .<span class="fu">attr</span>(<span class="st">&#39;cy&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">y</span>; });</code></pre></td></tr></table>
-<p>We’ll also want to adjust the end points of our edge lines. For these objects, however, there’s a small twist. When we initialized the <code>edges</code> array, we set the <code>source</code> and <code>target</code> properties to the indices of the respective nodes in the <code>nodes</code> array. When the <span class="smcp">D3</span>.js force layout begins execution, it replaces those indices with direct references to the nodes themselves. That makes it a little easier for us to find the appropriate coordinates for the lines.</p>
+<p>We’ll also want to adjust the endpoints of our edge lines. For these objects, however, there’s a small twist. When we initialized the <code>edges</code> array, we set the <code>source</code> and <code>target</code> properties to the indices of the respective nodes in the <code>nodes</code> array. When the <span class="smcp">D3</span>.js force layout begins execution, it replaces those indices with direct references to the nodes themselves. That makes it a little easier for us to find the appropriate coordinates for the lines.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1099,7 +1099,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"> <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
     .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">true</span>)
     .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="fl">1.5</span>*nodeRadius);</code></pre></td></tr></table>
-<p>We can do something similar by adding a <code>selected</code> class to all the edges that connect to the clicked node. To find those edges we can iterate through the full edge selection. <span class="lgcp">D3</span>.js has the <code>each()</code> function to do just that. As we look at each edge we check the <code>source</code> and <code>target</code> properties to see if either matches our clicked node. When we find a match, we add the <code>selected</code> class to the edge. Note that in line 3 we’re once again using <code>d3.select(this)</code>. In this case the code is inside of the <code>each()</code> function, so <code>this</code> will equal the particular element of the current iteration. In our case that’s the <code>&lt;line&gt;</code> for the edge.</p>
+<p>We can do something similar by adding a <code>selected</code> class to all the edges that connect to the clicked node. To find those edges we can iterate through the full edge selection. <span class="lgcp">D3</span>.js provides the <code>each()</code> function to do just that. As we look at each edge we check the <code>source</code> and <code>target</code> properties to see if either matches our clicked node. When we find a match, we add the <code>selected</code> class to the edge. Note that in line 3 we’re once again using <code>d3.select(this)</code>. In this case the code is inside of the <code>each()</code> function, so <code>this</code> will equal the particular element of the current iteration. In our case that’s the <code>&lt;line&gt;</code> for the edge.</p>
 <table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1119,7 +1119,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
     .<span class="fu">filter</span>(<span class="kw">function</span>(node) { <span class="kw">return</span> node !== d; })
     .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>)
     .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, nodeRadius);</code></pre></td></tr></table>
-<p>A similar process resets the <code>selected</code> class on all the edges. We can remove the class from all edges first, before we add to the appropriate edges in the previous code fragment. Here’s the code that removes it. With <span class="smcp">D3</span>.js it only takes a single line.</p>
+<p>A similar process resets the <code>selected</code> class on all the edges. We can remove the class from all edges first, before we add to the appropriate edges in the previous code fragment. Here’s the code that removes it. With <span class="smcp">D3</span>.js it takes only a single line:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">edgeSelection</span>.<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>);</code></pre></td></tr></table>
 <p>And finally, if the user clicks on a node that’s already selected, we can restore it to it’s default state.</p>
@@ -1197,8 +1197,8 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 <span class="lgcp">D3</span>.js includes functions to make visualizations interactive.
 </figcaption>
 </figure>
-<h3 id="step-9-the-skys-the-limit">Step 9: The Sky’s the Limit</h3>
-<p>So far our example has explored many of the features that <span class="smcp">D3</span>.js provides for custom visualizations. The code so far, however, has only scratched the surface of <span class="smcp">D3</span>’s capabilities. We haven’t added labels to our graph, nor have we animated the transitions in the graph’s state. In fact, it’s a pretty safe bet that if there is anything we want to add to the visualization, <span class="smcp">D3</span>.js has tools to help. And although we don’t have the time or space to consider other enhancements here, the source code for the book does include a more full-featured implementation that takes advantage of other <span class="smcp">D3</span>.js capabilities.</p>
+<p>Step 9: Experiment with Other Enhancements</p>
+<p>Our example has explored many of the features that <span class="smcp">D3</span>.js provides for custom visualizations. The code so far, however, has only scratched the surface of <span class="smcp">D3</span>’s capabilities. We haven’t added labels to our graph or animated the transitions in the graph’s state. In fact, it’s a pretty safe bet that if there is anything we want to add to the visualization, <span class="smcp">D3</span>.js has tools to help. And although we don’t have the time or space to consider other enhancements here, the source code for the book does include a more full-featured implementation that takes advantage of other <span class="smcp">D3</span>.js capabilities.</p>
 <script>
 ;(function(){
 
@@ -1776,9 +1776,9 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 }());
 </script>
 <h2 id="creating-a-choropleth-map">Creating a Choropleth Map</h2>
-<p>The first two examples touched on some of the capabilities of <span class="smcp">D3</span>.js, but the library includes many others. From the examples of chapter 6, we know some of the best visualizations rely on maps, and <span class="smcp">D3</span>.js—as a general purpose visualization library—has extensive support for mapping. We’ll look at a brief example in this section: a choropleth map of the <span class="smcp">US</span> presidential nominating events. More specifically, we’ll show the Democratic Party’s 2012 nominating events (either primary elections or a caucuses) in each state, and we’ll color the state based on the date of that event.</p>
+<p>The first two examples touched on some of the capabilities of <span class="smcp">D3</span>.js, but the library includes many others. From the examples of chapter 6, we know some of the best visualizations rely on maps, and <span class="smcp">D3</span>.js—as a general-purpose visualization library—has extensive support for mapping. We’ll look at a brief example in this section: a choropleth map of the <span class="smcp">US</span> presidential nominating events. More specifically, we’ll show the Democratic Party’s 2012 nominating events (either primary elections or caucuses) in each state, and we’ll color the state based on the date of that event.</p>
 <h3 id="step-1-prepare-the-data-2">Step 1: Prepare the Data</h3>
-<p>We can get the data for our visualization from the <a href="http://www.ncsl.org/research/elections-and-campaigns/2012-presidential-primary-calendar.aspx">National Conference of State Legislatures</a>. Collecting the data into a JavaScript array gives us the raw data below.</p>
+<p>We can get the data for our visualization from the <a href="http://www.ncsl.org/research/elections-and-campaigns/2012-presidential-primary-calendar.aspx">National Conference of State Legislatures</a>. Collecting that data into a JavaScript array gives us the raw data below.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1820,8 +1820,8 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
   <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
 <h3 id="step-3-create-a-color-scale">Step 3: Create a Color Scale</h3>
-<p>In the first example in this appendix we saw how <span class="smcp">D3</span>.js provides scales to map between data values and (in the case of that example) pixel positions. For this example we can use a scale to map from a data value to a color. The data value will be the date of the nominating event, and the color will range from light to dark blue.</p>
-<p>Since all the nominiating events took place in the first six months of the year, we can set input for our scale (its <em>domain</em>) to be from January 1 to June 30. As you can see from line 2, we’re converting calendar dates to integers. We use <code>new Date()</code> to construct a JavaScript <code>Date</code> object and then convert it to an integer with the plus sign (<code>+</code>). The resulting value is the number of milliseconds since January 1, 1970 <span class="smcp">UTC</span>, although the details aren’t really important in this case.</p>
+<p>In the first example in this chapter we saw how <span class="smcp">D3</span>.js provides scales to map between data values and (in the case of that example) pixel positions. For this example we can use a scale to map from a data value to a color. The data value will be the date of the nominating event, and the color will range from light to dark blue.</p>
+<p>Since all the nominating events took place in the first six months of the year, we can set the input for our scale (its <em>domain</em>) to be from January 1 to June 30. As you can see from line 2, we’re converting calendar dates to integers. We use <code>new Date()</code> to construct a JavaScript <code>Date</code> object and then convert it to an integer with the plus sign (<code>+</code>). The resulting value is the number of milliseconds since January 1, 1970 <span class="smcp">UTC</span>, although the details aren’t really important in this case.</p>
 <p>For the scale’s range in line 3 we’re giving <span class="smcp">D3</span>.js two colors in <span class="smcp">CSS</span> hexidecimal format. <span class="lgcp">D3</span>.js is smart enough to recognize those as a colors and construct the scale accordingly.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1861,7 +1861,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
     .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height);</code></pre></td></tr></table>
 <h3 id="step-6-retrieve-the-map-data">Step 6: Retrieve the Map Data</h3>
 <p>For our visualization, the map data is nothing but a map of the <span class="smcp">US</span> with individual states. <span class="lgcp">D3</span>.js uses <a href="http://geojson.org"><span class="smcp">G</span>eo<span class="smcp">JSON</span></a> for its map data. Unlike most image tiles that we used in chapter 6, <span class="smcp">G</span>eo<span class="smcp">JSON</span> data is vector-based, so it can be used at any scale. <span class="lgcp">G</span>eo<span class="smcp">JSON</span> data is also in <span class="smcp">JSON</span> format, which makes it especially compatible with JavaScript.</p>
-<p>The data file for our map, which you can find with the book’s source code, has the boundaries of all 50 states (plus the District of Columbia) as separate <code>feature</code>s, and each feature includes an <code>abbreviation</code> property of the state’s official two-letter abbreviation.</p>
+<p>The data file for our map, which you can find with the book’s source code, has the boundaries of all 50 states (plus the District of Columbia) as separate <code>feature</code>s, and each feature includes an <code>abbreviation</code> property for the state’s official two-letter abbreviation.</p>
 <p>Since our data is in a <span class="smcp">JSON</span> format, we can use the <code>d3.json()</code> function to retrieve it. If you’re more familiar with jQuery, that function is almost identical to the jQuery <code>$.getJSON()</code> function.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1870,7 +1870,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
     <span class="co">// Process the JSON data</span>
 });</code></pre></td></tr></table>
 <h3 id="step-7-draw-the-map">Step 7: Draw the Map</h3>
-<p>Once we have our data we can draw the map on the page. The code in this step is very similar to that in the previous example. Each state will be a <code>&lt;path&gt;</code> element within the <span class="smcp">SVG</span> container. Using the conventions of <span class="smcp">D3</span>.js, we create a selection of <code>&lt;path&gt;</code> elements (line 1) and bind those elements to our data (line 2). When there is no element we create one (line 3), and we set its <code>d</code> attribute to be the path associated with the data given our projection. Note that <code>path</code> in line 4 is the object we created in step 4.</p>
+<p>Once we have our data, we can draw the map on the page. The code in this step is very similar to that in the previous example. Each state will be a <code>&lt;path&gt;</code> element within the <span class="smcp">SVG</span> container. Using the conventions of <span class="smcp">D3</span>.js, we create a selection of <code>&lt;path&gt;</code> elements (line 1) and bind those elements to our data (line 2). When there is no element we create one (line 3), and we set its <code>d</code> attribute to be the path associated with the data given our projection. Note that <code>path</code> in line 4 is the object we created in step 4.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2025,7 +2025,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 }());
 </script>
 <h2 id="summing-up">Summing Up</h2>
-<p>As we’ve seen in these examples, D3.js is a very powerful library for building JavaScript visualizations. Using it effectively requires a deeper understanding of JavaScript techniques than most of the other libraries we’ve seen in the book. If you make the investment to learn D3.js, though, you’ll have more control and flexibility over the results.</p>
+<p>As we’ve seen in these examples, D3.js is a very powerful library for building JavaScript visualizations. Using it effectively requires a deeper understanding of JavaScript techniques than most of the other libraries we’ve seen in this book. If you make the investment to learn D3.js, though, you’ll have more control and flexibility over the results.</p>
 <p>Continue reading: <a href="apndA.html">Appendix A: Managing Data in the Browser</a>.</p>
 <script src="js/scripts.07.min.js"></script>
         </main>
