@@ -1,10 +1,10 @@
 ## Creating a Choropleth Map
 
-The first two examples touched on some of the capabilities of <span class="smcp">D3</span>.js, but the library includes many others. From the examples of chapter 6, we know some of the best visualizations rely on maps, and <span class="smcp">D3</span>.js—as a general purpose visualization library—has extensive support for mapping. We'll look at a brief example in this section: a choropleth map of the <span class="smcp">US</span> presidential nominating events. More specifically, we'll show the Democratic Party's 2012 nominating events (either primary elections or a caucuses) in each state, and we'll color the state based on the date of that event.
+The first two examples touched on some of the capabilities of <span class="smcp">D3</span>.js, but the library includes many others. From the examples of chapter 6, we know some of the best visualizations rely on maps, and <span class="smcp">D3</span>.js—as a general-purpose visualization library—has extensive support for mapping. We'll look at a brief example in this section: a choropleth map of the <span class="smcp">US</span> presidential nominating events. More specifically, we'll show the Democratic Party's 2012 nominating events (either primary elections or caucuses) in each state, and we'll color the state based on the date of that event.
 
 ### Step 1: Prepare the Data
 
-We can get the data for our visualization from the [National Conference of State Legislatures](http://www.ncsl.org/research/elections-and-campaigns/2012-presidential-primary-calendar.aspx). Collecting the data into a JavaScript array gives us the raw data below.
+We can get the data for our visualization from the [National Conference of State Legislatures](http://www.ncsl.org/research/elections-and-campaigns/2012-presidential-primary-calendar.aspx). Collecting that data into a JavaScript array gives us the raw data below.
 
 ``` {.javascript .numberLines}
 var nominatingEvents = [
@@ -37,9 +37,9 @@ Our skeletal web page is no different from the other <span class="smcp">D3</span
 
 ### Step 3: Create a Color Scale
 
-In the first example in this appendix we saw how <span class="smcp">D3</span>.js provides scales to map between data values and (in the case of that example) pixel positions. For this example we can use a scale to map from a data value to a color. The data value will be the date of the nominating event, and the color will range from light to dark blue.
+In the first example in this chapter we saw how <span class="smcp">D3</span>.js provides scales to map between data values and (in the case of that example) pixel positions. For this example we can use a scale to map from a data value to a color. The data value will be the date of the nominating event, and the color will range from light to dark blue.
 
-Since all the nominiating events took place in the first six months of the year, we can set input for our scale (its _domain_) to be from January 1 to June 30. As you can see from line 2, we're converting calendar dates to integers. We use `new Date()` to construct a JavaScript `Date` object and then convert it to an integer with the plus sign (`+`). The resulting value is the number of milliseconds since January 1, 1970 <span class="smcp">UTC</span>, although the details aren't really important in this case.
+Since all the nominating events took place in the first six months of the year, we can set the input for our scale (its _domain_) to be from January 1 to June 30. As you can see from line 2, we're converting calendar dates to integers. We use `new Date()` to construct a JavaScript `Date` object and then convert it to an integer with the plus sign (`+`). The resulting value is the number of milliseconds since January 1, 1970 <span class="smcp">UTC</span>, although the details aren't really important in this case.
 
 For the scale's range in line 3 we're giving <span class="smcp">D3</span>.js two colors in <span class="smcp">CSS</span> hexidecimal format. <span class="lgcp">D3</span>.js is smart enough to recognize those as a colors and construct the scale accordingly.
 
@@ -84,7 +84,7 @@ var svg = d3.select("#map").append("svg")
 
 For our visualization, the map data is nothing but a map of the <span class="smcp">US</span> with individual states. <span class="lgcp">D3</span>.js uses [<span class="smcp">G</span>eo<span class="smcp">JSON</span>](http://geojson.org) for its map data. Unlike most image tiles that we used in chapter 6, <span class="smcp">G</span>eo<span class="smcp">JSON</span> data is vector-based, so it can be used at any scale. <span class="lgcp">G</span>eo<span class="smcp">JSON</span> data is also in <span class="smcp">JSON</span> format, which makes it especially compatible with JavaScript.
 
-The data file for our map, which you can find with the book's source code, has the boundaries of all 50 states (plus the District of Columbia) as separate `feature`s, and each feature includes an `abbreviation` property of the state's official two-letter abbreviation.
+The data file for our map, which you can find with the book's source code, has the boundaries of all 50 states (plus the District of Columbia) as separate `feature`s, and each feature includes an `abbreviation` property for the state's official two-letter abbreviation.
 
 Since our data is in a <span class="smcp">JSON</span> format, we can use the `d3.json()` function to retrieve it. If you're more familiar with jQuery, that function is almost identical to the jQuery `$.getJSON()` function.
 
@@ -97,7 +97,7 @@ d3.json("data/us-states.json", function(data) {
 
 ### Step 7: Draw the Map
 
-Once we have our data we can draw the map on the page. The code in this step is very similar to that in the previous example. Each state will be a `<path>` element within the <span class="smcp">SVG</span> container. Using the conventions of <span class="smcp">D3</span>.js, we create a selection of `<path>` elements (line 1) and bind those elements to our data (line 2). When there is no element we create one (line 3), and we set its `d` attribute to be the path associated with the data given our projection. Note that `path` in line 4 is the object we created in step 4.
+Once we have our data, we can draw the map on the page. The code in this step is very similar to that in the previous example. Each state will be a `<path>` element within the <span class="smcp">SVG</span> container. Using the conventions of <span class="smcp">D3</span>.js, we create a selection of `<path>` elements (line 1) and bind those elements to our data (line 2). When there is no element we create one (line 3), and we set its `d` attribute to be the path associated with the data given our projection. Note that `path` in line 4 is the object we created in step 4.
 
 ``` {.javascript .numberLines}
 svg.selectAll("path")

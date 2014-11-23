@@ -1,4 +1,4 @@
-## Creating a Force Directed Network Graph
+## Creating a Force-Directed Network Graph
 
 Unlike the JavaScript plotting libraries we considered in the early chapters, <span class="smcp">D3</span>.js is not limited to standard charts. In fact, it excels at specialized and custom graph types. To see its power we'll create another version of the network graph from Chapter 4. In the earlier implementation we used the sigmajs library, and most of our work was structuring the data into the format that library requires. We didn't have to decide how to draw the nodes and edges, how to connect them, or, once we enabled layouts, how to position them on the page. As we'll see below, <span class="smcp">D3</span>.js doesn't make those decisions for us. For this example, we'll have to draw the nodes and edges, connect them to each other appropriately, and position them on the page. That may sound like a lot of work, but, as we'll also see, <span class="smcp">D3</span>.js gives us a lot of tools to help.
 
@@ -29,7 +29,7 @@ var albums = [
   // Data set continues...
 ```
 
-For the visualization it will be helpful to have two separate arrays, one for the graph's nodes and a second for the graph's edges. Extracting those arrays from the original data is straightforward, so we won't bother looking at it in this chapter. You can, however, see the full implementation in the book's source code. The result looks like the following.
+For the visualization it will be helpful to have two separate arrays, one for the graph's nodes and a one for the graph's edges. Extracting those arrays from the original data is straightforward, so we won't bother looking at it in this chapter. You can, however, see the full implementation in the book's source code. The result looks like the following:
 
 ``` {.javascript .numberLines}
 var nodes = [
@@ -90,7 +90,7 @@ The edges indicate the two nodes that they connect as indices in the `nodes` arr
 
 ### Step 2: Set Up the Page
 
-As we noted in the previous example, <span class="smcp">D3</span>.js doesn't depend on any other libraries, and it's available on most content distribution networks. All we need do is include it in the page (line 9). We'll also want to set up a container for the visualization, so our markup includes a `<div>` with the id `"container"` on line 8.
+As we noted in the previous example, <span class="smcp">D3</span>.js doesn't depend on any other libraries, and it's available on most content distribution networks. All we need to do is include it in the page (line 9). We'll also want to set up a container for the visualization, so our markup includes a `<div>` with the id `"container"` on line 8.
 
 ``` {.html .numberLines .line-8 .line-9}
 <!DOCTYPE html>
@@ -110,7 +110,7 @@ As we noted in the previous example, <span class="smcp">D3</span>.js doesn't dep
 
 ### Step 3: Create a Stage for the Visualization
 
-This step is also the same as the previous example. We ask <span class="smcp">D3</span>.js to select the container element and then insert an `<svg>` element within it. In addition to appending the `<svg>` element, we can define its size by setting the `height` and `width` attributes.
+This step is also the same as in the previous example. We ask <span class="smcp">D3</span>.js to select the container element and then insert an `<svg>` element within it. In addition to appending the `<svg>` element, we can define its size by setting the `height` and `width` attributes.
 
 ``` {.javascript .numberLines}
 var svg = d3.select("#container").append("svg")
@@ -120,7 +120,7 @@ var svg = d3.select("#container").append("svg")
 
 ### Step 4: Draw the Graph's Nodes
 
-We're going to draw each node as a circle, and that's as simple as appending `<circle>` elements inside the `<svg>` stage. Based on the previous step, you might think that would be as simple as executing `svg.append("circle")` for each element in the `nodes` array.
+We’ll draw each node as a circle by appending `<circle>` elements inside the `<svg>` stage. Based on the previous step, you might think that would be as simple as executing `svg.append("circle")` for each element in the `nodes` array.
 
 ``` {.javascript .numberLines}
 nodes.forEach(function(node) {
@@ -130,7 +130,7 @@ nodes.forEach(function(node) {
 
 That code will indeed add 25 circles to the visualization. What it won't do, though, is create any links between the data (nodes in the array) and the document (circle elements on the page). <span class="lgcp">D3</span>.js has another way to add the circles to the page that does create that linkage. In fact, not only will <span class="smcp">D3</span>.js create the links, it will even manage them for us. This support becomes especially valuable as visualizations grow more complex.
 
-> This feature is really the _core_ of <span class="smcp">D3</span>.js, and it is, in fact, the source for the name "<span class="smcp">D3</span>" which is shorthand for "Data Driven Documents."
+> Note: This feature is really the _core_ of <span class="smcp">D3</span>.js, and is, in fact, the source for the name "<span class="smcp">D3</span>" which is shorthand for "Data Driven Documents."
 
 Here's how we can use <span class="smcp">D3</span>.js more effectively to add the `<circle>` elements to the graph.
 
@@ -141,7 +141,7 @@ var selection = svg.selectAll("circle")
 selection.enter().append("circle");
 ```
 
-For those of you that haven't seen <span class="smcp">D3</span>.js code before, that fragment surely looks very strange. What are we trying to do by selecting `<circle>` elements before we've even created any? Won't the result just be empty? And if so, what's the point of the `data()` function that follows? To answer those questions, we have to understand how <span class="smcp">D3</span>.js differs from traditional JavaScript libraries like jQuery. In those libraries a selection represents elements of <span class="smcp">HTML</span> markup. With jQuery, `$("circle")` is nothing more than the `<circle>` elements in the page. With <span class="smcp">D3</span>.js, however, selections are more than just markup elements. <span class="lgcp">D3</span>.js selections can contain both markup _and_ data.
+If you haven't seen <span class="smcp">D3</span>.js code before, that fragment surely looks very strange. What are we trying to do by selecting `<circle>` elements before we've even created any? Won't the result just be empty? And if so, what's the point of the `data()` function that follows? To answer those questions, we have to understand how <span class="smcp">D3</span>.js differs from traditional JavaScript libraries like jQuery. In those libraries a selection represents elements of <span class="smcp">HTML</span> markup. With jQuery, `$("circle")` is nothing more than the `<circle>` elements in the page. With <span class="smcp">D3</span>.js, however, selections are more than just markup elements. <span class="lgcp">D3</span>.js selections can contain both markup _and_ data.
 
 <span class="lgcp">D3</span>.js puts markup elements and data objects together with the `data()` function. The object on which it operates (`svg.selectAll("circle")` above) supplies the elements, and its parameter (`nodes` above) provides the data. The first statement in the fragment, therefore, tells <span class="smcp">D3</span>.js that we want to match `<circle>` elements with nodes in our graph. We are, in effect, saying that we want one `<circle>` to represent each value in the `nodes` array.
 
@@ -516,14 +516,14 @@ In general, though, we can't guarantee that there will be exactly as many elemen
 <tspan x="21.44" y="55">&lt;circle&gt;</tspan>
 </text>
 </svg>
-<figcaption><span class="lgcp">D3</span>.js selections keep track of page content that doesn't exist (yet).</figcaption>
+<figcaption><span class="lgcp">D3</span>.js selections keep track of page content that doesn’t exist (yet).</figcaption>
 </figure>
 
 Our code fragment is an even more extreme example. When it executes, there are absolutely no circles on the page. There are, however, values in the `nodes` array that we're telling <span class="smcp">D3</span>.js to use as data. <span class="lgcp">D3</span>.js, therefore, creates an object for each of those data values. It just won't have a `<circle>` element to go with them.
 
 (Take a breath because magic is about to happen.)
 
-Now we can look at the second statement in our code fragment. It starts out `selection.enter()`. The `enter()` function is a special <span class="smcp">D3</span>.js function. It tells <span class="smcp">D3</span>.js to search through the selection and find all of the objects that have a data value _but no markup element._ We then complete the statement by taking that subset of the selection and calling `append("circle")`. And with that function call <span class="smcp">D3</span>.js will take any object in the selection without a markup element and create a circle for it. That's how we add `<circle>` elements to the graph.
+Now we can look at the second statement in our code fragment. It starts with `selection.enter()`. The `enter()` function is a special <span class="smcp">D3</span>.js function. It tells <span class="smcp">D3</span>.js to search through the selection and find all of the objects that have a data value _but no markup element._ We then complete the statement by taking that subset of the selection and calling `append("circle")`. And with that function call, <span class="smcp">D3</span>.js will take any object in the selection without a markup element and create a circle for it. That's how we add `<circle>` elements to the graph.
 
 To be a little more concise, we can combine our two statements into a single one. The effect, for our visualization is to create a `<circle>` within the `<svg>` container for every node in the graph.
 
@@ -543,7 +543,7 @@ var edgeSelection = svg.selectAll("line")
     .enter().append("line");
 ```
 
-> Even though we won't need to use them for this example, <span class="smcp">D3</span>.js has other functions that complement the `enter()` function. To find objects that have a markup element but no data value, you can use the function `exit()`. And to find objects that have a markup element with a data value that has changed, you can use the function `update()`. The names _enter_ and _exit_ derive from a theater metaphor that <span class="smcp">D3</span>.js associates with a visualization. The `enter()` subset represents those elements that are _entering_ the stage, while the `exit()` subset represents elements leaving, or _exiting,_ the stage.
+> Note: Even though we won't need to use them for this example, <span class="smcp">D3</span>.js has other functions that complement the `enter()` function. To find objects that have a markup element but no data value, you can use the function `exit()`. And to find objects that have a markup element with a data value that has changed, you can use the function `update()`. The names _enter_ and _exit_ derive from a theater metaphor that <span class="smcp">D3</span>.js associates with a visualization. The `enter()` subset represents those elements that are _entering_ the stage, while the `exit()` subset represents elements leaving, or _exiting,_ the stage.
 
 Because we're using <span class="smcp">SVG</span> elements for both the nodes and the edges, we can use <span class="smcp">CSS</span> rules to style them. That's especially important for the edges because, by default, <span class="smcp">SVG</span> lines have a stroke width of 0.
 
@@ -562,9 +562,9 @@ line {
 
 ### Step 6: Position the Elements
 
-At this point we've added the necessary markup elements to our visualization, but we haven't given them any dimensions or positions. As we've noted before, <span class="smcp">D3</span>.js doesn't do any drawing, so we'll have to write the code to do it. As noted in step 2, we did assign somewhat arbitrary positions to the nodes by arranging them in a circle. For now, we can use that to position them.
+At this point we've added the necessary markup elements to our visualization, but we haven't given them any dimensions or positions. As noted before, <span class="smcp">D3</span>.js doesn't do any drawing, so we'll have to write the code to do it. And as noted in step 2, we did assign somewhat arbitrary positions to the nodes by arranging them in a circle. For now, we can use that to position them.
 
-To position an <span class="smcp">SVG</span> circle we set its `cx` and `cy` attributes to correspond to the circle's center. We also specify the circle's radius with the `r` attribute. Let's start with the radius; we'll set it to a fixed value for all nodes. We've already created a <span class="smcp">D3</span>.js selection for all of those nodes. Setting their `r` attributes is a simple statement.
+To position an <span class="smcp">SVG</span> circle we set its `cx` and `cy` attributes to correspond to the circle's center. We also specify the circle's radius with the `r` attribute. Let's start with the radius; we'll set it to a fixed value for all nodes. We've already created a <span class="smcp">D3</span>.js selection for all of those nodes. Setting their `r` attributes is a simple statement:
 
 ``` {.javascript .numberLines}
 nodeSelection.attr('r', 10);
@@ -609,11 +609,11 @@ line {
 <figcaption><span class="lgcp">D3</span>.js provides tools to help draw the circles and lines for a network graph.</figcaption>
 </figure>
 
-### Step 7: Add Force-Direction to the Graph
+### Step 7: Add Force Direction to the Graph
 
-The graph has all the essential components, but its layout doesn't make identifying the connections as easy as we'd like. In chapter 4's example the sigmajs library could automate the layout with only took a couple of lines of JavaScript. To perform that automation, sigmajs uses a force-direction algorithm. Force-direction treats nodes as physical object and simulates the effect of forces such as gravity and electromagnetism.
+The graph has all the essential components, but its layout doesn't make identifying the connections as easy as we'd like. In chapter 4's example the sigmajs library could automate the layout with only a couple of lines of JavaScript. To perform that automation, sigmajs uses a force-direction algorithm. Force direction treats nodes as physical objects and simulates the effect of forces such as gravity and electromagnetism.
 
-With <span class="smcp">D3</span>.js we cannot rely on the library to fully automate the layout. As we've seen, <span class="smcp">D3</span>.js does not draw any of the graph elements, so it cannot, by itself, set positions and dimensions. <span class="lgcp">D3</span>.js does, however, provide a lot of tools to help us create our own graph layouts. One of those tools is the _force layout._ As you might expect, the force layout tool helps us draw our own force-directed graph. It handles all of the messy and complex calculations that underly force-direction and gives us results we can use directly in code that draws the graph.
+With <span class="smcp">D3</span>.js we cannot rely on the library to fully automate the layout. As we've seen, <span class="smcp">D3</span>.js does not draw any of the graph elements, so it cannot, by itself, set positions and dimensions. <span class="lgcp">D3</span>.js does, however, provide a lot of tools to help us create our own graph layouts. One of those tools is the _force layout._ As you might expect, the force layout tool helps us draw our own force-directed graph. It handles all of the messy and complex calculations that underlie force direction and gives us results we can use directly in code that draws the graph.
 
 To get started with the layout, we define a new `force` object. That object accepts many configuration parameters, but only five are essential for our visualization.
 
@@ -631,10 +631,10 @@ var force = d3.layout.force()
     .nodes(nodes)
     .links(edges)
     .linkDistance(40)
-    .force(-500);
+    .charge(-500);
 ```
 
-When we tell <span class="smcp">D3</span>.js to start its force-direction calculations, it will generate events at intermediate steps and when the calculations complete. Force-direction often takes several seconds to execute fully, and if we wait until the calculations are complete before we draw the graph, our users may think the browser has frozen. It's usually better to update the graph at each iteration so users see some indication of progress. To do that, we can add a function to respond to the intermediate force layout calculations. That happens on a <span class="smcp">D3</span>.js `tick` event.
+When we tell <span class="smcp">D3</span>.js to start its force direction calculations, it will generate events at intermediate steps and when the calculations complete. Force direction often takes several seconds to execute fully, and if we wait until the calculations are complete before we draw the graph, users may think the browser has frozen. It's usually better to update the graph at each iteration so users see some indication of progress. To do that, we can add a function to respond to the intermediate force layout calculations. That happens on a <span class="smcp">D3</span>.js `tick` event.
 
 ``` {.javascript .numberLines}
 force.on('tick', function() {
@@ -642,7 +642,7 @@ force.on('tick', function() {
 });
 ```
 
-Each time <span class="smcp">D3</span>.js calls our event handler function, it will have updated the `x` and `y` properties of the `nodes` array. The new values will reflect how the force-direction has nudged the nodes on the graph's stage. We can update our graph accordingly by changing the <span class="smcp">SVG</span> attributes of the circles and lines. Before we do that, however, we can take advantage of the fact that <span class="smcp">D3</span>.js is giving us an opportunity to tweak the force-layout algorithm as it executes. One problem that we may encounter, especially with the large charge force we defined, is that nodes may repel each other so strongly that some tend to drift off the stage entirely. We can prevent that by ensuring that the node positions remain within the dimensions of the graph.
+Each time <span class="smcp">D3</span>.js calls our event handler function, it will have updated the `x` and `y` properties of the `nodes` array. The new values will reflect how the force direction has nudged the nodes on the graph's stage. We can update our graph accordingly by changing the <span class="smcp">SVG</span> attributes of the circles and lines. Before we do that, however, we can take advantage of the fact that <span class="smcp">D3</span>.js is giving us an opportunity to tweak the force layout algorithm as it executes. One problem that we may encounter, especially with the large charge force we defined, is that nodes may repel each other so strongly that some tend to drift off the stage entirely. We can prevent that by ensuring that the node positions remain within the dimensions of the graph.
 
 ``` {.javascript .numberLines}
 force.on('tick', function() {
@@ -667,7 +667,7 @@ nodeSelection
     .attr('cy', function(d) { return d.y; });
 ```
 
-We'll also want to adjust the end points of our edge lines. For these objects, however, there's a small twist. When we initialized the `edges` array, we set the `source` and `target` properties to the indices of the respective nodes in the `nodes` array. When the <span class="smcp">D3</span>.js force layout begins execution, it replaces those indices with direct references to the nodes themselves. That makes it a little easier for us to find the appropriate coordinates for the lines.
+We'll also want to adjust the endpoints of our edge lines. For these objects, however, there's a small twist. When we initialized the `edges` array, we set the `source` and `target` properties to the indices of the respective nodes in the `nodes` array. When the <span class="smcp">D3</span>.js force layout begins execution, it replaces those indices with direct references to the nodes themselves. That makes it a little easier for us to find the appropriate coordinates for the lines.
 
 ``` {.javascript .numberLines}    
 edgeSelection
@@ -713,7 +713,7 @@ For our visualization we'll emphasize the clicked node by added a <span class="s
     .attr('r', 1.5*nodeRadius);
 ```
 
-We can do something similar by adding a `selected` class to all the edges that connect to the clicked node. To find those edges we can iterate through the full edge selection. <span class="lgcp">D3</span>.js has the `each()` function to do just that. As we look at each edge we check the `source` and `target` properties to see if either matches our clicked node. When we find a match, we add the `selected` class to the edge. Note that in line 3 we're once again using `d3.select(this)`. In this case the code is inside of the `each()` function, so `this` will equal the particular element of the current iteration. In our case that's the `<line>` for the edge.
+We can do something similar by adding a `selected` class to all the edges that connect to the clicked node. To find those edges we can iterate through the full edge selection. <span class="lgcp">D3</span>.js provides the `each()` function to do just that. As we look at each edge we check the `source` and `target` properties to see if either matches our clicked node. When we find a match, we add the `selected` class to the edge. Note that in line 3 we're once again using `d3.select(this)`. In this case the code is inside of the `each()` function, so `this` will equal the particular element of the current iteration. In our case that's the `<line>` for the edge.
 
 ``` {.javascript .numberLines .line-3}
 edgeSelection.each(function(edge) {
@@ -732,7 +732,7 @@ nodeSelection
     .attr('r', nodeRadius);
 ```
 
-A similar process resets the `selected` class on all the edges. We can remove the class from all edges first, before we add to the appropriate edges in the previous code fragment. Here's the code that removes it. With <span class="smcp">D3</span>.js it only takes a single line.
+A similar process resets the `selected` class on all the edges. We can remove the class from all edges first, before we add to the appropriate edges in the previous code fragment. Here's the code that removes it. With <span class="smcp">D3</span>.js it takes only a single line:
 
 ``` {.javascript .numberLines}
 edgeSelection.classed('selected', false);
@@ -791,10 +791,9 @@ Along with a bit of <span class="smcp">CSS</span> styling to emphasize the selec
 <figcaption><span class="lgcp">D3</span>.js includes functions to make visualizations interactive.</figcaption>
 </figure>
 
+Step 9: Experiment with Other Enhancements
 
-### Step 9: The Sky's the Limit
-
-So far our example has explored many of the features that <span class="smcp">D3</span>.js provides for custom visualizations. The code so far, however, has only scratched the surface of <span class="smcp">D3</span>'s capabilities. We haven't added labels to our graph, nor have we animated the transitions in the graph's state. In fact, it's a pretty safe bet that if there is anything we want to add to the visualization, <span class="smcp">D3</span>.js has tools to help. And although we don't have the time or space to consider other enhancements here, the source code for the book does include a more full-featured implementation that takes advantage of other <span class="smcp">D3</span>.js capabilities.
+Our example has explored many of the features that <span class="smcp">D3</span>.js provides for custom visualizations. The code so far, however, has only scratched the surface of <span class="smcp">D3</span>'s capabilities. We haven't added labels to our graph or animated the transitions in the graph's state. In fact, it's a pretty safe bet that if there is anything we want to add to the visualization, <span class="smcp">D3</span>.js has tools to help. And although we don't have the time or space to consider other enhancements here, the source code for the book does include a more full-featured implementation that takes advantage of other <span class="smcp">D3</span>.js capabilities.
 
 
 <script>

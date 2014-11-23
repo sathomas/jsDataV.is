@@ -138,7 +138,7 @@ For the last step in this example, we'll add appropriate labels to the chart. Th
 
 ``` {.javascript .numberLines .line-26}
 Flotr.draw(
-    document.getElementById("line-chart5"),
+    document.getElementById("chart"),
     [ {
         data: zero,
         label: "20<sup>th</sup> Century Baseline Temperature",
@@ -161,9 +161,9 @@ Flotr.draw(
     {
         title: "Global Temperature and CO2 Concentration (NOAA Data)",
         grid: {horizontalLines: false, verticalLines: false},
-        yaxis: {min: 300, max: 400},
-        y2axis: {min: -0.15, max: 0.69, 
-                tickFormatter: function(val) {return val+" °C";}}
+        yaxis: {min: -0.15, max: 0.69, 
+                tickFormatter: function(val) {return val+" °C";}},
+        y2axis: {min: 300, max: 400}
     }
 );
 ```

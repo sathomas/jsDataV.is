@@ -1,4 +1,0 @@
-
-## Summing Up
-
-In this chapter we've seen how to build an entire web application based on data and data visualizations. To help organize and coordinate our application we based it on the Backbone.js library, and we relied on the Yeoman tool to create the application's scaffolding and boilerplate code and templates. Backbone.js lets us separate our application into models and views so that the code responsible for managing the data doesn't have to worry about how that data is presented (and vice versa). It also gives us the flexibility to interact with <span class="smcp">REST</span> <span class="smcp">API</span>s that don't quite follow the normal conventions. The final Backbone.js component that we considered, the router, provided the support we needed to make sure our single page application behaves like a full web site so that our users can interact with it just as they would expect.

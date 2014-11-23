@@ -1,6 +1,6 @@
 {
 "CodeKitInfo": "This is a CodeKit 2.x project configuration file. It is designed to sync project settings across multiple machines. MODIFYING THE CONTENTS OF THIS FILE IS A POOR LIFE DECISION. If you do so, you will likely cause CodeKit to crash. This file is not useful unless accompanied by the project that created it in CodeKit 2. This file is not backwards-compatible with CodeKit 1.x. For more information, see: http:\/\/incident57.com\/codekit",
-"creatorBuild": "18027",
+"creatorBuild": "18268",
 "files": {
 	"\/bower_components\/backbone\/backbone.js": {
 		"fileType": 64,
@@ -4926,12 +4926,21 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
-	"\/build\/apnd.kit": {
+	"\/build\/apndA.kit": {
 		"fileType": 2048,
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/build\/apnd.kit",
-		"outputAbbreviatedPath": "\/Users\/Stephen\/Documents\/Development\/apnd.html",
+		"inputAbbreviatedPath": "\/build\/apndA.kit",
+		"outputAbbreviatedPath": "\/Users\/Stephen\/Documents\/Development\/apndA.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/build\/apndB.kit": {
+		"fileType": 2048,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/build\/apndB.kit",
+		"outputAbbreviatedPath": "\/Users\/Stephen\/Documents\/Development\/apndB.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -4995,15 +5004,6 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/build\/chap07.kit",
 		"outputAbbreviatedPath": "\/Users\/Stephen\/Documents\/Development\/chap07.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/build\/chap08.kit": {
-		"fileType": 2048,
-		"ignore": 1,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/build\/chap08.kit",
-		"outputAbbreviatedPath": "\/Users\/Stephen\/Documents\/Development\/chap08.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -5874,12 +5874,21 @@
 		"strictMath": 0,
 		"strictUnits": 0
 		},
-	"\/src\/templates\/apnd.kit": {
+	"\/src\/templates\/apndA.kit": {
 		"fileType": 2048,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/templates\/apnd.kit",
-		"outputAbbreviatedPath": "\/release\/apnd.html",
+		"inputAbbreviatedPath": "\/src\/templates\/apndA.kit",
+		"outputAbbreviatedPath": "\/release\/apndA.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 1
+		},
+	"\/src\/templates\/apndB.kit": {
+		"fileType": 2048,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/templates\/apndB.kit",
+		"outputAbbreviatedPath": "\/release\/apndB.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1
 		},
@@ -5946,15 +5955,6 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1
 		},
-	"\/src\/templates\/chap08.kit": {
-		"fileType": 2048,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/src\/templates\/chap08.kit",
-		"outputAbbreviatedPath": "\/release\/chap08.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 1
-		},
 	"\/src\/templates\/header.kit": {
 		"fileType": 2048,
 		"ignore": 1,
@@ -6000,75 +6000,159 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apnd\/00-intro.md": {
+	"\/src\/text\/apA\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apnd\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/apnd\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/apA\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/apA\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apnd\/01-functional-programming.md": {
+	"\/src\/text\/apA\/01-functional-programming.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apnd\/01-functional-programming.md",
-		"outputAbbreviatedPath": "\/src\/text\/apnd\/01-functional-programming.html",
+		"inputAbbreviatedPath": "\/src\/text\/apA\/01-functional-programming.md",
+		"outputAbbreviatedPath": "\/src\/text\/apA\/01-functional-programming.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apnd\/02-arrays.md": {
+	"\/src\/text\/apA\/02-arrays.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apnd\/02-arrays.md",
-		"outputAbbreviatedPath": "\/src\/text\/apnd\/02-arrays.html",
+		"inputAbbreviatedPath": "\/src\/text\/apA\/02-arrays.md",
+		"outputAbbreviatedPath": "\/src\/text\/apA\/02-arrays.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apnd\/03-objects.md": {
+	"\/src\/text\/apA\/03-objects.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apnd\/03-objects.md",
-		"outputAbbreviatedPath": "\/src\/text\/apnd\/03-objects.html",
+		"inputAbbreviatedPath": "\/src\/text\/apA\/03-objects.md",
+		"outputAbbreviatedPath": "\/src\/text\/apA\/03-objects.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apnd\/04-collections.md": {
+	"\/src\/text\/apA\/04-collections.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apnd\/04-collections.md",
-		"outputAbbreviatedPath": "\/src\/text\/apnd\/04-collections.html",
+		"inputAbbreviatedPath": "\/src\/text\/apA\/04-collections.md",
+		"outputAbbreviatedPath": "\/src\/text\/apA\/04-collections.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apnd\/99-conclusion.md": {
+	"\/src\/text\/apA\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apnd\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/apnd\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/apA\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/apA\/99-conclusion.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/apB\/00-intro.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/text\/apB\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/apB\/00-intro.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/apB\/01-framework.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/text\/apB\/01-framework.md",
+		"outputAbbreviatedPath": "\/src\/text\/apB\/01-framework.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/apB\/02-modelsviews.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/text\/apB\/02-modelsviews.md",
+		"outputAbbreviatedPath": "\/src\/text\/apB\/02-modelsviews.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/apB\/03-vizviews.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/text\/apB\/03-vizviews.md",
+		"outputAbbreviatedPath": "\/src\/text\/apB\/03-vizviews.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/apB\/04-restapi.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/text\/apB\/04-restapi.md",
+		"outputAbbreviatedPath": "\/src\/text\/apB\/04-restapi.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/apB\/05-routes.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/text\/apB\/05-routes.md",
+		"outputAbbreviatedPath": "\/src\/text\/apB\/05-routes.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/apB\/99-conclusion.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 1,
+		"inputAbbreviatedPath": "\/src\/text\/apB\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/apB\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -6600,90 +6684,6 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch8\/00-intro.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/00-intro.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch8\/01-framework.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/01-framework.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/01-framework.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch8\/02-modelsviews.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/02-modelsviews.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/02-modelsviews.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch8\/03-vizviews.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/03-vizviews.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/03-vizviews.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch8\/04-restapi.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/04-restapi.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/04-restapi.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch8\/05-routes.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/05-routes.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/05-routes.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
-	"\/src\/text\/ch8\/99-conclusion.md": {
-		"enableFootnoteSupport": 0,
-		"enableSmartyPants": 1,
-		"expandTabs": 1,
-		"fileType": 4096,
-		"ignore": 1,
-		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch8\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch8\/99-conclusion.html",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0
-		},
 	"\/src\/text\/intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
@@ -7099,6 +7099,10 @@
 			"flagValue": -1
 			},
 		"shelljs": {
+			"active": 0,
+			"flagValue": -1
+			},
+		"singleGroups": {
 			"active": 0,
 			"flagValue": -1
 			},

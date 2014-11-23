@@ -16,7 +16,7 @@ var arr = [1,2,3,4,5,6,7,8,9];
 <figcaption>Underscore has many utilities to make it easy to work with arrays.</figcaption>
 </figure>
 
-Underscore's  provides `first()` method a simple way to extract the first element of an array, or the first _n_ elements.
+Underscore's  `first()` method provides a simple way to extract the first element of an array, or the first _n_ elements.
 
 ``` {.javascript}
 > _(arr).first()
@@ -168,7 +168,7 @@ If you need to eliminate duplicate elements but only have one array (making `uni
 
 Finally, Underscore.js has a `zip()` method. It's name doesn't come from the popular compression algorithm but, rather, because it acts a bit like a zipper. It takes multiple input arrays and combines them, element by element, into an output array. That output is an array of arrays, where the inner arrays are the combined elements.
 
-The operations is perhaps most clearly understood through a picture.
+The operation is perhaps most clearly understood through a picture.
 
 <figure style="margin-left:0;margin-right:0;">
 ![](img/underscore.arrs.zip.svg)
@@ -190,10 +190,10 @@ One of the banes of visualization applications is invalid data values. Although 
 
 To avoid such an unpleasant error, we should validate all data sets and remove invalid values before we pass the data to graphing or charting libraries. Underscore.js has several utilities to help.
 
-The simplest of these Underscore.js methods is `compact()`. This function removes any data values that JavaScript treats as `false` from the input arrays. Eliminated values include the boolean value `false`, the numeric value `0`, an empty string, and the special values `NaN` (not a number, for example `1/0`) and `undefined`.
+The simplest of these Underscore.js methods is `compact()`. This function removes any data values that JavaScript treats as `false` from the input arrays. Eliminated values include the boolean value `false`, the numeric value `0`, an empty string, and the special values `NaN` (not a number, for example `1/0`), `undefined`, and `null`.
 
 ``` {.javascript}
-> var raw = [0, 1, false, 2, "", 3, NaN, 4, , 5];
+> var raw = [0, 1, false, 2, "", 3, NaN, 4, , 5, null];
 > _(raw).compact()
   [1, 2, 3, 4, 5]
 ```

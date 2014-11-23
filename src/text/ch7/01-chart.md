@@ -1,10 +1,10 @@
 ## Creating a Custom Chart
 
-The most significant difference between <span class="smcp">D3</span>.js and other JavaScript libraries is its philosophy. <span class="lgcp">D3</span>.js is not a tool for creating pre-defined types of charts and visualizations. It is, instead, a library to help with the creation of any visualization, including custom and unique presentations. It takes more effort to create a standard chart with <span class="smcp">D3</span>.js, but by using <span class="smcp">D3</span>.js we're not limited to standard charts. To get a sense of how <span class="smcp">D3</span>.js works, we can create a custom chart that wouldn't be possible with a typical charting library.
+The most significant difference between <span class="smcp">D3</span>.js and other JavaScript libraries is its philosophy. <span class="lgcp">D3</span>.js is not a tool for creating predefined types of charts and visualizations. Instead, it’s a library to help your create any visualization, including custom and unique presentations. It takes more effort to create a standard chart with <span class="smcp">D3</span>.js, but by using it we're not limited to standard charts. To get a sense of how <span class="smcp">D3</span>.js works, we can create a custom chart that wouldn't be possible with a typical charting library.
 
-For this example, we'll visualize one of the most important findings in modern physics—Hubble's Law. According to that law, the universe is expanding. As a result, the speed at which we perceive distant galaxies to be moving varies according to their distance from us. More precisely, Hubble's Law proposes that the variation, or shift, in this speed is a linear function of distance. To visualize the law, we can chart the speed variation (known as _red shift velocity_) vs. distance for several galaxies. If Hubble is right the chart should look like a line. For our data, we'll use galaxies and clusters from Hubble's original [1929 paper](http://www.pnas.org/content/15/3/168.full), but updated with current values for distance and red shift velocities.
+For this example, we'll visualize one of the most important findings in modern physics—Hubble's Law. According to that law, the universe is expanding, and as a result, the speed at which we perceive distant galaxies to be moving varies according to their distance from us. More precisely, Hubble's Law proposes that the variation, or shift, in this speed is a linear function of distance. To visualize the law, we can chart the speed variation (known as _red shift velocity_) versus distance for several galaxies. If Hubble is right the chart should look like a line. For our data, we'll use galaxies and clusters from Hubble's original [1929 paper](http://www.pnas.org/content/15/3/168.full) but updated with current values for distance and red shift velocities.
 
-So far this task seems like a good match for a scatter plot. Distance could serve as the x-axis and velocity the y-axis. There's a twist, though; physicists don't actually know the distances or velocities that we want to chart, at least not exactly. The best they can do is estimate those values, and there is potential for error in both. But that's no reason to abandon the effort. In fact, potential errors in the values might be an important aspect for the visualization to highlight. To do that, we won't draw each value as a point. Rather, we'll show it as a box, and the box dimensions will correspond to the potential errors in the value.
+So far this task seems like a good match for a scatter plot. Distance could serve as the x-axis and velocity the y-axis. There's a twist, though: physicists don't actually know the distances or velocities that we want to chart, at least not exactly. The best they can do is estimate those values, and there is potential for error in both. But that's no reason to abandon the effort. In fact, potential errors in the values might be an important aspect for us to highlight in our visualization. To do that, we won't draw each value as a point. Rather, we'll show it as a box, and the box dimensions will correspond to the potential errors in the value.
 
 ### Step 1: Prepare the Data
 
@@ -41,7 +41,7 @@ hubble_data = [
 
 ### Step 2: Set Up the Web Page
 
-<span class="lgcp">D3</span>.js doesn't depend on any other libraries, and it's available on most content distribution networks. All we need do is include it in the page (line 9). We'll also want to set up a container for the visualization, so our markup includes a `<div>` with the id `"container"` on line 8.
+<span class="lgcp">D3</span>.js doesn't depend on any other libraries, and it's available on most content distribution networks. All we need to do is include it in the page (line 9). We'll also want to set up a container for the visualization, so our markup includes a `<div>` with the id `"container"` on line 8.
 
 ``` {.html .numberLines .line-8 .line-9}
 <!DOCTYPE html>
@@ -61,16 +61,16 @@ hubble_data = [
 
 ### Step 3: Create a Stage for the Visualization
 
-Unlike higher level libraries, <span class="smcp">D3</span>.js doesn't draw the visualization on the page. We'll have to do that ourselves. In exchange for the additional effort, though, we do get the freedom to pick our own drawing technology. We could follow the same approach as most libraries in this book and use <span class="smcp">HTML5</span>'s `<canvas>` element, or we could simply use native <span class="smcp">HTML</span>. After seeing it in action in chapter 6, however, it seems Scalable Vector Graphics (<span class="smcp">SVG</span>) is the best approach for our chart. The root of our graph, therefore, will be an `<svg>` element, and we need to add that to the page. We can define its dimensions at the same time using attributes.
+Unlike higher-level libraries, <span class="smcp">D3</span>.js doesn't draw the visualization on the page. We'll have to do that ourselves. In exchange for the additional effort, though, we get the freedom to pick our own drawing technology. We could follow the same approach as most libraries in this book and use <span class="smcp">HTML5</span>'s `<canvas>` element, or we could simply use native <span class="smcp">HTML</span>. Now that we’ve seen it in action in chapter 6, however, it seems Scalable Vector Graphics (<span class="smcp">SVG</span>) is the best approach for our chart. The root of our graph, therefore, will be an `<svg>` element, and we need to add that to the page. We can define its dimensions at the same time using attributes.
 
-If we were using jQuery, we might do something like the following.
+If we were using jQuery, we might do something like the following:
 
 ``` {.javascript .numberLines}
 var svg = $("<svg>").attr("height", height).attr("width", width);
 $("#container").append(svg);
 ```
 
-With <span class="smcp">D3</span>.js our code is very similar.
+With <span class="smcp">D3</span>.js our code is very similar:
 
 ``` {.javascript .numberLines}
 var svg = d3.select("#container").append("svg")
@@ -78,9 +78,9 @@ var svg = d3.select("#container").append("svg")
     .attr("width", width);
 ```
 
-With that statement we're selecting the container, appending an `<svg>` element to it, and setting the attributes of that `<svg>` element. This statement does highlight one important difference between <span class="smcp">D3</span>.js and jQuery that often trips up developers starting out with <span class="smcp">D3</span>.js. In jQuery the `append()` method returns the original selection so that you can continue operating on that selection. More specifically, `$("#container").append(svg)` returns `$("#container")`.
+With this statement we're selecting the container, appending an `<svg>` element to it, and setting the attributes of that `<svg>` element. This statement highlights one important difference between <span class="smcp">D3</span>.js and jQuery that often trips up developers starting out with <span class="smcp">D3</span>.js. In jQuery the `append()` method returns the original selection so that you can continue operating on that selection. More specifically, `$("#container").append(svg)` returns `$("#container")`.
 
-With <span class="smcp">D3</span>.js, on the other hand, `append()` returns a different selection, the newly appended element(s). So `d3.select("#container").append("svg")` doesn't return the container selection but, rather, a selection of the new `<svg>` element. The `attr()` calls that follow, therefore, apply to the `<svg>` element and not the `"#container"`.
+With <span class="smcp">D3</span>.js, on the other hand, `append()` returns a different selection, the newly appended element(s). So `d3.select("#container").append("svg")` doesn't return the container selection but rather a selection of the new `<svg>` element. The `attr()` calls that follow, therefore, apply to the `<svg>` element and not the `"#container"`.
 
 ### Step 4: Control the Chart's Dimensions
 
@@ -109,9 +109,9 @@ var chart = svg.append("g")
     );
 ```
 
-Visualizations must often re-scale the source data. In our case, we'll need to re-scale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, we want to scale galactic distance to between 0 and 920 pixels. Since this type of requirement is common for visualizations, <span class="smcp">D3</span>.js has tools to help. Not surprisingly, they're `scale` objects. We'll create scales for both the x- and the y-dimensions.
+Visualizations must often rescale the source data. In our case, we'll need to rescale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, galactic distance should be scaled between 0 and 920 pixels. Since this type of requirement is common for visualizations, <span class="smcp">D3</span>.js has tools to help. Not surprisingly, they're `scale` objects. We'll create scales for both the x- and the y-dimensions.
 
-As the code below indicates, both of our scales are linear scales. Linear transformations are pretty simple (and we really don't need <span class="smcp">D3</span>.js to manage them); however, <span class="smcp">D3</span>.js supports other types of scales that can be quite complex. With <span class="smcp">D3</span>.js using more sophisticated scaling is just as easy as linear scales.
+As the code below indicates, both of our scales are linear. Linear transformations are pretty simple (and we really don't need <span class="smcp">D3</span>.js to manage them); however, <span class="smcp">D3</span>.js supports other types of scales that can be quite complex. With <span class="smcp">D3</span>.js using more sophisticated scaling is just as easy as using linear scales.
 
 ``` {.javascript .numberLines}
 var xScale = d3.scale.linear()
@@ -120,9 +120,9 @@ var yScale = d3.scale.linear()
     .range([height,0]);
 ```
 
-For both scales we define their range as the desired limits for the scales. The x scale ranges from 0 to the chart's width, and the y scale ranges from 0 to the chart's height. Note, though, that we've reversed the normal order for the y scale. That's because <span class="smcp">SVG</span> dimensions (just like <span class="smcp">HTML</span> dimensions) place 0 at the top of the area. That convention is opposite of the normal chart convention which places 0 at the bottom. To account for the reversal, we swap the values when defining the range.
+We define both ranges as the desired limits for each scale. The x-scale ranges from 0 to the chart's width, and the y-scale ranges from 0 to the chart's height. Note, though, that we've reversed the normal order for the y-scale. That's because <span class="smcp">SVG</span> dimensions (just like <span class="smcp">HTML</span> dimensions) place 0 at the top of the area. That convention is the opposite of the normal chart convention which places 0 at the bottom. To account for the reversal, we swap the values when defining the range.
 
-At this point we've set the ranges for each scale, and those ranges define the desired output. We also have to specify the possible inputs to each scale, which <span class="smcp">D3</span>.js calls the _domain._ Those inputs are the minimum and maximum values for the distance and velocity. We can use <span class="smcp">D3</span>.js to extract the values directly from the data. Here's how to get the minimum distance.
+At this point we've set the ranges for each scale, and those ranges define the desired output. We also have to specify the possible inputs to each scale, which <span class="smcp">D3</span>.js calls the _domain._ Those inputs are the minimum and maximum values for the distance and velocity. We can use <span class="smcp">D3</span>.js to extract the values directly from the data. Here's how to get the minimum distance:
 
 ``` {.javascript .numberLines}
 var minDist = d3.min(hubble_data, function(nebulae) { 
@@ -130,7 +130,7 @@ var minDist = d3.min(hubble_data, function(nebulae) {
 });
 ```
 
-We can't simply find the minimum value in the data because we have to account for the distance error. As we can see above, <span class="smcp">D3</span>.js accepts a function as a parameter to `d3.min()`, and that function can make the necessary adjustment. We can use the same approach for maximum values as well. Here's the complete code for defining the domains of both scales.
+We can't simply find the minimum value in the data because we have to account for the distance error. As we can see above, <span class="smcp">D3</span>.js accepts a function as a parameter to `d3.min()`, and that function can make the necessary adjustment. We can use the same approach for maximum values as well. Here's the complete code for defining the domains of both scales:
 
 
 ``` {.javascript .numberLines}
@@ -188,7 +188,7 @@ chart.append("g")
     .call(xAxis);
 ```
 
-And as long as we're preserving method chaining, we can take advantage of it to add yet another element to our chart, this time it's the label for the axis.
+And as long as we're preserving method chaining, we can take advantage of it to add yet another element to our chart: this time, it's the label for the axis.
 
 ``` {.javascript .numberLines}
 chart.append("g")
@@ -258,11 +258,11 @@ svg { font: 16px; }
 <figcaption><span class="lgcp">D3</span>.js provides tools to create the framework for a chart.</figcaption>
 </figure>
 
-As you can tell, we've had to write quite a bit of code just to get a couple of axes on the page. That's the nature of <span class="smcp">D3</span>.js. It's not a library to which you can simply pass a data set and get a chart as an output. Instead, it's better thought of as a collection of very useful utilities that you can use to help create your own charts.
+As you can tell, we've had to write quite a bit of code just to get a couple of axes on the page. That's the nature of <span class="smcp">D3</span>.js. It's not a library to which you can simply pass a data set and get a chart as an output. Instead, think of it as a collection of very useful utilities that you can use to help create your own charts.
 
 ### Step 6: Add the Data to the Chart
 
-Now that our chart's framework is ready, we can add the actual data. Because we want to show both the distance and velocity errors in the data, we can draw each point as a rectangle. For a simple, static chart, we can add <span class="smcp">SVG</span> `<rect>` elements just as we've created the rest of the chart. We can take advantage of our x and y scales to calculate the dimensions of the rectangles.
+Now that our chart's framework is ready, we can add the actual data. Because we want to show both the distance and velocity errors in the data, we can draw each point as a rectangle. For a simple, static chart, we can add <span class="smcp">SVG</span> `<rect>` elements just as we've created the rest of the chart. We can take advantage of our x- and y-scales to calculate the dimensions of the rectangles.
 
 ``` {.javascript .numberLines}
 hubble_data.forEach(function(nebulae) {
@@ -283,9 +283,9 @@ The approach above works fine for this example and results in the chart of figur
 
 ### Step 7: Answer Users' Questions
 
-Whenever we create a visualization, it's a good idea to anticipate questions that users might ask when they view it. In our example so far, we've presented a data set that leads to Hubble's Law. But we haven't (yet) shown how well the data fits that law. Since that is such an obvious question, let's answer it right on the chart itself.
+Whenever you create a visualization, it's a good idea to anticipate questions that users might ask when they view it. In our example so far, we've presented a data set that leads to Hubble's Law. But we haven't (yet) shown how well the data fits that law. Since that is such an obvious question, let's answer it right on the chart itself.
 
-The current estimate for Hubble's Constant (<span class="smcp">H0</span>) is about 70 km/s/Mpc. To show how that matches the data on our chart, we can create a line graph with that slope beginning at the point (0,0). A single <span class="smcp">SVG</span> `<line>` is all that's required. Once again we rely on the <span class="smcp">D3</span>.js scales to define the line's coordinates.
+The current estimate for the Hubble Constant (<span class="smcp">H0</span>) is about 70 km/s/Mpc. To show how that matches the data on our chart, we can create a line graph with that slope beginning at the point (0,0). A single <span class="smcp">SVG</span> `<line>` is all that's required. Once again we rely on the <span class="smcp">D3</span>.js scales to define the line's coordinates.
 
 ``` {.javascript .numberLines}
 chart.append("line")
