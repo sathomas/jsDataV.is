@@ -1,0 +1,433 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+    <link rel="stylesheet" id="ppstyle" type="text/css" href="style.css">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <style>
+        body { font-family: Open Sans; }
+        .bar-background rect { fill: silver; shape-rendering: crispEdges; }
+        .bar rect, rect.bar { fill: steelblue; shape-rendering: crispEdges; }
+        .bar text { fill: white; font-size: 10px; }
+        .bar text.above { fill: dimgray; }
+        .axis path, .axis line { fill: none; stroke: none; shape-rendering: crispEdges; }
+        .dist.axis path, .dist.axis line { fill: none; stroke: silver; shape-rendering: crispEdges; }
+        .axis text { fill: dimgray; }
+        text.pie-label { fill: dimgray; font-size: 16px;}
+        .brush .extent { stroke: white; fill: steelblue; fill-opacity: .125; shape-rendering: crispEdges; }
+        .l-bloc h1, .l-bloc h2, .l-bloc h3, .l-bloc h4, .l-bloc h5, .l-bloc h6, .l-bloc .ico, .l-bloc { color: dimgray; }
+        .btn-d, .btn-d:hover, .btn-d:focus { background-color: dimgray; }
+    </style>
+    <title>T-Square Project Sites</title>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="bloc l-bloc " id="main-chart">
+    	<div class="container bloc-sm">
+    		<div class="row">
+    			<div class="col-sm-12">
+    				<h3 class="mg-md ">Number of Sites per Range of File Counts</h3>
+                    <div id="files-per-site" style="width: 750px; height: 401px;"></div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+    <div class="bloc l-bloc " id="secondary-charts">
+    	<div class="container bloc-sm">
+    		<div class="row">
+    			<div class="col-sm-8">
+    				<h3 class="mg-md ">Number of Sites per Folder Nesting Level</h3>
+                    <div id="folder-nesting" style="width: 460px; height: 230px; margin-bottom: 10px;"></div>
+                    <button class="btn btn-d pull-left btn-sm" type="submit" id="reset-brush">Reset</button>
+                    <p class="mg-md  text-left">Drag the chart boundary to select a subset of sites.</p>
+    			</div>
+    			<div class="col-sm-4">
+    				<h3 class="mg-md text-center" style="width:210px;">Sites Selected</h3>
+                    <div id="sites-selected" style="width: 230px; height: 230px; margin-bottom: 10px;"></div>
+    				<p class="text-center" style="width: 210px;"><span id="filter-count">M</span> of <span id="total-count">N</span> sites selected</p>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.11/crossfilter.min.js"></script>
+<script>
+
+// Get the raw project data as a JSON file.
+d3.json("projects.json", function(projectData){
+    
+    // The project data file includes a `path_len` property which is
+    // three more than the maximum nesting level. Since the data set
+    // isn't large, we'll take the time to create a new property that
+    // represents nesting level directly. This property should help
+    // make the remaining code easier to follow.
+    projectData.forEach(function(p){
+        p.max_nesting = p.path_len - 3;
+    });
+
+    // The main control for the visualization will be a bar chart that
+    // shows the number of projects with each nesting level. We can
+    // create a data structure that exposes that information. We have
+    // to supply our own sorting function because the keys are strings
+    // and the natural sort order would place "10" before "2".
+    var filesByNestingLevel = d3.nest()
+        .key(function(d) { return d.max_nesting; })
+        .sortKeys(function(a, b) { return +a < +b ? -1 : +a > +b ? 1 : 0;})
+        .entries(projectData);
+    
+    // Define the scales for the nesting chart. The range of values for the 
+    // nesting level is available from our data structure, but the keys
+    // are strings instead of numbers, so we use `+` as a type cast.
+    var minNestingLevel = +filesByNestingLevel[0].key,
+        maxNestingLevel = +filesByNestingLevel[filesByNestingLevel.length - 1].key;
+
+    // The x-scale for the nesting level chart is a linear scale that varies from
+    // the minimum to the maximum nesting level values. We add one to the maximum
+    // value to account for the width of the bars since we're going to use this
+    // scale to set the *left* side of each bar. The scale's range is the width
+    // of the chart.
+    var nestingX = d3.scale.linear()
+        .domain([minNestingLevel, maxNestingLevel+1])
+        .range([0, 460]);
+
+    // The y-scale for the bottom chart varies from 0 to the maximum number of
+    // files for any nesting level. Its range is the height of the chart (reversed
+    // since SVG coordinates grow from top to bottom).
+    var nestingY = d3.scale.linear()
+        .domain([0, d3.max(filesByNestingLevel, function(d) { return d.values.length; })])
+        .range([210, 0]);
+
+    // The bar chart is contained in an SVG group.
+    var nestingChart = d3.select("#folder-nesting").append("svg")
+        .attr("width", 460)
+        .attr("height", 230)
+        .append("g");
+    
+    // The chart includes a clipping path to highlight only the section of
+    // the chart within the brushes.
+    nestingChart.append("clipPath")
+        .attr("id", "clip-nesting")
+        .append("rect")
+            .attr("width", 460)
+            .attr("height", 230);
+    
+    // The main part of the chart consists of two SVG groups. One group is
+    // the background, and it is always visible. The second group
+    // is the foreground, and its visibility is controlled by the brush.
+    var nestingBackground = nestingChart.append("g"),
+        nestingForeground = nestingChart.append("g");
+
+    // Add the bars that make up the background. We're duplicating the
+    // foreground bar code here but it could be simplified if needed.
+    var nestingBackgroundBar = nestingBackground.selectAll(".bar-background")
+        .data(filesByNestingLevel)
+      .enter().append("g")
+        .attr("class", "bar-background")
+        .attr("transform", function(d) { return "translate(" + nestingX(+d.key) + "," + nestingY(d.values.length) + ")"; });
+
+    nestingBackgroundBar.append("rect")
+        .attr("x", 5)
+        .attr("width", nestingX(+filesByNestingLevel[1].key) - 10)
+        .attr("height", function(d) { return 210 - nestingY(d.values.length); });
+
+    // Each element in the filesByNestingLevel array gets its own bar in the chart. The bar is an
+    // SVG group with class `bar` and it's positioned at the appropriate horizontal location. We
+    // use groups to enclose both the rectangle and the label for each bar.
+    var nestingBar = nestingForeground.selectAll(".bar")
+        .data(filesByNestingLevel)
+      .enter().append("g")
+        .attr("class", "bar")
+        .attr("transform", function(d) { return "translate(" + nestingX(+d.key) + "," + nestingY(d.values.length) + ")"; });
+
+    // The foreground has a clipping path to confine visibility.
+    nestingForeground
+        .attr("clip-path", "url(#clip-nesting)");    
+    
+    // Add the rectangles to the bar elements. The beight isn't all the way to tbe bottom of
+    // the chart to leave room (about 20 pixels) for the axis.
+    nestingBar.append("rect")
+        .attr("x", 5)
+        .attr("width", nestingX(+filesByNestingLevel[1].key) - 10)
+        .attr("height", function(d) { return 210 - nestingY(d.values.length); });
+        
+    // Label the bar elements. We use a convenience function to format
+    // the text as as integers.
+    var formatCount = d3.format(",.0f");
+    
+    // The labels themselves are positioned inside the bar group as long as the
+    // bar is high enough (about 15 pixels). If the bar is too short, then the
+    // labels are moved above the bar and given the "above" class so that they
+    // can be styled appropriately.
+    nestingBar.append("text")
+        .attr("dy", function(d) { return nestingY(d.values.length) < 195 ? ".5em" : "-1em"; })
+        .attr("class", function(d) { return nestingY(d.values.length) < 195 ? "below" : "above"; })
+        .attr("y", 6)
+        .attr("x", nestingX(+filesByNestingLevel[1].key) / 2)
+        .attr("text-anchor", "middle")
+        .text(function(d) { return formatCount(d.values.length); });
+
+    // The x-axis for the nesting level chart is a simple axis based on the x-scale. We
+    // don't want any tick marks, so we have to increase the padding by a compensating
+    // amount to make sure that the labels have enough margin. For the labels, we'll
+    // specify a complete set instead of letting the scale pick standard values.
+    var nestingXAxis = d3.svg.axis()
+        .scale(nestingX)
+        .tickSize(0)
+        .tickPadding(9)
+        .tickValues(d3.range(minNestingLevel, maxNestingLevel+1, 1))
+        .orient("bottom");
+
+    // When we position the axis, we shift it to the left by 1/2 of a bar width so that
+    // the numbers align under the bars.
+    nestingChart.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(" + nestingX(+filesByNestingLevel[1].key)/2 + "," + 210 + ")")
+        .call(nestingXAxis);
+
+    // Now we can create a brush so users can select parts of the bar chart.
+    var brush = d3.svg.brush()
+        .x(nestingX)
+        .extent([minNestingLevel, maxNestingLevel+1])
+        .on("brushend", brushend)
+        .on("brush", brushed);
+
+    var brushGroup = nestingChart.append("g")
+        .attr("class", "brush")
+        .call(brush)
+        .call(brush.event);
+
+    brushGroup.selectAll("rect")
+        .attr("height", 210);
+        
+    // Add a click handler for the reset button.
+    d3.select("#reset-brush")
+        .on("click", function(){
+            resetBrush();
+        });
+        
+    // Create a multi-dimensional data set from the project data.
+    var projects = crossfilter(projectData);
+
+    // The dimensions of the data set are each project's maximum nesting level
+    // and the number of files in the project.
+    var nestingDimension = projects.dimension(function(p) { return p.max_nesting; }),
+        countDimension = projects.dimension(function(p) { return p.num_files; });
+    
+    // Fill in the total number of projects.
+    d3.select("#total-count").text(projectData.length);
+    
+    // Now create the pie chart that shows the proportion of sites selected.
+    var pie = d3.layout.pie()
+        .sort(null);
+
+    var arc = d3.svg.arc()
+        .innerRadius(210/2 - 40)
+        .outerRadius(210/2);
+
+    var pieChart = d3.select("#sites-selected").append("svg")
+        .attr("width", 210)
+        .attr("height", 210)
+        .append("g")
+        .attr("transform", "translate(" + 210 / 2 + "," + 210 / 2 + ")");
+
+    var piePath = pieChart.selectAll("path")
+        .data(pie([projectData.length,0]))
+      .enter().append("path")
+        .attr("fill", function(d, i) { return i === 0 ? "steelblue" : "silver"; })
+        .attr("d", arc)
+        .each(function(d) { this._current = d; }); // store the initial angles
+    
+    pieChart.append("text")
+        .attr("class", "pie-label")
+        .attr("y", 8)
+        .attr("x", 0)
+        .attr("text-anchor", "middle")
+        .text("100%");
+
+    // Next up is the distribution chart. First we'll need to organize the data into bins.
+    var numBins = 40,
+        binSize = 50,
+        bins = [];
+
+    for (var i=0; i<numBins; i++) {
+        countDimension.filterRange([i*binSize, (i+1)*binSize]);
+        bins.push(projects.groupAll().reduceCount().value());
+    }
+    countDimension.filterAll();
+    
+    var distX = d3.scale.linear()
+        .domain([0, numBins*binSize])
+        .range([0, 690]);
+
+    var distY = d3.scale.linear()
+        .clamp(true)
+        .domain([0, d3.max(bins)])
+        .range([370, 0]);
+
+    var distChart = d3.select("#files-per-site").append("svg")
+        .attr("width", 750)
+        .attr("height", 401)
+        .append("g");
+
+    var distBar = distChart.selectAll("rect.bar")
+        .data(bins)
+      .enter().append("rect")
+        .attr("class", "bar")
+        .attr("transform", function(d,i) { return "translate(" + (40 + distX(i*binSize)) + "," + (10 + distY(d)) + ")"; })
+        .attr("x", 0)
+        .attr("width", function(d,i) { return distX(binSize)-2; })
+        .attr("height", function(d,i) { return d ? 370 - distY(d) : 0; });
+
+    var distXAxis = d3.svg.axis()
+        .scale(distX)
+        .orient("bottom");
+
+    var distYAxis = d3.svg.axis()
+        .scale(distY)
+        .orient("left");
+
+    distChart.append("g")
+        .attr("class", "dist x axis")
+        .attr("transform", "translate(" + 40 + "," + 381 + ")")
+        .call(distXAxis);
+
+    distChart.append("g")
+        .attr("class", "dist y axis")
+        .attr("transform", "translate(" + 40 + "," + 10 + ")")
+        .call(distYAxis);
+
+    // Update the charts with their initial values.
+    updateCharts(false);
+    
+    // Handle brush events. As the brush moves we update the clipping path.
+    function brushed() {
+        var exactExtent = brush.extent();
+        nestingChart.selectAll("#clip-nesting rect")
+            .attr("x", nestingX(exactExtent[0]))
+            .attr("width", nestingX(exactExtent[1]) - nestingX(exactExtent[0]));
+    };
+
+    // When brush movement completes, update the charts.
+    function brushend() {
+
+        // Only transition after input is complete.
+        if (!d3.event.sourceEvent) { return; }        
+
+        // Force the brush to transition to exact integer boundaries.
+        var exactExtent = brush.extent(),
+            integerExtent = exactExtent.map(function(n) { return Math.round(n,0); });
+
+        // if empty when rounded, use floor & ceil instead.
+        if (integerExtent[0] >= integerExtent[1]) {
+            integerExtent[0] = Math.floor(exactExtent[0]);
+            integerExtent[1] = Math.ceil(exactExtent[1]);
+        }
+
+        // Transition to the exact integer boundaries.
+        d3.select(this).transition()
+            .call(brush.extent(integerExtent))
+            .call(brush.event);
+
+        // Update the clipping path.
+        nestingChart.selectAll("#clip-nesting rect")
+            .attr("x", nestingX(integerExtent[0]))
+            .attr("width", nestingX(integerExtent[1]) - nestingX(integerExtent[0]));
+
+        // Update the other charts as a result.
+        updateCharts(true);
+
+    };
+
+    // Reset the brush to the full chart.
+    function resetBrush() {
+        brush.extent([minNestingLevel, maxNestingLevel+1]);
+        d3.select(".brush")
+            .call(brush.event);
+    };
+    
+    // Update the charts when the brush changes.
+    function updateCharts(redrawAxis) {
+        // Only consider those values within the current nesting range.
+        var range = brush.extent();
+        nestingDimension.filterRange(range);
+
+        // Get the count of how many projects have maximum path lengths within the range
+        // under consideration.
+        var nestingCount = projects.groupAll().reduceCount().value();
+
+        // Update the text that shows the number selected.
+        d3.select("#filter-count").text(nestingCount);
+
+        // Update the pie chart.
+        piePath = piePath.data(pie([nestingCount, projectData.length-nestingCount]));
+        piePath.transition().duration(750).attrTween("d", arcTween);
+
+        if (redrawAxis) {
+            // Recalculate the bins for the distribution chart.
+            bins = [];
+            for (var i=0; i<numBins; i++) {
+                countDimension.filterRange([i*binSize, (i+1)*binSize]);
+                bins.push(projects.groupAll().reduceCount().value());
+            }
+            countDimension.filterAll();
+
+            distY = d3.scale.linear()
+                .clamp(true)
+                .domain([0, d3.max(bins)])
+                .range([370, 0]);
+
+            var distBar = distChart.selectAll("rect.bar")
+                .data(bins)
+                .transition()
+                .duration(750)
+                .attr("transform", function(d,i) { return "translate(" + (40 + distX(i*binSize)) + "," + (10 + distY(d)) + ")"; })
+                .attr("height", function(d,i) { return 370 - distY(d); });
+
+            distYAxis = d3.svg.axis()
+                .scale(distY)
+                .orient("left");
+
+            distChart.select("g.dist.y.axis")
+                .transition()
+                .duration(375)
+                .style("opacity", "0")
+                .remove();
+
+            setTimeout(function() {
+                distChart.append("g")
+                    .attr("class", "dist y axis")
+                    .attr("transform", "translate(" + 40 + "," + 10 + ")")
+                    .style("opacity", "0")
+                    .call(distYAxis)
+                    .transition()
+                    .duration(375)
+                .style("opacity", "1");
+            }, 375);
+
+            setTimeout(function() {
+                d3.select(".pie-label")
+                    .text(Math.round(100*nestingCount/projectData.length) + "%");
+            }, 750);
+        }
+    };
+
+    // Calculate arc during transition.
+    function arcTween(a) {
+        var i = d3.interpolate(this._current, a);
+        this._current = i(0);
+        return function(t) {
+            return arc(i(t));
+        };
+    };
+
+});
+</script>
+</body>
+</html>
