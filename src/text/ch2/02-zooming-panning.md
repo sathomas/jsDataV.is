@@ -1,4 +1,4 @@
-## Zooming into Charts
+## Zooming In on Charts
 
 So far, we've given users some interaction with the visualization by letting them choose which data sets appear. In many cases, however, you'll want to give them even more control, especially if you're showing a lot of data and details are hard to discern. If users can't see the details they need, our visualization has failed. Fortunately we can avoid this problem by giving users a chance to inspect fine details within the data. One way to do that is to let users zoom into the chart.
 
@@ -153,7 +153,7 @@ Here we just set up a click handler with jQuery, and redraw the chart using the 
 That gives us a complete, interactive visualization. Users can zoom in to any level of detail and restore the original zoom with one click. You can see the interaction in figure NEXTFIGURENUMBER.
 
 <figure>
-<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
+<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">USD</span> in Trillions)</div>
 <div id="zoom-chart2" style="width:600px;height:400px;"></div>
 <button id="unzoom" style="margin-bottom: 20px; margin-top: 10px;">Reset Zoom</button>
 <figcaption>Interactive charts let users focus on data relevant to their needs.</figcaption>

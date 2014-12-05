@@ -141,7 +141,7 @@ Flotr.draw(
     document.getElementById("chart"),
     [ {
         data: zero,
-        label: "20<sup>th</sup> Century Baseline Temperature",
+        label: "20<sup>th</sup>-Century Baseline Temperature",
         lines: {show:true, lineWidth: 1},
         shadowSize: 0,
         color: "#545454"
@@ -338,7 +338,7 @@ A line chart like LASTFIGURENUMBER excels in visualizing this kind of data. Each
         Flotr.draw(
             document.getElementById("line-chart5")
             ,[
-                { data: zero, label: "20<sup>th</sup> Century Baseline Temperature", lines: {show:true, lineWidth: 1}, shadowSize: 0, color: chartStyles.color.primary },
+                { data: zero, label: "20<sup>th</sup>-Century Baseline Temperature", lines: {show:true, lineWidth: 1}, shadowSize: 0, color: chartStyles.color.primary },
                 { data: temp, label: "Yearly Temperature Difference (°C)", lines: {show:true}, color: chartStyles.color.alternate},
                 { data: co2, label: "CO<sub>2</sub> Concentration (ppm)", lines: {show:true}, yaxis: 2, color: chartStyles.color.secondary },
              ]

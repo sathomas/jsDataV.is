@@ -115,7 +115,7 @@ Flotr.draw(document.getElementById("chart"),
         player_data("Dwayne Wade"),
         player_data("Mario Chalmers")
     ],{
-        title:  "2011/12 Miami Heat - Contribution to Team Total",
+        title:  "2011/12 Miami Heat — Contribution to Team Total",
         radar:  { show: true },
         grid:   { circular: true },
         xaxis:  { ticks: labels },
@@ -187,7 +187,7 @@ The radar chart lends itself only to a few specialized applications, but it can 
             ],{
                 colors: [chartStyles.color.primary,chartStyles.color.alternateLightest,chartStyles.color.secondaryLightest,chartStyles.color.alternateDarkest,chartStyles.color.secondaryDarkest],
                 fontColor: chartStyles.color.text,
-                title:  "2011/12 Miami Heat Starting Lineup - Contribution to Team Total",
+                title:  "2011/12 Miami Heat Starting Lineup — Contribution to Team Total",
                 radar:  { show: true, radiusRatio: 0.9},
                 grid:   { circular: true, color: chartStyles.color.text },
                 xaxis:  { ticks: labels, },

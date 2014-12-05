@@ -265,7 +265,7 @@ Running.Views.Summary = Backbone.View.extend({
 Now we have to write the `renderRun` method that handles each individual run. Here's what we want that function to do:
 
 1. Create a new SummaryRow view for the run.
-2. Render that Summary Row view.
+2. Render that SummaryRow view.
 3. Append the resulting <span class="smcp">HTML</span> to the `<tbody>` in the Summary view.
 
 The code to implement those steps is straightforward, but it's helpful to take each step one at a time.
@@ -465,7 +465,7 @@ render: function () {
 
 > In the interest of brevity, we're cheating a little with the code above because it converts the <span class="smcp">UTC</span> timestamp to the local time zone of the browser. It would probably be more correct to convert it to the time zone for the run, which Nike+ provides in the data.
 
-Next up is the run's duration. It's doubtful that we need to show the fractions of seconds that Nike+ includes, so let's simply drop them from the attribute. (It would be more precise to round up or down, but assuming our users are Olympic athletes in training, a second here or there won't matter. Besides, Nike+ seems to always record these sub-second durations as ".000" anyway.)
+Next up is the run's duration. It's doubtful that we need to show the fractions of seconds that Nike+ includes, so let's simply drop them from the attribute. (It would be more precise to round up or down, but assuming our users are not Olympic athletes in training, a second here or there won't matter. Besides, Nike+ seems to always record these sub-second durations as ".000" anyway.)
 
 ``` {.javascript .numberLines}
 run.duration = this.model.get("metricSummary").duration.split(".")[0];

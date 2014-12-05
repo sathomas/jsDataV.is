@@ -188,7 +188,7 @@ Running.Views.Summary = Backbone.View.extend({
     events: {
         'click tbody': 'clicked'
     },
-````
+```
 
 The code above asks Backbone.js to watch for `click` events within the `<tbody>` element of our view. When an event occurs, Backbone.js will call the `clicked` method of our view.
 

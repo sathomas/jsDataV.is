@@ -1,6 +1,6 @@
 ## Emphasizing Fractions Using a Pie Chart
 
-Pie charts don't get a lot of love in the visualization community, and for a pretty good reason: they're rarely the most effective way to communicate data. We will walk through the steps to create pie charts in this section, but first let's take some time to understand the problems they introduce. Figure NEXTFIGURENUMBER, for example, shows a simple pie chart. Can you tell from the chart iwhich color is the largest? The smallest?
+Pie charts don't get a lot of love in the visualization community, and for a pretty good reason: they're rarely the most effective way to communicate data. We will walk through the steps to create pie charts in this section, but first let's take some time to understand the problems they introduce. Figure NEXTFIGURENUMBER, for example, shows a simple pie chart. Can you tell from the chart which color is the largest? The smallest?
 
 <figure>
 <div id="pie-chart1" style="width:300px;height:300px"></div>
@@ -193,7 +193,7 @@ Although pie charts have a bad reputation in the data visualization community, t
         Flotr.draw(document.getElementById("pie-chart4"),data, {
             fontColor: chartStyles.color.text,
             colors: [chartStyles.color.primary,chartStyles.color.secondary],
-            title: "How Much of the World Lives on $1.25/day?",
+            title: "How Much of the World Lives on $1.25/Day?",
             pie: {
                 show: true,
                 sizeRatio: 0.7,

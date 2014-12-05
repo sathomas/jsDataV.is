@@ -199,7 +199,7 @@ var clicked = function(ev) {
           return false; 
       })) {
           details = "There were " + clickedTag[1] + 
-                    " Stack Overflow questions tagged '" + tag + "'";
+                    " Stack Overflow questions tagged \"" + tag + "\"";
       }
   }
   document.getElementById("details").innerText = details;
@@ -382,7 +382,7 @@ With these few lines of code, our word cloud is now interactive.
             var tagElem;
             if (tags.some(function(el) { if (el[0] === tag) {tagElem = el; return true;} return false; })) {
             document.getElementById("details-2").innerText = "There were " + tagElem[1] + 
-                " Stack Overflow questions tagged '" + tag + "'";
+                " Stack Overflow questions tagged “" + tag + "”";
             }
           } else {
             document.getElementById("details-2").innerText = "";

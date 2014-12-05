@@ -377,11 +377,11 @@ In addition to making the details table visible, we'll also want to update it wi
 ``` {.javascript .numberLines}
 var zToText = function(z) {
     z = +z;
-    if (z >  0.25) { return "Far below average"; }
-    if (z >  0.1)  { return "Below average"; }
+    if (z >  0.25) { return "Far below Average"; }
+    if (z >  0.1)  { return "Below Average"; }
     if (z > -0.1)  { return "Average"; }
-    if (z > -0.25) { return "Above average"; }
-    return "Far above average";
+    if (z > -0.25) { return "Above Average"; }
+    return "Far above Average";
 }
 ```
 
@@ -3693,11 +3693,11 @@ At this point our visualization example is complete. Figure NEXTFIGURENUMBER sho
         
         var zToText = function(z) {
             z = +z;
-            if (z > 0.25) return "Far below average";
-            if (z > 0.1) return "Below average";
+            if (z > 0.25) return "Far below Average";
+            if (z > 0.1) return "Below Average";
             if (z > -0.1)  return "Average";
-            if (z > -0.5)  return "Above average";
-            return "Far above average";
+            if (z > -0.5)  return "Above Average";
+            return "Far above Average";
         }
         
         $("#map-svg-2").load("img/ga2.svg", function() {

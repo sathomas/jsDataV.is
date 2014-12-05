@@ -1205,7 +1205,7 @@ At this point we have the interactive visualization of the two train routes in f
             "could expect to arrive more than 90 minutes sooner " +
             "than those on the <i>Silver Comet</i>.</p>" +
             "<p>Click the play button to trace the journeys " +
-            "of both trains between Washington, DC and Atlanta, GA.</p>"
+            "of both trains between Washington, DC, and Atlanta, GA.</p>"
         ).addTo(map3);
         
         control.addTo(map3);

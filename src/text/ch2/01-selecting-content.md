@@ -146,7 +146,7 @@ On our web page we'd like to place the controls on the right side of the chart. 
 We should also add a title and instructions, and make all the `<input>` checkboxes default to `checked`. Let's see the chart now, to make sure the formatting looks okay.
 
 <figure>
-<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
+<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">USD</span> in Trillions)</div>
 <div id='select-chart2' style="width:400px;height:333px;float:left;margin-top:0"></div>
 <div style="float:left;margin-top:0;font-size:0.8em;">
 <p>Select Regions to Include:</p>
@@ -163,7 +163,7 @@ We should also add a title and instructions, and make all the `<input>` checkbox
 Now we see how the controls look in relation to the chart in figure LASTFIGURENUMBER, and we can verify that they make sense both for the data and for the interaction model. Our visualization lacks a critical piece of information, though: it doesn't identify which line corresponds to which region. For a static visualization, we could simply use the flot library to add a legend to the chart, but that approach isn't ideal here. You can see the problem in figure NEXTFIGURENUMBER as the legend looks confusingly like the interaction controls.
 
 <figure>
-<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
+<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">USD</span> in Trillions)</div>
 <div id='select-chart3' style="width:400px;height:333px;float:left;margin-top:0"></div>
 <div style="float:left;margin-top:0;font-size:0.8em;">
 <p>Select Regions to Include:</p>
@@ -195,7 +195,7 @@ In addition to the background color, the `<span>` needs an explicit size, and we
 A quick check in the browser can verify that the various elements combine effectively.
 
 <figure>
-<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
+<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">USD</span> in Trillions)</div>
 <div id='select-chart4' style="width:400px;height:333px;float:left;margin-top:0"></div>
 <div style="float:left;margin-top:0;font-size:0.8em;">
 <p>Select Regions to Include:</p>
@@ -455,7 +455,7 @@ If we combine the JavaScript to draw the chart along with the JavaScript to crea
 Our reward is the visualization shown in figure NEXTFIGURENUMBER that's dynamically created using JavaScript
 
 <figure>
-<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
+<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">USD</span> in Trillions)</div>
 <div id='select-chart5' style="width:400px;height:333px;float:left;margin-top:0"></div>
 <div id='select-chart5-control' style="float:left;margin-top:0:0;font-size:0.8em;"><p>Select Regions to Include:</p></div>
 <figcaption>Setting the chart options ensures that the data matches the legend.</figcaption>
@@ -493,7 +493,7 @@ plotObj.draw();
 And that's it. We finally have a fully interactive visualization of regional Gross Domestic Product, as shown in figure NEXTFIGURENUMBER.
 
 <figure>
-<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">US</span>$ in Trillions)</div>
+<div style="padding-left:1em;">Gross Domestic Product (Current <span class="lgcp">USD</span> in Trillions)</div>
 <div id='select-chart6' style="width:400px;height:333px;float:left;margin-top:0"></div>
 <div id='select-chart6-control' style="float:left;margin-top:0:0;font-size:0.8em;"><p>Select Regions to Include:</p></div>
 <figcaption>An interactive chart gives users control over the visualization.</figcaption>

@@ -16,7 +16,7 @@ Running.Collections.Runs = Backbone.Collection.extend({
     }
 ```
 
-As you can see, `sync` is passed a `method` (`GET`, `POST`, etc.), the collection in questions, and an object containing options for the request. To send the authorization token to Nike+, we can add it as a parameter using this `options` object.
+As you can see, `sync` is passed a `method` (`GET`, `POST`, etc.), the collection in question, and an object containing options for the request. To send the authorization token to Nike+, we can add it as a parameter using this `options` object.
 
 ``` {.javascript .numberLines}
 sync: function(method, collection, options) {

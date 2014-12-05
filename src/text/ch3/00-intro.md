@@ -1,4 +1,4 @@
-# Chapter 3: Integrating Charts in a Page
+# Chapter 3: Integrating Charts on a Page
 
 You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That's not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they "look pretty" on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn't. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn't take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes, labels, titles, legends, and more to place.
 

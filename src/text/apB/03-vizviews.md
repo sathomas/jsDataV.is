@@ -30,7 +30,7 @@ The Details view is really nothing more than a container for its three children,
 ``` {.javascript .numberLines}
 Running.Views.Details = Backbone.View.extend({
     render: function () {
-        this.$el.html("");
+        this.$el.empty();
         this.$el.append(
             new Running.Views.Properties({model: this.model}).render().el
         );

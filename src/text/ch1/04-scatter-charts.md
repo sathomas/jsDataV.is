@@ -1,12 +1,12 @@
 ## Plotting X/Y Data with a Scatter Chart
 
-A bar chart is often most effective for visualizing data that consists primarily of a single quantity (such as the number of wins in the bar charts we created earlier). But if we want to analyze data that primarily consists of a single quantity, perhaps a quantity that changes at regular intervals (e.g. yearly) or varies among a population (e.g. sports teams), the bar chart is often the best tool for our visualization. The real world, however, sometimes makes things more complicated than a single quantity can capture. If we want to explore the relationship between two different quantities, a scatter chart can be more effective. Suppose, for example, we wish to visualize the relationship between a country's health care spending (one quantity) and its life expectancy (the second quantity). Let's step through an example to see how to create a scatter chart for that data.
+A bar chart is often most effective for visualizing data that consists primarily of a single quantity (such as the number of wins in the bar charts we created earlier). But if we want to analyze data that primarily consists of a single quantity, perhaps a quantity that changes at regular intervals (e.g. yearly) or varies among a population (e.g. sports teams), the bar chart is often the best tool for our visualization. The real world, however, sometimes makes things more complicated than a single quantity can capture. If we want to explore the relationship between two different quantities, a scatter chart can be more effective. Suppose, for example, we wish to visualize the relationship between a country's health-care spending (one quantity) and its life expectancy (the second quantity). Let's step through an example to see how to create a scatter chart for that data.
 
 Just as in this chapter's first example, we need to include the flotr2 library in our web page and set aside a `<div>` element to contain the chart we'll construct.
 
 ### Step 1: Define the Data
 
-For this example, we'll use the 2012 Report from the [Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)](http://www.oecd.org). This report includes health care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here you can see a short excerpt of that data stored in a JavaScript array:
+For this example, we'll use the 2012 Report from the [Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)](http://www.oecd.org). This report includes health-care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here you can see a short excerpt of that data stored in a JavaScript array:
 
 ``` {.javascript .numberLines}
 var health_data = [
@@ -88,7 +88,7 @@ Flotr.draw(
         data: data, points: {show:true} 
     }],
     { 
-        title: "Life Expectancy vs. Health Care Spending",
+        title: "Life Expectancy vs. Health-Care Spending",
         subtitle: "(by Country, 2010 OECD data)",
         xaxis: {min: 5, max: 20, tickDecimals: 0, 
                 title: "Spending as Percentage of GDP"}, 
@@ -115,7 +115,7 @@ Flotr.draw(
         data: data, points: {show:true}
     }],
     { 
-        title: "Life Expectancy vs. Health Care Spending",
+        title: "Life Expectancy vs. Health-Care Spending",
         subtitle: "(by Country, 2010 OECD data)",
         xaxis: {min: 5, max: 20, tickDecimals: 0, 
                title: "Spending as Percentage of GDP", 
@@ -134,7 +134,7 @@ In figure NEXTFIGURENUMBER, with the addition of the percentage values labeling 
 <figcaption>Formatting the axis labels clarifies the content.</figcaption>
 </figure>
 
-The scatter plot excels at revealing relationships between two different variables. In this example, we can see how life expectancy relates to health care spending. In aggregate, more spending yields longer life.
+The scatter plot excels at revealing relationships between two different variables. In this example, we can see how life expectancy relates to health-care spending. In aggregate, more spending yields longer life.
 
 ### Step 7: Answer Users' Questions
 
@@ -191,8 +191,8 @@ Flotr.draw(
         { data: asia,     points: {show:true} },
         { data: us,       points: {show:true} }
     ],{ 
-        title: "Life Expectancy vs. Health Care Spending",
-        subtitle: "(by Country, 2010 OECD data)",
+        title: "Life Expectancy vs. Health-Care Spending",
+        subtitle: "(by country, 2010 OECD data)",
         xaxis: {min: 5, max: 20, tickDecimals: 0, 
                 title: "Spending as Percentage of GDP", 
                 tickFormatter: function(val) {return val+"%"}}, 
@@ -221,8 +221,8 @@ Flotr.draw(
         { data: asia,     label: "Asia", points: {show:true} },
         { data: us,       label: "United States", points: {show:true} }
     ],{ 
-        title: "Life Expectancy vs. Health Care Spending",
-        subtitle: "(by Country, 2010 OECD data)",
+        title: "Life Expectancy vs. Health-Care Spending",
+        subtitle: "(by country, 2010 OECD data)",
         xaxis: {min: 5, max: 25, tickDecimals: 0, 
                title: "Spending as Percentage of GDP", 
                tickFormatter: function(val) {return val+"%"}}, 
@@ -303,8 +303,8 @@ This addition gives us the final chart shown in figure NEXTFIGURENUMBER.
             ,{
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending",
-                subtitle: "(by Country, 2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending",
+                subtitle: "(by country, 2010 OECD data)",
                 xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP"}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
             }
@@ -315,8 +315,8 @@ This addition gives us the final chart shown in figure NEXTFIGURENUMBER.
             ,{ 
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending",
-                subtitle: "(by Country, 2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending",
+                subtitle: "(by country, 2010 OECD data)",
                 xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
             }
@@ -400,8 +400,8 @@ This addition gives us the final chart shown in figure NEXTFIGURENUMBER.
             ,{ 
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending",
-                subtitle: "(by Country, 2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending",
+                subtitle: "(by country, 2010 OECD data)",
                 xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
             }
@@ -419,7 +419,7 @@ This addition gives us the final chart shown in figure NEXTFIGURENUMBER.
             ,{ 
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending (2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending (2010 OECD data)",
                 xaxis: {min: 5, max: 25, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"},
                 legend: {position: "ne", backgroundOpacity: 0, },
