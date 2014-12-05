@@ -112,7 +112,7 @@
                         <li><a href="intro.html" >Introduction</a></li>
                         <li><a href="chap01.html"><span class="lgcp">1</span>: Graphing Data</a></li>
                         <li><a href="chap02.html"><span class="lgcp">2</span>: Making Charts Interactive</a></li>
-                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts in a Page</a></li>
+                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts on a Page</a></li>
                         <li><a href="chap04.html"><span class="lgcp">4</span>: Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html"><span class="lgcp">5</span>: Showing Timelines</a></li>
                         <li><a href="chap06.html"><span class="lgcp">6</span>: Visualizing Geographic Data</a></li>
@@ -1625,11 +1625,11 @@ An <span class="smcp">HTML</span> &lt;table&gt; can serve as a legend.
 8
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> zToText = <span class="kw">function</span>(z) {
     z = +z;
-    <span class="kw">if</span> (z &gt;  <span class="fl">0.25</span>) { <span class="kw">return</span> <span class="st">&quot;Far below average&quot;</span>; }
-    <span class="kw">if</span> (z &gt;  <span class="fl">0.1</span>)  { <span class="kw">return</span> <span class="st">&quot;Below average&quot;</span>; }
+    <span class="kw">if</span> (z &gt;  <span class="fl">0.25</span>) { <span class="kw">return</span> <span class="st">&quot;Far below Average&quot;</span>; }
+    <span class="kw">if</span> (z &gt;  <span class="fl">0.1</span>)  { <span class="kw">return</span> <span class="st">&quot;Below Average&quot;</span>; }
     <span class="kw">if</span> (z &gt; -<span class="fl">0.1</span>)  { <span class="kw">return</span> <span class="st">&quot;Average&quot;</span>; }
-    <span class="kw">if</span> (z &gt; -<span class="fl">0.25</span>) { <span class="kw">return</span> <span class="st">&quot;Above average&quot;</span>; }
-    <span class="kw">return</span> <span class="st">&quot;Far above average&quot;</span>;
+    <span class="kw">if</span> (z &gt; -<span class="fl">0.25</span>) { <span class="kw">return</span> <span class="st">&quot;Above Average&quot;</span>; }
+    <span class="kw">return</span> <span class="st">&quot;Far above Average&quot;</span>;
 }</code></pre></td></tr></table>
 <p>There are a couple of noteworthy items in this function. First, the statement, <code>z = +z</code> converts the z-score from a string to a numeric value for the tests that follow. Second, remember that because of the z-score adjustments the negative z-scores are actually better than average, while the positive values are below average.</p>
 <p>We can use this function to provide the data for our details table. The first step is finding the full data set for the associated <code>&lt;path&gt;</code> element. To do that we search through the <code>counties</code> array looking for a <code>code</code> property that matches the <code>id</code> attribute of the path. Because <code>indexOf()</code> doesn’t allow us to find objects by key, we’ll borrow the <code>some()</code> method instead. That method terminates as soon as it finds a match, so we avoid iterating through the entire array.</p>
@@ -5022,11 +5022,11 @@ Browsers (and a bit of code) can turn <span class="smcp">SVG</span> illustration
         
         var zToText = function(z) {
             z = +z;
-            if (z > 0.25) return "Far below average";
-            if (z > 0.1) return "Below average";
+            if (z > 0.25) return "Far below Average";
+            if (z > 0.1) return "Below Average";
             if (z > -0.1)  return "Average";
-            if (z > -0.5)  return "Above average";
-            return "Far above average";
+            if (z > -0.5)  return "Above Average";
+            return "Far above Average";
         }
         
         $("#map-svg-2").load("img/ga2.svg", function() {
@@ -6856,7 +6856,7 @@ Maps built in the browser with a map library can use interactivity to build inte
             "could expect to arrive more than 90 minutes sooner " +
             "than those on the <i>Silver Comet</i>.</p>" +
             "<p>Click the play button to trace the journeys " +
-            "of both trains between Washington, DC and Atlanta, GA.</p>"
+            "of both trains between Washington, DC, and Atlanta, GA.</p>"
         ).addTo(map3);
         
         control.addTo(map3);

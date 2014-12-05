@@ -112,7 +112,7 @@
                         <li><a href="intro.html" >Introduction</a></li>
                         <li><a href="chap01.html"><span class="lgcp">1</span>: Graphing Data</a></li>
                         <li><a href="chap02.html"><span class="lgcp">2</span>: Making Charts Interactive</a></li>
-                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts in a Page</a></li>
+                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts on a Page</a></li>
                         <li><a href="chap04.html"><span class="lgcp">4</span>: Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html"><span class="lgcp">5</span>: Showing Timelines</a></li>
                         <li><a href="chap06.html"><span class="lgcp">6</span>: Visualizing Geographic Data</a></li>
@@ -614,7 +614,7 @@ body { counter-reset: appendix 2; }
 <blockquote>
 <p>Note 1: The examples in this appendix are based on the version of the interface at the time of this writing. There have very likely been changes to the interface since then.</p>
 </blockquote>
-<p>Unlike most other chapters, we won’t be considering multiple independent examples. Instead we’ll walkthrough the main stages in the development and testing of a single data-driven application. This includes:</p>
+<p>Unlike most other chapters, we won’t be considering multiple independent examples. Instead we’ll walk through the main stages in the development and testing of a single data-driven application. This includes:</p>
 <ul>
 <li>How to structure a web application using a framework or library.</li>
 <li>How to organize an application into models and views.</li>
@@ -1049,7 +1049,7 @@ $ <span class="kw">yo</span> backbone:view summaryRow
 <p>Now we have to write the <code>renderRun</code> method that handles each individual run. Here’s what we want that function to do:</p>
 <ol type="1">
 <li>Create a new SummaryRow view for the run.</li>
-<li>Render that Summary Row view.</li>
+<li>Render that SummaryRow view.</li>
 <li>Append the resulting <span class="smcp">HTML</span> to the <code>&lt;tbody&gt;</code> in the Summary view.</li>
 </ol>
 <p>The code to implement those steps is straightforward, but it’s helpful to take each step one at a time.</p>
@@ -1436,7 +1436,7 @@ Calories
 <blockquote>
 <p>In the interest of brevity, we’re cheating a little with the code above because it converts the <span class="smcp">UTC</span> timestamp to the local time zone of the browser. It would probably be more correct to convert it to the time zone for the run, which Nike+ provides in the data.</p>
 </blockquote>
-<p>Next up is the run’s duration. It’s doubtful that we need to show the fractions of seconds that Nike+ includes, so let’s simply drop them from the attribute. (It would be more precise to round up or down, but assuming our users are Olympic athletes in training, a second here or there won’t matter. Besides, Nike+ seems to always record these sub-second durations as “.000” anyway.)</p>
+<p>Next up is the run’s duration. It’s doubtful that we need to show the fractions of seconds that Nike+ includes, so let’s simply drop them from the attribute. (It would be more precise to round up or down, but assuming our users are not Olympic athletes in training, a second here or there won’t matter. Besides, Nike+ seems to always record these sub-second durations as “.000” anyway.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">run</span>.<span class="fu">duration</span> = <span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">get</span>(<span class="st">&quot;metricSummary&quot;</span>).<span class="ot">duration</span>.<span class="fu">split</span>(<span class="st">&quot;.&quot;</span>)[<span class="dv">0</span>];</code></pre></td></tr></table>
 <p>The distance property can also use some adjustment. In addition to rounding it to a reasonable number of decimal places, we can convert from km to Miles for our <span class="smcp">US</span> users. A single statement takes care of both.</p>
@@ -1612,7 +1612,7 @@ $ <span class="kw">yo</span> backbone:view map</code></pre>
 15
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Running</span>.<span class="ot">Views</span>.<span class="fu">Details</span> = <span class="ot">Backbone</span>.<span class="ot">View</span>.<span class="fu">extend</span>({
     <span class="dt">render</span>: <span class="kw">function</span> () {
-        <span class="kw">this</span>.<span class="ot">$el</span>.<span class="fu">html</span>(<span class="st">&quot;&quot;</span>);
+        <span class="kw">this</span>.<span class="ot">$el</span>.<span class="fu">empty</span>();
         <span class="kw">this</span>.<span class="ot">$el</span>.<span class="fu">append</span>(
             <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Views</span>.<span class="fu">Properties</span>({<span class="dt">model</span>: <span class="kw">this</span>.<span class="fu">model</span>}).<span class="fu">render</span>().<span class="fu">el</span>
         );
@@ -2857,7 +2857,7 @@ An alternative view shows charts of the run.
     <span class="dt">sync</span>: <span class="kw">function</span>(method, collection, options) {
         <span class="co">// Handle the AJAX request</span>
     }</code></pre></td></tr></table>
-<p>As you can see, <code>sync</code> is passed a <code>method</code> (<code>GET</code>, <code>POST</code>, etc.), the collection in questions, and an object containing options for the request. To send the authorization token to Nike+, we can add it as a parameter using this <code>options</code> object.</p>
+<p>As you can see, <code>sync</code> is passed a <code>method</code> (<code>GET</code>, <code>POST</code>, etc.), the collection in question, and an object containing options for the request. To send the authorization token to Nike+, we can add it as a parameter using this <code>options</code> object.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3

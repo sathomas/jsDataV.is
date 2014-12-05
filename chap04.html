@@ -112,7 +112,7 @@
                         <li><a href="intro.html" >Introduction</a></li>
                         <li><a href="chap01.html"><span class="lgcp">1</span>: Graphing Data</a></li>
                         <li><a href="chap02.html"><span class="lgcp">2</span>: Making Charts Interactive</a></li>
-                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts in a Page</a></li>
+                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts on a Page</a></li>
                         <li><a href="chap04.html"><span class="lgcp">4</span>: Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html"><span class="lgcp">5</span>: Showing Timelines</a></li>
                         <li><a href="chap06.html"><span class="lgcp">6</span>: Visualizing Geographic Data</a></li>
@@ -1758,7 +1758,7 @@ A word cloud can show a list of words with their relative frequency.
           <span class="kw">return</span> <span class="kw">false</span>; 
       })) {
           details = <span class="st">&quot;There were &quot;</span> + clickedTag[<span class="dv">1</span>] + 
-                    <span class="st">&quot; Stack Overflow questions tagged &#39;&quot;</span> + tag + <span class="st">&quot;&#39;&quot;</span>;
+                    <span class="st">&quot; Stack Overflow questions tagged </span><span class="ch">\&quot;</span><span class="st">&quot;</span> + tag + <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>;
       }
   }
   <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;details&quot;</span>).<span class="fu">innerText</span> = details;
@@ -1939,7 +1939,7 @@ Because our word cloud consists of standard <span class="smcp">HTML</span> eleme
             var tagElem;
             if (tags.some(function(el) { if (el[0] === tag) {tagElem = el; return true;} return false; })) {
             document.getElementById("details-2").innerText = "There were " + tagElem[1] + 
-                " Stack Overflow questions tagged '" + tag + "'";
+                " Stack Overflow questions tagged “" + tag + "”";
             }
           } else {
             document.getElementById("details-2").innerText = "";

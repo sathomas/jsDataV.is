@@ -112,7 +112,7 @@
                         <li><a href="intro.html" >Introduction</a></li>
                         <li><a href="chap01.html"><span class="lgcp">1</span>: Graphing Data</a></li>
                         <li><a href="chap02.html"><span class="lgcp">2</span>: Making Charts Interactive</a></li>
-                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts in a Page</a></li>
+                        <li><a href="chap03.html"><span class="lgcp">3</span>: Integrating Charts on a Page</a></li>
                         <li><a href="chap04.html"><span class="lgcp">4</span>: Creating Specialized Graphs</a></li>
                         <li><a href="chap05.html"><span class="lgcp">5</span>: Showing Timelines</a></li>
                         <li><a href="chap06.html"><span class="lgcp">6</span>: Visualizing Geographic Data</a></li>
@@ -802,7 +802,7 @@ A dummy data set can emphasize a position on a chart axis.
     <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
     [ {
         <span class="dt">data</span>: zero,
-        <span class="dt">label</span>: <span class="st">&quot;20&lt;sup&gt;th&lt;/sup&gt; Century Baseline Temperature&quot;</span>,
+        <span class="dt">label</span>: <span class="st">&quot;20&lt;sup&gt;th&lt;/sup&gt;-Century Baseline Temperature&quot;</span>,
         <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">lineWidth</span>: <span class="dv">1</span>},
         <span class="dt">shadowSize</span>: <span class="dv">0</span>,
         <span class="dt">color</span>: <span class="st">&quot;#545454&quot;</span>
@@ -998,7 +998,7 @@ Labeling the axes and adding a legend completes the chart.
         Flotr.draw(
             document.getElementById("line-chart5")
             ,[
-                { data: zero, label: "20<sup>th</sup> Century Baseline Temperature", lines: {show:true, lineWidth: 1}, shadowSize: 0, color: chartStyles.color.primary },
+                { data: zero, label: "20<sup>th</sup>-Century Baseline Temperature", lines: {show:true, lineWidth: 1}, shadowSize: 0, color: chartStyles.color.primary },
                 { data: temp, label: "Yearly Temperature Difference (°C)", lines: {show:true}, color: chartStyles.color.alternate},
                 { data: co2, label: "CO<sub>2</sub> Concentration (ppm)", lines: {show:true}, yaxis: 2, color: chartStyles.color.secondary },
              ]
@@ -1029,7 +1029,7 @@ Labeling the axes and adding a legend completes the chart.
 }());
 </script>
 <h2 id="emphasizing-fractions-using-a-pie-chart">Emphasizing Fractions Using a Pie Chart</h2>
-<p>Pie charts don’t get a lot of love in the visualization community, and for a pretty good reason: they’re rarely the most effective way to communicate data. We will walk through the steps to create pie charts in this section, but first let’s take some time to understand the problems they introduce. Figure <span class="nextfigure"/>, for example, shows a simple pie chart. Can you tell from the chart iwhich color is the largest? The smallest?</p>
+<p>Pie charts don’t get a lot of love in the visualization community, and for a pretty good reason: they’re rarely the most effective way to communicate data. We will walk through the steps to create pie charts in this section, but first let’s take some time to understand the problems they introduce. Figure <span class="nextfigure"/>, for example, shows a simple pie chart. Can you tell from the chart which color is the largest? The smallest?</p>
 <figure>
 <div id="pie-chart1" style="width:300px;height:300px">
 
@@ -1242,7 +1242,7 @@ Labels and titles can help make a chart engaging.
         Flotr.draw(document.getElementById("pie-chart4"),data, {
             fontColor: chartStyles.color.text,
             colors: [chartStyles.color.primary,chartStyles.color.secondary],
-            title: "How Much of the World Lives on $1.25/day?",
+            title: "How Much of the World Lives on $1.25/Day?",
             pie: {
                 show: true,
                 sizeRatio: 0.7,
@@ -1282,10 +1282,10 @@ Labels and titles can help make a chart engaging.
 }());
 </script>
 <h2 id="plotting-xy-data-with-a-scatter-chart">Plotting X/Y Data with a Scatter Chart</h2>
-<p>A bar chart is often most effective for visualizing data that consists primarily of a single quantity (such as the number of wins in the bar charts we created earlier). But if we want to analyze data that primarily consists of a single quantity, perhaps a quantity that changes at regular intervals (e.g. yearly) or varies among a population (e.g. sports teams), the bar chart is often the best tool for our visualization. The real world, however, sometimes makes things more complicated than a single quantity can capture. If we want to explore the relationship between two different quantities, a scatter chart can be more effective. Suppose, for example, we wish to visualize the relationship between a country’s health care spending (one quantity) and its life expectancy (the second quantity). Let’s step through an example to see how to create a scatter chart for that data.</p>
+<p>A bar chart is often most effective for visualizing data that consists primarily of a single quantity (such as the number of wins in the bar charts we created earlier). But if we want to analyze data that primarily consists of a single quantity, perhaps a quantity that changes at regular intervals (e.g. yearly) or varies among a population (e.g. sports teams), the bar chart is often the best tool for our visualization. The real world, however, sometimes makes things more complicated than a single quantity can capture. If we want to explore the relationship between two different quantities, a scatter chart can be more effective. Suppose, for example, we wish to visualize the relationship between a country’s health-care spending (one quantity) and its life expectancy (the second quantity). Let’s step through an example to see how to create a scatter chart for that data.</p>
 <p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct.</p>
 <h3 id="step-1-define-the-data-2">Step 1: Define the Data</h3>
-<p>For this example, we’ll use the 2012 Report from the <a href="http://www.oecd.org">Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)</a>. This report includes health care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here you can see a short excerpt of that data stored in a JavaScript array:</p>
+<p>For this example, we’ll use the 2012 Report from the <a href="http://www.oecd.org">Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)</a>. This report includes health-care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here you can see a short excerpt of that data stored in a JavaScript array:</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1387,7 +1387,7 @@ Specifying our own axes makes the chart easier to read.
         <span class="dt">data</span>: data, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} 
     }],
     { 
-        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health-Care Spending&quot;</span>,
         <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
         <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
                 <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>}, 
@@ -1425,7 +1425,7 @@ Labels and titles clarify the chart’s content.
         <span class="dt">data</span>: data, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>}
     }],
     { 
-        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health-Care Spending&quot;</span>,
         <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
         <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
                <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>, 
@@ -1443,7 +1443,7 @@ Labels and titles clarify the chart’s content.
 Formatting the axis labels clarifies the content.
 </figcaption>
 </figure>
-<p>The scatter plot excels at revealing relationships between two different variables. In this example, we can see how life expectancy relates to health care spending. In aggregate, more spending yields longer life.</p>
+<p>The scatter plot excels at revealing relationships between two different variables. In this example, we can see how life expectancy relates to health-care spending. In aggregate, more spending yields longer life.</p>
 <h3 id="step-7-answer-users-questions">Step 7: Answer Users’ Questions</h3>
 <p>Now that our chart successfully presents the data, we can start to look more carefully at the visualization from our users’ perspective. We especially want to anticipate any questions that users might have and try to answer them directly on the chart. There are at least three questions that stand out:</p>
 <ol type="1">
@@ -1527,8 +1527,8 @@ Formatting the axis labels clarifies the content.
         { <span class="dt">data</span>: asia,     <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
         { <span class="dt">data</span>: us,       <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }
     ],{ 
-        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
-        <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health-Care Spending&quot;</span>,
+        <span class="dt">subtitle</span>: <span class="st">&quot;(by country, 2010 OECD data)&quot;</span>,
         <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
                 <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>, 
                 <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot;%&quot;</span>}}, 
@@ -1574,8 +1574,8 @@ Splitting the data into multiple data sets lets us assign different colors to ea
         { <span class="dt">data</span>: asia,     <span class="dt">label</span>: <span class="st">&quot;Asia&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
         { <span class="dt">data</span>: us,       <span class="dt">label</span>: <span class="st">&quot;United States&quot;</span>, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }
     ],{ 
-        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health Care Spending&quot;</span>,
-        <span class="dt">subtitle</span>: <span class="st">&quot;(by Country, 2010 OECD data)&quot;</span>,
+        <span class="dt">title</span>: <span class="st">&quot;Life Expectancy vs. Health-Care Spending&quot;</span>,
+        <span class="dt">subtitle</span>: <span class="st">&quot;(by country, 2010 OECD data)&quot;</span>,
         <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">25</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, 
                <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>, 
                <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot;%&quot;</span>}}, 
@@ -1656,8 +1656,8 @@ Adding a legend completes the chart.
             ,{
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending",
-                subtitle: "(by Country, 2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending",
+                subtitle: "(by country, 2010 OECD data)",
                 xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP"}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
             }
@@ -1668,8 +1668,8 @@ Adding a legend completes the chart.
             ,{ 
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending",
-                subtitle: "(by Country, 2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending",
+                subtitle: "(by country, 2010 OECD data)",
                 xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
             }
@@ -1753,8 +1753,8 @@ Adding a legend completes the chart.
             ,{ 
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending",
-                subtitle: "(by Country, 2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending",
+                subtitle: "(by country, 2010 OECD data)",
                 xaxis: {min: 5, max: 20, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"} 
             }
@@ -1772,7 +1772,7 @@ Adding a legend completes the chart.
             ,{ 
                 fontColor: chartStyles.color.text,
                 grid: { color: chartStyles.color.text },
-                title: "Life Expectancy vs. Health Care Spending (2010 OECD data)",
+                title: "Life Expectancy vs. Health-Care Spending (2010 OECD data)",
                 xaxis: {min: 5, max: 25, tickDecimals: 0, title: "Spending as Percentage of GDP", tickFormatter: function(val) {return val+"%"}}, 
                 yaxis: {min: 70, max: 85, tickDecimals: 0, title: "Years"},
                 legend: {position: "ne", backgroundOpacity: 0, },
@@ -2464,7 +2464,7 @@ A bubble chart shows a third dimension (wind speed) as well as position.
         <span class="fu">player_data</span>(<span class="st">&quot;Dwayne Wade&quot;</span>),
         <span class="fu">player_data</span>(<span class="st">&quot;Mario Chalmers&quot;</span>)
     ],{
-        <span class="dt">title</span>:  <span class="st">&quot;2011/12 Miami Heat - Contribution to Team Total&quot;</span>,
+        <span class="dt">title</span>:  <span class="st">&quot;2011/12 Miami Heat — Contribution to Team Total&quot;</span>,
         <span class="dt">radar</span>:  { <span class="dt">show</span>: <span class="kw">true</span> },
         <span class="dt">grid</span>:   { <span class="dt">circular</span>: <span class="kw">true</span> },
         <span class="dt">xaxis</span>:  { <span class="dt">ticks</span>: labels },
@@ -2534,7 +2534,7 @@ Radar charts let users compare multiple data variables at once.
             ],{
                 colors: [chartStyles.color.primary,chartStyles.color.alternateLightest,chartStyles.color.secondaryLightest,chartStyles.color.alternateDarkest,chartStyles.color.secondaryDarkest],
                 fontColor: chartStyles.color.text,
-                title:  "2011/12 Miami Heat Starting Lineup - Contribution to Team Total",
+                title:  "2011/12 Miami Heat Starting Lineup — Contribution to Team Total",
                 radar:  { show: true, radiusRatio: 0.9},
                 grid:   { circular: true, color: chartStyles.color.text },
                 xaxis:  { ticks: labels, },
