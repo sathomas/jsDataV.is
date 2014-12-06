@@ -30,7 +30,7 @@ When you begin building your own visualizations, you'll discover that the real w
 
 ## The Book's Contents
 
-The chapters that follow cover a variety of visualization techniques and many of the JavaScript libraries that we can use to implement them.
+The chapters and appendices that follow cover a variety of visualization techniques and many of the JavaScript libraries that we can use to implement them.
 
 * The [first chapter](chap01.html) begins with the most basic of visualizations—static charts and plots. Its examples rely on the [flotr2 library](http://www.humblesoftware.com/flotr2/) library.
 * [Chapter two](chap02.html) adds interactivity to the visualizations, giving users the chance to select content, zoom in, and track values. The chapter also covers retrieving data for visualizations directly from the web. For variety, and to give you a better sense of the options available, its examples are based on the [Flot library](http://www.flotcharts.org/), which is based on jQuery.
@@ -39,7 +39,7 @@ The chapters that follow cover a variety of visualization techniques and many of
 * [Chapter five](chap05.html) covers time series data. It looks at several ways to visualize timelines, including traditional libraries; pure <span class="smcp">HTML</span>, <span class="smcp">CSS</span>, and JavaScript; and full-features web components.
 * In [chapter six](chap06.html) we consider geographic data, and we see many ways of incorporating maps in our visualizations.
 * [Chapter seven](chap07.html) introduces the powerful [<span class="smcp">D3</span>.js](http://d3js.org) library, a flexible and full-featured toolkit for building custom visualizations of almost any type.
-* Beginning with [chapter eight](apdnA.html) we consider other aspects of web-based visualizations. In particular, we can see how the [Underscore.js](http://underscorejs.org) library makes it easy to prepare the data that drives our visualizations.
+* Beginning with [first appendix](apndA.html) we consider other aspects of web-based visualizations. In particular, we can see how the [Underscore.js](http://underscorejs.org) library makes it easy to prepare the data that drives our visualizations.
 * The book [concludes](apndB.html) with the development of a complete single page web application that relies on data visualization. Here we'll see how to use modern development tools such as [Yeoman](http://yeoman.io) and the [Backbone.js](http://backbonejs.org) library.
 
 ## Source Code for Examples
