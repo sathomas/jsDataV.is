@@ -43,7 +43,7 @@
     "modestmaps-js": "git://github.com/modestmaps/modestmaps-js.git#~3.3.6",
     "leaflet": "git://github.com/Leaflet/Leaflet.git#~0.7.3",
     "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1",
-    "underscore.string": "~2.3.3",
+    "underscore.string": ">=2.3.3",
     "chroma-js": "~0.6.1",
     "normalize-opentype.css": "~0.2.0",
     "tile.stamen": "http://maps.stamen.com/js/tile.stamen.js",

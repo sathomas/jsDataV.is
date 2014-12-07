@@ -1,29 +1,33 @@
 /*
- * Styles for site typography.
+ * Styles for site typography. To accommodate a flexible site hierarchy, define the
+ * LESS variable @font-folder to be equal to the path to be prepended to the raw
+ * font file names.
+ * 
+ * @font-folder: "../fonts"; 
  */
 
 /* Body font */
 @font-face {
     font-family: 'Varela';
-    src: url('../fonts/varela.woff') format('woff');
+    src: url('@{font-folder}/varela.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Varela-onum';
-    src: url('../fonts/varela-onum.woff') format('woff');
+    src: url('@{font-folder}/varela-onum.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Varela-smcp';
-    src: url('../fonts/varela-smcp.woff') format('woff');
+    src: url('@{font-folder}/varela-smcp.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Varela-lgcp';
-    src: url('../fonts/varela-lgcp.woff') format('woff');
+    src: url('@{font-folder}/varela-lgcp.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -83,7 +87,7 @@ blockquote {
 /* Display font */
 @font-face {
     font-family: 'klinicslab';
-    src: url('../fonts/klinicslab.woff') format('woff');
+    src: url('@{font-folder}/klinicslab.woff') format('woff');
     font-weight: bold;
     font-style: normal;
 }
@@ -101,19 +105,19 @@ h3 { font-size: 1.333rem; }
 /* Monospace fonts for code blocks */
 @font-face {
     font-family: 'ankacoder';
-    src: url('../fonts/ankacoder.woff') format('woff');
+    src: url('@{font-folder}/ankacoder.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'ankacoder';
-    src: url('../fonts/ankacoder-italic.woff') format('woff');
+    src: url('@{font-folder}/ankacoder-italic.woff') format('woff');
     font-weight: normal;
     font-style: italic;
 }
 @font-face {
     font-family: 'ankacoder';
-    src: url('../fonts/ankacoder-bold.woff') format('woff');
+    src: url('@{font-folder}/ankacoder-bold.woff') format('woff');
     font-weight: bold;
 }
 
