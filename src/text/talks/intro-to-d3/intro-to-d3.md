@@ -1,56 +1,131 @@
-# Introduction to D3.js
+# Introducing D3.js
 
 ---
 
-## Traditional Library
+## D3 is Not a Charting Library
 
 ```javascript
 $('#container').highcharts({
-    title: {  text: 'Monthly Average Temperature', x: -20 },
-    subtitle: { text: 'Source: WorldClimate.com', x: -20 },
-    xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', //…
-    yAxis: { title: { text: 'Temperature (°C)' },
-             plotLines: [{value: 0, width: 1, color: '#808080'}] },
-    legend: { layout: 'vertical', align: 'right', 
-              verticalAlign: 'middle', borderWidth: 0 },
-    series: [{ name: 'Tokyo',    data: [ 7.0, 6.9, 9.5, 14.5, //…
-             { name: 'New York', data: [-0.2, 0.8, 5.7, 11.3, //…
-             { name: 'Berlin',   data: [-0.9, 0.6, 3.5,  8.4, //…
-             { name: 'London',   data: [ 3.9, 4.2, 5.7,  8.5, //…
+  title: {  text: 'Monthly Average Temperature', x: -20 },
+  subtitle: { text: 'Source: WorldClimate.com', x: -20 },
+  xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', //…
+  yAxis: { title: { text: 'Temperature (°C)' },
+           plotLines: [{value: 0, width: 1, color: '#808080'}] },
+  legend: { layout: 'vertical', align: 'right', 
+            verticalAlign: 'middle', borderWidth: 0 },
+  series: [{ name: 'Tokyo',    data: [ 7.0, 6.9, 9.5, 14.5, //…
+           { name: 'New York', data: [-0.2, 0.8, 5.7, 11.3, //…
+           { name: 'Berlin',   data: [-0.9, 0.6, 3.5,  8.4, //…
+           { name: 'London',   data: [ 3.9, 4.2, 5.7,  8.5, //…
 });
 ```
 
 ---
 
-## Basic Line Chart
+## Where One Statement = A Chart
 
-<iframe height='500' scrolling='no' src='http://codepen.io/sathomas/embed/wBMeXe/' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/sathomas/pen/wBMeXe/'>wBMeXe</a> by Stephen Thomas (<a href='http://codepen.io/sathomas'>@sathomas</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+<svg width="592px" height="418px" viewBox="0 0 592 418" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:relative;left:124px;">
+<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+<g transform="translate(22.000000, 28.000000)">
+<path d="M42,53.5 L460,53.5 M42,97.5 L460,97.5 M42,141.5 L460,141.5 M42,184.5 L460,184.5 M42,227.5 L460,227.5 M42,270.5 L460,270.5 M42,314.5 L460,314.5 M42,357.5 L460,357.5" stroke="#B3B3B3"></path>
+<path d="M111.5,357 L111.5,367 M146.5,357 L146.5,367 M180.5,357 L180.5,367 M215.5,357 L215.5,367 M250.5,357 L250.5,367 M285.5,357 L285.5,367 M320.5,357 L320.5,367 M355.5,357 L355.5,367 M389.5,357 L389.5,367 M424.5,357 L424.5,367 M459.5,357 L459.5,367 M76.5,357 L76.5,367 M41.5,357 L41.5,367 M42,357.5 L460,357.5" stroke="#B3C5D9"></path>
+<g transform="translate(55.000000, 80.000000)">
+<path d="M4.4,173.1 L39.3,174 L74.1,151.5 L108.9,108.2 L143.8,76.2 L178.6,47.6 L213.4,15.6 L248.3,4.3 L283.1,32 L317.9,75.3 L352.8,113.4 L387.6,150.6" stroke="#CA0000" stroke-width="2"></path>
+<path d="M387,146.6 C392.3,146.6 392.3,154.6 387,154.6 C381.7,154.6 381.7,146.6 387,146.6 L387,146.6 Z M352,109.4 C357.3,109.4 357.3,117.4 352,117.4 C346.7,117.4 346.7,109.4 352,109.4 L352,109.4 Z M317,71.3 C322.3,71.3 322.3,79.3 317,79.3 C311.7,79.3 311.7,71.3 317,71.3 L317,71.3 Z M283,28 C288.3,28 288.3,36 283,36 C277.7,36 277.7,28 283,28 L283,28 Z M248,0.3 C253.3,0.3 253.3,8.3 248,8.3 C242.7,8.3 242.7,0.3 248,0.3 L248,0.3 Z M213,11.6 C218.3,11.6 218.3,19.6 213,19.6 C207.7,19.6 207.7,11.6 213,11.6 L213,11.6 Z M178,43.6 C183.3,43.6 183.3,51.6 178,51.6 C172.7,51.6 172.7,43.6 178,43.6 L178,43.6 Z M143,72.2 C148.3,72.2 148.3,80.2 143,80.2 C137.7,80.2 137.7,72.2 143,72.2 L143,72.2 Z M108,104.2 C113.3,104.2 113.3,112.2 108,112.2 C102.7,112.2 102.7,104.2 108,104.2 L108,104.2 Z M74,147.5 C79.3,147.5 79.3,155.5 74,155.5 C68.7,155.5 68.7,147.5 74,147.5 L74,147.5 Z M39,170 C44.3,170 44.3,178 39,178 C33.7,178 33.7,170 39,170 L39,170 Z M4,169.1 C9.3,169.1 9.3,177.1 4,177.1 C-1.3,177.1 -1.3,169.1 4,169.1 L4,169.1 Z" fill="#CA0000"></path>
+<path d="M4.4,235.4 L39.3,226.8 L74.1,184.4 L108.9,135.9 L143.8,86.5 L178.6,43.3 L213.4,19 L248.3,25.1 L283.1,59.7 L317.9,111.6 L352.8,159.3 L387.6,212.1" stroke="#A2005C" stroke-width="2"></path>
+<path d="M387,208.1 L391,212.1 L387,216.1 L383,212.1 L387,208.1 L387,208.1 Z M352,155.3 L356,159.3 L352,163.3 L348,159.3 L352,155.3 L352,155.3 Z M317,107.6 L321,111.6 L317,115.6 L313,111.6 L317,107.6 L317,107.6 Z M283,55.7 L287,59.7 L283,63.7 L279,59.7 L283,55.7 L283,55.7 Z M248,21.1 L252,25.1 L248,29.1 L244,25.1 L248,21.1 L248,21.1 Z M213,15 L217,19 L213,23 L209,19 L213,15 L213,15 Z M178,39.3 L182,43.3 L178,47.3 L174,43.3 L178,39.3 L178,39.3 Z M143,82.5 L147,86.5 L143,90.5 L139,86.5 L143,82.5 L143,82.5 Z M108,131.9 L112,135.9 L108,139.9 L104,135.9 L108,131.9 L108,131.9 Z M74,180.4 L78,184.4 L74,188.4 L70,184.4 L74,180.4 L74,180.4 Z M39,222.8 L43,226.8 L39,230.8 L35,226.8 L39,222.8 L39,222.8 Z M4,231.4 L8,235.4 L4,239.4 L0,235.4 L4,231.4 L4,231.4 Z" fill="#A2005C"></path>
+<path d="M4.4,241.5 L39.3,228.5 L74.1,203.4 L108.9,161 L143.8,116.8 L178.6,86.5 L213.4,72.7 L248.3,78.8 L283.1,109.9 L317.9,155.8 L352.8,200 L387.6,225.1" stroke="#7EBD00" stroke-width="2"></path>
+<path d="M383,221.1 L391,221.1 L391,229.1 L383,229.1 L383,221.1 L383,221.1 Z M348,196 L356,196 L356,204 L348,204 L348,196 L348,196 Z M313,151.8 L321,151.8 L321,159.8 L313,159.8 L313,151.8 L313,151.8 Z M279,105.9 L287,105.9 L287,113.9 L279,113.9 L279,105.9 L279,105.9 Z M244,74.8 L252,74.8 L252,82.8 L244,82.8 L244,74.8 L244,74.8 Z M209,68.7 L217,68.7 L217,76.7 L209,76.7 L209,68.7 L209,68.7 Z M174,82.5 L182,82.5 L182,90.5 L174,90.5 L174,82.5 L174,82.5 Z M139,112.8 L147,112.8 L147,120.8 L139,120.8 L139,112.8 L139,112.8 Z M104,157 L112,157 L112,165 L104,165 L104,157 L104,157 Z M70,199.4 L78,199.4 L78,207.4 L70,207.4 L70,199.4 L70,199.4 Z M35,224.5 L43,224.5 L43,232.5 L35,232.5 L35,224.5 L35,224.5 Z M0,237.5 L8,237.5 L8,245.5 L0,245.5 L0,237.5 L0,237.5 Z" fill="#7EBD00"></path>
+<path d="M4.4,200 L39.3,197.4 L74.1,184.4 L108.9,160.1 L143.8,130.7 L178.6,102.1 L213.4,86.5 L248.3,90 L283.1,110.8 L317.9,144.5 L352.8,176.6 L387.6,192.2" stroke="#007979" stroke-width="2"></path>
+<path d="M387,188.2 L391,196.2 L383,196.2 L387,188.2 L387,188.2 Z M352,172.6 L356,180.6 L348,180.6 L352,172.6 L352,172.6 Z M317,140.5 L321,148.5 L313,148.5 L317,140.5 L317,140.5 Z M283,106.8 L287,114.8 L279,114.8 L283,106.8 L283,106.8 Z M248,86 L252,94 L244,94 L248,86 L248,86 Z M213,82.5 L217,90.5 L209,90.5 L213,82.5 L213,82.5 Z M178,98.1 L182,106.1 L174,106.1 L178,98.1 L178,98.1 Z M143,126.7 L147,134.7 L139,134.7 L143,126.7 L143,126.7 Z M108,156.1 L112,164.1 L104,164.1 L108,156.1 L108,156.1 Z M74,180.4 L78,188.4 L70,188.4 L74,180.4 L74,180.4 Z M39,193.4 L43,201.4 L35,201.4 L39,193.4 L39,193.4 Z M4,196 L8,204 L0,204 L4,196 L4,196 Z" fill="#007979"></path>
+</g>
+<g transform="translate(488.000000, 167.000000)">
+<g>
+<path d="M0,8 L16,8 L0,8 Z M8,4 C13.3,4 13.3,12 8,12 C2.7,12 2.7,4 8,4 L8,4 Z" stroke="#CA0000" stroke-width="2"></path>
+<text fill="#000000" font-size="12"><tspan x="21" y="11.99">Tokyo</tspan></text>
+</g>
+<g transform="translate(0.000000, 15.000000)">
+<path d="M0,7 L16,7 L0,7 Z M8,3 L12,7 L8,11 L4,7 L8,3 L8,3 Z" stroke="#A2005C" stroke-width="2"></path>
+<text fill="#262626" font-size="12"><tspan x="21" y="11" fill="#000000">New York</tspan></text>
+</g>
+<g transform="translate(0.000000, 29.000000)">
+<path d="M0,7 L16,7 L0,7 Z M4,3 L12,3 L12,11 L4,11 L4,3 L4,3 Z" stroke="#7EBD00" stroke-width="2"></path>
+<text fill="#262626" font-size="12"><tspan x="21" y="11" fill="#000000">Berlin</tspan></text>
+</g>
+<g transform="translate(0.000000, 43.000000)">
+<path d="M0,7 L16,7 L0,7 Z M8,3 L12,11 L4,11 L8,3 L8,3 Z" stroke="#007979" stroke-width="2"></path>
+<text fill="#262626" font-size="12" ><tspan x="21" y="11" fill="#000000">London</tspan></text>
+</g>
+</g>
+<g transform="translate(51.000000, 367.000000)" font-size="11">
+<text><tspan x="0.03" y="10" fill="#000000">Jan</tspan></text>
+<text><tspan x="34.32" y="10" fill="#000000">Feb</tspan></text>
+<text><tspan x="69.13" y="10" fill="#000000">Mar</tspan></text>
+<text><tspan x="104.84" y="10" fill="#000000">Apr</tspan></text>
+<text><tspan x="137.91" y="10" fill="#000000">May</tspan></text>
+<text><tspan x="174.23" y="10" fill="#000000">Jun</tspan></text>
+<text><tspan x="210.87" y="10" fill="#000000">Jul</tspan></text>
+<text><tspan x="243.01" y="10" fill="#000000">Aug</tspan></text>
+<text><tspan x="277.81" y="10" fill="#000000">Sep</tspan></text>
+<text><tspan x="313.84" y="10" fill="#000000">Oct</tspan></text>
+<text><tspan x="347.52" y="10" fill="#000000">Nov</tspan></text>
+<text><tspan x="382.32" y="10" fill="#000000">Dec</tspan></text>
+</g>
+<g transform="translate(23.000000, 47.000000)" font-size="11">
+<text><tspan x="3.22" y="313.5" fill="#000000">-5</tspan></text>
+<text><tspan x="6.88" y="270" fill="#000000">0</tspan></text>
+<text><tspan x="6.88" y="227" fill="#000000">5</tspan></text>
+<text><tspan x="0.76" y="183.7" fill="#000000">10</tspan></text>
+<text><tspan x="0.76" y="140.4" fill="#000000">15</tspan></text>
+<text><tspan x="0.76" y="97.1" fill="#000000">20</tspan></text>
+<text><tspan x="0.76" y="53.8" fill="#000000">25</tspan></text>
+<text><tspan x="0.76" y="10.5" fill="#000000">30</tspan></text>
+</g>
+<g>
+<text transform="translate(7.500000, 201.480000) rotate(-90.000000) translate(-7.500000, -201.480000)" font-size="12"><tspan x="-39" y="205.48" fill="#000000">Temperature (°C)</tspan></text>
+<text font-size="18"><tspan x="130.75" y="18" fill="#000000">Monthly Average Temperature</tspan></text>
+<text font-size="12"><tspan x="179.75" y="40" fill="#000000">Source: WorldClimate.com</tspan></text>
+</g>
+</g>
+</g>
+</svg>
 
 ---
+
+## Charting Library - Buying a Home {.photoslide}
 
 ![](../../img/ForSale.jpg)
 
 ---
 
+## D3 - Buying a Home at Home Depot {.photoslide}
+
 ![](../../img/HomeDepot.jpg)
 
 ---
 
-## Example Code Block
+## D3 Philosophy
 
-```javascript
-var func = function(param) {
-    window.alert("Hello World!")
-};
-```
+* D3 is not really a "visualization library"; it does not draw visualizations
+* D3 = "Data Driven Documents"; it primarily associates data with DOM elements and manages the results
+* D3 also provides tools that you can use to draw visualizations
 
 ---
 
-## Bullet List
+## D3 Components
 
-* Item 1
-* Second Item
-* Last Item
+* Core: selections, transitions, data, localization, colors,
+* Scales: convert between data and visual encodings
+* <span class="lgcp">SVG</span>: utilities for creating Scalable Vector Graphics
+* Time: parse/format times, compute calendar intervals,
+* Layouts: derive data for positioning elements
+* Geography: project spherical coord., lat/long math
+* Geometry: utilities for 2<span class="smcp">D</span> geometry, e.g. Voronoi,
+* Behaviors: reusable interaction behaviors
 
 ---
+
+## Let's Build a Chart
+
+HTML Scaffolding
+
