@@ -5038,7 +5038,7 @@
 		},
 	"\/build\/styles.talks.min.css": {
 		"fileType": 16,
-		"ignore": 1,
+		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/build\/styles.talks.min.css",
 		"outputAbbreviatedPath": "No Output Path",
@@ -5172,6 +5172,15 @@
 		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/release\/css\/styles.min.css",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/release\/css\/styles.talks.min.css": {
+		"fileType": 16,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/release\/css\/styles.talks.min.css",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -5474,6 +5483,17 @@
 		"outputStyle": 1,
 		"syntaxCheckerStyle": 1
 		},
+	"\/release\/js\/scripts.talks.min.js": {
+		"fileType": 64,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/release\/js\/scripts.talks.min.js",
+		"outputAbbreviatedPath": "\/Users\/Stephen\/Documents\/Development\/release\/js\/scripts.talks.min.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
 	"\/release\/local\/cors-print.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -5496,11 +5516,11 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
-	"\/release\/source\/index.html": {
+	"\/release\/local\/source\/index.html": {
 		"fileType": 8192,
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
-		"inputAbbreviatedPath": "\/release\/source\/index.html",
+		"inputAbbreviatedPath": "\/release\/local\/source\/index.html",
 		"outputAbbreviatedPath": "No Output Path",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
@@ -5663,6 +5683,17 @@
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/scripts\/scripts.js",
 		"outputAbbreviatedPath": "\/release\/js\/scripts.min.js",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 1,
+		"outputStyle": 1,
+		"syntaxCheckerStyle": 1
+		},
+	"\/src\/scripts\/scripts.talks.js": {
+		"fileType": 64,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/scripts\/scripts.talks.js",
+		"outputAbbreviatedPath": "\/release\/js\/scripts.talks.min.js",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
 		"outputStyle": 1,
@@ -5919,10 +5950,10 @@
 		"ignore": 0,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/src\/styles\/styles.talks.less",
-		"outputAbbreviatedPath": "\/build\/styles.talks.min.css",
+		"outputAbbreviatedPath": "\/release\/css\/styles.talks.min.css",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 1,
-		"outputStyle": 0,
+		"outputStyle": 2,
 		"relativeURLS": 0,
 		"shouldRunAutoprefixer": 1,
 		"shouldRunBless": 1,
@@ -6183,687 +6214,687 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apA\/00-intro.md": {
+	"\/src\/text\/apndA\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apA\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/apA\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndA\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndA\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apA\/01-functional-programming.md": {
+	"\/src\/text\/apndA\/01-functional-programming.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apA\/01-functional-programming.md",
-		"outputAbbreviatedPath": "\/src\/text\/apA\/01-functional-programming.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndA\/01-functional-programming.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndA\/01-functional-programming.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apA\/02-arrays.md": {
+	"\/src\/text\/apndA\/02-arrays.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apA\/02-arrays.md",
-		"outputAbbreviatedPath": "\/src\/text\/apA\/02-arrays.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndA\/02-arrays.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndA\/02-arrays.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apA\/03-objects.md": {
+	"\/src\/text\/apndA\/03-objects.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apA\/03-objects.md",
-		"outputAbbreviatedPath": "\/src\/text\/apA\/03-objects.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndA\/03-objects.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndA\/03-objects.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apA\/04-collections.md": {
+	"\/src\/text\/apndA\/04-collections.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apA\/04-collections.md",
-		"outputAbbreviatedPath": "\/src\/text\/apA\/04-collections.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndA\/04-collections.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndA\/04-collections.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apA\/99-conclusion.md": {
+	"\/src\/text\/apndA\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apA\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/apA\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndA\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndA\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apB\/00-intro.md": {
+	"\/src\/text\/apndB\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apB\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/apB\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndB\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndB\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apB\/01-framework.md": {
+	"\/src\/text\/apndB\/01-framework.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apB\/01-framework.md",
-		"outputAbbreviatedPath": "\/src\/text\/apB\/01-framework.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndB\/01-framework.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndB\/01-framework.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apB\/02-modelsviews.md": {
+	"\/src\/text\/apndB\/02-modelsviews.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apB\/02-modelsviews.md",
-		"outputAbbreviatedPath": "\/src\/text\/apB\/02-modelsviews.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndB\/02-modelsviews.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndB\/02-modelsviews.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apB\/03-vizviews.md": {
+	"\/src\/text\/apndB\/03-vizviews.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apB\/03-vizviews.md",
-		"outputAbbreviatedPath": "\/src\/text\/apB\/03-vizviews.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndB\/03-vizviews.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndB\/03-vizviews.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apB\/04-restapi.md": {
+	"\/src\/text\/apndB\/04-restapi.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apB\/04-restapi.md",
-		"outputAbbreviatedPath": "\/src\/text\/apB\/04-restapi.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndB\/04-restapi.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndB\/04-restapi.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apB\/05-routes.md": {
+	"\/src\/text\/apndB\/05-routes.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apB\/05-routes.md",
-		"outputAbbreviatedPath": "\/src\/text\/apB\/05-routes.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndB\/05-routes.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndB\/05-routes.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/apB\/99-conclusion.md": {
+	"\/src\/text\/apndB\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/apB\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/apB\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/apndB\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/apndB\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/00-intro.md": {
+	"\/src\/text\/chap01\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/01-bar-charts.md": {
+	"\/src\/text\/chap01\/01-bar-charts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/01-bar-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/01-bar-charts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/01-bar-charts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/01-bar-charts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/02-line-charts.md": {
+	"\/src\/text\/chap01\/02-line-charts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/02-line-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/02-line-charts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/02-line-charts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/02-line-charts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/03-pie-charts.md": {
+	"\/src\/text\/chap01\/03-pie-charts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/03-pie-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/03-pie-charts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/03-pie-charts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/03-pie-charts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/04-scatter-charts.md": {
+	"\/src\/text\/chap01\/04-scatter-charts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/04-scatter-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/04-scatter-charts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/04-scatter-charts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/04-scatter-charts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/05-bubble-charts.md": {
+	"\/src\/text\/chap01\/05-bubble-charts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/05-bubble-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/05-bubble-charts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/05-bubble-charts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/05-bubble-charts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/06-radar-charts.md": {
+	"\/src\/text\/chap01\/06-radar-charts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/06-radar-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/06-radar-charts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/06-radar-charts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/06-radar-charts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch1\/99-conclusion.md": {
+	"\/src\/text\/chap01\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch1\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch1\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap01\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap01\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch2\/00-intro.md": {
+	"\/src\/text\/chap02\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap02\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap02\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch2\/01-selecting-content.md": {
+	"\/src\/text\/chap02\/01-selecting-content.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/01-selecting-content.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/01-selecting-content.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap02\/01-selecting-content.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap02\/01-selecting-content.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch2\/02-zooming-panning.md": {
+	"\/src\/text\/chap02\/02-zooming-panning.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/02-zooming-panning.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/02-zooming-panning.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap02\/02-zooming-panning.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap02\/02-zooming-panning.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch2\/03-tracking-values.md": {
+	"\/src\/text\/chap02\/03-tracking-values.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/03-tracking-values.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/03-tracking-values.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap02\/03-tracking-values.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap02\/03-tracking-values.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch2\/04-data-via-ajax.md": {
+	"\/src\/text\/chap02\/04-data-via-ajax.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/04-data-via-ajax.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/04-data-via-ajax.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap02\/04-data-via-ajax.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap02\/04-data-via-ajax.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch2\/99-conclusion.md": {
+	"\/src\/text\/chap02\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch2\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch2\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap02\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap02\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/00-intro.md": {
+	"\/src\/text\/chap03\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/01-classic-sparkline.md": {
+	"\/src\/text\/chap03\/01-classic-sparkline.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/01-classic-sparkline.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/01-classic-sparkline.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/01-classic-sparkline.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/01-classic-sparkline.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/02-small-multiples.md": {
+	"\/src\/text\/chap03\/02-small-multiples.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/02-small-multiples.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/02-small-multiples.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/02-small-multiples.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/02-small-multiples.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/03-annotations.md": {
+	"\/src\/text\/chap03\/03-annotations.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/03-annotations.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/03-annotations.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/03-annotations.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/03-annotations.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/04-composite-charts.md": {
+	"\/src\/text\/chap03\/04-composite-charts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/04-composite-charts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/04-composite-charts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/04-composite-charts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/04-composite-charts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/05-click-events.md": {
+	"\/src\/text\/chap03\/05-click-events.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/05-click-events.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/05-click-events.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/05-click-events.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/05-click-events.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/06-real-time.md": {
+	"\/src\/text\/chap03\/06-real-time.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/06-real-time.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/06-real-time.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/06-real-time.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/06-real-time.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch3\/99-conclusion.md": {
+	"\/src\/text\/chap03\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch3\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch3\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap03\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap03\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch4\/00-intro.md": {
+	"\/src\/text\/chap04\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap04\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap04\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch4\/01-tree-maps.md": {
+	"\/src\/text\/chap04\/01-tree-maps.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/01-tree-maps.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/01-tree-maps.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap04\/01-tree-maps.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap04\/01-tree-maps.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch4\/02-heat-maps.md": {
+	"\/src\/text\/chap04\/02-heat-maps.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/02-heat-maps.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/02-heat-maps.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap04\/02-heat-maps.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap04\/02-heat-maps.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch4\/03-graphs.md": {
+	"\/src\/text\/chap04\/03-graphs.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/03-graphs.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/03-graphs.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap04\/03-graphs.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap04\/03-graphs.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch4\/04-word-clouds.md": {
+	"\/src\/text\/chap04\/04-word-clouds.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/04-word-clouds.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/04-word-clouds.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap04\/04-word-clouds.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap04\/04-word-clouds.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch4\/99-conclusion.md": {
+	"\/src\/text\/chap04\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch4\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch4\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap04\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap04\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch5\/00-intro.md": {
+	"\/src\/text\/chap05\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch5\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch5\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap05\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap05\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch5\/01-library.md": {
+	"\/src\/text\/chap05\/01-library.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch5\/01-library.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch5\/01-library.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap05\/01-library.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap05\/01-library.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch5\/02-javascript.md": {
+	"\/src\/text\/chap05\/02-javascript.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch5\/02-javascript.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch5\/02-javascript.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap05\/02-javascript.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap05\/02-javascript.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch5\/03-component.md": {
+	"\/src\/text\/chap05\/03-component.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch5\/03-component.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch5\/03-component.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap05\/03-component.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap05\/03-component.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch5\/99-conclusion.md": {
+	"\/src\/text\/chap05\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch5\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch5\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap05\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap05\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch6\/00-intro.md": {
+	"\/src\/text\/chap06\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch6\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch6\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap06\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap06\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch6\/01-fonts.md": {
+	"\/src\/text\/chap06\/01-fonts.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch6\/01-fonts.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch6\/01-fonts.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap06\/01-fonts.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap06\/01-fonts.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch6\/02-svg.md": {
+	"\/src\/text\/chap06\/02-svg.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch6\/02-svg.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch6\/02-svg.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap06\/02-svg.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap06\/02-svg.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch6\/03-mapcontext.md": {
+	"\/src\/text\/chap06\/03-mapcontext.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch6\/03-mapcontext.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch6\/03-mapcontext.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap06\/03-mapcontext.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap06\/03-mapcontext.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch6\/04-maplibrary.md": {
+	"\/src\/text\/chap06\/04-maplibrary.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch6\/04-maplibrary.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch6\/04-maplibrary.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap06\/04-maplibrary.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap06\/04-maplibrary.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch6\/99-conclusion.md": {
+	"\/src\/text\/chap06\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch6\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch6\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap06\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap06\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch7\/00-intro.md": {
+	"\/src\/text\/chap07\/00-intro.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/00-intro.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/00-intro.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap07\/00-intro.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap07\/00-intro.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch7\/01-chart.md": {
+	"\/src\/text\/chap07\/01-chart.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/01-chart.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/01-chart.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap07\/01-chart.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap07\/01-chart.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch7\/02-graph.md": {
+	"\/src\/text\/chap07\/02-graph.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/02-graph.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/02-graph.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap07\/02-graph.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap07\/02-graph.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch7\/03-map.md": {
+	"\/src\/text\/chap07\/03-map.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/03-map.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/03-map.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap07\/03-map.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap07\/03-map.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
-	"\/src\/text\/ch7\/99-conclusion.md": {
+	"\/src\/text\/chap07\/99-conclusion.md": {
 		"enableFootnoteSupport": 0,
 		"enableSmartyPants": 1,
 		"expandTabs": 1,
 		"fileType": 4096,
 		"ignore": 1,
 		"ignoreWasSetByUser": 1,
-		"inputAbbreviatedPath": "\/src\/text\/ch7\/99-conclusion.md",
-		"outputAbbreviatedPath": "\/src\/text\/ch7\/99-conclusion.html",
+		"inputAbbreviatedPath": "\/src\/text\/chap07\/99-conclusion.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap07\/99-conclusion.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
@@ -6893,6 +6924,15 @@
 		}
 	},
 "hooks": [
+	{
+		"enabled": 1,
+		"hookType": 1,
+		"name": "Make Kit Files",
+		"predicateDataBase64Encoded": "YnBsaXN0MDDUAQIDBAUGbm9YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QFgcIDxQcJicpMTU6O0BESk9QVVxiZ2lVJG51bGzTCQoLDA0OXxAXTlNDb21wb3VuZFByZWRpY2F0ZVR5cGVfEA9OU1N1YnByZWRpY2F0ZXNWJGNsYXNzEAGAAoAV0hALERNaTlMub2JqZWN0c6ESgAOAFNQLFRYXGBkaG18QEU5TUmlnaHRFeHByZXNzaW9uXxAQTlNMZWZ0RXhwcmVzc2lvbl8QE05TUHJlZGljYXRlT3BlcmF0b3KAE4AOgASAEdUdHh8gCyEiIyQlWU5TT3BlcmFuZF5OU1NlbGVjdG9yTmFtZV8QEE5TRXhwcmVzc2lvblR5cGVbTlNBcmd1bWVudHOABoAFEAOACIANXHZhbHVlRm9yS2V5OtIfCwwogAfSKissLVokY2xhc3NuYW1lWCRjbGFzc2VzXxAQTlNTZWxmRXhwcmVzc2lvbqMuLzBfEBBOU1NlbGZFeHByZXNzaW9uXE5TRXhwcmVzc2lvblhOU09iamVjdNIQCzI0oTOACYAM0wsfNjc4OVlOU0tleVBhdGiACxAKgApdaW5wdXRGdWxsUGF0aNIqKzw9XxAcTlNLZXlQYXRoU3BlY2lmaWVyRXhwcmVzc2lvbqM+PzBfEBxOU0tleVBhdGhTcGVjaWZpZXJFeHByZXNzaW9uXE5TRXhwcmVzc2lvbtIqK0FCXk5TTXV0YWJsZUFycmF5o0FDMFdOU0FycmF50iorRUZfEBNOU0tleVBhdGhFeHByZXNzaW9upEdISTBfEBNOU0tleVBhdGhFeHByZXNzaW9uXxAUTlNGdW5jdGlvbkV4cHJlc3Npb25cTlNFeHByZXNzaW9u00sfC0xNTl8QD05TQ29uc3RhbnRWYWx1ZYAPEACAEFhzcmMvdGV4dNIqK1FSXxAZTlNDb25zdGFudFZhbHVlRXhwcmVzc2lvbqNTVDBfEBlOU0NvbnN0YW50VmFsdWVFeHByZXNzaW9uXE5TRXhwcmVzc2lvbtULVldYWVpNDE1bWk5TTW9kaWZpZXJXTlNGbGFnc1pOU1Bvc2l0aW9uXk5TT3BlcmF0b3JUeXBlgBIQCNIqK11eXxAcTlNTdWJzdHJpbmdQcmVkaWNhdGVPcGVyYXRvcqRfYGEwXxAcTlNTdWJzdHJpbmdQcmVkaWNhdGVPcGVyYXRvcl8QGU5TU3RyaW5nUHJlZGljYXRlT3BlcmF0b3JfEBNOU1ByZWRpY2F0ZU9wZXJhdG9y0iorY2RfEBVOU0NvbXBhcmlzb25QcmVkaWNhdGWjZWYwXxAVTlNDb21wYXJpc29uUHJlZGljYXRlW05TUHJlZGljYXRl0iorQ2iiQzDSKitqa18QE05TQ29tcG91bmRQcmVkaWNhdGWjbG0wXxATTlNDb21wb3VuZFByZWRpY2F0ZVtOU1ByZWRpY2F0ZV8QD05TS2V5ZWRBcmNoaXZlctFwcVRyb290gAEACAARABoAIwAtADIANwBQAFYAXQB3AIkAkACSAJQAlgCbAKYAqACqAKwAtQDJANwA8gD0APYA+AD6AQUBDwEeATEBPQE\/AUEBQwFFAUcBVAFZAVsBYAFrAXQBhwGLAZ4BqwG0AbkBuwG9Ab8BxgHQAdIB1AHWAeQB6QIIAgwCKwI4Aj0CTAJQAlgCXQJzAngCjgKlArICuQLLAs0CzwLRAtoC3wL7Av8DGwMoAzMDPgNGA1EDYANiA2QDaQOIA40DrAPIA94D4wP7A\/8EFwQjBCgEKwQwBEYESgRgBGwEfgSBBIYAAAAAAAACAQAAAAAAAAByAAAAAAAAAAAAAAAAAAAEiA==",
+		"runOrder": 0,
+		"scriptSourceString": "make all",
+		"uuidString": "205BBD53-E97C-4B96-A621-74C03DA1D9D6"
+		}
 	],
 "lastSavedByUser": "Stephen Thomas",
 "manualImportLinks": {
