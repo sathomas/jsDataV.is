@@ -1110,7 +1110,7 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
         <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>).<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>,<span class="kw">true</span>);
     }
 });</code></pre></td></tr></table>
-<p>That code handles setting the <code>selected</code> class, but we still need to remove it when appropriate. We can remove it from all the other circles (and make sure their radius is restored to its default value) by operating on the node selection. Other than line 2 below, the code looks the same as we’ve seen before. In line 2 we use the <span class="smcp">D3</span>.js <code>filter()</code> function to limit the selection to the nodes other than the one that was clicked.</p>
+<p>That code handles setting the <code>selected</code> class, but we still need to remove it when appropriate. We can remove it from all the other circles (and make sure their radii are restored to its default value) by operating on the node selection. Other than line 2 below, the code looks the same as we’ve seen before. In line 2 we use the <span class="smcp">D3</span>.js <code>filter()</code> function to limit the selection to the nodes other than the one that was clicked.</p>
 <table class="sourceCode javascript numberLines line-2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
