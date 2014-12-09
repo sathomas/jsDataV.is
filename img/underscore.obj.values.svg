@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="54"  xml:space="preserve">
+    <defs>
+        <filter id="shadow-outer" filterUnits="userSpaceOnUse">
+            <feGaussianBlur stdDeviation="2.5" />
+            <feOffset dx="0.1" dy="3.1" result="blur" />
+            <feFlood flood-color="rgb(0, 0, 0)" flood-opacity="0.5" />
+            <feComposite in2="blur" operator="in" result="colorShadow" />
+            <feComposite in="SourceGraphic" in2="colorShadow" operator="over" />
+        </filter>
+        <filter id="smallShadow-outer" filterUnits="userSpaceOnUse">
+            <feGaussianBlur stdDeviation="2" />
+            <feOffset dx="0.1" dy="2.1" result="blur" />
+            <feFlood flood-color="rgb(0, 0, 0)" flood-opacity="0.5" />
+            <feComposite in2="blur" operator="in" result="colorShadow" />
+            <feComposite in="SourceGraphic" in2="colorShadow" operator="over" />
+        </filter>
+    </defs>
+    <path id="bezier" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" d="M 150.07,5.87 L 188.47,5.87 188.47,44.27 150.07,44.27 150.07,5.87 Z M 150.07,5.87" />
+    <path id="bezier2" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 150.07,5.87 L 188.47,5.87 188.47,44.27 150.07,44.27 150.07,5.87 Z M 150.07,5.87" />
+    <path id="bezier3" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" d="M 188.47,5.87 L 236.47,5.87 236.47,44.27 188.47,44.27 188.47,5.87 Z M 188.47,5.87" />
+    <path id="bezier4" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 188.47,5.87 L 236.47,5.87 236.47,44.27 188.47,44.27 188.47,5.87 Z M 188.47,5.87" />
+    <path id="bezier5" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" d="M 236.47,5.87 L 274.87,5.87 274.87,44.27 236.47,44.27 236.47,5.87 Z M 236.47,5.87" />
+    <path id="bezier6" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 236.47,5.87 L 274.87,5.87 274.87,44.27 236.47,44.27 236.47,5.87 Z M 236.47,5.87" />
+    <path id="bezier7" stroke="none" fill="rgb(255, 255, 255)" filter="url(#shadow-outer)" d="M 274.87,5.87 L 438.07,5.87 438.07,44.27 274.87,44.27 274.87,5.87 Z M 274.87,5.87" />
+    <path id="bezier8" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 274.87,5.87 L 438.07,5.87 438.07,44.27 274.87,44.27 274.87,5.87 Z M 274.87,5.87" />
+    <path id="bezier9" stroke="none" fill="rgb(255, 255, 255)" filter="url(#smallShadow-outer)" d="M 284.47,13.07 L 428.47,13.07 428.47,37.07 284.47,37.07 284.47,13.07 Z M 284.47,13.07" />
+    <path id="bezier10" stroke="none" fill="rgb(255, 255, 255)" d="M 284.47,13.07 L 361.27,13.07 361.27,37.07 284.47,37.07 284.47,13.07 Z M 284.47,13.07" />
+    <path id="bezier11" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 284.47,13.07 L 361.27,13.07 361.27,37.07 284.47,37.07 284.47,13.07 Z M 284.47,13.07" />
+    <path id="bezier12" stroke="none" fill="rgb(255, 255, 255)" d="M 361.27,13.07 L 428.47,13.07 428.47,37.07 361.27,37.07 361.27,13.07 Z M 361.27,13.07" />
+    <path id="bezier13" stroke="rgb(68, 68, 68)" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4" fill="none" d="M 361.27,13.07 L 428.47,13.07 428.47,37.07 361.27,37.07 361.27,13.07 Z M 361.27,13.07" />
+    <rect id="rectangle2" stroke="none" fill="none" x="28" y="17" width="106" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="43.44" y="17">
+        <tspan x="43.44" y="29">_(pizza).values()</tspan>
+    </text>
+    <rect id="rectangle7" stroke="none" fill="none" x="150" y="16" width="38" height="26" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="160.63" y="16">
+        <tspan x="160.63" y="30">10</tspan>
+    </text>
+    <rect id="rectangle8" stroke="none" fill="none" x="188" y="16" width="48" height="26" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="193.99" y="16">
+        <tspan x="193.99" y="30">“thin”</tspan>
+    </text>
+    <rect id="rectangle10" stroke="none" fill="none" x="236" y="16" width="39" height="26" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="13.33" x="242.49" y="16">
+        <tspan x="242.49" y="30">true</tspan>
+    </text>
+    <rect id="rectangle11" stroke="none" fill="none" x="284" y="17" width="77" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="288.09" y="17">
+        <tspan x="288.09" y="29">“pepperoni”</tspan>
+    </text>
+    <rect id="rectangle12" stroke="none" fill="none" x="361" y="17" width="67" height="24" />
+    <text fill="rgb(68, 68, 68)" font-family="Varela, sans-serif" font-size="12" x="366.17" y="17">
+        <tspan x="366.17" y="29">“sausage”</tspan>
+    </text>
+</svg>
