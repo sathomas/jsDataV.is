@@ -11,41 +11,27 @@ BUILDBOOK = sed -e 's_NEXTFIGURENUMBER_\<span class="nextfigure"/\>_g' -e 's_LAS
 #   stdout: html5 output
 BUILDTALK = pandoc --smart --slide-level=2 -t dzslides
 
-# Rules for building the book (hacked copy-and-paste for now)
+# Rules for building the book
 
-build/intro.kit: src/text/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
+build/intro.kit:  src/text/*.md
 build/chap01.kit: src/text/chap01/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
 build/chap02.kit: src/text/chap02/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
 build/chap03.kit: src/text/chap03/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
 build/chap04.kit: src/text/chap04/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
 build/chap05.kit: src/text/chap05/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
 build/chap06.kit: src/text/chap06/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
 build/chap07.kit: src/text/chap07/*.md
-	@cat $^ | $(BUILDBOOK) > $@
+build/apndA.kit:  src/text/apndA/*.md
+build/apndB.kit:  src/text/apndB/*.md
 
-build/apndA.kit: src/text/apndA/*.md
-	@cat $^ | $(BUILDBOOK) > $@
-
-build/apndB.kit: src/text/apndB/*.md
+$(BOOK):
 	@cat $^ | $(BUILDBOOK) > $@
 
 # Rules for building talks
 
 build/intro-to-d3.kit: src/text/talks/intro-to-d3/*.md
+	
+$(TALKS):
 	@cat $^ | $(BUILDTALK) > $@
 
 # Targets for normal human beings

@@ -723,7 +723,7 @@ edgeSelection.each(function(edge) {
 });
 ```
 
-That code handles setting the `selected` class, but we still need to remove it when appropriate. We can remove it from all the other circles (and make sure their radius is restored to its default value) by operating on the node selection. Other than line 2 below, the code looks the same as we've seen before. In line 2 we use the <span class="smcp">D3</span>.js `filter()` function to limit the selection to the nodes other than the one that was clicked.
+That code handles setting the `selected` class, but we still need to remove it when appropriate. We can remove it from all the other circles (and make sure their radii are restored to its default value) by operating on the node selection. Other than line 2 below, the code looks the same as we've seen before. In line 2 we use the <span class="smcp">D3</span>.js `filter()` function to limit the selection to the nodes other than the one that was clicked.
 
 ``` {.javascript .numberLines .line-2}
 nodeSelection
