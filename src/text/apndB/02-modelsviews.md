@@ -85,7 +85,7 @@ Running.Models.Run = Backbone.Model.extend({
 });
 ```
 
-Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of `2126456911`. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, _and get all it's data,_ with the hypothetical two statements below. (We’ll consider the quirks of the actual Nike+ interface in a later section.)
+Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of `2126456911`. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, _and get all its data,_ with the hypothetical two statements below. (We’ll consider the quirks of the actual Nike+ interface in a later section.)
 
 ``` {.javascript .numberLines}
 var run = new Running.Models.Run({id: 2126456911});
@@ -219,7 +219,7 @@ Running.Views = Running.Views || {};
 
 The overall structure of the file is the same as our model and our collection, but there's a bit more going on in the view itself. Let's step through view's properties one at a time. The first property is `template`. That's where we define the exact <span class="smcp">HTML</span> markup for the view, and we'll look at this in more detail in the next step.
 
-The `tagName` property defines the <span class="smcp">HTML</span> tag that our view will use as it's parent. Yeoman defaults it to a generic `<div>`, but we know that in our case it will be a `<table>`. We'll change that in a moment.
+The `tagName` property defines the <span class="smcp">HTML</span> tag that our view will use as its parent. Yeoman defaults it to a generic `<div>`, but we know that in our case it will be a `<table>`. We'll change that in a moment.
 
 The `id` and `className` properties specify <span class="smcp">HTML</span> `id` attributes or `class` values to add to the main container (in our case the `<table>`). We could, for example, base some <span class="smcp">CSS</span> styles on these values. For our example we're not considering styles, so we can leave both properties blank or delete them entirely.
 
@@ -444,7 +444,7 @@ When we insert that markup in the page, our users can see a simple summary table
 
 ### Step 6: Refine the Main View
 
-Now we're starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we no control over the values passed to our template. Fortunately, that's not the case. If we look at the SummaryView's `render` method, we can see how the template gets its values.
+Now we're starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we have no control over the values passed to our template. Fortunately, that's not the case. If we look at the SummaryView's `render` method, we can see how the template gets its values.
 
 ``` {.javascript .numberLines}
 render: function () {
@@ -485,7 +485,7 @@ The calories attribute is one value that's fine as it is, so we'll just copy it 
 run.calories = this.model.get("metricSummary").calories;
 ```
 
-Finally, if you're an avid runner you might have noticed that there's an important value missing from the Nike+ attributes, the average pace for the run in minutes per mile. We have the data to calculate it, so let's go ahead and add that as well.
+Finally, if you're an avid runner you might have noticed that there's an important value missing from the Nike+ attributes: the average pace for the run in minutes per mile. We have the data to calculate it, so let's go ahead and add that as well.
 
 ``` {.javascript .numberLines}
 var secs = _(run.duration.split(":")).reduce(function(sum, num) {
