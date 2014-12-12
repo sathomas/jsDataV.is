@@ -30,9 +30,10 @@ $(BOOK):
 # Rules for building talks
 
 build/intro-to-d3.kit: src/text/talks/intro-to-d3/*.md
-	
-$(TALKS):
 	@cat $^ | $(BUILDTALK) > $@
+	
+# $(TALKS):
+#	@cat $^ | $(BUILDTALK) > $@
 
 # Targets for normal human beings
 

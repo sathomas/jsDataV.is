@@ -204,6 +204,10 @@
   }
 
   Dz.back = function() {
+    if ($$("section[aria-selected][data-custom-prev]").length > 0) {
+      eval($("section[aria-selected][data-custom-prev]").getAttribute("data-custom-prev") + "(" + this.idx + ")");
+      return;
+    }
     if (this.idx == 1 && this.step == 0) {
       return;
     }
@@ -216,6 +220,10 @@
   }
 
   Dz.forward = function() {
+    if ($$("section[aria-selected][data-custom-next]").length > 0) {
+        eval($("section[aria-selected][data-custom-next]").getAttribute("data-custom-next") + "(" + this.idx + ")");
+        return;
+    }
     if (this.idx >= this.slides.length &&
         this.step >= this.slides[this.idx - 1].$$('.incremental > *').length) {
         return;

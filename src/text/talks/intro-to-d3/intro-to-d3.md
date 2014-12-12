@@ -10,13 +10,13 @@ $('#container').highcharts({
   subtitle: { text: 'Source: WorldClimate.com', x: -20 },
   xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', //…
   yAxis: { title: { text: 'Temperature (°C)' },
-           plotLines: [{value: 0, width: 1, color: '#808080'}] },
+       plotLines: [{value: 0, width: 1, color: '#808080'}] },
   legend: { layout: 'vertical', align: 'right', 
-            verticalAlign: 'middle', borderWidth: 0 },
-  series: [{ name: 'Tokyo',    data: [ 7.0, 6.9, 9.5, 14.5, //…
-           { name: 'New York', data: [-0.2, 0.8, 5.7, 11.3, //…
-           { name: 'Berlin',   data: [-0.9, 0.6, 3.5,  8.4, //…
-           { name: 'London',   data: [ 3.9, 4.2, 5.7,  8.5, //…
+        verticalAlign: 'middle', borderWidth: 0 },
+  series: [{ name: 'Tokyo',  data: [ 7.0, 6.9, 9.5, 14.5, //…
+       { name: 'New York', data: [-0.2, 0.8, 5.7, 11.3, //…
+       { name: 'Berlin',   data: [-0.9, 0.6, 3.5,  8.4, //…
+       { name: 'London',   data: [ 3.9, 4.2, 5.7,  8.5, //…
 });
 ```
 
@@ -114,18 +114,350 @@ $('#container').highcharts({
 
 ## D3 Components
 
-* Core: selections, transitions, data, localization, colors,
-* Scales: convert between data and visual encodings
-* <span class="lgcp">SVG</span>: utilities for creating Scalable Vector Graphics
-* Time: parse/format times, compute calendar intervals,
-* Layouts: derive data for positioning elements
-* Geography: project spherical coord., lat/long math
-* Geometry: utilities for 2<span class="smcp">D</span> geometry, e.g. Voronoi,
-* Behaviors: reusable interaction behaviors
+> * Core: selections, transitions, data, localization, colors,
+> * Scales: convert between data and visual encodings
+> * <span class="lgcp">SVG</span>: utilities for creating Scalable Vector Graphics
+> * Time: parse/format times, compute calendar intervals,
+> * Layouts: derive data for positioning elements
+> * Geography: project spherical coord., lat/long math
+> * Geometry: utilities for 2<span class="smcp">D</span> geometry, e.g. Voronoi,
+> * Behaviors: reusable interaction behaviors
 
 ---
 
 ## Let's Build a Chart
 
-HTML Scaffolding
+1. Start with basic <span class="smcp">HTML</span> scaffolding
+2. Collect the data in <span class="smcp">JSON</span> format
+3. Retrieve the data via <span class="smcp">AJAX</span>
+4. Create a stage for the graph in the <span class="smcp">DOM</span>
+5. Define scales and axes
+6. Draw the data using <span class="smcp">SVG</span>
 
+
+---
+
+## Step 1: HTML Scaffolding
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Basic line demo</title>
+</head>
+<body>
+  <script src='http://d3js.org/d3.v3.min.js'></script>
+</body>
+</html>
+```
+
+---
+
+## The D3 Version
+
+<svg width="600" height="380" style="top: 16px; position: relative; left: 124px;"><g transform="translate(50,60)"><g class="x axis" transform="translate(0,290)"><g class="tick" transform="translate(17.972602739726028,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Jan</text></g><g class="tick" transform="translate(52.794520547945204,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Feb</text></g><g class="tick" transform="translate(84.24657534246575,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Mar</text></g><g class="tick" transform="translate(119.0216894977169,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Apr</text></g><g class="tick" transform="translate(152.7203196347032,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">May</text></g><g class="tick" transform="translate(187.54223744292239,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Jun</text></g><g class="tick" transform="translate(221.24086757990867,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Jul</text></g><g class="tick" transform="translate(256.06278538812785,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Aug</text></g><g class="tick" transform="translate(290.884703196347,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Sep</text></g><g class="tick" transform="translate(324.5833333333333,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Oct</text></g><g class="tick" transform="translate(359.40525114155247,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Nov</text></g><g class="tick" transform="translate(393.1506849315068,0)" style="opacity: 1;"><line y2="0" x2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".71em" y="10" x="0" font-size="14" style="text-anchor: middle;">Dec</text></g><path class="domain" d="M0,0V0H410V0" fill="none" stroke="#bbbbbb" stroke-width="2px" shape-rendering="crispEdges"></path></g><g class="y axis"><g class="tick" transform="translate(0,270.6666666666667)" style="opacity: 1;"><line x2="410" y2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".32em" x="-10" y="0" font-size="14" style="text-anchor: end;">0</text></g><g class="tick" transform="translate(0,222.33333333333331)" style="opacity: 1;"><line x2="410" y2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".32em" x="-10" y="0" font-size="14" style="text-anchor: end;">5</text></g><g class="tick" transform="translate(0,174)" style="opacity: 1;"><line x2="410" y2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".32em" x="-10" y="0" font-size="14" style="text-anchor: end;">10</text></g><g class="tick" transform="translate(0,125.66666666666667)" style="opacity: 1;"><line x2="410" y2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".32em" x="-10" y="0" font-size="14" style="text-anchor: end;">15</text></g><g class="tick" transform="translate(0,77.33333333333334)" style="opacity: 1;"><line x2="410" y2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".32em" x="-10" y="0" font-size="14" style="text-anchor: end;">20</text></g><g class="tick" transform="translate(0,28.999999999999993)" style="opacity: 1;"><line x2="410" y2="0" fill="none" stroke="#d0d0d0" stroke-width="1" shape-rendering="crispEdges"></line><text dy=".32em" x="-10" y="0" font-size="14" style="text-anchor: end;">25</text></g><path class="domain" d="M0,0H0V290H0" fill="none" stroke="#bbbbbb" stroke-width="2px" shape-rendering="crispEdges"></path><text transform="rotate(-90)" y="9" dy=".71em" text-anchor="end" font-size="14">Temperature (°C)</text></g><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(17.972602739726028,203)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(52.794520547945204,203.96666666666667)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(84.24657534246575,178.83333333333334)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(119.0216894977169,130.5)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(152.7203196347032,94.73333333333333)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(187.54223744292239,62.833333333333336)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(221.24086757990867,27.06666666666668)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(256.06278538812785,14.500000000000012)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(290.884703196347,45.43333333333332)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(324.5833333333333,93.76666666666668)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(359.40525114155247,136.29999999999998)"></path><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(393.1506849315068,177.86666666666665)"></path><path class="line dataset-0" fill="none" stroke="#CA0000" stroke-width="2" d="M17.972602739726028,203L52.794520547945204,203.96666666666667L84.24657534246575,178.83333333333334L119.0216894977169,130.5L152.7203196347032,94.73333333333333L187.54223744292239,62.833333333333336L221.24086757990867,27.06666666666668L256.06278538812785,14.500000000000012L290.884703196347,45.43333333333332L324.5833333333333,93.76666666666668L359.40525114155247,136.29999999999998L393.1506849315068,177.86666666666665"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(17.972602739726028,272.59999999999997)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(52.794520547945204,262.93333333333334)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(84.24657534246575,215.5666666666667)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(119.0216894977169,161.43333333333334)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(152.7203196347032,106.33333333333334)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(187.54223744292239,57.999999999999986)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(221.24086757990867,30.93333333333334)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(256.06278538812785,37.7)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(290.884703196347,76.36666666666666)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(324.5833333333333,134.36666666666665)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(359.40525114155247,187.53333333333336)"></path><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(393.1506849315068,246.5)"></path><path class="line dataset-1" fill="none" stroke="#A2005C" stroke-width="2" d="M17.972602739726028,272.59999999999997L52.794520547945204,262.93333333333334L84.24657534246575,215.5666666666667L119.0216894977169,161.43333333333334L152.7203196347032,106.33333333333334L187.54223744292239,57.999999999999986L221.24086757990867,30.93333333333334L256.06278538812785,37.7L290.884703196347,76.36666666666666L324.5833333333333,134.36666666666665L359.40525114155247,187.53333333333336L393.1506849315068,246.5"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(17.972602739726028,279.3666666666667)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(52.794520547945204,264.8666666666667)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(84.24657534246575,236.83333333333334)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(119.0216894977169,189.46666666666667)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(152.7203196347032,140.16666666666666)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(187.54223744292239,106.33333333333334)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(221.24086757990867,90.86666666666665)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(256.06278538812785,97.63333333333334)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(290.884703196347,132.43333333333334)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(324.5833333333333,183.66666666666666)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(359.40525114155247,232.96666666666667)"></path><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(393.1506849315068,261)"></path><path class="line dataset-2" fill="none" stroke="#7EBD00" stroke-width="2" d="M17.972602739726028,279.3666666666667L52.794520547945204,264.8666666666667L84.24657534246575,236.83333333333334L119.0216894977169,189.46666666666667L152.7203196347032,140.16666666666666L187.54223744292239,106.33333333333334L221.24086757990867,90.86666666666665L256.06278538812785,97.63333333333334L290.884703196347,132.43333333333334L324.5833333333333,183.66666666666666L359.40525114155247,232.96666666666667L393.1506849315068,261"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(17.972602739726028,232.96666666666667)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(52.794520547945204,230.06666666666666)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(84.24657534246575,215.5666666666667)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(119.0216894977169,188.5)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(152.7203196347032,155.63333333333333)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(187.54223744292239,123.73333333333332)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(221.24086757990867,106.33333333333334)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(256.06278538812785,110.2)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(290.884703196347,133.40000000000003)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(324.5833333333333,171.1)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(359.40525114155247,206.86666666666667)"></path><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(393.1506849315068,224.26666666666665)"></path><path class="line dataset-3" fill="none" stroke="#007979" stroke-width="2" d="M17.972602739726028,232.96666666666667L52.794520547945204,230.06666666666666L84.24657534246575,215.5666666666667L119.0216894977169,188.5L152.7203196347032,155.63333333333333L187.54223744292239,123.73333333333332L221.24086757990867,106.33333333333334L256.06278538812785,110.2L290.884703196347,133.40000000000003L324.5833333333333,171.1L359.40525114155247,206.86666666666667L393.1506849315068,224.26666666666665"></path></g><path class="point dataset-0" fill="#CA0000" stroke="#CA0000" d="M0,5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,-5.077706251929807A5.077706251929807,5.077706251929807 0 1,1 0,5.077706251929807Z" transform="translate(500,159)"></path><line class="line dataset-0" stroke="#CA0000" stroke-width="2" x1="490" x2="510" y1="159" y2="159"></line><text transform="translate(520,165)" class="legend" font-size="15" text-anchor="left">Tokyo</text><path class="point dataset-1" fill="#A2005C" stroke="#A2005C" d="M0,-8.375443731918898L4.835564693205938,0 0,8.375443731918898 -4.835564693205938,0Z" transform="translate(500,179)"></path><line class="line dataset-1" stroke="#A2005C" stroke-width="2" x1="490" x2="510" y1="179" y2="179"></line><text transform="translate(520,185)" class="legend" font-size="15" text-anchor="left">New York</text><path class="point dataset-2" fill="#7EBD00" stroke="#7EBD00" d="M-4.5,-4.5L4.5,-4.5 4.5,4.5 -4.5,4.5Z" transform="translate(500,199)"></path><line class="line dataset-2" stroke="#7EBD00" stroke-width="2" x1="490" x2="510" y1="199" y2="199"></line><text transform="translate(520,205)" class="legend" font-size="15" text-anchor="left">Berlin</text><path class="point dataset-3" fill="#007979" stroke="#007979" d="M0,-5.922333058286216L6.838521170864333,5.922333058286216 -6.838521170864333,5.922333058286216Z" transform="translate(500,219)"></path><line class="line dataset-3" stroke="#007979" stroke-width="2" x1="490" x2="510" y1="219" y2="219"></line><text transform="translate(520,225)" class="legend" font-size="15" text-anchor="left">London</text><text transform="translate(275,20)" class="title" font-size="20" text-anchor="middle">Monthly Average Temperature</text><text transform="translate(275,48)" class="subtitle" font-size="15" text-anchor="middle">Source: WorldClimate.com</text></svg>
+
+---
+
+## D3 Requires Much More Code
+
+<div class="codewrapper">
+``` {.javascript .numberLines}
+// Convenience functions that provide parameters for
+// the chart. In most cases these could be defined as
+// CSS rules, but for this particular implementation
+// we're avoiding CSS so that we can easily extract
+// the SVG into a presentation.
+
+// What colors are we going to use for the different
+// datasets.
+var color = function(i) {
+  var colors = ["#CA0000", "#A2005C",
+                "#7EBD00", "#007979"];
+  return colors[i % colors.length]
+};
+
+// What symbols are we going to use for the different
+// datasets.
+var symbol = function(i) {
+  var symbols = ["circle", "diamond", 
+                 "square", "triangle-up",
+                 "triangle-down", "cross"];
+  return d3.svg.symbol()
+           .size(100)
+           .type(symbols[i % symbols.length]);
+};
+
+// Define the dimensions of the visualization.
+var margin = {top: 60, right: 160, bottom: 30, left: 50},
+    width = 840 - margin.left - margin.right,
+    height = 520 - margin.top - margin.bottom;
+
+// Since this is a line chart, it graphs x- and y-values.
+// Define scales for each. Both scales span the size of
+// the chart. The x-scale is time-based (assuming months)
+// and the y-scale is linear. Note that the y-scale
+// ranges from `height` to 0 (opposite of what might be
+// expected) because the SVG coordinate system places a
+// y-value of `0` at the _top_ of the container.
+
+// At this point we don't know the domain for either of
+// the x- or y-values since that depends on the data
+// itself (which we'll retrieve in a moment) so we only
+// define the type of each scale and its range. We'll
+// add a definition of the domain after we retrieve the
+// actual data.
+var x = d3.time.scale()
+          .range([0, width]),
+    y = d3.scale.linear()
+          .range([height, 0]);
+
+// Define the axes for both x- and y-values. For the
+// x-axis, we specify a format for the tick labels
+// (just the month abbreviation) since we only have
+// the month value for the data. (The year is unknown.)
+// Without the override, D3 will try to display an
+// actual date (e.g. with a year).
+var xAxis = d3.svg.axis()
+  .scale(x)
+  .tickSize(0, 0, 0)
+  .tickPadding(10)
+  .tickFormat(d3.time.format("%b"))
+  .orient("bottom");
+
+// For the y-axis we add grid lines by specifying a
+// negative value for the major tick mark size. We
+// set the size of the grid lines to be the entire
+// width of the graph.
+var yAxis = d3.svg.axis()
+  .scale(y)
+  .tickSize(-width, 0, 0)
+  .tickPadding(10)
+  .orient("left");
+
+// Define a convenience function to create a line on
+// the chart. The line's x-values are dates and the
+// y-values are the temperature values. The result
+// of this statement is that `line` will be a
+// function that, when passed an array of data
+// points, returns an SVG path whose coordinates
+// match the x- and y-scales of the chart.
+var line = d3.svg.line()
+  .x(function(d) { return x(d.date); })
+  .y(function(d) { return y(d.temp); });
+
+// Create the SVG container for the visualization and
+// define its dimensions. Within that container, add a
+// group element (`<g>`) that can be transformed via
+// a translation to account for the margins.
+var svg = d3.select("body").append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left +
+    "," + margin.top + ")");
+
+// Retrieve the data. Even though this particular
+// data file is small enough to embed directly, it's
+// generally a good idea to keep the data separate.
+d3.json('data.json', function(error, datasets) {
+
+  // We're not bothering to check for error returns
+  // for this simple demonstration.
+
+  // Convert the data into a more "understandable"
+  // JavaScript object. Instead of just an array
+  // of numbers, make it an array of objects with
+  // appropriate properties.
+  datasets.forEach(function(dataset) {
+    dataset.data = dataset.data.map(function(d,i) {
+
+      // Although no year is given for the data
+      // (so we won't display one), we can simply
+      // pick an abitrary year (2013, in this case)
+      // to use for our dates. We'll start in January
+      // and increment by the index of the data value.
+      // The data value itself is the temperature.
+      return {
+        "date": d3.time.month.offset(
+          new Date(2013,0,1), i),
+        "temp": d
+      };
+    });
+  })
+
+  // Now that we have the data, we can calculate
+  // the domains for our x- and y-values. The x-values
+  // are a little tricky because we want to add additional
+  // space before and after the data. We start by getting
+  // the extent of the data, and then extending that range
+  // 16 days before the first date and 15 days after the
+  // last date. To account for datasets of differing
+  // lengths, we get the maximum length from among all
+  // datasets.
+  var xMin = new Date(2013,0,1),
+      xMax = d3.time.month.offset(xMin,
+               d3.max(datasets, function(dataset) {
+                 return dataset.data.length-1;
+               }));
+  x.domain([d3.time.day.offset(xMin,-16),
+            d3.time.day.offset(xMax,15)]);
+
+  // For the y-values, we want the chart to show the
+  // minimum and maximum values from all the datasets.
+  var yMin = d3.min(datasets, function(dataset) {
+               return d3.min(dataset.data, function(d) {
+                 return d.temp;
+               });
+             });
+  var yMax = d3.max(datasets, function(dataset) {
+               return d3.max(dataset.data, function(d) {
+                 return d.temp;
+               });
+             });
+
+  // The `.nice()` function gives the domain nice
+  // rounded limits.
+  y.domain([yMin, yMax]).nice();
+
+  // With the domains defined, we now have enough
+  // information to complete the axes. We position
+  // the x-axis by translating it below the chart.
+  svg.append("g")
+       .attr("class", "x axis")
+       .attr("transform", "translate(0," + height + ")")
+       .call(xAxis);
+
+  // For the y-axis, we add a label.
+  svg.append("g")
+       .attr("class", "y axis")
+       .call(yAxis)
+     .append("text")
+       .attr("font-size", "18")
+       .attr("transform", "rotate(-90)")
+       .attr("y", 9)
+       .attr("dy", ".71em")
+       .attr("text-anchor", "end")
+       .text("Temperature (°C)");
+  
+  // Style the axes. As with other styles, these
+  // could be more easily defined in CSS. For this
+  // particular code, though, we're avoiding CSS
+  // to make it easy to extract the resulting SVG
+  // and paste it into a presentation.
+  svg.selectAll(".axis line, .axis path")
+       .attr("fill", "none")
+       .attr("stroke", "#bbbbbb")
+       .attr("stroke-width", "2px")
+       .attr("shape-rendering", "crispEdges");
+
+  svg.selectAll(".axis text")
+       .attr("font-size", "18");
+
+  svg.selectAll(".axis .tick line")
+       .attr("stroke", "#d0d0d0")
+       .attr("stroke-width", "1");
+
+  // Plot the data and the legend
+  datasets.forEach(function(dataset, i) {
+
+      // Individual points
+      svg.selectAll(".point.dataset-" + i)
+           .data(dataset.data)
+         .enter().append("path")
+           .attr("class", "point dataset-" + i)
+           .attr("fill", color(i))
+           .attr("stroke", color(i))
+           .attr("d", symbol(i))
+           .attr("transform", function(d) { 
+             return "translate(" + x(d.date) +
+                         "," + y(d.temp) + ")";
+           });
+
+      // Connect the points with lines
+      svg.append("path")
+         .datum(dataset.data)
+         .attr("class", "line dataset-" + i)
+         .attr("fill", "none")
+         .attr("stroke", color(i))
+         .attr("stroke-width", "3")
+         .attr("d", line);
+
+      // Legend. In general, it would be cleaner
+      // to create an SVG group for the legend,
+      // position that group, and then position
+      // the individual elements of the legend
+      // relative to the group. We're not doing
+      // it in this case because we want to do
+      // some fancy animation tricks with the
+      // resulting SVG within the presentation.
+      d3.select("svg").append("path")
+         .attr("class", "point dataset-" + i)
+         .attr("fill", color(i))
+         .attr("stroke", color(i))
+         .attr("d", symbol(i))
+         .attr("transform", "translate(" +
+           (margin.left + width + 40) + "," +
+           (24*i + margin.top + height/2 -
+            24*datasets.length/2 - 6) + ")")
+
+      d3.select("svg").append("line")
+         .attr("class", "line dataset-" + i)
+         .attr("stroke", color(i))
+         .attr("stroke-width", "3")
+         .attr("x1", margin.left + width + 30)
+         .attr("x2", margin.left + width + 50)
+         .attr("y1", 24*i + margin.top + height/2 -
+                     24*datasets.length/2 - 6)
+         .attr("y2", 24*i + margin.top + height/2 -
+                     24*datasets.length/2 - 6);
+
+      d3.select("svg").append("text")
+         .attr("transform", "translate(" +
+           (margin.left + width + 60) + "," +
+           (24*i + margin.top + height/2 -
+            24*datasets.length/2) + ")")
+         .attr("class", "legend")
+         .attr("font-size", "18")
+         .attr("text-anchor", "left")
+         .text(dataset.name);
+
+  });
+
+  // Chart decoration. Once more we're avoiding
+  // CSS for styling, but usually that would be
+  // a better approach.
+  d3.select("svg").append("text")
+       .attr("transform", "translate(" +
+         (margin.left + width/2 + 20) + ",20)")
+       .attr("class", "title")
+       .attr("font-size", "24")
+       .attr("text-anchor", "middle")
+       .text("Monthly Average Temperature");
+
+  d3.select("svg").append("text")
+       .attr("transform", "translate(" +
+         (margin.left + width/2 + 20) + ",48)")
+       .attr("class", "subtitle")
+       .attr("font-size", "18")
+       .attr("text-anchor", "middle")
+       .text("Source: WorldClimate.com");
+});
+```
+</div>
+
+---
+
+## Test Slide {data-custom-next="test"}
+
+<script>
+var test = function() {
+    console.log("Hello World!");
+    d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);
+}
+</script>
+
+---
+
+## Next Slide
