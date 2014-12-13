@@ -858,7 +858,7 @@ $ <span class="kw">npm</span> install jake -g</code></pre>
         <span class="kw">return</span> response;
     }
 });</code></pre></td></tr></table>
-<p>Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of <code>2126456911</code>. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, <em>and get all it’s data,</em> with the hypothetical two statements below. (We’ll consider the quirks of the actual Nike+ interface in a later section.)</p>
+<p>Now imagine that we want to get the details for a specific run from the Nike+ service. The run in question has a unique identifier of <code>2126456911</code>. If the Nike+ <span class="smcp">API</span> followed typical conventions, we could create a variable representing that run, <em>and get all its data,</em> with the hypothetical two statements below. (We’ll consider the quirks of the actual Nike+ interface in a later section.)</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> run = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Models</span>.<span class="fu">Run</span>({<span class="dt">id</span>: <span class="dv">2126456911</span>});
@@ -993,7 +993,7 @@ $ <span class="kw">yo</span> backbone:view summaryRow
     });
 })();</code></pre></td></tr></table>
 <p>The overall structure of the file is the same as our model and our collection, but there’s a bit more going on in the view itself. Let’s step through view’s properties one at a time. The first property is <code>template</code>. That’s where we define the exact <span class="smcp">HTML</span> markup for the view, and we’ll look at this in more detail in the next step.</p>
-<p>The <code>tagName</code> property defines the <span class="smcp">HTML</span> tag that our view will use as it’s parent. Yeoman defaults it to a generic <code>&lt;div&gt;</code>, but we know that in our case it will be a <code>&lt;table&gt;</code>. We’ll change that in a moment.</p>
+<p>The <code>tagName</code> property defines the <span class="smcp">HTML</span> tag that our view will use as its parent. Yeoman defaults it to a generic <code>&lt;div&gt;</code>, but we know that in our case it will be a <code>&lt;table&gt;</code>. We’ll change that in a moment.</p>
 <p>The <code>id</code> and <code>className</code> properties specify <span class="smcp">HTML</span> <code>id</code> attributes or <code>class</code> values to add to the main container (in our case the <code>&lt;table&gt;</code>). We could, for example, base some <span class="smcp">CSS</span> styles on these values. For our example we’re not considering styles, so we can leave both properties blank or delete them entirely.</p>
 <p>Next is the <code>events</code> property. This object identifies user events (such as mouse clicks) that are relevant for the view. In the case of the Summary view, there are no events, so we can leave the object empty or simply delete it.</p>
 <p>The last two properties, <code>initialize</code> and <code>render</code>, are both methods. Before we consider those, let’s see the Summary view after the tweaks mentioned above. Now that we’ve omitted the properties we won’t be using, we’re down to just the <code>template</code> and <code>tagName</code> properties, plus the <code>initialize</code> and <code>render</code> methods:</p>
@@ -1416,7 +1416,7 @@ Calories
 </tbody>
 </table>
 <h3 id="step-6-refine-the-main-view">Step 6: Refine the Main View</h3>
-<p>Now we’re starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we no control over the values passed to our template. Fortunately, that’s not the case. If we look at the SummaryView’s <code>render</code> method, we can see how the template gets its values.</p>
+<p>Now we’re starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we have no control over the values passed to our template. Fortunately, that’s not the case. If we look at the SummaryView’s <code>render</code> method, we can see how the template gets its values.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -1449,7 +1449,7 @@ Calories
 <p>The calories attribute is one value that’s fine as it is, so we’ll just copy it into our temporary object.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">run</span>.<span class="fu">calories</span> = <span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">get</span>(<span class="st">&quot;metricSummary&quot;</span>).<span class="fu">calories</span>;</code></pre></td></tr></table>
-<p>Finally, if you’re an avid runner you might have noticed that there’s an important value missing from the Nike+ attributes, the average pace for the run in minutes per mile. We have the data to calculate it, so let’s go ahead and add that as well.</p>
+<p>Finally, if you’re an avid runner you might have noticed that there’s an important value missing from the Nike+ attributes: the average pace for the run in minutes per mile. We have the data to calculate it, so let’s go ahead and add that as well.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -2845,7 +2845,7 @@ An alternative view shows charts of the run.
 <h2 id="connecting-with-the-nike-service">Connecting with the Nike+ Service</h2>
 <p>Although our example application relies on the Nike+ service for its data, we haven’t looked at the details of that service’s interface. As I’ve mentioned, Nike+ doesn’t quite conform to common <span class="smcp">REST</span> <span class="smcp">API</span> conventions that application libraries such as Backbone.js expect. But Nike+ isn’t very unusual in that regard. There really isn’t a true <em>standard</em> for <span class="smcp">REST</span> <span class="smcp">API</span>s, and many other services take approaches similar to Nike+. Fortunately Backbone.js anticipates this variation. As we’ll see in the following steps, extending Backbone.js to support <span class="smcp">REST</span> <span class="smcp">API</span> variations isn’t all that difficult.</p>
 <h3 id="step-1-user-authorization">Step 1: User Authorization</h3>
-<p>As you might expect, Nike+ doesn’t allow anyone on the internet to retrieve details for any user’s runs. Users expect at least some level of privacy for that information. Before our app can retrieve any running information, therefore, it will need the user’s permission. We won’t go into the details of that process here, but it’s result will be an <code>authorization_token</code>. This object is an arbitrary string that our app will have to include with every Nike+ request. If the token is missing or invalid, Nike+ will deny our app access to the data.</p>
+<p>As you might expect, Nike+ doesn’t allow anyone on the internet to retrieve details for any user’s runs. Users expect at least some level of privacy for that information. Before our app can retrieve any running information, therefore, it will need the user’s permission. We won’t go into the details of that process here, but its result will be an <code>authorization_token</code>. This object is an arbitrary string that our app will have to include with every Nike+ request. If the token is missing or invalid, Nike+ will deny our app access to the data.</p>
 <p>Up until now we’ve let Backbone.js handle all of the details of the <span class="smcp">REST</span> <span class="smcp">API</span>. Next, we’ll have to modify how Backbone.js constructs its <span class="smcp">AJAX</span> calls. Fortunately, this isn’t as tricky as it sounds. All we need to do is add a <code>sync</code> method to our Runs collection. When a <code>sync</code> method is present in a collection, Backbone.js calls it whenever it makes an <span class="smcp">AJAX</span> request. (If there is no such method for a collection, Backbone.js calls its primary <code>Backbone.sync</code> method.) We’ll define the new method directly in the collection.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
