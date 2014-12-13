@@ -49,3 +49,7 @@ To make the text as clear and readable as possible, these examples generally con
 ## Acknowledgements
 
 Even though it's been said many times, there's no getting around the fact that a book such as this one is the work of many people other than the author. It certainly wouldn't be possible without the patience of Seph and the other fine folks at No Starch Press. There simply is no better publisher for technical books. Kudos also to Chris for the technical review, though, of course, the remaining mistakes are mine alone. I owe a special thanks to NickC for his generosity; it's such a pleasure to meet folks that appreciate the true community spirit of the Web and web development. Finally, a shout out to the team developing the [Open Academic Environment](http://www.oaeproject.org) and my colleagues at the Georgia Institute of Technology; working with them is a true pleasure.
+
+## Other Versions
+
+If you prefer a printed book or a proper ebook, you can purchase copes at [No Starch Press](http://www.nostarch.com/datavisualization). You can also find the book at [Amazon](http://www.amazon.com/gp/product/1593276052/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593276052&linkCode=as2&tag=jsdatis-20&linkId=EPVO4G5OWW6LZML7).
