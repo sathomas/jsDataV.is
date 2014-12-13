@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Data Visualization with JavaScript</title>
+        <link>http://jsDataV.is</link>
+        <description>Data Visualization with JavaScript, including the full content of the book published by No Starch Press, blog posts, examples, and presentations.</description>
+        <generator>Feeder 2.5.7(1898); Mac OS X Version 10.10.1 (Build 14B25) http://reinventedsoftware.com/feeder/</generator>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <language>en</language>
+        <pubDate>Sat, 13 Dec 2014 16:08:18 -0500</pubDate>
+        <lastBuildDate>Sat, 13 Dec 2014 16:08:18 -0500</lastBuildDate>
+        <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Introducing Data Visualization with JavaScript</title>
+            <link>http://jsDataV.is/intro.html</link>
+            <description><![CDATA[<p>It’s getting hard to ignore the importance of data in our lives. Data is critical to the largest social organizations in human history. It can affect even the least consequential of our everyday decisions. And its collection has widespread geopolitical implications. Yet it also seems to be getting easier to ignore the data itself. One estimate suggests that 99.5% of the data our systems collect goes to waste. No one ever analyzes it effectively.</p>
+
+<p>Data visualization is a tool that addresses this gap.</p>
+
+<p><a href="http://jsDataV.is/intro.html">Continue Reading</a></p>]]></description>
+            <pubDate>Sat, 13 Dec 2014 15:58:48 -0500</pubDate>
+            <guid isPermaLink="false">994ADB90-BB9B-4DCC-8FDE-46BAF42D636B</guid>
+        </item>
+    </channel>
+</rss>
