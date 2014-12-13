@@ -52,4 +52,4 @@ Even though it's been said many times, there's no getting around the fact that a
 
 ## Other Versions
 
-If you prefer a printed book or a proper ebook, you can purchase copes at [No Starch Press](http://www.nostarch.com/datavisualization). You can also find the book at [Amazon](http://www.amazon.com/gp/product/1593276052/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593276052&linkCode=as2&tag=jsdatis-20&linkId=EPVO4G5OWW6LZML7).
+If you prefer a printed book or a proper ebook, you can purchase copies from [No Starch Press](http://www.nostarch.com/datavisualization). You can also find the book at [Amazon](http://www.amazon.com/gp/product/1593276052/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1593276052&linkCode=as2&tag=jsdatis-20&linkId=EPVO4G5OWW6LZML7).
