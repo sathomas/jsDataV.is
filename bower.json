@@ -50,6 +50,7 @@
     "TimelineJS": "git://github.com/NUKnightLab/TimelineJS.git#~2.33.1",
     "treemap-squared": "git://github.com/imranghory/treemap-squared.git",
     "underscore.string": ">=2.3.3",
-    "wordcloud2.js": "*"
+    "wordcloud2.js": "*",
+    "snap.svg": "~0.3.0"
   }
 }
