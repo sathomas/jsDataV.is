@@ -12,3 +12,4 @@
 //@codekit-prepend "code.js"
 //@codekit-prepend "nav.js"
 //@codekit-prepend "transitions.js"
+//@codekit-prepend "swiftype.js"
