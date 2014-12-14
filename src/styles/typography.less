@@ -125,5 +125,14 @@ code, pre {
     font-family: ankacoder, monospace;
 }
 
+/* override normalize-opentype.css problems */
+::-moz-selection {
+    background: @color-border;
+}
+::selection {
+    background: @color-border;
+}
+
+
 /* Custom font for branding */
 @import (less) "../typefaces/jsdatavis-font.css";
