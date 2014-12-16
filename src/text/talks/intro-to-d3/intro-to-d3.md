@@ -507,10 +507,21 @@ var line = d3.svg.line()
 
 ---
 
+
+
+## Conventions are not Constraints
+
+<div id="radial" style="text-align:center;"></div>
+
+
+---
+
 ## More Information
 
-
-
+* My personal web site [http://jsDataV.is](http://jsDataV.is)
+* Example visualizations [http://bl.ocks.org/sathomas](http://bl.ocks.org/sathomas)
+* Book from No Starch Press [http://www.nostarch.com/datavisualization](http://www.nostarch.com/datavisualization)
+    * (Use coupon code "PREORDER" for 30% discount)
 
 <script>
 
@@ -625,5 +636,169 @@ var showMap2 = function() {
 
     d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);    
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+    var margin = {top: 30, right: 10, bottom: 20, left: 10},
+        width = 440 - margin.left - margin.right,
+        height = 440 - margin.top - margin.bottom,
+        radius = Math.min(width, height) / 2;
+
+    var svg = d3.select("#radial").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + 
+                (margin.left + width  / 2) + "," + 
+                (margin.top  + height / 2) + ")");
+
+    var x = d3.scale.linear()
+        .range([0, 2 * Math.PI]);
+    var y = d3.scale.sqrt()
+        .range([0, radius]);
+
+    var partition = d3.layout.partition()
+        .children(function(d) { 
+            return Array.isArray(d.values) ?
+                d.values : null;
+        })
+        .value(function(d) { 
+            return d.values;
+        });
+    var color = function(d) {
+        var colors;
+        
+        if (!d.parent) {
+            colors = d3.scale.category10()
+                .domain(d3.range(0,10));
+            d.color = "#fff";
+
+        } else if (d.children) {
+            var startColor = d3.hcl(d.color)
+                                .darker(),
+                endColor   = d3.hcl(d.color)
+                                .brighter();
+
+            colors = d3.scale.linear()
+                    .interpolate(d3.interpolateHcl)
+                    .range([
+                        startColor.toString(),
+                        endColor.toString()
+                    ])
+                    .domain([0,d.children.length+1]);
+
+        }
+        
+        if (d.children) {
+            d.children.map(function(child, i) {
+                return {value: child.value, idx: i};
+            }).sort(function(a,b) {
+                return b.value - a.value
+            }).forEach(function(child, i) {
+                d.children[child.idx].color = colors(i);
+            });
+        }
+
+        return d.color;
+    };
+
+    var arc = d3.svg.arc()
+        .startAngle(function(d) { 
+            return Math.max(0, 
+                Math.min(2 * Math.PI, x(d.x))); 
+        })
+        .endAngle(function(d) { 
+            return Math.max(0, 
+                Math.min(2 * Math.PI, x(d.x + d.dx)));
+        })
+        .innerRadius(function(d) { 
+            return Math.max(0, y(d.y));
+        })
+        .outerRadius(function(d) { 
+            return Math.max(0, y(d.y + d.dy)); 
+        });
+
+        d3.csv("/data/tornadoes.csv", function(error, dataset) {
+
+        var hierarchy = {
+            key: "United States",
+            values: d3.nest()
+                .key(function(d) { return d.region; })
+                .key(function(d) { return d.state; })
+                .key(function(d) { return d.county; })
+                .rollup(function(leaves) { 
+                    return leaves.length;
+                })
+                .entries(dataset)
+        };
+
+        var path = svg.selectAll("path")
+            .data(partition.nodes(hierarchy))
+          .enter().append("path")
+            .attr("d", arc)
+            .attr("stroke", "#fff")
+            .attr("fill-rule", "evenodd")
+            .attr("fill", function(d) { return color(d); })
+            .on("click", click)
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout);
+        
+        var tooltip = svg.append("text")
+            .attr("font-size", 12)
+            .attr("fill", "#000")
+            .attr("fill-opacity", 0)
+            .attr("text-anchor", "middle")
+            .attr("transform", "translate(" + 0 + "," + (12 + height/2)  +")")
+            .style("pointer-events", "none");
+
+        svg.append("text")
+            .attr("font-size", 16)
+            .attr("fill", "#000")
+            .attr("text-anchor", "middle")
+            .attr("transform", "translate(" + 0 + "," + (-10 -height/2)  +")")
+            .text("Tornado Sightings in 2013 (www.noaa.gov)");
+
+        function click(d) {
+            path.transition()
+                .duration(750)
+                .attrTween("d", arcTween(d));
+            mouseout();
+        };
+
+        function mouseover(d) {
+            tooltip.text(d.key + ": " + 
+                d.value + " sighting" + 
+                (d.value > 1 ? "s" : ""))
+                .transition()
+                .attr("fill-opacity", 1);
+        };
+        
+        function mouseout() {
+            tooltip.transition()
+                .attr("fill-opacity", 0);
+        };
+    });
+
+    function arcTween(d) {
+        var xd = d3.interpolate(x.domain(), 
+                    [d.x, d.x + d.dx]),
+            yd = d3.interpolate(y.domain(), 
+                    [d.y, 1]),
+            yr = d3.interpolate(y.range(),  
+                    [d.y ? 20 : 0, radius]);
+        return function(d, i) {
+            return i ?
+                function(t) { 
+                    return arc(d);
+                } :
+                function(t) { 
+                    x.domain(xd(t)); 
+                    y.domain(yd(t)).range(yr(t)); 
+                    return arc(d); 
+                };
+        };
+    }
+
+});
+
 </script>
 
