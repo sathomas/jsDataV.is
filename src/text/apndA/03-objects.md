@@ -80,7 +80,7 @@ var pizza = {
 <tspan x="318.67" y="163">“sausage”</tspan>
 </text>
 </svg>
-<figcaption>Underscore has many utilities for working with arbitrary JavaScript objects.</figcaption>
+<figcaption>Underscore.js has many utilities for working with arbitrary JavaScript objects.</figcaption>
 </figure>
 
 ### Keys and Values

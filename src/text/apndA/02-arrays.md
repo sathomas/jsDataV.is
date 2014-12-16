@@ -1,7 +1,7 @@
 
 ## Working with Arrays
 
-If your visualization relies on a significant amount of data, that data is most likely contained in arrays. Unfortunately, it's very tempting to resort to imperative programming when working with arrays. Arrays suggest the use of programming loops, and, as we saw above, programming loops are an imperative construct that often causes errors. If we can avoid loops and rely on functional programming instead, we can improve the quality of our JavaScript. The core JavaScript language includes a few utilities and methods to help applications cope with arrays in a functional style, but Underscore.js adds many others. This section describes many of Underscore's array utilities most helpful for data visualizations.
+If your visualization relies on a significant amount of data, that data is most likely contained in arrays. Unfortunately, it's very tempting to resort to imperative programming when working with arrays. Arrays suggest the use of programming loops, and, as we saw above, programming loops are an imperative construct that often causes errors. If we can avoid loops and rely on functional programming instead, we can improve the quality of our JavaScript. The core JavaScript language includes a few utilities and methods to help applications cope with arrays in a functional style, but Underscore.js adds many others. This section describes many of Underscore.js's array utilities most helpful for data visualizations.
 
 ### Extracting Elements by Position
 
@@ -71,10 +71,10 @@ var arr = [1,2,3,4,5,6,7,8,9];
 <tspan x="96.51" y="36">arr</tspan>
 </text>
 </svg>
-<figcaption>Underscore has many utilities to make it easy to work with arrays.</figcaption>
+<figcaption>Underscore.js has many utilities to make it easy to work with arrays.</figcaption>
 </figure>
 
-Underscore's  `first()` method provides a simple way to extract the first element of an array, or the first _n_ elements.
+Underscore.js's  `first()` method provides a simple way to extract the first element of an array, or the first _n_ elements.
 
 ``` {.javascript}
 > _(arr).first()
@@ -348,7 +348,7 @@ As you might expect, Underscore.js also has a `last()` method to extract element
 
 Without any parameters, `last()` returns the last element in the array. With a parameter `n` it returns a new array with the last _n_ elements from the original.
 
-The more general versions of both of these functions (`.first(3)` and `.last(3)`) would require some potentially tricky (and error-prone) code to implement in an imperative style. In the functional style that Underscore supports, however, our code is clean and simple.
+The more general versions of both of these functions (`.first(3)` and `.last(3)`) would require some potentially tricky (and error-prone) code to implement in an imperative style. In the functional style that Underscore.js supports, however, our code is clean and simple.
 
 What if you want to extract from the beginning of the array, but instead of knowing how many elements you want in the result, you only know how many elements you want to omit? In other words, you need "all but the last _n_" elements.  The `initial()` method performs this extraction. As with all of these methods, if you omit the optional parameter, Underscore.js assumes a value of 1. 
 
@@ -620,7 +620,7 @@ Finally, you may need the opposite of `initial()`. The `rest()` method skips pas
 <figcaption>The rest() function can also return all but the first <em>n</em> elements in an array.</figcaption>
 </figure>
 
-Again, these functions would be tricky to implement using traditional, imperative programming, but are a breeze with the help of Underscore.
+Again, these functions would be tricky to implement using traditional, imperative programming, but are a breeze with the help of Underscore.js.
 
 ### Combining Arrays
 
@@ -709,7 +709,7 @@ var even = [0, 2, 4, 6, 8];
 <tspan x="81.75" y="93">even</tspan>
 </text>
 </svg>
-<figcaption>Underscore also has many utilities to work with multiple arrays.</figcaption>
+<figcaption>Underscore.js also has many utilities to work with multiple arrays.</figcaption>
 </figure>
 
 The `union()` method is a straightforward combination of multiple arrays. It returns an array containing all elements that are in any of the inputs, and it removes any duplicates.
@@ -1435,7 +1435,7 @@ If you have a custom sorting function, you can pass that to `sortedIndex()` as w
 
 ### Generating Arrays
 
-The final array utility function I'll mention is a convenient method to generate arrays. The `range()` method tells Underscore to create an array with the specified number of elements. You may also specify a starting value (the default is `0`) and the increment between adjacent values (the default is `1`).
+The final array utility function I'll mention is a convenient method to generate arrays. The `range()` method tells Underscore.js to create an array with the specified number of elements. You may also specify a starting value (the default is `0`) and the increment between adjacent values (the default is `1`).
 
 ``` {.javascript}
 > _.range(10)

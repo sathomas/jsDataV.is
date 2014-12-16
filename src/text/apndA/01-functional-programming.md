@@ -139,11 +139,11 @@ Of course we need to include that library in our web pages. If you're including 
 </html>
 ```
 
-With Underscore in place, we can now optimize the performance of our Fibonacci implementation.
+With Underscore.js in place, we can now optimize the performance of our Fibonacci implementation.
 
 The problem with the recursive implementation is that it results in many unnecessary calls to `fib()`. For example, executing `fib(28)` requires more than 100,000 calls to `fib(3)`. And each time `fib(3)` is called, the return value is recalculated from scratch. It would be better if the implementation only called `fib(3)` once, and every subsequent time it needed to know the value of `fib(3)` it re-used the previous result instead of recalculating it from scratch. In effect, we'd like to implement a cache in front of the `fib()` function. The cache could eliminate the repetitive calculations.
 
-This approach is known as _memoizing_, and the Underscore library has a simple method to automatically and transparently memoize JavaScript functions. Not surprisingly, that method is called `memoize()`. To use it, we first wrap the function we want to memoize within the Underscore object. Just as jQuery uses the bling character ($) for wrapping, Underscore uses the underscore character. After wrapping our function, we simply call the `memoize()` method. Here's the complete code:
+This approach is known as _memoizing_, and the Underscore.js library has a simple method to automatically and transparently memoize JavaScript functions. Not surprisingly, that method is called `memoize()`. To use it, we first wrap the function we want to memoize within the Underscore object. Just as jQuery uses the bling character ($) for wrapping, Underscore.js uses the underscore character. After wrapping our function, we simply call the `memoize()` method. Here's the complete code:
 
 ``` {.javascript .numberLines}
 var fib = _( function(n) { 
@@ -158,7 +158,7 @@ As you can see, we haven't really lost any of the readability or conciseness of 
 | Functional `fib()` | `28` | 296.9 ms |
 | Memoized `fib()`   | `28` | 0.352 ms |
 
-Just by including the Underscore library and using one of its methods, our functional implementation has nearly the same performance as the imperative version.
+Just by including the Underscore.js library and using one of its methods, our functional implementation has nearly the same performance as the imperative version.
 
-For the rest of this appendix, we'll look at many of the other improvements and utilities that Underscore provides. With its support for functional programming, Underscore makes it significantly easier to work with data in the browser.
+For the rest of this appendix, we'll look at many of the other improvements and utilities that Underscore.js provides. With its support for functional programming, Underscore.js makes it significantly easier to work with data in the browser.
 

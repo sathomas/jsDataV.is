@@ -29,7 +29,7 @@ var national_league = [
 
 In the first section we saw some of the pitfalls of traditional JavaScript iteration loops as well as the improvements that functional programming can provide. Our Fibonacci example eliminated iteration by using recursion, but many algorithms don't lend themselves to a recursive implementation. In those cases we can still use a functional programming style, however, by taking advantage of the iteration utilities in Underscore.js
 
-The most basic Underscore utility is `each()`. It executes an arbitrary function on every element in a collection and often serves as a direct functional replacement for the traditional `for (i=0; i<len; i++)` loop.
+The most basic Underscore.js utility is `each()`. It executes an arbitrary function on every element in a collection and often serves as a direct functional replacement for the traditional `for (i=0; i<len; i++)` loop.
 
 ``` {.javascript}
 > _(national_league).each(function(team) { console.log(team.name); })
@@ -64,7 +64,7 @@ The `reduce()` method iterates through a collection and returns a single value. 
 
 As the comment in line 5 indicates, we start our count at 0. That value is passed as the first parameter to the function in line 2, and the function returns an updated value in line 3.
 
-> Note: If you've followed the development of "big data" implementations such as Hadoop or Google's search, you may know that the fundamental algorithm behind those technologies is _mapReduce_. Although the context differs, the same concepts underlie the `map()` and `reduce()` utilities in Underscore.js.
+> Note: If you've followed the development of "big data" implementations such as Hadoop or Google's search, you may know that the fundamental algorithm behind those technologies is _MapReduce_. Although the context differs, the same concepts underlie the `map()` and `reduce()` utilities in Underscore.js.
 
 ### Finding Elements in a Collection
 
