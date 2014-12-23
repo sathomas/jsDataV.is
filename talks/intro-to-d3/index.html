@@ -18,10 +18,10 @@
        <span class="dt">plotLines</span>: [{<span class="dt">value</span>: <span class="dv">0</span>, <span class="dt">width</span>: <span class="dv">1</span>, <span class="dt">color</span>: <span class="st">&#39;#808080&#39;</span>}] },
   <span class="dt">legend</span>: { <span class="dt">layout</span>: <span class="st">&#39;vertical&#39;</span>, <span class="dt">align</span>: <span class="st">&#39;right&#39;</span>, 
         <span class="dt">verticalAlign</span>: <span class="st">&#39;middle&#39;</span>, <span class="dt">borderWidth</span>: <span class="dv">0</span> },
-  <span class="dt">series</span>: [{ <span class="dt">name</span>: <span class="st">&#39;Tokyo&#39;</span>,  <span class="dt">data</span>: [ <span class="fl">7.0</span>, <span class="fl">6.9</span>, <span class="fl">9.5</span>, <span class="fl">14.5</span>, <span class="co">//…</span>
-       { <span class="dt">name</span>: <span class="st">&#39;New York&#39;</span>, <span class="dt">data</span>: [-<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">5.7</span>, <span class="fl">11.3</span>, <span class="co">//…</span>
-       { <span class="dt">name</span>: <span class="st">&#39;Berlin&#39;</span>,   <span class="dt">data</span>: [-<span class="fl">0.9</span>, <span class="fl">0.6</span>, <span class="fl">3.5</span>,  <span class="fl">8.4</span>, <span class="co">//…</span>
-       { <span class="dt">name</span>: <span class="st">&#39;London&#39;</span>,   <span class="dt">data</span>: [ <span class="fl">3.9</span>, <span class="fl">4.2</span>, <span class="fl">5.7</span>,  <span class="fl">8.5</span>, <span class="co">//…</span>
+  <span class="dt">series</span>: [{ <span class="dt">name</span>: <span class="st">&#39;Tokyo&#39;</span>,    <span class="dt">data</span>: [ <span class="fl">7.0</span>, <span class="fl">6.9</span>, <span class="fl">9.5</span>, <span class="fl">14.5</span>, <span class="co">//…</span>
+           { <span class="dt">name</span>: <span class="st">&#39;New York&#39;</span>, <span class="dt">data</span>: [-<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">5.7</span>, <span class="fl">11.3</span>, <span class="co">//…</span>
+           { <span class="dt">name</span>: <span class="st">&#39;Berlin&#39;</span>,   <span class="dt">data</span>: [-<span class="fl">0.9</span>, <span class="fl">0.6</span>, <span class="fl">3.5</span>,  <span class="fl">8.4</span>, <span class="co">//…</span>
+           { <span class="dt">name</span>: <span class="st">&#39;London&#39;</span>,   <span class="dt">data</span>: [ <span class="fl">3.9</span>, <span class="fl">4.2</span>, <span class="fl">5.7</span>,  <span class="fl">8.5</span>, <span class="co">//…</span>
 });</code></pre>
 </section><section id="where-one-statement-a-chart" class="slide level2">
 <h1>Where One Statement = A Chart</h1>
@@ -41,9 +41,9 @@
 </section><section id="d3-philosophy" class="slide level2">
 <h1>D3 Philosophy</h1>
 <ul>
-<li>D3 is not really a “visualization library”; it does not draw visualizations</li>
-<li>D3 = “Data Driven Documents”; it primarily associates data with DOM elements and manages the results</li>
-<li>D3 also provides tools that you can use to draw visualizations</li>
+<li><span class="lgcp">D</span>3 is not really a “visualization library”; it does not draw visualizations</li>
+<li><span class="lgcp">D</span>3 = “Data Driven Documents”; it primarily associates data with DOM elements and manages the results</li>
+<li><span class="lgcp">D</span>3 also provides tools that you can use to draw visualizations</li>
 </ul>
 </section><section id="d3-components" class="slide level2">
 <h1>D3 Components</h1>
@@ -60,15 +60,12 @@
 </section><section id="lets-build-a-chart" class="slide level2">
 <h1>Let’s Build a Chart</h1>
 <ol type="1">
-<li>Start with basic <span class="smcp">HTML</span> scaffolding</li>
-<li>Collect the data in <span class="smcp">JSON</span> format</li>
-<li>Retrieve the data via <span class="smcp">AJAX</span></li>
-<li>Create a stage for the graph in the <span class="smcp">DOM</span></li>
-<li>Define scales and axes</li>
-<li>Draw the data using <span class="smcp">SVG</span></li>
+<li>Setup and Scaffolding: <span class="smcp">HTML</span>, <span class="smcp">JSON</span>, and <span class="smcp">AJAX</span></li>
+<li><span class="lgcp">D</span>3 Scales: Map data ⇒ <span class="smcp">DOM</span></li>
+<li>Draw with <span class="smcp">SVG</span></li>
 </ol>
-</section><section id="step-1-html-scaffolding" class="slide level2">
-<h1>Step 1: HTML Scaffolding</h1>
+</section><section id="html-scaffolding" class="slide level2">
+<h1>HTML Scaffolding</h1>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html&gt;</span>
 <span class="kw">&lt;head&gt;</span>
@@ -79,6 +76,176 @@
   <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&#39;http://d3js.org/d3.v3.min.js&#39;</span><span class="kw">&gt;&lt;/script&gt;</span>
 <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre>
+</section><section id="data-in-json-format" class="slide level2">
+<h1>Data in JSON Format</h1>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">[{ 
+  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Tokyo&quot;</span>,
+  <span class="st">&quot;data&quot;</span>: [ <span class="fl">7.0</span>, <span class="fl">6.9</span>, <span class="fl">9.5</span>, <span class="fl">14.5</span>, <span class="fl">18.2</span>, <span class="fl">21.5</span>, <span class="fl">25.2</span>, <span class="fl">26.5</span>, <span class="co">//…</span>
+ },{
+  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;New York&quot;</span>,
+  <span class="st">&quot;data&quot;</span>: [-<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">5.7</span>, <span class="fl">11.3</span>, <span class="fl">17.0</span>, <span class="fl">22.0</span>, <span class="fl">24.8</span>, <span class="fl">24.1</span>, <span class="co">//…</span>
+ },{
+  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Berlin&quot;</span>,
+  <span class="st">&quot;data&quot;</span>: [-<span class="fl">0.9</span>, <span class="fl">0.6</span>, <span class="fl">3.5</span>,  <span class="fl">8.4</span>, <span class="fl">13.5</span>, <span class="fl">17.0</span>, <span class="fl">18.6</span>, <span class="fl">17.9</span>, <span class="co">//…</span>
+ },{
+  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;London&quot;</span>,
+  <span class="st">&quot;data&quot;</span>: [ <span class="fl">3.9</span>, <span class="fl">4.2</span>, <span class="fl">5.7</span>,  <span class="fl">8.5</span>, <span class="fl">11.9</span>, <span class="fl">15.2</span>, <span class="fl">17.0</span>, <span class="fl">16.6</span>, <span class="co">//…</span>
+}]</code></pre>
+</section><section id="retrieve-the-data" class="slide level2">
+<h1>Retrieve the Data</h1>
+<table class="sourceCode javascript numberLines line-1 line-5 line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">d3</span>.<span class="fu">json</span>(<span class="st">&#39;data.json&#39;</span>, <span class="kw">function</span>(error, datasets) {
+  <span class="ot">datasets</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(dataset) {
+    <span class="ot">dataset</span>.<span class="fu">data</span> = <span class="ot">dataset</span>.<span class="ot">data</span>.<span class="fu">map</span>(<span class="kw">function</span>(d,i) {
+      <span class="kw">return</span> {
+        <span class="st">&quot;date&quot;</span>: <span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">month</span>.<span class="fu">offset</span>(
+                  <span class="kw">new</span> <span class="fu">Date</span>(<span class="dv">2013</span>,<span class="dv">0</span>,<span class="dv">1</span>), i),
+        <span class="st">&quot;temp&quot;</span>: d
+      };
+  });
+  
+  <span class="co">// Continue...</span>
+})</code></pre></td></tr></table>
+</section><section id="use-a-scale-to-map-data-dom" class="slide level2">
+<h1>Use a Scale to Map Data ⇒ DOM</h1>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> y = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
+          .<span class="fu">range</span>([height, <span class="dv">0</span>])
+          .<span class="fu">domain</span>(<span class="ot">d3</span>.<span class="fu">extent</span>(dataset, <span class="ot">dataset</span>.<span class="fu">temp</span>))
+          .<span class="fu">nice</span>();</code></pre>
+<ul>
+<li>Range is from <code>height</code> to <code>0</code> because SVG coordinates position y-value of <code>0</code> at top</li>
+<li><code>d3.extent()</code> finds minimum and maximum of array with defined accessor</li>
+<li><code>d3.nice()</code> rounds scale to “human-friendly” values</li>
+</ul>
+</section><section id="scales-dont-have-to-be-linear" class="slide level2">
+<h1>Scales Don’t Have to be Linear</h1>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> x = <span class="ot">d3</span>.<span class="ot">time</span>.<span class="fu">scale</span>()
+          .<span class="fu">range</span>([<span class="dv">0</span>, width])
+          .<span class="fu">domain</span>(
+            <span class="ot">d3</span>.<span class="fu">extent</span>(dataset, <span class="ot">dataset</span>.<span class="fu">date</span>)
+              .<span class="fu">map</span>(<span class="kw">function</span>(d, i) {
+                <span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">day</span>.<span class="fu">offset</span>(d, i ? <span class="dv">15</span> : -<span class="dv">16</span>)
+            })
+        );</code></pre>
+<ul>
+<li>Domain of x-axis extended 16 days before and 15 days after data values</li>
+</ul>
+</section><section id="create-the-svg-container" class="slide level2">
+<h1>Create the SVG Container</h1>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;body&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
+            .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>,  width)
+            .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height);</code></pre>
+<ul>
+<li>Potential gotcha: With <span class="smcp">D</span>3, unlike jQuery, the <code>append()</code> function returns the newly appended DOM element(s) instead of the original selection.</li>
+</ul>
+</section><section id="graph-the-data-points" class="slide level2">
+<h1>Graph the Data Points</h1>
+<table class="sourceCode javascript numberLines line-1 line-2 line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
+      .<span class="fu">data</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
+    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
+      .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;point&quot;</span>)
+      .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
+      .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
+      .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>(idx));
+      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) { 
+        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) + 
+                        <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
+      });</code></pre></td></tr></table>
+</section><section id="associate-dom-and-data" class="slide level2" data-custom-next="domAndData">
+<h1>Associate DOM and Data</h1>
+<svg id="svgDomAndData" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="688" height="236" xml:space="preserve" style="position:relative;top:60px;left:56px;">
+<g id="point1" style="font-family:ankacoder"> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="-1" y="-1.16"> <tspan x="-1" y="10.84">&lt;path class=</tspan> </text> <text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="87.18" y="-1.16"> <tspan x="87.18" y="10.84">“point”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="138.62" y="-1.16"> <tspan x="138.62" y="10.84"> d=</tspan> </text> <text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="160.67" y="-1.16"> <tspan x="160.67" y="10.84">“…”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="-1" y="14.84"> <tspan x="-1" y="26.84"> transform=</tspan> </text> <text class="dom" fill="rgb(79, 0, 42)" fill-opacity="1" font-size="14" x="79.83" y="14.84"> <tspan x="79.83" y="26.84">“translate(…)”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="182.72" y="14.84"> <tspan x="182.72" y="26.84"> /&gt;</tspan> </text> <circle stroke="none" fill="rgb(188, 0, 4)" cx="92" cy="119" r="20" /> <text class="data" fill="rgb(0, 0, 0)" font-size="20" x="74" y="216.77"> <tspan x="74" y="234.77">7.0°</tspan> </text> <path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,210.7 L 91.5,146.5" /> <path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,146.7 C 90.45,150.48 89.55,153.72 88.5,157.5 90.6,157.5 92.4,157.5 94.5,157.5 93.45,153.72 92.55,150.48 91.5,146.7 L 91.5,146.7 Z M 91.5,146.7" /> <path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,37.49 L 91.5,92.5" /> <path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,91.31 C 90.45,87.53 89.55,84.29 88.5,80.51 90.6,80.51 92.4,80.51 94.5,80.51 93.45,84.29 92.55,87.53 91.5,91.31 L 91.5,91.31 Z M 91.5,91.31" /> </g> <g id="point2" style="font-family:ankacoder"> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="241" y="-1.16"> <tspan x="241" y="10.84">&lt;path class=</tspan> </text> <text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="329.18" y="-1.16"> <tspan x="329.18" y="10.84">“point”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="380.62" y="-1.16"> <tspan x="380.62" y="10.84"> d=</tspan> </text> <text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="402.67" y="-1.16"> <tspan x="402.67" y="10.84">“…”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="241" y="14.84"> <tspan x="241" y="26.84"> transform=</tspan> </text> <text class="dom" fill="rgb(79, 0, 42)" fill-opacity="1" font-size="14" x="321.83" y="14.84"> <tspan x="321.83" y="26.84">“translate(…)”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="424.72" y="14.84"> <tspan x="424.72" y="26.84"> /&gt;</tspan> </text> <circle fill-opacity="1" stroke="none" fill="rgb(188, 0, 4)" cx="334" cy="119" r="20" /> <text class="data" fill="rgb(0, 0, 0)" font-size="20" x="316" y="216.77"> <tspan x="316" y="234.77">6.9°</tspan> </text> <path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,210.7 L 334.5,146.5" /> <path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,146.7 C 333.45,150.48 332.55,153.72 331.5,157.5 333.6,157.5 335.4,157.5 337.5,157.5 336.45,153.72 335.55,150.48 334.5,146.7 L 334.5,146.7 Z M 334.5,146.7" /> <path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,34.49 L 334.5,92.5" /> <path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,91.31 C 333.45,87.53 332.55,84.29 331.5,80.51 333.6,80.51 335.4,80.51 337.5,80.51 336.45,84.29 335.55,87.53 334.5,91.31 L 334.5,91.31 Z M 334.5,91.31" /> </g> <g id="point3" style="font-family:ankacoder"> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="483" y="-0.16"> <tspan x="483" y="11.84">&lt;path class=</tspan> </text> <text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="571.18" y="-0.16"> <tspan x="571.18" y="11.84">“point”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="622.62" y="-0.16"> <tspan x="622.62" y="11.84"> d=</tspan> </text> <text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="644.67" y="-0.16"> <tspan x="644.67" y="11.84">“…”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="483" y="15.84"> <tspan x="483" y="27.84"> transform=</tspan> </text> <text class="dom" fill="rgb(79, 0, 42)" fill-opacity="1" font-size="14" x="563.83" y="15.84"> <tspan x="563.83" y="27.84">“translate(…)”</tspan> </text> <text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="666.72" y="15.84"> <tspan x="666.72" y="27.84"> /&gt;</tspan> </text> <circle fill-opacity="1" stroke="none" fill="rgb(188, 0, 4)" cx="576" cy="119" r="20" /> <text class="data" fill="rgb(0, 0, 0)" font-size="20" x="558" y="216.77"> <tspan x="558" y="234.77">9.5°</tspan> </text> <path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,210.7 L 575.5,146.5" /> <path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,146.7 C 574.45,150.48 573.55,153.72 572.5,157.5 574.6,157.5 576.4,157.5 578.5,157.5 577.45,153.72 576.55,150.48 575.5,146.7 L 575.5,146.7 Z M 575.5,146.7" /> <path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,36.49 L 575.5,92.5" /> <path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,93.31 C 574.45,89.53 573.55,86.29 572.5,82.51 574.6,82.51 576.4,82.51 578.5,82.51 577.45,86.29 576.55,89.53 575.5,93.31 L 575.5,93.31 Z M 575.5,93.31" /> </g>
+</svg>
+</section><section id="graph-the-data-points-contd" class="slide level2">
+<h1>Graph the Data Points (cont’d)</h1>
+<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
+      .<span class="fu">data</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
+    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
+      .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;point&quot;</span>)
+      .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
+      .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
+      .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>(idx));
+      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) { 
+        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) + 
+                        <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
+      });</code></pre></td></tr></table>
+</section><section id="add-the-connecting-lines" class="slide level2">
+<h1>Add the Connecting Lines</h1>
+<table class="sourceCode javascript numberLines line-2 line-6 line-7 line-8 line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="fu">datum</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
+    .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, 
+        <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
+            .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
+            .<span class="fu">y</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>); })
+    );</code></pre></td></tr></table>
+<ul>
+<li><code>datum()</code>: maps the entire dataset array to a single element</li>
+<li><code>d3.svg.line()</code>: <span class="smcp">SVG</span> <code>d</code> attribute for the path</li>
+</ul>
+</section><section id="add-the-axes" class="slide level2">
+<h1>Add the Axes</h1>
+<table class="sourceCode javascript numberLines line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
+    .<span class="fu">call</span>(<span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
+              .<span class="fu">scale</span>(x)
+              .<span class="fu">tickFormat</span>(<span class="ot">d3</span>.<span class="ot">time</span>.<span class="fu">format</span>(<span class="st">&quot;%b&quot;</span>))
+              .<span class="fu">orient</span>(<span class="st">&quot;bottom&quot;</span>));</code></pre></td></tr></table>
+<ul>
+<li><code>d3.svg.axis()</code> constructs a complete <span class="smcp">SVG</span> axis, including tick marks, grid lines, labels, etc.</li>
+<li>The <code>scale()</code> method defines the values for the axis</li>
+</ul>
 </section><section id="the-d3-version" class="slide level2">
 <h1>The D3 Version</h1>
 <svg width="600" height="380" style="top: 16px; position: relative; left: 124px;">
@@ -671,19 +838,30 @@
 </svg>
 </section><section id="small-addition-to-the-line-function" class="slide level2">
 <h1>Small Addition to the Line Function</h1>
-<div class="codewrapper">
-<table class="sourceCode javascript numberLines line-2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<table class="sourceCode javascript numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> line = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
-             .<span class="fu">interpolate</span>(<span class="st">&quot;basis&quot;</span>)
-             .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
-             .<span class="fu">y</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>); });</code></pre></td></tr></table>
-</div>
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="fu">datum</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
+    .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
+    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, 
+        <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
+            .<span class="fu">interpolate</span>(<span class="st">&quot;basis&quot;</span>)
+            .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
+            .<span class="fu">y</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>); })
+    );</code></pre></td></tr></table>
 <ul>
-<li>D3 has many interpolations: linear, step, b-spline, Cardinal spline, cubic, …</li>
-<li>Interpolation also useful for data (numbers, strings, colors) and scales</li>
+<li><span class="lgcp">D</span>3 has many interpolations: linear, step, b-spline, Cardinal spline, cubic, …</li>
 </ul>
 </section><section id="why-bother-with-monthly-values" class="slide level2" data-custom-next="showArea">
 <h1>Why Bother with Monthly Values?</h1>
@@ -704,13 +882,39 @@
 <h1>More Information</h1>
 <ul>
 <li>My personal web site <a href="http://jsDataV.is" class="uri">http://jsDataV.is</a></li>
-<li>Example visualizations <a href="http://bl.ocks.org/sathomas" class="uri">http://bl.ocks.org/sathomas</a></li>
+<li>All examples from this presentation <a href="http://bl.ocks.org/sathomas" class="uri">http://bl.ocks.org/sathomas</a></li>
 <li>Book from No Starch Press <a href="http://www.nostarch.com/datavisualization" class="uri">http://www.nostarch.com/datavisualization</a>
 <ul>
-<li>(Use coupon code “PREORDER” for 30% discount)</li>
+<li>(Coupon code “PREORDER” for discount)</li>
 </ul></li>
 </ul>
 <script>
+
+var domAndData = function() {
+    d3.selectAll("#svgDomAndData #point3 .dom")
+        .transition()
+        .duration(1500)
+        .attr("stroke-opacity", "0.1")
+        .attr("fill-opacity", "0.1");
+
+    d3.selectAll("#svgDomAndData #point2 .dom")
+        .transition()
+        .duration(1500)
+        .attr("stroke-opacity", "0.1")
+        .attr("fill-opacity", "0.1");
+
+    d3.selectAll("#svgDomAndData #point3 circle")
+        .transition()
+        .duration(1500)
+        .attr("fill-opacity", "0.4");
+
+    d3.selectAll("#svgDomAndData #point2 circle")
+        .transition()
+        .duration(1500)
+        .attr("fill-opacity", "0.4");
+
+    d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);
+}
 
 
 var dropPoints = function() {
