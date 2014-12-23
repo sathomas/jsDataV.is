@@ -5556,6 +5556,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/release\/img\/cover.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 364975,
+		"inputAbbreviatedPath": "\/release\/img\/cover.png",
+		"outputAbbreviatedPath": "\/release\/img\/cover.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/release\/img\/fancybox_sprite.png": {
 		"fileType": 32768,
 		"ignore": 0,

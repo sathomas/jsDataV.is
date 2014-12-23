@@ -13,10 +13,10 @@ $('#container').highcharts({
        plotLines: [{value: 0, width: 1, color: '#808080'}] },
   legend: { layout: 'vertical', align: 'right', 
         verticalAlign: 'middle', borderWidth: 0 },
-  series: [{ name: 'Tokyo',  data: [ 7.0, 6.9, 9.5, 14.5, //…
-       { name: 'New York', data: [-0.2, 0.8, 5.7, 11.3, //…
-       { name: 'Berlin',   data: [-0.9, 0.6, 3.5,  8.4, //…
-       { name: 'London',   data: [ 3.9, 4.2, 5.7,  8.5, //…
+  series: [{ name: 'Tokyo',    data: [ 7.0, 6.9, 9.5, 14.5, //…
+           { name: 'New York', data: [-0.2, 0.8, 5.7, 11.3, //…
+           { name: 'Berlin',   data: [-0.9, 0.6, 3.5,  8.4, //…
+           { name: 'London',   data: [ 3.9, 4.2, 5.7,  8.5, //…
 });
 ```
 
@@ -106,9 +106,9 @@ $('#container').highcharts({
 
 ## D3 Philosophy
 
-* D3 is not really a "visualization library"; it does not draw visualizations
-* D3 = "Data Driven Documents"; it primarily associates data with DOM elements and manages the results
-* D3 also provides tools that you can use to draw visualizations
+* <span class="lgcp">D</span>3 is not really a "visualization library"; it does not draw visualizations
+* <span class="lgcp">D</span>3 = "Data Driven Documents"; it primarily associates data with DOM elements and manages the results
+* <span class="lgcp">D</span>3 also provides tools that you can use to draw visualizations
 
 ---
 
@@ -127,17 +127,14 @@ $('#container').highcharts({
 
 ## Let's Build a Chart
 
-1. Start with basic <span class="smcp">HTML</span> scaffolding
-2. Collect the data in <span class="smcp">JSON</span> format
-3. Retrieve the data via <span class="smcp">AJAX</span>
-4. Create a stage for the graph in the <span class="smcp">DOM</span>
-5. Define scales and axes
-6. Draw the data using <span class="smcp">SVG</span>
+1. Setup and Scaffolding: <span class="smcp">HTML</span>, <span class="smcp">JSON</span>, and <span class="smcp">AJAX</span>
+2. <span class="lgcp">D</span>3 Scales: Map data ⇒ <span class="smcp">DOM</span>
+3. Draw with <span class="smcp">SVG</span>
 
 
 ---
 
-## Step 1: HTML Scaffolding
+## HTML Scaffolding
 
 ```html
 <!DOCTYPE html>
@@ -151,6 +148,261 @@ $('#container').highcharts({
 </body>
 </html>
 ```
+
+---
+
+## Data in JSON Format
+
+```javascript
+[{ 
+  "name": "Tokyo",
+  "data": [ 7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, //…
+ },{
+  "name": "New York",
+  "data": [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, //…
+ },{
+  "name": "Berlin",
+  "data": [-0.9, 0.6, 3.5,  8.4, 13.5, 17.0, 18.6, 17.9, //…
+ },{
+  "name": "London",
+  "data": [ 3.9, 4.2, 5.7,  8.5, 11.9, 15.2, 17.0, 16.6, //…
+}]
+```
+
+---
+
+## Retrieve the Data
+
+```{.javascript .numberLines .line-1 .line-5 .line-6}
+d3.json('data.json', function(error, datasets) {
+  datasets.forEach(function(dataset) {
+    dataset.data = dataset.data.map(function(d,i) {
+      return {
+        "date": d3.time.month.offset(
+                  new Date(2013,0,1), i),
+        "temp": d
+      };
+  });
+  
+  // Continue...
+})
+```
+
+---
+
+## Use a Scale to Map Data ⇒ DOM
+
+```javascript
+var y = d3.scale.linear()
+          .range([height, 0])
+          .domain(d3.extent(dataset, dataset.temp))
+          .nice();
+```
+
+* Range is from `height` to `0` because SVG coordinates position y-value of `0` at top
+* `d3.extent()` finds minimum and maximum of array with defined accessor
+* `d3.nice()` rounds scale to "human-friendly" values
+
+---
+
+## Scales Don't Have to be Linear
+
+```javascript
+var x = d3.time.scale()
+          .range([0, width])
+          .domain(
+            d3.extent(dataset, dataset.date)
+              .map(function(d, i) {
+                d3.time.day.offset(d, i ? 15 : -16)
+            })
+        );
+```
+
+* Domain of x-axis extended 16 days before and 15 days after data values
+
+---
+
+## Create the SVG Container
+
+```javascript
+var svg = d3.select("body").append("svg")
+            .attr("width",  width)
+            .attr("height", height);
+```
+
+* Potential gotcha: With <span class="smcp">D</span>3, unlike jQuery, the `append()` function returns the newly appended DOM element(s) instead of the original selection.
+
+---
+
+## Graph the Data Points
+
+```{.javascript .numberLines .line-1 .line-2 .line-3}
+svg.selectAll(".point")
+      .data(dataset.data)
+    .enter().append("path")
+      .attr("class", "point")
+      .attr("fill", d3.scale.category10(idx))
+      .attr("stroke", d3.scale.category10(idx))
+      .attr("d", d3.svg.symbol(idx));
+      .attr("transform", function(d) { 
+        return "translate(" + x(d.date) + 
+                        "," + y(d.temp) + ")";
+      });
+```
+
+---
+
+## Associate DOM and Data {data-custom-next="domAndData"}
+
+<svg id="svgDomAndData" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="688" height="236"  xml:space="preserve" style="position:relative;top:60px;left:56px;">
+<g id="point1" style="font-family:ankacoder">
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="-1" y="-1.16">
+<tspan x="-1" y="10.84">&lt;path class=</tspan>
+</text>
+<text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="87.18" y="-1.16">
+<tspan x="87.18" y="10.84">&quot;point&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="138.62" y="-1.16">
+<tspan x="138.62" y="10.84"> d=</tspan>
+</text>
+<text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="160.67" y="-1.16">
+<tspan x="160.67" y="10.84">&quot;…&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="-1" y="14.84">
+<tspan x="-1" y="26.84"> transform=</tspan>
+</text>
+<text class="dom" fill="rgb(79, 0, 42)" fill-opacity="1" font-size="14" x="79.83" y="14.84">
+<tspan x="79.83" y="26.84">&quot;translate(…)&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="182.72" y="14.84">
+<tspan x="182.72" y="26.84"> /&gt;</tspan>
+</text>
+<circle stroke="none" fill="rgb(188, 0, 4)" cx="92" cy="119" r="20" />
+<text class="data" fill="rgb(0, 0, 0)" font-size="20" x="74" y="216.77">
+<tspan x="74" y="234.77">7.0&#0176;</tspan>
+</text>
+<path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,210.7 L 91.5,146.5" />
+<path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,146.7 C 90.45,150.48 89.55,153.72 88.5,157.5 90.6,157.5 92.4,157.5 94.5,157.5 93.45,153.72 92.55,150.48 91.5,146.7 L 91.5,146.7 Z M 91.5,146.7" />
+<path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,37.49 L 91.5,92.5" />
+<path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 91.5,91.31 C 90.45,87.53 89.55,84.29 88.5,80.51 90.6,80.51 92.4,80.51 94.5,80.51 93.45,84.29 92.55,87.53 91.5,91.31 L 91.5,91.31 Z M 91.5,91.31" />
+</g>
+<g id="point2" style="font-family:ankacoder">
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="241" y="-1.16">
+<tspan x="241" y="10.84">&lt;path class=</tspan>
+</text>
+<text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="329.18" y="-1.16">
+<tspan x="329.18" y="10.84">&quot;point&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="380.62" y="-1.16">
+<tspan x="380.62" y="10.84"> d=</tspan>
+</text>
+<text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="402.67" y="-1.16">
+<tspan x="402.67" y="10.84">&quot;…&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="241" y="14.84">
+<tspan x="241" y="26.84"> transform=</tspan>
+</text>
+<text class="dom" fill="rgb(79, 0, 42)" fill-opacity="1" font-size="14" x="321.83" y="14.84">
+<tspan x="321.83" y="26.84">&quot;translate(…)&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="424.72" y="14.84">
+<tspan x="424.72" y="26.84"> /&gt;</tspan>
+</text>
+<circle fill-opacity="1" stroke="none" fill="rgb(188, 0, 4)" cx="334" cy="119" r="20" />
+<text class="data" fill="rgb(0, 0, 0)" font-size="20" x="316" y="216.77">
+<tspan x="316" y="234.77">6.9&#0176;</tspan>
+</text>
+<path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,210.7 L 334.5,146.5" />
+<path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,146.7 C 333.45,150.48 332.55,153.72 331.5,157.5 333.6,157.5 335.4,157.5 337.5,157.5 336.45,153.72 335.55,150.48 334.5,146.7 L 334.5,146.7 Z M 334.5,146.7" />
+<path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,34.49 L 334.5,92.5" />
+<path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 334.5,91.31 C 333.45,87.53 332.55,84.29 331.5,80.51 333.6,80.51 335.4,80.51 337.5,80.51 336.45,84.29 335.55,87.53 334.5,91.31 L 334.5,91.31 Z M 334.5,91.31" />
+</g>
+<g id="point3" style="font-family:ankacoder">
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="483" y="-0.16">
+<tspan x="483" y="11.84">&lt;path class=</tspan>
+</text>
+<text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="571.18" y="-0.16">
+<tspan x="571.18" y="11.84">&quot;point&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="622.62" y="-0.16">
+<tspan x="622.62" y="11.84"> d=</tspan>
+</text>
+<text class="dom" fill="rgb(99, 0, 56)" fill-opacity="1" font-size="14" x="644.67" y="-0.16">
+<tspan x="644.67" y="11.84">&quot;…&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="483" y="15.84">
+<tspan x="483" y="27.84"> transform=</tspan>
+</text>
+<text class="dom" fill="rgb(79, 0, 42)" fill-opacity="1" font-size="14" x="563.83" y="15.84">
+<tspan x="563.83" y="27.84">&quot;translate(…)&quot;</tspan>
+</text>
+<text class="dom" fill="rgb(10, 81, 80)" fill-opacity="1" font-size="14" x="666.72" y="15.84">
+<tspan x="666.72" y="27.84"> /&gt;</tspan>
+</text>
+<circle fill-opacity="1" stroke="none" fill="rgb(188, 0, 4)" cx="576" cy="119" r="20" />
+<text class="data" fill="rgb(0, 0, 0)" font-size="20" x="558" y="216.77">
+<tspan x="558" y="234.77">9.5&#0176;</tspan>
+</text>
+<path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,210.7 L 575.5,146.5" />
+<path stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,146.7 C 574.45,150.48 573.55,153.72 572.5,157.5 574.6,157.5 576.4,157.5 578.5,157.5 577.45,153.72 576.55,150.48 575.5,146.7 L 575.5,146.7 Z M 575.5,146.7" />
+<path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,36.49 L 575.5,92.5" />
+<path class="dom" fill-opacity="1" stroke-opacity="1" stroke="rgb(0, 0, 0)" stroke-linecap="square" stroke-miterlimit="4" fill="rgb(0, 0, 0)" d="M 575.5,93.31 C 574.45,89.53 573.55,86.29 572.5,82.51 574.6,82.51 576.4,82.51 578.5,82.51 577.45,86.29 576.55,89.53 575.5,93.31 L 575.5,93.31 Z M 575.5,93.31" />
+</g>
+</svg>
+
+---
+
+## Graph the Data Points (cont'd)
+
+```{.javascript .numberLines}
+svg.selectAll(".point")
+      .data(dataset.data)
+    .enter().append("path")
+      .attr("class", "point")
+      .attr("fill", d3.scale.category10(idx))
+      .attr("stroke", d3.scale.category10(idx))
+      .attr("d", d3.svg.symbol(idx));
+      .attr("transform", function(d) { 
+        return "translate(" + x(d.date) + 
+                        "," + y(d.temp) + ")";
+      });
+```
+
+---
+
+## Add the Connecting Lines
+
+```{.javascript .numberLines .line-2 .line-6 .line-7 .line-8 .line-9}
+svg.append("path")
+    .datum(dataset.data)
+    .attr("fill", "none")
+    .attr("stroke", color(i))
+    .attr("stroke-width", "3")
+    .attr("d", 
+        d3.svg.line()
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.temp); })
+    );
+```
+
+* `datum()`: maps the entire dataset array to a single element
+* `d3.svg.line()`:  <span class="smcp">SVG</span> `d` attribute for the path
+
+---
+
+## Add the Axes
+
+```{.javascript .numberLines .line-4}
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.svg.axis()
+              .scale(x)
+              .tickFormat(d3.time.format("%b"))
+              .orient("bottom"));
+```
+
+* `d3.svg.axis()` constructs a complete <span class="smcp">SVG</span> axis, including tick marks, grid lines, labels, etc.
+* The `scale()` method defines the values for the axis
 
 ---
 
@@ -480,17 +732,21 @@ d3.selectAll(".point")
 
 ## Small Addition to the Line Function
 
-<div class="codewrapper">
-``` {.javascript .numberLines .line-2}
-var line = d3.svg.line()
-             .interpolate("basis")
-             .x(function(d) { return x(d.date); })
-             .y(function(d) { return y(d.temp); });
+``` {.javascript .numberLines .line-8}
+svg.append("path")
+    .datum(dataset.data)
+    .attr("fill", "none")
+    .attr("stroke", color(i))
+    .attr("stroke-width", "3")
+    .attr("d", 
+        d3.svg.line()
+            .interpolate("basis")
+            .x(function(d) { return x(d.date); })
+            .y(function(d) { return y(d.temp); })
+    );
 ```
-</div>
 
-* D3 has many interpolations: linear, step, b-spline, Cardinal spline, cubic, ...
-* Interpolation also useful for data (numbers, strings, colors) and scales
+* <span class="lgcp">D</span>3 has many interpolations: linear, step, b-spline, Cardinal spline, cubic, ...
 
 ---
 
@@ -519,11 +775,37 @@ var line = d3.svg.line()
 ## More Information
 
 * My personal web site [http://jsDataV.is](http://jsDataV.is)
-* Example visualizations [http://bl.ocks.org/sathomas](http://bl.ocks.org/sathomas)
+* All examples from this presentation [http://bl.ocks.org/sathomas](http://bl.ocks.org/sathomas)
 * Book from No Starch Press [http://www.nostarch.com/datavisualization](http://www.nostarch.com/datavisualization)
-    * (Use coupon code "PREORDER" for 30% discount)
+    * (Coupon code "PREORDER" for discount)
 
 <script>
+
+var domAndData = function() {
+    d3.selectAll("#svgDomAndData #point3 .dom")
+        .transition()
+        .duration(1500)
+        .attr("stroke-opacity", "0.1")
+        .attr("fill-opacity", "0.1");
+
+    d3.selectAll("#svgDomAndData #point2 .dom")
+        .transition()
+        .duration(1500)
+        .attr("stroke-opacity", "0.1")
+        .attr("fill-opacity", "0.1");
+
+    d3.selectAll("#svgDomAndData #point3 circle")
+        .transition()
+        .duration(1500)
+        .attr("fill-opacity", "0.4");
+
+    d3.selectAll("#svgDomAndData #point2 circle")
+        .transition()
+        .duration(1500)
+        .attr("fill-opacity", "0.4");
+
+    d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);
+}
 
 
 var dropPoints = function() {

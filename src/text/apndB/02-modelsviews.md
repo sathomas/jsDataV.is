@@ -479,7 +479,7 @@ run.distance = Math.round(62. *
     " Miles";
 ```
 
-The calories attribute is one value that's fine as it is, so we'll just copy it into our temporary object.
+The calories property is one value that's fine as it is, so we'll just copy it into our temporary object.
 
 ``` {.javascript .numberLines}
 run.calories = this.model.get("metricSummary").calories;
