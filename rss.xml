@@ -7,9 +7,29 @@
         <generator>Feeder 2.5.7(1898); Mac OS X Version 10.10.1 (Build 14B25) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Sat, 13 Dec 2014 16:08:18 -0500</pubDate>
-        <lastBuildDate>Sat, 13 Dec 2014 16:08:18 -0500</lastBuildDate>
+        <pubDate>Wed, 24 Dec 2014 12:06:44 -0600</pubDate>
+        <lastBuildDate>Wed, 24 Dec 2014 12:06:44 -0600</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Chapter 1: Graphing Data</title>
+            <link>http://jsdatav.is/chap01.html</link>
+            <description><![CDATA[<p>Many people think of data visualization as intricate interactive graphics of dazzling complexity. Creating effective visualizations, however, doesn’t require Picasso’s artistic skill or Turing’s programming expertise. In fact, when you consider the ultimate purpose of data visualization—helping users understand data—simplicity is one of the most important features of an effective visualization. Simple, straightforward charts are often the easiest to understand. After all, users have seen hundreds or thousands of bar charts, line charts, x/y plots, and the like. They know the conventions that underlie these charts, so they can interpret a well-designed example effortlessly. If a simple, static chart presents the data best, use it. You’ll spend less effort creating your visualization, and your users will spend less effort trying to understand it.</p>
+
+<p>There are many quality tools and libraries to help you get started with simple visualizations. With these tools, you can avoid reinventing the wheel, and you can be assured of a reasonably attractive presentation by sticking with the library defaults. We’ll look at several of these tools throughout the book, but for this chapter the we’ll use the <a href="http://www.humblesoftware.com/flotr2/">flotr2 library</a>. flotr2 makes it easy to add standard bar charts, line charts, and pie charts to any web page, and it also supports some less common chart types. We’ll take a look at all of these techniques in the examples that follow. Here’s what you’ll learn:</p>
+
+<ul>
+<li>How to create a basic bar chart</li>
+<li>How to plot continuous data with a line chart</li>
+<li>How to emphasize fractions with a pie chart</li>
+<li>How to plot x/y data with a scatter chart</li>
+<li>How to show magnitudes of x/y data with a bubble chart</li>
+<li>How to display multidimensional data with a radar chart</li>
+</ul>
+
+<p><a href="http://jsdatav.is/chap01.html">Continue Reading</a></p>]]></description>
+            <pubDate>Wed, 24 Dec 2014 11:56:12 -0600</pubDate>
+            <guid isPermaLink="false">6DF81AC0-DBBA-4BAB-A4DA-C868915B04C7</guid>
+        </item>
         <item>
             <title>Introducing Data Visualization with JavaScript</title>
             <link>http://jsDataV.is/intro.html</link>
@@ -18,7 +38,7 @@
 <p>Data visualization is a tool that addresses this gap.</p>
 
 <p><a href="http://jsDataV.is/intro.html">Continue Reading</a></p>]]></description>
-            <pubDate>Sat, 13 Dec 2014 15:58:48 -0500</pubDate>
+            <pubDate>Sat, 13 Dec 2014 14:58:48 -0600</pubDate>
             <guid isPermaLink="false">994ADB90-BB9B-4DCC-8FDE-46BAF42D636B</guid>
         </item>
     </channel>
