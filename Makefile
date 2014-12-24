@@ -42,4 +42,7 @@ book: $(BOOK)
 talks: $(TALKS)
 	
 all: book talks
-	@echo Building everything $@
+
+.PHONY : release
+release:
+	cp -a release/ ../jsDataV.is-release/
