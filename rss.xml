@@ -7,9 +7,20 @@
         <generator>Feeder 2.5.7(1898); Mac OS X Version 10.10.1 (Build 14B25) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Mon, 29 Dec 2014 11:58:10 -0500</pubDate>
-        <lastBuildDate>Mon, 29 Dec 2014 11:58:10 -0500</lastBuildDate>
+        <pubDate>Fri, 02 Jan 2015 13:59:14 -0500</pubDate>
+        <lastBuildDate>Fri, 02 Jan 2015 13:59:14 -0500</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Chapter 3: Integrating Charts on a Page</title>
+            <link>http://jsdatav.is/chap03.html</link>
+            <description><![CDATA[<p>You might expect a data visualization for the web to be featured very prominently on the page, or even make up the entire web page. That’s not always the right approach, though. The best visualizations are effective because they help the user understand the data, not because they “look pretty” on the page. Some data may be straightforward enough to present without context, but meaningful data probably isn’t. And if our presentation requires context, its visualizations are likely sharing the page with other content. When we design web pages, we should take care to balance any individual component with the page as a whole. If a single visualization is not the entire story, it shouldn’t take up all (or even most) of the space on the page. It can be challenging, however, to minimize the space a traditional chart requires. There are, after all, axes, labels, titles, legends, and more to place.</p>
+
+<p>Edward Tufte considered this problem in his groundbreaking work <a href="http://www.edwardtufte.com/tufte/books_vdqi">The Visual Display of Quantitative Information</a>, and he proposed a novel solution he called sparklines. Sparklines are charts stripped to their bare essentials, presented without the aforementioned elements we often see in a chart. Sparklines can present a lot of information in very little space, even to the point where it is possible to include a chart right in the middle of a sentence. There is no need for “See figure below” or “Click for larger view.” One of Tufte’s earliest examples presents the glucose level of a medical patient; figure 3-1 shows a reproduction.</p>
+
+<p><a href="http://jsdatav.is/chap03.html">Continue Reading</a></p>]]></description>
+            <pubDate>Fri, 02 Jan 2015 13:59:06 -0500</pubDate>
+            <guid isPermaLink="false">E71D6786-6552-4BD8-B41E-244B26BFA383</guid>
+        </item>
         <item>
             <title>Chapter 2: Making Charts Interactive</title>
             <link>http://jsdatav.is/chap02.html</link>
