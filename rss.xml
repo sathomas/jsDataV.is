@@ -7,9 +7,27 @@
         <generator>Feeder 2.5.7(1898); Mac OS X Version 10.10.1 (Build 14B25) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Fri, 02 Jan 2015 13:59:14 -0500</pubDate>
-        <lastBuildDate>Fri, 02 Jan 2015 13:59:14 -0500</lastBuildDate>
+        <pubDate>Mon, 05 Jan 2015 09:46:13 -0500</pubDate>
+        <lastBuildDate>Mon, 05 Jan 2015 09:46:13 -0500</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Chapter 4: Creating Specialized Graphs</title>
+            <link>http://jsdatav.is/chap04.html</link>
+            <description><![CDATA[<p>The first three chapters looked at different ways to create many common types of charts with JavaScript. But if your data has unique properties, or if you want to show it in an unusual way, a more specialized chart might be more appropriate than a typical bar, line or scatter plot.</p>
+
+<p>Fortunately, there are many JavaScript techniques and plugins to expand our visualization vocabulary beyond the standard charts. In this chapter, we’ll look at approaches for several specialized chart types, including:</p>
+
+<ul>
+<li>How to combine hierarchy and dimension with tree maps</li>
+<li>How to highlight regions with heat maps</li>
+<li>How to show links between elements with network graphs</li>
+<li>How to reveal language patterns with word clouds</li>
+</ul>
+
+<p><a href="http://jsdatav.is/chap04.html">Continue Reading</a></p>]]></description>
+            <pubDate>Mon, 05 Jan 2015 09:46:08 -0500</pubDate>
+            <guid isPermaLink="false">C85A1B93-6432-469F-B997-260DCF3CB6ED</guid>
+        </item>
         <item>
             <title>Chapter 3: Integrating Charts on a Page</title>
             <link>http://jsdatav.is/chap03.html</link>
