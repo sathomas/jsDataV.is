@@ -592,13 +592,13 @@ edgeSelection
 With the elements finally drawn and positioned, we have the first version of our visualization with figure NEXTFIGURENUMBER.
 
 <style>
-circle {
+#figure1 circle, #figure2 circle, #figure3 circle {
     fill: #ccc;
     stroke: #fff;
     stroke-width: 1px;
 }
 
-line {
+#figure1 line, #figure2 line, #figure3 line {
     stroke: #777;
     stroke-width: 1px;
 }
