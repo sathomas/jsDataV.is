@@ -180,7 +180,7 @@ For other types, we convert the value to a string, format it a bit with Undersco
 }
 ```
 
-There are a few other minor improvements we can make to the presentation which you can find in the book's source code. The last piece of the View is implementing the `render` method. In that method, we use `toJSON` to get an object corresponding the Run model, and then we start the `obj2Html` recursion with that object.
+There are a few other minor improvements we can make to the presentation which you can find in the book's source code. The last piece of the View is implementing the `render` method. In that method, we use `toJSON` to get an object corresponding to the Run model, and then we start the `obj2Html` recursion with that object.
 
 ``` {.javascript .numberLines}
 render: function () {
