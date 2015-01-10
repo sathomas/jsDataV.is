@@ -1450,7 +1450,7 @@ Calories
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">run</span>.<span class="fu">distance</span> = <span class="ot">Math</span>.<span class="fu">round</span>(<span class="dv">62</span>. *
     <span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">get</span>(<span class="st">&quot;metricSummary&quot;</span>).<span class="fu">distance</span>)/<span class="dv">100</span> +
     <span class="st">&quot; Miles&quot;</span>;</code></pre></td></tr></table>
-<p>The calories attribute is one value that’s fine as it is, so we’ll just copy it into our temporary object.</p>
+<p>The calories property is one value that’s fine as it is, so we’ll just copy it into our temporary object.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">run</span>.<span class="fu">calories</span> = <span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">get</span>(<span class="st">&quot;metricSummary&quot;</span>).<span class="fu">calories</span>;</code></pre></td></tr></table>
 <p>Finally, if you’re an avid runner you might have noticed that there’s an important value missing from the Nike+ attributes: the average pace for the run in minutes per mile. We have the data to calculate it, so let’s go ahead and add that as well.</p>
@@ -1806,7 +1806,7 @@ $ <span class="kw">yo</span> backbone:view map</code></pre>
     value = <span class="fu">_</span>(<span class="ot">value</span>.<span class="fu">toString</span>().<span class="fu">toLowerCase</span>()).<span class="fu">titleize</span>();
     html += <span class="kw">this</span>.<span class="fu">template</span>({ <span class="dt">key</span>: key, <span class="dt">value</span>: value });
 }</code></pre></td></tr></table>
-<p>There are a few other minor improvements we can make to the presentation which you can find in the book’s source code. The last piece of the View is implementing the <code>render</code> method. In that method, we use <code>toJSON</code> to get an object corresponding the Run model, and then we start the <code>obj2Html</code> recursion with that object.</p>
+<p>There are a few other minor improvements we can make to the presentation which you can find in the book’s source code. The last piece of the View is implementing the <code>render</code> method. In that method, we use <code>toJSON</code> to get an object corresponding to the Run model, and then we start the <code>obj2Html</code> recursion with that object.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
