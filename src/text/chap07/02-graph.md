@@ -90,9 +90,9 @@ The edges indicate the two nodes that they connect as indices in the `nodes` arr
 
 ### Step 2: Set Up the Page
 
-As we noted in the previous example, <span class="smcp">D3</span>.js doesn't depend on any other libraries, and it's available on most content distribution networks. All we need to do is include it in the page (line 9). We'll also want to set up a container for the visualization, so our markup includes a `<div>` with the id `"container"` on line 8.
+As we noted in the previous example, <span class="smcp">D3</span>.js doesn't depend on any other libraries, and it's available on most content distribution networks. All we need to do is include it in the page (line 10). We'll also want to set up a container for the visualization, so our markup includes a `<div>` with the id `"container"` on line 8.
 
-``` {.html .numberLines .line-8 .line-9}
+``` {.html .numberLines .line-8 .line-10}
 <!DOCTYPE html>
 <html lang="en">
   <head>

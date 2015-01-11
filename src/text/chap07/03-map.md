@@ -24,9 +24,9 @@ Since we’re going to access this data using JavaScript, you might be tempted t
 
 ### Step 2: Set Up the Page
 
-Our skeletal web page is no different from the other <span class="smcp">D3</span>.js examples. We set aside a container for the map (line 8) and include the <span class="smcp">D3</span>.js library (line 9).
+Our skeletal web page is no different from the other <span class="smcp">D3</span>.js examples. We set aside a container for the map (line 8) and include the <span class="smcp">D3</span>.js library (line 10).
 
-``` {.html .numberLines .line-8 .line-9}
+``` {.html .numberLines .line-8 .line-10}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -149,7 +149,7 @@ As you can see, we set the position of the circles using the `position` property
 <figcaption>Adding points to a map is easy with <span class="smcp">D3</span>.js projections.</figcaption>
 </figure>
 
-### Step 10: Add Interactivty
+### Step 10: Add Interactivity
 
 Maps naturally invite users to zoom in and pan around, and <span class="smcp">D3</span>.js makes it easy to support those standard map interactions. Because, <span class="smcp">D3</span>.js gives us complete control, however, we’re not limited to conventions. Let’s do something a little different with our map. We can make each state clickable, so that clicking on any state zooms in on that state. Clicking on a state that’s already zoomed can then zoom the map back out to it’s default. As you’ll see, this behavior is easy to implement with <span class="smcp">D3</span>.js.
 
