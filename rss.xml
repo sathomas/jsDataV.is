@@ -7,9 +7,26 @@
         <generator>Feeder 2.5.7(1898); Mac OS X Version 10.10.1 (Build 14B25) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Mon, 05 Jan 2015 09:46:13 -0500</pubDate>
-        <lastBuildDate>Mon, 05 Jan 2015 09:46:13 -0500</lastBuildDate>
+        <pubDate>Tue, 13 Jan 2015 12:40:52 -0500</pubDate>
+        <lastBuildDate>Tue, 13 Jan 2015 12:40:52 -0500</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Chapter 5: Showing Timelines</title>
+            <link>http://jsdatav.is/chap05.html</link>
+            <description><![CDATA[<p>The most compelling visualizations often succeed because they tell a story; they extract a narrative from data and reveal that narrative to their users. And as with any narrative, time is a critical component. If the data consists solely of numbers, a standard bar or line chart can easily show its evolution over time. If the data is not numerical, however, standard charts probably won’t work. This chapter considers several alternatives for time-based visualizations. All are based on some variation of a timeline; one linear dimension represents time, and events are places along that dimension based on when they occurred. In all of the examples, we’ll consider the same underlying data: a possible chronology of the plays of William Shakespeare.</p>
+
+<p>We’ll look at three very different approaches for adding timelines to web pages. One option relies on a JavaScript library, and it follows a process similar to many other visualizations in the book. The other two techniques, however, offer a different perspective. In one, we won’t use a visualization library at all. Instead, we’ll build a timeline with basic JavaScript, HTML, and CSS, and we’ll see how to do that both with and without jQuery. The final example shows the other extreme. It relies on a full-featured web component available from an external web site. In short, we’ll look at:</p>
+
+<ul>
+<li>How to use a library to create timelines.</li>
+<li>How to create timelines without a library using only JavaScript, HTML, and CSS.</li>
+<li>How to integrate a timeline component in a web page.</li>
+</ul>
+
+<p><a href="http://jsdatav.is/chap05.html">Continue Reading</a></p>]]></description>
+            <pubDate>Tue, 13 Jan 2015 12:40:48 -0500</pubDate>
+            <guid isPermaLink="false">C37C6B96-7558-4869-B96F-F550C9BCF620</guid>
+        </item>
         <item>
             <title>Chapter 4: Creating Specialized Graphs</title>
             <link>http://jsdatav.is/chap04.html</link>
