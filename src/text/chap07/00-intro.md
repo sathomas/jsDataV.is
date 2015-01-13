@@ -6,7 +6,7 @@ In this chapter we'll look at an entirely different approach to JavaScript visua
 
 To see some of the powerful features of <span class="smcp">D3</span>.js, we'll take a whirlwind tour. This chapter’s examples include:
 
-* Using an unconventional chart type for special data.
+* Adapting a traditional chart type for particular data.
 * Building a force-directed graph that responds to user interactions.
 * Displaying map-based data using high-quality Scalable Vector Graphics.
 * Creating a fully custom visualization.

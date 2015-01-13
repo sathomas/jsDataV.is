@@ -5589,6 +5589,17 @@
 		"outputPathIsSetByUser": 0,
 		"processed": 0
 		},
+	"\/release\/img\/fig07-18.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 431184,
+		"inputAbbreviatedPath": "\/release\/img\/fig07-18.png",
+		"outputAbbreviatedPath": "\/release\/img\/fig07-18.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/release\/img\/ForSale.jpg": {
 		"fileType": 16384,
 		"ignore": 0,
@@ -7256,6 +7267,18 @@
 		"ignoreWasSetByUser": 1,
 		"inputAbbreviatedPath": "\/src\/text\/chap07\/03-map.md",
 		"outputAbbreviatedPath": "\/src\/text\/chap07\/03-map.html",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
+	"\/src\/text\/chap07\/04-sunburst.md": {
+		"enableFootnoteSupport": 0,
+		"enableSmartyPants": 1,
+		"expandTabs": 1,
+		"fileType": 4096,
+		"ignore": 1,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/src\/text\/chap07\/04-sunburst.md",
+		"outputAbbreviatedPath": "\/src\/text\/chap07\/04-sunburst.html",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
