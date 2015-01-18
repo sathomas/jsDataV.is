@@ -53,7 +53,7 @@
         {
             id: "blog",
             fixed: false,
-            href: "http://blog.sathomas.me",
+            href: "http://jsDataV.is/rss.xml",
             r: 30,
             x: 458,
             y: 290,
