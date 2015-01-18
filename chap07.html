@@ -2154,7 +2154,7 @@ Adding points to a map is easy with <span class="smcp">D3</span>.js projections.
 </script>
 <h2 id="creating-a-unique-visualization">Creating a Unique Visualization</h2>
 <p>If you’ve followed the first three examples in this chapter, you’re probably beginning to appreciate how <span class="smcp">D3</span>.js has a great deal more flexibility than traditional JavaScript libraries. Instead of creating visualizations for you, it provides many tools and utilities that you can use however you wish. We’ve used that flexibility to add unconventional error bars to a chart, to refine the behavior of a network graph, and to customize user interactions with a map. With <span class="smcp">D3</span>.js, however, we aren’t limited to minor adjustments to existing visualization types. Instead, we can use the library to create unique visualizations that are nothing like those in traditional libraries.</p>
-<p>In this example we’ll use the same data we used previously—tornado sightings in the <span class="smcp">US</span>.js from 2013. Rather than placing the sightings on a map, however, we’ll create an interactive, hierarchical visualization that lets users understand the number of sightings by region, by state, or even by counties within a state. Considering the subject matter, a circular hierarchy could be especially effective, so we’ll create a sunburst visualization with rotational animations. The code that follows is based on an [example (http://bl.ocks.org/mbostock/4348373)developed by Mike Bostock, the main <span class="smcp">D3</span>.js developer.</p>
+<p>In this example we’ll use the same data we used previously—tornado sightings in the <span class="smcp">US</span>.js from 2013. Rather than placing the sightings on a map, however, we’ll create an interactive, hierarchical visualization that lets users understand the number of sightings by region, by state, or even by counties within a state. Considering the subject matter, a circular hierarchy could be especially effective, so we’ll create a sunburst visualization with rotational animations. The code that follows is based on an <a href="http://bl.ocks.org/mbostock/4348373">example</a> developed by Mike Bostock, the main <span class="smcp">D3</span>.js developer.</p>
 <blockquote>
 <p>Note: To be fair, it is possible to create sunburst visualizations using some charting libraries, generally by customizing a variation of the pie chart. Those libraries, however, are focused much more on off-the-shelf use. Creating custom visualizations is generally much easier with a library like <span class="smcp">D3</span>.js that is designed especially for customization.</p>
 </blockquote>
@@ -2192,7 +2192,7 @@ Maine,New England,Piscataquis County
   <span class="kw">&lt;/head&gt;</span>
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;chart&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-    <span class="kw">&lt;script</span> 
+    <span class="kw">&lt;script</span>
 <span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
@@ -2215,13 +2215,13 @@ Maine,New England,Piscataquis County
     height = <span class="dv">400</span>,
     maxRadius = <span class="ot">Math</span>.<span class="fu">min</span>(width, height) / <span class="dv">2</span>;
 
-<span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#map&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
+<span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#chart&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
     .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width)
     .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height);
 
 <span class="kw">var</span> g = <span class="ot">svg</span>.<span class="fu">append</span>(“g”);
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> + 
-        (width  / <span class="dv">2</span>) + <span class="st">&quot;,&quot;</span> + 
+    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> +
+        (width  / <span class="dv">2</span>) + <span class="st">&quot;,&quot;</span> +
         (height / <span class="dv">2</span>) + <span class="st">&quot;)&quot;</span>);</code></pre></td></tr></table>
 <p>The code above contains a couple of new wrinkles. First, in line 3, we calculate the maximum radius for the visualization. This value—which is half of the height or the width, whichever is smaller—will come in handy in the code that follows. More interestingly, in lines 10-12 we translate the inner <code>&lt;g&gt;</code> container so that its coordinate system places the point (0,0) right in the center of the visualization. This translation makes it easy to center the sunburst and it makes it much simpler to calculate sunburst parameters.</p>
 <h3 id="step-4-create-scales">Step 4: Create Scales</h3>
@@ -2261,17 +2261,17 @@ Maine,New England,Piscataquis County
 12
 13
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> arc = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">arc</span>()
-    .<span class="fu">startAngle</span>(<span class="kw">function</span>(d) { 
-        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="ot">Math</span>.<span class="fu">min</span>(<span class="dv">2</span> * <span class="ot">Math</span>.<span class="fu">PI</span>, <span class="fu">theta</span>(<span class="ot">d</span>.<span class="fu">x</span>))); 
+    .<span class="fu">startAngle</span>(<span class="kw">function</span>(d) {
+        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="ot">Math</span>.<span class="fu">min</span>(<span class="dv">2</span> * <span class="ot">Math</span>.<span class="fu">PI</span>, <span class="fu">theta</span>(<span class="ot">d</span>.<span class="fu">x</span>)));
     })
-    .<span class="fu">endAngle</span>(<span class="kw">function</span>(d) { 
+    .<span class="fu">endAngle</span>(<span class="kw">function</span>(d) {
         <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="ot">Math</span>.<span class="fu">min</span>(<span class="dv">2</span> * <span class="ot">Math</span>.<span class="fu">PI</span>, <span class="fu">theta</span>(<span class="ot">d</span>.<span class="fu">x</span> + <span class="ot">d</span>.<span class="fu">dx</span>)));
     })
-    .<span class="fu">innerRadius</span>(<span class="kw">function</span>(d) { 
+    .<span class="fu">innerRadius</span>(<span class="kw">function</span>(d) {
         <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="fu">radius</span>(<span class="ot">d</span>.<span class="fu">y</span>));
     })
-    .<span class="fu">outerRadius</span>(<span class="kw">function</span>(d) { 
-        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="fu">radius</span>(<span class="ot">d</span>.<span class="fu">y</span> + <span class="ot">d</span>.<span class="fu">dy</span>)); 
+    .<span class="fu">outerRadius</span>(<span class="kw">function</span>(d) {
+        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="fu">radius</span>(<span class="ot">d</span>.<span class="fu">y</span> + <span class="ot">d</span>.<span class="fu">dy</span>));
     });</code></pre></td></tr></table>
 <p>The code itself is pretty straightforward, but a picture helps explain why we’re using the code this way. Assume that the data associated with a selection has a position (x,y) of (12.5, 10), a width of 25, and a height of 30. The data properties would then be:</p>
 <ul>
@@ -2283,7 +2283,7 @@ Maine,New England,Piscataquis County
 <p>In Cartesian coordinates, we could draw the selection as on the left side of figure <span class="nextfigure"/>. Our scales and arc function will transform it to the right side of the figure.</p>
 <figure>
 <svg width="640px" height="440px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:1.41421;">
-<g><g id="arc" transform="matrix(1,0,0,1,-1,22)"><path d="M516.8,88.2c61.75,61.74 61.75,161.86 0,223.6l-55.9,-55.9c30.88,-30.87 30.88,-80.93 0,-111.8l55.9,-55.9Z" style="fill:#007979;fill-rule:nonzero;stroke-width:1px;stroke:#007979;"/></g><g id="arrowhead2" transform="matrix(1.77496,-0.168783,0.168783,1.77496,-372.034,-79.7704)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead21" transform="matrix(-0.113136,-1.77938,1.77938,-0.113136,55.4145,1005.17)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead22" transform="matrix(-1.6095,-0.767138,0.767138,-1.6095,1002.93,914.131)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead23" transform="matrix(-1.16199,-1.35232,1.35232,-1.16199,750.602,1112.57)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="bezier8" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,-132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier9" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier10" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l0,-149.033" style="fill:none;stroke-width:1.27px;stroke:#bbb;"/></g><g id="rectangle" transform="matrix(1,0,0,1,22,52)"><rect x="120" y="64" width="150" height="180" style="fill:#7ebd00;stroke-width:1px;stroke:#7ebd00;"/></g><g transform="matrix(1,0,0,1,120,209)"><text x="-39.2622px" y="0px" font-size="16">dy=30</text></g><g id="bezier3" transform="matrix(1,0,0,1,22,52)"><path d="M110,64l0,180" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier4" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,243.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier5" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,63.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,216,320)"><text x="-22.968px" y="0px" font-size="16">dx=25</text></g><g id="bezier" transform="matrix(1,0,0,1,22,52)"><path d="M120,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier6" transform="matrix(1,0,0,1,22,52)"><path d="M120,254l150,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier2" transform="matrix(1,0,0,1,22,52)"><path d="M270,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="axes" transform="matrix(1,0,0,1,22,52)"><path d="M45,18l0,320l250,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="xtick" transform="matrix(1,0,0,1,22,52)"><path d="M120,338.5l0,5" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,142,410)"><text x="-24.752px" y="0px" font-size="16">x=12.5</text></g><g transform="matrix(1,0,0,1,53,300)"><text x="-29.4862px" y="0px" font-size="16">y=10</text></g><g id="ytick" transform="matrix(1,0,0,1,22,52)"><path d="M40,244l5,0" style="fill:none;stroke-width:1.33px;stroke:#000;"/></g><g transform="matrix(1,0,0,1,-1.29024,20.7601)"><path d="M403.946,131.807c37.1611,0 67.2861,30.5276 67.2861,68.1853c0,18.9471 -6.76902,35.1261 -19.0812,47.4835" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,-1.58887,21.0742)"><path d="M404.349,161.983c10.6811,0 19.5612,3.47083 26.5634,10.5609" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,389.242,200.584)"><text x="-32.952px" y="0px" font-size="16">start=45°</text></g><g transform="matrix(1,0,0,1,453.016,255.996)"><text x="-62.2388px" y="0px" font-size="16">end=135°</text></g><g transform="matrix(1,0,0,1,509.094,189.17)"><text x="-32.144px" y="0px" font-size="16">inner=79</text></g><g transform="matrix(1,0,0,1,-1,22)"><path d="M403.66,200.379l155.153,17.0383" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,553.984,254.4)"><text x="-37.624px" y="0px" font-size="16">outer=158</text></g><g transform="matrix(0.983668,0,0,0.983668,5.59273,25.2716)"><path d="M403.659,200.316l72.5965,-29.6859" style="fill:none;stroke-width:1.36px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,156.063,10.0342)"><text x="-32.4345px" y="36.6013px" font-size="16">Cartesian Coor<tspan x="74.2215px 83.9975px ">di</tspan>nates</text></g><g transform="matrix(1,0,0,1,431.792,10.0342)"><text x="-1.6185px" y="36.6013px" font-size="16">Polar Coor<tspan x="74.2215px 83.9975px ">di</tspan>nates</text></g></g>
+<g><g id="arc" transform="matrix(1,0,0,1,-1,22)"><path d="M516.8,88.2c61.75,61.74 61.75,161.86 0,223.6l-55.9,-55.9c30.88,-30.87 30.88,-80.93 0,-111.8l55.9,-55.9Z" style="fill:#007979;fill-rule:nonzero;stroke-width:1px;stroke:#007979;"/></g><g id="arrowhead2" transform="matrix(1.77496,-0.168783,0.168783,1.77496,-372.034,-79.7704)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead21" transform="matrix(-0.113136,-1.77938,1.77938,-0.113136,55.4145,1005.17)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead22" transform="matrix(-1.6095,-0.767138,0.767138,-1.6095,1002.93,914.131)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead23" transform="matrix(-1.16199,-1.35232,1.35232,-1.16199,750.602,1112.57)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="bezier8" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,-132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier9" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier10" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l0,-149.033" style="fill:none;stroke-width:1.27px;stroke:#bbb;"/></g><g id="rectangle" transform="matrix(1,0,0,1,22,52)"><rect x="120" y="64" width="150" height="180" style="fill:#7ebd00;stroke-width:1px;stroke:#7ebd00;"/></g><g transform="matrix(1,0,0,1,120,209)"><text x="-42px" y="0px" font-size="16">dy=30</text></g><g id="bezier3" transform="matrix(1,0,0,1,22,52)"><path d="M110,64l0,180" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier4" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,243.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier5" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,63.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,216,320)"><text x="-22.968px" y="2px" font-size="16">dx=25</text></g><g id="bezier" transform="matrix(1,0,0,1,22,52)"><path d="M120,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier6" transform="matrix(1,0,0,1,22,52)"><path d="M120,254l150,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier2" transform="matrix(1,0,0,1,22,52)"><path d="M270,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="axes" transform="matrix(1,0,0,1,22,52)"><path d="M45,18l0,320l250,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="xtick" transform="matrix(1,0,0,1,22,52)"><path d="M120,338.5l0,5" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,142,410)"><text x="-24.752px" y="0px" font-size="16">x=12.5</text></g><g transform="matrix(1,0,0,1,53,300)"><text x="-34px" y="0px" font-size="16">y=10</text></g><g id="ytick" transform="matrix(1,0,0,1,22,52)"><path d="M40,244l5,0" style="fill:none;stroke-width:1.33px;stroke:#000;"/></g><g transform="matrix(1,0,0,1,-1.29024,20.7601)"><path d="M403.946,131.807c37.1611,0 67.2861,30.5276 67.2861,68.1853c0,18.9471 -6.76902,35.1261 -19.0812,47.4835" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,-1.58887,21.0742)"><path d="M404.349,161.983c10.6811,0 19.5612,3.47083 26.5634,10.5609" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,389.242,200.584)"><text x="-40px" y="0px" font-size="16">start=45°</text></g><g transform="matrix(1,0,0,1,453.016,255.996)"><text x="-68px" y="0px" font-size="16">end=135°</text></g><g transform="matrix(1,0,0,1,509.094,189.17)"><text x="-32.144px" y="0px" font-size="16">inner=79</text></g><g transform="matrix(1,0,0,1,-1,22)"><path d="M403.66,200.379l155.153,17.0383" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,553.984,254.4)"><text x="-37.624px" y="0px" font-size="16">outer=158</text></g><g transform="matrix(0.983668,0,0,0.983668,5.59273,25.2716)"><path d="M403.659,200.316l72.5965,-29.6859" style="fill:none;stroke-width:1.36px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,156.063,10.0342)"><text x="-32.4345px" y="36.6013px" font-size="16">Cartesian Coordinates</text></g><g transform="matrix(1,0,0,1,431.792,10.0342)"><text x="-1.6185px" y="36.6013px" font-size="16">Polar Coordinates</text></g></g>
 </svg>
 <figcaption>
 <span class="lgcp">D3</span>.js helps transform a rectangular area into an arc.
@@ -2299,7 +2299,7 @@ Maine,New England,Piscataquis County
     <span class="co">// Continue processing the data...</span>
 });</code></pre></td></tr></table>
 <p>When <span class="smcp">D3</span>.js retrieves the file, it creates a data structure that begins like the following fragment.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">[ { 
+<pre class="sourceCode javascript"><code class="sourceCode javascript">[ {
     <span class="st">&quot;state&quot;</span>:<span class="st">&quot;Connecticut&quot;</span>,
     <span class="st">&quot;region&quot;</span>:<span class="st">&quot;New England&quot;</span>,
     <span class="st">&quot;county&quot;</span>:<span class="st">&quot;Fairfield County&quot;</span>
@@ -2311,7 +2311,7 @@ Maine,New England,Piscataquis County
     <span class="st">&quot;state&quot;</span>:<span class="st">&quot;Connecticut&quot;</span>,
     <span class="st">&quot;region&quot;</span>:<span class="st">&quot;New England&quot;</span>,
     <span class="st">&quot;county&quot;</span>:<span class="st">&quot;Hartford County&quot;</span>
-  }, 
+  },
 ...</code></pre>
 <p>That data structure reflects the data, but it doesn’t include the <code>.x</code>, <code>.dx</code>, <code>.y</code>, and <code>.dy</code> properties that we need to draw the arcs. There’s additional work to be done to calculate those values. If you recall the second example in this chapter, we’ve seen this situation before. We have a set of raw data, but we need to augment that raw data with additional properties for the visualization. In the earlier example, we used the <span class="smcp">D3</span>.js force layout to calculate the extra properties. In this case we can use the partition layout.</p>
 <p>Before we can use the partition layout, however, we have to restructure our data. The partition layout works with hierarchical data, and so far all we have is a single dimensional array. We must structure the data to reflect the natural hierarchy of region, state, and county. Here again, however, <span class="smcp">D3</span>.js is able to help us. The <code>d3.nest()</code> operator analyzes an array of data and extracts hierarchy from it. If you’re familiar with database commands, it’s the <span class="smcp">D3</span>.js equivalent of the <code>GROUP BY</code> operation. We can use the operator to create a new version of the data.</p>
@@ -2332,7 +2332,7 @@ Maine,New England,Piscataquis County
         .<span class="fu">key</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">region</span>; })
         .<span class="fu">key</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">state</span>; })
         .<span class="fu">key</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">county</span>; })
-        .<span class="fu">rollup</span>(<span class="kw">function</span>(leaves) { 
+        .<span class="fu">rollup</span>(<span class="kw">function</span>(leaves) {
             <span class="kw">return</span> <span class="ot">leaves</span>.<span class="fu">length</span>;
         })
         .<span class="fu">entries</span>(data)
@@ -2416,7 +2416,7 @@ Maine,New England,Piscataquis County
         colors = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>();
         <span class="ot">d</span>.<span class="fu">color</span> = <span class="st">&quot;#fff&quot;</span>;
     }
-    
+
     <span class="co">// More code needed ...</span></code></pre></td></tr></table>
 <p>The thing we do in the function (line 2) is create a local variable that we’ll use to store colors. We then check to see if the input node is the root of the hierarchy. If it is, then we create a color scale (line 4) for the node’s children and assign the node its own color (line 5). The root node in our visualization, which represents the entire <span class="smcp">U.S.</span>, will be white. That assigned color will eventually be returned by the function.</p>
 <p>After we create a color scale for the child nodes we want to distribute the individual colors to those nodes. There’s a slight catch, though. The nodes in the <code>d.children</code> array aren’t necessarily in the clockwise order in which they’ll end up on the visualization. We want to make sure the colors from our scale are distributed in order, so we’ll have to sort the <code>d.children</code> array before we distribute colors. Here’s the complete code for this step.</p>
@@ -2467,12 +2467,12 @@ Maine,New England,Piscataquis County
     <span class="kw">if</span> (!<span class="ot">d</span>.<span class="fu">parent</span>) {
         <span class="co">// Handle root node as above ...</span>
     } <span class="kw">else</span> <span class="kw">if</span> (<span class="ot">d</span>.<span class="fu">children</span>) {
-    
+
         <span class="kw">var</span> startColor = <span class="ot">d3</span>.<span class="fu">hcl</span>(<span class="ot">d</span>.<span class="fu">color</span>)
                             .<span class="fu">darker</span>(),
             endColor   = <span class="ot">d3</span>.<span class="fu">hcl</span>(<span class="ot">d</span>.<span class="fu">color</span>)
                             .<span class="fu">brighter</span>();
-    
+
         colors = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
                 .<span class="fu">interpolate</span>(<span class="ot">d3</span>.<span class="fu">interpolateHcl</span>)
                 .<span class="fu">range</span>([
@@ -2480,7 +2480,7 @@ Maine,New England,Piscataquis County
                     <span class="ot">endColor</span>.<span class="fu">toString</span>()
                 ])
                 .<span class="fu">domain</span>([<span class="dv">0</span>,<span class="ot">d</span>.<span class="ot">children</span>.<span class="fu">length</span><span class="dv">+1</span>]);
-    
+
     }
 
     <span class="co">// Code continues ...</span></code></pre></td></tr></table>
@@ -2655,17 +2655,17 @@ The transition smoothly animates the visualization to zoom in on the area of foc
             .range([0, maxRadius]);
 
         var arc = d3.svg.arc()
-            .startAngle(function(d) { 
-                return Math.max(0, Math.min(2 * Math.PI, theta(d.x))); 
+            .startAngle(function(d) {
+                return Math.max(0, Math.min(2 * Math.PI, theta(d.x)));
             })
-            .endAngle(function(d) { 
+            .endAngle(function(d) {
                 return Math.max(0, Math.min(2 * Math.PI, theta(d.x + d.dx)));
             })
-            .innerRadius(function(d) { 
+            .innerRadius(function(d) {
                 return Math.max(0, radius(d.y));
             })
-            .outerRadius(function(d) { 
-                return Math.max(0, radius(d.y + d.dy)); 
+            .outerRadius(function(d) {
+                return Math.max(0, radius(d.y + d.dy));
             });
 
         var partition = d3.layout.partition()
@@ -2680,21 +2680,21 @@ The transition smoothly animates the visualization to zoom in on the area of foc
         var color = function(d) {
 
             var colors;
-        
+
             if (!d.parent) {
-        
+
                 colors = d3.scale.category10()
                     .domain(d3.range(0,10));
-        
+
                 d.color = "#fff";
-        
+
             } else if (d.children) {
-        
+
                 var startColor = d3.hcl(d.color)
                                     .darker(),
                     endColor   = d3.hcl(d.color)
                                     .brighter();
-        
+
                 colors = d3.scale.linear()
                         .interpolate(d3.interpolateHcl)
                         .range([
@@ -2703,7 +2703,7 @@ The transition smoothly animates the visualization to zoom in on the area of foc
                         ])
                         .domain([0,d.children.length+1]);
             }
-        
+
             if (d.children) {
                 d.children.map(function(child, i) {
                     return {value: child.value, idx: i};
@@ -2713,7 +2713,7 @@ The transition smoothly animates the visualization to zoom in on the area of foc
                     d.children[child.idx].color = colors(i);
                 });
             }
-        
+
             return d.color;
         };
 
@@ -2730,7 +2730,7 @@ The transition smoothly animates the visualization to zoom in on the area of foc
                     })
                     .entries(data)
             };
-            
+
             var partitioned = partition.nodes(hierarchy);
 
             g1.selectAll("path")
@@ -2774,7 +2774,7 @@ The transition smoothly animates the visualization to zoom in on the area of foc
                 .attr("text-anchor", "middle")
                 .attr("transform", "translate(" + 0 + "," + (-10 -height/2)  +")")
                 .text("Tornado Sightings in 2013 (www.noaa.gov)");
-            
+
             function click(d) {
                 path.transition().duration(750)
                     .attrTween("d", arcTween(d));
