@@ -1,0 +1,49 @@
+/*
+ * Stylesheet for landing page
+ */
+
+/* Third-party stylesheets */
+@import (less) "../../bower_components/normalize-css/normalize.css";
+@import (less) "../../bower_components/normalize-opentype.css/normalize-opentype.css";
+
+/* Customized versions of third-party stylesheets */
+
+/* Primary stylesheets */
+@import "vars.colors.less";
+@import "vars.shapes.less";
+
+@font-folder: "../fonts";
+
+@import "typography.less";
+@import "layout.less";
+@import "simplenav.less";
+
+/* Specific styles just for index.html */
+
+body { padding-top: 1em; }
+
+main > ul {
+    padding-left: 0;
+    & > li {
+        &:before, &:after {
+            content: ' ';
+            display: table;
+        }
+        & > h2 {
+            margin-bottom: 0.4em;
+        }
+        list-style: none;
+        clear: both;
+        & > time {
+            font-size: 0.9em;
+            float: left;
+            margin-top: 0.5em;
+            width: 250px;
+        }
+        & > img {
+            clear: left;
+            float: left;
+            margin: 6px 20px 6px 0;
+        }
+    }
+}
