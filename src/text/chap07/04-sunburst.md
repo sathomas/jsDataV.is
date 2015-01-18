@@ -2,7 +2,7 @@
 
 If you’ve followed the first three examples in this chapter, you’re probably beginning to appreciate how <span class="smcp">D3</span>.js has a great deal more flexibility than traditional JavaScript libraries. Instead of creating visualizations for you, it provides many tools and utilities that you can use however you wish. We’ve used that flexibility to add unconventional error bars to a chart, to refine the behavior of a network graph, and to customize user interactions with a map. With <span class="smcp">D3</span>.js, however, we aren’t limited to minor adjustments to existing visualization types. Instead, we can use the library to create unique visualizations that are nothing like those in traditional libraries.
 
-In this example we’ll use the same data we used previously—tornado sightings in the <span class="smcp">US</span>.js from 2013. Rather than placing the sightings on a map, however, we’ll create an interactive, hierarchical visualization that lets users understand the number of sightings by region, by state, or even by counties within a state. Considering the subject matter, a circular hierarchy could be especially effective, so we’ll create a sunburst visualization with rotational animations. The code that follows is based on an [example (http://bl.ocks.org/mbostock/4348373)developed by Mike Bostock, the main <span class="smcp">D3</span>.js developer.
+In this example we’ll use the same data we used previously—tornado sightings in the <span class="smcp">US</span>.js from 2013. Rather than placing the sightings on a map, however, we’ll create an interactive, hierarchical visualization that lets users understand the number of sightings by region, by state, or even by counties within a state. Considering the subject matter, a circular hierarchy could be especially effective, so we’ll create a sunburst visualization with rotational animations. The code that follows is based on an [example](http://bl.ocks.org/mbostock/4348373) developed by Mike Bostock, the main <span class="smcp">D3</span>.js developer.
 
 > Note: To be fair, it is possible to create sunburst visualizations using some charting libraries, generally by customizing a variation of the pie chart. Those libraries, however, are focused much more on off-the-shelf use. Creating custom visualizations is generally much easier with a library like <span class="smcp">D3</span>.js that is designed especially for customization.
 
@@ -35,7 +35,7 @@ Our skeletal web page is no different from the other <span class="smcp">D3</span
   </head>
   <body>
     <div id="chart"></div>
-    <script 
+    <script
       src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js">
     </script>
   </body>
@@ -51,13 +51,13 @@ var width = 640,
     height = 400,
     maxRadius = Math.min(width, height) / 2;
 
-var svg = d3.select("#map").append("svg")
+var svg = d3.select("#chart").append("svg")
     .attr("width", width)
     .attr("height", height);
 
 var g = svg.append(“g”);
-    .attr("transform", "translate(" + 
-        (width  / 2) + "," + 
+    .attr("transform", "translate(" +
+        (width  / 2) + "," +
         (height / 2) + ")");
 ```
 
@@ -91,17 +91,17 @@ Given those properties, here’s the code that generates the arc path.
 
 ``` {.javascript .numberLines}
 var arc = d3.svg.arc()
-    .startAngle(function(d) { 
-        return Math.max(0, Math.min(2 * Math.PI, theta(d.x))); 
+    .startAngle(function(d) {
+        return Math.max(0, Math.min(2 * Math.PI, theta(d.x)));
     })
-    .endAngle(function(d) { 
+    .endAngle(function(d) {
         return Math.max(0, Math.min(2 * Math.PI, theta(d.x + d.dx)));
     })
-    .innerRadius(function(d) { 
+    .innerRadius(function(d) {
         return Math.max(0, radius(d.y));
     })
-    .outerRadius(function(d) { 
-        return Math.max(0, radius(d.y + d.dy)); 
+    .outerRadius(function(d) {
+        return Math.max(0, radius(d.y + d.dy));
     });
 ```
 
@@ -115,7 +115,7 @@ The code itself is pretty straightforward, but a picture helps explain why we’
 In Cartesian coordinates, we could draw the selection as on the left side of figure NEXTFIGURENUMBER. Our scales and arc function will transform it to the right side of the figure.
 
 <figure>
-<svg width="640px" height="440px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:1.41421;"><g><g id="arc" transform="matrix(1,0,0,1,-1,22)"><path d="M516.8,88.2c61.75,61.74 61.75,161.86 0,223.6l-55.9,-55.9c30.88,-30.87 30.88,-80.93 0,-111.8l55.9,-55.9Z" style="fill:#007979;fill-rule:nonzero;stroke-width:1px;stroke:#007979;"/></g><g id="arrowhead2" transform="matrix(1.77496,-0.168783,0.168783,1.77496,-372.034,-79.7704)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead21" transform="matrix(-0.113136,-1.77938,1.77938,-0.113136,55.4145,1005.17)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead22" transform="matrix(-1.6095,-0.767138,0.767138,-1.6095,1002.93,914.131)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead23" transform="matrix(-1.16199,-1.35232,1.35232,-1.16199,750.602,1112.57)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="bezier8" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,-132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier9" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier10" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l0,-149.033" style="fill:none;stroke-width:1.27px;stroke:#bbb;"/></g><g id="rectangle" transform="matrix(1,0,0,1,22,52)"><rect x="120" y="64" width="150" height="180" style="fill:#7ebd00;stroke-width:1px;stroke:#7ebd00;"/></g><g transform="matrix(1,0,0,1,120,209)"><text x="-39.2622px" y="0px" font-size="16">dy=30</text></g><g id="bezier3" transform="matrix(1,0,0,1,22,52)"><path d="M110,64l0,180" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier4" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,243.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier5" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,63.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,216,320)"><text x="-22.968px" y="0px" font-size="16">dx=25</text></g><g id="bezier" transform="matrix(1,0,0,1,22,52)"><path d="M120,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier6" transform="matrix(1,0,0,1,22,52)"><path d="M120,254l150,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier2" transform="matrix(1,0,0,1,22,52)"><path d="M270,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="axes" transform="matrix(1,0,0,1,22,52)"><path d="M45,18l0,320l250,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="xtick" transform="matrix(1,0,0,1,22,52)"><path d="M120,338.5l0,5" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,142,410)"><text x="-24.752px" y="0px" font-size="16">x=12.5</text></g><g transform="matrix(1,0,0,1,53,300)"><text x="-29.4862px" y="0px" font-size="16">y=10</text></g><g id="ytick" transform="matrix(1,0,0,1,22,52)"><path d="M40,244l5,0" style="fill:none;stroke-width:1.33px;stroke:#000;"/></g><g transform="matrix(1,0,0,1,-1.29024,20.7601)"><path d="M403.946,131.807c37.1611,0 67.2861,30.5276 67.2861,68.1853c0,18.9471 -6.76902,35.1261 -19.0812,47.4835" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,-1.58887,21.0742)"><path d="M404.349,161.983c10.6811,0 19.5612,3.47083 26.5634,10.5609" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,389.242,200.584)"><text x="-32.952px" y="0px" font-size="16">start=45°</text></g><g transform="matrix(1,0,0,1,453.016,255.996)"><text x="-62.2388px" y="0px" font-size="16">end=135°</text></g><g transform="matrix(1,0,0,1,509.094,189.17)"><text x="-32.144px" y="0px" font-size="16">inner=79</text></g><g transform="matrix(1,0,0,1,-1,22)"><path d="M403.66,200.379l155.153,17.0383" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,553.984,254.4)"><text x="-37.624px" y="0px" font-size="16">outer=158</text></g><g transform="matrix(0.983668,0,0,0.983668,5.59273,25.2716)"><path d="M403.659,200.316l72.5965,-29.6859" style="fill:none;stroke-width:1.36px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,156.063,10.0342)"><text x="-32.4345px" y="36.6013px" font-size="16">Cartesian Coor<tspan x="74.2215px 83.9975px ">di</tspan>nates</text></g><g transform="matrix(1,0,0,1,431.792,10.0342)"><text x="-1.6185px" y="36.6013px" font-size="16">Polar Coor<tspan x="74.2215px 83.9975px ">di</tspan>nates</text></g></g></svg><figcaption><span class="lgcp">D3</span>.js helps transform a rectangular area into an arc.</figcaption>
+<svg width="640px" height="440px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-miterlimit:1.41421;"><g><g id="arc" transform="matrix(1,0,0,1,-1,22)"><path d="M516.8,88.2c61.75,61.74 61.75,161.86 0,223.6l-55.9,-55.9c30.88,-30.87 30.88,-80.93 0,-111.8l55.9,-55.9Z" style="fill:#007979;fill-rule:nonzero;stroke-width:1px;stroke:#007979;"/></g><g id="arrowhead2" transform="matrix(1.77496,-0.168783,0.168783,1.77496,-372.034,-79.7704)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead21" transform="matrix(-0.113136,-1.77938,1.77938,-0.113136,55.4145,1005.17)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead22" transform="matrix(-1.6095,-0.767138,0.767138,-1.6095,1002.93,914.131)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="arrowhead23" transform="matrix(-1.16199,-1.35232,1.35232,-1.16199,750.602,1112.57)"><path d="M442.45,234.5l-1.77,3.89l3.89,-1.77l-2.12,-2.12Z" style="fill:#444;fill-rule:nonzero;stroke-width:0.5px;stroke:#444;"/></g><g id="bezier8" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,-132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier9" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l132,132" style="fill:none;stroke-width:1.33px;stroke:#bbb;"/></g><g id="bezier10" transform="matrix(1,0,0,1,-1,22)"><path d="M403.5,200.5l0,-149.033" style="fill:none;stroke-width:1.27px;stroke:#bbb;"/></g><g id="rectangle" transform="matrix(1,0,0,1,22,52)"><rect x="120" y="64" width="150" height="180" style="fill:#7ebd00;stroke-width:1px;stroke:#7ebd00;"/></g><g transform="matrix(1,0,0,1,120,209)"><text x="-42px" y="0px" font-size="16">dy=30</text></g><g id="bezier3" transform="matrix(1,0,0,1,22,52)"><path d="M110,64l0,180" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier4" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,243.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier5" transform="matrix(1,0,0,1,22,52)"><path d="M105.5,63.5l9,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,216,320)"><text x="-22.968px" y="2px" font-size="16">dx=25</text></g><g id="bezier" transform="matrix(1,0,0,1,22,52)"><path d="M120,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier6" transform="matrix(1,0,0,1,22,52)"><path d="M120,254l150,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="bezier2" transform="matrix(1,0,0,1,22,52)"><path d="M270,249.5l0,9" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="axes" transform="matrix(1,0,0,1,22,52)"><path d="M45,18l0,320l250,0" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g id="xtick" transform="matrix(1,0,0,1,22,52)"><path d="M120,338.5l0,5" style="fill:none;stroke-width:1.33px;stroke:#444;"/></g><g transform="matrix(1,0,0,1,142,410)"><text x="-24.752px" y="0px" font-size="16">x=12.5</text></g><g transform="matrix(1,0,0,1,53,300)"><text x="-34px" y="0px" font-size="16">y=10</text></g><g id="ytick" transform="matrix(1,0,0,1,22,52)"><path d="M40,244l5,0" style="fill:none;stroke-width:1.33px;stroke:#000;"/></g><g transform="matrix(1,0,0,1,-1.29024,20.7601)"><path d="M403.946,131.807c37.1611,0 67.2861,30.5276 67.2861,68.1853c0,18.9471 -6.76902,35.1261 -19.0812,47.4835" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,-1.58887,21.0742)"><path d="M404.349,161.983c10.6811,0 19.5612,3.47083 26.5634,10.5609" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444439;"/></g><g transform="matrix(1,0,0,1,389.242,200.584)"><text x="-40px" y="0px" font-size="16">start=45°</text></g><g transform="matrix(1,0,0,1,453.016,255.996)"><text x="-68px" y="0px" font-size="16">end=135°</text></g><g transform="matrix(1,0,0,1,509.094,189.17)"><text x="-32.144px" y="0px" font-size="16">inner=79</text></g><g transform="matrix(1,0,0,1,-1,22)"><path d="M403.66,200.379l155.153,17.0383" style="fill:none;stroke-width:1.33px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,553.984,254.4)"><text x="-37.624px" y="0px" font-size="16">outer=158</text></g><g transform="matrix(0.983668,0,0,0.983668,5.59273,25.2716)"><path d="M403.659,200.316l72.5965,-29.6859" style="fill:none;stroke-width:1.36px;stroke-linecap:round;stroke:#444;"/></g><g transform="matrix(1,0,0,1,156.063,10.0342)"><text x="-32.4345px" y="36.6013px" font-size="16">Cartesian Coordinates</text></g><g transform="matrix(1,0,0,1,431.792,10.0342)"><text x="-1.6185px" y="36.6013px" font-size="16">Polar Coordinates</text></g></g></svg><figcaption><span class="lgcp">D3</span>.js helps transform a rectangular area into an arc.</figcaption>
 </figure>
 
 We haven’t specified the ranges of the x– and y–scales, but assume for now that each ranges from 0 to 100. The starting x–value of 12.5, therefore, is 12.5% of the full range. When we convert that value to polar coordinates, the result will be 12.5% of the full 360°. That’s 45° or π/4. The x-value extends another 25%, so the final x–value adds another 90° or π/2 to the starting value. For the y–values, our scales take the square root and map the results to the domain from 0 to 250 (`maxRadius`). The initial value of 10, therefore is divided by 100 (for the range) and transformed to √0.1 ∙ 250 or 79. The final value of 10 + 30 results in a radius of √0.4 ∙ 250 or 158. That’s the process that creates an <span class="smcp">SVG</span> for each data value.
@@ -133,7 +133,7 @@ d3.csv("tornadoes.csv", function(data) {
 When <span class="smcp">D3</span>.js retrieves the file, it creates a data structure that begins like the following fragment.
 
 ``` {.javascript}
-[ { 
+[ {
     "state":"Connecticut",
     "region":"New England",
     "county":"Fairfield County"
@@ -145,7 +145,7 @@ When <span class="smcp">D3</span>.js retrieves the file, it creates a data struc
     "state":"Connecticut",
     "region":"New England",
     "county":"Hartford County"
-  }, 
+  },
 ...
 ```
 
@@ -160,7 +160,7 @@ var hierarchy = {
         .key(function(d) { return d.region; })
         .key(function(d) { return d.state; })
         .key(function(d) { return d.county; })
-        .rollup(function(leaves) { 
+        .rollup(function(leaves) {
             return leaves.length;
         })
         .entries(data)
@@ -254,7 +254,7 @@ var color = function(d) {
    		colors = d3.scale.category10();
    		d.color = "#fff";
    	}
-   	
+
    	// More code needed ...
 ```
 
@@ -284,12 +284,12 @@ var color = function(d) {
    	if (!d.parent) {
        	// Handle root node as above ...
 	} else if (d.children) {
-    
+
         var startColor = d3.hcl(d.color)
             				.darker(),
             endColor   = d3.hcl(d.color)
             				.brighter();
-    
+
         colors = d3.scale.linear()
             	.interpolate(d3.interpolateHcl)
             	.range([
@@ -297,7 +297,7 @@ var color = function(d) {
             		endColor.toString()
             	])
             	.domain([0,d.children.length+1]);
-    
+
     }
 
    	// Code continues ...
@@ -456,17 +456,17 @@ With this final bit of code, our visualization is complete. Figure NEXTFIGURENUM
 		    .range([0, maxRadius]);
 
 		var arc = d3.svg.arc()
-		    .startAngle(function(d) { 
-		        return Math.max(0, Math.min(2 * Math.PI, theta(d.x))); 
+		    .startAngle(function(d) {
+		        return Math.max(0, Math.min(2 * Math.PI, theta(d.x)));
 		    })
-		    .endAngle(function(d) { 
+		    .endAngle(function(d) {
 		        return Math.max(0, Math.min(2 * Math.PI, theta(d.x + d.dx)));
 		    })
-		    .innerRadius(function(d) { 
+		    .innerRadius(function(d) {
 		        return Math.max(0, radius(d.y));
 		    })
-		    .outerRadius(function(d) { 
-		        return Math.max(0, radius(d.y + d.dy)); 
+		    .outerRadius(function(d) {
+		        return Math.max(0, radius(d.y + d.dy));
 		    });
 
 		var partition = d3.layout.partition()
@@ -481,21 +481,21 @@ With this final bit of code, our visualization is complete. Figure NEXTFIGURENUM
 		var color = function(d) {
 
         	var colors;
-        
+
         	if (!d.parent) {
-        
+
         		colors = d3.scale.category10()
         			.domain(d3.range(0,10));
-        
+
         		d.color = "#fff";
-        
+
         	} else if (d.children) {
-        
+
         		var startColor = d3.hcl(d.color)
         							.darker(),
         			endColor   = d3.hcl(d.color)
         							.brighter();
-        
+
         		colors = d3.scale.linear()
         				.interpolate(d3.interpolateHcl)
         				.range([
@@ -504,7 +504,7 @@ With this final bit of code, our visualization is complete. Figure NEXTFIGURENUM
         				])
         				.domain([0,d.children.length+1]);
         	}
-        
+
         	if (d.children) {
            		d.children.map(function(child, i) {
         			return {value: child.value, idx: i};
@@ -514,7 +514,7 @@ With this final bit of code, our visualization is complete. Figure NEXTFIGURENUM
         			d.children[child.idx].color = colors(i);
         		});
         	}
-        
+
         	return d.color;
         };
 
@@ -531,7 +531,7 @@ With this final bit of code, our visualization is complete. Figure NEXTFIGURENUM
             		})
             		.entries(data)
             };
-            
+
             var partitioned = partition.nodes(hierarchy);
 
 			g1.selectAll("path")
@@ -575,7 +575,7 @@ With this final bit of code, our visualization is complete. Figure NEXTFIGURENUM
                 .attr("text-anchor", "middle")
                 .attr("transform", "translate(" + 0 + "," + (-10 -height/2)  +")")
                 .text("Tornado Sightings in 2013 (www.noaa.gov)");
-            
+
             function click(d) {
                 path.transition().duration(750)
                     .attrTween("d", arcTween(d));

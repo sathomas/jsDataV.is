@@ -5534,6 +5534,17 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/release\/img\/arctween.png": {
+		"fileType": 32768,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"initialSize": 431184,
+		"inputAbbreviatedPath": "\/release\/img\/arctween.png",
+		"outputAbbreviatedPath": "\/release\/img\/arctween.png",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0,
+		"processed": 0
+		},
 	"\/release\/img\/chronoline-sprites.png": {
 		"fileType": 32768,
 		"ignore": 0,
@@ -5585,17 +5596,6 @@
 		"initialSize": 5996,
 		"inputAbbreviatedPath": "\/release\/img\/fancybox_sprite@2x.png",
 		"outputAbbreviatedPath": "\/release\/img\/fancybox_sprite@2x.png",
-		"outputPathIsOutsideProject": 0,
-		"outputPathIsSetByUser": 0,
-		"processed": 0
-		},
-	"\/release\/img\/fig07-18.png": {
-		"fileType": 32768,
-		"ignore": 0,
-		"ignoreWasSetByUser": 0,
-		"initialSize": 431184,
-		"inputAbbreviatedPath": "\/release\/img\/fig07-18.png",
-		"outputAbbreviatedPath": "\/release\/img\/fig07-18.png",
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0,
 		"processed": 0
