@@ -11,7 +11,7 @@ $('#container').highcharts({
   xAxis: { categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', //…
   yAxis: { title: { text: 'Temperature (°C)' },
        plotLines: [{value: 0, width: 1, color: '#808080'}] },
-  legend: { layout: 'vertical', align: 'right', 
+  legend: { layout: 'vertical', align: 'right',
         verticalAlign: 'middle', borderWidth: 0 },
   series: [{ name: 'Tokyo',    data: [ 7.0, 6.9, 9.5, 14.5, //…
            { name: 'New York', data: [-0.2, 0.8, 5.7, 11.3, //…
@@ -154,7 +154,7 @@ $('#container').highcharts({
 ## Data in JSON Format
 
 ```javascript
-[{ 
+[{
   "name": "Tokyo",
   "data": [ 7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, //…
  },{
@@ -183,7 +183,7 @@ d3.json('data.json', function(error, datasets) {
         "temp": d
       };
   });
-  
+
   // Continue...
 })
 ```
@@ -244,8 +244,8 @@ svg.selectAll(".point")
       .attr("fill", d3.scale.category10(idx))
       .attr("stroke", d3.scale.category10(idx))
       .attr("d", d3.svg.symbol(idx));
-      .attr("transform", function(d) { 
-        return "translate(" + x(d.date) + 
+      .attr("transform", function(d) {
+        return "translate(" + x(d.date) +
                         "," + y(d.temp) + ")";
       });
 ```
@@ -362,8 +362,8 @@ svg.selectAll(".point")
       .attr("fill", d3.scale.category10(idx))
       .attr("stroke", d3.scale.category10(idx))
       .attr("d", d3.svg.symbol(idx));
-      .attr("transform", function(d) { 
-        return "translate(" + x(d.date) + 
+      .attr("transform", function(d) {
+        return "translate(" + x(d.date) +
                         "," + y(d.temp) + ")";
       });
 ```
@@ -378,7 +378,7 @@ svg.append("path")
     .attr("fill", "none")
     .attr("stroke", color(i))
     .attr("stroke-width", "3")
-    .attr("d", 
+    .attr("d",
         d3.svg.line()
             .x(function(d) { return x(d.date); })
             .y(function(d) { return y(d.temp); })
@@ -433,7 +433,7 @@ var color = function(i) {
 // What symbols are we going to use for the different
 // datasets.
 var symbol = function(i) {
-  var symbols = ["circle", "diamond", 
+  var symbols = ["circle", "diamond",
                  "square", "triangle-up",
                  "triangle-down", "cross"];
   return d3.svg.symbol()
@@ -592,7 +592,7 @@ d3.json('data.json', function(error, datasets) {
        .attr("dy", ".71em")
        .attr("text-anchor", "end")
        .text("Temperature (°C)");
-  
+
   // Style the axes. As with other styles, these
   // could be more easily defined in CSS. For this
   // particular code, though, we're avoiding CSS
@@ -622,7 +622,7 @@ d3.json('data.json', function(error, datasets) {
            .attr("fill", color(i))
            .attr("stroke", color(i))
            .attr("d", symbol(i))
-           .attr("transform", function(d) { 
+           .attr("transform", function(d) {
              return "translate(" + x(d.date) +
                          "," + y(d.temp) + ")";
            });
@@ -715,7 +715,7 @@ d3.selectAll(".point")
   .duration(2000)
   .ease("bounce")
   .attr("transform", function(d) {
-    return "translate(" + x(d.date) + "," + 
+    return "translate(" + x(d.date) + "," +
       (height - margin.top - margin.bottom - 10) + ")";
   })
   .remove();
@@ -738,7 +738,7 @@ svg.append("path")
     .attr("fill", "none")
     .attr("stroke", color(i))
     .attr("stroke-width", "3")
-    .attr("d", 
+    .attr("d",
         d3.svg.line()
             .interpolate("basis")
             .x(function(d) { return x(d.date); })
@@ -775,8 +775,9 @@ svg.append("path")
 ## More Information
 
 * My personal web site [http://jsDataV.is](http://jsDataV.is)
-* All examples from this presentation [http://bl.ocks.org/sathomas](http://bl.ocks.org/sathomas)
-* Book from No Starch Press [http://www.nostarch.com/datavisualization](http://www.nostarch.com/datavisualization)
+    * Full contents of _Data Visualization with JavaScript_
+    * Many annotated and commented examples
+* Paper/e-book from No Starch Press [http://www.nostarch.com/datavisualization](http://www.nostarch.com/datavisualization)
     * (Coupon code "PREORDER" for discount)
 
 <script>
@@ -903,7 +904,7 @@ var showMap = function() {
         .transition()
         .duration(750)
         .attr("r", function()  { return (d3.select(this).attr("r"))/5.407137393951416; });
-    
+
     d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next","showMap2");
 }
 
@@ -916,7 +917,7 @@ var showMap2 = function() {
         .duration(750)
     .attr("stroke-opacity", 1);
 
-    d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);    
+    d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -929,8 +930,8 @@ document.addEventListener("DOMContentLoaded", function(){
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
-        .attr("transform", "translate(" + 
-                (margin.left + width  / 2) + "," + 
+        .attr("transform", "translate(" +
+                (margin.left + width  / 2) + "," +
                 (margin.top  + height / 2) + ")");
 
     var x = d3.scale.linear()
@@ -939,16 +940,16 @@ document.addEventListener("DOMContentLoaded", function(){
         .range([0, radius]);
 
     var partition = d3.layout.partition()
-        .children(function(d) { 
+        .children(function(d) {
             return Array.isArray(d.values) ?
                 d.values : null;
         })
-        .value(function(d) { 
+        .value(function(d) {
             return d.values;
         });
     var color = function(d) {
         var colors;
-        
+
         if (!d.parent) {
             colors = d3.scale.category10()
                 .domain(d3.range(0,10));
@@ -969,7 +970,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     .domain([0,d.children.length+1]);
 
         }
-        
+
         if (d.children) {
             d.children.map(function(child, i) {
                 return {value: child.value, idx: i};
@@ -984,19 +985,19 @@ document.addEventListener("DOMContentLoaded", function(){
     };
 
     var arc = d3.svg.arc()
-        .startAngle(function(d) { 
-            return Math.max(0, 
-                Math.min(2 * Math.PI, x(d.x))); 
+        .startAngle(function(d) {
+            return Math.max(0,
+                Math.min(2 * Math.PI, x(d.x)));
         })
-        .endAngle(function(d) { 
-            return Math.max(0, 
+        .endAngle(function(d) {
+            return Math.max(0,
                 Math.min(2 * Math.PI, x(d.x + d.dx)));
         })
-        .innerRadius(function(d) { 
+        .innerRadius(function(d) {
             return Math.max(0, y(d.y));
         })
-        .outerRadius(function(d) { 
-            return Math.max(0, y(d.y + d.dy)); 
+        .outerRadius(function(d) {
+            return Math.max(0, y(d.y + d.dy));
         });
 
         d3.csv("/data/tornadoes.csv", function(error, dataset) {
@@ -1007,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 .key(function(d) { return d.region; })
                 .key(function(d) { return d.state; })
                 .key(function(d) { return d.county; })
-                .rollup(function(leaves) { 
+                .rollup(function(leaves) {
                     return leaves.length;
                 })
                 .entries(dataset)
@@ -1023,7 +1024,7 @@ document.addEventListener("DOMContentLoaded", function(){
             .on("click", click)
             .on("mouseover", mouseover)
             .on("mouseout", mouseout);
-        
+
         var tooltip = svg.append("text")
             .attr("font-size", 12)
             .attr("fill", "#000")
@@ -1047,13 +1048,13 @@ document.addEventListener("DOMContentLoaded", function(){
         };
 
         function mouseover(d) {
-            tooltip.text(d.key + ": " + 
-                d.value + " sighting" + 
+            tooltip.text(d.key + ": " +
+                d.value + " sighting" +
                 (d.value > 1 ? "s" : ""))
                 .transition()
                 .attr("fill-opacity", 1);
         };
-        
+
         function mouseout() {
             tooltip.transition()
                 .attr("fill-opacity", 0);
@@ -1061,21 +1062,21 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
     function arcTween(d) {
-        var xd = d3.interpolate(x.domain(), 
+        var xd = d3.interpolate(x.domain(),
                     [d.x, d.x + d.dx]),
-            yd = d3.interpolate(y.domain(), 
+            yd = d3.interpolate(y.domain(),
                     [d.y, 1]),
-            yr = d3.interpolate(y.range(),  
+            yr = d3.interpolate(y.range(),
                     [d.y ? 20 : 0, radius]);
         return function(d, i) {
             return i ?
-                function(t) { 
+                function(t) {
                     return arc(d);
                 } :
-                function(t) { 
-                    x.domain(xd(t)); 
-                    y.domain(yd(t)).range(yr(t)); 
-                    return arc(d); 
+                function(t) {
+                    x.domain(xd(t));
+                    y.domain(yd(t)).range(yr(t));
+                    return arc(d);
                 };
         };
     }
