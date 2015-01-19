@@ -16,7 +16,7 @@
   <span class="dt">xAxis</span>: { <span class="dt">categories</span>: [<span class="st">&#39;Jan&#39;</span>, <span class="st">&#39;Feb&#39;</span>, <span class="st">&#39;Mar&#39;</span>, <span class="st">&#39;Apr&#39;</span>, <span class="st">&#39;May&#39;</span>, <span class="co">//…</span>
   <span class="dt">yAxis</span>: { <span class="dt">title</span>: { <span class="dt">text</span>: <span class="st">&#39;Temperature (°C)&#39;</span> },
        <span class="dt">plotLines</span>: [{<span class="dt">value</span>: <span class="dv">0</span>, <span class="dt">width</span>: <span class="dv">1</span>, <span class="dt">color</span>: <span class="st">&#39;#808080&#39;</span>}] },
-  <span class="dt">legend</span>: { <span class="dt">layout</span>: <span class="st">&#39;vertical&#39;</span>, <span class="dt">align</span>: <span class="st">&#39;right&#39;</span>, 
+  <span class="dt">legend</span>: { <span class="dt">layout</span>: <span class="st">&#39;vertical&#39;</span>, <span class="dt">align</span>: <span class="st">&#39;right&#39;</span>,
         <span class="dt">verticalAlign</span>: <span class="st">&#39;middle&#39;</span>, <span class="dt">borderWidth</span>: <span class="dv">0</span> },
   <span class="dt">series</span>: [{ <span class="dt">name</span>: <span class="st">&#39;Tokyo&#39;</span>,    <span class="dt">data</span>: [ <span class="fl">7.0</span>, <span class="fl">6.9</span>, <span class="fl">9.5</span>, <span class="fl">14.5</span>, <span class="co">//…</span>
            { <span class="dt">name</span>: <span class="st">&#39;New York&#39;</span>, <span class="dt">data</span>: [-<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">5.7</span>, <span class="fl">11.3</span>, <span class="co">//…</span>
@@ -78,7 +78,7 @@
 <span class="kw">&lt;/html&gt;</span></code></pre>
 </section><section id="data-in-json-format" class="slide level2">
 <h1>Data in JSON Format</h1>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">[{ 
+<pre class="sourceCode javascript"><code class="sourceCode javascript">[{
   <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Tokyo&quot;</span>,
   <span class="st">&quot;data&quot;</span>: [ <span class="fl">7.0</span>, <span class="fl">6.9</span>, <span class="fl">9.5</span>, <span class="fl">14.5</span>, <span class="fl">18.2</span>, <span class="fl">21.5</span>, <span class="fl">25.2</span>, <span class="fl">26.5</span>, <span class="co">//…</span>
  },{
@@ -114,7 +114,7 @@
         <span class="st">&quot;temp&quot;</span>: d
       };
   });
-  
+
   <span class="co">// Continue...</span>
 })</code></pre></td></tr></table>
 </section><section id="use-a-scale-to-map-data-dom" class="slide level2">
@@ -169,8 +169,8 @@
       .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
       .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
       .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>(idx));
-      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) { 
-        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) + 
+      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
+        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) +
                         <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
       });</code></pre></td></tr></table>
 </section><section id="associate-dom-and-data" class="slide level2" data-custom-next="domAndData">
@@ -198,8 +198,8 @@
       .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
       .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
       .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>(idx));
-      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) { 
-        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) + 
+      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
+        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) +
                         <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
       });</code></pre></td></tr></table>
 </section><section id="add-the-connecting-lines" class="slide level2">
@@ -219,7 +219,7 @@
     .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
     .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
     .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, 
+    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>,
         <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
             .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
             .<span class="fu">y</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>); })
@@ -551,7 +551,7 @@
 <span class="co">// What symbols are we going to use for the different</span>
 <span class="co">// datasets.</span>
 <span class="kw">var</span> symbol = <span class="kw">function</span>(i) {
-  <span class="kw">var</span> symbols = [<span class="st">&quot;circle&quot;</span>, <span class="st">&quot;diamond&quot;</span>, 
+  <span class="kw">var</span> symbols = [<span class="st">&quot;circle&quot;</span>, <span class="st">&quot;diamond&quot;</span>,
                  <span class="st">&quot;square&quot;</span>, <span class="st">&quot;triangle-up&quot;</span>,
                  <span class="st">&quot;triangle-down&quot;</span>, <span class="st">&quot;cross&quot;</span>];
   <span class="kw">return</span> <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>()
@@ -710,7 +710,7 @@
        .<span class="fu">attr</span>(<span class="st">&quot;dy&quot;</span>, <span class="st">&quot;.71em&quot;</span>)
        .<span class="fu">attr</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
        .<span class="fu">text</span>(<span class="st">&quot;Temperature (°C)&quot;</span>);
-  
+
   <span class="co">// Style the axes. As with other styles, these</span>
   <span class="co">// could be more easily defined in CSS. For this</span>
   <span class="co">// particular code, though, we&#39;re avoiding CSS</span>
@@ -740,7 +740,7 @@
            .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="fu">color</span>(i))
            .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
            .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="fu">symbol</span>(i))
-           .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) { 
+           .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
              <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) +
                          <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
            });
@@ -827,7 +827,7 @@
   .<span class="fu">duration</span>(<span class="dv">2000</span>)
   .<span class="fu">ease</span>(<span class="st">&quot;bounce&quot;</span>)
   .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
-    <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) + <span class="st">&quot;,&quot;</span> + 
+    <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) + <span class="st">&quot;,&quot;</span> +
       (height - <span class="ot">margin</span>.<span class="fu">top</span> - <span class="ot">margin</span>.<span class="fu">bottom</span> - <span class="dv">10</span>) + <span class="st">&quot;)&quot;</span>;
   })
   .<span class="fu">remove</span>();</code></pre>
@@ -854,7 +854,7 @@
     .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
     .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
     .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, 
+    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>,
         <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
             .<span class="fu">interpolate</span>(<span class="st">&quot;basis&quot;</span>)
             .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
@@ -881,9 +881,12 @@
 </section><section id="more-information" class="slide level2">
 <h1>More Information</h1>
 <ul>
-<li>My personal web site <a href="http://jsDataV.is" class="uri">http://jsDataV.is</a></li>
-<li>All examples from this presentation <a href="http://bl.ocks.org/sathomas" class="uri">http://bl.ocks.org/sathomas</a></li>
-<li>Book from No Starch Press <a href="http://www.nostarch.com/datavisualization" class="uri">http://www.nostarch.com/datavisualization</a>
+<li>My personal web site <a href="http://jsDataV.is" class="uri">http://jsDataV.is</a>
+<ul>
+<li>Full contents of <em>Data Visualization with JavaScript</em></li>
+<li>Many annotated and commented examples</li>
+</ul></li>
+<li>Paper/e-book from No Starch Press <a href="http://www.nostarch.com/datavisualization" class="uri">http://www.nostarch.com/datavisualization</a>
 <ul>
 <li>(Coupon code “PREORDER” for discount)</li>
 </ul></li>
@@ -1012,7 +1015,7 @@ var showMap = function() {
         .transition()
         .duration(750)
         .attr("r", function()  { return (d3.select(this).attr("r"))/5.407137393951416; });
-    
+
     d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next","showMap2");
 }
 
@@ -1025,7 +1028,7 @@ var showMap2 = function() {
         .duration(750)
     .attr("stroke-opacity", 1);
 
-    d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);    
+    d3.select("section[aria-selected][data-custom-next]").attr("data-custom-next",null);
 }
 
 document.addEventListener("DOMContentLoaded", function(){
@@ -1038,8 +1041,8 @@ document.addEventListener("DOMContentLoaded", function(){
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
-        .attr("transform", "translate(" + 
-                (margin.left + width  / 2) + "," + 
+        .attr("transform", "translate(" +
+                (margin.left + width  / 2) + "," +
                 (margin.top  + height / 2) + ")");
 
     var x = d3.scale.linear()
@@ -1048,16 +1051,16 @@ document.addEventListener("DOMContentLoaded", function(){
         .range([0, radius]);
 
     var partition = d3.layout.partition()
-        .children(function(d) { 
+        .children(function(d) {
             return Array.isArray(d.values) ?
                 d.values : null;
         })
-        .value(function(d) { 
+        .value(function(d) {
             return d.values;
         });
     var color = function(d) {
         var colors;
-        
+
         if (!d.parent) {
             colors = d3.scale.category10()
                 .domain(d3.range(0,10));
@@ -1078,7 +1081,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     .domain([0,d.children.length+1]);
 
         }
-        
+
         if (d.children) {
             d.children.map(function(child, i) {
                 return {value: child.value, idx: i};
@@ -1093,19 +1096,19 @@ document.addEventListener("DOMContentLoaded", function(){
     };
 
     var arc = d3.svg.arc()
-        .startAngle(function(d) { 
-            return Math.max(0, 
-                Math.min(2 * Math.PI, x(d.x))); 
+        .startAngle(function(d) {
+            return Math.max(0,
+                Math.min(2 * Math.PI, x(d.x)));
         })
-        .endAngle(function(d) { 
-            return Math.max(0, 
+        .endAngle(function(d) {
+            return Math.max(0,
                 Math.min(2 * Math.PI, x(d.x + d.dx)));
         })
-        .innerRadius(function(d) { 
+        .innerRadius(function(d) {
             return Math.max(0, y(d.y));
         })
-        .outerRadius(function(d) { 
-            return Math.max(0, y(d.y + d.dy)); 
+        .outerRadius(function(d) {
+            return Math.max(0, y(d.y + d.dy));
         });
 
         d3.csv("/data/tornadoes.csv", function(error, dataset) {
@@ -1116,7 +1119,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 .key(function(d) { return d.region; })
                 .key(function(d) { return d.state; })
                 .key(function(d) { return d.county; })
-                .rollup(function(leaves) { 
+                .rollup(function(leaves) {
                     return leaves.length;
                 })
                 .entries(dataset)
@@ -1132,7 +1135,7 @@ document.addEventListener("DOMContentLoaded", function(){
             .on("click", click)
             .on("mouseover", mouseover)
             .on("mouseout", mouseout);
-        
+
         var tooltip = svg.append("text")
             .attr("font-size", 12)
             .attr("fill", "#000")
@@ -1156,13 +1159,13 @@ document.addEventListener("DOMContentLoaded", function(){
         };
 
         function mouseover(d) {
-            tooltip.text(d.key + ": " + 
-                d.value + " sighting" + 
+            tooltip.text(d.key + ": " +
+                d.value + " sighting" +
                 (d.value > 1 ? "s" : ""))
                 .transition()
                 .attr("fill-opacity", 1);
         };
-        
+
         function mouseout() {
             tooltip.transition()
                 .attr("fill-opacity", 0);
@@ -1170,21 +1173,21 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
     function arcTween(d) {
-        var xd = d3.interpolate(x.domain(), 
+        var xd = d3.interpolate(x.domain(),
                     [d.x, d.x + d.dx]),
-            yd = d3.interpolate(y.domain(), 
+            yd = d3.interpolate(y.domain(),
                     [d.y, 1]),
-            yr = d3.interpolate(y.range(),  
+            yr = d3.interpolate(y.range(),
                     [d.y ? 20 : 0, radius]);
         return function(d, i) {
             return i ?
-                function(t) { 
+                function(t) {
                     return arc(d);
                 } :
-                function(t) { 
-                    x.domain(xd(t)); 
-                    y.domain(yd(t)).range(yr(t)); 
-                    return arc(d); 
+                function(t) {
+                    x.domain(xd(t));
+                    y.domain(yd(t)).range(yr(t));
+                    return arc(d);
                 };
         };
     }
