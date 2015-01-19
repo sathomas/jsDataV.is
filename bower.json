@@ -52,6 +52,7 @@
     "underscore.string": ">=2.3.3",
     "wordcloud2.js": "*",
     "snap.svg": "~0.3.0",
-    "iwanthue": "https://github.com/medialab/iwanthue"
+    "iwanthue": "https://github.com/medialab/iwanthue",
+    "prism": "git://github.com/LeaVerou/prism.git#gh-pages"
   }
 }

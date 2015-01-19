@@ -53,7 +53,7 @@
         {
             id: "visuals",
             fixed: false,
-            href: "http://jsDataV.is/visuals/",
+            href: "visuals.html",
             r: 30,
             x: 458,
             y: 290,

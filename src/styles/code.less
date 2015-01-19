@@ -15,6 +15,10 @@ pre.sourceCode, table.sourceCode {
     width: 100%;
 }
 
+pre[class*="language-"] {
+    padding: 1em 0 0 1em;
+}
+
 table.sourceCode td.lineNumbers {
     text-align: right;
     padding: 0 0.5em;
@@ -50,14 +54,26 @@ table.sourceCode pre code .emphasized {
     background-color: @color-block-medium-background;
 }
 
-
-.sourceCode .ch, .sourceCode .st { color: @color-pink-dark; }                   /* character, string */
-.sourceCode .co { color: @color-pink-lightest; font-style: italic; }            /* comment */
-.sourceCode .dt { color: @color-blue; }                                         /* data type */
-.sourceCode .dv, .sourceCode .bn, .sourceCode .fl { color: @color-red-dark; }   /* decimal, baseN, float value */
-.sourceCode .fu { color: @color-green-dark; }                                   /* function */
-.sourceCode .kw { color: @color-blue-darkest; font-weight: normal; }            /* key word */
-.sourceCode .ot { color: @color-blue-darkest; }                                 /* other token */
-.sourceCode .re { } /* region */
-.sourceCode .al { } /* alert */
-.sourceCode .er { } /* error */
+/* character, string */
+.sourceCode .ch, .sourceCode .st, .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted { color: @color-pink-dark; }
+/* comment */
+.sourceCode .co, .token.comment,.token.prolog, .token.doctype, .token.cdata { color: @color-pink-lightest; font-style: italic; }
+/* data type */
+.sourceCode .dt, .token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string { color: @color-blue; }
+/* decimal, baseN, float value */
+.sourceCode .dv, .sourceCode .bn, .sourceCode .fl, .token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted { color: @color-red-dark; }
+/* function */
+.sourceCode .fu, .token.function{ color: @color-green-dark; }
+/* key word */
+.sourceCode .kw, .token.atrule, .token.attr-value, .token.keyword { color: @color-blue-darkest; font-weight: normal; }
+/* other token */
+.sourceCode .ot, .token.regex, .token.important, .token.variable { color: @color-blue-darkest; }
+/* region */
+.sourceCode .re { }
+/* alert */
+.sourceCode .al { }
+/* error */
+.sourceCode .er { }
+.token.important, .token.bold { font-weight: bold; }
+.token.italic { font-style: italic; }
+.token.entity { cursor: help; }
