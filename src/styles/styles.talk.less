@@ -1,5 +1,5 @@
 /*
- * Stylesheet for talks page
+ * Stylesheet for HTML-based presentations.
  */
 
 /* Third-party stylesheets */
@@ -12,16 +12,11 @@
 @import "vars.colors.less";
 @import "vars.shapes.less";
 
-@font-folder: "../fonts";
+@font-folder: "../fonts"; 
 
 @import "typography.less";
-@import "layout.less";
-@import "simplenav.less";
-
-/* Specific styles just for visuals.html */
-
-body { padding-top: 1em; }
-
-iframe {
-    margin-top: 4em !important;
-}
+@import "brand.less";
+@import "tables.less";
+@import "code.less";
+@import "lists.less";
+@import "slides.less";

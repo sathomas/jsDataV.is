@@ -83,7 +83,7 @@
         {
             id: "talks",
             fixed: false,
-            href: "http://speakerdeck.com/sathomas",
+            href: "talks.html",
             r: 30,
             x: 199,
             y: 219,
