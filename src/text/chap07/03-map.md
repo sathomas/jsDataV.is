@@ -1,6 +1,6 @@
 ## Creating a Scaleable Map
 
-The first two examples touched on some of the capabilities of <span class="smcp">D3</span>.js, but the library includes many others. From the examples of chapter 6, we know some of the best visualizations rely on maps, and <span class="smcp">D3</span>.js—as a general-purpose visualization library—has extensive support for mapping. To illustrate that support, we’ll create a map that shows tornado sightings in the continental United States.
+The first two examples touched on some of the capabilities of <span class="smcp">D3</span>.js, but the library includes many others. From the examples in chapter 6, we know some of the best visualizations rely on maps, and <span class="smcp">D3</span>.js—as a general-purpose visualization library—has extensive support for mapping. To illustrate that support, we’ll create a map that shows tornado sightings in the continental United States.
 
 ### Step 1: Prepare the Data
 
@@ -44,7 +44,7 @@ Our skeletal web page is no different from the other <span class="smcp">D3</span
 
 ### Step 3: Create a Map Projection
 
-If you can't quite recall your geography lessons about map projections, don't worry. <span class="lgcp">D3</span>.js can handle all of the heavy lifting. Not only does it have extensive support for common projections, but it also supports extensions for custom projections tailored specifically for visualizations. For example, there’s a modified Albers projection that's optimized for choropleth maps of the United States. It repositions (and resizes) Alaska and Hawaii to provide a convenient map of all 50 states. In our case, since there were no tornado sightings in Alaska or Hawaii in 2013, we can use a standard Albers protection.
+If you can't quite recall your geography lessons about map projections, don't worry; <span class="smcp">D3</span>.js can handle all of the heavy lifting. Not only does it have extensive support for common projections, but it also supports extensions for custom projections tailored specifically for visualizations. For example, there’s a modified Albers projection that's optimized for choropleth maps of the United States. It repositions (and resizes) Alaska and Hawaii to provide a convenient map of all 50 states. In our case, since there were no tornado sightings in Alaska or Hawaii in 2013, we can use a standard Albers projection.
 
 We set up the projection in the code below. First, in lines 1 and 2, we define the size our map in pixels. Then, in line 4, we create the  Albers projection. <span class="lgcp">D3</span>.js supports many adjustments to the projection to position it appropriately on the page, but the default values are generally fine in our case. We only need to scale the map (line 5) and center it (line 6) on the page.
 
@@ -80,7 +80,7 @@ As we’ll see in the later steps, it will be helpful have an inner group in whi
 
 For our visualization, the map data is nothing but a map of the <span class="smcp">US</span> with individual states. <span class="lgcp">D3</span>.js uses [<span class="smcp">G</span>eo<span class="smcp">JSON</span>](http://geojson.org) for its map data. Unlike most image tiles that we used in chapter 6, <span class="smcp">G</span>eo<span class="smcp">JSON</span> data is vector-based, so it can be used at any scale. <span class="lgcp">G</span>eo<span class="smcp">JSON</span> data is also in <span class="smcp">JSON</span> format, which makes it especially compatible with JavaScript.
 
-Since our data is in a <span class="smcp">JSON</span> format, we can use the `d3.json()` function to retrieve it. If you're more familiar with jQuery, that function is almost identical to the jQuery `$.getJSON()` function.
+Since our data is in a <span class="smcp">JSON</span> format, we can use the `d3.json()` function to retrieve it. If you're more familiar with jQuery, this function is almost identical to the jQuery `$.getJSON()` function.
 
 ``` {.javascript .numberLines}
 d3.json("data/us-states.json", function(map) {
@@ -106,7 +106,7 @@ As we can see from figure NEXTFIGURENUMBER, <span class="smcp">D3</span>.js give
 <figcaption><span class="lgcp">D3</span>.js helps create vector maps from geographic <span class="smcp">JSON</span> data.</figcaption>
 </figure>
 
-### Step 8: Retrieve the Data
+### Step 8: Retrieve the Weather Data
 
 Now our map is ready for some data. We can retrieve the <span class="smcp">CSV</span> file using another <span class="smcp">D3</span>.js utility. Note, though, that all of the properties of a <span class="smcp">CSV</span> file are considered text strings. We’ll want to convert those strings to numbers. We also want to filter out the few tornado sightings that don’t include latitude and longitude information.
 
@@ -151,7 +151,7 @@ As you can see, we set the position of the circles using the `position` property
 
 ### Step 10: Add Interactivity
 
-Maps naturally invite users to zoom in and pan around, and <span class="smcp">D3</span>.js makes it easy to support those standard map interactions. Because, <span class="smcp">D3</span>.js gives us complete control, however, we’re not limited to conventions. Let’s do something a little different with our map. We can make each state clickable, so that clicking on any state zooms in on that state. Clicking on a state that’s already zoomed can then zoom the map back out to it’s default. As you’ll see, this behavior is easy to implement with <span class="smcp">D3</span>.js.
+Maps naturally invite users to zoom in and pan around, and <span class="smcp">D3</span>.js makes it easy to support those standard map interactions. Because <span class="smcp">D3</span>.js gives us complete control, however, we’re not limited to conventions. Let’s do something a little different with our map. We can make it, so that clicking on any state zooms in on that state. Clicking a state that’s already zoomed in can then zoom the map back out to it’s default. As you’ll see, this behavior is easy to implement with <span class="smcp">D3</span>.js.
 
 The first bit of code we’ll add is a variable that keeps track of the particular state into which the map is zoomed. Initially, the user won’t have zoomed anywhere, so that variable is empty.
 
@@ -169,7 +169,7 @@ g.selectAll("path")
     .on("click", clicked);
 ```
 
-The extra statement is line 5. Like jQuery, <span class="smcp">D3</span>.js gives us an easy way to add event handlers to <span class="smcp">HTML</span> and <span class="smcp">SVG</span> elements. Now we have to write that event handler. The handler needs to identify the state on which the user clicked, calculate the position of that state (in <span class="smcp">SVG</span> coordinates), and transition the map to zoom to those coordinates. Before we look at the implementation in detail, it’s worth noting that <span class="smcp">D3</span>.js event handlers are optimized to work with data visualizations (which shouldn’t be surprising). In particular, the parameter passed to the handler is the data item associated with the target element (conventionally named `d`). The JavaScript context (`this`) is set to the specific element that received the event. If the handler needs access to the other properties of the JavaScript event, they’re available in the `d3.event` global variable. Here’s how those conventions work in a real event handler.
+The extra statement is line 5. Like jQuery, <span class="smcp">D3</span>.js gives us an easy way to add event handlers to <span class="smcp">HTML</span> and <span class="smcp">SVG</span> elements. Now we have to write that event handler. The handler needs to identify the state that the user clicked, calculate the position of that state (in <span class="smcp">SVG</span> coordinates), and transition the map to zoom to those coordinates. Before we look at the implementation in detail, it’s worth noting that <span class="smcp">D3</span>.js event handlers are optimized to work with data visualizations (which shouldn’t be surprising). In particular, the parameter passed to the handler is the data item associated with the target element (conventionally named `d`). The JavaScript context (`this`) is set to the specific element that received the event. If the handler needs access to the other properties of the JavaScript event, they’re available in the `d3.event` global variable. Here’s how those conventions work in a real event handler.
 
 ``` {.javascript .numberLines}
 var clicked = function(d) {
@@ -195,7 +195,7 @@ var clicked = function(d) {
 };
 ```
 
-In lines 2-4 we manipulate the map colors. The previously zoomed state is reset to a muted gray, and the clicked state is filled with a vibrant orange. Notice that this same code resets the `active` variable so that it accurately tracks the zoomed state. Next, in lines 6-14, we calculate the bounds of the zoomed state. Well, actually, we let <span class="smcp">D3</span>.js do the calculation. All the work happens in the `bounds()` function we call in line 6. The other lines are mostly just extracting the individual parts of that calculation. In line 11 we calculate how to scale the map so that the zoomed state fills 90% of the map. Then, in lines 12-14, we calculate how to shift the map to center that state. The final block of code (lines 16-20) adjusts the map by scaling and translating the <span class="smcp">SVG</span>. As you can see from line 16, we’re using a <span class="smcp">D3</span>.js transition to animate the change in view.
+In lines 2-4 we manipulate the map colors. The previously zoomed state is reset to a muted gray, and the clicked state is filled with a vibrant orange. Notice that this same code resets the `active` variable so that it accurately tracks the zoomed state. Next, in lines 6-14, we calculate the bounds of the zoomed state. Or rather, we let <span class="smcp">D3</span>.js do the calculation. All the work happens in the `bounds()` function we call in line 6. The other lines are mostly just extracting the individual parts of that calculation. In line 11 we calculate how to scale the map so that the zoomed state fills 90% of the map. Then, in lines 12-14, we calculate how to shift the map to center that state. The final block of code (lines 16-20) adjusts the map by scaling and translating the <span class="smcp">SVG</span>. As you can see from line 16, we’re using a <span class="smcp">D3</span>.js transition to animate the change in view.
 
 The code we’ve seen so far still needs a few minor additions to deal with some loose ends, but I’ll leave those to the book’s [source code](http://jsDataV.is/source/). The result in figure NEXTFIGURENUMBER is a nice, interactive map of our data.
 
