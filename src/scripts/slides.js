@@ -23,7 +23,7 @@
     this.setupTouchEvents();
     this.onresize();
   }
-  
+
   Dz.setupParams = function() {
     var p = window.location.search.substr(1).split('&');
     p.forEach(function(e, i, a) {
@@ -46,6 +46,7 @@
     if ( aEvent.keyCode == 37 // left arrow
       || aEvent.keyCode == 38 // up arrow
       || aEvent.keyCode == 33 // page up
+      || aEvent.keyCode == 8  // backspace
     ) {
       aEvent.preventDefault();
       this.back();
@@ -53,6 +54,7 @@
     if ( aEvent.keyCode == 39 // right arrow
       || aEvent.keyCode == 40 // down arrow
       || aEvent.keyCode == 34 // page down
+      || aEvent.keyCode == 13 // enter
     ) {
       aEvent.preventDefault();
       this.forward();
@@ -309,7 +311,7 @@
       requestFullscreen.apply(html);
     }
   }
-  
+
   Dz.setProgress = function(aIdx, aStep) {
     var slide = $("section:nth-of-type("+ aIdx +")");
     if (!slide)
@@ -319,14 +321,14 @@
         stepSize = slideSize / steps;
     this.progressBar.style.width = ((aIdx - 1) * slideSize + aStep * stepSize) + '%';
   }
-  
+
   Dz.postMsg = function(aWin, aMsg) { // [arg0, [arg1...]]
     aMsg = [aMsg];
     for (var i = 2; i < arguments.length; i++)
       aMsg.push(encodeURIComponent(arguments[i]));
     aWin.postMessage(aMsg.join(" "), "*");
   }
-  
+
   function init() {
     Dz.init();
     window.onkeydown = Dz.onkeydown.bind(Dz);
@@ -342,7 +344,7 @@
     Function.prototype.bind = function (oThis) {
 
       // closest thing possible to the ECMAScript 5 internal IsCallable
-      // function 
+      // function
       if (typeof this !== "function")
       throw new TypeError(
         "Function.prototype.bind - what is trying to be fBound is not callable"
