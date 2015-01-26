@@ -7,9 +7,29 @@
         <generator>Feeder 2.5.8(1906); Mac OS X Version 10.10.1 (Build 14B25) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Tue, 20 Jan 2015 09:29:10 -0500</pubDate>
-        <lastBuildDate>Tue, 20 Jan 2015 09:29:10 -0500</lastBuildDate>
+        <pubDate>Mon, 26 Jan 2015 11:34:01 -0500</pubDate>
+        <lastBuildDate>Mon, 26 Jan 2015 11:34:01 -0500</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Chapter 7: Custom Visualizations with D3.js</title>
+            <link>http://jsdatav.is/chap07.html</link>
+            <description><![CDATA[<p>In this book we’ve looked at many different JavaScript libraries that were designed for specific types of visualizations. If you need a certain type visualization for your web page and there’s a library that can create it, using that library is often the quickest and easiest way to create your visualization. There are drawbacks to such libraries, however. They all make assumptions about how the visualization should look and act, and despite the configuration options they provide, you don’t have complete control over the results. Sometimes that’s not an acceptable trade-off.</p>
+
+<p>In this chapter we’ll look at an entirely different approach to JavaScript visualizations, one that allows us to be creative and to retain complete control over the results. As you might expect, that approach isn’t always as easy as, for example, adding a charting library and feeding it data. Fortunately, there is a very powerful JavaScript library that can help: <a href="http://d3js.org/">D3.js</a>. D3.js doesn’t provide predefined visualizations such as charts, graphs, or maps. Instead, it’s a toolbox for data visualization, and it gives you the tools to create your own charts, graphs, maps, and more.</p>
+
+<p>To see some of the powerful features of D3.js, we’ll take a whirlwind tour. This chapter’s examples include:</p>
+
+<ul>
+<li>Adapting a traditional chart type for particular data.</li>
+<li>Building a force-directed graph that responds to user interactions.</li>
+<li>Displaying map-based data using high-quality Scalable Vector Graphics.</li>
+<li>Creating a fully custom visualization.</li>
+</ul>
+
+<p><a href="http://jsdatav.is/chap07.html">Continue Reading</a></p>]]></description>
+            <pubDate>Mon, 26 Jan 2015 11:33:52 -0500</pubDate>
+            <guid isPermaLink="false">55A953BB-2690-4E88-9683-11922FACE22C</guid>
+        </item>
         <item>
             <title>Chapter 6: Visualizing Geographic Data</title>
             <link>http://jsdatav.is/chap06.html</link>
