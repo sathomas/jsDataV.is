@@ -1,6 +1,6 @@
 /*
  * This code is simply the JavaScript part of DZslides extracted into
- * a separate file.
+ * a separate file and significantly modified for personal quirks.
  */
 
   var Dz = {
@@ -33,6 +33,11 @@
   // Specific params handling
     if (!+this.params.autoplay)
       $$.forEach($$("video"), function(v){ v.controls = true });
+  }
+
+  Dz.onclick = function(aEvent) {
+    aEvent.preventDefault();
+    this.forward();
   }
 
   Dz.onkeydown = function(aEvent) {
@@ -335,6 +340,7 @@
     window.onresize = Dz.onresize.bind(Dz);
     window.onhashchange = Dz.onhashchange.bind(Dz);
     window.onmessage = Dz.onmessage.bind(Dz);
+//    window.onclick = Dz.onclick.bind(Dz);
   }
 
   window.onload = init;
