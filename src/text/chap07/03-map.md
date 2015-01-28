@@ -48,7 +48,7 @@ If you can't quite recall your geography lessons about map projections, don't wo
 
 We set up the projection in the code below. First, in lines 1 and 2, we define the size our map in pixels. Then, in line 4, we create the  Albers projection. <span class="lgcp">D3</span>.js supports many adjustments to the projection to position it appropriately on the page, but the default values are generally fine in our case. We only need to scale the map (line 5) and center it (line 6) on the page.
 
-To draw the map on the page we're going to use <span class="smcp">SVG</span> `<path>` elements, but our map data takes the form of latitude and longitude values. <span class="lgcp">D3</span>.js has a `path` object to translate to <span class="smcp">SVG</span> paths based on a particular map projection. In lines 8 and 9 we create our path object.
+To draw the map on the page we're going to use <span class="smcp">SVG</span> `<path>` elements, but our map data takes the form of latitude and longitude values. <span class="lgcp">D3</span>.js has a `path` object to translate geographic coordinates to <span class="smcp">SVG</span> paths based on a particular map projection. In lines 8 and 9 we create our path object.
 
 ``` {.javascript .numberLines}
 var width = 640,

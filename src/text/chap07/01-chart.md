@@ -52,7 +52,7 @@ hubble_data = [
   </head>
   <body>
     <div id="container"></div>
-    <script 
+    <script
       src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js">
     </script>
   </body>
@@ -104,7 +104,7 @@ To make sure our chart honors the defined margins, we'll construct it entirely w
 
 ``` {.javascript .numberLines}
 var chart = svg.append("g")
-    .attr("transform", 
+    .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")"
     );
 ```
@@ -125,7 +125,7 @@ We define both ranges as the desired limits for each scale. The x-scale ranges f
 At this point we've set the ranges for each scale, and those ranges define the desired output. We also have to specify the possible inputs to each scale, which <span class="smcp">D3</span>.js calls the _domain._ Those inputs are the minimum and maximum values for the distance and velocity. We can use <span class="smcp">D3</span>.js to extract the values directly from the data. Here's how to get the minimum distance:
 
 ``` {.javascript .numberLines}
-var minDist = d3.min(hubble_data, function(nebulae) { 
+var minDist = d3.min(hubble_data, function(nebulae) {
     return nebulae.distance - nebulae.distance_error;
 });
 ```
@@ -135,20 +135,20 @@ We can't simply find the minimum value in the data because we have to account fo
 
 ``` {.javascript .numberLines}
 xScale.domain([
-        d3.min(hubble_data, function(nebulae) { 
-            return nebulae.distance - nebulae.distance_error; 
+        d3.min(hubble_data, function(nebulae) {
+            return nebulae.distance - nebulae.distance_error;
         }),
-        d3.max(hubble_data, function(nebulae) { 
-            return nebulae.distance + nebulae.distance_error; 
+        d3.max(hubble_data, function(nebulae) {
+            return nebulae.distance + nebulae.distance_error;
         })
     ])
     .nice();
 yScale.domain([
-        d3.min(hubble_data, function(nebulae) { 
-            return nebulae.velocity - nebulae.velocity_error; 
+        d3.min(hubble_data, function(nebulae) {
+            return nebulae.velocity - nebulae.velocity_error;
         }),
-        d3.max(hubble_data, function(nebulae) { 
-            return nebulae.velocity + nebulae.velocity_error; 
+        d3.max(hubble_data, function(nebulae) {
+            return nebulae.velocity + nebulae.velocity_error;
         })
     ])
     .nice();
@@ -274,7 +274,7 @@ hubble_data.forEach(function(nebulae) {
 });
 ```
 
-The approach above works fine for this example and results in the chart of figure NEXTFIGURENUMBER. Typically, however, <span class="smcp">D3</span>.js visualizations combine their data sets directly with markup elements and rely on <span class="smcp">D3</span>'s `enter`, `update`, and `exit` selections to add the data to the page. We'll defer further discussion of this alternative approach until the next example. 
+The approach above works fine for this example and results in the chart of figure NEXTFIGURENUMBER. Typically, however, <span class="smcp">D3</span>.js visualizations combine their data sets directly with markup elements and rely on <span class="smcp">D3</span>'s `enter`, `update`, and `exit` selections to add the data to the page. We'll defer further discussion of this alternative approach until the next example.
 
 <figure>
 <div id='chart2'></div>
@@ -345,7 +345,7 @@ In figure NEXTFIGURENUMBER we can see that Hubble's Law remains a good approxima
 		var yAxis = d3.svg.axis()
 		    .scale(yScale)
 		    .orient("left");
-    
+
 		xScale.domain([
 		        d3.min(hubble_data, function(nebulae) { return nebulae.distance - nebulae.distance_error; }),
 		        d3.max(hubble_data, function(nebulae) { return nebulae.distance + nebulae.distance_error; })
