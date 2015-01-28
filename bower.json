@@ -54,6 +54,7 @@
     "snap.svg": "~0.3.0",
     "iwanthue": "https://github.com/medialab/iwanthue",
     "prism": "git://github.com/LeaVerou/prism.git#gh-pages",
-    "pubcss": "thomaspark/pubcss"
+    "pubcss": "thomaspark/pubcss",
+    "numeric": "sloisel/numeric#~1.2.6"
   }
 }
