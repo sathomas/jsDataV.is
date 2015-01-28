@@ -52,7 +52,9 @@
                 var item = list.append("li");
 
                 item.append("h2")
-                    .text(gist.description);
+                    .append("a")
+                        .attr("href", window.location.pathname + "?id=" + gist.id)
+                        .text(gist.description);
 
                 item.append("time")
                     .text(toDate(new Date(gist.created_at)));

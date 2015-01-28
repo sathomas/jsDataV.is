@@ -2,8 +2,8 @@
  * Styles for site typography. To accommodate a flexible site hierarchy, define the
  * LESS variable @font-folder to be equal to the path to be prepended to the raw
  * font file names.
- * 
- * @font-folder: "../fonts"; 
+ *
+ * @font-folder: "../fonts";
  */
 
 /* Body font */
@@ -58,11 +58,11 @@ a {
     text-decoration: none;
     position: relative;
     text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
-    background-image: linear-gradient(to top, transparent, transparent 2px, #aaa 2px, #aaa 3px, transparent 3px);
+    background-image: linear-gradient(to top, transparent, transparent 2px, lighten(@color-body-text,40%) 2px, lighten(@color-body-text,40%) 3px, transparent 3px);
 }
 a:hover, a:focus {
     color: @color-red;
-    background-image: linear-gradient(to top, transparent, transparent 2px, #ca4318 2px, #ca4318 3px, transparent 3px);
+    background-image: linear-gradient(to top, transparent, transparent 2px, mix(@color-red,@color-grey-text,90%) 2px, mix(@color-red,@color-grey-text,90%) 3px, transparent 3px);
 }
 blockquote {
     border-left: 2px solid #ccc;
@@ -96,6 +96,17 @@ h1,h2,h3,h4,h5,h6 {
     font-family: klinicslab, serif;
     font-weight: bold;
     line-height: 1;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    color: @color-headings;
+    text-shadow: none;
+    background-image: none;
+}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
+h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus {
+    color: @color-headings;
+    text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+    background-image: linear-gradient(to top, transparent, transparent 5px, mix(@color-headings,@color-grey-text,90%) 5px, mix(@color-headings,@color-grey-text,90%) 6px, transparent 6px);
 }
 h1 { font-size: 3.157rem; }
 h2 { font-size: 2.369rem; }
