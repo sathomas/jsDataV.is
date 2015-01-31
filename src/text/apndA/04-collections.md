@@ -54,8 +54,8 @@ The `reduce()` method iterates through a collection and returns a single value. 
 
 ``` {.javascript}
 > _(national_league).reduce(
-      function(count, team) { 
-		  return count + (team.wins > team.losses); 
+      function(count, team) {
+		  return count + (team.wins > team.losses);
       },
       0  // starting point for reduced value
   )
@@ -79,7 +79,7 @@ The `find()` function just returns the first element in the array that meets the
 
 ``` {.javascript}
 > _(national_league).filter( function(team) { return team.wins > 90; })
-  [ {name: "Atlanta Braves", wins: 94, losses: 68, division: "east"},
+  [ { name: "Atlanta Braves", wins: 94, losses: 68, division: "east" },
     { name: "Cincinnati Reds", wins: 97, losses: 65, division: "central" },
     { name: "San Francisco Giants", wins: 94, losses: 68, division: "west" },
     { name: "Washington Nationals", wins: 98, losses: 64, division: "east" }
@@ -121,9 +121,9 @@ Another Underscore.js utility that's especially handy is `pluck()`. This functio
 ``` {.javascript}
 > _(national_league).pluck("team")
   [
-    "Arizona Diamondbacks", 
-    "Atlanta Braves", 
-    /* Data continues... */, 
+    "Arizona Diamondbacks",
+    "Atlanta Braves",
+    /* Data continues... */,
     "Washington Nationals"
   ]
 ```
@@ -166,10 +166,10 @@ To sort a collection, we can use the `sortBy()` method and supply an arbitrary f
 
 ``` {.javascript}
 > _(national_league).sortBy(function(team) { return team.wins; })
-  [ {name: "Houston Astros", wins: 55, losses: 107, division: "central"}
+  [ { name: "Houston Astros", wins: 55, losses: 107, division: "central" }
     { name: "Chicago Cubs", wins: 61, losses: 101, division: "central" },
     // Data continues...
-    {name: "Washington Nationals", wins: 98, losses: 64, division: "east"}
+    { name: "Washington Nationals", wins: 98, losses: 64, division: "east" } ]
 ```
 
 We could also reorganize our collection by grouping its elements according to a property. The Underscore.js function that helps in this case is `groupBy()`. One possibility is reorganizing the teams according to their division.
@@ -177,8 +177,8 @@ We could also reorganize our collection by grouping its elements according to a 
 ``` {.javascript}
 > _(national_league).groupBy("division")
   {
-    { west: 
-      { name: "Arizona Diamondbacks", wins: 81, losses: 81, division: "west"},
+    { west:
+      { name: "Arizona Diamondbacks", wins: 81, losses: 81, division: "west" },
       { name: "Colorado Rockies", wins: 64, losses: 98, division: "west" },
       { name: "Los Angeles Dodgers", wins: 86, losses: 76, division: "west" },
       { name: "San Diego Padres", wins: 76, losses: 86, division: "west" },
@@ -189,7 +189,7 @@ We could also reorganize our collection by grouping its elements according to a 
       { name: "Miami Marlins", wins: 69, losses: 93, division: "east" },
       { name: "New York Mets", wins: 74, losses: 88, division: "east" },
       { name: "Philadelphia Phillies", wins: 81, losses: 81, division: "east" },
-      { name: "Washington Nationals", wins: 98, losses: 64, division: "east"    }
+      { name: "Washington Nationals", wins: 98, losses: 64, division: "east" }
     },
     { central:
       { name: "Chicago Cubs", wins: 61, losses: 101, division: "central" },

@@ -106,7 +106,7 @@ As we can see from figure NEXTFIGURENUMBER, <span class="smcp">D3</span>.js give
 <figcaption><span class="lgcp">D3</span>.js helps create vector maps from geographic <span class="smcp">JSON</span> data.</figcaption>
 </figure>
 
-### Step 8: Retrieve the Weather Data
+### Step 7: Retrieve the Weather Data
 
 Now our map is ready for some data. We can retrieve the <span class="smcp">CSV</span> file using another <span class="smcp">D3</span>.js utility. Note, though, that all of the properties of a <span class="smcp">CSV</span> file are considered text strings. We’ll want to convert those strings to numbers. We also want to filter out the few tornado sightings that don’t include latitude and longitude information.
 
@@ -129,7 +129,7 @@ d3.csv("tornadoes.csv", function(data) {
 
 Once the browser has retrieved the <span class="smcp">CSV</span> file from the server, we can begin processing it in line 2. Here we’re using the `.filter()` method of arrays to iterate through the data values. The `.filter()` method eliminates the data points without latitude and longitude values. It only returns `true` (line 10) if both values are present (line 3). While we’re checking the data points for latitude and longitude, we convert the string values into numbers (lines 4 and 5), extract the number from the Enhanced Fujita Scale classification (line 6), and calculate the position of the sighting in <span class="smcp">SVG</span> coordinates using the projection function we created in step 3 (lines 7-9).
 
-### Step 9: Plot the Data
+### Step 8: Plot the Data
 
 With the data retrieved, cleaned, and converted, it’s a simple matter to plot the points on the map. Once again we’ll use the traditional <span class="smcp">D3</span>.js approach. Each data point is an <span class="smcp">SVG</span> `<circle>` element, so we select those elements, bind the data to the selection, and use the `.enter()` function to create new `<circle>` elements to match the data.
 
@@ -149,7 +149,7 @@ As you can see, we set the position of the circles using the `position` property
 <figcaption>Adding points to a map is easy with <span class="smcp">D3</span>.js projections.</figcaption>
 </figure>
 
-### Step 10: Add Interactivity
+### Step 9: Add Interactivity
 
 Maps naturally invite users to zoom in and pan around, and <span class="smcp">D3</span>.js makes it easy to support those standard map interactions. Because <span class="smcp">D3</span>.js gives us complete control, however, we’re not limited to conventions. Let’s do something a little different with our map. We can make it, so that clicking on any state zooms in on that state. Clicking a state that’s already zoomed in can then zoom the map back out to it’s default. As you’ll see, this behavior is easy to implement with <span class="smcp">D3</span>.js.
 

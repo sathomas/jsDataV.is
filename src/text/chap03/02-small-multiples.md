@@ -180,7 +180,7 @@ The resulting charts, shown in figure NEXTFIGURENUMBER, all have identical style
 <figcaption>Sparklines can be a good visualization to include within page elements such as tables.</figcaption>
 </figure>
 
-### Step 4: Establish a Default Style for the Charts
+### Step 3: Establish a Default Style for the Charts
 
 If we don't like the sparklines library's default style, it's easy to change it using an options object, as shown next. The object is the second parameter to the `sparkline()` function, and here it changes the color for the charts and disables the highlights on the minimum, maximum, and final values. The first parameter, the string `'html'`, indicates to the library that the data is already present in our <span class="smcp">HTML</span>. 
 
@@ -218,7 +218,7 @@ Figure NEXTFIGURENUMBER shows the result for one row. We'll use this style as th
 <figcaption>The sparkline options let us adjust the chart styles.</figcaption>
 </figure>
 
-### Step 5: Modify the Default Style for Special Classes
+### Step 4: Modify the Default Style for Special Classes
 
 With a default style in place, we can turn our attention to the special class of charts for stocks in Barclay's technology list. For our example, let's change the color of the chart _without any other changes to our default style._ That final clause is important. We could just copy-and-paste the options, but that would be setting ourselves up for problems in the future. You can see why in the following example code.
 
@@ -317,7 +317,7 @@ Notice in line 12 that we create the non-technology sparklines by selecting tabl
 </figure>
 
 
-### Step 6: Create a Unique Style for a Specific Chart
+### Step 5: Create a Unique Style for a Specific Chart
 
 For the final step in this example, let's consider the single stock at the top of <span class="smcp">CR</span> Magazine's list. Suppose we want to add distinct styles to its chart, and we know those styles only when we're generating the <span class="smcp">HTML</span>, not when we're writing the JavaScript. How can we adjust the chart style if we can't modify any JavaScript?
 
