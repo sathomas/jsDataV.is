@@ -739,8 +739,8 @@ The defaults() function adds missing properties to an object.
   [<span class="dv">50</span>, <span class="dv">58</span>, <span class="dv">38</span>, <span class="dv">60</span>, <span class="dv">40</span>, <span class="dv">34</span>, <span class="dv">53</span>, <span class="dv">43</span>, <span class="dv">51</span>, <span class="dv">46</span>, <span class="dv">50</span>, <span class="dv">49</span>, <span class="dv">47</span>, <span class="dv">58</span>, <span class="dv">54</span>, <span class="dv">60</span>]</code></pre>
 <p>The <code>reduce()</code> method iterates through a collection and returns a single value. One parameter initializes this value, and the other parameter is an arbitrary function that updates the value for each element in the collection. We can use <code>reduce()</code> for example, to calculate how many teams have a winning percentage over 500.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(national_league).<span class="fu">reduce</span>(
-      <span class="kw">function</span>(count, team) { 
-          <span class="kw">return</span> count + (<span class="ot">team</span>.<span class="fu">wins</span> &gt; <span class="ot">team</span>.<span class="fu">losses</span>); 
+      <span class="kw">function</span>(count, team) {
+          <span class="kw">return</span> count + (<span class="ot">team</span>.<span class="fu">wins</span> &gt; <span class="ot">team</span>.<span class="fu">losses</span>);
       },
       <span class="dv">0</span>  <span class="co">// starting point for reduced value</span>
   )
@@ -755,7 +755,7 @@ The defaults() function adds missing properties to an object.
   {<span class="dt">name</span>: <span class="st">&quot;Atlanta Braves&quot;</span>, <span class="dt">wins</span>: <span class="dv">94</span>, <span class="dt">losses</span>: <span class="dv">68</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span>}</code></pre>
 <p>The <code>find()</code> function just returns the first element in the array that meets the criteria. To find all elements that meet our criteria, use the <code>filter()</code> function.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(national_league).<span class="fu">filter</span>( <span class="kw">function</span>(team) { <span class="kw">return</span> <span class="ot">team</span>.<span class="fu">wins</span> &gt; <span class="dv">90</span>; })
-  [ {<span class="dt">name</span>: <span class="st">&quot;Atlanta Braves&quot;</span>, <span class="dt">wins</span>: <span class="dv">94</span>, <span class="dt">losses</span>: <span class="dv">68</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span>},
+  [ { <span class="dt">name</span>: <span class="st">&quot;Atlanta Braves&quot;</span>, <span class="dt">wins</span>: <span class="dv">94</span>, <span class="dt">losses</span>: <span class="dv">68</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span> },
     { <span class="dt">name</span>: <span class="st">&quot;Cincinnati Reds&quot;</span>, <span class="dt">wins</span>: <span class="dv">97</span>, <span class="dt">losses</span>: <span class="dv">65</span>, <span class="dt">division</span>: <span class="st">&quot;central&quot;</span> },
     { <span class="dt">name</span>: <span class="st">&quot;San Francisco Giants&quot;</span>, <span class="dt">wins</span>: <span class="dv">94</span>, <span class="dt">losses</span>: <span class="dv">68</span>, <span class="dt">division</span>: <span class="st">&quot;west&quot;</span> },
     { <span class="dt">name</span>: <span class="st">&quot;Washington Nationals&quot;</span>, <span class="dt">wins</span>: <span class="dv">98</span>, <span class="dt">losses</span>: <span class="dv">64</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span> }
@@ -781,9 +781,9 @@ The defaults() function adds missing properties to an object.
 <p>Another Underscore.js utility that’s especially handy is <code>pluck()</code>. This function creates an array by extracting only the specified property from a collection. We could use it to extract an array of nothing but team names, for example.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(national_league).<span class="fu">pluck</span>(<span class="st">&quot;team&quot;</span>)
   [
-    <span class="st">&quot;Arizona Diamondbacks&quot;</span>, 
-    <span class="st">&quot;Atlanta Braves&quot;</span>, 
-    <span class="co">/* Data continues... */</span>, 
+    <span class="st">&quot;Arizona Diamondbacks&quot;</span>,
+    <span class="st">&quot;Atlanta Braves&quot;</span>,
+    <span class="co">/* Data continues... */</span>,
     <span class="st">&quot;Washington Nationals&quot;</span>
   ]</code></pre>
 <h3 id="testing-a-collection">Testing a Collection</h3>
@@ -803,15 +803,15 @@ The defaults() function adds missing properties to an object.
 <h3 id="rearranging-collections">Rearranging Collections</h3>
 <p>To sort a collection, we can use the <code>sortBy()</code> method and supply an arbitrary function to provide sortable values. Here’s how to reorder our collection in order of increasing wins.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(national_league).<span class="fu">sortBy</span>(<span class="kw">function</span>(team) { <span class="kw">return</span> <span class="ot">team</span>.<span class="fu">wins</span>; })
-  [ {<span class="dt">name</span>: <span class="st">&quot;Houston Astros&quot;</span>, <span class="dt">wins</span>: <span class="dv">55</span>, <span class="dt">losses</span>: <span class="dv">107</span>, <span class="dt">division</span>: <span class="st">&quot;central&quot;</span>}
+  [ { <span class="dt">name</span>: <span class="st">&quot;Houston Astros&quot;</span>, <span class="dt">wins</span>: <span class="dv">55</span>, <span class="dt">losses</span>: <span class="dv">107</span>, <span class="dt">division</span>: <span class="st">&quot;central&quot;</span> }
     { <span class="dt">name</span>: <span class="st">&quot;Chicago Cubs&quot;</span>, <span class="dt">wins</span>: <span class="dv">61</span>, <span class="dt">losses</span>: <span class="dv">101</span>, <span class="dt">division</span>: <span class="st">&quot;central&quot;</span> },
     <span class="co">// Data continues...</span>
-    {<span class="dt">name</span>: <span class="st">&quot;Washington Nationals&quot;</span>, <span class="dt">wins</span>: <span class="dv">98</span>, <span class="dt">losses</span>: <span class="dv">64</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span>}</code></pre>
+    { <span class="dt">name</span>: <span class="st">&quot;Washington Nationals&quot;</span>, <span class="dt">wins</span>: <span class="dv">98</span>, <span class="dt">losses</span>: <span class="dv">64</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span> } ]</code></pre>
 <p>We could also reorganize our collection by grouping its elements according to a property. The Underscore.js function that helps in this case is <code>groupBy()</code>. One possibility is reorganizing the teams according to their division.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">&gt; <span class="fu">_</span>(national_league).<span class="fu">groupBy</span>(<span class="st">&quot;division&quot;</span>)
   {
-    { <span class="dt">west</span>: 
-      { <span class="dt">name</span>: <span class="st">&quot;Arizona Diamondbacks&quot;</span>, <span class="dt">wins</span>: <span class="dv">81</span>, <span class="dt">losses</span>: <span class="dv">81</span>, <span class="dt">division</span>: <span class="st">&quot;west&quot;</span>},
+    { <span class="dt">west</span>:
+      { <span class="dt">name</span>: <span class="st">&quot;Arizona Diamondbacks&quot;</span>, <span class="dt">wins</span>: <span class="dv">81</span>, <span class="dt">losses</span>: <span class="dv">81</span>, <span class="dt">division</span>: <span class="st">&quot;west&quot;</span> },
       { <span class="dt">name</span>: <span class="st">&quot;Colorado Rockies&quot;</span>, <span class="dt">wins</span>: <span class="dv">64</span>, <span class="dt">losses</span>: <span class="dv">98</span>, <span class="dt">division</span>: <span class="st">&quot;west&quot;</span> },
       { <span class="dt">name</span>: <span class="st">&quot;Los Angeles Dodgers&quot;</span>, <span class="dt">wins</span>: <span class="dv">86</span>, <span class="dt">losses</span>: <span class="dv">76</span>, <span class="dt">division</span>: <span class="st">&quot;west&quot;</span> },
       { <span class="dt">name</span>: <span class="st">&quot;San Diego Padres&quot;</span>, <span class="dt">wins</span>: <span class="dv">76</span>, <span class="dt">losses</span>: <span class="dv">86</span>, <span class="dt">division</span>: <span class="st">&quot;west&quot;</span> },
@@ -822,7 +822,7 @@ The defaults() function adds missing properties to an object.
       { <span class="dt">name</span>: <span class="st">&quot;Miami Marlins&quot;</span>, <span class="dt">wins</span>: <span class="dv">69</span>, <span class="dt">losses</span>: <span class="dv">93</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span> },
       { <span class="dt">name</span>: <span class="st">&quot;New York Mets&quot;</span>, <span class="dt">wins</span>: <span class="dv">74</span>, <span class="dt">losses</span>: <span class="dv">88</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span> },
       { <span class="dt">name</span>: <span class="st">&quot;Philadelphia Phillies&quot;</span>, <span class="dt">wins</span>: <span class="dv">81</span>, <span class="dt">losses</span>: <span class="dv">81</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span> },
-      { <span class="dt">name</span>: <span class="st">&quot;Washington Nationals&quot;</span>, <span class="dt">wins</span>: <span class="dv">98</span>, <span class="dt">losses</span>: <span class="dv">64</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span>    }
+      { <span class="dt">name</span>: <span class="st">&quot;Washington Nationals&quot;</span>, <span class="dt">wins</span>: <span class="dv">98</span>, <span class="dt">losses</span>: <span class="dv">64</span>, <span class="dt">division</span>: <span class="st">&quot;east&quot;</span> }
     },
     { <span class="dt">central</span>:
       { <span class="dt">name</span>: <span class="st">&quot;Chicago Cubs&quot;</span>, <span class="dt">wins</span>: <span class="dv">61</span>, <span class="dt">losses</span>: <span class="dv">101</span>, <span class="dt">division</span>: <span class="st">&quot;central&quot;</span> },

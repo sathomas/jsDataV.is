@@ -695,7 +695,7 @@ Exxon Mobil Corporation
 Sparklines can be a good visualization to include within page elements such as tables.
 </figcaption>
 </figure>
-<h3 id="step-4-establish-a-default-style-for-the-charts">Step 4: Establish a Default Style for the Charts</h3>
+<h3 id="step-3-establish-a-default-style-for-the-charts">Step 3: Establish a Default Style for the Charts</h3>
 <p>If we don’t like the sparklines library’s default style, it’s easy to change it using an options object, as shown next. The object is the second parameter to the <code>sparkline()</code> function, and here it changes the color for the charts and disables the highlights on the minimum, maximum, and final values. The first parameter, the string <code>'html'</code>, indicates to the library that the data is already present in our <span class="smcp">HTML</span>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -751,7 +751,7 @@ Apple Inc.
 The sparkline options let us adjust the chart styles.
 </figcaption>
 </figure>
-<h3 id="step-5-modify-the-default-style-for-special-classes">Step 5: Modify the Default Style for Special Classes</h3>
+<h3 id="step-4-modify-the-default-style-for-special-classes">Step 4: Modify the Default Style for Special Classes</h3>
 <p>With a default style in place, we can turn our attention to the special class of charts for stocks in Barclay’s technology list. For our example, let’s change the color of the chart <em>without any other changes to our default style.</em> That final clause is important. We could just copy-and-paste the options, but that would be setting ourselves up for problems in the future. You can see why in the following example code.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -893,7 +893,7 @@ Wal-Mart Stores, Inc.
 Different visual styles distinguish different types of data.
 </figcaption>
 </figure>
-<h3 id="step-6-create-a-unique-style-for-a-specific-chart">Step 6: Create a Unique Style for a Specific Chart</h3>
+<h3 id="step-5-create-a-unique-style-for-a-specific-chart">Step 5: Create a Unique Style for a Specific Chart</h3>
 <p>For the final step in this example, let’s consider the single stock at the top of <span class="smcp">CR</span> Magazine’s list. Suppose we want to add distinct styles to its chart, and we know those styles only when we’re generating the <span class="smcp">HTML</span>, not when we’re writing the JavaScript. How can we adjust the chart style if we can’t modify any JavaScript?</p>
 <p>Sparklines let you add special attributes directly to the <span class="smcp">HTML</span> element containing a chart. To set the line color, for example, you need to specify the attribute <code>sparkLineColor</code>. The problem is that if we were to enter this attribute directly in the <span class="smcp">HTML</span>, the result would’t be valid <span class="smcp">HTML</span>, because the <span class="smcp">HTML</span> specification doesn’t recognize the <code>sparkLineColor</code> attribute. To conform to the <span class="smcp">HTML</span> standard, custom attributes must have names that begin with the prefix <code>data-</code>.</p>
 <p>To use <span class="smcp">HTML</span>-compliant names to refer to sparklines’ custom attributes, we just need to tell the sparklines library how to find those names. For our <span class="smcp">HTML</span>, we use the standard <code>data-</code> prefix instead of <code>spark</code> in line 4.</p>

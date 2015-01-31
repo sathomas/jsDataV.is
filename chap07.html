@@ -1887,7 +1887,7 @@ EF1,31.62,-87.85
 <span class="lgcp">D3</span>.js helps create vector maps from geographic <span class="smcp">JSON</span> data.
 </figcaption>
 </figure>
-<h3 id="step-8-retrieve-the-weather-data">Step 8: Retrieve the Weather Data</h3>
+<h3 id="step-7-retrieve-the-weather-data">Step 7: Retrieve the Weather Data</h3>
 <p>Now our map is ready for some data. We can retrieve the <span class="smcp">CSV</span> file using another <span class="smcp">D3</span>.js utility. Note, though, that all of the properties of a <span class="smcp">CSV</span> file are considered text strings. We’ll want to convert those strings to numbers. We also want to filter out the few tornado sightings that don’t include latitude and longitude information.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1918,7 +1918,7 @@ EF1,31.62,-87.85
     <span class="co">// Continue creating the visualization...</span>
 });</code></pre></td></tr></table>
 <p>Once the browser has retrieved the <span class="smcp">CSV</span> file from the server, we can begin processing it in line 2. Here we’re using the <code>.filter()</code> method of arrays to iterate through the data values. The <code>.filter()</code> method eliminates the data points without latitude and longitude values. It only returns <code>true</code> (line 10) if both values are present (line 3). While we’re checking the data points for latitude and longitude, we convert the string values into numbers (lines 4 and 5), extract the number from the Enhanced Fujita Scale classification (line 6), and calculate the position of the sighting in <span class="smcp">SVG</span> coordinates using the projection function we created in step 3 (lines 7-9).</p>
-<h3 id="step-9-plot-the-data">Step 9: Plot the Data</h3>
+<h3 id="step-8-plot-the-data">Step 8: Plot the Data</h3>
 <p>With the data retrieved, cleaned, and converted, it’s a simple matter to plot the points on the map. Once again we’ll use the traditional <span class="smcp">D3</span>.js approach. Each data point is an <span class="smcp">SVG</span> <code>&lt;circle&gt;</code> element, so we select those elements, bind the data to the selection, and use the <code>.enter()</code> function to create new <code>&lt;circle&gt;</code> elements to match the data.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1941,7 +1941,7 @@ EF1,31.62,-87.85
 Adding points to a map is easy with <span class="smcp">D3</span>.js projections.
 </figcaption>
 </figure>
-<h3 id="step-10-add-interactivity">Step 10: Add Interactivity</h3>
+<h3 id="step-9-add-interactivity">Step 9: Add Interactivity</h3>
 <p>Maps naturally invite users to zoom in and pan around, and <span class="smcp">D3</span>.js makes it easy to support those standard map interactions. Because <span class="smcp">D3</span>.js gives us complete control, however, we’re not limited to conventions. Let’s do something a little different with our map. We can make it, so that clicking on any state zooms in on that state. Clicking a state that’s already zoomed in can then zoom the map back out to it’s default. As you’ll see, this behavior is easy to implement with <span class="smcp">D3</span>.js.</p>
 <p>The first bit of code we’ll add is a variable that keeps track of the particular state into which the map is zoomed. Initially, the user won’t have zoomed anywhere, so that variable is empty.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
@@ -2602,7 +2602,7 @@ The state of Kentucky is in the upper right of the visualization.
 When the user clicks on Kentucky, we want to focus on a small area of the initial visualization.
 </figcaption>
 </figure>
-<p>The concrete example helps explain the <code>arcTween()</code> implementation. The function first creates three <code>d3.interpolate</code> objects. These objects provide a convenient way to handle the mathematical calculations for interpolations. The first object interpolates from the starting theta domain (initially 0 to 1) to our desired subset (0.051 to 0.093 for Kentucky). The second object does the same for the radius, interpolating from the starting radius domain (initially 0 to 1) to our desired subset (0.5 to 1 for Kentucky and its counties). The final object provides a new, interpolated range for the radius. If the clicked element has a non-zero <code>y</code> value, the new range will start at 20 instead of 0. If the clicked element was the <code>&lt;path&gt;</code> representing the entire <span class="smcp">U.S.</span>, then the range reverts to the initial starting value of 0.</p>
+<p>The concrete example helps explain the <code>arcTween()</code> implementation. The function first creates three <code>d3.interpolate</code> objects. These objects provide a convenient way to handle the mathematical calculations for interpolations. The first object interpolates from the starting <code>theta</code> domain (initially 0 to 1) to our desired subset (0.051 to 0.093 for Kentucky). The second object does the same for the radius, interpolating from the starting radius domain (initially 0 to 1) to our desired subset (0.5 to 1 for Kentucky and its counties). The final object provides a new, interpolated range for the radius. If the clicked element has a non-zero <code>y</code> value, the new range will start at 20 instead of 0. If the clicked element was the <code>&lt;path&gt;</code> representing the entire <span class="smcp">U.S.</span>, then the range reverts to the initial starting value of 0.</p>
 <p>After creating the <code>d3.interpolate</code> objects, <code>arcTween()</code> returns the <code>calculateNewPath</code> function. <span class="lgcp">D3</span>.js calls this function once for each <code>&lt;path&gt;</code> element. When it executes, <code>calculateNewPath()</code> checks to see if the associated <code>&lt;path&gt;</code> element is the root (representing the entire <span class="smcp">U.S.</span>). If so, <code>calculateNewPath()</code> returns the <code>interpolatePathForRoot</code> function. For the root, no interpolation is necessary, so the desired path is just the regular path that our <code>arc()</code> function (from step 4) creates. For all other elements, however, we use the <code>d3.interpolate</code> objects to redefine the <code>theta</code> and <code>radius</code> scales. Instead of the full 0 to 2π and 0 to <code>maxRadius</code>, we set these scales to be the desired area of focus. Furthermore, we use the amount of progress in the transition from the parameter <code>t</code> to interpolate how close we are to those desired values. With the scales redefined, calling the <code>arc()</code> function returns a path appropriate for the new scales. As the transition progresses, the paths reshape themselves to fit the desired outcome. You can see the intermediate steps in figure <span class="nextfigure"/>.</p>
 <figure>
 <img src="img/arctween.png" height="431" width="640" />
