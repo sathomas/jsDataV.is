@@ -779,8 +779,8 @@ $ <span class="kw">npm</span> install jake -g</code></pre>
 <p>The Yeoman tool makes it very easy to define a model for our app. A simple command defines a new model and creates the JavaScript files and scaffolding for that model.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">yo</span> backbone:model run
    <span class="kw">create</span> app/scripts/models/run.js
-   <span class="kw">invoke</span>   backbone-mocha:model
-   <span class="kw">create</span>     test/models/run.spec.js</code></pre>
+   <span class="kw">invoke</span> backbone-mocha:model
+   <span class="kw">create</span> test/models/run.spec.js</code></pre>
 <p>That command creates two new files: <code>run.js</code> in the <code>app/scripts/models/</code> folder and <code>run.spec.js</code> in the <code>test/</code> folder. Let’s take a look at the file Yeoman created for our model. It’s quite short.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -893,8 +893,8 @@ $ <span class="kw">npm</span> install jake -g</code></pre>
 <p>Yeoman makes it easy to define and set up scaffolding for our collection. We execute the single command <code>yo backbone:collection runs</code> from the command line. (Yes, we’re being very original and calling our collection of runs, well, <em>runs.</em>)</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">yo</span> backbone:collection runs
    <span class="kw">create</span> app/scripts/collections/runs.js
-   <span class="kw">invoke</span>   backbone-mocha:collection
-   <span class="kw">create</span>     test/collections/runs.spec.js</code></pre>
+   <span class="kw">invoke</span> backbone-mocha:collection
+   <span class="kw">create</span> test/collections/runs.spec.js</code></pre>
 <p>Yeoman does the same thing for collections as it did for models. It creates an implementation file (<code>runs.js</code> in the <code>app/scripts/collections/</code> folder) and a test file. For now, let’s take a look at <code>runs.js</code>.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -948,13 +948,13 @@ $ <span class="kw">npm</span> install jake -g</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">yo</span> backbone:view summary
    <span class="kw">create</span> app/scripts/templates/summary.ejs
    <span class="kw">create</span> app/scripts/views/summary.js
-   <span class="kw">invoke</span>   backbone-mocha:view
-   <span class="kw">create</span>     test/views/summary.spec.js
+   <span class="kw">invoke</span> backbone-mocha:view
+   <span class="kw">create</span> test/views/summary.spec.js
 $ <span class="kw">yo</span> backbone:view summaryRow
    <span class="kw">create</span> app/scripts/templates/summaryRow.ejs
    <span class="kw">create</span> app/scripts/views/summaryRow.js
-   <span class="kw">invoke</span>   backbone-mocha:view
-   <span class="kw">create</span>     test/views/summaryRow.spec.js</code></pre>
+   <span class="kw">invoke</span> backbone-mocha:view
+   <span class="kw">create</span> test/views/summaryRow.spec.js</code></pre>
 <p>The scaffolding that Yeoman sets up is pretty much the same for each view; only the name varies. Here’s what a Summary view looks like.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1021,8 +1021,8 @@ $ <span class="kw">yo</span> backbone:view summaryRow
             <span class="kw">this</span>.<span class="ot">$el</span>.<span class="fu">html</span>(<span class="kw">this</span>.<span class="fu">template</span>(<span class="kw">this</span>.<span class="ot">model</span>.<span class="fu">toJSON</span>()));
     }
 });</code></pre></td></tr></table>
-<p>Now let’s look inside the last two methods, starting with <code>initialize</code>. That method has a single statement (other than the <code>return</code> statement that we just added). By calling <code>listenTo</code>, it tells Backbone.js that the view wants to listen for events. The first parameter, <code>this.collection</code>, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view’s <code>render</code> method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.</p>
-<p>Most of the real work of a view takes place in its <code>render</code> method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that’s not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn’t handle the models that are part of the collection. For the individual runs, we can use the <code>each</code> function from Underscore.js to iterate through the collection and render each run.</p>
+<p>Now let’s look inside the last two methods, starting with <code>initialize</code>. That method has a single statement (other than the <code>return</code> statement that we just added). By calling <code>listenTo</code>, it tells Backbone.js that the view wants to listen for events. The first parameter, which we’ll change to <code>this.collection</code>, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view’s <code>render</code> method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.</p>
+<p>Most of the real work of a view takes place in its <code>render</code> method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template (though again we need to change <code>this.model</code> to <code>this.collection</code>), but, in the case of a collection view, that’s not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn’t handle the models that are part of the collection. For the individual runs, we can use the <code>each</code> function from Underscore.js to iterate through the collection and render each run.</p>
 <p>As you can see from the code below, we’ve also added a <code>return this;</code> statement to each method. In a bit we’ll take advantage of this addition to <em>chain</em> together calls to multiple methods in a single, concise statement.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
@@ -1193,7 +1193,7 @@ $ <span class="kw">yo</span> backbone:view summaryRow
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> runs = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Collection</span>.<span class="fu">Runs</span>();
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> runs = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Collections</span>.<span class="fu">Runs</span>();
 <span class="ot">runs</span>.<span class="fu">fetch</span>();
 <span class="kw">var</span> summaryView = <span class="kw">new</span> <span class="ot">Running</span>.<span class="ot">Views</span>.<span class="fu">Summary</span>({<span class="dt">collection</span>: runs});
 <span class="ot">summaryView</span>.<span class="fu">render</span>();</code></pre></td></tr></table>
@@ -1420,7 +1420,7 @@ Calories
 </tbody>
 </table>
 <h3 id="step-6-refine-the-main-view">Step 6: Refine the Main View</h3>
-<p>Now we’re starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we have no control over the values passed to our template. Fortunately, that’s not the case. If we look at the SummaryView’s <code>render</code> method, we can see how the template gets its values.</p>
+<p>Now we’re starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we have no control over the values passed to our template. Fortunately, that’s not the case. If we look at the SummaryRow’s <code>render</code> method, we can see how the template gets its values.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
@@ -3327,8 +3327,8 @@ An alternative view shows charts of the run.
 <p>So far we’ve looked at three Backbone.js components, Models, Collections, and Views, all of which may be helpful in any JavaScript application. The fourth component, the <em>Router,</em> is especially helpful for single page applications. You won’t be surprised to learn that we can use Yeoman to create the scaffolding for a Router.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">yo</span> backbone:router app 
    <span class="kw">create</span> app/scripts/routes/app.js
-   <span class="kw">invoke</span>   backbone-mocha:router
-   <span class="kw">create</span>     test/routers/app.spec.js</code></pre>
+   <span class="kw">invoke</span> backbone-mocha:router
+   <span class="kw">create</span> test/routers/app.spec.js</code></pre>
 <p>Notice that we’ve named our router <code>app</code>. As you might expect from this name, we’re using this router as the main controller for our application. That approach has pros and cons. Some developers feel that a router should be limited strictly to routing, while others view the router as the natural place to coordinate the overall application. For a simple example such as our’s, there isn’t really any harm in adding a bit of extra code to the router to control the app. In complex applications, however, it might be better to separate routing from application control. One of the nice things about Backbone.js is that it’s happy to support either approach.</p>
 <p>With the scaffolding in place, we can start adding our router code to the <code>app.js</code> file. The first property we’ll define are the <code>routes</code>. This property is an object whose keys are <span class="smcp">URL</span> fragments and whose values are methods of the router. Here’s our starting point.</p>
 <table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
