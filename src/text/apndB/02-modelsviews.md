@@ -12,8 +12,8 @@ The Yeoman tool makes it very easy to define a model for our app. A simple comma
 ``` {.bash}
 $ yo backbone:model run
    create app/scripts/models/run.js
-   invoke   backbone-mocha:model
-   create     test/models/run.spec.js
+   invoke backbone-mocha:model
+   create test/models/run.spec.js
 ```
 
 That command creates two new files: `run.js` in the `app/scripts/models/` folder and `run.spec.js` in the `test/` folder. Let's take a look at the file Yeoman created for our model. It's quite short.
@@ -124,8 +124,8 @@ Yeoman makes it easy to define and set up scaffolding for our collection. We exe
 ``` {.bash}
 $ yo backbone:collection runs
    create app/scripts/collections/runs.js
-   invoke   backbone-mocha:collection
-   create     test/collections/runs.spec.js
+   invoke backbone-mocha:collection
+   create test/collections/runs.spec.js
 ```
 
 Yeoman does the same thing for collections as it did for models. It creates an implementation file (`runs.js` in the `app/scripts/collections/` folder) and a test file. For now, let's take a look at `runs.js`.
@@ -183,13 +183,13 @@ The bulk of the table for this Summary view will be a series of table rows, wher
 $ yo backbone:view summary
    create app/scripts/templates/summary.ejs
    create app/scripts/views/summary.js
-   invoke   backbone-mocha:view
-   create     test/views/summary.spec.js
+   invoke backbone-mocha:view
+   create test/views/summary.spec.js
 $ yo backbone:view summaryRow
    create app/scripts/templates/summaryRow.ejs
    create app/scripts/views/summaryRow.js
-   invoke   backbone-mocha:view
-   create     test/views/summaryRow.spec.js
+   invoke backbone-mocha:view
+   create test/views/summaryRow.spec.js
 ```
 
 The scaffolding that Yeoman sets up is pretty much the same for each view; only the name varies. Here's what a Summary view looks like.
@@ -240,9 +240,9 @@ Running.Views.Summary = Backbone.View.extend({
 });
 ```
 
-Now let's look inside the last two methods, starting with `initialize`. That method has a single statement (other than the `return` statement that we just added). By calling `listenTo`, it tells Backbone.js that the view wants to listen for events. The first parameter, `this.collection`, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view's `render` method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.
+Now let's look inside the last two methods, starting with `initialize`. That method has a single statement (other than the `return` statement that we just added). By calling `listenTo`, it tells Backbone.js that the view wants to listen for events. The first parameter, which we’ll change to `this.collection`, specifies the event target, so the statement says that the view wants to listen to events affecting the collection. The second parameter specifies the type of events. In this case the view wants to know whenever the collection changes. The final parameter is the function Backbone.js should call when the event occurs. Every time the Runs collection changes, we want Backbone.js to call the view's `render` method. That makes sense. Whenever the Runs collection changes, whatever we were displaying on the page before is now out-of-date. To make it current, our view should refresh its contents.
 
-Most of the real work of a view takes place in its `render` method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template, but, in the case of a collection view, that's not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn't handle the models that are part of the collection. For the individual runs, we can use the `each` function from Underscore.js to iterate through the collection and render each run.
+Most of the real work of a view takes place in its `render` method. After all, this is the code that actually creates the <span class="smcp">HTML</span> markup for the web page. Yeoman has gotten us started with a template (though again we need to change `this.model` to `this.collection`), but, in the case of a collection view, that's not enough. The template takes care of the <span class="smcp">HTML</span> for the collection as a whole, but it doesn't handle the models that are part of the collection. For the individual runs, we can use the `each` function from Underscore.js to iterate through the collection and render each run.
 
 As you can see from the code below, we’ve also added a `return this;` statement to each method. In a bit we’ll take advantage of this addition to _chain_ together calls to multiple methods in a single, concise statement.
 
@@ -381,7 +381,7 @@ Now we're finally ready to construct the main view for our runs. The steps are q
 Here's the JavaScript code for those four steps.
 
 ``` {.javascript .numberLines}
-var runs = new Running.Collection.Runs();
+var runs = new Running.Collections.Runs();
 runs.fetch();
 var summaryView = new Running.Views.Summary({collection: runs});
 summaryView.render();
@@ -444,7 +444,7 @@ When we insert that markup in the page, our users can see a simple summary table
 
 ### Step 6: Refine the Main View
 
-Now we're starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we have no control over the values passed to our template. Fortunately, that's not the case. If we look at the SummaryView's `render` method, we can see how the template gets its values.
+Now we're starting to get somewhere, though the table contents could use some tweaking. After all, does the last digit in a run of 16.068001 km really matter? Since Nike+ determines the attributes of our Run model, it might seem like we have no control over the values passed to our template. Fortunately, that's not the case. If we look at the SummaryRow’s `render` method, we can see how the template gets its values.
 
 ``` {.javascript .numberLines}
 render: function () {

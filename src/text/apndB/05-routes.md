@@ -11,8 +11,8 @@ So far we've looked at three Backbone.js components, Models, Collections, and Vi
 ``` {.bash}
 $ yo backbone:router app 
    create app/scripts/routes/app.js
-   invoke   backbone-mocha:router
-   create     test/routers/app.spec.js
+   invoke backbone-mocha:router
+   create test/routers/app.spec.js
 ```
 
 Notice that we've named our router `app`. As you might expect from this name, we're using this router as the main controller for our application. That approach has pros and cons. Some developers feel that a router should be limited strictly to routing, while others view the router as the natural place to coordinate the overall application. For a simple example such as our's, there isn't really any harm in adding a bit of extra code to the router to control the app. In complex applications, however, it might be better to separate routing from application control. One of the nice things about Backbone.js is that it's happy to support either approach.
