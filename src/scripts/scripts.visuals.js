@@ -66,6 +66,7 @@
 
                 d3.text(gist.files["README.md"].raw_url, function(error, readme) {
                     var md = new Remarkable({
+                        html: true,
                         typographer: true,
                         quotes: '“”‘’'
                     });
@@ -77,6 +78,8 @@
                     item.append("p").append("a")
                         .attr("href", window.location.pathname + "?id=" + gist.id)
                         .text("View visualization");
+
+                    MathJax.Hub.Typeset();
                 });
 
             });
@@ -128,13 +131,16 @@
                     .text(toDate(new Date(gist.created_at)));
 
                 var md = new Remarkable({
+                    html: true,
                     typographer: true,
                     quotes: '“”‘’'
                 });
 
+                var text = gist.files["README2.md"] || gist.files["README.md"];
+
                 main.append("section")
                     .classed("summary", true)
-                    .html(md.render(gist.files["README.md"].content));
+                    .html(md.render(text.content));
 
                 main.append("h2")
                     .text("Source Code")
@@ -147,6 +153,7 @@
 
                 setTimeout(function() {
                     Prism.highlightAll();
+                    MathJax.Hub.Typeset();
                 }, 0);
 
             }
