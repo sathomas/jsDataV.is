@@ -30,7 +30,7 @@
                 return gist.files &&
                        gist.files["README.md"] &&
                        gist.files["index.html"] &&
-                       gist.files["thumbnail.png"];
+                       gist.files["thumbnail.lnk"];
             });
 
             // Sort the gists from newest to oldest.
@@ -49,6 +49,7 @@
             var toDate = d3.time.format("%B %e, %Y");
 
             gists.forEach(function(gist) {
+
                 var item = list.append("li");
 
                 item.append("h2")
@@ -59,27 +60,33 @@
                 item.append("time")
                     .text(toDate(new Date(gist.created_at)));
 
-                item.append("img")
-                    .attr("src", gist.files["thumbnail.png"].raw_url)
-                    .attr("height", 120)
-                    .attr("width", 230);
+                d3.text(gist.files["thumbnail.lnk"].raw_url, function(error, imgsrc) {
 
-                d3.text(gist.files["README.md"].raw_url, function(error, readme) {
-                    var md = new Remarkable({
-                        html: true,
-                        typographer: true,
-                        quotes: '“”‘’'
+                    item.append("img")
+                        .attr("src", imgsrc)
+                        .attr("height", 120)
+                        .attr("width", 230);
+
+                    d3.text(gist.files["README.md"].raw_url, function(error, readme) {
+
+                        var md = new Remarkable({
+                            html: true,
+                            typographer: true,
+                            quotes: '“”‘’'
+                        });
+
+                        var summary = item.append("div")
+                            .classed("summary", true)
+                            .html(md.render(readme));
+
+                        item.append("p").append("a")
+                            .attr("href", window.location.pathname + "?id=" + gist.id)
+                            .text("View visualization");
+
+                        MathJax.Hub.Typeset(summary);
+
                     });
 
-                    item.append("div")
-                        .classed("summary", true)
-                        .html(md.render(readme));
-
-                    item.append("p").append("a")
-                        .attr("href", window.location.pathname + "?id=" + gist.id)
-                        .text("View visualization");
-
-                    MathJax.Hub.Typeset();
                 });
 
             });
@@ -138,23 +145,23 @@
 
                 var text = gist.files["README2.md"] || gist.files["README.md"];
 
-                main.append("section")
+                var summary = main.append("section")
                     .classed("summary", true)
                     .html(md.render(text.content));
 
                 main.append("h2")
                     .text("Source Code")
 
-                main.append("pre")
+                var code = main.append("pre")
                     .classed("sourceCode", true)
                     .append("code")
                         .classed("language-markup", true)
                         .text(gist.files["index.html"].content);
 
                 setTimeout(function() {
-                    Prism.highlightAll();
-                    MathJax.Hub.Typeset();
-                }, 0);
+                    Prism.highlightElement(code.node());
+                    MathJax.Hub.Typeset(summary);
+                }, 20);
 
             }
 
