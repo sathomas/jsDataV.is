@@ -168,5 +168,20 @@
             <small>Copyright © 2012-2015 by <a href="http://sathomas.me">Stephen A. Thomas</a>. All Rights Reserved.</small>
         </footer>
     <script src="js/scripts.min.js"></script>
-   </body>
+    <script src="https://carnivalapp.io/sites/36/init.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          Carnival.init({
+            enabled: true,
+            article_selector: "main",
+            block_selector: ":scope > p, :scope > ol, :scope > ul, :scope > table"
+          });
+        });
+    </script>
+    <style>
+        .carnival-comment-indicator:hover svg path, .carnival-comment-indicator.commenting svg path {
+            fill: #CA0000 !important;
+        }
+    </style>
+    </body>
 </html>
