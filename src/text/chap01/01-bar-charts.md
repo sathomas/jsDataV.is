@@ -102,7 +102,7 @@ The most glaring problem with the vertical axis is its scale. By default, flotr2
 Another problem with the vertical axis is the formatting. Flotr2 defaults to a precision of one decimal place, so it adds the superfluous ".0" to all the labels. We can fix both of these problems by specifying some y-axis options. The `min` property sets the minimum value for the y-axis, and the `tickDecimals` property tells flotr2 how many decimal places to show for the labels. In our case we don't want any decimal places.
 
 ``` {.javascript .numberLines}
-Flotr.draw(document.getElementById("chart"), [wins], {
+Flotr.draw(document.getElementById("chart"), wins, {
     bars: {
         show: true
     },
