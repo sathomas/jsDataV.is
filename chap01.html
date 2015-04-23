@@ -161,7 +161,7 @@ body { counter-reset: chapter 1; }
 <h3 id="step-1-include-the-required-javascript">Step 1: Include the Required JavaScript</h3>
 <p>Since we’re using the flotr2 library to create the chart, we need to include that library in our web pages. The flotr2 package isn’t currently popular enough for public content distribution networks, so you’ll need to download a copy and host it on your own web server. We’ll use the minimized version (<code>flotr2.min.js</code>) since it provides the best performance.</p>
 <p>Flotr2 doesn’t require any other JavaScript libraries (such as jQuery), but it does rely on the <span class="smcp">HTML</span> <em>canvas</em> feature. Major modern browsers (Safari, Chrome, Firefox) support canvas, but until version 9, Internet Explorer (<span class="smcp">IE</span>) did not. Unfortunately, there are still millions of users with <span class="smcp">IE8</span> (or even earlier). To support those users, we can include an additional library (<code>excanvas.min.js</code>) in our pages. That library is available from <a href="https://code.google.com/p/explorercanvas/">Google</a>. Since other browsers don’t need this library, we use some special markup to make sure that only <span class="smcp">IE8</span> and earlier will load it. (Line 9.) Start with the following skeleton for your <span class="smcp">HTML</span> document:</p>
-<table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -184,11 +184,11 @@ body { counter-reset: chapter 1; }
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/flotr2.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>As you can see, we’re including the JavaScript libraries at the end of the document. This approach lets the browser load the document’s entire <span class="smcp">HTML</span> markup and begin laying out the page while it waits for the server to provide the JavaScript libraries.</p>
 <h3 id="step-2-set-aside-a-div-element-to-hold-the-chart">Step 2: Set Aside a &lt;div&gt; Element to Hold the Chart</h3>
 <p>Within our document, we need to create a <code>&lt;div&gt;</code> element to contain the chart. This element must have an explicit height and width, or flotr2 won’t be able to construct the chart. We can indicate the element’s size in a <span class="smcp">CSS</span> stylesheet, or we can place it directly on the element itself. Here’s how the document might look with the latter approach.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -211,11 +211,11 @@ body { counter-reset: chapter 1; }
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/flotr2.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>Note that we’ve given the <code>&lt;div&gt;</code> an explicit <code>id</code> (‘chart’) so we can reference it later. You’ll need to use a basic template like this (importing the flotr2 library and setting up the <code>&lt;div&gt;</code>) for all the charts in this chapter.</p>
 <h3 id="step-3-define-the-data">Step 3: Define the Data</h3>
 <p>Now we can tackle the data that we want to display. For this example, I’ll use the number of Manchester City wins in the English Premier League for the past seven years. Of course you’ll want to substitute your actual data values, either with inline JavaScript (like the following example) or by another means (such as an <span class="smcp">AJAX</span> call to the server).</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -228,7 +228,7 @@ body { counter-reset: chapter 1; }
       [<span class="dv">2010</span>,<span class="dv">18</span>],[<span class="dv">2011</span>,<span class="dv">21</span>],[<span class="dv">2012</span>,<span class="dv">28</span>]
     ]
 ];
-&lt;<span class="ot">/script&gt;</span></code></pre></td></tr></table>
+&lt;<span class="ot">/script&gt;</span></code></pre></td></tr></table></div>
 <p>As you can see, we have three layers of arrays. Let’s start from the inside and work our way out. For flotr2 charts, each data point is entered in a two-item array with an x-value and y-value. In our case we’re using the year as the x-value and the number of wins as the y-value. We collect all these values in another array called a <em>series</em>. We place this series inside one more outer array. We could enter multiple series into this outer array, but for now we’re showing only one series. Here’s a quick summary of each layer:</p>
 <ul>
 <li>Each data point consists of an x-value and a y-value packaged in an array</li>
@@ -237,7 +237,7 @@ body { counter-reset: chapter 1; }
 </ul>
 <h3 id="step-4-draw-the-chart">Step 4: Draw the Chart</h3>
 <p>That’s all the setup we need. A simple call to the flotr2 library, as shown here, creates our first attempt at a chart. Here’s the code to do that. We first have to make sure the browser has loaded our document; otherwise the <code>chart</code> <code>&lt;div&gt;</code> might not be present. That’s the point of <code>window.onload</code>. Once that event occurs, we call <code>Flotr.draw</code> with three parameters: the <span class="smcp">HTML</span> element to contain the chart, the data for the chart, and any chart options (in this case, we specify options only to tell flotr2 to create a bar chart from the data.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -258,7 +258,7 @@ body { counter-reset: chapter 1; }
             }
         }
     );
-};</code></pre></td></tr></table>
+};</code></pre></td></tr></table></div>
 <p>Since flotr2 doesn’t require jQuery, we haven’t taken advantage of any of jQuery’s shortcuts in this example. If your page already includes jQuery, you can use the standard jQuery conventions for the flotr2 charts in this chapter to execute the script after the window has loaded, and to find the <code>&lt;div&gt;</code> container for the chart.</p>
 <p>Figure <span class="nextfigure"/> shows what you’ll see on the web page:</p>
 <figure>
@@ -273,7 +273,7 @@ The flotr2 library turns data into a basic (if unpolished) bar chart.
 <h3 id="step-5-fix-the-vertical-axis">Step 5: Fix the Vertical Axis</h3>
 <p>The most glaring problem with the vertical axis is its scale. By default, flotr2 automatically calculates the range of the axis from the minimum and maximum values in the data. In our case the minimum value is 11 wins (from 2007), so flotr2 dutifully uses that as its y-axis minimum. In bar charts, however, it’s almost always best to make zero the y-axis minimum. If you don’t use zero, you risk overemphasizing the differences between values and confusing your users. Anyone who glances at the chart above, for example, might think that Manchester City did not win any matches in 2007. That certainly wouldn’t do the team any justice.</p>
 <p>Another problem with the vertical axis is the formatting. Flotr2 defaults to a precision of one decimal place, so it adds the superfluous “.0” to all the labels. We can fix both of these problems by specifying some y-axis options. The <code>min</code> property sets the minimum value for the y-axis, and the <code>tickDecimals</code> property tells flotr2 how many decimal places to show for the labels. In our case we don’t want any decimal places.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -282,7 +282,7 @@ The flotr2 library turns data into a basic (if unpolished) bar chart.
 7
 8
 9
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>), [wins], {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>), wins, {
     <span class="dt">bars</span>: {
         <span class="dt">show</span>: <span class="kw">true</span>
     },
@@ -290,7 +290,7 @@ The flotr2 library turns data into a basic (if unpolished) bar chart.
         <span class="dt">min</span>: <span class="dv">0</span>,
         <span class="dt">tickDecimals</span>: <span class="dv">0</span>
     }
-});</code></pre></td></tr></table>
+});</code></pre></td></tr></table></div>
 <p>As you can see in figure <span class="nextfigure"/>, adding these options definitely improves the vertical axis since the values now start at zero and are formatted appropriately for integers.</p>
 <figure>
 <div id="bar-chart2" style="width:600px;height:400px;">
@@ -302,7 +302,7 @@ Simple options help flotr2 construct a better vertical axis.</figcation>
 <h3 id="step-6-fix-the-horizontal-axis">Step 6: Fix the Horizontal Axis</h3>
 <p>The horizontal axis needs some work as well. Just as with the y-axis, flotr2 assumes that the x-axis values are real numbers and shows one decimal place in the labels. Since we’re charting years, we could simply set the precision to zero, as we did for the y-axis. But that’s not a very general solution, since it won’t work when the x-values are non-numeric categories (like team names). For the more general case, let’s first change our data to use simple numbers rather than years for the x-values. Then we’ll create an array that maps those simple numbers to arbitrary strings, which we can use as labels.</p>
 <p>As you can see, instead of using the actual years for the x-values, we’re simply using 0, 1, 2, and so on. We then define a second array that maps those integer values into strings. Although our strings are years (and thus numbers) they could be anything.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -321,10 +321,10 @@ Simple options help flotr2 construct a better vertical axis.</figcation>
     [<span class="dv">4</span>, <span class="st">&quot;2010&quot;</span>],
     [<span class="dv">5</span>, <span class="st">&quot;2011&quot;</span>],
     [<span class="dv">6</span>, <span class="st">&quot;2012&quot;</span>]
-];</code></pre></td></tr></table>
+];</code></pre></td></tr></table></div>
 <p>Another problem is a lack of spacing between the bars. By default, flotr2 has each bar take up its full horizontal space, but that makes the chart look very cramped. We can adjust that with the <code>barWidth</code> property. Let’s set it to <code>0.5</code> so that each bar takes up only half the available space.</p>
 <p>Here’s how we pass those options to flotr2. Note in line 11 that we use the <code>ticks</code> property of the x-axis to tell flotr2 which labels match which x-values.</p>
-<table class="sourceCode javascript numberLines line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -349,7 +349,7 @@ Simple options help flotr2 construct a better vertical axis.</figcation>
     <span class="dt">xaxis</span>: {
         <span class="dt">ticks</span>: years
     }
-});</code></pre></td></tr></table>
+});</code></pre></td></tr></table></div>
 <p>Now we’re starting to get somewhere with our chart, as shown in figure <span class="nextfigure"/>. The x-axis labels are appropriate for years, and there is space between the bars to improve the chart’s legibility.</p>
 <figure>
 <div id="bar-chart3" style="width:600px;height:400px;">
@@ -361,7 +361,7 @@ We can define our own labels for the horizontal axis.
 </figure>
 <h3 id="step-7-adjust-the-styling">Step 7: Adjust the Styling</h3>
 <p>Now that the chart is functional and readable, we can pay some attention to the aesthetics. Let’s add a title, get rid of the unnecessary grid lines, and adjust the coloring of the bars.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -404,7 +404,7 @@ We can define our own labels for the horizontal axis.
         <span class="dt">horizontalLines</span>: <span class="kw">false</span>,
         <span class="dt">verticalLines</span>: <span class="kw">false</span>
     }
-});</code></pre></td></tr></table>
+});</code></pre></td></tr></table></div>
 <p>As you can see in figure <span class="nextfigure"/>, we now have a bar chart that Manchester City fans can be proud of.</p>
 <figure>
 <div id="bar-chart4" style="width:600px;height:400px;">
@@ -418,7 +418,7 @@ Additional options let us adjust the visual styles of the chart.
 <h3 id="step-8-vary-the-bar-color">Step 8: Vary the Bar Color</h3>
 <p>So far our chart has been fairly monochromatic. That actually makes sense because we’re showing the same value (Manchester City wins) across time. But bar charts are also good for comparing different values. Suppose, for example, we wanted to show the total wins for multiple teams in one year. In that case, it makes sense to use a different color for the bar of each team’s bar. Let’s of over how we can do that.</p>
 <p>First we need to restructure the data somewhat. Previously we’ve shown only a single series. Now we want a different series for each team. Creating multiple series lets flotr2 color each independently. The following example shows how the new data series compares with the old. We’ve left the <code>wins</code> array in the code for comparison, but it’s the <code>wins2</code> array that we’re going to show now. Notice how the nesting of the arrays changes. Also, we’re going to label each bar with the team abbreviation instead of the year.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -435,9 +435,9 @@ Additional options let us adjust the visual styles of the chart.
     [<span class="dv">2</span>, <span class="st">&quot;ARS&quot;</span>],
     [<span class="dv">3</span>, <span class="st">&quot;TOT&quot;</span>],
     [<span class="dv">4</span>, <span class="st">&quot;NEW&quot;</span>]
-];</code></pre></td></tr></table>
+];</code></pre></td></tr></table></div>
 <p>With those changes, our data is structured appropriately, and we can ask flotr2 to draw the chart. When we do that, let’s use different colors for each team. Everything else is the same as before.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -480,7 +480,7 @@ Additional options let us adjust the visual styles of the chart.
         <span class="dt">horizontalLines</span>: <span class="kw">false</span>,
         <span class="dt">verticalLines</span>: <span class="kw">false</span>
     }
-});</code></pre></td></tr></table>
+});</code></pre></td></tr></table></div>
 <p>As you can see in figure <span class="nextfigure"/>, with a few minor adjustments we’ve completely changed the focus of our bar chart. Instead of showing a single team at different points in time, we’re now comparing different teams at the same point in time. That’s the versatility of a simple bar chart.</p>
 <figure>
 <div id="bar-chart5" style="width:600px;height:400px;">
@@ -493,11 +493,11 @@ Bar charts can compare different quantities at one point in time as well as the 
 <p>We’ve used a lot of different code fragments to put together these examples. If you want to see a complete example in a single file, check out this book’s source code.</p>
 <h3 id="step-9-work-around-flotr2-bugs">Step 9: Work Around Flotr2 “Bugs”</h3>
 <p>If you’re building large web pages with a lot of content, you may run into a flotr2 “bug” that can be quite annoying. I’ve put “bug” in quotation marks because the flotr2 behavior is deliberate, but I believe it’s not correct. In the process of constructing its charts, flotr2 creates dummy <span class="smcp">HTML</span> elements so it can calculate their sizes. Flotr2 doesn’t intend these dummy elements to be visible on the page, so it hides them by positioning them off the screen. Unfortunately, what flotr2 thinks is off the screen isn’t always. Specifically, around line 2280 in <code>flotr2.js</code> you’ll find the statement:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">D</span>.<span class="fu">setStyles</span>(div, { <span class="st">&#39;position&#39;</span> : <span class="st">&#39;absolute&#39;</span>, <span class="st">&#39;top&#39;</span> : <span class="st">&#39;-10000px&#39;</span> });</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">D</span>.<span class="fu">setStyles</span>(div, { <span class="st">&#39;position&#39;</span> : <span class="st">&#39;absolute&#39;</span>, <span class="st">&#39;top&#39;</span> : <span class="st">&#39;-10000px&#39;</span> });</code></pre></div>
 <p>Flotr2 intends to place these dummy elements 10,000 pixels above the top of the browser window. However, <span class="smcp">CSS</span> absolute positioning can be relative to the containing element, which is not always the browser window. So if your document is more than 10,000 pixels high, you may find flotr2 scattering text in random-looking locations throughout the page. There are a couple of ways to work around this bug, at least until the flotr2 code is revised.</p>
 <p>One option is to modify the code yourself. Flotr2 is open source, so you can freely download the full source code and modify it appropriately. One simple modification would position the dummy elements far to the right or left rather than above. Instead of <code>'top'</code> you could change the code to <code>'right'</code>. If you’re not comfortable making changes to the library’s source code, another option is to find and hide those dummy elements yourself. You should do this <em>after</em> you’ve called <code>Flotr.draw()</code> for the last time. The latest version of jQuery can banish these extraneous elements with the following statement:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;.flotr-dummy-div&quot;</span>).<span class="fu">parent</span>().<span class="fu">hide</span>();</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;.flotr-dummy-div&quot;</span>).<span class="fu">parent</span>().<span class="fu">hide</span>();</code></pre></td></tr></table></div>
 <script>
 ;(function(){
 
@@ -625,7 +625,7 @@ Bar charts can compare different quantities at one point in time as well as the 
 <p>Just like for the bar chart, you’ll need to include the flotr2 library in your web page and create a <code>&lt;div&gt;</code> element to contain the chart. Let’s start prepping the data.</p>
 <h3 id="step-1-define-the-data">Step 1: Define the Data</h3>
 <p>We’ll begin with <span class="smcp">CO</span><sub>2</sub> concentration measurements. The <span class="smcp">US</span> National Oceanographic and Atmospheric Administration (<span class="smcp">NOAA</span>) publishes <a href="http://www.esrl.noaa.gov/gmd/ccgg/trends/co2_data_mlo.html">measurements</a> taken at Mauna Loa, Hawaii from 1959 through today. The first few values are shown in the following excerpt.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -636,9 +636,9 @@ Bar charts can compare different quantities at one point in time as well as the 
     [ <span class="dv">1960</span>, <span class="fl">316.91</span> ],
     [ <span class="dv">1961</span>, <span class="fl">317.64</span> ],
     [ <span class="dv">1962</span>, <span class="fl">318.45</span> ],
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <p><span class="lgcp">NOAA</span> also publishes measurements of <a href="http://www.ncdc.noaa.gov/cmb-faq/anomalies.php">mean global surface temperature</a>. These values measure the difference from the baseline, which is currently taken to be the average temperature over the entire 20<sup>th</sup> century. Since the <span class="smcp">CO</span><sub>2</sub> measurements begin in 1959, we’ll use that as our starting point for temperature as well.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -649,17 +649,17 @@ Bar charts can compare different quantities at one point in time as well as the 
     [ <span class="dv">1960</span>,  <span class="fl">0.0280</span> ],
     [ <span class="dv">1961</span>,  <span class="fl">0.1028</span> ],
     [ <span class="dv">1962</span>,  <span class="fl">0.1289</span> ],
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <h3 id="step-2-graph-the-co2-data">Step 2: Graph the CO<sub>2</sub> Data</h3>
 <p>Graphing one data set is quite easy with flotr2. We simply call the <code>draw()</code> method of the <code>Flotr</code> object. The only parameters the method requires are a reference to the <span class="smcp">HTML</span> element in which to place the graph, and the data itself. As part of the data object, we indicate that we want a line chart.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
     <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
     [{ <span class="dt">data</span>: co2, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }]
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>Since flotr2 does not require jQuery, we’re not using any jQuery convenience functions in our example. If you do have jQuery on your pages, you can simplify the preceding code a little. In either case figure <span class="nextfigure"/> shows the result:</p>
 <figure>
 <div id="line-chart1" style="width:600px;height:400px;">
@@ -672,7 +672,7 @@ The first chart shows one data set.
 <p>The chart clearly shows the trend in <span class="smcp">CO</span><sub>2</sub> concentration for the past 50+ years.</p>
 <h3 id="step-3-add-the-temperature-data">Step 3: Add the Temperature Data</h3>
 <p>With a simple addition to our code, we can include temperature measurements in our chart. Note that we include the <code>yaxis</code> option for the temperature data and give it a value of 2. That tells flotr2 to use a different y-scale for the temperature data.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -685,7 +685,7 @@ The first chart shows one data set.
         { <span class="dt">data</span>: co2, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>} },
         { <span class="dt">data</span>: temp, <span class="dt">lines</span>: {<span class="dt">show</span>:<span class="kw">true</span>}, <span class="dt">yaxis</span>: <span class="dv">2</span> }
     ]
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>The chart in figure <span class="nextfigure"/> now shows both measurements for the years in question, but it’s gotten a little cramped and confusing. The values butt up against the edges of the chart, and the grid lines are hard for users to interpret when there are multiple vertical axes.</p>
 <figure>
 <div id="line-chart2" style="width:600px;height:400px;">
@@ -698,7 +698,7 @@ A single chart can show multiple data sets.
 <h3 id="step-4-improve-the-charts-readability">Step 4: Improve the Chart’s Readability</h3>
 <p>By using more flotr2 options, we can make several improvements in our line chart’s readability. First we can eliminate the grid lines, since they aren’t relevant for the temperature measurements.</p>
 <p>We can also extend the range of both vertical axes to provide a bit of breathing room for the chart. Both of these changes are additional options to the <code>draw()</code> method. The <code>grid</code> options turn off the gridlines by setting both the <code>horizontalLines</code> and <code>verticalLines</code> properties to <code>false</code>. The <code>yaxis</code> options specify the minimum and maximum value for the first vertical axis (<span class="smcp">CO</span><sub>2</sub> concentration), while the <code>y2axis</code> options specify those values for the second vertical axis (temperature difference).</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -719,7 +719,7 @@ A single chart can show multiple data sets.
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>},
         <span class="dt">y2axis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>}
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>The resulting graph in figure <span class="nextfigure"/> is cleaner and easier to read.</p>
 <figure>
 <div id="line-chart3" style="width:600px;height:400px;">
@@ -731,12 +731,12 @@ Removing grid lines and expanding the axes makes the chart easier to read.
 </figure>
 <h3 id="step-5-clarify-the-temperature-measurements">Step 5: Clarify the Temperature Measurements</h3>
 <p>The temperature measurements might still be confusing to users, since they’re not really temperatures; they’re actually deviations from the 20<sup>th</sup> century average. Let’s convey that distinction by adding a line for that 20<sup>th</sup> century average, and explicitly labelling it. The simplest way to do that is to create a “dummy” data set and add that to the chart. The extra data set has nothing but zeros.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> zero = [];
-<span class="kw">for</span> (<span class="kw">var</span> yr=<span class="dv">1959</span>; yr&lt;<span class="dv">2012</span>; yr++) { <span class="ot">zero</span>.<span class="fu">push</span>([yr, <span class="dv">0</span>]); };</code></pre></td></tr></table>
+<span class="kw">for</span> (<span class="kw">var</span> yr=<span class="dv">1959</span>; yr&lt;<span class="dv">2012</span>; yr++) { <span class="ot">zero</span>.<span class="fu">push</span>([yr, <span class="dv">0</span>]); };</code></pre></td></tr></table></div>
 <p>When we add that data set to the chart, we need to indicate that it corresponds to the second y-axis. And since we want this line to appear as part of the chart framework rather than as another data set, let’s deemphasize it somewhat by setting its width to one pixel, coloring it dark gray, and disabling shadows.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -761,7 +761,7 @@ Removing grid lines and expanding the axes makes the chart easier to read.
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>},
         <span class="dt">y2axis</span>: {<span class="dt">min</span>: -<span class="fl">0.15</span>, <span class="dt">max</span>: <span class="fl">0.69</span>}
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>As you can see, we’ve placed the zero line first among the data sets. With that order, flotr2 will draw the actual data on top of the zero line, as shown in figure <span class="nextfigure"/>, reinforcing its role as chart framework instead of data.</p>
 <figure>
 <div id="line-chart4" style="width:600px;height:400px;">
@@ -773,7 +773,7 @@ A dummy data set can emphasize a position on a chart axis.
 </figure>
 <h3 id="step-6-label-the-chart">Step 6: Label the Chart</h3>
 <p>For the last step in this example, we’ll add appropriate labels to the chart. That includes an overall title, as well as labels for individual data sets. And to make it clear which axis refers to temperature, we’ll add a “°C” suffix to the temperature scale. We identify the label for each data series in the <code>label</code> option for that series. The overall chart title merits its own option, and we add the “°C” suffix using a <code>tickFormatter</code> function. That option expects a function. For each value on the axis, the formatter function is called with the value, and flotr2 expects it to return a string to use for the label. As you can see in line 26, we simply append the <code>&quot; °C&quot;</code> string to the value.</p>
-<table class="sourceCode javascript numberLines line-26"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-26"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -830,7 +830,7 @@ A dummy data set can emphasize a position on a chart axis.
                 <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot; °C&quot;</span>;}},
         <span class="dt">y2axis</span>: {<span class="dt">min</span>: <span class="dv">300</span>, <span class="dt">max</span>: <span class="dv">400</span>}
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>Notice that we’ve also swapped the position of the <span class="smcp">CO</span><sub>2</sub> and temperature graphs. We’re now passing the temperature data series ahead of the <span class="smcp">CO</span><sub>2</sub> series. We did that so that the two temperature quantities (baseline and difference) appear next to each other in the legend, making their connection a little more clear to the user. And because the temperature now appears first in the legend, we’ve also swapped the axes, so the temperature axis is on the left. Finally, we’ve adjusted the title of the chart for the same reason. Figure <span class="nextfigure"/> shows the result.</p>
 <figure>
 <div id="line-chart5" style="width:600px;height:400px;">
@@ -1056,12 +1056,12 @@ Bar charts usually make comparisons easier.
 <p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct. The unique aspects of this example begin below.</p>
 <h3 id="step-1-define-the-data-1">Step 1: Define the Data</h3>
 <p>The data in this case is quite straightforward. According to the <a href="http://www.newgeography.com/content/003325-alleviating-world-poverty-a-progress-report">World Bank</a>, at the end of 2008, 22.4 percent of the world’s population lived on less than $1.25/day. That’s the fraction that we want to emphasize with our chart.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [[[<span class="dv">0</span>,<span class="fl">22.4</span>]],[[<span class="dv">1</span>,<span class="fl">77.6</span>]]];</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [[[<span class="dv">0</span>,<span class="fl">22.4</span>]],[[<span class="dv">1</span>,<span class="fl">77.6</span>]]];</code></pre></td></tr></table></div>
 <p>Here we have an array with two data series: one for the percentage of the population in poverty (22.4) and a second series for the rest (77.6). Each series itself consists of an array of points. In this example, and for pie charts in general, there is only one point in each series, with an x-value and a y-value (which are each stored together in yet another, inner array). For pie charts the x-values are irrelevant, so we simply include the placeholder values 0 and 1.</p>
 <h3 id="step-2-draw-the-chart">Step 2: Draw the Chart</h3>
 <p>To draw the chart, we call the <code>draw()</code> method of the <code>Flotr</code> object. That method takes three parameters: the element in our <span class="smcp">HTML</span> document in which to place the chart, the data for our chart, and any options. We’ll start with the minimum set of options required for a pie chart. As you can see, flotr2 requires a few more options for a minimum pie chart than it does for other common chart types. For both the x- and y-axes we need to disable labels, which we do by setting the <code>showLabels</code> property to <code>false</code> in lines 7 and 10. We also have to turn off the grid lines, as a grid doesn’t make a lot of sense for a pie chart. We accomplish that by setting the <code>verticalLines</code> and <code>horizontalLines</code> properties of the <code>grid</code> option to <code>false</code> in lines 13 and 14.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1094,7 +1094,7 @@ Bar charts usually make comparisons easier.
             <span class="dt">verticalLines</span>: <span class="kw">false</span>
         }
     });
-}</code></pre></td></tr></table>
+}</code></pre></td></tr></table></div>
 <p>Since flotr2 doesn’t require jQuery, we’re not using any of the jQuery convenience functions in this example. If you do have jQuery for your pages, you can simplify this code a bit.</p>
 <p>Figure <span class="nextfigure"/> is a start, but it’s hard to tell exactly what the graph intends to show.</p>
 <figure>
@@ -1107,16 +1107,16 @@ Without effective labeling, pie charts can be difficult to interpret.
 </figure>
 <h3 id="step-3-label-the-values">Step 3: Label the Values</h3>
 <p>The next step is to add some text labels and a legend to indicate what the chart is displaying. To label each quantity separately, we have to change the structure of our data. Instead of using an array of series, we’ll create an object to store each series. Each object’s <code>data</code> property will contain the corresponding series, and we’ll add a <code>label</code> property for the text labels.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [
     {<span class="dt">data</span>: [[<span class="dv">0</span>,<span class="fl">22.4</span>]], <span class="dt">label</span>: <span class="st">&quot;Extreme Poverty&quot;</span>},
     {<span class="dt">data</span>: [[<span class="dv">1</span>,<span class="fl">77.6</span>]]}
-];</code></pre></td></tr></table>
+];</code></pre></td></tr></table></div>
 <p>With our data structured this way, flotr2 will automatically identify labels associated with each series. Now when we call the <code>draw()</code> method, we just need to add a title option. Flotr2 will add the title above the graph, and create a simple legend identifying the pie portions with our labels. To make the chart a little more engaging, we’ll pose a question in our title. That’s why we’re labeling only one of the areas in the chart: the labeled area answers the question in the title.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1147,7 +1147,7 @@ Without effective labeling, pie charts can be difficult to interpret.
         <span class="dt">horizontalLines</span>: <span class="kw">false</span>,
         <span class="dt">verticalLines</span>: <span class="kw">false</span>
     }
-});</code></pre></td></tr></table>
+});</code></pre></td></tr></table></div>
 <p>The chart in figure <span class="nextfigure"/> reveals the data quite clearly.</p>
 <figure style="margin-top:20px;">
 <div id="pie-chart4" style="width:400px;height:400px;">
@@ -1290,7 +1290,7 @@ Labels and titles can help make a chart engaging.
 <p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct.</p>
 <h3 id="step-1-define-the-data-2">Step 1: Define the Data</h3>
 <p>For this example, we’ll use the 2012 Report from the <a href="http://www.oecd.org">Organisation for Economic Co-operation and Development (<span class="smcp">OECD</span>)</a>. This report includes health-care spending as a percent of gross domestic product, and average life expectancy at birth. (Although the report was released in late 2012, it contains data for 2010.) Here you can see a short excerpt of that data stored in a JavaScript array:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1299,10 +1299,10 @@ Labels and titles can help make a chart engaging.
     {  <span class="dt">country</span>: <span class="st">&quot;Australia&quot;</span>,       <span class="dt">spending</span>:  <span class="fl">9.1</span>,  <span class="dt">life</span>: <span class="fl">81.8</span>  },
     {  <span class="dt">country</span>: <span class="st">&quot;Austria&quot;</span>,         <span class="dt">spending</span>: <span class="fl">11.0</span>,  <span class="dt">life</span>: <span class="fl">80.7</span>  },
     {  <span class="dt">country</span>: <span class="st">&quot;Belgium&quot;</span>,         <span class="dt">spending</span>: <span class="fl">10.5</span>,  <span class="dt">life</span>: <span class="fl">80.3</span>  },
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <h3 id="step-2-format-the-data">Step 2: Format the Data</h3>
 <p>As is often the case, we’ll need to restructure the original data a bit so that it matches the format flotr2 requires. The JavaScript code for that is shown next. We start with an empty <code>data</code> array and step through the source data. For each element in the source <code>health_data</code>, we extract the data point for our chart and push that data point into the <code>data</code> array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1315,18 +1315,18 @@ Labels and titles can help make a chart engaging.
         health_data[i].<span class="fu">spending</span>, 
         health_data[i].<span class="fu">life</span>
     ]);
-};</code></pre></td></tr></table>
+};</code></pre></td></tr></table></div>
 <p>Since flotr2 doesn’t require jQuery, we’re not using any of the jQuery convenience functions in this example. But if you’re using jQuery for other reasons in your page, you could, for example, use the <code>.map()</code> function to simplify the code for this restructuring. (Chapter 2 includes a detailed example of the jQuery <code>.map()</code> function.)</p>
 <h3 id="step-3-plot-the-data">Step 3: Plot the Data</h3>
 <p>Now all we need to do is call the <code>draw()</code> method of the <code>Flotr</code> object to create our chart. For a first attempt, we’ll stick with the default options.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Flotr</span>.<span class="fu">draw</span>(
     <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>),
     [{ <span class="dt">data</span>: data, <span class="dt">points</span>: {<span class="dt">show</span>:<span class="kw">true</span>} }]
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>As you can see, flotr2 expects at least two parameters. The first is the element in our <span class="smcp">HTML</span> document in which we want the chart placed, and the second is the data for the chart. The data takes the form of an array. In general, flotr2 can draw multiple series on the same chart, so that array might have multiple objects. In our case, however, we’re charting only one series, so the array has a single object. That object identifies the data itself, and it tells flotr2 to show points instead of lines.</p>
 <p>Figure <span class="nextfigure"/> shows our result. Notice how the points are pressed right up against the edges of the chart.</p>
 <figure>
@@ -1339,7 +1339,7 @@ The default scatterplot options don’t provide any margins
 </figure>
 <h3 id="step-4-adjust-the-charts-axes">Step 4: Adjust the Chart’s Axes</h3>
 <p>The first attempt isn’t too bad, but flotr2 automatically calculates the ranges for each axis, and its default algorithm usually results in a chart that’s too cramped. Flotr2 does have an <code>autoscale</code> option; if you set it, the library attempts to find sensible ranges for the associated axes automatically. Unfortunately, in my experience the ranges flotr2 suggests rarely improve the default option significantly, so in most cases we’re better off explicitly setting them. Here’s how we might do that for our chart:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1360,7 +1360,7 @@ The default scatterplot options don’t provide any margins
         <span class="dt">xaxis</span>: {<span class="dt">min</span>: <span class="dv">5</span>, <span class="dt">max</span>: <span class="dv">20</span>}, 
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>}
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>We’ve added a third parameter to the <code>draw()</code> method that contains our options which in this case are properties for the x- and y-axes. In each case we’re explicitly setting a minimum and maximum value. By specifying ranges that give the data a little breathing room, we’ve made the chart in figure <span class="nextfigure"/> much easier to read.</p>
 <figure>
 <div id="scatter-chart2" style="width:600px;height:400px;">
@@ -1372,7 +1372,7 @@ Specifying our own axes makes the chart easier to read.
 </figure>
 <h3 id="step-5-label-the-data">Step 5: Label the Data</h3>
 <p>Our chart so far looks reasonably nice, but it doesn’t tell users what they’re seeing. We need to add some labels to identify the data. A few more options can clarify the chart:</p>
-<table class="sourceCode javascript numberLines line-9 line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-9 line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1397,7 +1397,7 @@ Specifying our own axes makes the chart easier to read.
                 <span class="dt">title</span>: <span class="st">&quot;Spending as Percentage of GDP&quot;</span>}, 
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>The <code>title</code> and <code>subtitle</code> options give the chart its overall title and subtitle, while the <code>title</code> properties within the <code>xaxis</code> and <code>yaxis</code> options name the labels for those axes. In addition to adding labels, we’ve told flotr2 to drop the unnecessary decimal point from the x- and y-axis values by changing the <code>tickDecimals</code> property in lines 9 and 11. The chart in figure <span class="nextfigure"/> looks much better.</p>
 <figure>
 <div id="scatter-chart3" style="width:600px;height:400px;">
@@ -1409,7 +1409,7 @@ Labels and titles clarify the chart’s content.
 </figure>
 <h3 id="step-6-clarify-the-x-axis">Step 6: Clarify the X-Axis</h3>
 <p>Although our chart has definitely improved since our first attempt, there is still one nagging problem with the data presentation. The x-axis represents a percentage, but the labels for that axis show whole numbers. That discrepancy might cause our users some initial confusion, so lets get rid of it. Flotr2 allows us to format the axis labels however we want. In this example, we simply wish to add a percentage symbol to the value. That’s easy enough:</p>
-<table class="sourceCode javascript numberLines line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-11"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1436,7 +1436,7 @@ Labels and titles clarify the chart’s content.
                <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot;%&quot;</span>}}, 
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>The trick is the <code>tickFormatter</code> property of the <code>xaxis</code> options. It’s line 11 in the preceding code. That property specifies a function. When <code>tickFormatter</code> is present, flotr2 doesn’t draw the labels automatically. Instead, at each point where it would draw a label, it calls our function. The parameter passed to the function is the numeric value for the label. Flotr2 expects the function to return a string that it will use as the label. In our case we’re simply adding a percent sign after the value.</p>
 <p>In figure <span class="nextfigure"/>, with the addition of the percentage values labeling the horizontal axis, we have a chart that presents the data clearly.</p>
 <figure>
@@ -1457,7 +1457,7 @@ Formatting the axis labels clarifies the content.
 </ol>
 <p>One way to answer those questions would be to add mouseovers (or tool tips) to each data point. But we’re not going to use that approach in this example for a couple of reasons. First (and most obviously), interactive visualizations are the subject of chapter 2; this chapter considers only static charts and graphs. Secondly, mouse overs and tool tips are ineffective for users accessing our site on a touch device such as a smartphone or tablet. If we required users to have a mouse to fully understand our visualization, we might be neglecting a significant (and rapidly growing) number of them.</p>
 <p>Our approach to this problem will be to divide our data into multiple series so that we can color and label each independently. Here’s the first step in breaking the data into regions:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1484,9 +1484,9 @@ Formatting the axis labels clarifies the content.
 
 <span class="kw">var</span> us_data = [
     {  <span class="dt">country</span>: <span class="st">&quot;United States&quot;</span>,   <span class="dt">spending</span>: <span class="fl">17.6</span>,  <span class="dt">life</span>: <span class="fl">78.7</span>  }
-];</code></pre></td></tr></table>
+];</code></pre></td></tr></table></div>
 <p>Here, we’re giving the United States its own series, separate from the Americas series. That’s because the U.S. is the outlier data point on the far right of the chart. Our users probably want to know the specific country for that point, not just its region. For the other countries, a region alone is probably enough identification. As before, we need to restructure these arrays into flotr2’s format. The code is the same as step 4; we’re just repeating it for each data set.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1501,9 +1501,9 @@ Formatting the axis labels clarifies the content.
 <span class="kw">for</span> (i = <span class="dv">0</span>; i &lt; <span class="ot">europe_data</span>.<span class="fu">length</span>; i++) {
     <span class="ot">europe</span>.<span class="fu">push</span>([ europe_data[i].<span class="fu">spending</span>, europe_data[i].<span class="fu">life</span> ]);
 }
-<span class="co">// Code continues...</span></code></pre></td></tr></table>
+<span class="co">// Code continues...</span></code></pre></td></tr></table></div>
 <p>Once we’ve separated the countries, we can pass their data to flotr2 as distinct series. Here we see why flotr2 expects arrays as its data parameter. Each series is a separate object in the array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1538,7 +1538,7 @@ Formatting the axis labels clarifies the content.
                 <span class="dt">tickFormatter</span>: <span class="kw">function</span>(val) {<span class="kw">return</span> val+<span class="st">&quot;%&quot;</span>}}, 
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>} 
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>With the countries in different data series based on regions, flotr2 now colors the regions distinctly as shown in figure <span class="nextfigure"/>.</p>
 <figure>
 <div id="scatter-chart5" style="width:600px;height:400px;">
@@ -1549,7 +1549,7 @@ Splitting the data into multiple data sets lets us assign different colors to ea
 </figcaption>
 </figure>
 <p>For the final enhancement, we add a legend to the chart identifying the regions. In order to make room for the legend, we can increase the range of the x-axis (line 13) and position the legend in the northeast quadrant (line 17).</p>
-<table class="sourceCode javascript numberLines line-13 line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-13 line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1586,7 +1586,7 @@ Splitting the data into multiple data sets lets us assign different colors to ea
         <span class="dt">yaxis</span>: {<span class="dt">min</span>: <span class="dv">70</span>, <span class="dt">max</span>: <span class="dv">85</span>, <span class="dt">tickDecimals</span>: <span class="dv">0</span>, <span class="dt">title</span>: <span class="st">&quot;Years&quot;</span>},
         <span class="dt">legend</span>: {<span class="dt">position</span>: <span class="st">&quot;ne&quot;</span>}
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>This addition gives us the final chart shown in figure <span class="nextfigure"/>.</p>
 <figure>
 <div id="scatter-chart6" style="width:600px;height:400px;">
@@ -1805,7 +1805,7 @@ Adding a legend completes the chart.
 <p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct.</p>
 <h3 id="step-1-define-the-data-3">Step 1: Define the Data</h3>
 <p>We’ll start our example with data taken from Hurricane Katrina observations. The data includes the latitude and longitude of the observation and the sustained wind speed in miles/hour.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1814,10 +1814,10 @@ Adding a legend completes the chart.
     { <span class="dt">north</span>: <span class="fl">23.2</span>, <span class="dt">west</span>: <span class="fl">75.5</span>, <span class="dt">wind</span>:  <span class="dv">35</span> },
     { <span class="dt">north</span>: <span class="fl">24.0</span>, <span class="dt">west</span>: <span class="fl">76.4</span>, <span class="dt">wind</span>:  <span class="dv">35</span> },
     { <span class="dt">north</span>: <span class="fl">25.2</span>, <span class="dt">west</span>: <span class="fl">77.0</span>, <span class="dt">wind</span>:  <span class="dv">45</span> },
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <p>For the bubble chart, flotr2 needs each data point to be an array rather than an object, so lets build a simple function to convert the source data into that format. To make the function more general, we can use an optional parameter to specify a filter function. And while we’re extracting data points, we can reverse the sign of the longitude so that west to east displays left to right.</p>
 <p>The code for our function starts by setting the return value (<code>result</code>) to an empty array in line 2. Then it iterates through the input <code>source_array</code> one element at a time. If the <code>filter_function</code> parameter is available, and if it is a valid function, our code calls that function with the source array element as a parameter. If the function returns <code>true</code>, or if no function was passed in the parameter, then our code extracts the data point from the source element and pushes it onto the result array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1846,7 +1846,7 @@ Adding a legend completes the chart.
         }
     }
     <span class="kw">return</span> result;
-}</code></pre></td></tr></table>
+}</code></pre></td></tr></table></div>
 <p>As you can see, the <code>filter_function</code> parameter is optional. If the caller omits it (or if it is not a valid function), then every point in the source ends up in the result. We won’t use the filter function right away, but it will come in handy for the later steps in this example.</p>
 <h3 id="step-2-create-a-background-for-the-chart">Step 2: Create a Background for the Chart</h3>
 <p>Because the x- and y-values of our chart will represent position, a map makes the perfect chart background. To avoid any copyright concerns, we’ll use map images from <a href="http://stamen.com/">Stamen Design</a> that use data from <a href="http://openstreetmap.org/">OpenStreetMap</a>. Both are available under Creative Commons licenses, <a href="http://creativecommons.org/licenses/by/3.0"><span class="smcp">CC</span> <span class="smcp">BY</span> 3.0</a> and <a href="http://creativecommons.org/licenses/by-sa/3.0"><span class="smcp">CC</span> <span class="smcp">BY</span> <span class="smcp">SA</span></a>, respectively.</p>
@@ -1860,7 +1860,7 @@ A map image can be used as the background for a chart.
 <p>Projections can be a tricky issue when you’re working with maps, but for smaller mapped area they have less of an effect. Also, they’re less critical in the center of the mapped region. For this example, with its relatively small area and action focused in the center, we’ll assume the map image uses a Mercator projection. That assumption lets us avoid any advanced mathematical transformations when converting from latitude and longitude to x- and y-values.</p>
 <h3 id="step-3-plot-the-data-1">Step 3: Plot the Data</h3>
 <p>It will take us several iterations to get the plot looking the way we want, but let’s start with the minimum number of options. One parameter we will need to specify is the bubble radius. For static charts such as this example, it’s easiest to experiment with a few values to find the best size. A value of 0.3 seems effective for our chart. In addition to the options, the <code>draw()</code> method expects an <span class="smcp">HTML</span> element that will contain the chart, as well as the data itself. As you can see, we’re using our transformation function to extract the data from our source. The return value from that function serves directly as the second parameter to <code>draw()</code>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1873,7 +1873,7 @@ A map image can be used as the background for a chart.
       <span class="dt">data</span>: <span class="fu">get_points</span>(katrina), 
       <span class="dt">bubbles</span>: {<span class="dt">show</span>:<span class="kw">true</span>, <span class="dt">baseRadius</span>: <span class="fl">0.3</span>}
     }]
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>For now, we haven’t bothered with the background image. We’ll add that to the chart once we’ve adjusted the data a bit. The result in figure <span class="nextfigure"/> still needs improvement, but it’s a working start.</p>
 <figure>
 <div id="bubble-chart1" style="width:600px;height:400px;">
@@ -1886,7 +1886,7 @@ A basic bubble chart varies the size of the data points.
 <h3 id="step-4-add-the-background">Step 4: Add the Background</h3>
 <p>Now that we’ve seen how flotr2 will plot our data, we can add in the background image. We’ll want to make a few other additions at the same time. First, as long as we’re adding the background, we can remove the grid lines. Second, let’s disable the axis labels; latitude and longitude values don’t have much meaning for the average user, and they’re certainly not necessary with the map. Finally, and most importantly, we need to adjust the scale of the chart to match the map image.</p>
 <p>Our image shows latitude values from 23.607°<span class="smcp">N</span> to 33.657°<span class="smcp">N</span> and longitude from 77.586°<span class="smcp">W</span> to 94.298°<span class="smcp">W</span>. We provide those values to flotr2 as the ranges for its axes in line 11. The <code>grid</code> options in lines 5 through 9 tell flotr2 to omit both horizontal and vertical grid lines, and they designate the background image. The <code>xaxis</code> and <code>yaxis</code> options in lines 10 and 11 disable labels for both axes and specify their minimum and maximum values. Note that because we’re dealing with longitudes west of 0, we’re using negative values.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1917,7 +1917,7 @@ A basic bubble chart varies the size of the data points.
         <span class="dt">yaxis</span>: {<span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>: <span class="fl">23.607</span>, <span class="dt">max</span>: <span class="fl">33.657</span>},
         <span class="dt">xaxis</span>: {<span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>: -<span class="fl">94.298</span>, <span class="dt">max</span>: -<span class="fl">77.586</span>}
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>At this point the chart in figure <span class="nextfigure"/> is looking pretty good. We can clearly see the path of the hurricane and get a sense of how the storm strengthened and weakened along that path.</p>
 <figure>
 <div id="bubble-chart2" style="width:600px;height:400px;background-image:url(img/gulf.png);background-size:cover;">
@@ -1930,14 +1930,14 @@ With a map as the background image, the chart has a meaningful context.
 <h3 id="step-5-color-the-bubbles">Step 5: Color the Bubbles</h3>
 <p>This example gives us a chance to provide even more information to our users without overly distracting them, we have the option to modify the bubble colors. Let’s use that freedom to indicate the Saffir-Simpson classification for the storm at each measurement point.</p>
 <p>Here’s where we can take advantage of the filter option we included in the data formatting function. The Saffir-Simpson classification is based on wind speed, so we’ll filter based on the <code>wind</code> property. For example, here’s how to extract only those values that represent a Category 1 hurricane, with wind speeds from 74 to 95 miles per hour. The function we pass to <code>get_points</code> only returns <code>true</code> only for appropriate wind speeds.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">cat1 = <span class="fu">get_points</span>(katrina, <span class="kw">function</span>(obs) {
     <span class="kw">return</span> (<span class="ot">obs</span>.<span class="fu">wind</span> &gt;= <span class="dv">74</span>) &amp;&amp; (<span class="ot">obs</span>.<span class="fu">wind</span> &lt; <span class="dv">95</span>);
-});</code></pre></td></tr></table>
+});</code></pre></td></tr></table></div>
 <p>To have flotr2 assign different colors to different strengths, we divide the data into multiple series with the following code. Each series gets its own color. In addition to the five hurricane categories, we’ve also parsed out the points for tropical storm and tropical depression strength.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1996,7 +1996,7 @@ With a map as the background image, the chart has a meaningful context.
         <span class="dt">xaxis</span>: {<span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>: -<span class="fl">94.298</span>, <span class="dt">max</span>: -<span class="fl">77.586</span>},
         <span class="dt">legend</span>: {<span class="dt">position</span>: <span class="st">&quot;sw&quot;</span>}
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>We’ve also added labels for the hurricane categories and placed a legend in the lower left of the chart, as you can see in figure <span class="nextfigure"/>.</p>
 <figure>
 <div id="bubble-chart3" style="width:600px;height:400px;background-image:url(img/gulf.png);background-size:cover;">
@@ -2008,16 +2008,16 @@ Different colors can indicate wind strength.
 </figure>
 <h3 id="step-6-adjust-the-legend-styles">Step 6: Adjust the Legend Styles</h3>
 <p>By default, flotr2 seems to prefer all elements as large as possible. The legend in figure <span class="lastfigure"/> is a good example: it looks cramped and unattractive. Fortunately, the fix is rather simple: we simply add some <span class="smcp">CSS</span> styles which give the legend padding. We can also set the legend’s background color explicitly rather than relying on flotr2’s manipulation of opacity.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.flotr-legend</span> <span class="kw">{</span>
     <span class="kw">padding:</span> <span class="dt">5px</span><span class="kw">;</span>
     <span class="kw">background-color:</span> <span class="dt">#ececec</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>To prevent flotr2 from creating its own background for the legend, set the opacity to zero.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2026,7 +2026,7 @@ Different colors can indicate wind strength.
     <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;chart&quot;</span>)
         <span class="co">// Additional options...</span>
         legend: {<span class="dt">position</span>: <span class="st">&quot;sw&quot;</span>, <span class="dt">backgroundOpacity</span>: <span class="dv">0</span>,},
-        <span class="co">// Additional options...</span></code></pre></td></tr></table>
+        <span class="co">// Additional options...</span></code></pre></td></tr></table></div>
 <p>With that final tweak, we have the finished product of figure <span class="nextfigure"/>. We don’t want to use the flotr2 options to specify a title because flotr2 will shrink the chart area by an unpredictable amount (since we cannot predict the font sizing in the users’ browsers). That would distort our latitude transformation. Of course, it’s easy enough to use <span class="smcp">HTML</span> to provide the title.</p>
 <style>
 #bubble-chart4 .flotr-legend { background-color: #ececec; }
@@ -2335,7 +2335,7 @@ A bubble chart shows a third dimension (wind speed) as well as position.
 <p>Just as in this chapter’s first example, we need to include the flotr2 library in our web page and set aside a <code>&lt;div&gt;</code> element to contain the chart we’ll construct.</p>
 <h3 id="step-1-define-the-data-4">Step 1: Define the Data</h3>
 <p>We’ll start with a typical JavaScript expression of the team’s statistics. For our example we’ll start with an array of objects corresponding to each starter, and a separate object for the entire team.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2372,10 +2372,10 @@ A bubble chart shows a third dimension (wind speed) as well as position.
     <span class="dt">assists</span>:  <span class="fl">19.3</span>,
     <span class="dt">steals</span>:    <span class="fl">8.5</span>,
     <span class="dt">blocks</span>:    <span class="fl">5.3</span>
-};</code></pre></td></tr></table>
+};</code></pre></td></tr></table></div>
 <p>For an effective radar plot, we need to normalize all the values to a common scale. In this example, let’s translate raw statistics into team percentage. For example, instead of visualizing LeBron’s James’ scoring as 28.0, we’ll show it as 29 percent (28.0/98.2).</p>
 <p>There are a couple of functions we can use to convert the raw statistics into an object to chart. The first function returns the <code>statistics</code> object for a single player. It simply searches through the <code>players</code> array looking for that player’s name. The second function steps through each statistic in the <code>team</code> object, gets the corresponding statistic for the named player, and normalizes the value. The returned object will have a <code>label</code> property equal to the player’s name, and an array of normalized statistics for that player.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2404,9 +2404,9 @@ A bubble chart shows a third dimension (wind speed) as well as position.
         i++;
     };
     <span class="kw">return</span> obj;
-};</code></pre></td></tr></table>
+};</code></pre></td></tr></table></div>
 <p>For example, the function call <code>player_data(&quot;LeBron James&quot;)</code> returns the following object:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2425,11 +2425,11 @@ A bubble chart shows a third dimension (wind speed) as well as position.
                [<span class="dv">3</span>,<span class="fl">22.352941176470587</span>],
                [<span class="dv">4</span>,<span class="fl">15.09433962264151</span>]
            ]
-}</code></pre></td></tr></table>
+}</code></pre></td></tr></table></div>
 <p>For the specific statistics, we’re using counter from 0 to 4. We’ll see how to map those numbers into meaningful values shortly.</p>
 <p>Since flotr2 doesn’t require jQuery, we aren’t taking advantage of any jQuery convenience function in the preceding code. We’re also not taking full advantage of the JavaScript standard (including methods such as <code>.each()</code>) because Internet Explorer (<span class="smcp">IE</span>) releases prior to version 9 do not support those methods. If you have jQuery on your pages for other reasons, or if you don’t need to support older <span class="smcp">IE</span> versions, you can simplify this code quite a bit.</p>
 <p>The last bit of code we’ll use is a simple array of labels for the statistics in our chart. The order must match the order returned in <code>player_data()</code>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2442,10 +2442,10 @@ A bubble chart shows a third dimension (wind speed) as well as position.
     [<span class="dv">2</span>, <span class="st">&quot;Assists&quot;</span>],
     [<span class="dv">3</span>, <span class="st">&quot;Steals&quot;</span>],
     [<span class="dv">4</span>, <span class="st">&quot;Blocks&quot;</span>]
-];</code></pre></td></tr></table>
+];</code></pre></td></tr></table></div>
 <h3 id="step-2-create-the-chart">Step 2: Create the Chart</h3>
 <p>A single call to flotr2’s <code>draw()</code> method is all it takes to create our chart. We need to specify the <span class="smcp">HTML</span> element in which to place the chart, as well as the chart data. For the data, we’ll use the <code>get_player()</code> function previously. The following code also includes a few options. The <code>title</code> option in line 9 provides an overall title for the chart, and the <code>radar</code> option in line 10 tells flotr2 the type of chart we want. With a radar chart we also have to explicitly specify a circular (as opposed to rectangular) grid, so we do that with the <code>grid</code> option in line 11. The final two options detail the x- and y-axes. For the x-axis we’ll use our <code>labels</code> array to give each statistic a name, and for the y-axis we’ll forgo labels altogether and explicitly specify the minimum and maximum values.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2474,7 +2474,7 @@ A bubble chart shows a third dimension (wind speed) as well as position.
         <span class="dt">xaxis</span>:  { <span class="dt">ticks</span>: labels },
         <span class="dt">yaxis</span>:  { <span class="dt">showLabels</span>: <span class="kw">false</span>, <span class="dt">min</span>:<span class="dv">0</span>, <span class="dt">max</span>: <span class="dv">33</span> }
     }
-);</code></pre></td></tr></table>
+);</code></pre></td></tr></table></div>
 <p>The only real trick is making the <span class="smcp">HTML</span> container wide enough to hold both the chart proper and the legend since flotr2 doesn’t do a great job of calculating the size appropriately. For a static chart such as this one, trial and error is the simplest approach and gives us the chart shown in figure <span class="nextfigure"/>.</p>
 <figure>
 <div id="radar-chart1" style="width:600px;height:400px;">
