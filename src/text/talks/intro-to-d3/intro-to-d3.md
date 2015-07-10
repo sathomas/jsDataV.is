@@ -779,7 +779,6 @@ svg.append("path")
     * Many annotated and commented examples
     * Presentations (including this one)
 * Paper/e-book from No Starch Press [http://www.nostarch.com/datavisualization](http://www.nostarch.com/datavisualization)
-    * (Coupon code "PREORDER" for discount)
 
 <script>
 
