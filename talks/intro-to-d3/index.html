@@ -10,19 +10,19 @@
     <body>
 <section id="introducing-d3.js" class="titleslide slide level1"><h1>Introducing D3.js</h1></section><section id="d3-is-not-a-charting-library" class="slide level2">
 <h1>D3 is Not a Charting Library</h1>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;#container&#39;</span>).<span class="fu">highcharts</span>({
-  <span class="dt">title</span>: {  <span class="dt">text</span>: <span class="st">&#39;Monthly Average Temperature&#39;</span>, <span class="dt">x</span>: -<span class="dv">20</span> },
-  <span class="dt">subtitle</span>: { <span class="dt">text</span>: <span class="st">&#39;Source: WorldClimate.com&#39;</span>, <span class="dt">x</span>: -<span class="dv">20</span> },
-  <span class="dt">xAxis</span>: { <span class="dt">categories</span>: [<span class="st">&#39;Jan&#39;</span>, <span class="st">&#39;Feb&#39;</span>, <span class="st">&#39;Mar&#39;</span>, <span class="st">&#39;Apr&#39;</span>, <span class="st">&#39;May&#39;</span>, <span class="co">//…</span>
-  <span class="dt">yAxis</span>: { <span class="dt">title</span>: { <span class="dt">text</span>: <span class="st">&#39;Temperature (°C)&#39;</span> },
-       <span class="dt">plotLines</span>: [{<span class="dt">value</span>: <span class="dv">0</span>, <span class="dt">width</span>: <span class="dv">1</span>, <span class="dt">color</span>: <span class="st">&#39;#808080&#39;</span>}] },
-  <span class="dt">legend</span>: { <span class="dt">layout</span>: <span class="st">&#39;vertical&#39;</span>, <span class="dt">align</span>: <span class="st">&#39;right&#39;</span>,
-        <span class="dt">verticalAlign</span>: <span class="st">&#39;middle&#39;</span>, <span class="dt">borderWidth</span>: <span class="dv">0</span> },
-  <span class="dt">series</span>: [{ <span class="dt">name</span>: <span class="st">&#39;Tokyo&#39;</span>,    <span class="dt">data</span>: [ <span class="fl">7.0</span>, <span class="fl">6.9</span>, <span class="fl">9.5</span>, <span class="fl">14.5</span>, <span class="co">//…</span>
-           { <span class="dt">name</span>: <span class="st">&#39;New York&#39;</span>, <span class="dt">data</span>: [-<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">5.7</span>, <span class="fl">11.3</span>, <span class="co">//…</span>
-           { <span class="dt">name</span>: <span class="st">&#39;Berlin&#39;</span>,   <span class="dt">data</span>: [-<span class="fl">0.9</span>, <span class="fl">0.6</span>, <span class="fl">3.5</span>,  <span class="fl">8.4</span>, <span class="co">//…</span>
-           { <span class="dt">name</span>: <span class="st">&#39;London&#39;</span>,   <span class="dt">data</span>: [ <span class="fl">3.9</span>, <span class="fl">4.2</span>, <span class="fl">5.7</span>,  <span class="fl">8.5</span>, <span class="co">//…</span>
-});</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="at">$</span>(<span class="st">&#39;#container&#39;</span>).<span class="at">highcharts</span>(<span class="op">{</span>
+  <span class="dt">title</span><span class="op">:</span> <span class="op">{</span>  <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Monthly Average Temperature&#39;</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="op">-</span><span class="dv">20</span> <span class="op">},</span>
+  <span class="dt">subtitle</span><span class="op">:</span> <span class="op">{</span> <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Source: WorldClimate.com&#39;</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="op">-</span><span class="dv">20</span> <span class="op">},</span>
+  <span class="dt">xAxis</span><span class="op">:</span> <span class="op">{</span> <span class="dt">categories</span><span class="op">:</span> [<span class="st">&#39;Jan&#39;</span><span class="op">,</span> <span class="st">&#39;Feb&#39;</span><span class="op">,</span> <span class="st">&#39;Mar&#39;</span><span class="op">,</span> <span class="st">&#39;Apr&#39;</span><span class="op">,</span> <span class="st">&#39;May&#39;</span><span class="op">,</span> <span class="co">//…</span>
+  <span class="dt">yAxis</span><span class="op">:</span> <span class="op">{</span> <span class="dt">title</span><span class="op">:</span> <span class="op">{</span> <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Temperature (°C)&#39;</span> <span class="op">},</span>
+       <span class="dt">plotLines</span><span class="op">:</span> [<span class="op">{</span><span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="st">&#39;#808080&#39;</span><span class="op">}</span>] <span class="op">},</span>
+  <span class="dt">legend</span><span class="op">:</span> <span class="op">{</span> <span class="dt">layout</span><span class="op">:</span> <span class="st">&#39;vertical&#39;</span><span class="op">,</span> <span class="dt">align</span><span class="op">:</span> <span class="st">&#39;right&#39;</span><span class="op">,</span>
+        <span class="dt">verticalAlign</span><span class="op">:</span> <span class="st">&#39;middle&#39;</span><span class="op">,</span> <span class="dt">borderWidth</span><span class="op">:</span> <span class="dv">0</span> <span class="op">},</span>
+  <span class="dt">series</span><span class="op">:</span> [<span class="op">{</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Tokyo&#39;</span><span class="op">,</span>    <span class="dt">data</span><span class="op">:</span> [ <span class="fl">7.0</span><span class="op">,</span> <span class="fl">6.9</span><span class="op">,</span> <span class="fl">9.5</span><span class="op">,</span> <span class="fl">14.5</span><span class="op">,</span> <span class="co">//…</span>
+           <span class="op">{</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;New York&#39;</span><span class="op">,</span> <span class="dt">data</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.8</span><span class="op">,</span> <span class="fl">5.7</span><span class="op">,</span> <span class="fl">11.3</span><span class="op">,</span> <span class="co">//…</span>
+           <span class="op">{</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Berlin&#39;</span><span class="op">,</span>   <span class="dt">data</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.9</span><span class="op">,</span> <span class="fl">0.6</span><span class="op">,</span> <span class="fl">3.5</span><span class="op">,</span>  <span class="fl">8.4</span><span class="op">,</span> <span class="co">//…</span>
+           <span class="op">{</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;London&#39;</span><span class="op">,</span>   <span class="dt">data</span><span class="op">:</span> [ <span class="fl">3.9</span><span class="op">,</span> <span class="fl">4.2</span><span class="op">,</span> <span class="fl">5.7</span><span class="op">,</span>  <span class="fl">8.5</span><span class="op">,</span> <span class="co">//…</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
 </section><section id="where-one-statement-a-chart" class="slide level2">
 <h1>Where One Statement = A Chart</h1>
 <svg width="592px" height="418px" viewBox="0 0 592 418" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:relative;left:124px;">
@@ -31,12 +31,12 @@
 </section><section id="charting-library---buying-a-home" class="slide level2 photoslide">
 <h1>Charting Library - Buying a Home</h1>
 <figure>
-<img src="../../img/ForSale.jpg" />
+<img src="../../img/ForSale.jpg" alt="" />
 </figure>
 </section><section id="d3---buying-a-home-at-home-depot" class="slide level2 photoslide">
 <h1>D3 - Buying a Home at Home Depot</h1>
 <figure>
-<img src="../../img/HomeDepot.jpg" />
+<img src="../../img/HomeDepot.jpg" alt="" />
 </figure>
 </section><section id="d3-philosophy" class="slide level2">
 <h1>D3 Philosophy</h1>
@@ -66,7 +66,7 @@
 </ol>
 </section><section id="html-scaffolding" class="slide level2">
 <h1>HTML Scaffolding</h1>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html&gt;</span>
 <span class="kw">&lt;head&gt;</span>
   <span class="kw">&lt;meta</span><span class="ot"> charset=</span><span class="st">&#39;utf-8&#39;</span><span class="kw">&gt;</span>
@@ -75,25 +75,25 @@
 <span class="kw">&lt;body&gt;</span>
   <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&#39;http://d3js.org/d3.v3.min.js&#39;</span><span class="kw">&gt;&lt;/script&gt;</span>
 <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre>
+<span class="kw">&lt;/html&gt;</span></code></pre></div>
 </section><section id="data-in-json-format" class="slide level2">
 <h1>Data in JSON Format</h1>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">[{
-  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Tokyo&quot;</span>,
-  <span class="st">&quot;data&quot;</span>: [ <span class="fl">7.0</span>, <span class="fl">6.9</span>, <span class="fl">9.5</span>, <span class="fl">14.5</span>, <span class="fl">18.2</span>, <span class="fl">21.5</span>, <span class="fl">25.2</span>, <span class="fl">26.5</span>, <span class="co">//…</span>
- },{
-  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;New York&quot;</span>,
-  <span class="st">&quot;data&quot;</span>: [-<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="fl">5.7</span>, <span class="fl">11.3</span>, <span class="fl">17.0</span>, <span class="fl">22.0</span>, <span class="fl">24.8</span>, <span class="fl">24.1</span>, <span class="co">//…</span>
- },{
-  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Berlin&quot;</span>,
-  <span class="st">&quot;data&quot;</span>: [-<span class="fl">0.9</span>, <span class="fl">0.6</span>, <span class="fl">3.5</span>,  <span class="fl">8.4</span>, <span class="fl">13.5</span>, <span class="fl">17.0</span>, <span class="fl">18.6</span>, <span class="fl">17.9</span>, <span class="co">//…</span>
- },{
-  <span class="st">&quot;name&quot;</span>: <span class="st">&quot;London&quot;</span>,
-  <span class="st">&quot;data&quot;</span>: [ <span class="fl">3.9</span>, <span class="fl">4.2</span>, <span class="fl">5.7</span>,  <span class="fl">8.5</span>, <span class="fl">11.9</span>, <span class="fl">15.2</span>, <span class="fl">17.0</span>, <span class="fl">16.6</span>, <span class="co">//…</span>
-}]</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">[<span class="op">{</span>
+  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Tokyo&quot;</span><span class="op">,</span>
+  <span class="st">&quot;data&quot;</span><span class="op">:</span> [ <span class="fl">7.0</span><span class="op">,</span> <span class="fl">6.9</span><span class="op">,</span> <span class="fl">9.5</span><span class="op">,</span> <span class="fl">14.5</span><span class="op">,</span> <span class="fl">18.2</span><span class="op">,</span> <span class="fl">21.5</span><span class="op">,</span> <span class="fl">25.2</span><span class="op">,</span> <span class="fl">26.5</span><span class="op">,</span> <span class="co">//…</span>
+ <span class="op">},{</span>
+  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;New York&quot;</span><span class="op">,</span>
+  <span class="st">&quot;data&quot;</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.2</span><span class="op">,</span> <span class="fl">0.8</span><span class="op">,</span> <span class="fl">5.7</span><span class="op">,</span> <span class="fl">11.3</span><span class="op">,</span> <span class="fl">17.0</span><span class="op">,</span> <span class="fl">22.0</span><span class="op">,</span> <span class="fl">24.8</span><span class="op">,</span> <span class="fl">24.1</span><span class="op">,</span> <span class="co">//…</span>
+ <span class="op">},{</span>
+  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Berlin&quot;</span><span class="op">,</span>
+  <span class="st">&quot;data&quot;</span><span class="op">:</span> [<span class="op">-</span><span class="fl">0.9</span><span class="op">,</span> <span class="fl">0.6</span><span class="op">,</span> <span class="fl">3.5</span><span class="op">,</span>  <span class="fl">8.4</span><span class="op">,</span> <span class="fl">13.5</span><span class="op">,</span> <span class="fl">17.0</span><span class="op">,</span> <span class="fl">18.6</span><span class="op">,</span> <span class="fl">17.9</span><span class="op">,</span> <span class="co">//…</span>
+ <span class="op">},{</span>
+  <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;London&quot;</span><span class="op">,</span>
+  <span class="st">&quot;data&quot;</span><span class="op">:</span> [ <span class="fl">3.9</span><span class="op">,</span> <span class="fl">4.2</span><span class="op">,</span> <span class="fl">5.7</span><span class="op">,</span>  <span class="fl">8.5</span><span class="op">,</span> <span class="fl">11.9</span><span class="op">,</span> <span class="fl">15.2</span><span class="op">,</span> <span class="fl">17.0</span><span class="op">,</span> <span class="fl">16.6</span><span class="op">,</span> <span class="co">//…</span>
+<span class="op">}</span>]</code></pre></div>
 </section><section id="retrieve-the-data" class="slide level2">
 <h1>Retrieve the Data</h1>
-<table class="sourceCode javascript numberLines line-1 line-5 line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-1 line-5 line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -105,24 +105,24 @@
 10
 11
 12
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">d3</span>.<span class="fu">json</span>(<span class="st">&#39;data.json&#39;</span>, <span class="kw">function</span>(error, datasets) {
-  <span class="ot">datasets</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(dataset) {
-    <span class="ot">dataset</span>.<span class="fu">data</span> = <span class="ot">dataset</span>.<span class="ot">data</span>.<span class="fu">map</span>(<span class="kw">function</span>(d,i) {
-      <span class="kw">return</span> {
-        <span class="st">&quot;date&quot;</span>: <span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">month</span>.<span class="fu">offset</span>(
-                  <span class="kw">new</span> <span class="fu">Date</span>(<span class="dv">2013</span>,<span class="dv">0</span>,<span class="dv">1</span>), i),
-        <span class="st">&quot;temp&quot;</span>: d
-      };
-  });
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">json</span>(<span class="st">&#39;data.json&#39;</span><span class="op">,</span> <span class="kw">function</span>(error<span class="op">,</span> datasets) <span class="op">{</span>
+  <span class="va">datasets</span>.<span class="at">forEach</span>(<span class="kw">function</span>(dataset) <span class="op">{</span>
+    <span class="va">dataset</span>.<span class="at">data</span> <span class="op">=</span> <span class="va">dataset</span>.<span class="va">data</span>.<span class="at">map</span>(<span class="kw">function</span>(d<span class="op">,</span>i) <span class="op">{</span>
+      <span class="cf">return</span> <span class="op">{</span>
+        <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="va">d3</span>.<span class="va">time</span>.<span class="va">month</span>.<span class="at">offset</span>(
+                  <span class="kw">new</span> <span class="at">Date</span>(<span class="dv">2013</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span>)<span class="op">,</span> i)<span class="op">,</span>
+        <span class="st">&quot;temp&quot;</span><span class="op">:</span> d
+      <span class="op">};</span>
+  <span class="op">}</span>)<span class="op">;</span>
 
   <span class="co">// Continue...</span>
-})</code></pre></td></tr></table>
+<span class="op">}</span>)</code></pre></td></tr></table></div>
 </section><section id="use-a-scale-to-map-data-dom" class="slide level2">
 <h1>Use a Scale to Map Data ⇒ DOM</h1>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> y = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
-          .<span class="fu">range</span>([height, <span class="dv">0</span>])
-          .<span class="fu">domain</span>(<span class="ot">d3</span>.<span class="fu">extent</span>(dataset, <span class="ot">dataset</span>.<span class="fu">temp</span>))
-          .<span class="fu">nice</span>();</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> y <span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">linear</span>()
+          .<span class="at">range</span>([height<span class="op">,</span> <span class="dv">0</span>])
+          .<span class="at">domain</span>(<span class="va">d3</span>.<span class="at">extent</span>(dataset<span class="op">,</span> <span class="va">dataset</span>.<span class="at">temp</span>))
+          .<span class="at">nice</span>()<span class="op">;</span></code></pre></div>
 <ul>
 <li>Range is from <code>height</code> to <code>0</code> because SVG coordinates position y-value of <code>0</code> at top</li>
 <li><code>d3.extent()</code> finds minimum and maximum of array with defined accessor</li>
@@ -130,28 +130,28 @@
 </ul>
 </section><section id="scales-dont-have-to-be-linear" class="slide level2">
 <h1>Scales Don’t Have to be Linear</h1>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> x = <span class="ot">d3</span>.<span class="ot">time</span>.<span class="fu">scale</span>()
-          .<span class="fu">range</span>([<span class="dv">0</span>, width])
-          .<span class="fu">domain</span>(
-            <span class="ot">d3</span>.<span class="fu">extent</span>(dataset, <span class="ot">dataset</span>.<span class="fu">date</span>)
-              .<span class="fu">map</span>(<span class="kw">function</span>(d, i) {
-                <span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">day</span>.<span class="fu">offset</span>(d, i ? <span class="dv">15</span> : -<span class="dv">16</span>)
-            })
-        );</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> x <span class="op">=</span> <span class="va">d3</span>.<span class="va">time</span>.<span class="at">scale</span>()
+          .<span class="at">range</span>([<span class="dv">0</span><span class="op">,</span> width])
+          .<span class="at">domain</span>(
+            <span class="va">d3</span>.<span class="at">extent</span>(dataset<span class="op">,</span> <span class="va">dataset</span>.<span class="at">date</span>)
+              .<span class="at">map</span>(<span class="kw">function</span>(d<span class="op">,</span> i) <span class="op">{</span>
+                <span class="va">d3</span>.<span class="va">time</span>.<span class="va">day</span>.<span class="at">offset</span>(d<span class="op">,</span> i <span class="op">?</span> <span class="dv">15</span> : <span class="op">-</span><span class="dv">16</span>)
+            <span class="op">}</span>)
+        )<span class="op">;</span></code></pre></div>
 <ul>
 <li>Domain of x-axis extended 16 days before and 15 days after data values</li>
 </ul>
 </section><section id="create-the-svg-container" class="slide level2">
 <h1>Create the SVG Container</h1>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;body&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
-            .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>,  width)
-            .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height);</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> svg <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;body&quot;</span>).<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)
+            .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span>  width)
+            .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height)<span class="op">;</span></code></pre></div>
 <ul>
 <li>Potential gotcha: With <span class="smcp">D</span>3, unlike jQuery, the <code>append()</code> function returns the newly appended DOM element(s) instead of the original selection.</li>
 </ul>
 </section><section id="graph-the-data-points" class="slide level2">
 <h1>Graph the Data Points</h1>
-<table class="sourceCode javascript numberLines line-1 line-2 line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-1 line-2 line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -162,17 +162,17 @@
 9
 10
 11
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
-      .<span class="fu">data</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
-    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-      .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;point&quot;</span>)
-      .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
-      .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
-      .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>(idx));
-      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) +
-                        <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
-      });</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
+      .<span class="at">data</span>(<span class="va">dataset</span>.<span class="at">data</span>)
+    .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+      .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;point&quot;</span>)
+      .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">category10</span>(idx))
+      .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">category10</span>(idx))
+      .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">symbol</span>(idx))<span class="op">;</span>
+      .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> <span class="at">x</span>(<span class="va">d</span>.<span class="at">date</span>) <span class="op">+</span>
+                        <span class="st">&quot;,&quot;</span> <span class="op">+</span> <span class="at">y</span>(<span class="va">d</span>.<span class="at">temp</span>) <span class="op">+</span> <span class="st">&quot;)&quot;</span><span class="op">;</span>
+      <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 </section><section id="associate-dom-and-data" class="slide level2" data-custom-next="domAndData">
 <h1>Associate DOM and Data</h1>
 <svg id="svgDomAndData" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="688" height="236" xml:space="preserve" style="position:relative;top:60px;left:56px;">
@@ -180,7 +180,7 @@
 </svg>
 </section><section id="graph-the-data-points-contd" class="slide level2">
 <h1>Graph the Data Points (cont’d)</h1>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -191,20 +191,20 @@
 9
 10
 11
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
-      .<span class="fu">data</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
-    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-      .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;point&quot;</span>)
-      .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
-      .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>(idx))
-      .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>(idx));
-      .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) +
-                        <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
-      });</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
+      .<span class="at">data</span>(<span class="va">dataset</span>.<span class="at">data</span>)
+    .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+      .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;point&quot;</span>)
+      .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">category10</span>(idx))
+      .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">category10</span>(idx))
+      .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">symbol</span>(idx))<span class="op">;</span>
+      .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> <span class="at">x</span>(<span class="va">d</span>.<span class="at">date</span>) <span class="op">+</span>
+                        <span class="st">&quot;,&quot;</span> <span class="op">+</span> <span class="at">y</span>(<span class="va">d</span>.<span class="at">temp</span>) <span class="op">+</span> <span class="st">&quot;)&quot;</span><span class="op">;</span>
+      <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 </section><section id="add-the-connecting-lines" class="slide level2">
 <h1>Add the Connecting Lines</h1>
-<table class="sourceCode javascript numberLines line-2 line-6 line-7 line-8 line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-2 line-6 line-7 line-8 line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -214,34 +214,34 @@
 8
 9
 10
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">datum</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
-    .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>,
-        <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
-            .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
-            .<span class="fu">y</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>); })
-    );</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">datum</span>(<span class="va">dataset</span>.<span class="at">data</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="st">&quot;none&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+    .<span class="at">attr</span>(<span class="st">&quot;stroke-width&quot;</span><span class="op">,</span> <span class="st">&quot;3&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span>
+        <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">line</span>()
+            .<span class="at">x</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">x</span>(<span class="va">d</span>.<span class="at">date</span>)<span class="op">;</span> <span class="op">}</span>)
+            .<span class="at">y</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">y</span>(<span class="va">d</span>.<span class="at">temp</span>)<span class="op">;</span> <span class="op">}</span>)
+    )<span class="op">;</span></code></pre></td></tr></table></div>
 <ul>
 <li><code>datum()</code>: maps the entire dataset array to a single element</li>
 <li><code>d3.svg.line()</code>: <span class="smcp">SVG</span> <code>d</code> attribute for the path</li>
 </ul>
 </section><section id="add-the-axes" class="slide level2">
 <h1>Add the Axes</h1>
-<table class="sourceCode javascript numberLines line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-4"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
-    .<span class="fu">call</span>(<span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
-              .<span class="fu">scale</span>(x)
-              .<span class="fu">tickFormat</span>(<span class="ot">d3</span>.<span class="ot">time</span>.<span class="fu">format</span>(<span class="st">&quot;%b&quot;</span>))
-              .<span class="fu">orient</span>(<span class="st">&quot;bottom&quot;</span>));</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(0,&quot;</span> <span class="op">+</span> height <span class="op">+</span> <span class="st">&quot;)&quot;</span>)
+    .<span class="at">call</span>(<span class="va">d3</span>.<span class="va">svg</span>.<span class="at">axis</span>()
+              .<span class="at">scale</span>(x)
+              .<span class="at">tickFormat</span>(<span class="va">d3</span>.<span class="va">time</span>.<span class="at">format</span>(<span class="st">&quot;%b&quot;</span>))
+              .<span class="at">orient</span>(<span class="st">&quot;bottom&quot;</span>))<span class="op">;</span></code></pre></td></tr></table></div>
 <ul>
 <li><code>d3.svg.axis()</code> constructs a complete <span class="smcp">SVG</span> axis, including tick marks, grid lines, labels, etc.</li>
 <li>The <code>scale()</code> method defines the values for the axis</li>
@@ -254,7 +254,7 @@
 </section><section id="thats-a-lot-of-code" class="slide level2">
 <h1>That’s a Lot of Code</h1>
 <div class="codewrapper">
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -542,27 +542,27 @@
 
 <span class="co">// What colors are we going to use for the different</span>
 <span class="co">// datasets.</span>
-<span class="kw">var</span> color = <span class="kw">function</span>(i) {
-  <span class="kw">var</span> colors = [<span class="st">&quot;#CA0000&quot;</span>, <span class="st">&quot;#A2005C&quot;</span>,
-                <span class="st">&quot;#7EBD00&quot;</span>, <span class="st">&quot;#007979&quot;</span>];
-  <span class="kw">return</span> colors[i % <span class="ot">colors</span>.<span class="fu">length</span>]
-};
+<span class="kw">var</span> color <span class="op">=</span> <span class="kw">function</span>(i) <span class="op">{</span>
+  <span class="kw">var</span> colors <span class="op">=</span> [<span class="st">&quot;#CA0000&quot;</span><span class="op">,</span> <span class="st">&quot;#A2005C&quot;</span><span class="op">,</span>
+                <span class="st">&quot;#7EBD00&quot;</span><span class="op">,</span> <span class="st">&quot;#007979&quot;</span>]<span class="op">;</span>
+  <span class="cf">return</span> colors[i <span class="op">%</span> <span class="va">colors</span>.<span class="at">length</span>]
+<span class="op">};</span>
 
 <span class="co">// What symbols are we going to use for the different</span>
 <span class="co">// datasets.</span>
-<span class="kw">var</span> symbol = <span class="kw">function</span>(i) {
-  <span class="kw">var</span> symbols = [<span class="st">&quot;circle&quot;</span>, <span class="st">&quot;diamond&quot;</span>,
-                 <span class="st">&quot;square&quot;</span>, <span class="st">&quot;triangle-up&quot;</span>,
-                 <span class="st">&quot;triangle-down&quot;</span>, <span class="st">&quot;cross&quot;</span>];
-  <span class="kw">return</span> <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">symbol</span>()
-           .<span class="fu">size</span>(<span class="dv">100</span>)
-           .<span class="fu">type</span>(symbols[i % <span class="ot">symbols</span>.<span class="fu">length</span>]);
-};
+<span class="kw">var</span> symbol <span class="op">=</span> <span class="kw">function</span>(i) <span class="op">{</span>
+  <span class="kw">var</span> symbols <span class="op">=</span> [<span class="st">&quot;circle&quot;</span><span class="op">,</span> <span class="st">&quot;diamond&quot;</span><span class="op">,</span>
+                 <span class="st">&quot;square&quot;</span><span class="op">,</span> <span class="st">&quot;triangle-up&quot;</span><span class="op">,</span>
+                 <span class="st">&quot;triangle-down&quot;</span><span class="op">,</span> <span class="st">&quot;cross&quot;</span>]<span class="op">;</span>
+  <span class="cf">return</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">symbol</span>()
+           .<span class="at">size</span>(<span class="dv">100</span>)
+           .<span class="at">type</span>(symbols[i <span class="op">%</span> <span class="va">symbols</span>.<span class="at">length</span>])<span class="op">;</span>
+<span class="op">};</span>
 
 <span class="co">// Define the dimensions of the visualization.</span>
-<span class="kw">var</span> margin = {<span class="dt">top</span>: <span class="dv">60</span>, <span class="dt">right</span>: <span class="dv">160</span>, <span class="dt">bottom</span>: <span class="dv">30</span>, <span class="dt">left</span>: <span class="dv">50</span>},
-    width = <span class="dv">840</span> - <span class="ot">margin</span>.<span class="fu">left</span> - <span class="ot">margin</span>.<span class="fu">right</span>,
-    height = <span class="dv">520</span> - <span class="ot">margin</span>.<span class="fu">top</span> - <span class="ot">margin</span>.<span class="fu">bottom</span>;
+<span class="kw">var</span> margin <span class="op">=</span> <span class="op">{</span><span class="dt">top</span><span class="op">:</span> <span class="dv">60</span><span class="op">,</span> <span class="dt">right</span><span class="op">:</span> <span class="dv">160</span><span class="op">,</span> <span class="dt">bottom</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">left</span><span class="op">:</span> <span class="dv">50</span><span class="op">},</span>
+    width <span class="op">=</span> <span class="dv">840</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">right</span><span class="op">,</span>
+    height <span class="op">=</span> <span class="dv">520</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">bottom</span><span class="op">;</span>
 
 <span class="co">// Since this is a line chart, it graphs x- and y-values.</span>
 <span class="co">// Define scales for each. Both scales span the size of</span>
@@ -578,10 +578,10 @@
 <span class="co">// define the type of each scale and its range. We&#39;ll</span>
 <span class="co">// add a definition of the domain after we retrieve the</span>
 <span class="co">// actual data.</span>
-<span class="kw">var</span> x = <span class="ot">d3</span>.<span class="ot">time</span>.<span class="fu">scale</span>()
-          .<span class="fu">range</span>([<span class="dv">0</span>, width]),
-    y = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
-          .<span class="fu">range</span>([height, <span class="dv">0</span>]);
+<span class="kw">var</span> x <span class="op">=</span> <span class="va">d3</span>.<span class="va">time</span>.<span class="at">scale</span>()
+          .<span class="at">range</span>([<span class="dv">0</span><span class="op">,</span> width])<span class="op">,</span>
+    y <span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">linear</span>()
+          .<span class="at">range</span>([height<span class="op">,</span> <span class="dv">0</span>])<span class="op">;</span>
 
 <span class="co">// Define the axes for both x- and y-values. For the</span>
 <span class="co">// x-axis, we specify a format for the tick labels</span>
@@ -589,22 +589,22 @@
 <span class="co">// the month value for the data. (The year is unknown.)</span>
 <span class="co">// Without the override, D3 will try to display an</span>
 <span class="co">// actual date (e.g. with a year).</span>
-<span class="kw">var</span> xAxis = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
-  .<span class="fu">scale</span>(x)
-  .<span class="fu">tickSize</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)
-  .<span class="fu">tickPadding</span>(<span class="dv">10</span>)
-  .<span class="fu">tickFormat</span>(<span class="ot">d3</span>.<span class="ot">time</span>.<span class="fu">format</span>(<span class="st">&quot;%b&quot;</span>))
-  .<span class="fu">orient</span>(<span class="st">&quot;bottom&quot;</span>);
+<span class="kw">var</span> xAxis <span class="op">=</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">axis</span>()
+  .<span class="at">scale</span>(x)
+  .<span class="at">tickSize</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)
+  .<span class="at">tickPadding</span>(<span class="dv">10</span>)
+  .<span class="at">tickFormat</span>(<span class="va">d3</span>.<span class="va">time</span>.<span class="at">format</span>(<span class="st">&quot;%b&quot;</span>))
+  .<span class="at">orient</span>(<span class="st">&quot;bottom&quot;</span>)<span class="op">;</span>
 
 <span class="co">// For the y-axis we add grid lines by specifying a</span>
 <span class="co">// negative value for the major tick mark size. We</span>
 <span class="co">// set the size of the grid lines to be the entire</span>
 <span class="co">// width of the graph.</span>
-<span class="kw">var</span> yAxis = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
-  .<span class="fu">scale</span>(y)
-  .<span class="fu">tickSize</span>(-width, <span class="dv">0</span>, <span class="dv">0</span>)
-  .<span class="fu">tickPadding</span>(<span class="dv">10</span>)
-  .<span class="fu">orient</span>(<span class="st">&quot;left&quot;</span>);
+<span class="kw">var</span> yAxis <span class="op">=</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">axis</span>()
+  .<span class="at">scale</span>(y)
+  .<span class="at">tickSize</span>(<span class="op">-</span>width<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>)
+  .<span class="at">tickPadding</span>(<span class="dv">10</span>)
+  .<span class="at">orient</span>(<span class="st">&quot;left&quot;</span>)<span class="op">;</span>
 
 <span class="co">// Define a convenience function to create a line on</span>
 <span class="co">// the chart. The line&#39;s x-values are dates and the</span>
@@ -613,25 +613,25 @@
 <span class="co">// function that, when passed an array of data</span>
 <span class="co">// points, returns an SVG path whose coordinates</span>
 <span class="co">// match the x- and y-scales of the chart.</span>
-<span class="kw">var</span> line = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
-  .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
-  .<span class="fu">y</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>); });
+<span class="kw">var</span> line <span class="op">=</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">line</span>()
+  .<span class="at">x</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">x</span>(<span class="va">d</span>.<span class="at">date</span>)<span class="op">;</span> <span class="op">}</span>)
+  .<span class="at">y</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">y</span>(<span class="va">d</span>.<span class="at">temp</span>)<span class="op">;</span> <span class="op">}</span>)<span class="op">;</span>
 
 <span class="co">// Create the SVG container for the visualization and</span>
 <span class="co">// define its dimensions. Within that container, add a</span>
 <span class="co">// group element (`&lt;g&gt;`) that can be transformed via</span>
 <span class="co">// a translation to account for the margins.</span>
-<span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;body&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
-  .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="ot">margin</span>.<span class="fu">right</span>)
-  .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="ot">margin</span>.<span class="fu">bottom</span>)
-  .<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-  .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> + <span class="ot">margin</span>.<span class="fu">left</span> +
-    <span class="st">&quot;,&quot;</span> + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="st">&quot;)&quot;</span>);
+<span class="kw">var</span> svg <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;body&quot;</span>).<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)
+  .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> width <span class="op">+</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">right</span>)
+  .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">bottom</span>)
+  .<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+  .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span>
+    <span class="st">&quot;,&quot;</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> <span class="st">&quot;)&quot;</span>)<span class="op">;</span>
 
 <span class="co">// Retrieve the data. Even though this particular</span>
 <span class="co">// data file is small enough to embed directly, it&#39;s</span>
 <span class="co">// generally a good idea to keep the data separate.</span>
-<span class="ot">d3</span>.<span class="fu">json</span>(<span class="st">&#39;data.json&#39;</span>, <span class="kw">function</span>(error, datasets) {
+<span class="va">d3</span>.<span class="at">json</span>(<span class="st">&#39;data.json&#39;</span><span class="op">,</span> <span class="kw">function</span>(error<span class="op">,</span> datasets) <span class="op">{</span>
 
   <span class="co">// We&#39;re not bothering to check for error returns</span>
   <span class="co">// for this simple demonstration.</span>
@@ -640,8 +640,8 @@
   <span class="co">// JavaScript object. Instead of just an array</span>
   <span class="co">// of numbers, make it an array of objects with</span>
   <span class="co">// appropriate properties.</span>
-  <span class="ot">datasets</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(dataset) {
-    <span class="ot">dataset</span>.<span class="fu">data</span> = <span class="ot">dataset</span>.<span class="ot">data</span>.<span class="fu">map</span>(<span class="kw">function</span>(d,i) {
+  <span class="va">datasets</span>.<span class="at">forEach</span>(<span class="kw">function</span>(dataset) <span class="op">{</span>
+    <span class="va">dataset</span>.<span class="at">data</span> <span class="op">=</span> <span class="va">dataset</span>.<span class="va">data</span>.<span class="at">map</span>(<span class="kw">function</span>(d<span class="op">,</span>i) <span class="op">{</span>
 
       <span class="co">// Although no year is given for the data</span>
       <span class="co">// (so we won&#39;t display one), we can simply</span>
@@ -649,13 +649,13 @@
       <span class="co">// to use for our dates. We&#39;ll start in January</span>
       <span class="co">// and increment by the index of the data value.</span>
       <span class="co">// The data value itself is the temperature.</span>
-      <span class="kw">return</span> {
-        <span class="st">&quot;date&quot;</span>: <span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">month</span>.<span class="fu">offset</span>(
-          <span class="kw">new</span> <span class="fu">Date</span>(<span class="dv">2013</span>,<span class="dv">0</span>,<span class="dv">1</span>), i),
-        <span class="st">&quot;temp&quot;</span>: d
-      };
-    });
-  })
+      <span class="cf">return</span> <span class="op">{</span>
+        <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="va">d3</span>.<span class="va">time</span>.<span class="va">month</span>.<span class="at">offset</span>(
+          <span class="kw">new</span> <span class="at">Date</span>(<span class="dv">2013</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span>)<span class="op">,</span> i)<span class="op">,</span>
+        <span class="st">&quot;temp&quot;</span><span class="op">:</span> d
+      <span class="op">};</span>
+    <span class="op">}</span>)<span class="op">;</span>
+  <span class="op">}</span>)
 
   <span class="co">// Now that we have the data, we can calculate</span>
   <span class="co">// the domains for our x- and y-values. The x-values</span>
@@ -666,93 +666,93 @@
   <span class="co">// last date. To account for datasets of differing</span>
   <span class="co">// lengths, we get the maximum length from among all</span>
   <span class="co">// datasets.</span>
-  <span class="kw">var</span> xMin = <span class="kw">new</span> <span class="fu">Date</span>(<span class="dv">2013</span>,<span class="dv">0</span>,<span class="dv">1</span>),
-      xMax = <span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">month</span>.<span class="fu">offset</span>(xMin,
-               <span class="ot">d3</span>.<span class="fu">max</span>(datasets, <span class="kw">function</span>(dataset) {
-                 <span class="kw">return</span> <span class="ot">dataset</span>.<span class="ot">data</span>.<span class="fu">length</span><span class="dv">-1</span>;
-               }));
-  <span class="ot">x</span>.<span class="fu">domain</span>([<span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">day</span>.<span class="fu">offset</span>(xMin,-<span class="dv">16</span>),
-            <span class="ot">d3</span>.<span class="ot">time</span>.<span class="ot">day</span>.<span class="fu">offset</span>(xMax,<span class="dv">15</span>)]);
+  <span class="kw">var</span> xMin <span class="op">=</span> <span class="kw">new</span> <span class="at">Date</span>(<span class="dv">2013</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span>)<span class="op">,</span>
+      xMax <span class="op">=</span> <span class="va">d3</span>.<span class="va">time</span>.<span class="va">month</span>.<span class="at">offset</span>(xMin<span class="op">,</span>
+               <span class="va">d3</span>.<span class="at">max</span>(datasets<span class="op">,</span> <span class="kw">function</span>(dataset) <span class="op">{</span>
+                 <span class="cf">return</span> <span class="va">dataset</span>.<span class="va">data</span>.<span class="at">length</span><span class="dv">-1</span><span class="op">;</span>
+               <span class="op">}</span>))<span class="op">;</span>
+  <span class="va">x</span>.<span class="at">domain</span>([<span class="va">d3</span>.<span class="va">time</span>.<span class="va">day</span>.<span class="at">offset</span>(xMin<span class="op">,-</span><span class="dv">16</span>)<span class="op">,</span>
+            <span class="va">d3</span>.<span class="va">time</span>.<span class="va">day</span>.<span class="at">offset</span>(xMax<span class="op">,</span><span class="dv">15</span>)])<span class="op">;</span>
 
   <span class="co">// For the y-values, we want the chart to show the</span>
   <span class="co">// minimum and maximum values from all the datasets.</span>
-  <span class="kw">var</span> yMin = <span class="ot">d3</span>.<span class="fu">min</span>(datasets, <span class="kw">function</span>(dataset) {
-               <span class="kw">return</span> <span class="ot">d3</span>.<span class="fu">min</span>(<span class="ot">dataset</span>.<span class="fu">data</span>, <span class="kw">function</span>(d) {
-                 <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">temp</span>;
-               });
-             });
-  <span class="kw">var</span> yMax = <span class="ot">d3</span>.<span class="fu">max</span>(datasets, <span class="kw">function</span>(dataset) {
-               <span class="kw">return</span> <span class="ot">d3</span>.<span class="fu">max</span>(<span class="ot">dataset</span>.<span class="fu">data</span>, <span class="kw">function</span>(d) {
-                 <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">temp</span>;
-               });
-             });
+  <span class="kw">var</span> yMin <span class="op">=</span> <span class="va">d3</span>.<span class="at">min</span>(datasets<span class="op">,</span> <span class="kw">function</span>(dataset) <span class="op">{</span>
+               <span class="cf">return</span> <span class="va">d3</span>.<span class="at">min</span>(<span class="va">dataset</span>.<span class="at">data</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
+                 <span class="cf">return</span> <span class="va">d</span>.<span class="at">temp</span><span class="op">;</span>
+               <span class="op">}</span>)<span class="op">;</span>
+             <span class="op">}</span>)<span class="op">;</span>
+  <span class="kw">var</span> yMax <span class="op">=</span> <span class="va">d3</span>.<span class="at">max</span>(datasets<span class="op">,</span> <span class="kw">function</span>(dataset) <span class="op">{</span>
+               <span class="cf">return</span> <span class="va">d3</span>.<span class="at">max</span>(<span class="va">dataset</span>.<span class="at">data</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
+                 <span class="cf">return</span> <span class="va">d</span>.<span class="at">temp</span><span class="op">;</span>
+               <span class="op">}</span>)<span class="op">;</span>
+             <span class="op">}</span>)<span class="op">;</span>
 
   <span class="co">// The `.nice()` function gives the domain nice</span>
   <span class="co">// rounded limits.</span>
-  <span class="ot">y</span>.<span class="fu">domain</span>([yMin, yMax]).<span class="fu">nice</span>();
+  <span class="va">y</span>.<span class="at">domain</span>([yMin<span class="op">,</span> yMax]).<span class="at">nice</span>()<span class="op">;</span>
 
   <span class="co">// With the domains defined, we now have enough</span>
   <span class="co">// information to complete the axes. We position</span>
   <span class="co">// the x-axis by translating it below the chart.</span>
-  <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;x axis&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
-       .<span class="fu">call</span>(xAxis);
+  <span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;x axis&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(0,&quot;</span> <span class="op">+</span> height <span class="op">+</span> <span class="st">&quot;)&quot;</span>)
+       .<span class="at">call</span>(xAxis)<span class="op">;</span>
 
   <span class="co">// For the y-axis, we add a label.</span>
-  <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;y axis&quot;</span>)
-       .<span class="fu">call</span>(yAxis)
-     .<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;font-size&quot;</span>, <span class="st">&quot;18&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;rotate(-90)&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, <span class="dv">9</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;dy&quot;</span>, <span class="st">&quot;.71em&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
-       .<span class="fu">text</span>(<span class="st">&quot;Temperature (°C)&quot;</span>);
+  <span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;y axis&quot;</span>)
+       .<span class="at">call</span>(yAxis)
+     .<span class="at">append</span>(<span class="st">&quot;text&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;font-size&quot;</span><span class="op">,</span> <span class="st">&quot;18&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;rotate(-90)&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;y&quot;</span><span class="op">,</span> <span class="dv">9</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;dy&quot;</span><span class="op">,</span> <span class="st">&quot;.71em&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;text-anchor&quot;</span><span class="op">,</span> <span class="st">&quot;end&quot;</span>)
+       .<span class="at">text</span>(<span class="st">&quot;Temperature (°C)&quot;</span>)<span class="op">;</span>
 
   <span class="co">// Style the axes. As with other styles, these</span>
   <span class="co">// could be more easily defined in CSS. For this</span>
   <span class="co">// particular code, though, we&#39;re avoiding CSS</span>
   <span class="co">// to make it easy to extract the resulting SVG</span>
   <span class="co">// and paste it into a presentation.</span>
-  <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.axis line, .axis path&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="st">&quot;#bbbbbb&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;2px&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;shape-rendering&quot;</span>, <span class="st">&quot;crispEdges&quot;</span>);
+  <span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;.axis line, .axis path&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="st">&quot;none&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="st">&quot;#bbbbbb&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;stroke-width&quot;</span><span class="op">,</span> <span class="st">&quot;2px&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;shape-rendering&quot;</span><span class="op">,</span> <span class="st">&quot;crispEdges&quot;</span>)<span class="op">;</span>
 
-  <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.axis text&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;font-size&quot;</span>, <span class="st">&quot;18&quot;</span>);
+  <span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;.axis text&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;font-size&quot;</span><span class="op">,</span> <span class="st">&quot;18&quot;</span>)<span class="op">;</span>
 
-  <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.axis .tick line&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="st">&quot;#d0d0d0&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;1&quot;</span>);
+  <span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;.axis .tick line&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="st">&quot;#d0d0d0&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;stroke-width&quot;</span><span class="op">,</span> <span class="st">&quot;1&quot;</span>)<span class="op">;</span>
 
   <span class="co">// Plot the data and the legend</span>
-  <span class="ot">datasets</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(dataset, i) {
+  <span class="va">datasets</span>.<span class="at">forEach</span>(<span class="kw">function</span>(dataset<span class="op">,</span> i) <span class="op">{</span>
 
       <span class="co">// Individual points</span>
-      <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.point.dataset-&quot;</span> + i)
-           .<span class="fu">data</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
-         .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-           .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;point dataset-&quot;</span> + i)
-           .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="fu">color</span>(i))
-           .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
-           .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="fu">symbol</span>(i))
-           .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
-             <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) +
-                         <span class="st">&quot;,&quot;</span> + <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>) + <span class="st">&quot;)&quot;</span>;
-           });
+      <span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;.point.dataset-&quot;</span> <span class="op">+</span> i)
+           .<span class="at">data</span>(<span class="va">dataset</span>.<span class="at">data</span>)
+         .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+           .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;point dataset-&quot;</span> <span class="op">+</span> i)
+           .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+           .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+           .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> <span class="at">symbol</span>(i))
+           .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
+             <span class="cf">return</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> <span class="at">x</span>(<span class="va">d</span>.<span class="at">date</span>) <span class="op">+</span>
+                         <span class="st">&quot;,&quot;</span> <span class="op">+</span> <span class="at">y</span>(<span class="va">d</span>.<span class="at">temp</span>) <span class="op">+</span> <span class="st">&quot;)&quot;</span><span class="op">;</span>
+           <span class="op">}</span>)<span class="op">;</span>
 
       <span class="co">// Connect the points with lines</span>
-      <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-         .<span class="fu">datum</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;line dataset-&quot;</span> + i)
-         .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
-         .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, line);
+      <span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+         .<span class="at">datum</span>(<span class="va">dataset</span>.<span class="at">data</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;line dataset-&quot;</span> <span class="op">+</span> i)
+         .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="st">&quot;none&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+         .<span class="at">attr</span>(<span class="st">&quot;stroke-width&quot;</span><span class="op">,</span> <span class="st">&quot;3&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> line)<span class="op">;</span>
 
       <span class="co">// Legend. In general, it would be cleaner</span>
       <span class="co">// to create an SVG group for the legend,</span>
@@ -762,58 +762,58 @@
       <span class="co">// it in this case because we want to do</span>
       <span class="co">// some fancy animation tricks with the</span>
       <span class="co">// resulting SVG within the presentation.</span>
-      <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;point dataset-&quot;</span> + i)
-         .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="fu">color</span>(i))
-         .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
-         .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, <span class="fu">symbol</span>(i))
-         .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> +
-           (<span class="ot">margin</span>.<span class="fu">left</span> + width + <span class="dv">40</span>) + <span class="st">&quot;,&quot;</span> +
-           (<span class="dv">24</span>*i + <span class="ot">margin</span>.<span class="fu">top</span> + height/<span class="dv">2</span> -
-            <span class="dv">24</span>*<span class="ot">datasets</span>.<span class="fu">length</span>/<span class="dv">2</span> - <span class="dv">6</span>) + <span class="st">&quot;)&quot;</span>)
+      <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;point dataset-&quot;</span> <span class="op">+</span> i)
+         .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+         .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+         .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> <span class="at">symbol</span>(i))
+         .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span>
+           (<span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> width <span class="op">+</span> <span class="dv">40</span>) <span class="op">+</span> <span class="st">&quot;,&quot;</span> <span class="op">+</span>
+           (<span class="dv">24</span><span class="op">*</span>i <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> height/<span class="dv">2</span> <span class="op">-</span>
+            <span class="dv">24</span><span class="op">*</span><span class="va">datasets</span>.<span class="at">length</span>/<span class="dv">2</span> <span class="op">-</span> <span class="dv">6</span>) <span class="op">+</span> <span class="st">&quot;)&quot;</span>)
 
-      <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;line&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;line dataset-&quot;</span> + i)
-         .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
-         .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;x1&quot;</span>, <span class="ot">margin</span>.<span class="fu">left</span> + width + <span class="dv">30</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;x2&quot;</span>, <span class="ot">margin</span>.<span class="fu">left</span> + width + <span class="dv">50</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;y1&quot;</span>, <span class="dv">24</span>*i + <span class="ot">margin</span>.<span class="fu">top</span> + height/<span class="dv">2</span> -
-                     <span class="dv">24</span>*<span class="ot">datasets</span>.<span class="fu">length</span>/<span class="dv">2</span> - <span class="dv">6</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;y2&quot;</span>, <span class="dv">24</span>*i + <span class="ot">margin</span>.<span class="fu">top</span> + height/<span class="dv">2</span> -
-                     <span class="dv">24</span>*<span class="ot">datasets</span>.<span class="fu">length</span>/<span class="dv">2</span> - <span class="dv">6</span>);
+      <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="at">append</span>(<span class="st">&quot;line&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;line dataset-&quot;</span> <span class="op">+</span> i)
+         .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+         .<span class="at">attr</span>(<span class="st">&quot;stroke-width&quot;</span><span class="op">,</span> <span class="st">&quot;3&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;x1&quot;</span><span class="op">,</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> width <span class="op">+</span> <span class="dv">30</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;x2&quot;</span><span class="op">,</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> width <span class="op">+</span> <span class="dv">50</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;y1&quot;</span><span class="op">,</span> <span class="dv">24</span><span class="op">*</span>i <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> height/<span class="dv">2</span> <span class="op">-</span>
+                     <span class="dv">24</span><span class="op">*</span><span class="va">datasets</span>.<span class="at">length</span>/<span class="dv">2</span> <span class="op">-</span> <span class="dv">6</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;y2&quot;</span><span class="op">,</span> <span class="dv">24</span><span class="op">*</span>i <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> height/<span class="dv">2</span> <span class="op">-</span>
+                     <span class="dv">24</span><span class="op">*</span><span class="va">datasets</span>.<span class="at">length</span>/<span class="dv">2</span> <span class="op">-</span> <span class="dv">6</span>)<span class="op">;</span>
 
-      <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> +
-           (<span class="ot">margin</span>.<span class="fu">left</span> + width + <span class="dv">60</span>) + <span class="st">&quot;,&quot;</span> +
-           (<span class="dv">24</span>*i + <span class="ot">margin</span>.<span class="fu">top</span> + height/<span class="dv">2</span> -
-            <span class="dv">24</span>*<span class="ot">datasets</span>.<span class="fu">length</span>/<span class="dv">2</span>) + <span class="st">&quot;)&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;legend&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;font-size&quot;</span>, <span class="st">&quot;18&quot;</span>)
-         .<span class="fu">attr</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;left&quot;</span>)
-         .<span class="fu">text</span>(<span class="ot">dataset</span>.<span class="fu">name</span>);
+      <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="at">append</span>(<span class="st">&quot;text&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span>
+           (<span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> width <span class="op">+</span> <span class="dv">60</span>) <span class="op">+</span> <span class="st">&quot;,&quot;</span> <span class="op">+</span>
+           (<span class="dv">24</span><span class="op">*</span>i <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> height/<span class="dv">2</span> <span class="op">-</span>
+            <span class="dv">24</span><span class="op">*</span><span class="va">datasets</span>.<span class="at">length</span>/<span class="dv">2</span>) <span class="op">+</span> <span class="st">&quot;)&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;legend&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;font-size&quot;</span><span class="op">,</span> <span class="st">&quot;18&quot;</span>)
+         .<span class="at">attr</span>(<span class="st">&quot;text-anchor&quot;</span><span class="op">,</span> <span class="st">&quot;left&quot;</span>)
+         .<span class="at">text</span>(<span class="va">dataset</span>.<span class="at">name</span>)<span class="op">;</span>
 
-  });
+  <span class="op">}</span>)<span class="op">;</span>
 
   <span class="co">// Chart decoration. Once more we&#39;re avoiding</span>
   <span class="co">// CSS for styling, but usually that would be</span>
   <span class="co">// a better approach.</span>
-  <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> +
-         (<span class="ot">margin</span>.<span class="fu">left</span> + width/<span class="dv">2</span> + <span class="dv">20</span>) + <span class="st">&quot;,20)&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;title&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;font-size&quot;</span>, <span class="st">&quot;24&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;middle&quot;</span>)
-       .<span class="fu">text</span>(<span class="st">&quot;Monthly Average Temperature&quot;</span>);
+  <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="at">append</span>(<span class="st">&quot;text&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span>
+         (<span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> width/<span class="dv">2</span> <span class="op">+</span> <span class="dv">20</span>) <span class="op">+</span> <span class="st">&quot;,20)&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;title&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;font-size&quot;</span><span class="op">,</span> <span class="st">&quot;24&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;text-anchor&quot;</span><span class="op">,</span> <span class="st">&quot;middle&quot;</span>)
+       .<span class="at">text</span>(<span class="st">&quot;Monthly Average Temperature&quot;</span>)<span class="op">;</span>
 
-  <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> +
-         (<span class="ot">margin</span>.<span class="fu">left</span> + width/<span class="dv">2</span> + <span class="dv">20</span>) + <span class="st">&quot;,48)&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;class&quot;</span>, <span class="st">&quot;subtitle&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;font-size&quot;</span>, <span class="st">&quot;18&quot;</span>)
-       .<span class="fu">attr</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;middle&quot;</span>)
-       .<span class="fu">text</span>(<span class="st">&quot;Source: WorldClimate.com&quot;</span>);
-});</code></pre></td></tr></table>
+  <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;svg&quot;</span>).<span class="at">append</span>(<span class="st">&quot;text&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span>
+         (<span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> width/<span class="dv">2</span> <span class="op">+</span> <span class="dv">20</span>) <span class="op">+</span> <span class="st">&quot;,48)&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span> <span class="st">&quot;subtitle&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;font-size&quot;</span><span class="op">,</span> <span class="st">&quot;18&quot;</span>)
+       .<span class="at">attr</span>(<span class="st">&quot;text-anchor&quot;</span><span class="op">,</span> <span class="st">&quot;middle&quot;</span>)
+       .<span class="at">text</span>(<span class="st">&quot;Source: WorldClimate.com&quot;</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 </div>
 </section><section id="but-with-d3-we-can-do-more" class="slide level2" data-custom-next="dropPoints">
 <h1>But with D3 We Can Do More</h1>
@@ -822,15 +822,15 @@
 </svg>
 </section><section id="that-animation-was-d3" class="slide level2">
 <h1>(That Animation was D3)</h1>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">d3</span>.<span class="fu">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
-  .<span class="fu">transition</span>()
-  .<span class="fu">duration</span>(<span class="dv">2000</span>)
-  .<span class="fu">ease</span>(<span class="st">&quot;bounce&quot;</span>)
-  .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="kw">function</span>(d) {
-    <span class="kw">return</span> <span class="st">&quot;translate(&quot;</span> + <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>) + <span class="st">&quot;,&quot;</span> +
-      (height - <span class="ot">margin</span>.<span class="fu">top</span> - <span class="ot">margin</span>.<span class="fu">bottom</span> - <span class="dv">10</span>) + <span class="st">&quot;)&quot;</span>;
-  })
-  .<span class="fu">remove</span>();</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">selectAll</span>(<span class="st">&quot;.point&quot;</span>)
+  .<span class="at">transition</span>()
+  .<span class="at">duration</span>(<span class="dv">2000</span>)
+  .<span class="at">ease</span>(<span class="st">&quot;bounce&quot;</span>)
+  .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
+    <span class="cf">return</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> <span class="at">x</span>(<span class="va">d</span>.<span class="at">date</span>) <span class="op">+</span> <span class="st">&quot;,&quot;</span> <span class="op">+</span>
+      (height <span class="op">-</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">bottom</span> <span class="op">-</span> <span class="dv">10</span>) <span class="op">+</span> <span class="st">&quot;)&quot;</span><span class="op">;</span>
+  <span class="op">}</span>)
+  .<span class="at">remove</span>()<span class="op">;</span></code></pre></div>
 </section><section id="but-with-d3-we-can-do-more-1" class="slide level2" data-custom-next="smoothLines">
 <h1>But with D3 We Can Do More</h1>
 <svg id="svgSmoothLines" width="600" height="380" style="top: 16px; position: relative; left: 124px;">
@@ -838,7 +838,7 @@
 </svg>
 </section><section id="small-addition-to-the-line-function" class="slide level2">
 <h1>Small Addition to the Line Function</h1>
-<table class="sourceCode javascript numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -849,17 +849,17 @@
 9
 10
 11
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">datum</span>(<span class="ot">dataset</span>.<span class="fu">data</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;none&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;stroke&quot;</span>, <span class="fu">color</span>(i))
-    .<span class="fu">attr</span>(<span class="st">&quot;stroke-width&quot;</span>, <span class="st">&quot;3&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>,
-        <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">line</span>()
-            .<span class="fu">interpolate</span>(<span class="st">&quot;basis&quot;</span>)
-            .<span class="fu">x</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">x</span>(<span class="ot">d</span>.<span class="fu">date</span>); })
-            .<span class="fu">y</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="fu">y</span>(<span class="ot">d</span>.<span class="fu">temp</span>); })
-    );</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">datum</span>(<span class="va">dataset</span>.<span class="at">data</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="st">&quot;none&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;stroke&quot;</span><span class="op">,</span> <span class="at">color</span>(i))
+    .<span class="at">attr</span>(<span class="st">&quot;stroke-width&quot;</span><span class="op">,</span> <span class="st">&quot;3&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span>
+        <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">line</span>()
+            .<span class="at">interpolate</span>(<span class="st">&quot;basis&quot;</span>)
+            .<span class="at">x</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">x</span>(<span class="va">d</span>.<span class="at">date</span>)<span class="op">;</span> <span class="op">}</span>)
+            .<span class="at">y</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">y</span>(<span class="va">d</span>.<span class="at">temp</span>)<span class="op">;</span> <span class="op">}</span>)
+    )<span class="op">;</span></code></pre></td></tr></table></div>
 <ul>
 <li><span class="lgcp">D</span>3 has many interpolations: linear, step, b-spline, Cardinal spline, cubic, …</li>
 </ul>
@@ -887,10 +887,7 @@
 <li>Many annotated and commented examples</li>
 <li>Presentations (including this one)</li>
 </ul></li>
-<li>Paper/e-book from No Starch Press <a href="http://www.nostarch.com/datavisualization" class="uri">http://www.nostarch.com/datavisualization</a>
-<ul>
-<li>(Coupon code “PREORDER” for discount)</li>
-</ul></li>
+<li>Paper/e-book from No Starch Press <a href="http://www.nostarch.com/datavisualization" class="uri">http://www.nostarch.com/datavisualization</a></li>
 </ul>
 <script>
 
