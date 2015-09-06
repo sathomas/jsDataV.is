@@ -4,12 +4,21 @@
         <title>Data Visualization with JavaScript</title>
         <link>http://jsDataV.is</link>
         <description>Data Visualization with JavaScript, including the full content of the book published by No Starch Press, blog posts, examples, and presentations.</description>
-        <generator>Feeder 2.5.8(1906); Mac OS X Version 10.10.2 (Build 14C109) http://reinventedsoftware.com/feeder/</generator>
+        <generator>Feeder 3 3.0.3(2493); Mac OS X Version 10.10.5 (Build 14F27) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Wed, 11 Feb 2015 07:31:36 -0500</pubDate>
-        <lastBuildDate>Wed, 11 Feb 2015 07:31:36 -0500</lastBuildDate>
+        <pubDate>Sun, 06 Sep 2015 15:04:48 -0400</pubDate>
+        <lastBuildDate>Sun, 06 Sep 2015 15:04:49 -0400</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Automated Visualization Testing</title>
+            <link>http://jsdatav.is/visuals.html?id=dcb31c1de5940d2fca9c</link>
+            <description><![CDATA[<p>Many smart folks have been writing about data visualization lately, and there are lots of great resources available on the internet and in your favorite book store. There is one aspect of data visualization, however, that doesn’t seem to get much love—testing. That’s a shame, because effective testing, especially when we include it as part of the initial planning for the project, can make a big difference in the results.</p>
+
+<p><a href="http://jsdatav.is/visuals.html?id=dcb31c1de5940d2fca9c">View visualization</a></p>]]></description>
+            <pubDate>Sun, 06 Sep 2015 15:03:09 -0400</pubDate>
+            <guid isPermaLink="false">84789D13-FEFE-444F-9C6E-69F723A39314</guid>
+        </item>
         <item>
             <title>Appendix B: Building Data-Driven Web Applications</title>
             <link>http://jsdatav.is/apndB.html</link>
