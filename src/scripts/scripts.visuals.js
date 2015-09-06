@@ -148,18 +148,33 @@
                 var summary = main.append("section")
                     .classed("summary", true)
                     .html(md.render(text.content));
+                    
+                var codeFiles = [], code = [];
+                
+                for (filename in gist.files) {
+                    var ext = filename.split(".").pop().toLowerCase();
+                    if (ext === "html" || ext === "js") {
+                        codeFiles.push(filename.toLowerCase());
+                    }
+                };
+                
+                codeFiles.forEach(function(filename) {
+                    main.append("h2")
+                        .text("Source Code (" + filename + ")");
 
-                main.append("h2")
-                    .text("Source Code")
+                    var codeBlock = main.append("pre")
+                        .classed("sourceCode", true)
+                        .append("code")
+                            .classed(filename.split(".").pop() === "html" ? "language-markup" : "language-javascript", true)
+                            .text(gist.files[filename].content);
 
-                var code = main.append("pre")
-                    .classed("sourceCode", true)
-                    .append("code")
-                        .classed("language-markup", true)
-                        .text(gist.files["index.html"].content);
+                    code.push(codeBlock);
+                })
 
                 setTimeout(function() {
-                    Prism.highlightElement(code.node());
+                    code.forEach(function(block) {
+                        Prism.highlightElement(block.node());
+                    });
                     MathJax.Hub.Typeset(summary);
                 }, 20);
 
