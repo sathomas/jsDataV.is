@@ -4,12 +4,21 @@
         <title>Data Visualization with JavaScript</title>
         <link>http://jsDataV.is</link>
         <description>Data Visualization with JavaScript, including the full content of the book published by No Starch Press, blog posts, examples, and presentations.</description>
-        <generator>Feeder 3 3.0.3(2493); Mac OS X Version 10.10.5 (Build 14F27) http://reinventedsoftware.com/feeder/</generator>
+        <generator>Feeder 3 3.0.4(2507); Mac OS X Version 10.10.5 (Build 14F27) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Sun, 06 Sep 2015 15:04:48 -0400</pubDate>
-        <lastBuildDate>Sun, 06 Sep 2015 15:04:49 -0400</lastBuildDate>
+        <pubDate>Wed, 30 Sep 2015 14:29:56 -0400</pubDate>
+        <lastBuildDate>Wed, 30 Sep 2015 14:29:57 -0400</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>A Material Design Gauge in Pure CSS/HTML</title>
+            <link>http://jsdatav.is/visuals.html?id=a8f1cc13c8b4fcb63c6f</link>
+            <description><![CDATA[<p>As a change of pace from complex visualizations, here’s simple <a href="https://www.google.com/design/spec/material-design/introduction.html">Material Design</a> gauge control implemented in pure CSS/HTML. The implementation includes an optional JavaScript component to change the gauge value dynamically. If you’d like to use the gauge on your web pages (it’s open source), you can download it from <a href="https://github.com/sathomas/material-gauge">GitHub</a>, where you’ll also find documentation on how to use it. In this post we’ll walk through the implementation to understand how it works.</p>
+
+<p><a href="http://jsdatav.is/visuals.html?id=a8f1cc13c8b4fcb63c6f">View visualization</a></p>]]></description>
+            <pubDate>Wed, 30 Sep 2015 14:22:52 -0400</pubDate>
+            <guid isPermaLink="false">AA9ED57F-A3D5-41CA-8C88-116A2F958385</guid>
+        </item>
         <item>
             <title>Automated Visualization Testing</title>
             <link>http://jsdatav.is/visuals.html?id=dcb31c1de5940d2fca9c</link>
