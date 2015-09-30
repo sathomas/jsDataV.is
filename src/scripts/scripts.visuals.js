@@ -177,6 +177,13 @@
                     });
                     MathJax.Hub.Typeset(summary);
                 }, 20);
+                
+                var script = gist.files["script.lnk"];
+                if (script && script.content.length && script.content.charAt(0) === "/") {
+                    d3.select("body").append("script")
+                        .attr("type", "text/javascript")
+                        .attr("src", script.content);
+                }
 
             }
 
