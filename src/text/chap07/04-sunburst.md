@@ -8,7 +8,7 @@ In this example we’ll use the same data we used previously—tornado sightings
 
 ### Step 1: Prepare the Data
 
-For this example we’ll use the same data behind the previous visualization—2013 tornado sightings from the [<span class="smcp">US</span> National Oceanic and Atmospheric Administration’s](http://www.noaa.gov) [Climate Data Online](http://www.ncdc.noaa.gov/cdo-web/) site. As before, we’ll clean and prune the dataset. Instead of longitude, latitude, and Enhanced Fujita Scale classification, however, we’ll keep the state and county. We’ll also add a region name as a way to group subsets of states.The resulting (<span class="smcp">CSV</span>) file begins as below.
+For this example we’ll use the same data behind the previous visualization—2013 tornado sightings from the [<span class="smcp">US</span> National Oceanic and Atmospheric Administration’s](http://www.noaa.gov) [Climate Data Online](http://www.ncdc.noaa.gov/cdo-web/) site. As before, we’ll clean and prune the dataset. Instead of longitude, latitude, and Enhanced Fujita Scale classification, however, we’ll keep the state and county. We’ll also add a region name as a way to group subsets of states. The resulting (<span class="smcp">CSV</span>) file begins as below.
 
 ```
 state,region,county
