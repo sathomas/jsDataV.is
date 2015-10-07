@@ -227,7 +227,7 @@ body { counter-reset: chapter 7; }
 </tbody>
 </table>
 <p>We can represent that in JavaScript using the following array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -235,17 +235,17 @@ body { counter-reset: chapter 7; }
 6
 7
 8
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">hubble_data = [
-    { <span class="dt">nebulae</span>: <span class="st">&quot;NGC 6822&quot;</span>, <span class="dt">distance</span>:  <span class="fl">0.500</span>, <span class="dt">distance_error</span>: <span class="fl">0.010</span>,
-      <span class="dt">velocity</span>:   <span class="dv">57</span>, <span class="dt">velocity_error</span>: <span class="dv">2</span>, },
-    { <span class="dt">nebulae</span>: <span class="st">&quot;NGC  221&quot;</span>, <span class="dt">distance</span>:  <span class="fl">0.763</span>, <span class="dt">distance_error</span>: <span class="fl">0.024</span>,
-      <span class="dt">velocity</span>:  <span class="dv">200</span>, <span class="dt">velocity_error</span>: <span class="dv">6</span>, },
-    { <span class="dt">nebulae</span>: <span class="st">&quot;NGC  598&quot;</span>, <span class="dt">distance</span>:  <span class="fl">0.835</span>, <span class="dt">distance_error</span>: <span class="fl">0.105</span>,
-      <span class="dt">velocity</span>:  <span class="dv">179</span>, <span class="dt">velocity_error</span>: <span class="dv">3</span>, },
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">hubble_data <span class="op">=</span> [
+    <span class="op">{</span> <span class="dt">nebulae</span><span class="op">:</span> <span class="st">&quot;NGC 6822&quot;</span><span class="op">,</span> <span class="dt">distance</span><span class="op">:</span>  <span class="fl">0.500</span><span class="op">,</span> <span class="dt">distance_error</span><span class="op">:</span> <span class="fl">0.010</span><span class="op">,</span>
+      <span class="dt">velocity</span><span class="op">:</span>   <span class="dv">57</span><span class="op">,</span> <span class="dt">velocity_error</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="op">},</span>
+    <span class="op">{</span> <span class="dt">nebulae</span><span class="op">:</span> <span class="st">&quot;NGC  221&quot;</span><span class="op">,</span> <span class="dt">distance</span><span class="op">:</span>  <span class="fl">0.763</span><span class="op">,</span> <span class="dt">distance_error</span><span class="op">:</span> <span class="fl">0.024</span><span class="op">,</span>
+      <span class="dt">velocity</span><span class="op">:</span>  <span class="dv">200</span><span class="op">,</span> <span class="dt">velocity_error</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span> <span class="op">},</span>
+    <span class="op">{</span> <span class="dt">nebulae</span><span class="op">:</span> <span class="st">&quot;NGC  598&quot;</span><span class="op">,</span> <span class="dt">distance</span><span class="op">:</span>  <span class="fl">0.835</span><span class="op">,</span> <span class="dt">distance_error</span><span class="op">:</span> <span class="fl">0.105</span><span class="op">,</span>
+      <span class="dt">velocity</span><span class="op">:</span>  <span class="dv">179</span><span class="op">,</span> <span class="dt">velocity_error</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="op">},</span>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <h3 id="step-2-set-up-the-web-page">Step 2: Set Up the Web Page</h3>
 <p><span class="lgcp">D3</span>.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need to do is include it in the page (line 10). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
-<table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -270,67 +270,67 @@ body { counter-reset: chapter 7; }
 <span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-3-create-a-stage-for-the-visualization">Step 3: Create a Stage for the Visualization</h3>
 <p>Unlike higher-level libraries, <span class="smcp">D3</span>.js doesn’t draw the visualization on the page. We’ll have to do that ourselves. In exchange for the additional effort, though, we get the freedom to pick our own drawing technology. We could follow the same approach as most libraries in this book and use <span class="smcp">HTML5</span>’s <code>&lt;canvas&gt;</code> element, or we could simply use native <span class="smcp">HTML</span>. Now that we’ve seen it in action in chapter 6, however, it seems Scalable Vector Graphics (<span class="smcp">SVG</span>) is the best approach for our chart. The root of our graph, therefore, will be an <code>&lt;svg&gt;</code> element, and we need to add that to the page. We can define its dimensions at the same time using attributes.</p>
 <p>If we were using jQuery, we might do something like the following:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="fu">$</span>(<span class="st">&quot;&lt;svg&gt;&quot;</span>).<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height).<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width);
-<span class="fu">$</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(svg);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg <span class="op">=</span> <span class="at">$</span>(<span class="st">&quot;&lt;svg&gt;&quot;</span>).<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height).<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> width)<span class="op">;</span>
+<span class="at">$</span>(<span class="st">&quot;#container&quot;</span>).<span class="at">append</span>(svg)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With <span class="smcp">D3</span>.js our code is very similar:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height)
-    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;#container&quot;</span>).<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height)
+    .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> width)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With this statement we’re selecting the container, appending an <code>&lt;svg&gt;</code> element to it, and setting the attributes of that <code>&lt;svg&gt;</code> element. This statement highlights one important difference between <span class="smcp">D3</span>.js and jQuery that often trips up developers starting out with <span class="smcp">D3</span>.js. In jQuery the <code>append()</code> method returns the original selection so that you can continue operating on that selection. More specifically, <code>$(&quot;#container&quot;).append(svg)</code> returns <code>$(&quot;#container&quot;)</code>.</p>
 <p>With <span class="smcp">D3</span>.js, on the other hand, <code>append()</code> returns a different selection, the newly appended element(s). So <code>d3.select(&quot;#container&quot;).append(&quot;svg&quot;)</code> doesn’t return the container selection but rather a selection of the new <code>&lt;svg&gt;</code> element. The <code>attr()</code> calls that follow, therefore, apply to the <code>&lt;svg&gt;</code> element and not the <code>&quot;#container&quot;</code>.</p>
 <h3 id="step-4-control-the-charts-dimensions">Step 4: Control the Chart’s Dimensions</h3>
 <p>So far we haven’t specified the actual values for the chart’s height and width; we’ve only used <code>height</code> and <code>width</code> variables. Having the dimensions in variables will come in handy, and it will make it easy to incorporate margins in the visualization. The code below sets up those dimensions; its form is a common convention in <span class="smcp">D3</span>.js visualizations.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> margin = {<span class="dt">top</span>: <span class="dv">20</span>, <span class="dt">right</span>: <span class="dv">20</span>, <span class="dt">bottom</span>: <span class="dv">30</span>, <span class="dt">left</span>: <span class="dv">40</span>},
-    width = <span class="dv">640</span> - <span class="ot">margin</span>.<span class="fu">left</span> - <span class="ot">margin</span>.<span class="fu">right</span>,
-    height = <span class="dv">400</span> - <span class="ot">margin</span>.<span class="fu">top</span> - <span class="ot">margin</span>.<span class="fu">bottom</span>;</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> margin <span class="op">=</span> <span class="op">{</span><span class="dt">top</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">right</span><span class="op">:</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">bottom</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span> <span class="dt">left</span><span class="op">:</span> <span class="dv">40</span><span class="op">},</span>
+    width <span class="op">=</span> <span class="dv">640</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">right</span><span class="op">,</span>
+    height <span class="op">=</span> <span class="dv">400</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">bottom</span><span class="op">;</span></code></pre></td></tr></table></div>
 <p>We’ll have to adjust the code that creates the main <code>&lt;svg&gt;</code> container to account for these margins.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#chart1&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="ot">margin</span>.<span class="fu">right</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="ot">margin</span>.<span class="fu">bottom</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;#chart1&quot;</span>).<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height <span class="op">+</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">right</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> width <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">bottom</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>To make sure our chart honors the defined margins, we’ll construct it entirely within a child <span class="smcp">SVG</span> group (<code>&lt;g&gt;</code>) element. The <code>&lt;g&gt;</code> element is just an arbitrary containing element in <span class="smcp">SVG</span>, much like the <code>&lt;div&gt;</code> element for <span class="smcp">HTML</span>. We can use <span class="smcp">D3</span>.js to create the element and position it appropriately within the main <code>&lt;svg&gt;</code> element.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> chart = <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>,
-        <span class="st">&quot;translate(&quot;</span> + <span class="ot">margin</span>.<span class="fu">left</span> + <span class="st">&quot;,&quot;</span> + <span class="ot">margin</span>.<span class="fu">top</span> + <span class="st">&quot;)&quot;</span>
-    );</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> chart <span class="op">=</span> <span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span>
+        <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> <span class="st">&quot;,&quot;</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> <span class="st">&quot;)&quot;</span>
+    )<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Visualizations must often rescale the source data. In our case, we’ll need to rescale the data to fit within the chart dimensions. Instead of ranging from 0.5 to 17 Mpc, for example, galactic distance should be scaled between 0 and 920 pixels. Since this type of requirement is common for visualizations, <span class="smcp">D3</span>.js has tools to help. Not surprisingly, they’re <code>scale</code> objects. We’ll create scales for both the x- and the y-dimensions.</p>
 <p>As the code below indicates, both of our scales are linear. Linear transformations are pretty simple (and we really don’t need <span class="smcp">D3</span>.js to manage them); however, <span class="smcp">D3</span>.js supports other types of scales that can be quite complex. With <span class="smcp">D3</span>.js using more sophisticated scaling is just as easy as using linear scales.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xScale = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
-    .<span class="fu">range</span>([<span class="dv">0</span>,width]);
-<span class="kw">var</span> yScale = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
-    .<span class="fu">range</span>([height,<span class="dv">0</span>]);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xScale <span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">linear</span>()
+    .<span class="at">range</span>([<span class="dv">0</span><span class="op">,</span>width])<span class="op">;</span>
+<span class="kw">var</span> yScale <span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">linear</span>()
+    .<span class="at">range</span>([height<span class="op">,</span><span class="dv">0</span>])<span class="op">;</span></code></pre></td></tr></table></div>
 <p>We define both ranges as the desired limits for each scale. The x-scale ranges from 0 to the chart’s width, and the y-scale ranges from 0 to the chart’s height. Note, though, that we’ve reversed the normal order for the y-scale. That’s because <span class="smcp">SVG</span> dimensions (just like <span class="smcp">HTML</span> dimensions) place 0 at the top of the area. That convention is the opposite of the normal chart convention which places 0 at the bottom. To account for the reversal, we swap the values when defining the range.</p>
 <p>At this point we’ve set the ranges for each scale, and those ranges define the desired output. We also have to specify the possible inputs to each scale, which <span class="smcp">D3</span>.js calls the <em>domain.</em> Those inputs are the minimum and maximum values for the distance and velocity. We can use <span class="smcp">D3</span>.js to extract the values directly from the data. Here’s how to get the minimum distance:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> minDist = <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) {
-    <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>;
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> minDist <span class="op">=</span> <span class="va">d3</span>.<span class="at">min</span>(hubble_data<span class="op">,</span> <span class="kw">function</span>(nebulae) <span class="op">{</span>
+    <span class="cf">return</span> <span class="va">nebulae</span>.<span class="at">distance</span> <span class="op">-</span> <span class="va">nebulae</span>.<span class="at">distance_error</span><span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>We can’t simply find the minimum value in the data because we have to account for the distance error. As we can see above, <span class="smcp">D3</span>.js accepts a function as a parameter to <code>d3.min()</code>, and that function can make the necessary adjustment. We can use the same approach for maximum values as well. Here’s the complete code for defining the domains of both scales:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -348,55 +348,55 @@ body { counter-reset: chapter 7; }
 16
 17
 18
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">xScale</span>.<span class="fu">domain</span>([
-        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) {
-            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>;
-        }),
-        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) {
-            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">distance</span> + <span class="ot">nebulae</span>.<span class="fu">distance_error</span>;
-        })
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">xScale</span>.<span class="at">domain</span>([
+        <span class="va">d3</span>.<span class="at">min</span>(hubble_data<span class="op">,</span> <span class="kw">function</span>(nebulae) <span class="op">{</span>
+            <span class="cf">return</span> <span class="va">nebulae</span>.<span class="at">distance</span> <span class="op">-</span> <span class="va">nebulae</span>.<span class="at">distance_error</span><span class="op">;</span>
+        <span class="op">}</span>)<span class="op">,</span>
+        <span class="va">d3</span>.<span class="at">max</span>(hubble_data<span class="op">,</span> <span class="kw">function</span>(nebulae) <span class="op">{</span>
+            <span class="cf">return</span> <span class="va">nebulae</span>.<span class="at">distance</span> <span class="op">+</span> <span class="va">nebulae</span>.<span class="at">distance_error</span><span class="op">;</span>
+        <span class="op">}</span>)
     ])
-    .<span class="fu">nice</span>();
-<span class="ot">yScale</span>.<span class="fu">domain</span>([
-        <span class="ot">d3</span>.<span class="fu">min</span>(hubble_data, <span class="kw">function</span>(nebulae) {
-            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> - <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>;
-        }),
-        <span class="ot">d3</span>.<span class="fu">max</span>(hubble_data, <span class="kw">function</span>(nebulae) {
-            <span class="kw">return</span> <span class="ot">nebulae</span>.<span class="fu">velocity</span> + <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>;
-        })
+    .<span class="at">nice</span>()<span class="op">;</span>
+<span class="va">yScale</span>.<span class="at">domain</span>([
+        <span class="va">d3</span>.<span class="at">min</span>(hubble_data<span class="op">,</span> <span class="kw">function</span>(nebulae) <span class="op">{</span>
+            <span class="cf">return</span> <span class="va">nebulae</span>.<span class="at">velocity</span> <span class="op">-</span> <span class="va">nebulae</span>.<span class="at">velocity_error</span><span class="op">;</span>
+        <span class="op">}</span>)<span class="op">,</span>
+        <span class="va">d3</span>.<span class="at">max</span>(hubble_data<span class="op">,</span> <span class="kw">function</span>(nebulae) <span class="op">{</span>
+            <span class="cf">return</span> <span class="va">nebulae</span>.<span class="at">velocity</span> <span class="op">+</span> <span class="va">nebulae</span>.<span class="at">velocity_error</span><span class="op">;</span>
+        <span class="op">}</span>)
     ])
-    .<span class="fu">nice</span>();</code></pre></td></tr></table>
+    .<span class="at">nice</span>()<span class="op">;</span></code></pre></td></tr></table></div>
 <h3 id="step-5-draw-the-chart-framework">Step 5: Draw the Chart Framework</h3>
 <p>Axes are another common feature in visualizations, and <span class="smcp">D3</span>.js has tools for those as well. To create the axes for our chart, we specify the appropriate scales and an orientation. As you can see from the code below, <span class="smcp">D3</span>.js supports axes as part of its <span class="smcp">SVG</span> utilities.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xAxis = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
-    .<span class="fu">scale</span>(xScale)
-    .<span class="fu">orient</span>(<span class="st">&quot;bottom&quot;</span>);
-<span class="kw">var</span> yAxis = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">axis</span>()
-    .<span class="fu">scale</span>(yScale)
-    .<span class="fu">orient</span>(<span class="st">&quot;left&quot;</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xAxis <span class="op">=</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">axis</span>()
+    .<span class="at">scale</span>(xScale)
+    .<span class="at">orient</span>(<span class="st">&quot;bottom&quot;</span>)<span class="op">;</span>
+<span class="kw">var</span> yAxis <span class="op">=</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">axis</span>()
+    .<span class="at">scale</span>(yScale)
+    .<span class="at">orient</span>(<span class="st">&quot;left&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>After defining the axes, we can use <span class="smcp">D3</span>.js to add the appropriate <span class="smcp">SVG</span> elements to the page. We’ll contain each axis within its own <code>&lt;g&gt;</code> group. For the x-axis, we need to shift that group to the bottom of the chart.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xAxisGroup = <span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> xAxisGroup <span class="op">=</span> <span class="va">chart</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(0,&quot;</span> <span class="op">+</span> height <span class="op">+</span> <span class="st">&quot;)&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>To create the <span class="smcp">SVG</span> elements that make up the axis, we could call the <code>xAxis</code> object and pass it the containing group as a parameter.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">xAxis</span>(xAxisGroup);</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="at">xAxis</span>(xAxisGroup)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With <span class="smcp">D3</span>.js, though, there’s a more concise expression that avoids creating unnecessary local variables and preserves method chaining.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
-    .<span class="fu">call</span>(xAxis);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">chart</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(0,&quot;</span> <span class="op">+</span> height <span class="op">+</span> <span class="st">&quot;)&quot;</span>)
+    .<span class="at">call</span>(xAxis)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>And as long as we’re preserving method chaining, we can take advantage of it to add yet another element to our chart: this time, it’s the label for the axis.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -404,16 +404,16 @@ body { counter-reset: chapter 7; }
 6
 7
 8
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
-    .<span class="fu">call</span>(xAxis)
-  .<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;x&quot;</span>, width)
-    .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, -<span class="dv">6</span>)
-    .<span class="fu">style</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
-    .<span class="fu">text</span>(<span class="st">&quot;Distance (Mpc)&quot;</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">chart</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(0,&quot;</span> <span class="op">+</span> height <span class="op">+</span> <span class="st">&quot;)&quot;</span>)
+    .<span class="at">call</span>(xAxis)
+  .<span class="at">append</span>(<span class="st">&quot;text&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;x&quot;</span><span class="op">,</span> width)
+    .<span class="at">attr</span>(<span class="st">&quot;y&quot;</span><span class="op">,</span> <span class="op">-</span><span class="dv">6</span>)
+    .<span class="at">style</span>(<span class="st">&quot;text-anchor&quot;</span><span class="op">,</span> <span class="st">&quot;end&quot;</span>)
+    .<span class="at">text</span>(<span class="st">&quot;Distance (Mpc)&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>If you look under the hood, you’ll find that <span class="smcp">D3</span>.js has done quite a bit of work for us in creating the axis, its tick marks, and its labels. Here’s a taste of the <span class="smcp">SVG</span> it builds.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -438,9 +438,9 @@ body { counter-reset: chapter 7; }
     <span class="co">&lt;!-- Additional Tick Marks... --&gt;</span>
     <span class="kw">&lt;path</span><span class="ot"> class=</span><span class="st">&quot;domain&quot;</span><span class="ot"> d=</span><span class="st">&quot;M0,6V0H700V6&quot;</span><span class="kw">&gt;&lt;/path&gt;</span>
     <span class="kw">&lt;text</span><span class="ot"> x=</span><span class="st">&quot;700&quot;</span><span class="ot"> y=</span><span class="st">&quot;-6&quot;</span><span class="ot"> style=</span><span class="st">&quot;text-anchor: end;&quot;</span><span class="kw">&gt;</span>Distance (Mpc)<span class="kw">&lt;/text&gt;</span>
-<span class="kw">&lt;/g&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/g&gt;</span></code></pre></td></tr></table></div>
 <p>When we add the code for the y-axis, we’ve completed the framework for the chart.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -457,23 +457,23 @@ body { counter-reset: chapter 7; }
 15
 16
 17
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(0,&quot;</span> + height + <span class="st">&quot;)&quot;</span>)
-    .<span class="fu">call</span>(xAxis)
-  .<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;x&quot;</span>, width)
-    .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, -<span class="dv">6</span>)
-    .<span class="fu">style</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
-    .<span class="fu">text</span>(<span class="st">&quot;Distance (Mpc)&quot;</span>);
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">chart</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(0,&quot;</span> <span class="op">+</span> height <span class="op">+</span> <span class="st">&quot;)&quot;</span>)
+    .<span class="at">call</span>(xAxis)
+  .<span class="at">append</span>(<span class="st">&quot;text&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;x&quot;</span><span class="op">,</span> width)
+    .<span class="at">attr</span>(<span class="st">&quot;y&quot;</span><span class="op">,</span> <span class="op">-</span><span class="dv">6</span>)
+    .<span class="at">style</span>(<span class="st">&quot;text-anchor&quot;</span><span class="op">,</span> <span class="st">&quot;end&quot;</span>)
+    .<span class="at">text</span>(<span class="st">&quot;Distance (Mpc)&quot;</span>)<span class="op">;</span>
 
-<span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;g&quot;</span>)
-    .<span class="fu">call</span>(yAxis)
-  .<span class="fu">append</span>(<span class="st">&quot;text&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;rotate(-90)&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, <span class="dv">6</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;dy&quot;</span>, <span class="st">&quot;.71em&quot;</span>)
-    .<span class="fu">style</span>(<span class="st">&quot;text-anchor&quot;</span>, <span class="st">&quot;end&quot;</span>)
-    .<span class="fu">text</span>(<span class="st">&quot;Red Shift Velocity (km/s)&quot;</span>)</code></pre></td></tr></table>
+<span class="va">chart</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)
+    .<span class="at">call</span>(yAxis)
+  .<span class="at">append</span>(<span class="st">&quot;text&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;rotate(-90)&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;y&quot;</span><span class="op">,</span> <span class="dv">6</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;dy&quot;</span><span class="op">,</span> <span class="st">&quot;.71em&quot;</span>)
+    .<span class="at">style</span>(<span class="st">&quot;text-anchor&quot;</span><span class="op">,</span> <span class="st">&quot;end&quot;</span>)
+    .<span class="at">text</span>(<span class="st">&quot;Red Shift Velocity (km/s)&quot;</span>)</code></pre></td></tr></table></div>
 <p>The result of figure <span class="nextfigure"/> isn’t very exciting without any data, but it does give us a framework for the chart.</p>
 <style>
 svg { font: 16px; }
@@ -495,20 +495,20 @@ svg { font: 16px; }
 <p>As you can tell, we’ve had to write quite a bit of code just to get a couple of axes on the page. That’s the nature of <span class="smcp">D3</span>.js. It’s not a library to which you can simply pass a data set and get a chart as an output. Instead, think of it as a collection of very useful utilities that you can use to help create your own charts.</p>
 <h3 id="step-6-add-the-data-to-the-chart">Step 6: Add the Data to the Chart</h3>
 <p>Now that our chart’s framework is ready, we can add the actual data. Because we want to show both the distance and velocity errors in the data, we can draw each point as a rectangle. For a simple, static chart, we can add <span class="smcp">SVG</span> <code>&lt;rect&gt;</code> elements just as we’ve created the rest of the chart. We can take advantage of our x- and y-scales to calculate the dimensions of the rectangles.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
 7
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">hubble_data</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(nebulae) {
-    <span class="ot">chart2</span>.<span class="fu">append</span>(<span class="st">&quot;rect&quot;</span>)
-      .<span class="fu">attr</span>(<span class="st">&quot;x&quot;</span>, <span class="fu">xScale</span>(<span class="ot">nebulae</span>.<span class="fu">distance</span> - <span class="ot">nebulae</span>.<span class="fu">distance_error</span>))
-      .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, <span class="fu">xScale</span>(<span class="dv">2</span> * <span class="ot">nebulae</span>.<span class="fu">distance_error</span>))
-      .<span class="fu">attr</span>(<span class="st">&quot;y&quot;</span>, <span class="fu">yScale</span>(<span class="ot">nebulae</span>.<span class="fu">velocity</span> - <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>))
-      .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height - <span class="fu">yScale</span>(<span class="dv">2</span> * <span class="ot">nebulae</span>.<span class="fu">velocity_error</span>));
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">hubble_data</span>.<span class="at">forEach</span>(<span class="kw">function</span>(nebulae) <span class="op">{</span>
+    <span class="va">chart2</span>.<span class="at">append</span>(<span class="st">&quot;rect&quot;</span>)
+      .<span class="at">attr</span>(<span class="st">&quot;x&quot;</span><span class="op">,</span> <span class="at">xScale</span>(<span class="va">nebulae</span>.<span class="at">distance</span> <span class="op">-</span> <span class="va">nebulae</span>.<span class="at">distance_error</span>))
+      .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> <span class="at">xScale</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">nebulae</span>.<span class="at">distance_error</span>))
+      .<span class="at">attr</span>(<span class="st">&quot;y&quot;</span><span class="op">,</span> <span class="at">yScale</span>(<span class="va">nebulae</span>.<span class="at">velocity</span> <span class="op">-</span> <span class="va">nebulae</span>.<span class="at">velocity_error</span>))
+      .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height <span class="op">-</span> <span class="at">yScale</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">nebulae</span>.<span class="at">velocity_error</span>))<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The approach above works fine for this example and results in the chart of figure <span class="nextfigure"/>. Typically, however, <span class="smcp">D3</span>.js visualizations combine their data sets directly with markup elements and rely on <span class="smcp">D3</span>’s <code>enter</code>, <code>update</code>, and <code>exit</code> selections to add the data to the page. We’ll defer further discussion of this alternative approach until the next example.</p>
 <figure>
 <div id="chart2">
@@ -521,16 +521,16 @@ svg { font: 16px; }
 <h3 id="step-7-answer-users-questions">Step 7: Answer Users’ Questions</h3>
 <p>Whenever you create a visualization, it’s a good idea to anticipate questions that users might ask when they view it. In our example so far, we’ve presented a data set that leads to Hubble’s Law. But we haven’t (yet) shown how well the data fits that law. Since that is such an obvious question, let’s answer it right on the chart itself.</p>
 <p>The current estimate for the Hubble Constant (<span class="smcp">H0</span>) is about 70 km/s/Mpc. To show how that matches the data on our chart, we can create a line graph with that slope beginning at the point (0,0). A single <span class="smcp">SVG</span> <code>&lt;line&gt;</code> is all that’s required. Once again we rely on the <span class="smcp">D3</span>.js scales to define the line’s coordinates.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">chart</span>.<span class="fu">append</span>(<span class="st">&quot;line&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;x1&quot;</span>,<span class="fu">xScale</span>(<span class="dv">0</span>))
-    .<span class="fu">attr</span>(<span class="st">&quot;y1&quot;</span>,<span class="fu">yScale</span>(<span class="dv">0</span>))
-    .<span class="fu">attr</span>(<span class="st">&quot;x2&quot;</span>,<span class="fu">xScale</span>(<span class="dv">20</span>))
-    .<span class="fu">attr</span>(<span class="st">&quot;y2&quot;</span>,<span class="fu">yScale</span>(<span class="dv">1400</span>));</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">chart</span>.<span class="at">append</span>(<span class="st">&quot;line&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;x1&quot;</span><span class="op">,</span><span class="at">xScale</span>(<span class="dv">0</span>))
+    .<span class="at">attr</span>(<span class="st">&quot;y1&quot;</span><span class="op">,</span><span class="at">yScale</span>(<span class="dv">0</span>))
+    .<span class="at">attr</span>(<span class="st">&quot;x2&quot;</span><span class="op">,</span><span class="at">xScale</span>(<span class="dv">20</span>))
+    .<span class="at">attr</span>(<span class="st">&quot;y2&quot;</span><span class="op">,</span><span class="at">yScale</span>(<span class="dv">1400</span>))<span class="op">;</span></code></pre></td></tr></table></div>
 <p>In figure <span class="nextfigure"/> we can see that Hubble’s Law remains a good approximation.</p>
 <figure>
 <div id="chart3">
@@ -707,7 +707,7 @@ The complete custom chart shows the data set exactly as we wish.
 <p>Unlike the JavaScript plotting libraries we considered in the early chapters, <span class="smcp">D3</span>.js is not limited to standard charts. In fact, it excels at specialized and custom graph types. To see its power we’ll create another version of the network graph from Chapter 4. In the earlier implementation we used the sigmajs library, and most of our work was structuring the data into the format that library requires. We didn’t have to decide how to draw the nodes and edges, how to connect them, or, once we enabled layouts, how to position them on the page. As we’ll see below, <span class="smcp">D3</span>.js doesn’t make those decisions for us. For this example, we’ll have to draw the nodes and edges, connect them to each other appropriately, and position them on the page. That may sound like a lot of work, but, as we’ll also see, <span class="smcp">D3</span>.js gives us a lot of tools to help.</p>
 <h3 id="step-1-prepare-the-data-1">Step 1: Prepare the Data</h3>
 <p>Since we’re replicating the network graph from chapter 4, we start with the same data set.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -727,28 +727,28 @@ The complete custom chart shows the data set exactly as we wish.
 18
 19
 20
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> albums = [
-  {
-    <span class="dt">album</span>: <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span>,
-    <span class="dt">musicians</span>: [
-      <span class="st">&quot;Cannonball Adderley&quot;</span>,
-      <span class="st">&quot;Paul Chambers&quot;</span>,
-      <span class="st">&quot;Jimmy Cobb&quot;</span>,
-      <span class="st">&quot;John Coltrane&quot;</span>,
-      <span class="st">&quot;Miles Davis&quot;</span>,
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> albums <span class="op">=</span> [
+  <span class="op">{</span>
+    <span class="dt">album</span><span class="op">:</span> <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span><span class="op">,</span>
+    <span class="dt">musicians</span><span class="op">:</span> [
+      <span class="st">&quot;Cannonball Adderley&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Paul Chambers&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Jimmy Cobb&quot;</span><span class="op">,</span>
+      <span class="st">&quot;John Coltrane&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Miles Davis&quot;</span><span class="op">,</span>
       <span class="st">&quot;Bill Evans&quot;</span>
     ]
-  },{
-    <span class="dt">album</span>: <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span>,
-    <span class="dt">musicians</span>: [
-      <span class="st">&quot;John Coltrane&quot;</span>,
-      <span class="st">&quot;Jimmy Garrison&quot;</span>,
-      <span class="st">&quot;Elvin Jones&quot;</span>,
+  <span class="op">},{</span>
+    <span class="dt">album</span><span class="op">:</span> <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span><span class="op">,</span>
+    <span class="dt">musicians</span><span class="op">:</span> [
+      <span class="st">&quot;John Coltrane&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Jimmy Garrison&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Elvin Jones&quot;</span><span class="op">,</span>
       <span class="st">&quot;McCoy Tyner&quot;</span>
     ]
-  <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+  <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <p>For the visualization it will be helpful to have two separate arrays, one for the graph’s nodes and a one for the graph’s edges. Extracting those arrays from the original data is straightforward, so we won’t bother looking at it in this chapter. You can, however, see the full implementation in the book’s source code. The result looks like the following:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -775,35 +775,35 @@ The complete custom chart shows the data set exactly as we wish.
 25
 26
 27
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> nodes = [
-  {
-    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span>,
-    <span class="st">&quot;links&quot;</span>: [
-      <span class="st">&quot;Cannonball Adderley&quot;</span>,
-      <span class="st">&quot;Paul Chambers&quot;</span>,
-      <span class="st">&quot;Jimmy Cobb&quot;</span>,
-      <span class="st">&quot;John Coltrane&quot;</span>,
-      <span class="st">&quot;Miles Davis&quot;</span>,
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> nodes <span class="op">=</span> [
+  <span class="op">{</span>
+    <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span><span class="op">,</span>
+    <span class="st">&quot;links&quot;</span><span class="op">:</span> [
+      <span class="st">&quot;Cannonball Adderley&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Paul Chambers&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Jimmy Cobb&quot;</span><span class="op">,</span>
+      <span class="st">&quot;John Coltrane&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Miles Davis&quot;</span><span class="op">,</span>
       <span class="st">&quot;Bill Evans&quot;</span>
-    ],
-    <span class="st">&quot;x&quot;</span>: <span class="dv">270</span>,
-    <span class="st">&quot;y&quot;</span>: <span class="dv">200</span>
-  },
-  {
-    <span class="st">&quot;name&quot;</span>: <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span>,
-    <span class="st">&quot;links&quot;</span>: [
-      <span class="st">&quot;John Coltrane&quot;</span>,
-      <span class="st">&quot;Jimmy Garrison&quot;</span>,
-      <span class="st">&quot;Elvin Jones&quot;</span>,
+    ]<span class="op">,</span>
+    <span class="st">&quot;x&quot;</span><span class="op">:</span> <span class="dv">270</span><span class="op">,</span>
+    <span class="st">&quot;y&quot;</span><span class="op">:</span> <span class="dv">200</span>
+  <span class="op">},</span>
+  <span class="op">{</span>
+    <span class="st">&quot;name&quot;</span><span class="op">:</span> <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span><span class="op">,</span>
+    <span class="st">&quot;links&quot;</span><span class="op">:</span> [
+      <span class="st">&quot;John Coltrane&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Jimmy Garrison&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Elvin Jones&quot;</span><span class="op">,</span>
       <span class="st">&quot;McCoy Tyner&quot;</span>
-    ],
-    <span class="st">&quot;x&quot;</span>: <span class="fl">307.303483</span>,
-    <span class="st">&quot;y&quot;</span>: <span class="fl">195.287474</span>
-  },
+    ]<span class="op">,</span>
+    <span class="st">&quot;x&quot;</span><span class="op">:</span> <span class="fl">307.303483</span><span class="op">,</span>
+    <span class="st">&quot;y&quot;</span><span class="op">:</span> <span class="fl">195.287474</span>
+  <span class="op">},</span>
   <span class="co">// Data set continues...</span>
-];</code></pre></td></tr></table>
+]<span class="op">;</span></code></pre></td></tr></table></div>
 <p>For the nodes, we’ve added <code>x</code> and <code>y</code> properties to define a position on the graph. Initially the code arbitrarily sets these values so that the nodes are positioned in a circle.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -822,29 +822,29 @@ The complete custom chart shows the data set exactly as we wish.
 17
 18
 19
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> edges = [
-  {
-    <span class="st">&quot;source&quot;</span>: <span class="dv">0</span>,
-    <span class="st">&quot;target&quot;</span>: <span class="dv">16</span>,
-    <span class="st">&quot;links&quot;</span>: [
-      <span class="st">&quot;Cannonball Adderley&quot;</span>,
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> edges <span class="op">=</span> [
+  <span class="op">{</span>
+    <span class="st">&quot;source&quot;</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span>
+    <span class="st">&quot;target&quot;</span><span class="op">:</span> <span class="dv">16</span><span class="op">,</span>
+    <span class="st">&quot;links&quot;</span><span class="op">:</span> [
+      <span class="st">&quot;Cannonball Adderley&quot;</span><span class="op">,</span>
       <span class="st">&quot;Miles Davis&quot;</span>
     ]
-  },
-  {
-    <span class="st">&quot;source&quot;</span>: <span class="dv">0</span>,
-    <span class="st">&quot;target&quot;</span>: <span class="dv">6</span>,
-    <span class="st">&quot;links&quot;</span>: [
-      <span class="st">&quot;Paul Chambers&quot;</span>,
+  <span class="op">},</span>
+  <span class="op">{</span>
+    <span class="st">&quot;source&quot;</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span>
+    <span class="st">&quot;target&quot;</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span>
+    <span class="st">&quot;links&quot;</span><span class="op">:</span> [
+      <span class="st">&quot;Paul Chambers&quot;</span><span class="op">,</span>
       <span class="st">&quot;John Coltrane&quot;</span>
     ]
-  },
+  <span class="op">},</span>
   <span class="co">// Data set continues...</span>
-];</code></pre></td></tr></table>
+]<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The edges indicate the two nodes that they connect as indices in the <code>nodes</code> array and they include an array of the individual musicians that are common between the albums.</p>
 <h3 id="step-2-set-up-the-page">Step 2: Set Up the Page</h3>
 <p>As we noted in the previous example, <span class="smcp">D3</span>.js doesn’t depend on any other libraries, and it’s available on most content distribution networks. All we need to do is include it in the page (line 10). We’ll also want to set up a container for the visualization, so our markup includes a <code>&lt;div&gt;</code> with the id <code>&quot;container&quot;</code> on line 8.</p>
-<table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -869,36 +869,36 @@ The complete custom chart shows the data set exactly as we wish.
 <span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-3-create-a-stage-for-the-visualization-1">Step 3: Create a Stage for the Visualization</h3>
 <p>This step is also the same as in the previous example. We ask <span class="smcp">D3</span>.js to select the container element and then insert an <code>&lt;svg&gt;</code> element within it. In addition to appending the <code>&lt;svg&gt;</code> element, we can define its size by setting the <code>height</code> and <code>width</code> attributes.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#container&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, <span class="dv">500</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, <span class="dv">960</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;#container&quot;</span>).<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> <span class="dv">500</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> <span class="dv">960</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <h3 id="step-4-draw-the-graphs-nodes">Step 4: Draw the Graph’s Nodes</h3>
 <p>We’ll draw each node as a circle by appending <code>&lt;circle&gt;</code> elements inside the <code>&lt;svg&gt;</code> stage. Based on the previous step, you might think that would be as simple as executing <code>svg.append(&quot;circle&quot;)</code> for each element in the <code>nodes</code> array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodes</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(node) {
-    <span class="ot">svg</span>.<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>);
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">nodes</span>.<span class="at">forEach</span>(<span class="kw">function</span>(node) <span class="op">{</span>
+    <span class="va">svg</span>.<span class="at">append</span>(<span class="st">&quot;circle&quot;</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>That code will indeed add 25 circles to the visualization. What it won’t do, though, is create any links between the data (nodes in the array) and the document (circle elements on the page). <span class="lgcp">D3</span>.js has another way to add the circles to the page that does create that linkage. In fact, not only will <span class="smcp">D3</span>.js create the links, it will even manage them for us. This support becomes especially valuable as visualizations grow more complex.</p>
 <blockquote>
 <p>Note: This feature is really the <em>core</em> of <span class="smcp">D3</span>.js, and is, in fact, the source for the name “<span class="smcp">D3</span>” which is shorthand for “Data Driven Documents.”</p>
 </blockquote>
 <p>Here’s how we can use <span class="smcp">D3</span>.js more effectively to add the <code>&lt;circle&gt;</code> elements to the graph.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> selection = <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
-    .<span class="fu">data</span>(nodes);
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> selection <span class="op">=</span> <span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
+    .<span class="at">data</span>(nodes)<span class="op">;</span>
     
-<span class="ot">selection</span>.<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>);</code></pre></td></tr></table>
+<span class="va">selection</span>.<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;circle&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>If you haven’t seen <span class="smcp">D3</span>.js code before, that fragment surely looks very strange. What are we trying to do by selecting <code>&lt;circle&gt;</code> elements before we’ve even created any? Won’t the result just be empty? And if so, what’s the point of the <code>data()</code> function that follows? To answer those questions, we have to understand how <span class="smcp">D3</span>.js differs from traditional JavaScript libraries like jQuery. In those libraries a selection represents elements of <span class="smcp">HTML</span> markup. With jQuery, <code>$(&quot;circle&quot;)</code> is nothing more than the <code>&lt;circle&gt;</code> elements in the page. With <span class="smcp">D3</span>.js, however, selections are more than just markup elements. <span class="lgcp">D3</span>.js selections can contain both markup <em>and</em> data.</p>
 <p><span class="lgcp">D3</span>.js puts markup elements and data objects together with the <code>data()</code> function. The object on which it operates (<code>svg.selectAll(&quot;circle&quot;)</code> above) supplies the elements, and its parameter (<code>nodes</code> above) provides the data. The first statement in the fragment, therefore, tells <span class="smcp">D3</span>.js that we want to match <code>&lt;circle&gt;</code> elements with nodes in our graph. We are, in effect, saying that we want one <code>&lt;circle&gt;</code> to represent each value in the <code>nodes</code> array.</p>
 <p>The result is easiest to understand when there are exactly as many elements as there are data values. Figure <span class="nextfigure"/> shows four <code>&lt;circle&gt;</code> elements and four albums. <span class="lgcp">D3</span>.js dutifully combines the two sets, giving us a selection of four objects. Each object has both a <code>&lt;circle&gt;</code> and an album.</p>
@@ -923,25 +923,25 @@ The complete custom chart shows the data set exactly as we wish.
 <p>(Take a breath because magic is about to happen.)</p>
 <p>Now we can look at the second statement in our code fragment. It starts with <code>selection.enter()</code>. The <code>enter()</code> function is a special <span class="smcp">D3</span>.js function. It tells <span class="smcp">D3</span>.js to search through the selection and find all of the objects that have a data value <em>but no markup element.</em> We then complete the statement by taking that subset of the selection and calling <code>append(&quot;circle&quot;)</code>. And with that function call, <span class="smcp">D3</span>.js will take any object in the selection without a markup element and create a circle for it. That’s how we add <code>&lt;circle&gt;</code> elements to the graph.</p>
 <p>To be a little more concise, we can combine our two statements into a single one. The effect, for our visualization is to create a <code>&lt;circle&gt;</code> within the <code>&lt;svg&gt;</code> container for every node in the graph.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> nodeSelection = <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
-    .<span class="fu">data</span>(nodes)
-    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> nodeSelection <span class="op">=</span> <span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
+    .<span class="at">data</span>(nodes)
+    .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;circle&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <h3 id="step-5-draw-the-graphs-edges">Step 5: Draw the Graph’s Edges</h3>
 <p>You won’t be surprised to find that adding the edges to the graph works just like adding nodes. We simply append <code>&lt;line&gt;</code> elements instead of circles.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> edgeSelection = <span class="ot">svg</span>.<span class="fu">selectAll</span>(<span class="st">&quot;line&quot;</span>)
-    .<span class="fu">data</span>(edges)
-    .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;line&quot;</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> edgeSelection <span class="op">=</span> <span class="va">svg</span>.<span class="at">selectAll</span>(<span class="st">&quot;line&quot;</span>)
+    .<span class="at">data</span>(edges)
+    .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;line&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <blockquote>
 <p>Note: Even though we won’t need to use them for this example, <span class="smcp">D3</span>.js has other functions that complement the <code>enter()</code> function. To find objects that have a markup element but no data value, you can use the function <code>exit()</code>. And to find objects that have a markup element with a data value that has changed, you can use the function <code>update()</code>. The names <em>enter</em> and <em>exit</em> derive from a theater metaphor that <span class="smcp">D3</span>.js associates with a visualization. The <code>enter()</code> subset represents those elements that are <em>entering</em> the stage, while the <code>exit()</code> subset represents elements leaving, or <em>exiting,</em> the stage.</p>
 </blockquote>
 <p>Because we’re using <span class="smcp">SVG</span> elements for both the nodes and the edges, we can use <span class="smcp">CSS</span> rules to style them. That’s especially important for the edges because, by default, <span class="smcp">SVG</span> lines have a stroke width of 0.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -960,32 +960,32 @@ The complete custom chart shows the data set exactly as we wish.
 line <span class="kw">{</span>
     <span class="kw">stroke:</span> <span class="dt">#777</span><span class="kw">;</span>
     <span class="kw">stroke-width:</span> <span class="dt">1px</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <h3 id="step-6-position-the-elements">Step 6: Position the Elements</h3>
 <p>At this point we’ve added the necessary markup elements to our visualization, but we haven’t given them any dimensions or positions. As noted before, <span class="smcp">D3</span>.js doesn’t do any drawing, so we’ll have to write the code to do it. And as noted in step 2, we did assign somewhat arbitrary positions to the nodes by arranging them in a circle. For now, we can use that to position them.</p>
 <p>To position an <span class="smcp">SVG</span> circle we set its <code>cx</code> and <code>cy</code> attributes to correspond to the circle’s center. We also specify the circle’s radius with the <code>r</code> attribute. Let’s start with the radius; we’ll set it to a fixed value for all nodes. We’ve already created a <span class="smcp">D3</span>.js selection for all of those nodes. Setting their <code>r</code> attributes is a simple statement:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodeSelection</span>.<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">10</span>);</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">nodeSelection</span>.<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The <code>cx</code> and <code>cy</code> values are a little trickier because they’re not the same for all of the nodes. Those values depend on properties of the data associated with the nodes. More specifically, each element in the <code>nodes</code> array has <code>x</code> and <code>y</code> properties. <span class="lgcp">D3</span>.js, however, makes it very easy to access those properties. Instead of providing constant values for the attributes, we provide functions. <span class="lgcp">D3</span>.js will then call those functions and pass the data values as parameters. Our functions can return the appropriate value for the attribute.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">nodeSelection
-    .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="dv">10</span>)
-    .<span class="fu">attr</span>(<span class="st">&#39;cx&#39;</span>, <span class="kw">function</span>(dataValue) { <span class="kw">return</span> <span class="ot">dataValue</span>.<span class="fu">x</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;cy&#39;</span>, <span class="kw">function</span>(dataValue) { <span class="kw">return</span> <span class="ot">dataValue</span>.<span class="fu">y</span>; });</code></pre></td></tr></table>
+    .<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> <span class="dv">10</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;cx&#39;</span><span class="op">,</span> <span class="kw">function</span>(dataValue) <span class="op">{</span> <span class="cf">return</span> <span class="va">dataValue</span>.<span class="at">x</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;cy&#39;</span><span class="op">,</span> <span class="kw">function</span>(dataValue) <span class="op">{</span> <span class="cf">return</span> <span class="va">dataValue</span>.<span class="at">y</span><span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Positioning the edges relies on a similar strategy. We want to set the endpoints of the lines to the centers of the corresponding nodes. Those endpoints are the <code>x1,y1</code> and <code>x2,y2</code> attributes of the <code>&lt;line&gt;</code> elements. Here’s the code to set those attributes. As is conventional with <span class="smcp">D3</span>.js, the parameter <code>d</code> is the data value.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">edgeSelection
-    .<span class="fu">attr</span>(<span class="st">&#39;x1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">source</span>].<span class="fu">x</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;y1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">source</span>].<span class="fu">y</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;x2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">target</span>].<span class="fu">x</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;y2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> nodes[<span class="ot">d</span>.<span class="fu">target</span>].<span class="fu">y</span>; });</code></pre></td></tr></table>
+    .<span class="at">attr</span>(<span class="st">&#39;x1&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> nodes[<span class="va">d</span>.<span class="at">source</span>].<span class="at">x</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;y1&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> nodes[<span class="va">d</span>.<span class="at">source</span>].<span class="at">y</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;x2&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> nodes[<span class="va">d</span>.<span class="at">target</span>].<span class="at">x</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;y2&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> nodes[<span class="va">d</span>.<span class="at">target</span>].<span class="at">y</span><span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With the elements finally drawn and positioned, we have the first version of our visualization with figure <span class="nextfigure"/>.</p>
 <style>
 #figure1 circle, #figure2 circle, #figure3 circle {
@@ -1019,27 +1019,27 @@ line <span class="kw">{</span>
 <li>how strongly nodes repel each other, a parameter <span class="smcp">D3</span>.js calls <em>charge</em></li>
 </ul>
 <p>The last parameter can take a bit of trial-and-error to optimize for any particular visualization. In our case we’ll want to increase it substantially above its default (-30) because we have a lot of nodes in a small space. (Negative charge values indicate repulsion.) Here’s the code to set all of those values.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> force = <span class="ot">d3</span>.<span class="ot">layout</span>.<span class="fu">force</span>()
-    .<span class="fu">size</span>([width, height])
-    .<span class="fu">nodes</span>(nodes)
-    .<span class="fu">links</span>(edges)
-    .<span class="fu">linkDistance</span>(<span class="dv">40</span>)
-    .<span class="fu">charge</span>(-<span class="dv">500</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> force <span class="op">=</span> <span class="va">d3</span>.<span class="va">layout</span>.<span class="at">force</span>()
+    .<span class="at">size</span>([width<span class="op">,</span> height])
+    .<span class="at">nodes</span>(nodes)
+    .<span class="at">links</span>(edges)
+    .<span class="at">linkDistance</span>(<span class="dv">40</span>)
+    .<span class="at">charge</span>(<span class="op">-</span><span class="dv">500</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>When we tell <span class="smcp">D3</span>.js to start its force direction calculations, it will generate events at intermediate steps and when the calculations complete. Force direction often takes several seconds to execute fully, and if we wait until the calculations are complete before we draw the graph, users may think the browser has frozen. It’s usually better to update the graph at each iteration so users see some indication of progress. To do that, we can add a function to respond to the intermediate force layout calculations. That happens on a <span class="smcp">D3</span>.js <code>tick</code> event.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">force</span>.<span class="fu">on</span>(<span class="st">&#39;tick&#39;</span>, <span class="kw">function</span>() {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">force</span>.<span class="at">on</span>(<span class="st">&#39;tick&#39;</span><span class="op">,</span> <span class="kw">function</span>() <span class="op">{</span>
     <span class="co">// Update graph with intermediate results</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Each time <span class="smcp">D3</span>.js calls our event handler function, it will have updated the <code>x</code> and <code>y</code> properties of the <code>nodes</code> array. The new values will reflect how the force direction has nudged the nodes on the graph’s stage. We can update our graph accordingly by changing the <span class="smcp">SVG</span> attributes of the circles and lines. Before we do that, however, we can take advantage of the fact that <span class="smcp">D3</span>.js is giving us an opportunity to tweak the force layout algorithm as it executes. One problem that we may encounter, especially with the large charge force we defined, is that nodes may repel each other so strongly that some tend to drift off the stage entirely. We can prevent that by ensuring that the node positions remain within the dimensions of the graph.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1048,37 +1048,37 @@ line <span class="kw">{</span>
 7
 8
 9
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">force</span>.<span class="fu">on</span>(<span class="st">&#39;tick&#39;</span>, <span class="kw">function</span>() {
-    <span class="ot">nodeSelection</span>.<span class="fu">each</span>(<span class="kw">function</span>(node) {
-        <span class="ot">node</span>.<span class="fu">x</span> = <span class="ot">Math</span>.<span class="fu">max</span>(<span class="ot">node</span>.<span class="fu">x</span>, <span class="dv">5</span>);
-        <span class="ot">node</span>.<span class="fu">y</span> = <span class="ot">Math</span>.<span class="fu">max</span>(<span class="ot">node</span>.<span class="fu">y</span>, <span class="dv">5</span>);
-        <span class="ot">node</span>.<span class="fu">x</span> = <span class="ot">Math</span>.<span class="fu">min</span>(<span class="ot">node</span>.<span class="fu">x</span>, width<span class="dv">-5</span>);
-        <span class="ot">node</span>.<span class="fu">y</span> = <span class="ot">Math</span>.<span class="fu">min</span>(<span class="ot">node</span>.<span class="fu">y</span>, height<span class="dv">-5</span>);
-    });
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">force</span>.<span class="at">on</span>(<span class="st">&#39;tick&#39;</span><span class="op">,</span> <span class="kw">function</span>() <span class="op">{</span>
+    <span class="va">nodeSelection</span>.<span class="at">each</span>(<span class="kw">function</span>(node) <span class="op">{</span>
+        <span class="va">node</span>.<span class="at">x</span> <span class="op">=</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="va">node</span>.<span class="at">x</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">;</span>
+        <span class="va">node</span>.<span class="at">y</span> <span class="op">=</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="va">node</span>.<span class="at">y</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">;</span>
+        <span class="va">node</span>.<span class="at">x</span> <span class="op">=</span> <span class="va">Math</span>.<span class="at">min</span>(<span class="va">node</span>.<span class="at">x</span><span class="op">,</span> width<span class="dv">-5</span>)<span class="op">;</span>
+        <span class="va">node</span>.<span class="at">y</span> <span class="op">=</span> <span class="va">Math</span>.<span class="at">min</span>(<span class="va">node</span>.<span class="at">y</span><span class="op">,</span> height<span class="dv">-5</span>)<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
     <span class="co">// Update graph with intermediate results</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>We’ve added or subtracted <code>5</code> in the above fragment to account for the radius of the nodes’ circles.</p>
 <p>Once we’ve adjusted the nodes’ properties to keep them on the stage, we can update their positions. The code is exactly the same as the code we used to position them initially.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">nodeSelection
-    .<span class="fu">attr</span>(<span class="st">&#39;cx&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">x</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;cy&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">y</span>; });</code></pre></td></tr></table>
+    .<span class="at">attr</span>(<span class="st">&#39;cx&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="at">x</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;cy&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="at">y</span><span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>We’ll also want to adjust the endpoints of our edge lines. For these objects, however, there’s a small twist. When we initialized the <code>edges</code> array, we set the <code>source</code> and <code>target</code> properties to the indices of the respective nodes in the <code>nodes</code> array. When the <span class="smcp">D3</span>.js force layout begins execution, it replaces those indices with direct references to the nodes themselves. That makes it a little easier for us to find the appropriate coordinates for the lines.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">edgeSelection
-    .<span class="fu">attr</span>(<span class="st">&#39;x1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">source</span>.<span class="fu">x</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;y1&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">source</span>.<span class="fu">y</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;x2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">target</span>.<span class="fu">x</span>; })
-    .<span class="fu">attr</span>(<span class="st">&#39;y2&#39;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="ot">target</span>.<span class="fu">y</span>; });</code></pre></td></tr></table>
+    .<span class="at">attr</span>(<span class="st">&#39;x1&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="va">source</span>.<span class="at">x</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;y1&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="va">source</span>.<span class="at">y</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;x2&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="va">target</span>.<span class="at">x</span><span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;y2&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="va">target</span>.<span class="at">y</span><span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With our function ready to handle updates from the force-direction calculations, we can tell <span class="smcp">D3</span>.js to start its work. That’s a simple method of the <code>force</code> object.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">force</span>.<span class="fu">start</span>();</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">force</span>.<span class="at">start</span>()<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With that statement the graph begins an animated transition to its final, force-directed state as figure <span class="nextfigure"/> shows.</p>
 <figure>
 <div id="figure2">
@@ -1091,52 +1091,52 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 <h3 id="step-8-add-interactivity">Step 8: Add Interactivity</h3>
 <p>Since <span class="smcp">D3</span>.js is a JavaScript library, you would expect it to support interactions with the user. It does, and to demonstrate we can add a simple interaction to the graph. When a user clicks on one of the nodes in the graph, we can emphasize that node and its neighbors.</p>
 <p>Event handlers in <span class="smcp">D3</span>.js closely resemble those in other JavaScript libraries such as jQuery. We define an event handler using the <code>on()</code> method of a selection, as in the following code.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodeSelection</span>.<span class="fu">on</span>(<span class="st">&#39;click&#39;</span>, <span class="kw">function</span>(d) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">nodeSelection</span>.<span class="at">on</span>(<span class="st">&#39;click&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
     <span class="co">// Handle the click event</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The first parameter to <code>on()</code> is the event type, and the second parameter is a function that <span class="smcp">D3</span>.js will call when the event occurs. The parameter to this function is the data object that corresponds to the selection element, and by convention it’s named <code>d</code>. Because we’re adding the event to the selection of nodes (<code>nodeSelection</code>), <code>d</code> will be one of the graph nodes.</p>
 <p>For our visualization we’ll emphasize the clicked node by added a <span class="smcp">CSS</span>-accessible class to the corresponding <code>&lt;circle&gt;</code> and by increasing the circle’s size. The class makes it possible to style the circle uniquely, but a circle’s size cannot be specified with <span class="smcp">CSS</span> rules. Ultimately, therefore, we have to do two things to the circle: add the <code>selected</code> class and increase the radius using the <code>r</code> attribute. Of course, in order to do either we have to select the <code>&lt;circle&gt;</code> element. When <span class="smcp">D3</span>.js calls an event handler, it sets <code>this</code> equal to the target of the event; we can turn that target into a selection with <code>d3.select(this)</code>. The following code, therefore, is all it takes to change the clicked node’s circle.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"> <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
-    .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">true</span>)
-    .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="fl">1.5</span>*nodeRadius);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"> <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>)
+    .<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">true</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> <span class="fl">1.5</span><span class="op">*</span>nodeRadius)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>We can do something similar by adding a <code>selected</code> class to all the edges that connect to the clicked node. To find those edges we can iterate through the full edge selection. <span class="lgcp">D3</span>.js provides the <code>each()</code> function to do just that. As we look at each edge we check the <code>source</code> and <code>target</code> properties to see if either matches our clicked node. When we find a match, we add the <code>selected</code> class to the edge. Note that in line 3 we’re once again using <code>d3.select(this)</code>. In this case the code is inside of the <code>each()</code> function, so <code>this</code> will equal the particular element of the current iteration. In our case that’s the <code>&lt;line&gt;</code> for the edge.</p>
-<table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">edgeSelection</span>.<span class="fu">each</span>(<span class="kw">function</span>(edge) {
-    <span class="kw">if</span> ((<span class="ot">edge</span>.<span class="fu">source</span> === d) || (<span class="ot">edge</span>.<span class="fu">target</span> === d)) {
-        <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>).<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>,<span class="kw">true</span>);
-    }
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">edgeSelection</span>.<span class="at">each</span>(<span class="kw">function</span>(edge) <span class="op">{</span>
+    <span class="cf">if</span> ((<span class="va">edge</span>.<span class="at">source</span> <span class="op">===</span> d) <span class="op">||</span> (<span class="va">edge</span>.<span class="at">target</span> <span class="op">===</span> d)) <span class="op">{</span>
+        <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>).<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span><span class="kw">true</span>)<span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>That code handles setting the <code>selected</code> class, but we still need to remove it when appropriate. We can remove it from all the other circles (and make sure their radii are restored to its default value) by operating on the node selection. Other than line 2 below, the code looks the same as we’ve seen before. In line 2 we use the <span class="smcp">D3</span>.js <code>filter()</code> function to limit the selection to the nodes other than the one that was clicked.</p>
-<table class="sourceCode javascript numberLines line-2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">nodeSelection
-    .<span class="fu">filter</span>(<span class="kw">function</span>(node) { <span class="kw">return</span> node !== d; })
-    .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>)
-    .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, nodeRadius);</code></pre></td></tr></table>
+    .<span class="at">filter</span>(<span class="kw">function</span>(node) <span class="op">{</span> <span class="cf">return</span> node <span class="op">!==</span> d<span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">false</span>)
+    .<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> nodeRadius)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>A similar process resets the <code>selected</code> class on all the edges. We can remove the class from all edges first, before we add to the appropriate edges in the previous code fragment. Here’s the code that removes it. With <span class="smcp">D3</span>.js it takes only a single line:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">edgeSelection</span>.<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>);</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">edgeSelection</span>.<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>And finally, if the user clicks on a node that’s already selected, we can restore it to it’s default state.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">    <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
-        .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">true</span>)
-        .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="fl">1.5</span>*nodeRadius);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">    <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>)
+        .<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">true</span>)
+        .<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> <span class="fl">1.5</span><span class="op">*</span>nodeRadius)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>When you put all of the above code fragments together, you have the complete event handler below.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1162,32 +1162,32 @@ The <span class="smcp">D3</span>.js force layout provides the information to rep
 24
 25
 26
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">nodeSelection</span>.<span class="fu">on</span>(<span class="st">&#39;click&#39;</span>, <span class="kw">function</span>(d) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">nodeSelection</span>.<span class="at">on</span>(<span class="st">&#39;click&#39;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span>
 
     nodeSelection
-        .<span class="fu">filter</span>(<span class="kw">function</span>(node) { <span class="kw">return</span> node !== d; })
-        .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>)
-        .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, nodeRadius);
+        .<span class="at">filter</span>(<span class="kw">function</span>(node) <span class="op">{</span> <span class="cf">return</span> node <span class="op">!==</span> d<span class="op">;</span> <span class="op">}</span>)
+        .<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">false</span>)
+        .<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> nodeRadius)<span class="op">;</span>
 
-    <span class="ot">edgeSelection</span>.<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>);
+    <span class="va">edgeSelection</span>.<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span>
 
-    <span class="kw">if</span> (<span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>).<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>)) {
-        <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
-            .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">false</span>)
-            .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, nodeRadius)
+    <span class="cf">if</span> (<span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>).<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span>)) <span class="op">{</span>
+        <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>)
+            .<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">false</span>)
+            .<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> nodeRadius)
 
-    } <span class="kw">else</span> {
-        <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
-            .<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">true</span>)
-            .<span class="fu">attr</span>(<span class="st">&#39;r&#39;</span>, <span class="fl">1.5</span>*nodeRadius);
+    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>)
+            .<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">true</span>)
+            .<span class="at">attr</span>(<span class="st">&#39;r&#39;</span><span class="op">,</span> <span class="fl">1.5</span><span class="op">*</span>nodeRadius)<span class="op">;</span>
        
-       <span class="ot">edgeSelection</span>.<span class="fu">each</span>(<span class="kw">function</span>(edge) {
-            <span class="kw">if</span> ((<span class="ot">edge</span>.<span class="fu">source</span> === d) || (<span class="ot">edge</span>.<span class="fu">target</span> === d)) {
-                <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>).<span class="fu">classed</span>(<span class="st">&#39;selected&#39;</span>,<span class="kw">true</span>);
-            }
-       });
-    }
-});</code></pre></td></tr></table>
+       <span class="va">edgeSelection</span>.<span class="at">each</span>(<span class="kw">function</span>(edge) <span class="op">{</span>
+            <span class="cf">if</span> ((<span class="va">edge</span>.<span class="at">source</span> <span class="op">===</span> d) <span class="op">||</span> (<span class="va">edge</span>.<span class="at">target</span> <span class="op">===</span> d)) <span class="op">{</span>
+                <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>).<span class="at">classed</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span><span class="kw">true</span>)<span class="op">;</span>
+            <span class="op">}</span>
+       <span class="op">}</span>)<span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Along with a bit of <span class="smcp">CSS</span> styling to emphasize the selected circles and lines, this code results in the interactive visualization of <span class="nextfigure"/>.</p>
 <style>
 #figure3 circle, #figure3 line { cursor: pointer; }
@@ -1799,7 +1799,7 @@ EF1,31.62,-87.85
 <p>Since we’re going to access this data using JavaScript, you might be tempted to convert the file from <span class="smcp">CSV</span> to <span class="smcp">JSON</span> format. It’s better, however, to keep the data in a <span class="smcp">CSV</span> file. <span class="lgcp">D3</span>.js has full support for <span class="smcp">CSV</span>, so we don’t really gain anything by converting to <span class="smcp">JSON</span>. More importantly, the <span class="smcp">JSON</span> file would be more than four times larger than the <span class="smcp">CSV</span> version, and that extra size would slow down the loading of our web page.</p>
 <h3 id="step-2-set-up-the-page-1">Step 2: Set Up the Page</h3>
 <p>Our skeletal web page is no different from the other <span class="smcp">D3</span>.js examples. We set aside a container for the map (line 8) and include the <span class="smcp">D3</span>.js library (line 10).</p>
-<table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1824,12 +1824,12 @@ EF1,31.62,-87.85
 <span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-3-create-a-map-projection">Step 3: Create a Map Projection</h3>
 <p>If you can’t quite recall your geography lessons about map projections, don’t worry; <span class="smcp">D3</span>.js can handle all of the heavy lifting. Not only does it have extensive support for common projections, but it also supports extensions for custom projections tailored specifically for visualizations. For example, there’s a modified Albers projection that’s optimized for choropleth maps of the United States. It repositions (and resizes) Alaska and Hawaii to provide a convenient map of all 50 states. In our case, since there were no tornado sightings in Alaska or Hawaii in 2013, we can use a standard Albers projection.</p>
 <p>We set up the projection in the code below. First, in lines 1 and 2, we define the size our map in pixels. Then, in line 4, we create the Albers projection. <span class="lgcp">D3</span>.js supports many adjustments to the projection to position it appropriately on the page, but the default values are generally fine in our case. We only need to scale the map (line 5) and center it (line 6) on the page.</p>
 <p>To draw the map on the page we’re going to use <span class="smcp">SVG</span> <code>&lt;path&gt;</code> elements, but our map data takes the form of latitude and longitude values. <span class="lgcp">D3</span>.js has a <code>path</code> object to translate geographic coordinates to <span class="smcp">SVG</span> paths based on a particular map projection. In lines 8 and 9 we create our path object.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1838,47 +1838,47 @@ EF1,31.62,-87.85
 7
 8
 9
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> width = <span class="dv">640</span>,
-    height = <span class="dv">400</span>;
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> width <span class="op">=</span> <span class="dv">640</span><span class="op">,</span>
+    height <span class="op">=</span> <span class="dv">400</span><span class="op">;</span>
 
-<span class="kw">var</span> projection = <span class="ot">d3</span>.<span class="ot">geo</span>.<span class="fu">albers</span>()
-    .<span class="fu">scale</span>(<span class="dv">888</span>)
-    .<span class="fu">translate</span>([width / <span class="dv">2</span>, height / <span class="dv">2</span>]);
+<span class="kw">var</span> projection <span class="op">=</span> <span class="va">d3</span>.<span class="va">geo</span>.<span class="at">albers</span>()
+    .<span class="at">scale</span>(<span class="dv">888</span>)
+    .<span class="at">translate</span>([width / <span class="dv">2</span><span class="op">,</span> height / <span class="dv">2</span>])<span class="op">;</span>
 
-<span class="kw">var</span> path = <span class="ot">d3</span>.<span class="ot">geo</span>.<span class="fu">path</span>()
-    .<span class="fu">projection</span>(projection);</code></pre></td></tr></table>
+<span class="kw">var</span> path <span class="op">=</span> <span class="va">d3</span>.<span class="va">geo</span>.<span class="at">path</span>()
+    .<span class="at">projection</span>(projection)<span class="op">;</span></code></pre></td></tr></table></div>
 <h3 id="step-4-initialize-the-svg-container">Step 4: Initialize the SVG container</h3>
 <p>Just as we’ve done in the previous <span class="smcp">D3</span>.js example, we can create an <span class="smcp">SVG</span> container to hold the map.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#map&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width)
-    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height);
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> svg <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;#map&quot;</span>).<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> width)
+    .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height)<span class="op">;</span>
 
-<span class="kw">var</span> g = <span class="ot">svg</span>.<span class="fu">append</span>(“g”);</code></pre></td></tr></table>
+<span class="kw">var</span> g <span class="op">=</span> <span class="va">svg</span>.<span class="at">append</span>(“g”)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>As we’ll see in the later steps, it will be helpful have an inner group in which to place the map. This inner group (defined by a <code>&lt;g&gt;</code> element) acts much like an arbitrary <code>&lt;div&gt;</code> element in <span class="smcp">HTML</span>. We create that inner group in line 5.</p>
 <h3 id="step-5-retrieve-the-map-data">Step 5: Retrieve the Map Data</h3>
 <p>For our visualization, the map data is nothing but a map of the <span class="smcp">US</span> with individual states. <span class="lgcp">D3</span>.js uses <a href="http://geojson.org"><span class="smcp">G</span>eo<span class="smcp">JSON</span></a> for its map data. Unlike most image tiles that we used in chapter 6, <span class="smcp">G</span>eo<span class="smcp">JSON</span> data is vector-based, so it can be used at any scale. <span class="lgcp">G</span>eo<span class="smcp">JSON</span> data is also in <span class="smcp">JSON</span> format, which makes it especially compatible with JavaScript.</p>
 <p>Since our data is in a <span class="smcp">JSON</span> format, we can use the <code>d3.json()</code> function to retrieve it. If you’re more familiar with jQuery, this function is almost identical to the jQuery <code>$.getJSON()</code> function.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">d3</span>.<span class="fu">json</span>(<span class="st">&quot;data/us-states.json&quot;</span>, <span class="kw">function</span>(map) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">json</span>(<span class="st">&quot;data/us-states.json&quot;</span><span class="op">,</span> <span class="kw">function</span>(map) <span class="op">{</span>
     <span class="co">// Process the JSON map data</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <h3 id="step-6-draw-the-map">Step 6: Draw the Map</h3>
 <p>Once we have our data, we can draw the map on the page. The code in this step is very similar to that in the previous example. Each state will be a <code>&lt;path&gt;</code> element within the <code>&lt;g&gt;</code> container. Using the conventions of <span class="smcp">D3</span>.js, we create a selection of <code>&lt;path&gt;</code> elements (line 1) and bind those elements to our data (line 2). When there is no element we create one (line 3), and we set its <code>d</code> attribute to be the path associated with the data, given our projection. Note that <code>path</code> in line 4 is the object we created in step 4. It is a function that translates the latitude and longitude information into appropriate <span class="smcp">SVG</span> coordinates.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">g</span>.<span class="fu">selectAll</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">data</span>(<span class="ot">map</span>.<span class="fu">features</span>)
-  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, path);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">g</span>.<span class="at">selectAll</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">data</span>(<span class="va">map</span>.<span class="at">features</span>)
+  .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> path)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>As we can see from figure <span class="nextfigure"/>, <span class="smcp">D3</span>.js gives us the paths required to create a nice <span class="smcp">SVG</span> map.</p>
 <figure>
 <div id="map1">
@@ -1890,7 +1890,7 @@ EF1,31.62,-87.85
 </figure>
 <h3 id="step-7-retrieve-the-weather-data">Step 7: Retrieve the Weather Data</h3>
 <p>Now our map is ready for some data. We can retrieve the <span class="smcp">CSV</span> file using another <span class="smcp">D3</span>.js utility. Note, though, that all of the properties of a <span class="smcp">CSV</span> file are considered text strings. We’ll want to convert those strings to numbers. We also want to filter out the few tornado sightings that don’t include latitude and longitude information.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1904,35 +1904,35 @@ EF1,31.62,-87.85
 12
 13
 14
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">d3</span>.<span class="fu">csv</span>(<span class="st">&quot;tornadoes.csv&quot;</span>, <span class="kw">function</span>(data) {
-    data = <span class="ot">data</span>.<span class="fu">filter</span>(<span class="kw">function</span>(d, i) {
-        <span class="kw">if</span> (<span class="ot">d</span>.<span class="fu">latitude</span> &amp;&amp; <span class="ot">d</span>.<span class="fu">longitude</span>) {
-            <span class="ot">d</span>.<span class="fu">latitude</span> = +<span class="ot">d</span>.<span class="fu">latitude</span>;
-            <span class="ot">d</span>.<span class="fu">longitude</span> = +<span class="ot">d</span>.<span class="fu">longitude</span>;
-            <span class="ot">d</span>.<span class="fu">f_scale</span> = +<span class="ot">d</span>.<span class="fu">f_scale</span>[<span class="dv">2</span>];
-            <span class="ot">d</span>.<span class="fu">position</span> = <span class="fu">projection</span>([
-                <span class="ot">d</span>.<span class="fu">longitude</span>, <span class="ot">d</span>.<span class="fu">latitude</span>
-            ]);
-            <span class="kw">return</span> <span class="kw">true</span>;
-        }
-    });
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">csv</span>(<span class="st">&quot;tornadoes.csv&quot;</span><span class="op">,</span> <span class="kw">function</span>(data) <span class="op">{</span>
+    data <span class="op">=</span> <span class="va">data</span>.<span class="at">filter</span>(<span class="kw">function</span>(d<span class="op">,</span> i) <span class="op">{</span>
+        <span class="cf">if</span> (<span class="va">d</span>.<span class="at">latitude</span> <span class="op">&amp;&amp;</span> <span class="va">d</span>.<span class="at">longitude</span>) <span class="op">{</span>
+            <span class="va">d</span>.<span class="at">latitude</span> <span class="op">=</span> <span class="op">+</span><span class="va">d</span>.<span class="at">latitude</span><span class="op">;</span>
+            <span class="va">d</span>.<span class="at">longitude</span> <span class="op">=</span> <span class="op">+</span><span class="va">d</span>.<span class="at">longitude</span><span class="op">;</span>
+            <span class="va">d</span>.<span class="at">f_scale</span> <span class="op">=</span> <span class="op">+</span><span class="va">d</span>.<span class="at">f_scale</span>[<span class="dv">2</span>]<span class="op">;</span>
+            <span class="va">d</span>.<span class="at">position</span> <span class="op">=</span> <span class="at">projection</span>([
+                <span class="va">d</span>.<span class="at">longitude</span><span class="op">,</span> <span class="va">d</span>.<span class="at">latitude</span>
+            ])<span class="op">;</span>
+            <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span>
+        <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
     <span class="co">// Continue creating the visualization...</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Once the browser has retrieved the <span class="smcp">CSV</span> file from the server, we can begin processing it in line 2. Here we’re using the <code>.filter()</code> method of arrays to iterate through the data values. The <code>.filter()</code> method eliminates the data points without latitude and longitude values. It only returns <code>true</code> (line 10) if both values are present (line 3). While we’re checking the data points for latitude and longitude, we convert the string values into numbers (lines 4 and 5), extract the number from the Enhanced Fujita Scale classification (line 6), and calculate the position of the sighting in <span class="smcp">SVG</span> coordinates using the projection function we created in step 3 (lines 7-9).</p>
 <h3 id="step-8-plot-the-data">Step 8: Plot the Data</h3>
 <p>With the data retrieved, cleaned, and converted, it’s a simple matter to plot the points on the map. Once again we’ll use the traditional <span class="smcp">D3</span>.js approach. Each data point is an <span class="smcp">SVG</span> <code>&lt;circle&gt;</code> element, so we select those elements, bind the data to the selection, and use the <code>.enter()</code> function to create new <code>&lt;circle&gt;</code> elements to match the data.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">g</span>.<span class="fu">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
-    .<span class="fu">data</span>(data)
-  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;circle&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;cx&quot;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">position</span>[<span class="dv">0</span>]; })
-    .<span class="fu">attr</span>(<span class="st">&quot;cy&quot;</span>, <span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">position</span>[<span class="dv">1</span>]; })
-    .<span class="fu">attr</span>(<span class="st">&quot;r&quot;</span>, <span class="kw">function</span>(d)  { <span class="kw">return</span> <span class="dv">4</span> + <span class="dv">2</span>*<span class="ot">d</span>.<span class="fu">f_scale</span>; });</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">g</span>.<span class="at">selectAll</span>(<span class="st">&quot;circle&quot;</span>)
+    .<span class="at">data</span>(data)
+  .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;circle&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;cx&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="at">position</span>[<span class="dv">0</span>]<span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;cy&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="at">position</span>[<span class="dv">1</span>]<span class="op">;</span> <span class="op">}</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;r&quot;</span><span class="op">,</span> <span class="kw">function</span>(d)  <span class="op">{</span> <span class="cf">return</span> <span class="dv">4</span> <span class="op">+</span> <span class="dv">2</span><span class="op">*</span><span class="va">d</span>.<span class="at">f_scale</span><span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>As you can see, we set the position of the circles using the <code>position</code> property we created in the previous step. Also, to indicate the relative strength of each tornado, we make the size of the circle proportional to the Enhanced Fujita Scale classification (line 6). The result in figure <span class="nextfigure"/> is a nice map of 2013 tornado sightings in the continental <span class="smcp">U.S.</span></p>
 <figure>
 <div id="map2">
@@ -1945,21 +1945,21 @@ Adding points to a map is easy with <span class="smcp">D3</span>.js projections.
 <h3 id="step-9-add-interactivity">Step 9: Add Interactivity</h3>
 <p>Maps naturally invite users to zoom in and pan around, and <span class="smcp">D3</span>.js makes it easy to support those standard map interactions. Because <span class="smcp">D3</span>.js gives us complete control, however, we’re not limited to conventions. Let’s do something a little different with our map. We can make it, so that clicking on any state zooms in on that state. Clicking a state that’s already zoomed in can then zoom the map back out to it’s default. As you’ll see, this behavior is easy to implement with <span class="smcp">D3</span>.js.</p>
 <p>The first bit of code we’ll add is a variable that keeps track of the particular state into which the map is zoomed. Initially, the user won’t have zoomed anywhere, so that variable is empty.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> active = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">null</span>)</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> active <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">null</span>)</code></pre></td></tr></table></div>
 <p>Next we add an event handler to all of the state <code>&lt;path&gt;</code> elements. We can do that when we create the elements (which we did above in step 6).</p>
-<table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">g</span>.<span class="fu">selectAll</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">data</span>(<span class="ot">map</span>.<span class="fu">features</span>)
-  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, path)
-    .<span class="fu">on</span>(<span class="st">&quot;click&quot;</span>, clicked);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">g</span>.<span class="at">selectAll</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">data</span>(<span class="va">map</span>.<span class="at">features</span>)
+  .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> path)
+    .<span class="at">on</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> clicked)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The extra statement is line 5. Like jQuery, <span class="smcp">D3</span>.js gives us an easy way to add event handlers to <span class="smcp">HTML</span> and <span class="smcp">SVG</span> elements. Now we have to write that event handler. The handler needs to identify the state that the user clicked, calculate the position of that state (in <span class="smcp">SVG</span> coordinates), and transition the map to zoom to those coordinates. Before we look at the implementation in detail, it’s worth noting that <span class="smcp">D3</span>.js event handlers are optimized to work with data visualizations (which shouldn’t be surprising). In particular, the parameter passed to the handler is the data item associated with the target element (conventionally named <code>d</code>). The JavaScript context (<code>this</code>) is set to the specific element that received the event. If the handler needs access to the other properties of the JavaScript event, they’re available in the <code>d3.event</code> global variable. Here’s how those conventions work in a real event handler.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1980,27 +1980,27 @@ Adding points to a map is easy with <span class="smcp">D3</span>.js projections.
 19
 20
 21
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked = <span class="kw">function</span>(d) {
-    <span class="ot">active</span>.<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;#cccccc&quot;</span>);
-    active = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="kw">this</span>)
-        .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, <span class="st">&quot;#F77B15&quot;</span>);
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked <span class="op">=</span> <span class="kw">function</span>(d) <span class="op">{</span>
+    <span class="va">active</span>.<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="st">&quot;#cccccc&quot;</span>)<span class="op">;</span>
+    active <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="kw">this</span>)
+        .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="st">&quot;#F77B15&quot;</span>)<span class="op">;</span>
 
-    <span class="kw">var</span> bounds = <span class="ot">path</span>.<span class="fu">bounds</span>(d),
-        dx = bounds[<span class="dv">1</span>][<span class="dv">0</span>] - bounds[<span class="dv">0</span>][<span class="dv">0</span>],
-        dy = bounds[<span class="dv">1</span>][<span class="dv">1</span>] - bounds[<span class="dv">0</span>][<span class="dv">1</span>],
-        x = (bounds[<span class="dv">0</span>][<span class="dv">0</span>] + bounds[<span class="dv">1</span>][<span class="dv">0</span>]) / <span class="dv">2</span>,
-        y = (bounds[<span class="dv">0</span>][<span class="dv">1</span>] + bounds[<span class="dv">1</span>][<span class="dv">1</span>]) / <span class="dv">2</span>,
-        scale = .<span class="dv">9</span> / <span class="ot">Math</span>.<span class="fu">max</span>(dx / width, dy / height),
-        translate = [
-            width / <span class="dv">2</span> - scale * x, 
-            height / <span class="dv">2</span> - scale * y];
+    <span class="kw">var</span> bounds <span class="op">=</span> <span class="va">path</span>.<span class="at">bounds</span>(d)<span class="op">,</span>
+        dx <span class="op">=</span> bounds[<span class="dv">1</span>][<span class="dv">0</span>] <span class="op">-</span> bounds[<span class="dv">0</span>][<span class="dv">0</span>]<span class="op">,</span>
+        dy <span class="op">=</span> bounds[<span class="dv">1</span>][<span class="dv">1</span>] <span class="op">-</span> bounds[<span class="dv">0</span>][<span class="dv">1</span>]<span class="op">,</span>
+        x <span class="op">=</span> (bounds[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">+</span> bounds[<span class="dv">1</span>][<span class="dv">0</span>]) / <span class="dv">2</span><span class="op">,</span>
+        y <span class="op">=</span> (bounds[<span class="dv">0</span>][<span class="dv">1</span>] <span class="op">+</span> bounds[<span class="dv">1</span>][<span class="dv">1</span>]) / <span class="dv">2</span><span class="op">,</span>
+        scale <span class="op">=</span> .<span class="dv">9</span> / <span class="va">Math</span>.<span class="at">max</span>(dx / width<span class="op">,</span> dy / height)<span class="op">,</span>
+        translate <span class="op">=</span> [
+            width / <span class="dv">2</span> <span class="op">-</span> scale <span class="op">*</span> x<span class="op">,</span> 
+            height / <span class="dv">2</span> <span class="op">-</span> scale <span class="op">*</span> y]<span class="op">;</span>
 
-    <span class="ot">g</span>.<span class="fu">transition</span>()
-        .<span class="fu">duration</span>(<span class="dv">750</span>)
-        .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> + 
-            translate + <span class="st">&quot;)scale(&quot;</span> + 
-            scale + <span class="st">&quot;)&quot;</span>);
-};</code></pre></td></tr></table>
+    <span class="va">g</span>.<span class="at">transition</span>()
+        .<span class="at">duration</span>(<span class="dv">750</span>)
+        .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> 
+            translate <span class="op">+</span> <span class="st">&quot;)scale(&quot;</span> <span class="op">+</span> 
+            scale <span class="op">+</span> <span class="st">&quot;)&quot;</span>)<span class="op">;</span>
+<span class="op">};</span></code></pre></td></tr></table></div>
 <p>In lines 2-4 we manipulate the map colors. The previously zoomed state is reset to a muted gray, and the clicked state is filled with a vibrant orange. Notice that this same code resets the <code>active</code> variable so that it accurately tracks the zoomed state. Next, in lines 6-14, we calculate the bounds of the zoomed state. Or rather, we let <span class="smcp">D3</span>.js do the calculation. All the work happens in the <code>bounds()</code> function we call in line 6. The other lines are mostly just extracting the individual parts of that calculation. In line 11 we calculate how to scale the map so that the zoomed state fills 90% of the map. Then, in lines 12-14, we calculate how to shift the map to center that state. The final block of code (lines 16-20) adjusts the map by scaling and translating the <span class="smcp">SVG</span>. As you can see from line 16, we’re using a <span class="smcp">D3</span>.js transition to animate the change in view.</p>
 <p>The code we’ve seen so far still needs a few minor additions to deal with some loose ends, but I’ll leave those to the book’s <a href="http://jsDataV.is/source/">source code</a>. The result in figure <span class="nextfigure"/> is a nice, interactive map of our data.</p>
 <style>
@@ -2172,7 +2172,7 @@ Maine,New England,Piscataquis County
 ...</code></pre>
 <h3 id="step-2-set-up-the-page-2">Step 2: Set Up the Page</h3>
 <p>Our skeletal web page is no different from the other <span class="smcp">D3</span>.js examples. We set aside a container for the visualization (line 8) and include the <span class="smcp">D3</span>.js library (line 10).</p>
-<table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-8 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2197,10 +2197,10 @@ Maine,New England,Piscataquis County
 <span class="ot">      src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-3-create-a-stage-for-the-visualization-2">Step 3: Create a Stage for the Visualization</h3>
 <p>As with our other <span class="smcp">D3</span>.js examples, we start by creating an <code>&lt;svg&gt;</code> container for the visualization. Within that container, we’ll also add a group (<code>&lt;g&gt;</code>) element.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2212,29 +2212,29 @@ Maine,New England,Piscataquis County
 10
 11
 12
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> width = <span class="dv">640</span>,
-    height = <span class="dv">400</span>,
-    maxRadius = <span class="ot">Math</span>.<span class="fu">min</span>(width, height) / <span class="dv">2</span>;
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> width <span class="op">=</span> <span class="dv">640</span><span class="op">,</span>
+    height <span class="op">=</span> <span class="dv">400</span><span class="op">,</span>
+    maxRadius <span class="op">=</span> <span class="va">Math</span>.<span class="at">min</span>(width<span class="op">,</span> height) / <span class="dv">2</span><span class="op">;</span>
 
-<span class="kw">var</span> svg = <span class="ot">d3</span>.<span class="fu">select</span>(<span class="st">&quot;#chart&quot;</span>).<span class="fu">append</span>(<span class="st">&quot;svg&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;width&quot;</span>, width)
-    .<span class="fu">attr</span>(<span class="st">&quot;height&quot;</span>, height);
+<span class="kw">var</span> svg <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;#chart&quot;</span>).<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> width)
+    .<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> height)<span class="op">;</span>
 
-<span class="kw">var</span> g = <span class="ot">svg</span>.<span class="fu">append</span>(“g”);
-    .<span class="fu">attr</span>(<span class="st">&quot;transform&quot;</span>, <span class="st">&quot;translate(&quot;</span> +
-        (width  / <span class="dv">2</span>) + <span class="st">&quot;,&quot;</span> +
-        (height / <span class="dv">2</span>) + <span class="st">&quot;)&quot;</span>);</code></pre></td></tr></table>
+<span class="kw">var</span> g <span class="op">=</span> <span class="va">svg</span>.<span class="at">append</span>(“g”)<span class="op">;</span>
+    .<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span>
+        (width  / <span class="dv">2</span>) <span class="op">+</span> <span class="st">&quot;,&quot;</span> <span class="op">+</span>
+        (height / <span class="dv">2</span>) <span class="op">+</span> <span class="st">&quot;)&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The code above contains a couple of new wrinkles. First, in line 3, we calculate the maximum radius for the visualization. This value—which is half of the height or the width, whichever is smaller—will come in handy in the code that follows. More interestingly, in lines 10-12 we translate the inner <code>&lt;g&gt;</code> container so that its coordinate system places the point (0,0) right in the center of the visualization. This translation makes it easy to center the sunburst and calculate sunburst parameters.</p>
 <h3 id="step-4-create-scales">Step 4: Create Scales</h3>
 <p>When it’s complete, our visualization will consist of areas corresponding to regions in the <span class="smcp">U.S.</span>; larger areas will represent regions with more tornadoes. Because we’re dealing with areas, we’ll need two dimensions for each region. We are not, however, going to draw our areas as simple rectangles; instead we’re going to use arcs. That will require a bit of trigonometry, but fortunately, <span class="smcp">D3</span>.js provides a lot of help. We’ll start by defining some <code>scale</code> objects. We first saw scales in the step 4 of this chapter’s first example where they translated data values to <span class="smcp">SVG</span> coordinates. The scales in the code below do much the same, except they’re using polar coordinates.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> theta = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
-    .<span class="fu">range</span>([<span class="dv">0</span>, <span class="dv">2</span> * <span class="ot">Math</span>.<span class="fu">PI</span>]);
-<span class="kw">var</span> radius= <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">sqrt</span>()
-    .<span class="fu">range</span>([<span class="dv">0</span>, maxRadius]);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> theta <span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">linear</span>()
+    .<span class="at">range</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">PI</span>])<span class="op">;</span>
+<span class="kw">var</span> radius<span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">sqrt</span>()
+    .<span class="at">range</span>([<span class="dv">0</span><span class="op">,</span> maxRadius])<span class="op">;</span></code></pre></td></tr></table></div>
 <p>As you can see, the angular scale is a linear scale that ranges from 0 to 2π (or 360°). The radial scale ranges from 0 to the maximum radius, but it’s not linear. Instead, this scale is a square root scale; <span class="smcp">D3</span>.js takes the square root of the input before computing the output. The area of an arc varies as the square of its radius, and the square root scale compensates for this effect.</p>
 <blockquote>
 <p>Note: In prior examples, we’ve set both ranges (outputs) and domains (inputs) for our scales. In this case, however, we won’t need to set domains explicitly. The default domain of [0,1] is exactly what we need for both scales.</p>
@@ -2248,7 +2248,7 @@ Maine,New England,Piscataquis County
 <li><code>.dx</code>: the data’s length along the y–axis (∆y)</li>
 </ul>
 <p>Given those properties, here’s the code that generates the arc path.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2261,19 +2261,19 @@ Maine,New England,Piscataquis County
 11
 12
 13
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> arc = <span class="ot">d3</span>.<span class="ot">svg</span>.<span class="fu">arc</span>()
-    .<span class="fu">startAngle</span>(<span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="ot">Math</span>.<span class="fu">min</span>(<span class="dv">2</span> * <span class="ot">Math</span>.<span class="fu">PI</span>, <span class="fu">theta</span>(<span class="ot">d</span>.<span class="fu">x</span>)));
-    })
-    .<span class="fu">endAngle</span>(<span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="ot">Math</span>.<span class="fu">min</span>(<span class="dv">2</span> * <span class="ot">Math</span>.<span class="fu">PI</span>, <span class="fu">theta</span>(<span class="ot">d</span>.<span class="fu">x</span> + <span class="ot">d</span>.<span class="fu">dx</span>)));
-    })
-    .<span class="fu">innerRadius</span>(<span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="fu">radius</span>(<span class="ot">d</span>.<span class="fu">y</span>));
-    })
-    .<span class="fu">outerRadius</span>(<span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="ot">Math</span>.<span class="fu">max</span>(<span class="dv">0</span>, <span class="fu">radius</span>(<span class="ot">d</span>.<span class="fu">y</span> + <span class="ot">d</span>.<span class="fu">dy</span>));
-    });</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> arc <span class="op">=</span> <span class="va">d3</span>.<span class="va">svg</span>.<span class="at">arc</span>()
+    .<span class="at">startAngle</span>(<span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="va">Math</span>.<span class="at">min</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">PI</span><span class="op">,</span> <span class="at">theta</span>(<span class="va">d</span>.<span class="at">x</span>)))<span class="op">;</span>
+    <span class="op">}</span>)
+    .<span class="at">endAngle</span>(<span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="va">Math</span>.<span class="at">min</span>(<span class="dv">2</span> <span class="op">*</span> <span class="va">Math</span>.<span class="at">PI</span><span class="op">,</span> <span class="at">theta</span>(<span class="va">d</span>.<span class="at">x</span> <span class="op">+</span> <span class="va">d</span>.<span class="at">dx</span>)))<span class="op">;</span>
+    <span class="op">}</span>)
+    .<span class="at">innerRadius</span>(<span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="at">radius</span>(<span class="va">d</span>.<span class="at">y</span>))<span class="op">;</span>
+    <span class="op">}</span>)
+    .<span class="at">outerRadius</span>(<span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">Math</span>.<span class="at">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="at">radius</span>(<span class="va">d</span>.<span class="at">y</span> <span class="op">+</span> <span class="va">d</span>.<span class="at">dy</span>))<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The code itself is pretty straightforward, but a picture helps explain why we’re using the code this way. Assume that the data associated with a selection has a position (x,y) of (12.5, 10), a width of 25, and a height of 30. The data properties would then be:</p>
 <ul>
 <li><code>.x = 12.5</code></li>
@@ -2293,30 +2293,30 @@ Maine,New England,Piscataquis County
 <p>We haven’t specified the ranges of the x– and y–scales, but assume for now that each ranges from 0 to 100. The starting x–value of 12.5, therefore, is 12.5% of the full range. When we convert that value to polar coordinates, the result will be 12.5% of the full 360°. That’s 45° or π/4. The x-value extends another 25%, so the final x–value adds another 90° or π/2 to the starting value. For the y–values, our scales take the square root and map the results to the domain from 0 to 250 (<code>maxRadius</code>). The initial value of 10, therefore is divided by 100 (for the range) and transformed to √0.1 ⨉ 250 or 79. The final value of 10 + 30 results in a radius of √0.4 ⨉ 250 or 158. That’s the process that creates an <span class="smcp">SVG</span> for each data value.</p>
 <h3 id="step-5-retrieve-the-data">Step 5: Retrieve the Data</h3>
 <p>With the initial preparation complete, we’re now ready to process the data. As in the previous example, we’ll use <code>d3.csv()</code> to retrieve the <span class="smcp">CSV</span> file from the server.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">d3</span>.<span class="fu">csv</span>(<span class="st">&quot;tornadoes.csv&quot;</span>, <span class="kw">function</span>(data) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">csv</span>(<span class="st">&quot;tornadoes.csv&quot;</span><span class="op">,</span> <span class="kw">function</span>(data) <span class="op">{</span>
     <span class="co">// Continue processing the data...</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>When <span class="smcp">D3</span>.js retrieves the file, it creates a data structure that begins like the following fragment.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">[ {
-    <span class="st">&quot;state&quot;</span>:<span class="st">&quot;Connecticut&quot;</span>,
-    <span class="st">&quot;region&quot;</span>:<span class="st">&quot;New England&quot;</span>,
-    <span class="st">&quot;county&quot;</span>:<span class="st">&quot;Fairfield County&quot;</span>
-  },{
-    <span class="st">&quot;state&quot;</span>:<span class="st">&quot;Connecticut&quot;</span>,
-    <span class="st">&quot;region&quot;</span>:<span class="st">&quot;New England&quot;</span>,
-    <span class="st">&quot;county&quot;</span>:<span class="st">&quot;Hartford County&quot;</span>
-  },{
-    <span class="st">&quot;state&quot;</span>:<span class="st">&quot;Connecticut&quot;</span>,
-    <span class="st">&quot;region&quot;</span>:<span class="st">&quot;New England&quot;</span>,
-    <span class="st">&quot;county&quot;</span>:<span class="st">&quot;Hartford County&quot;</span>
-  },
-...</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">[ <span class="op">{</span>
+    <span class="st">&quot;state&quot;</span><span class="op">:</span><span class="st">&quot;Connecticut&quot;</span><span class="op">,</span>
+    <span class="st">&quot;region&quot;</span><span class="op">:</span><span class="st">&quot;New England&quot;</span><span class="op">,</span>
+    <span class="st">&quot;county&quot;</span><span class="op">:</span><span class="st">&quot;Fairfield County&quot;</span>
+  <span class="op">},{</span>
+    <span class="st">&quot;state&quot;</span><span class="op">:</span><span class="st">&quot;Connecticut&quot;</span><span class="op">,</span>
+    <span class="st">&quot;region&quot;</span><span class="op">:</span><span class="st">&quot;New England&quot;</span><span class="op">,</span>
+    <span class="st">&quot;county&quot;</span><span class="op">:</span><span class="st">&quot;Hartford County&quot;</span>
+  <span class="op">},{</span>
+    <span class="st">&quot;state&quot;</span><span class="op">:</span><span class="st">&quot;Connecticut&quot;</span><span class="op">,</span>
+    <span class="st">&quot;region&quot;</span><span class="op">:</span><span class="st">&quot;New England&quot;</span><span class="op">,</span>
+    <span class="st">&quot;county&quot;</span><span class="op">:</span><span class="st">&quot;Hartford County&quot;</span>
+  <span class="op">},</span>
+...</code></pre></div>
 <p>That data structure reflects the data, but it doesn’t include the <code>.x</code>, <code>.dx</code>, <code>.y</code>, and <code>.dy</code> properties that we need to draw the arcs. There’s additional work to be done to calculate those values. If you recall the second example in this chapter, we’ve seen this situation before. We have a set of raw data, but we need to augment that raw data with additional properties for the visualization. In the earlier example, we used the <span class="smcp">D3</span>.js force layout to calculate the extra properties. In this case we can use the partition layout.</p>
 <p>Before we can use the partition layout, however, we have to restructure our data. The partition layout works with hierarchical data, and right now all we have is a single dimensional array. We must structure the data to reflect the natural hierarchy of region, state, and county. Here again, however, <span class="smcp">D3</span>.js is able to help us. The <code>d3.nest()</code> operator analyzes an array of data and extracts the hierarchy from it. If you’re familiar with database commands, it’s the <span class="smcp">D3</span>.js equivalent of the <code>GROUP BY</code> operation. We can use the operator to create a new version of the data.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2327,61 +2327,61 @@ Maine,New England,Piscataquis County
 9
 10
 11
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> hierarchy = {
-    <span class="dt">key</span>: <span class="st">&quot;United States&quot;</span>,
-    <span class="dt">values</span>: <span class="ot">d3</span>.<span class="fu">nest</span>()
-        .<span class="fu">key</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">region</span>; })
-        .<span class="fu">key</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">state</span>; })
-        .<span class="fu">key</span>(<span class="kw">function</span>(d) { <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">county</span>; })
-        .<span class="fu">rollup</span>(<span class="kw">function</span>(leaves) {
-            <span class="kw">return</span> <span class="ot">leaves</span>.<span class="fu">length</span>;
-        })
-        .<span class="fu">entries</span>(data)
-    };</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> hierarchy <span class="op">=</span> <span class="op">{</span>
+    <span class="dt">key</span><span class="op">:</span> <span class="st">&quot;United States&quot;</span><span class="op">,</span>
+    <span class="dt">values</span><span class="op">:</span> <span class="va">d3</span>.<span class="at">nest</span>()
+        .<span class="at">key</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="at">region</span><span class="op">;</span> <span class="op">}</span>)
+        .<span class="at">key</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="at">state</span><span class="op">;</span> <span class="op">}</span>)
+        .<span class="at">key</span>(<span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="va">d</span>.<span class="at">county</span><span class="op">;</span> <span class="op">}</span>)
+        .<span class="at">rollup</span>(<span class="kw">function</span>(leaves) <span class="op">{</span>
+            <span class="cf">return</span> <span class="va">leaves</span>.<span class="at">length</span><span class="op">;</span>
+        <span class="op">}</span>)
+        .<span class="at">entries</span>(data)
+    <span class="op">};</span></code></pre></td></tr></table></div>
 <p>In line 1 we define the variable that will hold our restructured data. It’s an object with two properties. The <code>.key</code> property is set equal to <code>&quot;United States&quot;</code> and the <code>.values</code> property is the result of the the <code>d3.nest()</code> operation. In lines 4-6 we tell the operator to group the data, first by <code>.region</code>, then by <code>.state</code>, and finally by <code>.county</code>. Then, in lines 7-9 we tell the operator to set the final value to be simply the count of entries for the final grouping. Line 10 is where we pass the original dataset to the operator. When this statement finishes, the <code>hierarchy</code> variable contains a structured version of our data that begins like the following fragment.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">{
-    <span class="st">&quot;key&quot;</span>: <span class="st">&quot;United States&quot;</span>,
-    <span class="st">&quot;values&quot;</span>: [
-        {
-            <span class="st">&quot;key&quot;</span>: <span class="st">&quot;New England&quot;</span>,
-            <span class="st">&quot;values&quot;</span>: [
-                {
-                   <span class="st">&quot;key&quot;</span>: <span class="st">&quot;Connecticut&quot;</span>,
-                   <span class="st">&quot;values&quot;</span>: [
-                        {
-                            <span class="st">&quot;key&quot;</span>: <span class="st">&quot;Fairfield County&quot;</span>,
-                            <span class="st">&quot;values&quot;</span>: <span class="dv">1</span>
-                        },{
-                            <span class="st">&quot;key&quot;</span>: <span class="st">&quot;Hartford County&quot;</span>,
-                            <span class="st">&quot;values&quot;</span>: <span class="dv">2</span>
-                        },{
-...</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="op">{</span>
+    <span class="st">&quot;key&quot;</span><span class="op">:</span> <span class="st">&quot;United States&quot;</span><span class="op">,</span>
+    <span class="st">&quot;values&quot;</span><span class="op">:</span> [
+        <span class="op">{</span>
+            <span class="st">&quot;key&quot;</span><span class="op">:</span> <span class="st">&quot;New England&quot;</span><span class="op">,</span>
+            <span class="st">&quot;values&quot;</span><span class="op">:</span> [
+                <span class="op">{</span>
+                   <span class="st">&quot;key&quot;</span><span class="op">:</span> <span class="st">&quot;Connecticut&quot;</span><span class="op">,</span>
+                   <span class="st">&quot;values&quot;</span><span class="op">:</span> [
+                        <span class="op">{</span>
+                            <span class="st">&quot;key&quot;</span><span class="op">:</span> <span class="st">&quot;Fairfield County&quot;</span><span class="op">,</span>
+                            <span class="st">&quot;values&quot;</span><span class="op">:</span> <span class="dv">1</span>
+                        <span class="op">},{</span>
+                            <span class="st">&quot;key&quot;</span><span class="op">:</span> <span class="st">&quot;Hartford County&quot;</span><span class="op">,</span>
+                            <span class="st">&quot;values&quot;</span><span class="op">:</span> <span class="dv">2</span>
+                        <span class="op">},{</span>
+...</code></pre></div>
 <p>This structure matches what the partition layout needs, but there’s still one more step we need to take. The <code>d3.nest()</code> operator places both child arrays and leaf data in the <code>.values</code> property. By default, however, the partition layout expects the data to use different property names for each type of property. More specifically, it expects child nodes to be stored in the <code>.children</code> property and data values in the <code>.value</code> property. Since the <code>d3.nest()</code> operator does’t create exactly that structure, we have to extend the default partition layout. Here’s the code to do that.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
 7
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> partition = <span class="ot">d3</span>.<span class="ot">layout</span>.<span class="fu">partition</span>()
-    .<span class="fu">children</span>(<span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="ot">Array</span>.<span class="fu">isArray</span>(<span class="ot">d</span>.<span class="fu">values</span>) ? <span class="ot">d</span>.<span class="fu">values</span> : <span class="kw">null</span>;
-    })
-    .<span class="fu">value</span>(<span class="kw">function</span>(d) {
-        <span class="kw">return</span> <span class="ot">d</span>.<span class="fu">values</span>;
-    });</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> partition <span class="op">=</span> <span class="va">d3</span>.<span class="va">layout</span>.<span class="at">partition</span>()
+    .<span class="at">children</span>(<span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">Array</span>.<span class="at">isArray</span>(<span class="va">d</span>.<span class="at">values</span>) <span class="op">?</span> <span class="va">d</span>.<span class="at">values</span> : <span class="kw">null</span><span class="op">;</span>
+    <span class="op">}</span>)
+    .<span class="at">value</span>(<span class="kw">function</span>(d) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">d</span>.<span class="at">values</span><span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>In lines 2-4 we provide a custom function to return a node’s children. If the node’s <code>.values</code> property is an array, then that property contains the children. Otherwise the node has no children and we return <code>null</code>. In lines 5-7 we provide a custom function to return a node’s value. Since this function is only used when no children exist, the <code>.values</code> property has to contain the node value.</p>
 <h3 id="step-6-draw-the-visualization">Step 6: Draw the Visualization</h3>
 <p>It’s taken a bit of work to get to this point, but now we’re ready to draw the visualization. Here’s where we see the payoff for all the work. It only takes a few lines of code to create the visualization.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> path = <span class="ot">g</span>.<span class="fu">selectAll</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">data</span>(<span class="ot">partition</span>.<span class="fu">nodes</span>(hierarchy))
-  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, arc);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> path <span class="op">=</span> <span class="va">g</span>.<span class="at">selectAll</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">data</span>(<span class="va">partition</span>.<span class="at">nodes</span>(hierarchy))
+  .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> arc)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>This code follows the same structure we’ve used for all of our <span class="smcp">D3</span>.js examples. In line 1 we create a selection of the <span class="smcp">SVG</span> elements that represent our data; in this case we’re using <code>&lt;path&gt;</code> elements. We then bind the selection to the hierarchical data using the custom partition layout. In line 3 we identify the data values that don’t (yet) have an associated <span class="smcp">SVG</span> element, and in line 4 we create new elements for those values. That final step relies on the <code>.arc()</code> function that we created in step 4. We haven’t yet added any colors or labels, but we can see from figure <span class="nextfigure"/> that we’re on the right track.</p>
 <figure>
 <div id="sunburst1">
@@ -2403,7 +2403,7 @@ Maine,New England,Piscataquis County
 </figcaption>
 </figure>
 <p>Our next task is assigning colors from this scale to the arcs in our visualization. To do that we’ll define our own <code>color()</code> function. That function will accept a data node from the partition layout as input.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2411,17 +2411,17 @@ Maine,New England,Piscataquis County
 6
 7
 8
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> color = <span class="kw">function</span>(d) {
-    <span class="kw">var</span> colors;
-    <span class="kw">if</span> (!<span class="ot">d</span>.<span class="fu">parent</span>) {
-        colors = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">category10</span>();
-        <span class="ot">d</span>.<span class="fu">color</span> = <span class="st">&quot;#fff&quot;</span>;
-    }
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> color <span class="op">=</span> <span class="kw">function</span>(d) <span class="op">{</span>
+    <span class="kw">var</span> colors<span class="op">;</span>
+    <span class="cf">if</span> (<span class="op">!</span><span class="va">d</span>.<span class="at">parent</span>) <span class="op">{</span>
+        colors <span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">category10</span>()<span class="op">;</span>
+        <span class="va">d</span>.<span class="at">color</span> <span class="op">=</span> <span class="st">&quot;#fff&quot;</span><span class="op">;</span>
+    <span class="op">}</span>
 
-    <span class="co">// More code needed ...</span></code></pre></td></tr></table>
+    <span class="co">// More code needed ...</span></code></pre></td></tr></table></div>
 <p>The thing we do in the function (line 2) is create a local variable that we’ll use to store colors. We then check to see if the input node is the root of the hierarchy. If it is, then we create a color scale (line 4) for the node’s children and assign the node its own color (line 5). The root node in our visualization, which represents the entire <span class="smcp">U.S.</span>, will be white. That assigned color will eventually be returned by the function.</p>
 <p>After we create a color scale for the child nodes we want to distribute the individual colors to those nodes. There’s a slight catch, though. The nodes in the <code>d.children</code> array aren’t necessarily distributed in the clockwise order we want for our visualization. To make sure the colors from our scale are distributed in order, so we’ll have to sort the <code>d.children</code> array first. Here’s the complete code for this step.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2430,18 +2430,18 @@ Maine,New England,Piscataquis County
 7
 8
 9
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">if</span> (<span class="ot">d</span>.<span class="fu">children</span>) {
-    <span class="ot">d</span>.<span class="ot">children</span>.<span class="fu">map</span>(<span class="kw">function</span>(child, i) {
-        <span class="kw">return</span> {<span class="dt">value</span>: <span class="ot">child</span>.<span class="fu">value</span>, <span class="dt">idx</span>: i};
-    }).<span class="fu">sort</span>(<span class="kw">function</span>(a,b) {
-        <span class="kw">return</span> <span class="ot">b</span>.<span class="fu">value</span> - <span class="ot">a</span>.<span class="fu">value</span>
-    }).<span class="fu">forEach</span>(<span class="kw">function</span>(child, i) {
-        <span class="ot">d</span>.<span class="fu">children</span>[<span class="ot">child</span>.<span class="fu">idx</span>].<span class="fu">color</span> = <span class="fu">colors</span>(i);
-    });
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="cf">if</span> (<span class="va">d</span>.<span class="at">children</span>) <span class="op">{</span>
+    <span class="va">d</span>.<span class="va">children</span>.<span class="at">map</span>(<span class="kw">function</span>(child<span class="op">,</span> i) <span class="op">{</span>
+        <span class="cf">return</span> <span class="op">{</span><span class="dt">value</span><span class="op">:</span> <span class="va">child</span>.<span class="at">value</span><span class="op">,</span> <span class="dt">idx</span><span class="op">:</span> i<span class="op">};</span>
+    <span class="op">}</span>).<span class="at">sort</span>(<span class="kw">function</span>(a<span class="op">,</span>b) <span class="op">{</span>
+        <span class="cf">return</span> <span class="va">b</span>.<span class="at">value</span> <span class="op">-</span> <span class="va">a</span>.<span class="at">value</span>
+    <span class="op">}</span>).<span class="at">forEach</span>(<span class="kw">function</span>(child<span class="op">,</span> i) <span class="op">{</span>
+        <span class="va">d</span>.<span class="at">children</span>[<span class="va">child</span>.<span class="at">idx</span>].<span class="at">color</span> <span class="op">=</span> <span class="at">colors</span>(i)<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>In the first line we make sure that there is a children array. If there is, then, in lines 2 and 3 we create a copy of the children array that contains just the node values and their original array index. Then, in lines 4 and 5 we sort that copy based on the node values. Finally, in lines 6 and 7 we iterate through the sorted array and assign colors to the child nodes.</p>
 <p>So far we’ve created a categorical color scale and assigned its colors to the first-level children. That takes care of colors for the regions, but there are also states and counties that need colors. For those, we can create a different scale based on the parent color. Let’s go back to our function definition and add an <code>else</code> clause for non-root nodes. In that clause, we also create a color scale for the children. These child nodes, however, are not regions; they are states or counties. For states of a region and counties of a state, we don’t want unique, distinct colors like those from a categorical scale. Instead, we want colors related to the color of the parent. That calls for a linear gradient.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2463,41 +2463,41 @@ Maine,New England,Piscataquis County
 20
 21
 22
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> color = <span class="kw">function</span>(d) {
-    <span class="kw">var</span> colors;
-    <span class="kw">if</span> (!<span class="ot">d</span>.<span class="fu">parent</span>) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> color <span class="op">=</span> <span class="kw">function</span>(d) <span class="op">{</span>
+    <span class="kw">var</span> colors<span class="op">;</span>
+    <span class="cf">if</span> (<span class="op">!</span><span class="va">d</span>.<span class="at">parent</span>) <span class="op">{</span>
         <span class="co">// Handle root node as above ...</span>
-    } <span class="kw">else</span> <span class="kw">if</span> (<span class="ot">d</span>.<span class="fu">children</span>) {
+    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> (<span class="va">d</span>.<span class="at">children</span>) <span class="op">{</span>
 
-        <span class="kw">var</span> startColor = <span class="ot">d3</span>.<span class="fu">hcl</span>(<span class="ot">d</span>.<span class="fu">color</span>)
-                            .<span class="fu">darker</span>(),
-            endColor   = <span class="ot">d3</span>.<span class="fu">hcl</span>(<span class="ot">d</span>.<span class="fu">color</span>)
-                            .<span class="fu">brighter</span>();
+        <span class="kw">var</span> startColor <span class="op">=</span> <span class="va">d3</span>.<span class="at">hcl</span>(<span class="va">d</span>.<span class="at">color</span>)
+                            .<span class="at">darker</span>()<span class="op">,</span>
+            endColor   <span class="op">=</span> <span class="va">d3</span>.<span class="at">hcl</span>(<span class="va">d</span>.<span class="at">color</span>)
+                            .<span class="at">brighter</span>()<span class="op">;</span>
 
-        colors = <span class="ot">d3</span>.<span class="ot">scale</span>.<span class="fu">linear</span>()
-                .<span class="fu">interpolate</span>(<span class="ot">d3</span>.<span class="fu">interpolateHcl</span>)
-                .<span class="fu">range</span>([
-                    <span class="ot">startColor</span>.<span class="fu">toString</span>(),
-                    <span class="ot">endColor</span>.<span class="fu">toString</span>()
+        colors <span class="op">=</span> <span class="va">d3</span>.<span class="va">scale</span>.<span class="at">linear</span>()
+                .<span class="at">interpolate</span>(<span class="va">d3</span>.<span class="at">interpolateHcl</span>)
+                .<span class="at">range</span>([
+                    <span class="va">startColor</span>.<span class="at">toString</span>()<span class="op">,</span>
+                    <span class="va">endColor</span>.<span class="at">toString</span>()
                 ])
-                .<span class="fu">domain</span>([<span class="dv">0</span>,<span class="ot">d</span>.<span class="ot">children</span>.<span class="fu">length</span><span class="dv">+1</span>]);
+                .<span class="at">domain</span>([<span class="dv">0</span><span class="op">,</span><span class="va">d</span>.<span class="va">children</span>.<span class="at">length</span><span class="dv">+1</span>])<span class="op">;</span>
 
-    }
+    <span class="op">}</span>
 
-    <span class="co">// Code continues ...</span></code></pre></td></tr></table>
+    <span class="co">// Code continues ...</span></code></pre></td></tr></table></div>
 <p>In lines 7-10 we define the starting and ending colors for our gradient. To create those colors, we start with the parent node’s color (<code>d.color</code>) and darken or brighten it. In both cases we use hue, chroma, and luminance (<span class="smcp">HCL</span>) as the basis for the color manipulations. The <span class="smcp">HCL</span> color space is based on human visual perception, unlike the purely mathematical basis for the more familiar <span class="smcp">RGB</span> color space. Using <span class="smcp">HCL</span> general results in a more visually pleasing gradient.</p>
 <p>Lines 12-18 contain the code to actually create the gradient. Here we’re using a <span class="smcp">D3</span>.js linear scale (line 12) and a built-in interpolation algorithm for <span class="smcp">HCL</span> colors (line 13). Our gradient ranges between the start and end colors (lines 14-17) and its domain is the indices of the node’s children (line 18).</p>
 <p>Now all we need do is assign the appropriate color when we create each data value’s <code>&lt;path&gt;</code> element. That requires a one-line addition (line 5) to the code that creates those paths.</p>
-<table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> path = <span class="ot">g</span>.<span class="fu">selectAll</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">data</span>(<span class="ot">partition</span>.<span class="fu">nodes</span>(hierarchy))
-  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, arc)
-    .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, color);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> path <span class="op">=</span> <span class="va">g</span>.<span class="at">selectAll</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">data</span>(<span class="va">partition</span>.<span class="at">nodes</span>(hierarchy))
+  .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> arc)
+    .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> color)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>As figure <span class="nextfigure"/> shows, our visualization now includes appropriate colors.</p>
 <figure>
 <div id="sunburst2">
@@ -2509,30 +2509,30 @@ Maine,New England,Piscataquis County
 </figure>
 <h3 id="step-8-make-the-visualization-interactive">Step 8: Make the Visualization Interactive</h3>
 <p>To conclude this example we can add some interactivity. When a user clicks on an area in the chart, we can zoom the chart to show more detail for that area. To emphasize the subject matter, we’ll create a custom, rotating animation effect for this zoom. The easiest part of this step is adding the function to handle click events. We can do that when we add the <code>&lt;path&gt;</code> elements to the page.</p>
-<table class="sourceCode javascript numberLines line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> path = <span class="ot">g</span>.<span class="fu">selectAll</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">data</span>(<span class="ot">partition</span>.<span class="fu">nodes</span>(hierarchy))
-  .<span class="fu">enter</span>().<span class="fu">append</span>(<span class="st">&quot;path&quot;</span>)
-    .<span class="fu">attr</span>(<span class="st">&quot;d&quot;</span>, arc)
-    .<span class="fu">attr</span>(<span class="st">&quot;fill&quot;</span>, color)
-      .<span class="fu">on</span>(<span class="st">&quot;click&quot;</span>, handleClick);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> path <span class="op">=</span> <span class="va">g</span>.<span class="at">selectAll</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">data</span>(<span class="va">partition</span>.<span class="at">nodes</span>(hierarchy))
+  .<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;path&quot;</span>)
+    .<span class="at">attr</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> arc)
+    .<span class="at">attr</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> color)
+      .<span class="at">on</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> handleClick)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The function <code>handleClick</code> that line 6 references is, of course, the event handler that we’ll have to write. Conceptually, the function is pretty straightforward. When the user clicks on an area, we want to modify all the paths to make that area the focal point of the visualization. The complete function is as simple as the following code.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="fu">handleClick</span>(datum) {
-    <span class="ot">path</span>.<span class="fu">transition</span>().<span class="fu">duration</span>(<span class="dv">750</span>)
-        .<span class="fu">attrTween</span>(<span class="st">&quot;d&quot;</span>, <span class="fu">arcTween</span>(datum));
-};</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">handleClick</span>(datum) <span class="op">{</span>
+    <span class="va">path</span>.<span class="at">transition</span>().<span class="at">duration</span>(<span class="dv">750</span>)
+        .<span class="at">attrTween</span>(<span class="st">&quot;d&quot;</span><span class="op">,</span> <span class="at">arcTween</span>(datum))<span class="op">;</span>
+<span class="op">};</span></code></pre></td></tr></table></div>
 <p>The function’s single parameter is the data value corresponding to the clicked element. Conventionally, <span class="smcp">D3</span>.js uses <code>d</code> for that value; in this case, however, we’re using <code>datum</code> to avoid confusion with the <span class="smcp">SVG</span> <code>&quot;d&quot;</code> attribute. The first line in the function references all of the paths in the visualization and sets up an animated transition for those paths. The next line tells <span class="smcp">D3</span>.js what values we’re going to transition. In this case we’re changing an attribute of the <code>&lt;path&gt;</code> elements (so we use the function <code>attrTween</code>) and the specific attribute we’re changing is the <code>&quot;d&quot;</code> attribute (the first parameter to that function). The second parameter, <code>arcTween(datum)</code> is a function that returns a function.</p>
 <p>Here’s the complete implementation of <code>arcTween()</code>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2552,26 +2552,26 @@ Maine,New England,Piscataquis County
 18
 19
 20
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="fu">arcTween</span>(datum) {
-    <span class="kw">var</span> thetaDomain  = <span class="ot">d3</span>.<span class="fu">interpolate</span>(<span class="ot">theta</span>.<span class="fu">domain</span>(),
-                          [<span class="ot">datum</span>.<span class="fu">x</span>, <span class="ot">datum</span>.<span class="fu">x</span> + <span class="ot">datum</span>.<span class="fu">dx</span>]),
-        radiusDomain = <span class="ot">d3</span>.<span class="fu">interpolate</span>(<span class="ot">radius</span>.<span class="fu">domain</span>(),
-                          [<span class="ot">datum</span>.<span class="fu">y</span>, <span class="dv">1</span>]),
-        radiusRange  = <span class="ot">d3</span>.<span class="fu">interpolate</span>(<span class="ot">radius</span>.<span class="fu">range</span>(),
-                          [<span class="ot">datum</span>.<span class="fu">y</span> ? <span class="dv">20</span> : <span class="dv">0</span>, maxRadius]);
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">arcTween</span>(datum) <span class="op">{</span>
+    <span class="kw">var</span> thetaDomain  <span class="op">=</span> <span class="va">d3</span>.<span class="at">interpolate</span>(<span class="va">theta</span>.<span class="at">domain</span>()<span class="op">,</span>
+                          [<span class="va">datum</span>.<span class="at">x</span><span class="op">,</span> <span class="va">datum</span>.<span class="at">x</span> <span class="op">+</span> <span class="va">datum</span>.<span class="at">dx</span>])<span class="op">,</span>
+        radiusDomain <span class="op">=</span> <span class="va">d3</span>.<span class="at">interpolate</span>(<span class="va">radius</span>.<span class="at">domain</span>()<span class="op">,</span>
+                          [<span class="va">datum</span>.<span class="at">y</span><span class="op">,</span> <span class="dv">1</span>])<span class="op">,</span>
+        radiusRange  <span class="op">=</span> <span class="va">d3</span>.<span class="at">interpolate</span>(<span class="va">radius</span>.<span class="at">range</span>()<span class="op">,</span>
+                          [<span class="va">datum</span>.<span class="at">y</span> <span class="op">?</span> <span class="dv">20</span> : <span class="dv">0</span><span class="op">,</span> maxRadius])<span class="op">;</span>
 
-    <span class="kw">return</span> <span class="kw">function</span> <span class="fu">calculateNewPath</span>(d, i) {
-        <span class="kw">return</span> i ?
-            <span class="kw">function</span> <span class="fu">interpolatePathForRoot</span>(t) {
-                <span class="kw">return</span> <span class="fu">arc</span>(d);
-            } :
-            <span class="kw">function</span> <span class="fu">interpolatePathForNonRoot</span>(t) {
-                <span class="ot">theta</span>.<span class="fu">domain</span>(<span class="fu">thetaDomain</span>(t));
-                <span class="ot">radius</span>.<span class="fu">domain</span>(<span class="fu">radiusDomain</span>(t)).<span class="fu">range</span>(<span class="fu">radiusRange</span>(t));
-                <span class="kw">return</span> <span class="fu">arc</span>(d);
-            };
-    };
-};</code></pre></td></tr></table>
+    <span class="cf">return</span> <span class="kw">function</span> <span class="at">calculateNewPath</span>(d<span class="op">,</span> i) <span class="op">{</span>
+        <span class="cf">return</span> i <span class="op">?</span>
+            <span class="kw">function</span> <span class="at">interpolatePathForRoot</span>(t) <span class="op">{</span>
+                <span class="cf">return</span> <span class="at">arc</span>(d)<span class="op">;</span>
+            <span class="op">}</span> :
+            <span class="kw">function</span> <span class="at">interpolatePathForNonRoot</span>(t) <span class="op">{</span>
+                <span class="va">theta</span>.<span class="at">domain</span>(<span class="at">thetaDomain</span>(t))<span class="op">;</span>
+                <span class="va">radius</span>.<span class="at">domain</span>(<span class="at">radiusDomain</span>(t)).<span class="at">range</span>(<span class="at">radiusRange</span>(t))<span class="op">;</span>
+                <span class="cf">return</span> <span class="at">arc</span>(d)<span class="op">;</span>
+            <span class="op">};</span>
+    <span class="op">};</span>
+<span class="op">};</span></code></pre></td></tr></table></div>
 <p>You can see that this code block defines several different functions. First, there’s <code>arcTween()</code>. It returns another function <code>calculateNewPath()</code>, and <em>that</em> function returns either <code>interpolatePathForRoot()</code> or <code>interpolatePathForNonRoot()</code>. Before we look at the details of the implementation, we want to be sure and understand the distinction between these functions.</p>
 <ul>
 <li><code>arcTween()</code> is called once (for a single click) in the click event handler. Its input parameter is the data value corresponding to the clicked element.</li>
@@ -2835,6 +2835,7 @@ The transition smoothly animates the visualization to zoom in on the area of foc
             <small>Copyright © 2012-2015 by <a href="http://sathomas.me">Stephen A. Thomas</a>. All Rights Reserved.</small>
         </footer>
     <script src="js/scripts.min.js"></script>
+    <!--
     <script src="https://carnivalapp.io/sites/49/init.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -2850,5 +2851,6 @@ The transition smoothly animates the visualization to zoom in on the area of foc
             fill: #CA0000 !important;
         }
     </style>
+    -->
     </body>
 </html>

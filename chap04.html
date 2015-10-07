@@ -151,7 +151,7 @@ body { counter-reset: chapter 4; }
 <blockquote>
 <p>Note: Chapter 2 includes a more extensive discussion of content distributions networks and the trade-offs involved in using them.</p>
 </blockquote>
-<table class="sourceCode html numberLines line-9 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-9 line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -178,23 +178,23 @@ body { counter-reset: chapter 4; }
     <span class="kw">&lt;/script&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/treemap-squared-0.5.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>As you can see, we’ve set aside a <code>&lt;div&gt;</code> to hold our tree map. We’ve also included the JavaScript libraries as the last part of the <code>&lt;body&gt;</code> element, as that provides the best browser performance.</p>
 <h3 id="step-2-prepare-the-data">Step 2: Prepare the Data</h3>
 <p>For our example we’ll show the population of the United States divided by region and then, within each region, by state. The data is available from the <a href="http://www.census.gov/popest/data/state/totals/2012/index.html"><span class="smcp">US</span> Census Bureau</a>. We’ll follow its convention and divide the country into four regions. The resulting JavaScript array could look like the following snippet.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">census = [
-  { <span class="dt">region</span>: <span class="st">&quot;South&quot;</span>, <span class="dt">state</span>: <span class="st">&quot;AL&quot;</span>, <span class="dt">pop2010</span>: <span class="dv">4784762</span>, <span class="dt">pop2012</span>: <span class="dv">4822023</span> },
-  { <span class="dt">region</span>: <span class="st">&quot;West&quot;</span>,  <span class="dt">state</span>: <span class="st">&quot;AK&quot;</span>, <span class="dt">pop2010</span>:  <span class="dv">714046</span>, <span class="dt">pop2012</span>:  <span class="dv">731449</span> },
-  { <span class="dt">region</span>: <span class="st">&quot;West&quot;</span>,  <span class="dt">state</span>: <span class="st">&quot;AZ&quot;</span>, <span class="dt">pop2010</span>: <span class="dv">6410810</span>, <span class="dt">pop2012</span>: <span class="dv">6553255</span> },
-  <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">census <span class="op">=</span> [
+  <span class="op">{</span> <span class="dt">region</span><span class="op">:</span> <span class="st">&quot;South&quot;</span><span class="op">,</span> <span class="dt">state</span><span class="op">:</span> <span class="st">&quot;AL&quot;</span><span class="op">,</span> <span class="dt">pop2010</span><span class="op">:</span> <span class="dv">4784762</span><span class="op">,</span> <span class="dt">pop2012</span><span class="op">:</span> <span class="dv">4822023</span> <span class="op">},</span>
+  <span class="op">{</span> <span class="dt">region</span><span class="op">:</span> <span class="st">&quot;West&quot;</span><span class="op">,</span>  <span class="dt">state</span><span class="op">:</span> <span class="st">&quot;AK&quot;</span><span class="op">,</span> <span class="dt">pop2010</span><span class="op">:</span>  <span class="dv">714046</span><span class="op">,</span> <span class="dt">pop2012</span><span class="op">:</span>  <span class="dv">731449</span> <span class="op">},</span>
+  <span class="op">{</span> <span class="dt">region</span><span class="op">:</span> <span class="st">&quot;West&quot;</span><span class="op">,</span>  <span class="dt">state</span><span class="op">:</span> <span class="st">&quot;AZ&quot;</span><span class="op">,</span> <span class="dt">pop2010</span><span class="op">:</span> <span class="dv">6410810</span><span class="op">,</span> <span class="dt">pop2012</span><span class="op">:</span> <span class="dv">6553255</span> <span class="op">},</span>
+  <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <p>We’ve retained both the 2010 and the 2012 data</p>
 <p>To structure the data for the treemap-squared library, we need to create separate data arrays for each region. At the same time, we can also create arrays to label the data values using the two-letter state abbreviations. The following code steps through the <code>census</code> array to build data and label arrays for the <code>&quot;South&quot;</code> region. The same approach works for the other three regions as well.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -203,31 +203,31 @@ body { counter-reset: chapter 4; }
 7
 8
 9
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> south = {};
-<span class="ot">south</span>.<span class="fu">data</span> = [];
-<span class="ot">south</span>.<span class="fu">labels</span> = [];
-<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="ot">census</span>.<span class="fu">length</span>; i++) {
-    <span class="kw">if</span> (census[i].<span class="fu">region</span> === <span class="st">&quot;South&quot;</span>) {
-        <span class="ot">south</span>.<span class="ot">data</span>.<span class="fu">push</span>(census[i].<span class="fu">pop2012</span>);
-        <span class="ot">south</span>.<span class="ot">labels</span>.<span class="fu">push</span>(census[i].<span class="fu">state</span>);
-    }
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> south <span class="op">=</span> <span class="op">{};</span>
+<span class="va">south</span>.<span class="at">data</span> <span class="op">=</span> []<span class="op">;</span>
+<span class="va">south</span>.<span class="at">labels</span> <span class="op">=</span> []<span class="op">;</span>
+<span class="cf">for</span> (<span class="kw">var</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="va">census</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+    <span class="cf">if</span> (census[i].<span class="at">region</span> <span class="op">===</span> <span class="st">&quot;South&quot;</span>) <span class="op">{</span>
+        <span class="va">south</span>.<span class="va">data</span>.<span class="at">push</span>(census[i].<span class="at">pop2012</span>)<span class="op">;</span>
+        <span class="va">south</span>.<span class="va">labels</span>.<span class="at">push</span>(census[i].<span class="at">state</span>)<span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <h3 id="step-3-draw-the-tree-map">Step 3: Draw the Tree Map</h3>
 <p>Now we’re ready to use the library to construct our tree map. We need to assemble the individual data and label arrays and then call the library’s main function. The first two parameters in line 3 are the width and height of the map.</p>
-<table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-3"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
 7
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data = [ 
-    <span class="ot">west</span>.<span class="fu">data</span>, <span class="ot">midwest</span>.<span class="fu">data</span>, <span class="ot">northeast</span>.<span class="fu">data</span>, <span class="ot">south</span>.<span class="fu">data</span>
-];
-<span class="kw">var</span> labels = [ 
-    <span class="ot">west</span>.<span class="fu">labels</span>, <span class="ot">midwest</span>.<span class="fu">labels</span>, <span class="ot">northeast</span>.<span class="fu">labels</span>, <span class="ot">south</span>.<span class="fu">labels</span>
-];
-<span class="ot">Treemap</span>.<span class="fu">draw</span>(<span class="st">&quot;treemap&quot;</span>, <span class="dv">600</span>, <span class="dv">450</span>, data, labels);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> data <span class="op">=</span> [ 
+    <span class="va">west</span>.<span class="at">data</span><span class="op">,</span> <span class="va">midwest</span>.<span class="at">data</span><span class="op">,</span> <span class="va">northeast</span>.<span class="at">data</span><span class="op">,</span> <span class="va">south</span>.<span class="at">data</span>
+]<span class="op">;</span>
+<span class="kw">var</span> labels <span class="op">=</span> [ 
+    <span class="va">west</span>.<span class="at">labels</span><span class="op">,</span> <span class="va">midwest</span>.<span class="at">labels</span><span class="op">,</span> <span class="va">northeast</span>.<span class="at">labels</span><span class="op">,</span> <span class="va">south</span>.<span class="at">labels</span>
+]<span class="op">;</span>
+<span class="va">Treemap</span>.<span class="at">draw</span>(<span class="st">&quot;treemap&quot;</span><span class="op">,</span> <span class="dv">600</span><span class="op">,</span> <span class="dv">450</span><span class="op">,</span> data<span class="op">,</span> labels)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The resulting chart, shown in figure <span class="nextfigure"/>, provides a simple visualization of the <span class="smcp">US</span> population. Among the four regions, it is clear where most of the population resides. The bottom right quadrant (the South) has the largest share of the population. And within the regions the relative size of each state’s population is also clear. Notice, for example, how California dominates the West.</p>
 <figure>
 <div id="treemap-1">
@@ -245,7 +245,7 @@ Tree maps show the relative size of data values using rectangular area.
 <li>For each region, we save both the minimum and maximum growth rates in lines 18 and 19.</li>
 </ul>
 <p>Here’s an expanded version of our earlier code fragment that includes these additional calculations.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -267,39 +267,39 @@ Tree maps show the relative size of data values using rectangular area.
 20
 21
 22
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> total2010 = <span class="dv">0</span>;
-<span class="kw">var</span> total2012 = <span class="dv">0</span>;
-<span class="kw">var</span> south = {
-    <span class="dt">data</span>: [],
-    <span class="dt">labels</span>: [],
-    <span class="dt">growth</span>: [],
-    <span class="dt">minGrowth</span>: <span class="dv">100</span>,
-    <span class="dt">maxGrowth</span>: -<span class="dv">100</span>
-};
-<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="ot">census</span>.<span class="fu">length</span>; i++) {
-    total2010 += census[i].<span class="fu">pop2010</span>;
-    total2012 += census[i].<span class="fu">pop2012</span>;
-    <span class="kw">var</span> growth = (census[i].<span class="fu">pop2012</span> - census[i].<span class="fu">pop2010</span>)/census[i].<span class="fu">pop2010</span>;
-    <span class="kw">if</span> (census[i].<span class="fu">region</span> === <span class="st">&quot;South&quot;</span>) {
-        <span class="ot">south</span>.<span class="ot">data</span>.<span class="fu">push</span>(census[i].<span class="fu">pop2012</span>);
-        <span class="ot">south</span>.<span class="ot">labels</span>.<span class="fu">push</span>(census[i].<span class="fu">state</span>);
-        <span class="ot">south</span>.<span class="ot">growth</span>.<span class="fu">push</span>(growth);
-        <span class="kw">if</span> (growth &gt; <span class="ot">south</span>.<span class="fu">maxGrowth</span>) { <span class="ot">south</span>.<span class="fu">maxGrowth</span> = growth; }
-        <span class="kw">if</span> (growth &lt; <span class="ot">south</span>.<span class="fu">minGrowth</span>) { <span class="ot">south</span>.<span class="fu">minGrowth</span> = growth; }
-    }
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> total2010 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+<span class="kw">var</span> total2012 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+<span class="kw">var</span> south <span class="op">=</span> <span class="op">{</span>
+    <span class="dt">data</span><span class="op">:</span> []<span class="op">,</span>
+    <span class="dt">labels</span><span class="op">:</span> []<span class="op">,</span>
+    <span class="dt">growth</span><span class="op">:</span> []<span class="op">,</span>
+    <span class="dt">minGrowth</span><span class="op">:</span> <span class="dv">100</span><span class="op">,</span>
+    <span class="dt">maxGrowth</span><span class="op">:</span> <span class="op">-</span><span class="dv">100</span>
+<span class="op">};</span>
+<span class="cf">for</span> (<span class="kw">var</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="va">census</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+    total2010 <span class="op">+=</span> census[i].<span class="at">pop2010</span><span class="op">;</span>
+    total2012 <span class="op">+=</span> census[i].<span class="at">pop2012</span><span class="op">;</span>
+    <span class="kw">var</span> growth <span class="op">=</span> (census[i].<span class="at">pop2012</span> <span class="op">-</span> census[i].<span class="at">pop2010</span>)/census[i].<span class="at">pop2010</span><span class="op">;</span>
+    <span class="cf">if</span> (census[i].<span class="at">region</span> <span class="op">===</span> <span class="st">&quot;South&quot;</span>) <span class="op">{</span>
+        <span class="va">south</span>.<span class="va">data</span>.<span class="at">push</span>(census[i].<span class="at">pop2012</span>)<span class="op">;</span>
+        <span class="va">south</span>.<span class="va">labels</span>.<span class="at">push</span>(census[i].<span class="at">state</span>)<span class="op">;</span>
+        <span class="va">south</span>.<span class="va">growth</span>.<span class="at">push</span>(growth)<span class="op">;</span>
+        <span class="cf">if</span> (growth <span class="op">&gt;</span> <span class="va">south</span>.<span class="at">maxGrowth</span>) <span class="op">{</span> <span class="va">south</span>.<span class="at">maxGrowth</span> <span class="op">=</span> growth<span class="op">;</span> <span class="op">}</span>
+        <span class="cf">if</span> (growth <span class="op">&lt;</span> <span class="va">south</span>.<span class="at">minGrowth</span>) <span class="op">{</span> <span class="va">south</span>.<span class="at">minGrowth</span> <span class="op">=</span> growth<span class="op">;</span> <span class="op">}</span>
+    <span class="op">}</span>
     <span class="co">// Code continues...</span>
-}</code></pre></td></tr></table>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>In the same way that we created a master object for the data and the labels, we create another master object for the growth rates. Let’s also calculate the total growth rate for the country overall.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> growth = [ 
-    <span class="ot">west</span>.<span class="fu">growth</span>, <span class="ot">midwest</span>.<span class="fu">growth</span>, <span class="ot">northeast</span>.<span class="fu">growth</span>, <span class="ot">south</span>.<span class="fu">growth</span>
-];
-<span class="kw">var</span> totalGrowth = (total2012 - total2010)/total2010;</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> growth <span class="op">=</span> [ 
+    <span class="va">west</span>.<span class="at">growth</span><span class="op">,</span> <span class="va">midwest</span>.<span class="at">growth</span><span class="op">,</span> <span class="va">northeast</span>.<span class="at">growth</span><span class="op">,</span> <span class="va">south</span>.<span class="at">growth</span>
+]<span class="op">;</span>
+<span class="kw">var</span> totalGrowth <span class="op">=</span> (total2012 <span class="op">-</span> total2010)/total2010<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Now we need a function to calculate the color for a tree map rectangle. We start by defining two color ranges, one for growth rates higher than the national average and another for lower growth rates. We can then pick an appropriate color for each state, based on that state’s growth rate. As an example, here’s one possible set of colors.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -307,17 +307,17 @@ Tree maps show the relative size of data values using rectangular area.
 6
 7
 8
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> colorRanges = { 
-  <span class="dt">positive</span>: [ 
-    <span class="st">&quot;#FFFFBF&quot;</span>,<span class="st">&quot;#D9EF8B&quot;</span>,<span class="st">&quot;#A6D96A&quot;</span>,<span class="st">&quot;#66BD63&quot;</span>,<span class="st">&quot;#1A9850&quot;</span>,<span class="st">&quot;#006837&quot;</span> 
-  ],
-  <span class="dt">negative</span>: [ 
-    <span class="st">&quot;#FFFFBF&quot;</span>,<span class="st">&quot;#FEE08B&quot;</span>,<span class="st">&quot;#FDAE61&quot;</span>,<span class="st">&quot;#F46D43&quot;</span>,<span class="st">&quot;#D73027&quot;</span>,<span class="st">&quot;#A50026&quot;</span> 
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> colorRanges <span class="op">=</span> <span class="op">{</span> 
+  <span class="dt">positive</span><span class="op">:</span> [ 
+    <span class="st">&quot;#FFFFBF&quot;</span><span class="op">,</span><span class="st">&quot;#D9EF8B&quot;</span><span class="op">,</span><span class="st">&quot;#A6D96A&quot;</span><span class="op">,</span><span class="st">&quot;#66BD63&quot;</span><span class="op">,</span><span class="st">&quot;#1A9850&quot;</span><span class="op">,</span><span class="st">&quot;#006837&quot;</span> 
+  ]<span class="op">,</span>
+  <span class="dt">negative</span><span class="op">:</span> [ 
+    <span class="st">&quot;#FFFFBF&quot;</span><span class="op">,</span><span class="st">&quot;#FEE08B&quot;</span><span class="op">,</span><span class="st">&quot;#FDAE61&quot;</span><span class="op">,</span><span class="st">&quot;#F46D43&quot;</span><span class="op">,</span><span class="st">&quot;#D73027&quot;</span><span class="op">,</span><span class="st">&quot;#A50026&quot;</span> 
   ]
-};</code></pre></td></tr></table>
+<span class="op">};</span></code></pre></td></tr></table></div>
 <p>Next is the <code>pickColor</code> function that uses these color ranges to select the right color for each box. The treemap-squared library will call it with two parameters—the coordinates of the rectangle it’s about to draw, and the index into the data set. We don’t need the coordinates in our example, but we will use the index to find the value to model. Once we find the state’s growth rate, we can subtract the national average. That calculation determines which color range to use. States that are growing faster than the national average get the positive color range; states growing slower than the average get the negative range.</p>
 <p>The final part of the code calculates where on the appropriate color range to select the color. It uses a linear scale based on the extreme values from among all the states. So, for example, if a state’s growth rate is halfway between the overall average and the maximum growth rate, we’ll give it a color that’s halfway in the positive color range array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -337,29 +337,29 @@ Tree maps show the relative size of data values using rectangular area.
 18
 19
 20
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="fu">pickColor</span>(coordinates, index) {
-    <span class="kw">var</span> regionIdx = index[<span class="dv">0</span>];
-    <span class="kw">var</span> stateIdx  = index[<span class="dv">1</span>];
-    <span class="kw">var</span> growthRate = growth[regionIdx][stateIdx];
-    <span class="kw">var</span> deltaGrowth = growthRate - totalGrowth;
-    <span class="kw">if</span> (deltaGrowth &gt; <span class="dv">0</span>) {
-        colorRange = <span class="ot">colorRanges</span>.<span class="fu">positive</span>;
-    } <span class="kw">else</span> {
-        colorRange = <span class="ot">colorRanges</span>.<span class="fu">negative</span>;
-        deltaGrowth = -<span class="dv">1</span> * deltaGrowth;
-    }
-    <span class="kw">var</span> colorIndex = <span class="ot">Math</span>.<span class="fu">floor</span>(<span class="ot">colorRange</span>.<span class="fu">length</span> * 
-        (deltaGrowth - minDelta) / (maxDelta - minDelta));
-    <span class="kw">if</span> (colorIndex &gt;= <span class="ot">colorRange</span>.<span class="fu">length</span>) { 
-        colorIndex = <span class="ot">colorRange</span>.<span class="fu">length</span> - <span class="dv">1</span>; 
-    }
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">pickColor</span>(coordinates<span class="op">,</span> index) <span class="op">{</span>
+    <span class="kw">var</span> regionIdx <span class="op">=</span> index[<span class="dv">0</span>]<span class="op">;</span>
+    <span class="kw">var</span> stateIdx  <span class="op">=</span> index[<span class="dv">1</span>]<span class="op">;</span>
+    <span class="kw">var</span> growthRate <span class="op">=</span> growth[regionIdx][stateIdx]<span class="op">;</span>
+    <span class="kw">var</span> deltaGrowth <span class="op">=</span> growthRate <span class="op">-</span> totalGrowth<span class="op">;</span>
+    <span class="cf">if</span> (deltaGrowth <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">{</span>
+        colorRange <span class="op">=</span> <span class="va">colorRanges</span>.<span class="at">positive</span><span class="op">;</span>
+    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        colorRange <span class="op">=</span> <span class="va">colorRanges</span>.<span class="at">negative</span><span class="op">;</span>
+        deltaGrowth <span class="op">=</span> <span class="op">-</span><span class="dv">1</span> <span class="op">*</span> deltaGrowth<span class="op">;</span>
+    <span class="op">}</span>
+    <span class="kw">var</span> colorIndex <span class="op">=</span> <span class="va">Math</span>.<span class="at">floor</span>(<span class="va">colorRange</span>.<span class="at">length</span> <span class="op">*</span> 
+        (deltaGrowth <span class="op">-</span> minDelta) / (maxDelta <span class="op">-</span> minDelta))<span class="op">;</span>
+    <span class="cf">if</span> (colorIndex <span class="op">&gt;=</span> <span class="va">colorRange</span>.<span class="at">length</span>) <span class="op">{</span> 
+        colorIndex <span class="op">=</span> <span class="va">colorRange</span>.<span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> 
+    <span class="op">}</span>
     
-    color = colorRange[colorIndex];
-    <span class="kw">return</span>{ <span class="st">&quot;fill&quot;</span> : color };
-}</code></pre></td></tr></table>
+    color <span class="op">=</span> colorRange[colorIndex]<span class="op">;</span>
+    <span class="cf">return</span><span class="op">{</span> <span class="st">&quot;fill&quot;</span> <span class="op">:</span> color <span class="op">};</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>Now when we call <code>TreeMap.draw()</code>, we can add this function to its parameters, specifically by setting it as the value for the <code>box</code> key of the options object. The treemap-squared library will then defer to our function for selecting the colors of the regions.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">Treemap</span>.<span class="fu">draw</span>(<span class="st">&quot;treemap&quot;</span>, <span class="dv">600</span>, <span class="dv">450</span>, data, labels, {<span class="st">&#39;box&#39;</span> : pickColor});</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">Treemap</span>.<span class="at">draw</span>(<span class="st">&quot;treemap&quot;</span><span class="op">,</span> <span class="dv">600</span><span class="op">,</span> <span class="dv">450</span><span class="op">,</span> data<span class="op">,</span> labels<span class="op">,</span> <span class="op">{</span><span class="st">&#39;box&#39;</span> <span class="op">:</span> pickColor<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The resulting tree map of figure <span class="nextfigure"/> still shows the relative populations for all of the states. Now, through the use of color shades, it also indicates the rate of population growth compared to the national average. The visualization clearly shows the migration from the Northeast and Midwest to the South and West.</p>
 <figure>
 <div id="treemap-2">
@@ -514,7 +514,7 @@ Heat maps traditionally show where web users focus their attention on a page.
 <p>For this example we’ll use a heat map to visualize an important aspect of a basketball game: where on the court the teams are scoring most of their points. The software we’ll use is the <a href="http://www.patrick-wied.at/static/heatmapjs/">heatmap.js</a> library from Patrick Wied. If you need to create traditional web site heat maps, that library includes built-in support for capturing mouse movements and mouse clicks on a web page. Although we won’t use those features for our example, the general approach is much the same.</p>
 <h3 id="step-1-include-the-required-javascript">Step 1: Include the Required JavaScript</h3>
 <p>For modern browsers, the heatmap.js library has no additional requirements. The library includes optional additions for real-time heat maps and for geographic integration, but we won’t need these in our example. Older browsers (principally Internet Explorer version 8 and older) can use heatmap.js with the <em>explorer canvas</em> library. Since we don’t need to burden all users with this library, we’ll use conditional comments to include it only when it’s needed. Following current best practices, we include all script files at the end of our <code>&lt;body&gt;</code>.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -535,7 +535,7 @@ Heat maps traditionally show where web users focus their attention on a page.
     <span class="co">&lt;!--[if lt IE 9]&gt;&lt;script src=&quot;js/excanvas.min.js&quot;&gt;&lt;/script&gt;&lt;![endif]--&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/heatmap.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-2-define-the-visualization-data">Step 2: Define the Visualization Data</h3>
 <p>For our example, we’ll visualize the <span class="smcp">NCAA</span> Mens’ Basketball game on 13 February 2013 between Duke University and the University of North Carolina. Our <a href="http://www.cbssports.com/collegebasketball/gametracker/live/NCAAB_20130213_UNC@DUKE">dataset</a> contains details about every point scored in the game. To clean the data, we convert the time of each score to minutes from the game start, and we define the position of the scorer in x- and y-coordinates. We’ve defined these coordinates using several important conventions:</p>
 <ul>
@@ -544,7 +544,7 @@ Heat maps traditionally show where web users focus their attention on a page.
 <li>To avoid confusing free throws with field goals, we’ve given all free throws a position of (–1,–1).</li>
 </ul>
 <p>Here’s the beginning of the data; the full data is available with the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -552,32 +552,32 @@ Heat maps traditionally show where web users focus their attention on a page.
 6
 7
 8
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> game = [
-    { <span class="dt">team</span>: <span class="st">&quot;UNC&quot;</span>,  <span class="dt">points</span>: <span class="dv">2</span>, <span class="dt">time</span>: <span class="fl">0.85</span>, 
-      <span class="dt">unc</span>: <span class="dv">2</span>, <span class="dt">duke</span>: <span class="dv">0</span>, <span class="dt">x</span>: <span class="fl">0.506</span>, <span class="dt">y</span>: <span class="fl">5.039</span> },
-    { <span class="dt">team</span>: <span class="st">&quot;UNC&quot;</span>,  <span class="dt">points</span>: <span class="dv">3</span>, <span class="dt">time</span>: <span class="fl">1.22</span>, 
-      <span class="dt">unc</span>: <span class="dv">5</span>, <span class="dt">duke</span>: <span class="dv">0</span>, <span class="dt">x</span>: <span class="fl">1.377</span>, <span class="dt">y</span>: <span class="fl">1.184</span> },
-    { <span class="dt">team</span>: <span class="st">&quot;DUKE&quot;</span>, <span class="dt">points</span>: <span class="dv">2</span>, <span class="dt">time</span>: <span class="fl">1.65</span>  
-      <span class="dt">unc</span>: <span class="dv">5</span>, <span class="dt">duke</span>: <span class="dv">2</span>, <span class="dt">x</span>: <span class="fl">8.804</span>, <span class="dt">y</span>: <span class="fl">7.231</span> },
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> game <span class="op">=</span> [
+    <span class="op">{</span> <span class="dt">team</span><span class="op">:</span> <span class="st">&quot;UNC&quot;</span><span class="op">,</span>  <span class="dt">points</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">time</span><span class="op">:</span> <span class="fl">0.85</span><span class="op">,</span> 
+      <span class="dt">unc</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">duke</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="fl">0.506</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fl">5.039</span> <span class="op">},</span>
+    <span class="op">{</span> <span class="dt">team</span><span class="op">:</span> <span class="st">&quot;UNC&quot;</span><span class="op">,</span>  <span class="dt">points</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">time</span><span class="op">:</span> <span class="fl">1.22</span><span class="op">,</span> 
+      <span class="dt">unc</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">duke</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="fl">1.377</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fl">1.184</span> <span class="op">},</span>
+    <span class="op">{</span> <span class="dt">team</span><span class="op">:</span> <span class="st">&quot;DUKE&quot;</span><span class="op">,</span> <span class="dt">points</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">time</span><span class="op">:</span> <span class="fl">1.65</span>  
+      <span class="dt">unc</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">duke</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span> <span class="dt">x</span><span class="op">:</span> <span class="fl">8.804</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="fl">7.231</span> <span class="op">},</span>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <h3 id="step-3-create-the-background-image">Step 3: Create the Background Image</h3>
 <p>A simple diagram of a basketball court, like that in figure <span class="nextfigure"/>, works fine for our visualization. The dimensions of our background image are 600 by 360 pixels.</p>
 <figure>
-<img src="img/basketball.svg" />
+<img src="img/basketball.svg" alt="" />
 <figcaption>
 A background image sets the context for the visualization.
 </figcaption>
 </figure>
 <h3 id="step-4-set-aside-an-html-element-to-contain-the-visualization">Step 4: Set Aside an HTML Element to Contain the Visualization</h3>
 <p>In our web page, we need to define the element (generally a <code>&lt;div&gt;</code>) that will hold the heat map. When we create the element, we specify its dimensions, and we define the background. The following fragment does both of those using inline styles to keep the example concise. You might want to use a <span class="smcp">CSS</span> stylesheet in an actual implementation</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&#39;heatmap&#39;</span> 
 <span class="ot">    style=</span><span class="st">&quot;position:relative;width:600px;height:360px;&quot;</span><span class="er">+</span>
           <span class="er">&quot;background-image:url(&#39;img/basketball.png&#39;);&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table></div>
 <p>Notice that we’ve given the element a unique <code>id</code>. The heatmap.js library needs that <code>id</code> to place the map on the page. Most importantly, we also set the <code>position</code> property to <code>relative</code>. The heatmap.js library positions its graphics using absolute positioning, and we want to contain those graphics within the parent element.</p>
 <h3 id="step-5-format-the-data">Step 5: Format the Data</h3>
 <p>For our next step, we must convert the game data into the proper format for the library. The heatmap.js library expects individual data points to contain three properties:</p>
@@ -588,7 +588,7 @@ A background image sets the context for the visualization.
 </ol>
 <p>The library also requires the maximum magnitude for the entire map, and here things get a little tricky. With standard heat maps, the magnitudes of all the data points for any particular position sum together. In our case that means that all the baskets scored from layups and slam dunks—which are effectively from the same position on the court—are added together by the heat map algorithm. That one position, right underneath the basket, dominates the rest of the court. To counteract that effect, we specify a maximum value far less than what the heat map would expect. In our case, we’ll set the maximum value to <code>3</code>, which means that any location where at least three points were scored will be colored red, and we’ll easily be able to see all the baskets.</p>
 <p>We can use JavaScript to transform the <code>game</code> array into the appropriate format. We start by fetching the height and width of the containing element in lines 1-3. If those dimensions change, our code will still work fine. Then we initialize the <code>dataset</code> object with a <code>max</code> property and an empty <code>data</code> array in lines 4-6. Finally, we iterate through the game data and add relevant data points to this array. Notice that we’re filtering out free throws in line 9.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -602,34 +602,34 @@ A background image sets the context for the visualization.
 12
 13
 14
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> docNode = <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;heatmap&quot;</span>);
-<span class="kw">var</span> height = <span class="ot">docNode</span>.<span class="fu">clientHeight</span>;
-<span class="kw">var</span> width  = <span class="ot">docNode</span>.<span class="fu">clientWidth</span>;
-<span class="kw">var</span> dataset = {};
-<span class="ot">dataset</span>.<span class="fu">max</span> = <span class="dv">3</span>;
-<span class="ot">dataset</span>.<span class="fu">data</span> = [];
-<span class="kw">for</span> (<span class="kw">var</span> i=<span class="dv">0</span>; i&lt;<span class="ot">game</span>.<span class="fu">length</span>; i++) {
-    <span class="kw">var</span> currentShot = game[<span class="dv">1</span>];
-    <span class="kw">if</span> ((<span class="ot">currentShot</span>.<span class="fu">x</span> !== -<span class="dv">1</span>) &amp;&amp; (<span class="ot">currentShot</span>.<span class="fu">y</span> !== -<span class="dv">1</span>)) {
-        <span class="kw">var</span> x = <span class="ot">Math</span>.<span class="fu">round</span>(width  * <span class="ot">currentShot</span>.<span class="fu">x</span>/<span class="dv">10</span>);
-        <span class="kw">var</span> y = height - <span class="ot">Math</span>.<span class="fu">round</span>(height * <span class="ot">currentShot</span>.<span class="fu">y</span>/<span class="dv">10</span>);
-        <span class="ot">dataset</span>.<span class="ot">data</span>.<span class="fu">push</span>({<span class="st">&quot;x&quot;</span>: x, <span class="st">&quot;y&quot;</span>: y, <span class="st">&quot;count&quot;</span>: <span class="ot">currentShot</span>.<span class="fu">points</span>});
-    }
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> docNode <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;heatmap&quot;</span>)<span class="op">;</span>
+<span class="kw">var</span> height <span class="op">=</span> <span class="va">docNode</span>.<span class="at">clientHeight</span><span class="op">;</span>
+<span class="kw">var</span> width  <span class="op">=</span> <span class="va">docNode</span>.<span class="at">clientWidth</span><span class="op">;</span>
+<span class="kw">var</span> dataset <span class="op">=</span> <span class="op">{};</span>
+<span class="va">dataset</span>.<span class="at">max</span> <span class="op">=</span> <span class="dv">3</span><span class="op">;</span>
+<span class="va">dataset</span>.<span class="at">data</span> <span class="op">=</span> []<span class="op">;</span>
+<span class="cf">for</span> (<span class="kw">var</span> i<span class="op">=</span><span class="dv">0</span><span class="op">;</span> i<span class="op">&lt;</span><span class="va">game</span>.<span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span>
+    <span class="kw">var</span> currentShot <span class="op">=</span> game[<span class="dv">1</span>]<span class="op">;</span>
+    <span class="cf">if</span> ((<span class="va">currentShot</span>.<span class="at">x</span> <span class="op">!==</span> <span class="op">-</span><span class="dv">1</span>) <span class="op">&amp;&amp;</span> (<span class="va">currentShot</span>.<span class="at">y</span> <span class="op">!==</span> <span class="op">-</span><span class="dv">1</span>)) <span class="op">{</span>
+        <span class="kw">var</span> x <span class="op">=</span> <span class="va">Math</span>.<span class="at">round</span>(width  <span class="op">*</span> <span class="va">currentShot</span>.<span class="at">x</span>/<span class="dv">10</span>)<span class="op">;</span>
+        <span class="kw">var</span> y <span class="op">=</span> height <span class="op">-</span> <span class="va">Math</span>.<span class="at">round</span>(height <span class="op">*</span> <span class="va">currentShot</span>.<span class="at">y</span>/<span class="dv">10</span>)<span class="op">;</span>
+        <span class="va">dataset</span>.<span class="va">data</span>.<span class="at">push</span>(<span class="op">{</span><span class="st">&quot;x&quot;</span><span class="op">:</span> x<span class="op">,</span> <span class="st">&quot;y&quot;</span><span class="op">:</span> y<span class="op">,</span> <span class="st">&quot;count&quot;</span><span class="op">:</span> <span class="va">currentShot</span>.<span class="at">points</span><span class="op">}</span>)<span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <h3 id="step-6-draw-the-map">Step 6: Draw the Map</h3>
 <p>With a containing element and a formatted data set, it’s a simple matter to draw the heat map. We create the heat map object (the library uses the name <code>h337</code> in an attempt to be clever) by specifying the containing element, a radius for each point, and an opacity. Then we add the data set to this object.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> heatmap = <span class="ot">h337</span>.<span class="fu">create</span>({
-    <span class="dt">element</span>: <span class="st">&quot;heatmap&quot;</span>,
-    <span class="dt">radius</span>: <span class="dv">30</span>,
-    <span class="dt">opacity</span>: <span class="dv">50</span>
-});
-<span class="ot">heatmap</span>.<span class="ot">store</span>.<span class="fu">setDataSet</span>(dataset);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> heatmap <span class="op">=</span> <span class="va">h337</span>.<span class="at">create</span>(<span class="op">{</span>
+    <span class="dt">element</span><span class="op">:</span> <span class="st">&quot;heatmap&quot;</span><span class="op">,</span>
+    <span class="dt">radius</span><span class="op">:</span> <span class="dv">30</span><span class="op">,</span>
+    <span class="dt">opacity</span><span class="op">:</span> <span class="dv">50</span>
+<span class="op">}</span>)<span class="op">;</span>
+<span class="va">heatmap</span>.<span class="va">store</span>.<span class="at">setDataSet</span>(dataset)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>The resulting visualization in figure <span class="nextfigure"/> shows where each team scored its points.</p>
 <figure>
 <div id="heatmap1" style="position:relative;width:600px;height:360px;background-image: url(&#39;img/basketball.svg&#39;);">
@@ -642,8 +642,8 @@ The heat map shows successful shots in the game.
 <h3 id="step-7-adjust-the-heat-map-z-index">Step 7: Adjust the Heat Map z-index</h3>
 <p>The heatmap.js library is especially aggressive in its manipulation of the <code>z-index</code> property. To ensure that the heat map appears above all other elements on the page, the library explicitly sets this property to a value of <code>10000000000</code>. If your web page has elements that you don’t want the heat map to obscure (such as fixed-position navigation menus), that value is probably too aggressive. You can fix it by modifying the source code directly. Or, as an alternative, you can simply reset the value after the library finishes drawing the map.</p>
 <p>If you’re using jQuery, the following code will reduce the z-index to a more reasonable value.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;#heatmap canvas&quot;</span>).<span class="fu">css</span>(<span class="st">&quot;z-index&quot;</span>, <span class="st">&quot;1&quot;</span>);</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="at">$</span>(<span class="st">&quot;#heatmap canvas&quot;</span>).<span class="at">css</span>(<span class="st">&quot;z-index&quot;</span><span class="op">,</span> <span class="st">&quot;1&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <script>
 ;(function(){
 
@@ -764,7 +764,7 @@ The heat map shows successful shots in the game.
 <p>Constructing network graphs can be a bit tricky, as the underlying mathematics is not always trivial. Fortunately, the <a href="http://sigmajs.org">sigmajs</a> library takes care of most of the complicated calculations. By using that library, we can create full-featured network graphs with just a little bit of JavaScript. For our example, we’ll consider one critic’s list of the <a href="http://www.thejazzresource.com/top_25_jazz_albums.html">top 25 jazz albums of all time</a>. Several musicians performed on more than one of these albums, and a network graph lets us explore those connections.</p>
 <h3 id="step-1-include-the-required-libraries-1">Step 1: Include the Required Libraries</h3>
 <p>The sigmajs library does not depend on any other JavaScript libraries, so we don’t need any other included scripts. It is not, however, available on common content distribution networks. Consequently, we’ll have to serve it from our own web host.</p>
-<table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -785,14 +785,14 @@ The heat map shows successful shots in the game.
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;graph&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/sigma.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>As you can see, we’ve set aside a <code>&lt;div&gt;</code> in line 8 to hold our graph. We’ve also included the JavaScript library as the last part of the <code>&lt;body&gt;</code> element, as that provides the best browser performance.</p>
 <blockquote>
 <p>Note: In most of the examples in this book, I’ve included steps you can take to make your visualizations compatible with older web browsers such as Internet Explorer 8. In this case, however, those approaches degrade performance so severely that they are rarely workable. To view the network graph visualization, your users will need a modern browser.</p>
 </blockquote>
 <h3 id="step-2-prepare-the-data-1">Step 2: Prepare the Data</h3>
 <p>Our data on the top 25 jazz albums looks like the following snippet. I’m showing only the first couple of albums below, but you can see the full list in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -812,33 +812,33 @@ The heat map shows successful shots in the game.
 18
 19
 20
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> albums = [
-  {
-    <span class="dt">album</span>: <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span>,
-    <span class="dt">musicians</span>: [
-      <span class="st">&quot;Cannonball Adderley&quot;</span>,
-      <span class="st">&quot;Paul Chambers&quot;</span>,
-      <span class="st">&quot;Jimmy Cobb&quot;</span>,
-      <span class="st">&quot;John Coltrane&quot;</span>,
-      <span class="st">&quot;Miles Davis&quot;</span>,
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> albums <span class="op">=</span> [
+  <span class="op">{</span>
+    <span class="dt">album</span><span class="op">:</span> <span class="st">&quot;Miles Davis - Kind of Blue&quot;</span><span class="op">,</span>
+    <span class="dt">musicians</span><span class="op">:</span> [
+      <span class="st">&quot;Cannonball Adderley&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Paul Chambers&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Jimmy Cobb&quot;</span><span class="op">,</span>
+      <span class="st">&quot;John Coltrane&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Miles Davis&quot;</span><span class="op">,</span>
       <span class="st">&quot;Bill Evans&quot;</span>
     ]
-  },{
-    <span class="dt">album</span>: <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span>,
-    <span class="dt">musicians</span>: [
-      <span class="st">&quot;John Coltrane&quot;</span>,
-      <span class="st">&quot;Jimmy Garrison&quot;</span>,
-      <span class="st">&quot;Elvin Jones&quot;</span>,
+  <span class="op">},{</span>
+    <span class="dt">album</span><span class="op">:</span> <span class="st">&quot;John Coltrane - A Love Supreme&quot;</span><span class="op">,</span>
+    <span class="dt">musicians</span><span class="op">:</span> [
+      <span class="st">&quot;John Coltrane&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Jimmy Garrison&quot;</span><span class="op">,</span>
+      <span class="st">&quot;Elvin Jones&quot;</span><span class="op">,</span>
       <span class="st">&quot;McCoy Tyner&quot;</span>
     ]
-  <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+  <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <p>That’s not exactly the structure that sigmajs requires. We could convert it to a sigmajs <span class="smcp">JSON</span> data structure in bulk, but there’s really no need. Instead, as we’ll see in the next step, we can simply pass data to the library one element at a time.</p>
 <h3 id="step-3-define-the-graphs-nodes">Step 3: Define the Graph’s Nodes</h3>
 <p>Now we’re ready to use the library to construct our graph. We start by initializing the library and indicating where it should construct the graph. That parameter is the <code>id</code> of the <code>&lt;div&gt;</code> element set aside to hold the visualization.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> s = <span class="kw">new</span> <span class="fu">sigma</span>(<span class="st">&quot;graph&quot;</span>);</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> s <span class="op">=</span> <span class="kw">new</span> <span class="at">sigma</span>(<span class="st">&quot;graph&quot;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Now we can continue by adding the nodes to the graph. In our case, each album is a node. As we add a node to the graph, we give it a unique identifier (which must be a string), a label, and a position. Figuring out an initial position can be a bit tricky for arbitrary data. In a few steps we’ll look at an approach that makes the initial position less critical. For now, though, we’ll simply spread our albums in a circle using basic trigonometry. The <code>radius</code> value is roughly half of the width of the container. We can also give each node a different size, but for our purposes it’s fine to set every album’s size to <code>1</code>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -848,19 +848,19 @@ The heat map shows successful shots in the game.
 8
 9
 10
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> idx=<span class="dv">0</span>; idx&lt;<span class="ot">albums</span>.<span class="fu">length</span>; idx++) {
-    <span class="kw">var</span> theta = idx*<span class="dv">2</span>*<span class="ot">Math</span>.<span class="fu">PI</span> / <span class="ot">albums</span>.<span class="fu">length</span>;
-    <span class="ot">s</span>.<span class="ot">graph</span>.<span class="fu">addNode</span>({
-        <span class="dt">id</span>: <span class="st">&quot;&quot;</span>+idx,   <span class="co">// Note: &#39;id&#39; must be a string</span>
-        <span class="dt">label</span>: albums[idx].<span class="fu">album</span>,
-        <span class="dt">x</span>: radius*<span class="ot">Math</span>.<span class="fu">sin</span>(theta),
-        <span class="dt">y</span>: radius*<span class="ot">Math</span>.<span class="fu">cos</span>(theta),
-        <span class="dt">size</span>: <span class="dv">1</span>
-    });
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="cf">for</span> (<span class="kw">var</span> idx<span class="op">=</span><span class="dv">0</span><span class="op">;</span> idx<span class="op">&lt;</span><span class="va">albums</span>.<span class="at">length</span><span class="op">;</span> idx<span class="op">++</span>) <span class="op">{</span>
+    <span class="kw">var</span> theta <span class="op">=</span> idx<span class="op">*</span><span class="dv">2</span><span class="op">*</span><span class="va">Math</span>.<span class="at">PI</span> / <span class="va">albums</span>.<span class="at">length</span><span class="op">;</span>
+    <span class="va">s</span>.<span class="va">graph</span>.<span class="at">addNode</span>(<span class="op">{</span>
+        <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">+</span>idx<span class="op">,</span>   <span class="co">// Note: &#39;id&#39; must be a string</span>
+        <span class="dt">label</span><span class="op">:</span> albums[idx].<span class="at">album</span><span class="op">,</span>
+        <span class="dt">x</span><span class="op">:</span> radius<span class="op">*</span><span class="va">Math</span>.<span class="at">sin</span>(theta)<span class="op">,</span>
+        <span class="dt">y</span><span class="op">:</span> radius<span class="op">*</span><span class="va">Math</span>.<span class="at">cos</span>(theta)<span class="op">,</span>
+        <span class="dt">size</span><span class="op">:</span> <span class="dv">1</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>Finally, after defining the graph, we tell the library to draw it.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="fu">refresh</span>();</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">s</span>.<span class="at">refresh</span>()<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With figure <span class="nextfigure"/> we now have a nicely drawn circle of the top jazz albums of all time. In this initial attempt some of the labels may get in one another’s way, but we’ll address that shortly.</p>
 <figure>
 <div id="graph-1" style="width:1000px;height:450px;position:relative;left:-300px;">
@@ -880,7 +880,7 @@ Sigmajs draws graph nodes as small circles.
 <li>For each target album, loop through all the musicians looking for a match (line 7).</li>
 </ol>
 <p>For the last step we’re using the <code>some()</code> method of JavaScript arrays. That method takes a function as a parameter, and it returns <code>true</code> if that function itself returns <code>true</code> for any element in the array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -898,24 +898,24 @@ Sigmajs draws graph nodes as small circles.
 16
 17
 18
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> srcIdx=<span class="dv">0</span>; srcIdx&lt;<span class="ot">albums</span>.<span class="fu">length</span>; srcIdx++) {
-    <span class="kw">var</span> src = albums[srcIdx];
-    <span class="kw">for</span> (<span class="kw">var</span> mscIdx=<span class="dv">0</span>; mscIdx&lt;<span class="ot">src</span>.<span class="ot">musicians</span>.<span class="fu">length</span>; mscIdx++) {
-        <span class="kw">var</span> msc = <span class="ot">src</span>.<span class="fu">musicians</span>[mscIdx];
-        <span class="kw">for</span> (<span class="kw">var</span> tgtIdx=srcIdx<span class="dv">+1</span>; tgtIdx&lt;<span class="ot">albums</span>.<span class="fu">length</span>; tgtIdx++) {
-            <span class="kw">var</span> tgt = albums[tgtIdx];
-            <span class="kw">if</span> (<span class="ot">tgt</span>.<span class="ot">musicians</span>.<span class="fu">some</span>(<span class="kw">function</span>(tgtMsc) {
-                <span class="kw">return</span> tgtMsc === msc;
-            })) {
-                <span class="ot">s</span>.<span class="ot">graph</span>.<span class="fu">addEdge</span>({
-                    <span class="dt">id</span>: srcIdx + <span class="st">&quot;.&quot;</span> + mscIdx + <span class="st">&quot;-&quot;</span> + tgtIdx,
-                    <span class="dt">source</span>: <span class="st">&quot;&quot;</span>+srcIdx,
-                    <span class="dt">target</span>: <span class="st">&quot;&quot;</span>+tgtIdx
-                })
-            }
-        }
-    }
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="cf">for</span> (<span class="kw">var</span> srcIdx<span class="op">=</span><span class="dv">0</span><span class="op">;</span> srcIdx<span class="op">&lt;</span><span class="va">albums</span>.<span class="at">length</span><span class="op">;</span> srcIdx<span class="op">++</span>) <span class="op">{</span>
+    <span class="kw">var</span> src <span class="op">=</span> albums[srcIdx]<span class="op">;</span>
+    <span class="cf">for</span> (<span class="kw">var</span> mscIdx<span class="op">=</span><span class="dv">0</span><span class="op">;</span> mscIdx<span class="op">&lt;</span><span class="va">src</span>.<span class="va">musicians</span>.<span class="at">length</span><span class="op">;</span> mscIdx<span class="op">++</span>) <span class="op">{</span>
+        <span class="kw">var</span> msc <span class="op">=</span> <span class="va">src</span>.<span class="at">musicians</span>[mscIdx]<span class="op">;</span>
+        <span class="cf">for</span> (<span class="kw">var</span> tgtIdx<span class="op">=</span>srcIdx<span class="dv">+1</span><span class="op">;</span> tgtIdx<span class="op">&lt;</span><span class="va">albums</span>.<span class="at">length</span><span class="op">;</span> tgtIdx<span class="op">++</span>) <span class="op">{</span>
+            <span class="kw">var</span> tgt <span class="op">=</span> albums[tgtIdx]<span class="op">;</span>
+            <span class="cf">if</span> (<span class="va">tgt</span>.<span class="va">musicians</span>.<span class="at">some</span>(<span class="kw">function</span>(tgtMsc) <span class="op">{</span>
+                <span class="cf">return</span> tgtMsc <span class="op">===</span> msc<span class="op">;</span>
+            <span class="op">}</span>)) <span class="op">{</span>
+                <span class="va">s</span>.<span class="va">graph</span>.<span class="at">addEdge</span>(<span class="op">{</span>
+                    <span class="dt">id</span><span class="op">:</span> srcIdx <span class="op">+</span> <span class="st">&quot;.&quot;</span> <span class="op">+</span> mscIdx <span class="op">+</span> <span class="st">&quot;-&quot;</span> <span class="op">+</span> tgtIdx<span class="op">,</span>
+                    <span class="dt">source</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">+</span>srcIdx<span class="op">,</span>
+                    <span class="dt">target</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">+</span>tgtIdx
+                <span class="op">}</span>)
+            <span class="op">}</span>
+        <span class="op">}</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>We’ll want to insert this code before we <code>refresh</code> the graph. When we’ve done that, we’ll have a connected circle of albums, as shown in figure <span class="nextfigure"/>.</p>
 <figure>
 <div id="graph-2" style="width:1000px;height:450px;position:relative;left:-300px;">
@@ -930,7 +930,7 @@ Sigmajs can then connect graph nodes using lines to represent edges.
 <p>So far we’ve manually placed the nodes in our graph in a circle. That’s not a terrible approach, but it can make it hard to discern some of the connections. It would be better if we could let the library calculate a more optimal layout than the simple circle. That’s exactly what we’ll do now.</p>
 <p>The mathematics behind this approach is known as <em>force directed graphing.</em> In a nutshell, the algorithm proceeds by treating the graph’s nodes and edges as physical objects subject to real forces such as gravity and electromagnetism. It simulates the effect of those forces, pushing and prodding the nodes into new positions on the graph.</p>
 <p>The underlying algorithm may be complicated, but sigmajs makes it easy to employ. First we have to add an optional plugin to the sigmajs library. That’s the <code>forceAtlas2</code> plugin in line 10 below.</p>
-<table class="sourceCode html numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -953,7 +953,7 @@ Sigmajs can then connect graph nodes using lines to represent edges.
         <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/sigma.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
         <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/sigma.layout.forceAtlas2.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
     <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>Mathieu Jacomy and Tommaso Venturini developed the specific force-direction algorithm employed by this plugin; they document the algorithm, known as <em>Force Atlas 2</em>, in the 2011 paper <a href="http://webatlas.fr/tempshare/ForceAtlas2_Paper.pdf"><em>ForceAtlas2, A Graph Layout Algorithm for Handy Network Visualization</em></a><em>.</em> Although we don’t have to understand the mathematical details of the algorithm, knowing how to use its parameters does come in handy. There are three parameters that are important for most visualizations that use the plugin:</p>
 <ul>
 <li><strong>gravity.</strong> This parameter determines how strongly the algorithm tries to keep isolated nodes from drifting off the edges of the screen. Without any gravity, then the only force acting on isolated nodes will one that repels them from other nodes; undeterred, that force will push the nodes off the screen entirely. Since our data includes several isolated nodes, we’ll want to set this value relatively high to keep those nodes on the screen</li>
@@ -962,10 +962,10 @@ Sigmajs can then connect graph nodes using lines to represent edges.
 </ul>
 <p>The best way to settle on values for these parameters is to experiment with the actual data. For this data set, we’ve settled on the values in line 1 below.</p>
 <p>Now, instead of simply refreshing the graph when we’re ready to display it, we start the force directed algorithm, which periodically refreshes the display while it performs its simulation. We also need to stop the algorithm after it’s had a chance to run for awhile. In our case 10 seconds (<code>10000 ms</code>) is plenty of time.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="fu">startForceAtlas2</span>({<span class="dt">gravity</span>:<span class="dv">100</span>,<span class="dt">scalingRatio</span>:<span class="dv">70</span>,<span class="dt">slowDown</span>:<span class="dv">100</span>});
-<span class="fu">setTimeout</span>(<span class="kw">function</span>() { <span class="ot">s</span>.<span class="fu">stopForceAtlas2</span>(); }, <span class="dv">10000</span>);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">s</span>.<span class="at">startForceAtlas2</span>(<span class="op">{</span><span class="dt">gravity</span><span class="op">:</span><span class="dv">100</span><span class="op">,</span><span class="dt">scalingRatio</span><span class="op">:</span><span class="dv">70</span><span class="op">,</span><span class="dt">slowDown</span><span class="op">:</span><span class="dv">100</span><span class="op">}</span>)<span class="op">;</span>
+<span class="at">setTimeout</span>(<span class="kw">function</span>() <span class="op">{</span> <span class="va">s</span>.<span class="at">stopForceAtlas2</span>()<span class="op">;</span> <span class="op">},</span> <span class="dv">10000</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>As a result, our albums start out in their original circle, but quickly migrate to a position that makes it much easier to identify the connections. Some of the top albums are tightly connected, indicating that they have many musicians in common. A few, however, remain isolated. Their musicians make the list only once.</p>
 <figure>
 <div id="graph-3" style="width:650px;height:600px;position:relative;left:-50px">
@@ -978,7 +978,7 @@ Force direction positions the graph nodes automatically.
 <p>As you can see, the labels for the nodes still get in the way of each other; we’ll fix that in the next step. What’s important here, however, is that it’s much easier to identify the albums with lots of connections. The nodes representing those albums have migrated to the center of the graph, and they have many links to other nodes.</p>
 <h3 id="step-6-adding-interactivity">Step 6: Adding Interactivity</h3>
 <p>To keep the labels from interfering with one another, we can add some interactivity to the graph. By default, we’ll hide the labels entirely giving users the chance to appreciate the structure of the graph without distractions. We’ll then allow them to click on individual nodes to reveal the album title and it’s connections. To suppress the initial label display, we can modify the initialization code so that nodes have blank labels (line 5). We’ll save a reference to the album title though in line 6.</p>
-<table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-5"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -989,28 +989,28 @@ Force direction positions the graph nodes automatically.
 9
 10
 11
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">for</span> (<span class="kw">var</span> idx=<span class="dv">0</span>; idx&lt;<span class="ot">albums</span>.<span class="fu">length</span>; idx++) {
-    <span class="kw">var</span> theta = idx*<span class="dv">2</span>*<span class="ot">Math</span>.<span class="fu">PI</span> / <span class="ot">albums</span>.<span class="fu">length</span>;
-    <span class="ot">s</span>.<span class="ot">graph</span>.<span class="fu">addNode</span>({
-        <span class="dt">id</span>: <span class="st">&quot;&quot;</span>+idx,   <span class="co">// Note: &#39;id&#39; must be a string</span>
-        <span class="dt">label</span>: <span class="st">&quot;&quot;</span>,
-        <span class="dt">album</span>: albums[idx].<span class="fu">album</span>,
-        <span class="dt">x</span>: radius*<span class="ot">Math</span>.<span class="fu">sin</span>(theta),
-        <span class="dt">y</span>: radius*<span class="ot">Math</span>.<span class="fu">cos</span>(theta),
-        <span class="dt">size</span>: <span class="dv">1</span>
-    });
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="cf">for</span> (<span class="kw">var</span> idx<span class="op">=</span><span class="dv">0</span><span class="op">;</span> idx<span class="op">&lt;</span><span class="va">albums</span>.<span class="at">length</span><span class="op">;</span> idx<span class="op">++</span>) <span class="op">{</span>
+    <span class="kw">var</span> theta <span class="op">=</span> idx<span class="op">*</span><span class="dv">2</span><span class="op">*</span><span class="va">Math</span>.<span class="at">PI</span> / <span class="va">albums</span>.<span class="at">length</span><span class="op">;</span>
+    <span class="va">s</span>.<span class="va">graph</span>.<span class="at">addNode</span>(<span class="op">{</span>
+        <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">+</span>idx<span class="op">,</span>   <span class="co">// Note: &#39;id&#39; must be a string</span>
+        <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">,</span>
+        <span class="dt">album</span><span class="op">:</span> albums[idx].<span class="at">album</span><span class="op">,</span>
+        <span class="dt">x</span><span class="op">:</span> radius<span class="op">*</span><span class="va">Math</span>.<span class="at">sin</span>(theta)<span class="op">,</span>
+        <span class="dt">y</span><span class="op">:</span> radius<span class="op">*</span><span class="va">Math</span>.<span class="at">cos</span>(theta)<span class="op">,</span>
+        <span class="dt">size</span><span class="op">:</span> <span class="dv">1</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>Now we need a function that responds to clicks on the node elements. The sigmajs library supports exactly this sort of function with its interface. We simply bind to the <code>clickNode</code> event.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="fu">bind</span>(<span class="st">&#39;clickNode&#39;</span>, <span class="kw">function</span>(ev) {
-    <span class="kw">var</span> nodeIdx = <span class="ot">ev</span>.<span class="ot">data</span>.<span class="ot">node</span>.<span class="fu">id</span>;
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">s</span>.<span class="at">bind</span>(<span class="st">&#39;clickNode&#39;</span><span class="op">,</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+    <span class="kw">var</span> nodeIdx <span class="op">=</span> <span class="va">ev</span>.<span class="va">data</span>.<span class="va">node</span>.<span class="at">id</span><span class="op">;</span>
     <span class="co">// Code continues...</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Within that function, the <code>ev.data.node.id</code> property gives us the index of the node that the user clicked. The complete set of nodes is available from the array returned by <code>s.graph.nodes()</code>. Since we want to display the label for the clicked node (but not for any other), we can iterate through the entire array. At each iteration, we either set the label property to an empty string (to hide it) or to the <code>album</code> property (to show it).</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1021,23 +1021,23 @@ Force direction positions the graph nodes automatically.
 9
 10
 11
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="fu">bind</span>(<span class="st">&#39;clickNode&#39;</span>, <span class="kw">function</span>(ev) {
-    <span class="kw">var</span> nodeIdx = <span class="ot">ev</span>.<span class="ot">data</span>.<span class="ot">node</span>.<span class="fu">id</span>;
-    <span class="kw">var</span> nodes = <span class="ot">s</span>.<span class="ot">graph</span>.<span class="fu">nodes</span>();
-    <span class="ot">nodes</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(node) {
-        <span class="kw">if</span> (nodes[nodeIdx] === node) {
-            <span class="ot">node</span>.<span class="fu">label</span> = <span class="ot">node</span>.<span class="fu">album</span>;
-        } <span class="kw">else</span> {
-            <span class="ot">node</span>.<span class="fu">label</span> = <span class="st">&quot;&quot;</span>;
-        }
-    });
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">s</span>.<span class="at">bind</span>(<span class="st">&#39;clickNode&#39;</span><span class="op">,</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+    <span class="kw">var</span> nodeIdx <span class="op">=</span> <span class="va">ev</span>.<span class="va">data</span>.<span class="va">node</span>.<span class="at">id</span><span class="op">;</span>
+    <span class="kw">var</span> nodes <span class="op">=</span> <span class="va">s</span>.<span class="va">graph</span>.<span class="at">nodes</span>()<span class="op">;</span>
+    <span class="va">nodes</span>.<span class="at">forEach</span>(<span class="kw">function</span>(node) <span class="op">{</span>
+        <span class="cf">if</span> (nodes[nodeIdx] <span class="op">===</span> node) <span class="op">{</span>
+            <span class="va">node</span>.<span class="at">label</span> <span class="op">=</span> <span class="va">node</span>.<span class="at">album</span><span class="op">;</span>
+        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+            <span class="va">node</span>.<span class="at">label</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span>
+        <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Now that users have a way to show the title of an album, let’s give them a way to hide it. A small addition in the preceding code is all it takes to let users toggle the album display with subsequent clicks.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">        <span class="kw">if</span> (nodes[nodeIdx] === node &amp;&amp; <span class="ot">node</span>.<span class="fu">label</span> !== <span class="ot">node</span>.<span class="fu">album</span>) {</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">        <span class="cf">if</span> (nodes[nodeIdx] <span class="op">===</span> node <span class="op">&amp;&amp;</span> <span class="va">node</span>.<span class="at">label</span> <span class="op">!==</span> <span class="va">node</span>.<span class="at">album</span>) <span class="op">{</span></code></pre></td></tr></table></div>
 <p>As long as we’re making the graph respond to clicks, we can also take the opportunity to highlight the clicked node’s connections. We do that by changing their color. Just as <code>s.graph.nodes()</code> returns an array of the graph nodes, <code>s.graph.edges()</code> returns an array of edges. Each edge object includes <code>target</code> and <code>source</code> properties that hold the index of the relevant node.</p>
 <p>We can then scan through all the graph’s edges to see if they connect to the clicked node. If the edge does connect to the node, we can change its color to something other than the default (line 4). Otherwise, we change the color back to the default (line 6). You can see in line 3 that we’re using the same approach as we did with the nodes to toggle the edge colors on successive clicks.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1045,17 +1045,17 @@ Force direction positions the graph nodes automatically.
 6
 7
 8
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="ot">graph</span>.<span class="fu">edges</span>().<span class="fu">forEach</span>(<span class="kw">function</span>(edge) {
-    <span class="kw">if</span> ((nodes[nodeIdx].<span class="fu">label</span> === nodes[nodeIdx].<span class="fu">album</span>) &amp;&amp; 
-        ((<span class="ot">edge</span>.<span class="fu">target</span> === nodeIdx) || (<span class="ot">edge</span>.<span class="fu">source</span> === nodeIdx))) {
-        <span class="ot">edge</span>.<span class="fu">color</span> = <span class="st">&#39;blue&#39;</span>;
-    } <span class="kw">else</span> {
-        <span class="ot">edge</span>.<span class="fu">color</span> = <span class="st">&#39;black&#39;</span>;
-    }
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">s</span>.<span class="va">graph</span>.<span class="at">edges</span>().<span class="at">forEach</span>(<span class="kw">function</span>(edge) <span class="op">{</span>
+    <span class="cf">if</span> ((nodes[nodeIdx].<span class="at">label</span> <span class="op">===</span> nodes[nodeIdx].<span class="at">album</span>) <span class="op">&amp;&amp;</span> 
+        ((<span class="va">edge</span>.<span class="at">target</span> <span class="op">===</span> nodeIdx) <span class="op">||</span> (<span class="va">edge</span>.<span class="at">source</span> <span class="op">===</span> nodeIdx))) <span class="op">{</span>
+        <span class="va">edge</span>.<span class="at">color</span> <span class="op">=</span> <span class="st">&#39;blue&#39;</span><span class="op">;</span>
+    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        <span class="va">edge</span>.<span class="at">color</span> <span class="op">=</span> <span class="st">&#39;black&#39;</span><span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Now that we’ve changed the graph properties, we have to tell sigmajs to redraw it. That’s a simple matter of calling <code>s.refresh()</code>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">s</span>.<span class="fu">refresh</span>();</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">s</span>.<span class="at">refresh</span>()<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Now we have a fully interactive network graph in figure <span class="nextfigure"/>. Our users can get a quick sense of the connections between albums, and a simple click provides additional details.</p>
 <figure>
 <div id="graph-4" style="width:650px;height:600px;position:relative;left:-50px">
@@ -1525,7 +1525,7 @@ An interactive graph gives users the chance to highlight specific nodes.
 </blockquote>
 <h3 id="step-1-include-the-required-libraries-2">Step 1: Include the Required Libraries</h3>
 <p>The wordcloud2 library does not depend on any other JavaScript libraries, so we don’t need any other included scripts. It is not, however, available on common content distribution networks, so we’ll have to serve it from our own web host.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1544,14 +1544,14 @@ An interactive graph gives users the chance to highlight specific nodes.
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/wordcloud2.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <blockquote>
 <p>Note: To keep our example focused on the visualization, we’ll use a word list that doesn’t need any special preparation. If you’re working with natural language as spoken or written, however, you might wish to process the text to identify alternate forms of the same word. For example, you might want to count “hold,” “holds,” and “held” as three instances of “hold” rather than three separate words. This type of processing obviously depends greatly on the particular language. If you’re working in English and Chinese, though, the same developer that created wordcloud2 has also released the <a href="http://timdream.org/wordfreq/">WordFreq</a> JavaScript library that performs exactly this type of analysis.</p>
 </blockquote>
 <h3 id="step-2-prepare-the-data-2">Step 2: Prepare the Data</h3>
 <p>For this example we’ll look at the different tags users associate with their questions on the popular <a href="http://stackoverflow.com">Stack Overflow</a>. That site lets users pose programming questions that the community tries to answer. Tags provide a convenient way to categorize the questions so that users can browse other posts related to the same topic. By constructing a word cloud (perhaps better named a <em>tag cloud</em>) we can quickly show the relative popularity of different programming topics.</p>
 <p>If you wanted to develop this example into a real application, you could access the Stack Overflow data in real time using the site’s <span class="smcp">API</span>. For our example, though, we’ll use a static snapshot. Here’s how it starts:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1562,27 +1562,27 @@ An interactive graph gives users the chance to highlight specific nodes.
 9
 10
 11
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> tags = [
-    [<span class="st">&quot;c#&quot;</span>, <span class="dv">601251</span>],
-    [<span class="st">&quot;java&quot;</span>, <span class="dv">585413</span>],
-    [<span class="st">&quot;javascript&quot;</span>, <span class="dv">557407</span>],
-    [<span class="st">&quot;php&quot;</span>, <span class="dv">534590</span>],
-    [<span class="st">&quot;android&quot;</span>, <span class="dv">466436</span>],
-    [<span class="st">&quot;jquery&quot;</span>, <span class="dv">438303</span>],
-    [<span class="st">&quot;python&quot;</span>, <span class="dv">274216</span>],
-    [<span class="st">&quot;c++&quot;</span>, <span class="dv">269570</span>],
-    [<span class="st">&quot;html&quot;</span>, <span class="dv">259946</span>],
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> tags <span class="op">=</span> [
+    [<span class="st">&quot;c#&quot;</span><span class="op">,</span> <span class="dv">601251</span>]<span class="op">,</span>
+    [<span class="st">&quot;java&quot;</span><span class="op">,</span> <span class="dv">585413</span>]<span class="op">,</span>
+    [<span class="st">&quot;javascript&quot;</span><span class="op">,</span> <span class="dv">557407</span>]<span class="op">,</span>
+    [<span class="st">&quot;php&quot;</span><span class="op">,</span> <span class="dv">534590</span>]<span class="op">,</span>
+    [<span class="st">&quot;android&quot;</span><span class="op">,</span> <span class="dv">466436</span>]<span class="op">,</span>
+    [<span class="st">&quot;jquery&quot;</span><span class="op">,</span> <span class="dv">438303</span>]<span class="op">,</span>
+    [<span class="st">&quot;python&quot;</span><span class="op">,</span> <span class="dv">274216</span>]<span class="op">,</span>
+    [<span class="st">&quot;c++&quot;</span><span class="op">,</span> <span class="dv">269570</span>]<span class="op">,</span>
+    [<span class="st">&quot;html&quot;</span><span class="op">,</span> <span class="dv">259946</span>]<span class="op">,</span>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <p>In this data set, the list of tags is an array, and each tag within the list is also an array. These inner arrays have the word itself as the first item and a count for that word as the second item. You can see the complete list in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <p>The format that wordcloud2 expects is quite similar to how our data is already laid out, except that in each word array, the second value needs to specify the drawing size for that word. For example, the array element <code>[&quot;javascript&quot;, 56]</code> would tell wordcloud2 to draw “javascript” with a height of 56 pixels. Our data, of course, isn’t set up with pixel sizes. The data value for “javascript” is 557407, and a word 557407 pixels high wouldn’t even fit on a billboard. As a result, we must convert counts to drawing sizes. The specific algorithm for this conversion will depend both on the size of the visualization and the raw values. A simple approach that works in this case is to divide the count values by 10000 and round to the nearest integer. In chapter 2, we saw how jQuery’s <code>.map()</code> function makes it easy to process all the elements in an array. It turns out that modern browsers have the same functionality built in, so we can use the native version of <code>.map()</code> even without jQuery. (This native version won’t work on older browsers like jQuery will, but we’re not worrying about that for this example.)</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> list = <span class="ot">tags</span>.<span class="fu">map</span>(<span class="kw">function</span>(word) { 
-    <span class="kw">return</span> [word[<span class="dv">0</span>], <span class="ot">Math</span>.<span class="fu">round</span>(word[<span class="dv">1</span>]/<span class="dv">10000</span>)]; 
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> list <span class="op">=</span> <span class="va">tags</span>.<span class="at">map</span>(<span class="kw">function</span>(word) <span class="op">{</span> 
+    <span class="cf">return</span> [word[<span class="dv">0</span>]<span class="op">,</span> <span class="va">Math</span>.<span class="at">round</span>(word[<span class="dv">1</span>]/<span class="dv">10000</span>)]<span class="op">;</span> 
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>After this code executes, our <code>list</code> variable will contain the following:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1594,19 +1594,19 @@ An interactive graph gives users the chance to highlight specific nodes.
 10
 11
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">[
-    [<span class="st">&quot;c#&quot;</span>, <span class="dv">60</span>],
-    [<span class="st">&quot;java&quot;</span>, <span class="dv">59</span>],
-    [<span class="st">&quot;javascript&quot;</span>, <span class="dv">56</span>],
-    [<span class="st">&quot;php&quot;</span>, <span class="dv">53</span>],
-    [<span class="st">&quot;android&quot;</span>, <span class="dv">47</span>],
-    [<span class="st">&quot;jquery&quot;</span>, <span class="dv">44</span>],
-    [<span class="st">&quot;python&quot;</span>, <span class="dv">27</span>],
-    [<span class="st">&quot;c++&quot;</span>, <span class="dv">27</span>],
-    [<span class="st">&quot;html&quot;</span>, <span class="dv">26</span>],
-    <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+    [<span class="st">&quot;c#&quot;</span><span class="op">,</span> <span class="dv">60</span>]<span class="op">,</span>
+    [<span class="st">&quot;java&quot;</span><span class="op">,</span> <span class="dv">59</span>]<span class="op">,</span>
+    [<span class="st">&quot;javascript&quot;</span><span class="op">,</span> <span class="dv">56</span>]<span class="op">,</span>
+    [<span class="st">&quot;php&quot;</span><span class="op">,</span> <span class="dv">53</span>]<span class="op">,</span>
+    [<span class="st">&quot;android&quot;</span><span class="op">,</span> <span class="dv">47</span>]<span class="op">,</span>
+    [<span class="st">&quot;jquery&quot;</span><span class="op">,</span> <span class="dv">44</span>]<span class="op">,</span>
+    [<span class="st">&quot;python&quot;</span><span class="op">,</span> <span class="dv">27</span>]<span class="op">,</span>
+    [<span class="st">&quot;c++&quot;</span><span class="op">,</span> <span class="dv">27</span>]<span class="op">,</span>
+    [<span class="st">&quot;html&quot;</span><span class="op">,</span> <span class="dv">26</span>]<span class="op">,</span>
+    <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <h3 id="step-3-add-the-required-markup">Step 3: Add the Required Markup</h3>
 <p>The wordcloud2 library can build its graphics either using the <span class="smcp">HTML</span> <code>&lt;canvas&gt;</code> interface or in pure <span class="smcp">HTML</span>. As we’ve seen with many graphing libraries, <code>&lt;canvas&gt;</code> is a convenient interface for creating graphic elements. For word clouds, however, there aren’t many benefits to using <code>&lt;canvas&gt;</code>. Native <span class="smcp">HTML</span>, on the other hand, lets us use all the standard <span class="smcp">HTML</span> tools (such as <span class="smcp">CSS</span> stylesheets or JavaScript event handling). That’s the approach we’ll take in this example. When using native <span class="smcp">HTML</span>, we do have to make sure that the containing element has a <code>position: relative</code> style, because wordcloud2 relies on that when placing the words in their proper location in the cloud. You can see in line 8 below that we’ve set that style inline.</p>
-<table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1627,11 +1627,11 @@ An interactive graph gives users the chance to highlight specific nodes.
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;cloud&quot;</span><span class="ot"> style=</span><span class="st">&quot;position:relative;&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/wordcloud2.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-4-create-a-simple-cloud">Step 4: Create a Simple Cloud</h3>
 <p>With these preparations in place, creating a simple word cloud is about as easy as it can get. We call the wordcloud2 library and tell it the <span class="smcp">HTML</span> element in which to draw the cloud, and the list of words for the cloud’s data.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">WordCloud</span>(<span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;cloud&quot;</span>), {<span class="dt">list</span>: list});</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="at">WordCloud</span>(<span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;cloud&quot;</span>)<span class="op">,</span> <span class="op">{</span><span class="dt">list</span><span class="op">:</span> list<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Even with nothing other than default values, wordcloud2 creates the attractive visualization shown in figure <span class="nextfigure"/>.</p>
 <style>
 #cloud-1, #cloud-2 { border-radius:3px;border:1px solid #d0d0d0;}
@@ -1649,14 +1649,14 @@ A word cloud can show a list of words with their relative frequency.
 <h3 id="step-5-add-interactivity">Step 5: Add Interactivity</h3>
 <p>If you ask wordcloud2 to use the <code>&lt;canvas&gt;</code> interface, it gives you a couple of callback hooks that your code can use to respond to user interactions. With native <span class="smcp">HTML</span>, however, we aren’t limited to just the callbacks that wordcloud2 provides. To demonstrate, we can add a simple interaction to respond to mouse clicks on words in the cloud.</p>
 <p>First we’ll let users know that interactions are supported by changing the cursor to a pointer when they hover the mouse over a cloud word.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">#cloud</span> span <span class="kw">{</span>
     <span class="kw">cursor:</span> <span class="dt">pointer</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>Next let’s add an extra element to the markup where we can display information about any clicked word. That element is the <code>&lt;div&gt;</code> with the id <code>details</code> in line 9.</p>
-<table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-9"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1679,33 +1679,33 @@ A word cloud can show a list of words with their relative frequency.
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;details&quot;</span><span class="kw">&gt;&lt;div&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/wordcloud2.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>Then we define a function that can be called when the user clicks within the cloud. Because our function will be called for any clicks on the cloud (including clicks on empty space), it will first check to see if the target of the click was really a word. Words are contained in <code>&lt;span&gt;</code> elements, so we can verify that by looking that the <code>nodeName</code> property of the click target. As you can see from line 2, JavaScript node names are always in uppercase.</p>
-<table class="sourceCode javascript numberLines line-2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-2"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked = <span class="kw">function</span>(ev) {
-    <span class="kw">if</span> (<span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">nodeName</span> === <span class="st">&quot;SPAN&quot;</span>) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked <span class="op">=</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+    <span class="cf">if</span> (<span class="va">ev</span>.<span class="va">target</span>.<span class="at">nodeName</span> <span class="op">===</span> <span class="st">&quot;SPAN&quot;</span>) <span class="op">{</span>
         <span class="co">// A &lt;span&gt; element was the target of the click</span>
-    }
-}</code></pre></td></tr></table>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>If the user did click on a word, we can find out which word by looking at the <code>textContent</code> property of the event target. After line 3 below, the variable <code>tag</code> will hold the word on which the user clicked. So, for example, if a user clicks on the word “javascript,” then the tag variable will have the value <code>&quot;javascript&quot;</code>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked = <span class="kw">function</span>(ev) {
-    <span class="kw">if</span> (<span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">nodeName</span> === <span class="st">&quot;SPAN&quot;</span>) {
-        <span class="kw">var</span> tag = <span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">textContent</span>;
-    }
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked <span class="op">=</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+    <span class="cf">if</span> (<span class="va">ev</span>.<span class="va">target</span>.<span class="at">nodeName</span> <span class="op">===</span> <span class="st">&quot;SPAN&quot;</span>) <span class="op">{</span>
+        <span class="kw">var</span> tag <span class="op">=</span> <span class="va">ev</span>.<span class="va">target</span>.<span class="at">textContent</span><span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>Since we’d like to show users the total count when they click on a word, we’re going to need to find the word in our original data set. We have the word’s value, so that’s simply a matter of searching through the data set to find a match. If we were using jQuery, the <code>.grep()</code> function would do just that. In this example we’re sticking with native JavaScript, so we can look for an equivalent method in pure JavaScript. Unfortunately, although there is such a native method defined (<code>.find()</code>) very few browsers (even modern browsers) currently support it. We could resort to a standard <code>for</code> or <code>forEach</code> loop, but there is an alternative that many consider an improvement over that approach. It relies on the <code>.some()</code> method, an array method that modern browsers do support. The <code>.some()</code> method passes every element of an array to an arbitrary function and stops when that function returns true. Here’s how we can use it to find the clicked tag in our <code>tags</code> array.</p>
 <p>The function that’s the argument to <code>.some()</code> is defined in lines 5 through 11. It is called with the parameter <code>el</code>, short for an <em>element</em> in the <code>tags</code> array. The conditional statement in line 6 checks to see if that element’s word matches the clicked node’s text content. If so, the function sets the <code>clickedTag</code> variable and returns <code>true</code> to terminate the <code>.some()</code> loop.</p>
 <p>If the clicked word doesn’t match the element we’re checking in the <code>tags</code> array, then the function supplied to <code>some()</code> returns <code>false</code> (line 10). When <code>some()</code> sees a <code>false</code> return value, it continues iterating through the array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1718,21 +1718,21 @@ A word cloud can show a list of words with their relative frequency.
 11
 12
 13
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked = <span class="kw">function</span>(ev) {
-    <span class="kw">if</span> (<span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">nodeName</span> === <span class="st">&quot;SPAN&quot;</span>) {
-        <span class="kw">var</span> tag = <span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">textContent</span>;
-        <span class="kw">var</span> clickedTag;
-        <span class="ot">tags</span>.<span class="fu">some</span>(<span class="kw">function</span>(el) { 
-            <span class="kw">if</span> (el[<span class="dv">0</span>] === tag) {
-                clickedTag = el; 
-                <span class="kw">return</span> <span class="kw">true</span>;  <span class="co">// This ends the .some() loop</span>
-            }
-            <span class="kw">return</span> <span class="kw">false</span>;
-        });
-    }
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked <span class="op">=</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+    <span class="cf">if</span> (<span class="va">ev</span>.<span class="va">target</span>.<span class="at">nodeName</span> <span class="op">===</span> <span class="st">&quot;SPAN&quot;</span>) <span class="op">{</span>
+        <span class="kw">var</span> tag <span class="op">=</span> <span class="va">ev</span>.<span class="va">target</span>.<span class="at">textContent</span><span class="op">;</span>
+        <span class="kw">var</span> clickedTag<span class="op">;</span>
+        <span class="va">tags</span>.<span class="at">some</span>(<span class="kw">function</span>(el) <span class="op">{</span> 
+            <span class="cf">if</span> (el[<span class="dv">0</span>] <span class="op">===</span> tag) <span class="op">{</span>
+                clickedTag <span class="op">=</span> el<span class="op">;</span> 
+                <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span>  <span class="co">// This ends the .some() loop</span>
+            <span class="op">}</span>
+            <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span>
+        <span class="op">}</span>)<span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>We can use the return value of the <code>.some()</code> method to make sure the clicked element was found in the array. When that’s the case, <code>.some()</code> itself returns <code>true</code>. In lines 13 and 14 below we update the <code>details</code> variable with extra information. In line 17 we update the web page with those details.</p>
-<table class="sourceCode javascript numberLines line-13 line-14 line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-13 line-14 line-17"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1750,27 +1750,27 @@ A word cloud can show a list of words with their relative frequency.
 16
 17
 18
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked = <span class="kw">function</span>(ev) {
-  <span class="kw">var</span> details = <span class="st">&quot;&quot;</span>;
-  <span class="kw">if</span> (<span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">nodeName</span> === <span class="st">&quot;SPAN&quot;</span>) {
-      <span class="kw">var</span> tag = <span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">textContent</span>,
-          clickedTag;
-      <span class="kw">if</span> (<span class="ot">tags</span>.<span class="fu">some</span>(<span class="kw">function</span>(el) { 
-          <span class="kw">if</span> (el[<span class="dv">0</span>] === tag) {
-                clickedTag = el; 
-                <span class="kw">return</span> <span class="kw">true</span>;
-          }
-          <span class="kw">return</span> <span class="kw">false</span>; 
-      })) {
-          details = <span class="st">&quot;There were &quot;</span> + clickedTag[<span class="dv">1</span>] + 
-                    <span class="st">&quot; Stack Overflow questions tagged </span><span class="ch">\&quot;</span><span class="st">&quot;</span> + tag + <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>;
-      }
-  }
-  <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;details&quot;</span>).<span class="fu">innerText</span> = details;
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked <span class="op">=</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+  <span class="kw">var</span> details <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span>
+  <span class="cf">if</span> (<span class="va">ev</span>.<span class="va">target</span>.<span class="at">nodeName</span> <span class="op">===</span> <span class="st">&quot;SPAN&quot;</span>) <span class="op">{</span>
+      <span class="kw">var</span> tag <span class="op">=</span> <span class="va">ev</span>.<span class="va">target</span>.<span class="at">textContent</span><span class="op">,</span>
+          clickedTag<span class="op">;</span>
+      <span class="cf">if</span> (<span class="va">tags</span>.<span class="at">some</span>(<span class="kw">function</span>(el) <span class="op">{</span> 
+          <span class="cf">if</span> (el[<span class="dv">0</span>] <span class="op">===</span> tag) <span class="op">{</span>
+                clickedTag <span class="op">=</span> el<span class="op">;</span> 
+                <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span>
+          <span class="op">}</span>
+          <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span> 
+      <span class="op">}</span>)) <span class="op">{</span>
+          details <span class="op">=</span> <span class="st">&quot;There were &quot;</span> <span class="op">+</span> clickedTag[<span class="dv">1</span>] <span class="op">+</span> 
+                    <span class="st">&quot; Stack Overflow questions tagged </span><span class="sc">\&quot;</span><span class="st">&quot;</span> <span class="op">+</span> tag <span class="op">+</span> <span class="st">&quot;</span><span class="sc">\&quot;</span><span class="st">&quot;</span><span class="op">;</span>
+      <span class="op">}</span>
+  <span class="op">}</span>
+  <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;details&quot;</span>).<span class="at">innerText</span> <span class="op">=</span> details<span class="op">;</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>And finally we tell the browser to call our handler when a user clicks on anything in the cloud container.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;cloud&quot;</span>).<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, clicked)</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;cloud&quot;</span>).<span class="at">addEventListener</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> clicked)</code></pre></td></tr></table></div>
 <p>With these few lines of code, our word cloud is now interactive.</p>
 <style>
 #cloud-2 span {
@@ -1971,6 +1971,7 @@ Because our word cloud consists of standard <span class="smcp">HTML</span> eleme
             <small>Copyright © 2012-2015 by <a href="http://sathomas.me">Stephen A. Thomas</a>. All Rights Reserved.</small>
         </footer>
     <script src="js/scripts.min.js"></script>
+    <!--
     <script src="https://carnivalapp.io/sites/49/init.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -1986,5 +1987,6 @@ Because our word cloud consists of standard <span class="smcp">HTML</span> eleme
             fill: #CA0000 !important;
         }
     </style>
+    -->
     </body>
 </html>

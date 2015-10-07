@@ -612,7 +612,7 @@ body { counter-reset: chapter 5; }
 <blockquote>
 <p>Note: Chapter 2 includes a more extensive discussion of content distribution networks and the trade-offs involved in using them.</p>
 </blockquote>
-<table class="sourceCode html numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-10"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -657,11 +657,11 @@ body { counter-reset: chapter 5; }
     <span class="kw">&lt;/script&gt;</span>
    <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/chronoline.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>As you can see, we’ve set aside a <code>&lt;div&gt;</code> in line 10 to hold our timeline. We’ve also included the JavaScript libraries as the last part of the <code>&lt;body&gt;</code> element, as that provides the best browser performance.</p>
 <h3 id="step-2-prepare-the-data">Step 2: Prepare the Data</h3>
 <p>The data for our time line comes from <a href="http://en.wikipedia.org/wiki/Chronology_of_Shakespeare%27s_plays">Wikipedia</a>. As a JavaScript object, that data might be structured like the following excerpt:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -686,42 +686,42 @@ body { counter-reset: chapter 5; }
 23
 24
 </pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">[
-  {
-    <span class="st">&quot;play&quot;</span>: <span class="st">&quot;The Two Gentlemen of Verona&quot;</span>, 
-    <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1589-1591&quot;</span>,
-    <span class="st">&quot;record&quot;</span>: <span class="st">&quot;Francis Meres&#39;...&quot;</span>,
-    <span class="st">&quot;published&quot;</span>: <span class="st">&quot;First Folio (1623)&quot;</span>,   
-    <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;adaptation by Benjamin Victor...&quot;</span>,
-    <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;The play contains...&quot;</span> 
-  }, { 
-    <span class="st">&quot;play&quot;</span>: <span class="st">&quot;The Taming of the Shrew&quot;</span>,     
-    <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1590-1594&quot;</span>, 
-    <span class="st">&quot;record&quot;</span>: <span class="st">&quot;possible version...&quot;</span>, 
-    <span class="st">&quot;published&quot;</span>: <span class="st">&quot;possible version...&quot;</span>, 
-    <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;According to Philip Henslowe...&quot;</span>,  
-    <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;Kier Elam posits...&quot;</span>
-  }, { 
-    <span class="st">&quot;play&quot;</span>: <span class="st">&quot;Henry VI, Part 2&quot;</span>,
-    <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1590-1591&quot;</span>, 
-    <span class="st">&quot;record&quot;</span>: <span class="st">&quot;version of the...&quot;</span>,   
-    <span class="st">&quot;published&quot;</span>: <span class="st">&quot;version of the...&quot;</span>,   
-    <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;although it is known...&quot;</span>,         
-    <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;It is known...&quot;</span> 
-  },
-  <span class="co">// Data set continues...</span></code></pre></td></tr></table>
+  <span class="op">{</span>
+    <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;The Two Gentlemen of Verona&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1589-1591&quot;</span><span class="op">,</span>
+    <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;Francis Meres&#39;...&quot;</span><span class="op">,</span>
+    <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;First Folio (1623)&quot;</span><span class="op">,</span>   
+    <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;adaptation by Benjamin Victor...&quot;</span><span class="op">,</span>
+    <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;The play contains...&quot;</span> 
+  <span class="op">},</span> <span class="op">{</span> 
+    <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;The Taming of the Shrew&quot;</span><span class="op">,</span>     
+    <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1590-1594&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;possible version...&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;possible version...&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;According to Philip Henslowe...&quot;</span><span class="op">,</span>  
+    <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;Kier Elam posits...&quot;</span>
+  <span class="op">},</span> <span class="op">{</span> 
+    <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;Henry VI, Part 2&quot;</span><span class="op">,</span>
+    <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1590-1591&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;version of the...&quot;</span><span class="op">,</span>   
+    <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;version of the...&quot;</span><span class="op">,</span>   
+    <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;although it is known...&quot;</span><span class="op">,</span>         
+    <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;It is known...&quot;</span> 
+  <span class="op">},</span>
+  <span class="co">// Data set continues...</span></code></pre></td></tr></table></div>
 <p>You can see the complete data set in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
 <p>Before we can use Chronoline.js, we have to convert the raw data into the format the library expects. Since we have jQuery available, we can take advantage of its <code>.map()</code> function for the conversion. (For details on <code>.map()</code>, see chapter 2.)</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> events = <span class="ot">$</span>.<span class="fu">map</span>(plays, <span class="kw">function</span>(play) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> events <span class="op">=</span> <span class="va">$</span>.<span class="at">map</span>(plays<span class="op">,</span> <span class="kw">function</span>(play) <span class="op">{</span>
     <span class="co">// Code continues...</span>
-});</code></pre></td></tr></table>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>As you can see from our data set, some of the plays have a single year as their date, while others have a range of years (two dates separated by a dash). To set the date range for Chronoline.js, we check for a dash on line 4. If one is present, we split the date string at that dash and set a multi-year range in line 6. Otherwise we set the range to a single year in line 9.</p>
 <blockquote>
 <p>Recall that the JavaScript <code>Date()</code> object numbers months beginning with the value <code>0</code> rather than <code>1</code>.</p>
 </blockquote>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -735,101 +735,101 @@ body { counter-reset: chapter 5; }
 12
 13
 14
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> events = <span class="ot">$</span>.<span class="fu">map</span>(plays, <span class="kw">function</span>(play) {
-    <span class="kw">var</span> event = {};
-    <span class="ot">event</span>.<span class="fu">title</span> = <span class="ot">play</span>.<span class="fu">play</span>;
-    <span class="kw">if</span> (<span class="ot">play</span>.<span class="ot">date</span>.<span class="fu">indexOf</span>(<span class="st">&quot;-&quot;</span>) !== -<span class="dv">1</span>) {
-        <span class="kw">var</span> daterange = <span class="ot">play</span>.<span class="ot">date</span>.<span class="fu">split</span>(<span class="st">&quot;-&quot;</span>);
-        <span class="ot">event</span>.<span class="fu">dates</span> = [<span class="kw">new</span> <span class="fu">Date</span>(daterange[<span class="dv">0</span>], <span class="dv">0</span>, <span class="dv">1</span>), 
-            <span class="kw">new</span> <span class="fu">Date</span>(daterange[<span class="dv">1</span>], <span class="dv">11</span>, <span class="dv">31</span>)];
-    } <span class="kw">else</span> {
-        <span class="ot">event</span>.<span class="fu">dates</span> = [
-            <span class="kw">new</span> <span class="fu">Date</span>(<span class="ot">play</span>.<span class="fu">date</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="kw">new</span> <span class="fu">Date</span>(<span class="ot">play</span>.<span class="fu">date</span>, <span class="dv">11</span>, <span class="dv">31</span>)
-        ];
-    }
-    <span class="kw">return</span> event;
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> events <span class="op">=</span> <span class="va">$</span>.<span class="at">map</span>(plays<span class="op">,</span> <span class="kw">function</span>(play) <span class="op">{</span>
+    <span class="kw">var</span> event <span class="op">=</span> <span class="op">{};</span>
+    <span class="va">event</span>.<span class="at">title</span> <span class="op">=</span> <span class="va">play</span>.<span class="at">play</span><span class="op">;</span>
+    <span class="cf">if</span> (<span class="va">play</span>.<span class="va">date</span>.<span class="at">indexOf</span>(<span class="st">&quot;-&quot;</span>) <span class="op">!==</span> <span class="op">-</span><span class="dv">1</span>) <span class="op">{</span>
+        <span class="kw">var</span> daterange <span class="op">=</span> <span class="va">play</span>.<span class="va">date</span>.<span class="at">split</span>(<span class="st">&quot;-&quot;</span>)<span class="op">;</span>
+        <span class="va">event</span>.<span class="at">dates</span> <span class="op">=</span> [<span class="kw">new</span> <span class="at">Date</span>(daterange[<span class="dv">0</span>]<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span> 
+            <span class="kw">new</span> <span class="at">Date</span>(daterange[<span class="dv">1</span>]<span class="op">,</span> <span class="dv">11</span><span class="op">,</span> <span class="dv">31</span>)]<span class="op">;</span>
+    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        <span class="va">event</span>.<span class="at">dates</span> <span class="op">=</span> [
+            <span class="kw">new</span> <span class="at">Date</span>(<span class="va">play</span>.<span class="at">date</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span> <span class="kw">new</span> <span class="at">Date</span>(<span class="va">play</span>.<span class="at">date</span><span class="op">,</span> <span class="dv">11</span><span class="op">,</span> <span class="dv">31</span>)
+        ]<span class="op">;</span>
+    <span class="op">}</span>
+    <span class="cf">return</span> event<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <h3 id="step-3-draw-the-timeline">Step 3: Draw the Timeline</h3>
 <p>To draw the timeline, we create a new <code>Chronoline</code> object, passing it the <span class="smcp">HTML</span> container element, our event data, and any options. The <span class="smcp">HTML</span> container element should be a native element, not a jQuery selection. To convert from a selection to a native element, we use the <code>get()</code> method. In this case, we want the first element, so we use the parameter <code>0</code>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="kw">function</span>() {
-    <span class="kw">var</span> timeline = <span class="kw">new</span> <span class="fu">Chronoline</span>(<span class="fu">$</span>(<span class="st">&quot;#timeline&quot;</span>).<span class="fu">get</span>(<span class="dv">0</span>), events, {});
-}</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="at">$</span>(<span class="kw">function</span>() <span class="op">{</span>
+    <span class="kw">var</span> timeline <span class="op">=</span> <span class="kw">new</span> <span class="at">Chronoline</span>(<span class="at">$</span>(<span class="st">&quot;#timeline&quot;</span>).<span class="at">get</span>(<span class="dv">0</span>)<span class="op">,</span> events<span class="op">,</span> <span class="op">{}</span>)<span class="op">;</span>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <p>If we try to use the default options of Chronoline.js with our data, however, the result is quite disappointing. (In fact, it’s illegible and not worth reproducing at this point.) We can fix that in the next step with some additional options.</p>
 <h3 id="step-4-set-chronoline.js-options-for-the-data">Step 4: Set Chronoline.js Options for the Data</h3>
 <p>The Chronoline.js library has default options that are well suited for its original application, but they don’t work so well for Shakespeare’s plays. Fortunately, we can change the options from the default values. As of this writing, Chronoline.js doesn’t have much documentation on its options; to see the full set you would normally have to examine the source code. We’ll cover the most important options here, though.</p>
 <p>One of the most obvious problems with the Chonoline.js defaults is the date shown in the initial view. Chronoline.js starts by displaying the current date by default. Since our timeline ends in 1613, the user would have to scroll backward for a long time to see anything meaningful. We can change this view by giving Chronoline.js a different start date for the initial view:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">defaultStartDate: <span class="kw">new</span> <span class="fu">Date</span>(<span class="dv">1589</span>, <span class="dv">0</span>, <span class="dv">1</span>),</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">defaultStartDate<span class="op">:</span> <span class="kw">new</span> <span class="at">Date</span>(<span class="dv">1589</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">,</span></code></pre></td></tr></table></div>
 <p>As long as we’re setting the timeline to start somewhere close to Shakespeare’s lifetime, there’s no need for Chronoline.js to add a special mark for the current date, so we use this simple option to tell it not to bother:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">markToday: <span class="kw">false</span>,</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">markToday<span class="op">:</span> <span class="kw">false</span><span class="op">,</span></code></pre></td></tr></table></div>
 <p>The next major problem to address is the labeling. By default, Chronoline.js tries to label every day on the timeline. As our events span 24 years, we don’t need that granularity. Instead, we can tell Chronoline.js just to label the years. For the same reason we also need to change the tick marks. Instead of every day, we need tick marks only for every month.</p>
 <p>To change both of these options, we supply Chronoline.js with a pair of functions to call. Chronoline.js passes each of these functions a date object, and the functions return <code>true</code> or <code>false</code> depending on whether the date merits a tick mark or label. For tick marks we return <code>true</code> only on the first day of the month. We return <code>true</code> for labels only on January 1. (Remember that JavaScript numbers months beginning with <code>0</code>.)</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">hashInterval: <span class="kw">function</span>(date) {
-    <span class="kw">return</span> <span class="ot">date</span>.<span class="fu">getDate</span>() === <span class="dv">1</span>;
-},
-labelInterval: <span class="kw">function</span>(date) {
-    <span class="kw">return</span> <span class="ot">date</span>.<span class="fu">getMonth</span>() === <span class="dv">0</span> &amp;&amp; <span class="ot">date</span>.<span class="fu">getDate</span>() === <span class="dv">1</span>;
-},</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">hashInterval<span class="op">:</span> <span class="kw">function</span>(date) <span class="op">{</span>
+    <span class="cf">return</span> <span class="va">date</span>.<span class="at">getDate</span>() <span class="op">===</span> <span class="dv">1</span><span class="op">;</span>
+<span class="op">},</span>
+labelInterval<span class="op">:</span> <span class="kw">function</span>(date) <span class="op">{</span>
+    <span class="cf">return</span> <span class="va">date</span>.<span class="at">getMonth</span>() <span class="op">===</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> <span class="va">date</span>.<span class="at">getDate</span>() <span class="op">===</span> <span class="dv">1</span><span class="op">;</span>
+<span class="op">},</span></code></pre></td></tr></table></div>
 <p>By default, Chronoline.js will try to show a full date for each label. Since we only want to label each year, we’ll change the label format to just show the year. The details for the format specification are based on a standard <a href="http://www.cplusplus.com/reference/ctime/strftime/">C++ library</a>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">labelFormat: <span class="st">&quot;%Y&quot;</span>,</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">labelFormat<span class="op">:</span> <span class="st">&quot;%Y&quot;</span><span class="op">,</span></code></pre></td></tr></table></div>
 <p>For our last adjustments to the labeling, we remove the “sub-labels” and “sub-sub-labels” that Chronoline.js adds by default. Those labels don’t provide any value in our case.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">subLabel: <span class="kw">null</span>,
-subSubLabel: <span class="kw">null</span>,</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">subLabel<span class="op">:</span> <span class="kw">null</span><span class="op">,</span>
+subSubLabel<span class="op">:</span> <span class="kw">null</span><span class="op">,</span></code></pre></td></tr></table></div>
 <p>We also want to change the span of time that Chronoline.js displays in the timeline. For our data, showing a span of five years at a time seems good.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">visibleSpan: DAY_IN_MILLISECONDS * <span class="dv">366</span> * <span class="dv">5</span>,</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">visibleSpan<span class="op">:</span> DAY_IN_MILLISECONDS <span class="op">*</span> <span class="dv">366</span> <span class="op">*</span> <span class="dv">5</span><span class="op">,</span></code></pre></td></tr></table></div>
 <p>Note that the variable <code>DAY_IN_MILLISECONDS</code> is defined by Chronoline.js itself. We’re free to use it in this or in any other option setting.</p>
 <p>Now we can address the timeline scrolling. Chronoline.js normally advances the timeline by a single day with each click. That would result in some rather tedious scrolling for our users. Instead of the default behavior, we’ll have Chronoline.js advance by a full year. As with the labels, we change this behavior by supplying Chronoline.js with a function. That function is passed a date object, and it should return a new date object to which Chronoline.js should scroll. In our case, we simply add or subtract one from the year value.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">scrollLeft: <span class="kw">function</span>(date) {
-    <span class="kw">return</span> <span class="kw">new</span> <span class="fu">Date</span>(<span class="ot">date</span>.<span class="fu">getFullYear</span>()-<span class="dv">1</span>, <span class="ot">date</span>.<span class="fu">getMonth</span>(), <span class="ot">date</span>.<span class="fu">getDate</span>());
-},
-scrollRight: <span class="kw">function</span>(date) {
-    <span class="kw">return</span> <span class="kw">new</span> <span class="fu">Date</span>(<span class="ot">date</span>.<span class="fu">getFullYear</span>()+<span class="dv">1</span>, <span class="ot">date</span>.<span class="fu">getMonth</span>(), <span class="ot">date</span>.<span class="fu">getDate</span>());
-},</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">scrollLeft<span class="op">:</span> <span class="kw">function</span>(date) <span class="op">{</span>
+    <span class="cf">return</span> <span class="kw">new</span> <span class="at">Date</span>(<span class="va">date</span>.<span class="at">getFullYear</span>()<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="va">date</span>.<span class="at">getMonth</span>()<span class="op">,</span> <span class="va">date</span>.<span class="at">getDate</span>())<span class="op">;</span>
+<span class="op">},</span>
+scrollRight<span class="op">:</span> <span class="kw">function</span>(date) <span class="op">{</span>
+    <span class="cf">return</span> <span class="kw">new</span> <span class="at">Date</span>(<span class="va">date</span>.<span class="at">getFullYear</span>()<span class="op">+</span><span class="dv">1</span><span class="op">,</span> <span class="va">date</span>.<span class="at">getMonth</span>()<span class="op">,</span> <span class="va">date</span>.<span class="at">getDate</span>())<span class="op">;</span>
+<span class="op">},</span></code></pre></td></tr></table></div>
 <p>The last few adjustments clean up the appearance and behavior of Chronoline.js. Adding some extra space (in our case three months) before the start and after the end of the timeline gives the data a bit of room.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">timelinePadding: DAY_IN_MILLISECONDS * <span class="dv">366</span> / <span class="dv">4</span>,</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">timelinePadding<span class="op">:</span> DAY_IN_MILLISECONDS <span class="op">*</span> <span class="dv">366</span> / <span class="dv">4</span><span class="op">,</span></code></pre></td></tr></table></div>
 <p>We can also make the scrolling animate smoothly instead of jumping, give users the ability to drag the timeline right or left, and improve the default browser tool tips.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">animated: <span class="kw">true</span>,
-draggable: <span class="kw">true</span>,
-tooltips: <span class="kw">true</span>,</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">animated<span class="op">:</span> <span class="kw">true</span><span class="op">,</span>
+draggable<span class="op">:</span> <span class="kw">true</span><span class="op">,</span>
+tooltips<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></code></pre></td></tr></table></div>
 <p>For the final tweaks, we can change the appearance of the timeline. To change the color and size of the events, we use options:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">eventAttrs: {  <span class="co">// attrs for the bars and circles of the events</span>
-    <span class="dt">fill</span>: <span class="st">&#39;#ffa44f&#39;</span>,
-    <span class="dt">stroke</span>: <span class="st">&#39;#ffa44f&#39;</span>,
-    <span class="st">&quot;stroke-width&quot;</span>: <span class="dv">1</span>
-},
-eventHeight: <span class="dv">10</span>,</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript">eventAttrs<span class="op">:</span> <span class="op">{</span>  <span class="co">// attrs for the bars and circles of the events</span>
+    <span class="dt">fill</span><span class="op">:</span> <span class="st">&#39;#ffa44f&#39;</span><span class="op">,</span>
+    <span class="dt">stroke</span><span class="op">:</span> <span class="st">&#39;#ffa44f&#39;</span><span class="op">,</span>
+    <span class="st">&quot;stroke-width&quot;</span><span class="op">:</span> <span class="dv">1</span>
+<span class="op">},</span>
+eventHeight<span class="op">:</span> <span class="dv">10</span><span class="op">,</span></code></pre></td></tr></table></div>
 <p>To change the color of the scroll buttons, we have to modify the <code>chronoline.css</code> stylesheet. The property to change is <code>background-color</code>.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -840,7 +840,7 @@ eventHeight: <span class="dv">10</span>,</code></pre></td></tr></table>
     <span class="kw">opacity:</span> <span class="dt">1</span><span class="kw">;</span>
     <span class="kw">filter:</span> alpha(opacity=<span class="dt">100</span>)<span class="kw">;</span>
     <span class="kw">background-color:</span> <span class="dt">#97aceb</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>With those changes, we finally have a timeline of Shakespeare’s plays.</p>
 <style>
 .chronoline-left-icon, .chronoline-right-icon { background: url("../img/chronoline-sprites.png") no-repeat scroll 0px 0 transparent; }
@@ -965,7 +965,7 @@ The Chronoline.js library creates a simple, interactive time line.
 <p>That’s exactly what we’ll do in this example. We’ll start with the same data set as before. Instead of feeding that data into a third-party library, however, we’ll use plain old JavaScript (with an optional dose of jQuery) to construct a pure <span class="smcp">HTML</span> representation of the data. Then we’ll use <span class="smcp">CSS</span> to set the appearance of the timeline.</p>
 <h3 id="step-1-prepare-the-html-skeleton">Step 1: Prepare the HTML Skeleton</h3>
 <p>Without any required libraries, the <span class="smcp">HTML</span> page for our timeline is pretty simple. All we need is a containing <code>&lt;div&gt;</code> with a unique <code>id</code> attribute in line 8.</p>
-<table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines line-8"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -984,10 +984,10 @@ The Chronoline.js library creates a simple, interactive time line.
   <span class="kw">&lt;body&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;timeline&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-2-start-javascript-execution">Step 2: Start JavaScript Execution</h3>
 <p>As soon as the browser has finished loading our page, we can start processing the data. As before, we’ll start with our data formatted as a JavaScript array. You can see the complete data set in the book’s <a href="https://github.com/sathomas/jsDataV.is-source">source code</a>.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1013,53 +1013,53 @@ The Chronoline.js library creates a simple, interactive time line.
 24
 25
 26
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">window</span>.<span class="fu">onload</span> = <span class="kw">function</span> () {
-  <span class="kw">var</span> plays = [
-    {
-      <span class="st">&quot;play&quot;</span>: <span class="st">&quot;The Two Gentlemen of Verona&quot;</span>, 
-      <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1589-1591&quot;</span>,
-      <span class="st">&quot;record&quot;</span>: <span class="st">&quot;Francis Meres&#39;...&quot;</span>,
-      <span class="st">&quot;published&quot;</span>: <span class="st">&quot;First Folio (1623)&quot;</span>,   
-      <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;adaptation by Benjamin Victor...&quot;</span>,
-      <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;The play contains...&quot;</span> 
-    }, { 
-      <span class="st">&quot;play&quot;</span>: <span class="st">&quot;The Taming of the Shrew&quot;</span>,     
-      <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1590-1594&quot;</span>, 
-      <span class="st">&quot;record&quot;</span>: <span class="st">&quot;possible version...&quot;</span>, 
-      <span class="st">&quot;published&quot;</span>: <span class="st">&quot;possible version...&quot;</span>, 
-      <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;According to Philip Henslowe...&quot;</span>,  
-      <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;Kier Elam posits...&quot;</span>
-    }, { 
-      <span class="st">&quot;play&quot;</span>: <span class="st">&quot;Henry VI, Part 2&quot;</span>,
-      <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1590-1591&quot;</span>, 
-      <span class="st">&quot;record&quot;</span>: <span class="st">&quot;version of the...&quot;</span>,   
-      <span class="st">&quot;published&quot;</span>: <span class="st">&quot;version of the...&quot;</span>,   
-      <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;although it is known...&quot;</span>,         
-      <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;It is known...&quot;</span> 
-    },
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">window</span>.<span class="at">onload</span> <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span>
+  <span class="kw">var</span> plays <span class="op">=</span> [
+    <span class="op">{</span>
+      <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;The Two Gentlemen of Verona&quot;</span><span class="op">,</span> 
+      <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1589-1591&quot;</span><span class="op">,</span>
+      <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;Francis Meres&#39;...&quot;</span><span class="op">,</span>
+      <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;First Folio (1623)&quot;</span><span class="op">,</span>   
+      <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;adaptation by Benjamin Victor...&quot;</span><span class="op">,</span>
+      <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;The play contains...&quot;</span> 
+    <span class="op">},</span> <span class="op">{</span> 
+      <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;The Taming of the Shrew&quot;</span><span class="op">,</span>     
+      <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1590-1594&quot;</span><span class="op">,</span> 
+      <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;possible version...&quot;</span><span class="op">,</span> 
+      <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;possible version...&quot;</span><span class="op">,</span> 
+      <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;According to Philip Henslowe...&quot;</span><span class="op">,</span>  
+      <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;Kier Elam posits...&quot;</span>
+    <span class="op">},</span> <span class="op">{</span> 
+      <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;Henry VI, Part 2&quot;</span><span class="op">,</span>
+      <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1590-1591&quot;</span><span class="op">,</span> 
+      <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;version of the...&quot;</span><span class="op">,</span>   
+      <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;version of the...&quot;</span><span class="op">,</span>   
+      <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;although it is known...&quot;</span><span class="op">,</span>         
+      <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;It is known...&quot;</span> 
+    <span class="op">},</span>
     <span class="co">// Data set continues...</span>
-}</code></pre></td></tr></table>
+<span class="op">}</span></code></pre></td></tr></table></div>
 <h3 id="step-3-create-the-timeline-in-semantic-html">Step 3: Create the Timeline in Semantic HTML</h3>
 <p>To create the timeline in <span class="smcp">HTML</span>, we first need to decide how to represent it. If you’re used to working with arbitrary <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> elements, you might think that’s the best approach here as well. Instead of jumping right to these generic elements, however, we should consider other <span class="smcp">HTML</span> structures that more accurately convey the content. <span class="lgcp">HTML</span> that more closely reflects the meaning of the underlying content is known as <em>semantic markup</em>, and it’s usually preferred over generic <code>&lt;div&gt;</code> and <code>&lt;span&gt;</code> tags. Semantic markup exposes the meaning of your content to computers such as search engines and screen readers for users with visual impairments, and it can improve your site’s search rank and its accessibility. If we think about a timeline in the context of semantic markup, it’s easy to see that the timeline is really just a list. In fact, it’s a list with a specific order. We should build our <span class="smcp">HTML</span> timeline, therefore, as an ordered list (<code>&lt;ol&gt;</code>) element. While we’re creating the <code>&lt;ol&gt;</code> we can also give it a class name for <span class="smcp">CSS</span> style rules we’ll be adding later.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> container = <span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;timeline&quot;</span>);
-<span class="kw">var</span> list = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;ol&quot;</span>);
-<span class="ot">list</span>.<span class="fu">className</span>=<span class="st">&quot;timeline&quot;</span>;
-<span class="ot">container</span>.<span class="fu">appendChild</span>(list);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> container <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;timeline&quot;</span>)<span class="op">;</span>
+<span class="kw">var</span> list <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;ol&quot;</span>)<span class="op">;</span>
+<span class="va">list</span>.<span class="at">className</span><span class="op">=</span><span class="st">&quot;timeline&quot;</span><span class="op">;</span>
+<span class="va">container</span>.<span class="at">appendChild</span>(list)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Next we can iterate through the plays, creating an individual list item <code>&lt;li&gt;</code> for each one. For now, we’ll just insert the date and title as text.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">plays</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(play) {
-    <span class="kw">var</span> listItem = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;li&quot;</span>);
-    <span class="ot">listItem</span>.<span class="fu">textContent</span> = <span class="ot">play</span>.<span class="fu">date</span> + <span class="st">&quot;: &quot;</span> + <span class="ot">play</span>.<span class="fu">play</span>;
-    <span class="ot">list</span>.<span class="fu">appendChild</span>(listItem);
-})</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">plays</span>.<span class="at">forEach</span>(<span class="kw">function</span>(play) <span class="op">{</span>
+    <span class="kw">var</span> listItem <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;li&quot;</span>)<span class="op">;</span>
+    <span class="va">listItem</span>.<span class="at">textContent</span> <span class="op">=</span> <span class="va">play</span>.<span class="at">date</span> <span class="op">+</span> <span class="st">&quot;: &quot;</span> <span class="op">+</span> <span class="va">play</span>.<span class="at">play</span><span class="op">;</span>
+    <span class="va">list</span>.<span class="at">appendChild</span>(listItem)<span class="op">;</span>
+<span class="op">}</span>)</code></pre></td></tr></table></div>
 <p>Here’s a truncated version of the resulting list. It may not look like much (yet), but it has the essential data and structure.</p>
 <figure>
 <div id="javascript-1" style="font-size:0.8em">
@@ -1070,7 +1070,7 @@ A pure <span class="smcp">HTML</span> timeline can start out as a simple ordered
 </figcaption>
 </figure>
 <p>If you look at the resulting <span class="smcp">HTML</span> that underlies that list, it’s pretty simple:</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1083,13 +1083,13 @@ A pure <span class="smcp">HTML</span> timeline can start out as a simple ordered
     <span class="kw">&lt;li&gt;</span>1590-1591: Henry VI, Part 2<span class="kw">&lt;/li&gt;</span>
     <span class="kw">&lt;li&gt;</span>1591: Henry VI, Part 3<span class="kw">&lt;/li&gt;</span>
     <span class="kw">&lt;li&gt;</span>1591: Henry VI, Part 1<span class="kw">&lt;/li&gt;</span>
-<span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table></div>
 <p>In the spirit of semantic <span class="smcp">HTML</span>, we should stop and consider whether that markup can be improved. Since it appears first in our list items, let’s consider the date or date range for a play. Although there has been some controversy around the decision, <span class="smcp">HTML5</span> has defined support for a <code>&lt;time&gt;</code> element to contain dates and times. Using that element as a wrapper will make our dates more semantic. The second part of each list item is the title of the play. As it happens, <span class="smcp">HTML5</span>’s <code>&lt;cite&gt;</code> element is perfect for that content. To quote the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/text-level-semantics.html#the-cite-element">current standard</a>:</p>
 <blockquote>
 <p>The cite element represents the title of a work (e.g. a book, […] <strong>a play,</strong> […] etc). This can be a work that is being quoted or referenced in detail (i.e. a citation), or it can just be a work that is mentioned in passing. [Emphasis added.]</p>
 </blockquote>
 <p>To add those elements to our code, we’ll have to distinguish between dates that are single years and those that are ranges. Looking for a dash <code>-</code> in the data will tell us which we have. Notice how we handle date ranges in lines 4 through 10. Since a range has a start and end time, we create two distinct <code>&lt;time&gt;</code> elements. We don’t need to add any punctuation between the dates at this point.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1109,26 +1109,26 @@ A pure <span class="smcp">HTML</span> timeline can start out as a simple ordered
 18
 19
 20
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">plays</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(play) {
-    <span class="kw">var</span> listItem = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;li&quot;</span>);
-    <span class="kw">if</span> (<span class="ot">play</span>.<span class="ot">date</span>.<span class="fu">indexOf</span>(<span class="st">&quot;-&quot;</span>) !== -<span class="dv">1</span>) {
-        <span class="kw">var</span> dates = <span class="ot">play</span>.<span class="ot">date</span>.<span class="fu">split</span>(<span class="st">&quot;-&quot;</span>);
-        <span class="kw">var</span> time = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;time&quot;</span>);
-        <span class="ot">time</span>.<span class="fu">textContent</span> = dates[<span class="dv">0</span>];
-        <span class="ot">listItem</span>.<span class="fu">appendChild</span>(time);
-        time = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;time&quot;</span>);
-        <span class="ot">time</span>.<span class="fu">textContent</span> = dates[<span class="dv">1</span>];
-        <span class="ot">listItem</span>.<span class="fu">appendChild</span>(time);
-    } <span class="kw">else</span> {
-        <span class="kw">var</span> time = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;time&quot;</span>);
-        <span class="ot">time</span>.<span class="fu">textContent</span> = <span class="ot">play</span>.<span class="fu">date</span>;
-        <span class="ot">listItem</span>.<span class="fu">appendChild</span>(time);
-    }
-    <span class="kw">var</span> cite = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;cite&quot;</span>);
-    <span class="ot">cite</span>.<span class="fu">textContent</span> = <span class="ot">play</span>.<span class="fu">play</span>;
-    <span class="ot">listItem</span>.<span class="fu">appendChild</span>(cite);
-    <span class="ot">list</span>.<span class="fu">appendChild</span>(listItem);
-})</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">plays</span>.<span class="at">forEach</span>(<span class="kw">function</span>(play) <span class="op">{</span>
+    <span class="kw">var</span> listItem <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;li&quot;</span>)<span class="op">;</span>
+    <span class="cf">if</span> (<span class="va">play</span>.<span class="va">date</span>.<span class="at">indexOf</span>(<span class="st">&quot;-&quot;</span>) <span class="op">!==</span> <span class="op">-</span><span class="dv">1</span>) <span class="op">{</span>
+        <span class="kw">var</span> dates <span class="op">=</span> <span class="va">play</span>.<span class="va">date</span>.<span class="at">split</span>(<span class="st">&quot;-&quot;</span>)<span class="op">;</span>
+        <span class="kw">var</span> time <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;time&quot;</span>)<span class="op">;</span>
+        <span class="va">time</span>.<span class="at">textContent</span> <span class="op">=</span> dates[<span class="dv">0</span>]<span class="op">;</span>
+        <span class="va">listItem</span>.<span class="at">appendChild</span>(time)<span class="op">;</span>
+        time <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;time&quot;</span>)<span class="op">;</span>
+        <span class="va">time</span>.<span class="at">textContent</span> <span class="op">=</span> dates[<span class="dv">1</span>]<span class="op">;</span>
+        <span class="va">listItem</span>.<span class="at">appendChild</span>(time)<span class="op">;</span>
+    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+        <span class="kw">var</span> time <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;time&quot;</span>)<span class="op">;</span>
+        <span class="va">time</span>.<span class="at">textContent</span> <span class="op">=</span> <span class="va">play</span>.<span class="at">date</span><span class="op">;</span>
+        <span class="va">listItem</span>.<span class="at">appendChild</span>(time)<span class="op">;</span>
+    <span class="op">}</span>
+    <span class="kw">var</span> cite <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;cite&quot;</span>)<span class="op">;</span>
+    <span class="va">cite</span>.<span class="at">textContent</span> <span class="op">=</span> <span class="va">play</span>.<span class="at">play</span><span class="op">;</span>
+    <span class="va">listItem</span>.<span class="at">appendChild</span>(cite)<span class="op">;</span>
+    <span class="va">list</span>.<span class="at">appendChild</span>(listItem)<span class="op">;</span>
+<span class="op">}</span>)</code></pre></td></tr></table></div>
 <p>Because we’re no longer including the punctuation, the resulting output might look a little worse than before. Don’t worry, though, we’ll fix it soon.</p>
 <figure>
 <div id="javascript-2" style="font-size:0.8em">
@@ -1139,7 +1139,7 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
 </figcaption>
 </figure>
 <p>What <em>is</em> much improved is the underlying <span class="smcp">HTML</span>. The markup clearly identifies the type of content it contains: an ordered list of dates and citations.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1152,10 +1152,10 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
     <span class="kw">&lt;li&gt;&lt;time&gt;</span>1590<span class="kw">&lt;/time&gt;&lt;time&gt;</span>1591<span class="kw">&lt;/time&gt;&lt;cite&gt;</span>Henry VI, Part 2<span class="kw">&lt;/cite&gt;&lt;/li&gt;</span>
     <span class="kw">&lt;li&gt;&lt;time&gt;</span>1591<span class="kw">&lt;/time&gt;&lt;cite&gt;</span>Henry VI, Part 3<span class="kw">&lt;/cite&gt;&lt;/li&gt;</span>
     <span class="kw">&lt;li&gt;&lt;time&gt;</span>1591<span class="kw">&lt;/time&gt;&lt;cite&gt;</span>Henry VI, Part 1<span class="kw">&lt;/cite&gt;&lt;/li&gt;</span>
-<span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-4-include-the-supporting-content">Step 4: Include the Supporting Content</h3>
 <p>When we created a timeline using the Chronoline.js library, we weren’t able to include the supporting content from Wikipedia because the library did not offer that option. In this example, though, we have complete control over the content, so let’s include that information in our timeline. For most plays our data includes its first official record, its first publication, its first performance, and a discussion of the evidence. This type of content is perfectly matched to the <span class="smcp">HTML</span> <em>description list</em> <code>&lt;dl&gt;</code> so that’s how we’ll add it to our page. It can follow the <code>&lt;cite&gt;</code> of the play’s title.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1163,29 +1163,29 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
 6
 7
 8
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">plays</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(play) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">plays</span>.<span class="at">forEach</span>(<span class="kw">function</span>(play) <span class="op">{</span>
     <span class="co">// Additional code...</span>
-    <span class="ot">listItem</span>.<span class="fu">appendChild</span>(cite);
-    <span class="kw">var</span> descList = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;dl&quot;</span>);
+    <span class="va">listItem</span>.<span class="at">appendChild</span>(cite)<span class="op">;</span>
+    <span class="kw">var</span> descList <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;dl&quot;</span>)<span class="op">;</span>
     <span class="co">// Add terms to the list here</span>
-    <span class="ot">listItem</span>.<span class="fu">appendChild</span>(descList);
-    <span class="ot">list</span>.<span class="fu">appendChild</span>(listItem);
-})</code></pre></td></tr></table>
+    <span class="va">listItem</span>.<span class="at">appendChild</span>(descList)<span class="op">;</span>
+    <span class="va">list</span>.<span class="at">appendChild</span>(listItem)<span class="op">;</span>
+<span class="op">}</span>)</code></pre></td></tr></table></div>
 <p>We can define a mapping array to help add the individual terms to each play. That array maps the property name in our data set to the label we want to use in the content.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> descTerms = [
-    { <span class="dt">key</span>: <span class="st">&quot;record&quot;</span>,      <span class="dt">label</span>: <span class="st">&quot;First official record&quot;</span>},
-    { <span class="dt">key</span>: <span class="st">&quot;published&quot;</span>,   <span class="dt">label</span>: <span class="st">&quot;First published&quot;</span>},
-    { <span class="dt">key</span>: <span class="st">&quot;performance&quot;</span>, <span class="dt">label</span>: <span class="st">&quot;First recorded performance&quot;</span>},
-    { <span class="dt">key</span>: <span class="st">&quot;evidence&quot;</span>,    <span class="dt">label</span>: <span class="st">&quot;Evidence&quot;</span>},
-];</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> descTerms <span class="op">=</span> [
+    <span class="op">{</span> <span class="dt">key</span><span class="op">:</span> <span class="st">&quot;record&quot;</span><span class="op">,</span>      <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;First official record&quot;</span><span class="op">},</span>
+    <span class="op">{</span> <span class="dt">key</span><span class="op">:</span> <span class="st">&quot;published&quot;</span><span class="op">,</span>   <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;First published&quot;</span><span class="op">},</span>
+    <span class="op">{</span> <span class="dt">key</span><span class="op">:</span> <span class="st">&quot;performance&quot;</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;First recorded performance&quot;</span><span class="op">},</span>
+    <span class="op">{</span> <span class="dt">key</span><span class="op">:</span> <span class="st">&quot;evidence&quot;</span><span class="op">,</span>    <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Evidence&quot;</span><span class="op">},</span>
+]<span class="op">;</span></code></pre></td></tr></table></div>
 <p>With that array we can quickly add the descriptions to our content. We iterate over the array using <code>.forEach()</code>. At each iteration we make sure that the data has content (line 6) before creating the description item. A description item contains the term(s) being described in one <code>&lt;dt&gt;</code> tag and the description itself in a <code>&lt;dd&gt;</code> tag.</p>
-<table class="sourceCode javascript numberLines line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines line-6"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1202,23 +1202,23 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
 15
 16
 17
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">plays</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(play) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">plays</span>.<span class="at">forEach</span>(<span class="kw">function</span>(play) <span class="op">{</span>
     <span class="co">// Additional code...</span>
-    <span class="ot">listItem</span>.<span class="fu">appendChild</span>(cite);
-    <span class="kw">var</span> descList = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;dl&quot;</span>);
-    <span class="ot">descTerms</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(term) {
-        <span class="kw">if</span> (play[<span class="ot">term</span>.<span class="fu">key</span>]) {
-            <span class="kw">var</span> descTerm = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;dt&quot;</span>);
-            <span class="ot">descTerm</span>.<span class="fu">textContent</span> = <span class="ot">term</span>.<span class="fu">label</span>;
-            <span class="ot">descList</span>.<span class="fu">appendChild</span>(descTerm);
-            <span class="kw">var</span> descElem = <span class="ot">document</span>.<span class="fu">createElement</span>(<span class="st">&quot;dd&quot;</span>);
-            <span class="ot">descElem</span>.<span class="fu">textContent</span> = play[<span class="ot">term</span>.<span class="fu">key</span>];
-            <span class="ot">descList</span>.<span class="fu">appendChild</span>(descElem);
-        }
-    });
-    <span class="ot">listItem</span>.<span class="fu">appendChild</span>(descList);
-    <span class="ot">list</span>.<span class="fu">appendChild</span>(listItem);
-})</code></pre></td></tr></table>
+    <span class="va">listItem</span>.<span class="at">appendChild</span>(cite)<span class="op">;</span>
+    <span class="kw">var</span> descList <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;dl&quot;</span>)<span class="op">;</span>
+    <span class="va">descTerms</span>.<span class="at">forEach</span>(<span class="kw">function</span>(term) <span class="op">{</span>
+        <span class="cf">if</span> (play[<span class="va">term</span>.<span class="at">key</span>]) <span class="op">{</span>
+            <span class="kw">var</span> descTerm <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;dt&quot;</span>)<span class="op">;</span>
+            <span class="va">descTerm</span>.<span class="at">textContent</span> <span class="op">=</span> <span class="va">term</span>.<span class="at">label</span><span class="op">;</span>
+            <span class="va">descList</span>.<span class="at">appendChild</span>(descTerm)<span class="op">;</span>
+            <span class="kw">var</span> descElem <span class="op">=</span> <span class="va">document</span>.<span class="at">createElement</span>(<span class="st">&quot;dd&quot;</span>)<span class="op">;</span>
+            <span class="va">descElem</span>.<span class="at">textContent</span> <span class="op">=</span> play[<span class="va">term</span>.<span class="at">key</span>]<span class="op">;</span>
+            <span class="va">descList</span>.<span class="at">appendChild</span>(descElem)<span class="op">;</span>
+        <span class="op">}</span>
+    <span class="op">}</span>)<span class="op">;</span>
+    <span class="va">listItem</span>.<span class="at">appendChild</span>(descList)<span class="op">;</span>
+    <span class="va">list</span>.<span class="at">appendChild</span>(listItem)<span class="op">;</span>
+<span class="op">}</span>)</code></pre></td></tr></table></div>
 <p>Our timeline is still lacking a bit of visual appeal, but it has a much richer set of content. In fact, even without any styling at all, it still communicates the essential data quite well.</p>
 <style>
 #javascript-3 { font-size: 0.8em; }
@@ -1234,7 +1234,7 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
 </figcaption>
 </figure>
 <p>Here’s the resulting markup (truncated for brevity):</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1277,33 +1277,33 @@ Semantic markup simplifies the required <span class="smcp">HTML</span>, but it m
             <span class="kw">&lt;dt&gt;</span>Evidence<span class="kw">&lt;/dt&gt;&lt;dd&gt;</span>Kier Elam posits...<span class="kw">&lt;/dd&gt;</span>
         <span class="kw">&lt;/dl&gt;</span>
     <span class="kw">&lt;/li&gt;</span>
-<span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/ol&gt;</span></code></pre></td></tr></table></div>
 <h3 id="step-5-optionally-take-advantage-of-jquery">Step 5: Optionally Take Advantage of jQuery</h3>
 <p>Our code so far has used nothing but plain JavaScript. If you’re using jQuery on your web pages, you can shorten the code a bit by taking advantage of some jQuery features. If your web pages aren’t using jQuery already, the minor enhancements in this step don’t justify adding it, but if you’d like to see a more concise version, check out the book’s source code for an alternative.</p>
 <h3 id="step-6-fix-timeline-problems-with-css">Step 6: Fix Timeline Problems with CSS</h3>
 <p>Now that we’ve built our timeline’s content in <span class="smcp">HTML</span>, it’s time to define the styles that determine its appearance. Throughout this example we’ll focus on the functional aspects of styling rather than pure visual elements such as fonts and colors, since you’ll probably want those visual styles to be specific to your own web site.</p>
 <p>The first step is a simple one. We want to get rid of the numbering (1, 2, 3, …) that browsers normally add to ordered list items. A single rule banishes them from our timeline: by setting the <code>list-style-type</code> to <code>none</code> we tell the browser not to add any special characters to our list items.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li <span class="kw">{</span>
     <span class="kw">list-style-type:</span> <span class="dt">none</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>We can also use CSS rules to add some punctuation to our semantic HTML. First we look for places where two <code>&lt;time&gt;</code> elements appear right after each other, while skipping isolated <code>&lt;time&gt;</code> tags. The trick to finding <code>&lt;time&gt;</code> pairs is the CSS adjacent selector <code>+</code>. A rule with <code>time + time</code> specifies a <code>&lt;time&gt;</code> element that immediately follows a <code>&lt;time&gt;</code> element. To add the punctuation, we use the <code>:before</code> pseudo-selector to specify what we want to happen <em>before</em> this second <code>&lt;time&gt;</code> tag, and we set the <code>content</code> property to indicate the content we want inserted.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li &gt; time + time<span class="dv">:before</span> <span class="kw">{</span>
     <span class="kw">content:</span> <span class="st">&quot;-&quot;</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>If you haven’t seen the <code>&gt;</code> before in a CSS rule, it’s the direct descendant selector. In this example, it means that the <code>&lt;time&gt;</code> element must be an immediate child of the <code>&lt;li&gt;</code> element. We’re using this selector so our rules won’t inadvertently apply to other <code>&lt;time&gt;</code> elements that may be nested deeper within the list item’s content.</p>
 <p>To finish up the punctuation, let’s add a colon and space after the last of the <code>&lt;time&gt;</code> elements in each list item. We have to use two pseudo-selectors for this rule. The <code>:last-of-type</code> selector will target the last <code>&lt;time&gt;</code> element in the list item. That’s the first <code>&lt;time&gt;</code> if there’s only one and the second <code>&lt;time&gt;</code> if both are present. Then we add the <code>:after</code> pseudo-selector to insert content after that <code>&lt;time&gt;</code> element.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li &gt; time<span class="dv">:last-of-type:after</span> <span class="kw">{</span>
     <span class="kw">content:</span> <span class="st">&quot;: &quot;</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>With these changes we’ve cleaned up all of the obvious problems with our timeline.</p>
 <style>
 .timeline1 {
@@ -1390,7 +1390,7 @@ Kier Elam posits…
 <p>Now we can add a little flair to the visualization.</p>
 <h3 id="step-7-add-styles-to-visually-structure-the-timeline">Step 7: Add Styles to Visually Structure the Timeline</h3>
 <p>The next set of CSS styles will improve the visual structure of the timeline. First among those improvements will be making the timeline look more like, well, a <em>line.</em> To do that, we can add a border to the left side of the <code>&lt;li&gt;</code> elements. At the same time, we’ll also want to make sure that those <code>&lt;li&gt;</code> elements don’t have any margins, as margins would introduce gaps in the border and break the continuity of the line.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1403,16 +1403,16 @@ Kier Elam posits…
 <span class="fl">.timeline</span> dl,
 <span class="fl">.timeline</span> li <span class="kw">{</span>
     <span class="kw">margin:</span> <span class="dt">0</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>These styles add a nice vertical line on the left side of our entire timeline. Now that we have that line, we can shift the dates over to the left side of it. The shift requires rules for the parent <code>&lt;li&gt;</code> as well as the <code>&lt;time&gt;</code> elements. For the parent <code>&lt;li&gt;</code> elements, we want their <code>position</code> specified as <code>relative</code>.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li <span class="kw">{</span>
     <span class="kw">position:</span> <span class="dt">relative</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>By itself, this rule doesn’t actually change our timeline. It does, however, establish a <em>positioning context</em> for any elements that are children of the <code>&lt;li&gt;</code>. Those children include the <code>&lt;time&gt;</code> elements that we want to move. With the <code>&lt;li&gt;</code> set to <code>position: relative</code>, we can now set the <code>&lt;time&gt;</code> children to <code>position: absolute</code>. This rule lets us specify exactly where the browser should place the time elements, <em>relative</em> to the parent <code>&lt;li&gt;</code>. We want to move all <code>&lt;time&gt;</code> elements to the left, and we want to move the second <code>&lt;time&gt;</code> element down. In the following code the first selector targets both of our <code>&lt;time&gt;</code> tags while the second selector, using the same <code>time + time</code> trick described earlier, targets only the second of two <code>&lt;time&gt;</code> tags.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1427,31 +1427,31 @@ Kier Elam posits…
 <span class="fl">.timeline</span> li &gt; time + time <span class="kw">{</span>
     <span class="kw">top:</span> <span class="dt">1em</span><span class="kw">;</span>
     <span class="kw">left:</span> <span class="dt">-3.85em</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>By using <code>em</code> units rather than pixel <code>px</code> units for this shift, we define our shift to be relative to the current font size, regardless of what it is. That gives us the freedom to change the font size without having to go back and tweak any pixel positioning.</p>
 <p>The specific values for the position shift may need adjustment depending on the specific font face, but, in general, we use a negative <code>left</code> position to shift content farther to the left than it would normally appear, and a positive <code>top</code> position to move the content down the page.</p>
 <p>After moving the dates to the left of the vertical line, we’ll also want to shift the main content a bit to the right so it doesn’t crowd up against the line. The <code>padding-left</code> property takes care of that. And while we’re adjusting the left padding we can also add a bit of padding on the bottom to separate each play from the other.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li <span class="kw">{</span>
     <span class="kw">padding-left:</span> <span class="dt">1em</span><span class="kw">;</span>
     <span class="kw">padding-bottom:</span> <span class="dt">1em</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>With the dates and the main content on opposite sides of our vertical line, we no longer need any punctuation after the date, so we’ll remove the style that adds a colon after the last <code>&lt;time&gt;</code> element.</p>
 <style>
 .strikeThrough td.sourceCode { text-decoration: line-through; }
 </style>
-<table class="sourceCode css numberLines strikeThrough"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines strikeThrough"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li &gt; time<span class="dv">:last-of-type:after</span> <span class="kw">{</span>
     <span class="kw">content:</span> <span class="st">&quot;: &quot;</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>The fact that we’re able to make this change highlights one of the reasons for using CSS to add the colon in the first place. If we had included the punctuation explicitly in the markup (by, for example, generating it in the JavaScript code), then our markup would be more tightly coupled to our styles. If a style modification changed whether the colon was appropriate, we would have to go back and change the JavaScript as well. With the approach that we’re using here, however, styles and markup are much more independent. Any style changes are isolated to our CSS rules; no modifications to the JavaScript are required.</p>
 <p>To further improve its visual styling, we can make a few other changes to our timeline. We can increase the font size for each play’s title to make that information more prominent. At the same time, we can add some extra spacing below the title and indent the description list a bit.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1466,9 +1466,9 @@ Kier Elam posits…
 <span class="kw">}</span>
 <span class="fl">.timeline</span> dl <span class="kw">{</span>
     <span class="kw">padding-left:</span> <span class="dt">1.5em</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>For a last bit of polish, let’s add a bullet right on the vertical line to mark each play and tie the title more closely to the dates. We use a large bullet (several times the normal size) and position it right over the line. As you can see from the following rules, the Unicode character for a bullet can be represented as <code>&quot;\2022&quot;</code>. The exact position values will depend on the specific font, but a bit of trial and error can perfect the adjustments.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1483,7 +1483,7 @@ Kier Elam posits…
     <span class="kw">position:</span> <span class="dt">absolute</span><span class="kw">;</span>
     <span class="kw">right:</span> <span class="dt">-0.65em</span><span class="kw">;</span>
     <span class="kw">top:</span> <span class="dt">0.1em</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>Now our timeline is starting to look like an actual time <em>line.</em> In your own pages you could include additional styles to define fonts, colors, and so on, but even without those decorations the visualization is effective.</p>
 <style>
 .timeline2 { font-size: 0.8em; }
@@ -1570,44 +1570,44 @@ Additional styles clarify the structure of the timeline elements.
 <h3 id="step-8-add-interactivity">Step 8: Add Interactivity</h3>
 <p>The full details on all 40 of Shakespeare’s plays might be a little overwhelming for a first view of our timeline. The visualization would be more effective if it showed only the play titles at first, but let users reveal more details through interactions. Because we’re building this visualization ourselves, we have all the control necessary to make that happen.</p>
 <p>First we’ll set up a few additional styles. There are several ways to hide the play details with CSS, the most obvious being the <code>display:none</code> property. As we’ll see a little later though, a better choice for our timeline is setting the <code>max-height</code> to 0. If the maximum height of an element is 0, then, in theory, it should be invisible. In practice, we also have to set the <code>overflow</code> property to <code>hidden</code>. Otherwise, even though the <code>&lt;dl&gt;</code> element itself has no height, the browser will display the content that overflows from it. Since we want our description lists to start out hidden, we can set that property as the default.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li dl <span class="kw">{</span>
     <span class="kw">max-height:</span> <span class="dt">0</span><span class="kw">;</span>
     <span class="kw">overflow:</span> <span class="dt">hidden</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>To reveal a play’s details, users click on the play’s title in the <code>&lt;cite&gt;</code> element. To indicate to users that they can click on the title, we’ll change the mouse cursor from the normal arrow to the “clickable” hand. We can also change the <code>display</code> property from the default <code>inline</code> to <code>block</code>. That change gives users a larger and more consistent area to click.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li &gt; cite <span class="kw">{</span>
     <span class="kw">cursor:</span> <span class="dt">pointer</span><span class="kw">;</span>
     <span class="kw">display:</span> <span class="dt">block</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>Finally, we need a way to reveal a play’s details. We’ll do that by adding a class of <code>&quot;expanded&quot;</code> to the <code>&lt;li&gt;</code> for the play. When that class is present, our styles should override the <code>max-height</code> of <code>0</code>.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li<span class="fl">.expanded</span> dl <span class="kw">{</span>
     <span class="kw">max-height:</span> <span class="dt">40em</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>The exact value for the expanded <code>max-height</code> will depend on the content. In general, though, it should be large enough to reveal the full details for the item. It’s okay to make it a little larger than necessary “just in case.” Don’t go overboard, however, and make it unreasonably large. (We’ll see why at the end of this step.)</p>
 <p>With these styles in place, we can add a bit of JavaScript to control them. It won’t take much. The first step is writing an event handler that will be called when users click. That function will take a single parameter, specifically an <code>Event</code> object, with details about the click. One of those details is the <code>.target</code> property, which will contain a reference to the specific element of the page on which the user clicked. We care only about clicks on the <code>&lt;cite&gt;</code> elements.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked = <span class="kw">function</span>(ev) {
-    <span class="kw">if</span> (<span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">nodeName</span> === <span class="st">&quot;CITE&quot;</span>) {
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked <span class="op">=</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+    <span class="cf">if</span> (<span class="va">ev</span>.<span class="va">target</span>.<span class="at">nodeName</span> <span class="op">===</span> <span class="st">&quot;CITE&quot;</span>) <span class="op">{</span>
         <span class="co">// Code continues...</span>
-    }
-};</code></pre></td></tr></table>
+    <span class="op">}</span>
+<span class="op">};</span></code></pre></td></tr></table></div>
 <p>Once we know that a <code>&lt;cite&gt;</code> was clicked, we find its parent <code>&lt;li&gt;</code> element. We can then check to see if the <code>&lt;li&gt;</code> has the <code>&quot;expanded&quot;</code> class. If it doesn’t, we add it. If the class is already present, we remove it. Our approach is a bit primitive because it allows only one class to be defined for the <code>&lt;li&gt;</code>. That’s all we need for this example, though, so we’ll stick with it.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1617,45 +1617,45 @@ Additional styles clarify the structure of the timeline elements.
 8
 9
 10
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked = <span class="kw">function</span>(ev) {
-    <span class="kw">if</span> (<span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">nodeName</span> === <span class="st">&quot;CITE&quot;</span>) {
-        <span class="kw">var</span> li = <span class="ot">ev</span>.<span class="ot">target</span>.<span class="fu">parentNode</span>;
-        <span class="kw">if</span> (<span class="ot">li</span>.<span class="fu">className</span> === <span class="st">&quot;expanded&quot;</span>) {
-            <span class="ot">li</span>.<span class="fu">className</span> = <span class="st">&quot;&quot;</span>;
-        } <span class="kw">else</span> {
-            <span class="ot">li</span>.<span class="fu">className</span> = <span class="st">&quot;expanded&quot;</span>;
-        }
-    }
-};</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> clicked <span class="op">=</span> <span class="kw">function</span>(ev) <span class="op">{</span>
+    <span class="cf">if</span> (<span class="va">ev</span>.<span class="va">target</span>.<span class="at">nodeName</span> <span class="op">===</span> <span class="st">&quot;CITE&quot;</span>) <span class="op">{</span>
+        <span class="kw">var</span> li <span class="op">=</span> <span class="va">ev</span>.<span class="va">target</span>.<span class="at">parentNode</span><span class="op">;</span>
+        <span class="cf">if</span> (<span class="va">li</span>.<span class="at">className</span> <span class="op">===</span> <span class="st">&quot;expanded&quot;</span>) <span class="op">{</span>
+            <span class="va">li</span>.<span class="at">className</span> <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span>
+        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span>
+            <span class="va">li</span>.<span class="at">className</span> <span class="op">=</span> <span class="st">&quot;expanded&quot;</span><span class="op">;</span>
+        <span class="op">}</span>
+    <span class="op">}</span>
+<span class="op">};</span></code></pre></td></tr></table></div>
 <blockquote>
 <p>Note: Modern browsers have a more sophisticated interface for controlling the class attributes of elements. That interface is the <code>classList</code>, and it easily supports multiple classes per element, as well as toggling the class on and off with a single function. Older browsers (namely Internet Explorer version 9 and earlier) don’t support that interface, however. Since we don’t need the extra functionality, the older <code>className</code> is sufficient for this example.</p>
 </blockquote>
 <p>With our event handling function defined, we can associate it with clicks anywhere on the timeline. The standard <code>addEventListener</code> method creates the association for any element.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">document</span>.<span class="fu">getElementById</span>(<span class="st">&quot;timeline&quot;</span>).<span class="fu">addEventListener</span>(<span class="st">&quot;click&quot;</span>, clicked);</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;timeline&quot;</span>).<span class="at">addEventListener</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> clicked)<span class="op">;</span></code></pre></td></tr></table></div>
 <blockquote>
 <p>Note: You might be curious as to why we’re associating an event listener with the entire timeline visualization instead of, for example, adding individual event listeners to each <code>&lt;cite&gt;</code>. That alternative would eliminate the need to check the event target in the handler; however, it turns out that it’s much less efficient than the approach we’re taking. Event listeners can consume a fair bit of JavaScript resources, and our page will perform better if we keep them to a minimum.</p>
 </blockquote>
 <p>If you’re using jQuery, the required code is even simpler:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&quot;#timeline&quot;</span>).<span class="fu">on</span>(<span class="st">&quot;click&quot;</span>, <span class="st">&quot;cite&quot;</span>, <span class="kw">function</span>() {
-    <span class="fu">$</span>(<span class="kw">this</span>).<span class="fu">parent</span>(<span class="st">&quot;li&quot;</span>).<span class="fu">toggleClass</span>(<span class="st">&quot;expanded&quot;</span>);
-})</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="at">$</span>(<span class="st">&quot;#timeline&quot;</span>).<span class="at">on</span>(<span class="st">&quot;click&quot;</span><span class="op">,</span> <span class="st">&quot;cite&quot;</span><span class="op">,</span> <span class="kw">function</span>() <span class="op">{</span>
+    <span class="at">$</span>(<span class="kw">this</span>).<span class="at">parent</span>(<span class="st">&quot;li&quot;</span>).<span class="at">toggleClass</span>(<span class="st">&quot;expanded&quot;</span>)<span class="op">;</span>
+<span class="op">}</span>)</code></pre></td></tr></table></div>
 <p>We’re almost ready to show our new and improved timeline to the world, but there’s one final refinement we can make. Our current version shows or hides a play’s details all at once. This transition can be abrupt to users, as content appears or disappears instantly. We can provide a better experience by gracefully transitioning between the two states, and a natural transition for this timeline is animating the height of the content. When the details are hidden, they have a height of 0. And when we want to show them, we will gradually animate the height to its natural value.</p>
 <p>It’s possible to add these animations using JavaScript. The jQuery library, in fact, has a fairly extensive set of animation functions. In modern browsers, however, it is much better to animate content using CSS transitions. Web browsers are optimized for CSS, often offloading the computations to special high-performance graphics co-processors. In those cases CSS-based animations can perform several orders of magnitude better than JavaScript. The only disadvantage to using CSS for animations is a lack of support in older browsers. But animation isn’t usually <em>critical</em> to most web pages. Sure, it’s nice, but if a user with an older browser misses out on the graceful transitions, it isn’t the end of the world. The web page will still <em>function</em> just fine.</p>
 <p>The CSS <code>transition</code> property is the simplest way to define a CSS animation. It specifies the actual property to animate, the duration of the animation, and the <em>easing function</em> to follow. Here’s a rule we could use in our example:</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode css"><span class="fl">.timeline</span> li dl <span class="kw">{</span>
     <span class="kw">transition:</span> max-height <span class="dt">500ms</span> ease-in-out<span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>This rule defines a transition for the timeline’s <code>&lt;dl&gt;</code> elements. It specifies that the property to animate is <code>max-height</code>, so the transition will take effect whenever an element’s <code>max-height</code> property changes (and that’s precisely the property we modify when the <code>&quot;expanded&quot;</code> class is added or removed). The transition rule also specifies that the animation should take 500 milliseconds, and that it should “ease in” and “ease out.” This last property indicates that the animation should start slowly; speed up, and then slow down again before finishing. That behavior usually looks more natural than animating at a constant speed.</p>
 <p>CSS transitions can animate many CSS properties, but there is one important constraint. Both the starting and ending values must be explicit. That constraint explains why we’re animating <code>max-height</code> instead of <code>height</code>, even though it’s really just <code>height</code> that we want to change. Unfortunately, we can’t animate <code>height</code> because it has no explicit value when the description list is expanded. Every <code>&lt;dl&gt;</code> will have its own height based on its content, and there’s no way we can predict those values in our CSS. The <code>max-height</code> property, on the other hand, gives us explicit values for both states—<code>0</code> and <code>40em</code> in this example—so CSS can animate its transitions. We just have to be sure that no <code>&lt;dl&gt;</code> has content more than <code>40em</code> high. Otherwise, the extra content will be cut off. This doesn’t mean, however, that we should set the <code>max-height</code> for expanded <code>&lt;dl&gt;</code> elements to an astronomical value. To see why, consider what would happen if we transitioned <code>max-height</code> to <code>1000em</code> for a <code>&lt;dl&gt;</code> that needed only <code>10em</code> of height. Ignoring (for simplicity) the complications of easing, it would only take 1/100<sup>th</sup> of the full transition time before the full content of the element was visible. The animation that we had planned to take 500 milliseconds is over in 5 milliseconds instead.</p>
 <p>There is one final complication with CSS transitions. Most browsers implemented the functionality before the official standard was finalized. To make sure their implementations wouldn’t conflict with potential changes in the official standards, browser vendors initially implemented transitions using a proprietary syntax. That syntax adds a prefix (<code>-webkit-</code> for Safari and Chrome, <code>-moz-</code> for Firefox, and <code>-o-</code> for Opera) to the property name. To cover all the major browsers, we must include a rule with each prefix.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1666,7 +1666,7 @@ Additional styles clarify the structure of the timeline elements.
        <span class="kw">-moz-transition:</span> max-height <span class="dt">500ms</span> ease-in-out<span class="kw">;</span>
          <span class="kw">-o-transition:</span> max-height <span class="dt">500ms</span> ease-in-out<span class="kw">;</span>
             <span class="kw">transition:</span> max-height <span class="dt">500ms</span> ease-in-out<span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <blockquote>
 <p>Note: Internet Explorer doesn’t need a prefix because Microsoft didn’t implement transitions until the standard was stable. Also, there’s no harm in specifying multiple prefixes since browsers simply ignore properties they don’t understand.</p>
 </blockquote>
@@ -1902,7 +1902,7 @@ The Timeline <span class="smcp">JS</span> component can get its data from a Goog
 </figcaption>
 </figure>
 <p>The <span class="smcp">HTML</span> snippet that Timeline <span class="smcp">JS</span> creates for this timeline is as follows:</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1913,11 +1913,10 @@ The Timeline <span class="smcp">JS</span> component can get its data from a Goog
 <span class="st">    source=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E</span><span class="er">&amp;</span>
 <span class="st">    font=Bevan-PotanoSans</span><span class="er">&amp;</span><span class="st">maptype=toner</span><span class="er">&amp;</span><span class="st">lang=en</span><span class="er">&amp;</span><span class="st">height=650&#39;</span>
 <span class="ot">    width=</span><span class="st">&#39;100%&#39;</span><span class="ot"> height=</span><span class="st">&#39;650&#39;</span><span class="ot"> frameborder=</span><span class="st">&#39;0&#39;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/iframe&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/iframe&gt;</span></code></pre></td></tr></table></div>
 <p>When included in a page, that snippet results in fully interactive timeline for the chronology as shown in figure <span class="nextfigure"/>.</p>
 <figure>
-<iframe src="http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?source=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E&amp;font=Bevan-PotanoSans&amp;maptype=toner⟨=en&amp;start_at_slide=2&amp;height=450" width="100%" height="450" frameborder="0" style="border: 1px solid #444; margin-top:20px;">
-</iframe>
+&lt;iframe src=‘http://cdn.knightlab.com/libs/timeline/latest/embed/index.html?source=0An4ME25ELRdYdDk4WmRacmxjaDM0V0tDTk9vMnQxU1E&amp;font=Bevan-PotanoSans&amp;maptype=toner&amp;lang=en&amp;start_at_slide=2&amp;height=450’ width=‘100%’ height=‘450’ frameborder=‘0’ style=‘border: 1px solid #444; margin-top:20px;’&gt;</iframe>
 <figcaption>
 Timeline <span class="smcp">JS</span> builds a complete timeline component within an &lt;iframe&gt;.
 </pre>
@@ -1937,7 +1936,7 @@ Timeline <span class="smcp">JS</span> builds a complete timeline component withi
 <blockquote>
 <p>See chapter 2 for more details on the advantages and disadvantages of content distribution networks.</p>
 </blockquote>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1964,11 +1963,11 @@ Timeline <span class="smcp">JS</span> builds a complete timeline component withi
     <span class="kw">&lt;/script&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;js/timeline-min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/html&gt;</span></code></pre></td></tr></table></div>
 <p>The <span class="smcp">HTML</span> at this point doesn’t include the element in which we’ll place the timeline. There are some special constraints on that element, which we’ll consider when we add it to the page.</p>
 <h3 id="step-3-prepare-the-data">Step 3: Prepare the Data</h3>
 <p>Because Timeline <span class="smcp">JS</span> supports several features that we haven’t used in the earlier examples, we’ll add a few additional properties to our data set. The overall format, though, looks the same as before:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -1998,50 +1997,50 @@ Timeline <span class="smcp">JS</span> builds a complete timeline component withi
 28
 29
 30
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> plays = [
-  {
-    <span class="st">&quot;play&quot;</span>: <span class="st">&quot;The Two Gentlemen of Verona&quot;</span>, 
-    <span class="st">&quot;genre&quot;</span>: <span class="st">&quot;Comedies&quot;</span>,
-    <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1589-1591&quot;</span>,
-    <span class="st">&quot;record&quot;</span>: <span class="st">&quot;Francis Meres&#39;...&quot;</span>,
-    <span class="st">&quot;published&quot;</span>: <span class="st">&quot;First Folio (1623)&quot;</span>,   
-    <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;adaptation by Benjamin Victor...&quot;</span>,
-    <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;The play contains...&quot;</span> 
-  }, { 
-    <span class="st">&quot;play&quot;</span>: <span class="st">&quot;The Taming of the Shrew&quot;</span>,
-    <span class="st">&quot;genre&quot;</span>: <span class="st">&quot;Comedies&quot;</span>,
-    <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1590-1594&quot;</span>, 
-    <span class="st">&quot;record&quot;</span>: <span class="st">&quot;possible version...&quot;</span>, 
-    <span class="st">&quot;published&quot;</span>: <span class="st">&quot;possible version...&quot;</span>, 
-    <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;According to Philip Henslowe...&quot;</span>,  
-    <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;Kier Elam posits...&quot;</span>
-   }, { 
-    <span class="st">&quot;play&quot;</span>: <span class="st">&quot;Henry VI, Part 2&quot;</span>,
-    <span class="st">&quot;genre&quot;</span>: <span class="st">&quot;Histories&quot;</span>,
-    <span class="st">&quot;date&quot;</span>: <span class="st">&quot;1590-1591&quot;</span>, 
-    <span class="st">&quot;record&quot;</span>: <span class="st">&quot;version of the...&quot;</span>,   
-    <span class="st">&quot;published&quot;</span>: <span class="st">&quot;version of the...&quot;</span>,   
-    <span class="st">&quot;performance&quot;</span>: <span class="st">&quot;although it is known...&quot;</span>,         
-    <span class="st">&quot;evidence&quot;</span>: <span class="st">&quot;It is known...&quot;</span> 
-    <span class="st">&quot;media&quot;</span>: <span class="st">&quot;http://upload.wikimedia.org/wikipedia/commons/...&quot;</span>,
-    <span class="st">&quot;credit&quot;</span>: <span class="st">&quot;Wikimedia Commons&quot;</span>,
-    <span class="st">&quot;caption&quot;</span>: <span class="st">&quot;Photo of the first page...&quot;</span>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> plays <span class="op">=</span> [
+  <span class="op">{</span>
+    <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;The Two Gentlemen of Verona&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;genre&quot;</span><span class="op">:</span> <span class="st">&quot;Comedies&quot;</span><span class="op">,</span>
+    <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1589-1591&quot;</span><span class="op">,</span>
+    <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;Francis Meres&#39;...&quot;</span><span class="op">,</span>
+    <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;First Folio (1623)&quot;</span><span class="op">,</span>   
+    <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;adaptation by Benjamin Victor...&quot;</span><span class="op">,</span>
+    <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;The play contains...&quot;</span> 
+  <span class="op">},</span> <span class="op">{</span> 
+    <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;The Taming of the Shrew&quot;</span><span class="op">,</span>
+    <span class="st">&quot;genre&quot;</span><span class="op">:</span> <span class="st">&quot;Comedies&quot;</span><span class="op">,</span>
+    <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1590-1594&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;possible version...&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;possible version...&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;According to Philip Henslowe...&quot;</span><span class="op">,</span>  
+    <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;Kier Elam posits...&quot;</span>
+   <span class="op">},</span> <span class="op">{</span> 
+    <span class="st">&quot;play&quot;</span><span class="op">:</span> <span class="st">&quot;Henry VI, Part 2&quot;</span><span class="op">,</span>
+    <span class="st">&quot;genre&quot;</span><span class="op">:</span> <span class="st">&quot;Histories&quot;</span><span class="op">,</span>
+    <span class="st">&quot;date&quot;</span><span class="op">:</span> <span class="st">&quot;1590-1591&quot;</span><span class="op">,</span> 
+    <span class="st">&quot;record&quot;</span><span class="op">:</span> <span class="st">&quot;version of the...&quot;</span><span class="op">,</span>   
+    <span class="st">&quot;published&quot;</span><span class="op">:</span> <span class="st">&quot;version of the...&quot;</span><span class="op">,</span>   
+    <span class="st">&quot;performance&quot;</span><span class="op">:</span> <span class="st">&quot;although it is known...&quot;</span><span class="op">,</span>         
+    <span class="st">&quot;evidence&quot;</span><span class="op">:</span> <span class="st">&quot;It is known...&quot;</span> 
+    <span class="st">&quot;media&quot;</span><span class="op">:</span> <span class="st">&quot;http://upload.wikimedia.org/wikipedia/commons/...&quot;</span><span class="op">,</span>
+    <span class="st">&quot;credit&quot;</span><span class="op">:</span> <span class="st">&quot;Wikimedia Commons&quot;</span><span class="op">,</span>
+    <span class="st">&quot;caption&quot;</span><span class="op">:</span> <span class="st">&quot;Photo of the first page...&quot;</span>
   <span class="co">// Data set continues...</span>
-},</code></pre></td></tr></table>
+<span class="op">},</span></code></pre></td></tr></table></div>
 <p>As you can see, we’ve added genre information to the plays, as well as optional multimedia links, and text for credits and captions. With that starting point, we can rearrange the data to match what Timeline <span class="smcp">JS</span> expects. The basic structure of that object, shown next, includes some overall properties (such as the headline), and an array of events. We can initialize it to an empty array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> timelineData = {
-    <span class="dt">headline</span>: <span class="st">&quot;Chronology of Shakespeare&#39;s Plays&quot;</span>,
-    <span class="dt">type</span>: <span class="st">&quot;default&quot;</span>,
-    <span class="dt">date</span>: []
-};</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> timelineData <span class="op">=</span> <span class="op">{</span>
+    <span class="dt">headline</span><span class="op">:</span> <span class="st">&quot;Chronology of Shakespeare&#39;s Plays&quot;</span><span class="op">,</span>
+    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;default&quot;</span><span class="op">,</span>
+    <span class="dt">date</span><span class="op">:</span> []
+<span class="op">};</span></code></pre></td></tr></table></div>
 <p>Note that the <code>type</code> property is required and should be set to <code>&quot;default&quot;</code>.</p>
 <p>Now we iterate through the data set adding events to <code>timelineData</code>. For the following code we’ll use <code>forEach</code> for this iteration, but there are plenty of alternatives we could use here (including <code>for</code> loops, array <code>.map()</code> methods, or jQuery’s <code>$.each()</code> and <code>$.map()</code> functions). The first step in each iteration is parsing the date information. It can take one of two forms: either a single year (<code>&quot;1591&quot;</code>) or a range of years (<code>&quot;1589-1591&quot;</code>). Our code assumes a single date and makes adjustments if it finds two.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2050,17 +2049,17 @@ Timeline <span class="smcp">JS</span> builds a complete timeline component withi
 7
 8
 9
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">plays</span>.<span class="fu">forEach</span>(<span class="kw">function</span>(play) {
-    <span class="kw">var</span> start = <span class="ot">play</span>.<span class="fu">date</span>;
-    <span class="kw">var</span> end = <span class="st">&quot;&quot;</span>;
-    <span class="kw">if</span> (<span class="ot">play</span>.<span class="ot">date</span>.<span class="fu">indexOf</span>(<span class="st">&quot;-&quot;</span>) !== -<span class="dv">1</span>) {
-        <span class="kw">var</span> dates = <span class="ot">play</span>.<span class="ot">date</span>.<span class="fu">split</span>(<span class="st">&quot;-&quot;</span>);
-        start = dates[<span class="dv">0</span>];
-        end = dates[<span class="dv">1</span>];
-    }
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">plays</span>.<span class="at">forEach</span>(<span class="kw">function</span>(play) <span class="op">{</span>
+    <span class="kw">var</span> start <span class="op">=</span> <span class="va">play</span>.<span class="at">date</span><span class="op">;</span>
+    <span class="kw">var</span> end <span class="op">=</span> <span class="st">&quot;&quot;</span><span class="op">;</span>
+    <span class="cf">if</span> (<span class="va">play</span>.<span class="va">date</span>.<span class="at">indexOf</span>(<span class="st">&quot;-&quot;</span>) <span class="op">!==</span> <span class="op">-</span><span class="dv">1</span>) <span class="op">{</span>
+        <span class="kw">var</span> dates <span class="op">=</span> <span class="va">play</span>.<span class="va">date</span>.<span class="at">split</span>(<span class="st">&quot;-&quot;</span>)<span class="op">;</span>
+        start <span class="op">=</span> dates[<span class="dv">0</span>]<span class="op">;</span>
+        end <span class="op">=</span> dates[<span class="dv">1</span>]<span class="op">;</span>
+    <span class="op">}</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Now we can provide the full entry for the event in Timeline <span class="smcp">JS</span> format by pushing the new object into the <code>timelineData.date</code> array.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2072,18 +2071,18 @@ Timeline <span class="smcp">JS</span> builds a complete timeline component withi
 10
 11
 12
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="ot">timelineData</span>.<span class="ot">date</span>.<span class="fu">push</span>({
-   <span class="dt">startDate</span>: start,
-   <span class="dt">endDate</span>: end,
-   <span class="dt">headline</span>: <span class="ot">play</span>.<span class="fu">play</span>,
-   <span class="dt">text</span>: <span class="ot">play</span>.<span class="fu">evidence</span>,
-   <span class="dt">tag</span>: <span class="ot">play</span>.<span class="fu">genre</span>,
-   <span class="dt">asset</span>: {
-       <span class="dt">media</span>: <span class="ot">play</span>.<span class="fu">media</span>,
-       <span class="dt">credit</span>: <span class="ot">play</span>.<span class="fu">credit</span>,
-       <span class="dt">caption</span>: <span class="ot">play</span>.<span class="fu">caption</span>
-   }
-});</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="va">timelineData</span>.<span class="va">date</span>.<span class="at">push</span>(<span class="op">{</span>
+   <span class="dt">startDate</span><span class="op">:</span> start<span class="op">,</span>
+   <span class="dt">endDate</span><span class="op">:</span> end<span class="op">,</span>
+   <span class="dt">headline</span><span class="op">:</span> <span class="va">play</span>.<span class="at">play</span><span class="op">,</span>
+   <span class="dt">text</span><span class="op">:</span> <span class="va">play</span>.<span class="at">evidence</span><span class="op">,</span>
+   <span class="dt">tag</span><span class="op">:</span> <span class="va">play</span>.<span class="at">genre</span><span class="op">,</span>
+   <span class="dt">asset</span><span class="op">:</span> <span class="op">{</span>
+       <span class="dt">media</span><span class="op">:</span> <span class="va">play</span>.<span class="at">media</span><span class="op">,</span>
+       <span class="dt">credit</span><span class="op">:</span> <span class="va">play</span>.<span class="at">credit</span><span class="op">,</span>
+       <span class="dt">caption</span><span class="op">:</span> <span class="va">play</span>.<span class="at">caption</span>
+   <span class="op">}</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <h3 id="step-4-create-a-default-timeline">Step 4: Create a Default Timeline</h3>
 <p>With our <span class="smcp">HTML</span> set up and our data set prepared, we can now call Timeline <span class="smcp">JS</span> to create its default visualization. Figuring out exactly how to do that, however, isn’t quite as simple as looking in the documentation. That’s because Timeline <span class="smcp">JS</span> assumes that it will be used primarily as an embedded and isolated component rather than an integrated part of a page. The documentation, therefore, describes how to use Timeline <span class="smcp">JS</span> using the <code>storyjs_embed.js</code> wrapper for embedded content. That wrapper loads all the Timeline <span class="smcp">JS</span> resources (style sheets, JavaScript, fonts, and so on), and if we use it as intended, we’ll end up with most of the same problems as if we had simply embedded an <code>&lt;iframe&gt;</code>.</p>
 <p>Fortunately, it’s not too difficult to skip all the embedding and simply access the JavaScript code directly. It requires only three steps:</p>
@@ -2093,37 +2092,37 @@ Timeline <span class="smcp">JS</span> builds a complete timeline component withi
 <li>Initialize the object using the configuration object.</li>
 </ol>
 <p>Here’s what these steps will look like in our JavaScript, with the details omitted for now:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> timelineConfig = {<span class="co">/* needs properties */</span>};
-<span class="kw">var</span> timelinejs = <span class="kw">new</span> <span class="ot">VMM</span>.<span class="fu">Timeline</span>(<span class="co">/* needs parameters */</span>);
-<span class="ot">timelinejs</span>.<span class="fu">init</span>(timelineConfig);</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> timelineConfig <span class="op">=</span> <span class="op">{</span><span class="co">/* needs properties */</span><span class="op">};</span>
+<span class="kw">var</span> timelinejs <span class="op">=</span> <span class="kw">new</span> <span class="va">VMM</span>.<span class="at">Timeline</span>(<span class="co">/* needs parameters */</span>)<span class="op">;</span>
+<span class="va">timelinejs</span>.<span class="at">init</span>(timelineConfig)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>We still need to fill in the exact configuration object and the parameters for the <code>VMM.Timeline</code> constructor. The configuration object is documented in the <a href="https://github.com/NUKnightLab/TimelineJS#config-options">Timeline <span class="smcp">JS</span> source</a>. We must provide a <code>type</code> (equal to <code>&quot;timeline&quot;</code>), dimensions, the data source, and the <code>id</code> of the <span class="smcp">HTML</span> element into which the timeline should be placed. For example, we could use:</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
 5
 6
 7
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"> <span class="kw">var</span> timelineConfig = {
-        <span class="dt">type</span>:       <span class="st">&#39;timeline&#39;</span>,
-        <span class="dt">width</span>:      <span class="st">&#39;100%&#39;</span>,
-        <span class="dt">height</span>:     <span class="st">&#39;600&#39;</span>,
-        <span class="dt">source</span>:     {<span class="dt">timeline</span>: timelineData},
-        <span class="dt">embed_id</span>:   <span class="st">&#39;timeline&#39;</span>
-};</code></pre></td></tr></table>
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"> <span class="kw">var</span> timelineConfig <span class="op">=</span> <span class="op">{</span>
+        <span class="dt">type</span><span class="op">:</span>       <span class="st">&#39;timeline&#39;</span><span class="op">,</span>
+        <span class="dt">width</span><span class="op">:</span>      <span class="st">&#39;100%&#39;</span><span class="op">,</span>
+        <span class="dt">height</span><span class="op">:</span>     <span class="st">&#39;600&#39;</span><span class="op">,</span>
+        <span class="dt">source</span><span class="op">:</span>     <span class="op">{</span><span class="dt">timeline</span><span class="op">:</span> timelineData<span class="op">},</span>
+        <span class="dt">embed_id</span><span class="op">:</span>   <span class="st">&#39;timeline&#39;</span>
+<span class="op">};</span></code></pre></td></tr></table></div>
 <p>We have to pass many of those same parameters to the constructor. In particular, we provide the container’s <code>id</code> and the dimensions.</p>
-<table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> timelinejs = <span class="kw">new</span> <span class="ot">VMM</span>.<span class="fu">Timeline</span>(<span class="st">&#39;timeline&#39;</span>,<span class="st">&#39;100%&#39;</span>,<span class="st">&#39;600px&#39;</span>);</code></pre></td></tr></table>
+<div class="sourceCode"><table class="sourceCode javascript numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+</pre></td><td class="sourceCode"><pre><code class="sourceCode javascript"><span class="kw">var</span> timelinejs <span class="op">=</span> <span class="kw">new</span> <span class="va">VMM</span>.<span class="at">Timeline</span>(<span class="st">&#39;timeline&#39;</span><span class="op">,</span><span class="st">&#39;100%&#39;</span><span class="op">,</span><span class="st">&#39;600px&#39;</span>)<span class="op">;</span></code></pre></td></tr></table></div>
 <p>Finally we have to build our <span class="smcp">HTML</span> markup with care. Timeline <span class="smcp">JS</span> styles its <span class="smcp">HTML</span> appropriately for an embedded <code>&lt;iframe&gt;</code>, but those styles aren’t as compatible with a timeline that’s integrated in the page. In particular, it positions the timeline absolutely and sets its <code>z-index</code>. If we don’t compensate, the timeline will float out of the flow of the page content, which is almost certainly not desirable. There are several ways to adjust for this issue, and we’ll use a simple one in this example. Instead of a single <code>&lt;div&gt;</code>, we use two nested <code>&lt;div&gt;</code> elements. The inner <code>&lt;div&gt;</code> will contain the timeline, and the outer <code>&lt;div&gt;</code> establishes both a positioning context and size for the timeline.</p>
-<table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode html numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 </pre></td><td class="sourceCode"><pre><code class="sourceCode html"><span class="kw">&lt;div</span><span class="ot"> style=</span><span class="st">&quot;position:relative;height:600px;&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;timeline&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table>
+<span class="kw">&lt;/div&gt;</span></code></pre></td></tr></table></div>
 <p>Now when our JavaScript executes, it produces the integrated timeline shown in figure <span class="nextfigure"/> with the default Timeline <span class="smcp">JS</span> styling.</p>
 <figure>
 <div style="position:relative;height:600px;margin-top:20px;">
@@ -2145,7 +2144,7 @@ With a little extra work, we can embed a Timeline <span class="smcp">JS</span> t
 </ol>
 <p>For this example we’ll use the third approach. We’ll identify the <code>timeline.css</code> styles that we want to change and add new rules to our stylesheet to take precedence over those styles. When <span class="smcp">CSS</span> finds that multiple, conflicting rules apply to an element, it resolves the conflict by considering the specificity of the rules and their order in the document. We can give our rules priority by making them more specific than the <code>timeline.css</code> rules, or by making them equally specific but including them after <code>timeline.css</code>.</p>
 <p>First we’ll tackle the fonts that Timeline <span class="smcp">JS</span> uses. There’s nothing wrong with the default or optional fonts, but they may not match the style of our web page. In addition, downloading extra fonts will slow the performance of the page. The quickest way to find the styles that affect fonts is to look at one of the optional font selections that Timeline <span class="smcp">JS</span> offers on its web site. For example, if you select the “Merriweather &amp; News Cycle” option, you’ll see that Timeline <span class="smcp">JS</span> adds an additional stylesheet to the visualization. That file is <code>NewsCycle-Merriweather.css</code>, which defines all the font rules for the option:</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2162,9 +2161,9 @@ With a little extra work, we can embed a Timeline <span class="smcp">JS</span> t
 
 <span class="fl">.timeline-tooltip</span> <span class="kw">{</span>
     <span class="kw">font-family:</span> <span class="st">&#39;News Cycle&#39;</span>, <span class="dt">sans-serif</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>To use our own fonts, all we need to do is copy that file and replace <code>'News Cycle'</code> and <code>'Merriweather'</code> with our own choices—in this case, Avenir.</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2183,10 +2182,10 @@ With a little extra work, we can embed a Timeline <span class="smcp">JS</span> t
 
 <span class="fl">.timeline-tooltip</span> <span class="kw">{</span>
     <span class="kw">font-family:</span> <span class="st">&#39;Avenir&#39;</span>, <span class="dt">sans-serif</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <p>Customizing other aspects of the Timeline <span class="smcp">JS</span> visualization are more challenging but not impossible. These customizations are rather fragile, however, as even the slightest change in the Timeline <span class="smcp">JS</span> implementation could render them ineffective. If it’s important for your page, though, it can be done.</p>
 <p>For our example we’ll change the blue color that Timeline <span class="smcp">JS</span> uses in the bottom section of the visualization. It uses that color to highlight the active item, show the timeline marker, and for the event line. Finding the specific rules to override takes a bit of detective work with your browser’s developer tools, but here’s how to change the color from blue to green:</p>
-<table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode css numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -2217,7 +2216,7 @@ With a little extra work, we can embed a Timeline <span class="smcp">JS</span> t
 <span class="fl">.vco-timeline</span> <span class="fl">.vco-navigation</span> <span class="fl">.timenav</span> <span class="fl">.content</span> <span class="fl">.marker.active</span> <span class="fl">.dot</span>,
 <span class="fl">.vco-timeline</span> <span class="fl">.vco-navigation</span> <span class="fl">.timenav</span> <span class="fl">.content</span> <span class="fl">.marker.active</span> <span class="fl">.line</span> <span class="kw">{</span>
     <span class="kw">background:</span> <span class="dt">green</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre></td></tr></table>
+<span class="kw">}</span></code></pre></td></tr></table></div>
 <style>
 .timelinejs-2 .vco-storyjs {
     font-family: 'Varela';
@@ -2407,6 +2406,7 @@ Adjusting the <span class="smcp">CSS</span> for Timeline <span class="smcp">JS</
             <small>Copyright © 2012-2015 by <a href="http://sathomas.me">Stephen A. Thomas</a>. All Rights Reserved.</small>
         </footer>
     <script src="js/scripts.min.js"></script>
+    <!--
     <script src="https://carnivalapp.io/sites/49/init.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -2422,5 +2422,6 @@ Adjusting the <span class="smcp">CSS</span> for Timeline <span class="smcp">JS</
             fill: #CA0000 !important;
         }
     </style>
+    -->
     </body>
 </html>
