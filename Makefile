@@ -31,7 +31,7 @@ $(BOOK):
 
 build/intro-to-d3.kit: src/text/talks/intro-to-d3/*.md
 	@cat $^ | $(BUILDTALK) > $@
-	
+
 # $(TALKS):
 #	@cat $^ | $(BUILDTALK) > $@
 
@@ -40,9 +40,9 @@ build/intro-to-d3.kit: src/text/talks/intro-to-d3/*.md
 book: $(BOOK)
 
 talks: $(TALKS)
-	
+
 all: book talks
 
 .PHONY : release
 release:
-	cp -a release/ ../jsDataV.is-release/
+	cp -a release/ ../release/
