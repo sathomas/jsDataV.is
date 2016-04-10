@@ -4,12 +4,23 @@
         <title>Data Visualization with JavaScript</title>
         <link>http://jsDataV.is</link>
         <description>Data Visualization with JavaScript, including the full content of the book published by No Starch Press, blog posts, examples, and presentations.</description>
-        <generator>Feeder 3 3.0.4(2507); Mac OS X Version 10.10.5 (Build 14F27) http://reinventedsoftware.com/feeder/</generator>
+        <generator>Feeder 2.5.12(2294); Mac OS X Version 10.11.4 (Build 15E65) http://reinventedsoftware.com/feeder/</generator>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
         <language>en</language>
-        <pubDate>Wed, 30 Sep 2015 14:29:56 -0400</pubDate>
-        <lastBuildDate>Wed, 30 Sep 2015 14:29:57 -0400</lastBuildDate>
+        <pubDate>Sun, 10 Apr 2016 18:30:30 -0400</pubDate>
+        <lastBuildDate>Sun, 10 Apr 2016 18:30:30 -0400</lastBuildDate>
         <atom:link href="http://jsDataV.is/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Visualizing Bayes, Markov Chain Monte Carlo</title>
+            <link>http://jsdatav.is/visuals.html?id=cf526d6495811a8ca779946ef5558702</link>
+            <description><![CDATA[<p>Thanks to the excellent <a href="http://www.sumsar.net/blog/2015/12/bayes-js-a-small-library-for-doing-mcmc-in-the-browser/">bayes.js</a> library from Rasmus Bååth it’s now possible to experiment with Bayesian statistics in JavaScript. We’ll take advantage of that library in this series of posts, which demonstrate Bayesian statistics visually for anyone with a web browser.</p>
+
+<p>This first post covers Markov Chain Monte Carlo (MCMC), algorithms which are fundamental to modern Bayesian analysis. MCMC is also critical to many machine learning applications. Since this is the first post, though, we’ll start with a brief introduction to Bayesian statistics.</p>
+
+<p><a href="http://jsdatav.is/visuals.html?id=cf526d6495811a8ca779946ef5558702">View visualization</a></p>]]></description>
+            <pubDate>Sun, 10 Apr 2016 18:28:48 -0400</pubDate>
+            <guid isPermaLink="false">012424D3-1671-493D-B4E0-CD877DD17D93</guid>
+        </item>
         <item>
             <title>A Material Design Gauge in Pure CSS/HTML</title>
             <link>http://jsdatav.is/visuals.html?id=a8f1cc13c8b4fcb63c6f</link>
